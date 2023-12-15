@@ -11,6 +11,7 @@
 		BEA770E92B2C904900AFA2F0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA770E82B2C904900AFA2F0 /* ContentView.swift */; };
 		BEA770EB2B2C904A00AFA2F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */; };
 		BEA770EF2B2C904A00AFA2F0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA770EE2B2C904A00AFA2F0 /* Preview Assets.xcassets */; };
+		BEA770F72B2C92B700AFA2F0 /* OpenCC in Frameworks */ = {isa = PBXBuildFile; productRef = BEA770F62B2C92B700AFA2F0 /* OpenCC */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEA770F72B2C92B700AFA2F0 /* OpenCC in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +89,9 @@
 			dependencies = (
 			);
 			name = OpenCCman;
+			packageProductDependencies = (
+				BEA770F62B2C92B700AFA2F0 /* OpenCC */,
+			);
 			productName = OpenCCman;
 			productReference = BEA770E32B2C904900AFA2F0 /* OpenCCman.app */;
 			productType = "com.apple.product-type.application";
@@ -115,6 +120,9 @@
 				Base,
 			);
 			mainGroup = BEA770DA2B2C904900AFA2F0;
+			packageReferences = (
+				BEA770F52B2C92B700AFA2F0 /* XCRemoteSwiftPackageReference "SwiftyOpenCC" */,
+			);
 			productRefGroup = BEA770E42B2C904900AFA2F0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -361,6 +369,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		BEA770F52B2C92B700AFA2F0 /* XCRemoteSwiftPackageReference "SwiftyOpenCC" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gewill/SwiftyOpenCC";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BEA770F62B2C92B700AFA2F0 /* OpenCC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BEA770F52B2C92B700AFA2F0 /* XCRemoteSwiftPackageReference "SwiftyOpenCC" */;
+			productName = OpenCC;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BEA770DB2B2C904900AFA2F0 /* Project object */;
 }
