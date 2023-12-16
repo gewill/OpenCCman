@@ -17,7 +17,7 @@ class ViewModel: ObservableObject {
   @Published var options: ChineseConverter.Options = []
   @Published var targetOptions: Language = .simplified
   @Published var variantOptions: Variant = .openCC
-  @Published var regionOptions: Region = .notConverted
+  @Published var regionOptions: Region = .notConvert
 
   @Published var error: Error?
   @Published var isLoading: Bool = false
@@ -34,7 +34,7 @@ class ViewModel: ObservableObject {
           switch variantOptions {
           case .openCC:
             break
-          case .taiWan:
+          case .taiwan:
             options.formUnion(.twStandard)
           case .hongKong:
             options.formUnion(.hkStandard)
@@ -66,25 +66,25 @@ class ViewModel: ObservableObject {
   // MARK: - Options
 
   enum Language: String, CaseIterable, Identifiable, Segmentable {
-    case simplified
-    case traditional
+    case simplified = "Simplified Chinese"
+    case traditional = "Traditional Chinese"
 
     var id: Language { self }
     var title: String { rawValue }
   }
 
   enum Variant: String, CaseIterable, Identifiable, Segmentable {
-    case openCC
-    case taiWan
-    case hongKong
+    case openCC = "OpenCC Standard"
+    case taiwan = "Taiwan Standard"
+    case hongKong = "HongKong Standard"
 
     var id: Variant { self }
     var title: String { rawValue }
   }
 
   enum Region: String, CaseIterable, Identifiable, Segmentable {
-    case notConverted
-    case taiwan
+    case notConvert = "Not convert"
+    case taiwan = "Taiwan Idiom"
 
     var id: Region { self }
     var title: String { rawValue }

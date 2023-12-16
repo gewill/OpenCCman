@@ -3,16 +3,51 @@ import Foundation
 import Neumorphic
 import SwiftUI
 
+enum ChineseLanguageConstant: String {
+  case zh_Hans = "zh-Hans"
+  case zh_Hant = "zh-Hant"
+  case languageCode = "zh"
+  case simpleScriptCode = "Hans"
+  case traditionalScriptCode = "Hant"
+}
+
 enum LocaleConstants: String, CaseIterable, Identifiable {
   case system
   case en
-  case zh_CN
+  case zh_Hans
   case zh_Hant
 
   var identifier: String {
     switch self {
-    case .system: return Locale.current.identifier == LocaleConstants.zh_CN.rawValue ? LocaleConstants.zh_CN.rawValue : LocaleConstants.en.rawValue
+    case .system: return Self.systemIdentifier
     default: return rawValue
+    }
+  }
+
+  static var systemIdentifier: String {
+    if let languageCode = Locale.current.languageCode {
+      switch languageCode {
+      case ChineseLanguageConstant.languageCode.rawValue:
+        if Locale.current.scriptCode == ChineseLanguageConstant.simpleScriptCode.rawValue {
+          return Self.zh_Hans.rawValue
+        } else {
+          return Self.zh_Hant.rawValue
+        }
+      case _ where notChineseLanguages.map { $0.rawValue }.contains(languageCode):
+        return languageCode
+      default: break
+      }
+    }
+    return Self.zh_Hant.rawValue
+  }
+
+  static var chineseLanguages: [LocaleConstants] {
+    [.zh_Hans, .zh_Hant]
+  }
+
+  static var notChineseLanguages: [LocaleConstants] {
+    Self.allCases.filter {
+      Self.chineseLanguages.contains($0) == false
     }
   }
 
@@ -20,7 +55,7 @@ enum LocaleConstants: String, CaseIterable, Identifiable {
     switch self {
     case .system: return "Follow system"
     case .en: return "English"
-    case .zh_CN: return "简体中文"
+    case .zh_Hans: return "简体中文"
     case .zh_Hant: return "繁體中文"
     }
   }

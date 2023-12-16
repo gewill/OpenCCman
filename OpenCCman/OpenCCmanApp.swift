@@ -9,12 +9,15 @@ import SwiftUI
 
 @main
 struct OpenCCmanApp: App {
+  @AppStorage(UserDefaultsKeys.selectedLocale.rawValue) var selectedLocale: LocaleConstants = .system
+
   init() {
   }
 
   var body: some Scene {
     WindowGroup {
       ContentView()
+        .environment(\.locale, Locale(identifier: selectedLocale.identifier))
     }
     #if os(macOS)
     .windowStyle(.hiddenTitleBar)

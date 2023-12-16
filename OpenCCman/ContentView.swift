@@ -27,7 +27,7 @@ struct ContentView: View {
           SegmentView(title: "Target Language", options: ViewModel.Language.allCases, seleted: $viewModel.targetOptions)
           Group {
             SegmentView(title: "Variant", options: ViewModel.Variant.allCases, seleted: $viewModel.variantOptions)
-            SegmentView(title: "Region", options: ViewModel.Region.allCases, seleted: $viewModel.regionOptions)
+            SegmentView(title: "Region Idiom", options: ViewModel.Region.allCases, seleted: $viewModel.regionOptions)
           }
           .disabled(viewModel.targetOptions == .simplified)
         }
