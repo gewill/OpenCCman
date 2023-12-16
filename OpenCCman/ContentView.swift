@@ -5,6 +5,7 @@
 //  Created by will on 2023/12/15.
 //
 
+import Neumorphic
 import OpenCC
 import SwiftUI
 
@@ -15,35 +16,44 @@ struct ContentView: View {
   let converter = try! ChineseConverter(options: [.traditionalize, .twStandard, .twIdiom])
 
   var body: some View {
-    VStack(alignment: .leading) {
-      Group {
-        Text("OpenCCman").font(.title)
-        Text("Convert Chinese text with OpenCC")
+    ZStack(alignment: .top) {
+      Color.main
+        .ignoresSafeArea()
+      VStack(alignment: .leading) {
+        Group {
+          Text("OpenCCman").font(.title)
+          Text("Convert Chinese text with [OpenCC](https://github.com/BYVoid/OpenCC)")
+        }
+        .frame(maxWidth: .infinity)
+
+        Text("Input").font(.headline)
+        TextEditor(text: $text)
+          .clearTextEdtorStyle()
+          .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 300)
+          .padding(6)
+          .background(
+            RoundedRectangle(cornerRadius: 10)
+              .stroke(Color.secondary, lineWidth: 1)
+          )
+        Button(action: {
+          result = converter.convert(text)
+        }, label: {
+          Text("Convert")
+        })
+        .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10, mainColor: Color.accentColor, textColor: Color.Neumorphic.main)
+        Text("Result").font(.headline)
+        Text(result)
+          .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 300, alignment: .topLeading)
+          .padding(6)
+          .background(
+            RoundedRectangle(cornerRadius: 10)
+              .stroke(Color.secondary, lineWidth: 1)
+          )
       }
-      .frame(maxWidth: .infinity)
-      
-      Text("Input").font(.headline)
-      TextEditor(text: $text)
-        .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 300)
-        .padding(6)
-        .background(
-          RoundedRectangle(cornerRadius: 10)
-            .stroke(Color.primary.opacity(0.3), lineWidth: 1)
-        )
-      Text("Result").font(.headline)
-      Text(result)
-        .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 300, alignment: .topLeading)
-        .padding(6)
-        .background(
-          RoundedRectangle(cornerRadius: 10)
-            .stroke(Color.primary.opacity(0.3), lineWidth: 1)
-        )
-      Spacer()
-      Button("Convert") {
-        result = converter.convert(text)
-      }
+      .foregroundColor(Color.Neumorphic.secondary)
+      .textSelectable()
+      .padding()
     }
-    .padding()
   }
 }
 

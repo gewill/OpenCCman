@@ -7,6 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE2C6D3E2B2D7EA700FC4112 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = BE2C6D3D2B2D7EA700FC4112 /* SwiftUIIntrospect */; };
+		BE2C6D502B2D7ED000FC4112 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D402B2D7ED000FC4112 /* ViewExtensions.swift */; };
+		BE2C6D512B2D7ED000FC4112 /* SKProductExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D412B2D7ED000FC4112 /* SKProductExtensions.swift */; };
+		BE2C6D522B2D7ED000FC4112 /* ImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D422B2D7ED000FC4112 /* ImageExtensions.swift */; };
+		BE2C6D542B2D7ED000FC4112 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D442B2D7ED000FC4112 /* StringExtensions.swift */; };
+		BE2C6D552B2D7ED000FC4112 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D452B2D7ED000FC4112 /* ColorExtensions.swift */; };
+		BE2C6D562B2D7ED000FC4112 /* BoolExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D462B2D7ED000FC4112 /* BoolExtensions.swift */; };
+		BE2C6D572B2D7ED000FC4112 /* DoubleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D472B2D7ED000FC4112 /* DoubleExtensions.swift */; };
+		BE2C6D592B2D7ED000FC4112 /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D492B2D7ED000FC4112 /* BundleExtensions.swift */; };
+		BE2C6D5A2B2D7ED000FC4112 /* IntExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D4A2B2D7ED000FC4112 /* IntExtensions.swift */; };
+		BE2C6D5C2B2D7ED000FC4112 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D4C2B2D7ED000FC4112 /* DateExtensions.swift */; };
+		BE2C6D632B2D80D100FC4112 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D612B2D80D100FC4112 /* Styles.swift */; };
+		BE2C6D642B2D80D100FC4112 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D622B2D80D100FC4112 /* ButtonStyles.swift */; };
+		BE2C6D672B2D817100FC4112 /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = BE2C6D662B2D817100FC4112 /* Neumorphic */; };
+		BE2C6D692B2D81A300FC4112 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D682B2D81A300FC4112 /* Constants.swift */; };
 		BEA770E72B2C904900AFA2F0 /* OpenCCmanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA770E62B2C904900AFA2F0 /* OpenCCmanApp.swift */; };
 		BEA770E92B2C904900AFA2F0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA770E82B2C904900AFA2F0 /* ContentView.swift */; };
 		BEA770EB2B2C904A00AFA2F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */; };
@@ -15,6 +30,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BE2C6D402B2D7ED000FC4112 /* ViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		BE2C6D412B2D7ED000FC4112 /* SKProductExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKProductExtensions.swift; sourceTree = "<group>"; };
+		BE2C6D422B2D7ED000FC4112 /* ImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
+		BE2C6D442B2D7ED000FC4112 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		BE2C6D452B2D7ED000FC4112 /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
+		BE2C6D462B2D7ED000FC4112 /* BoolExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolExtensions.swift; sourceTree = "<group>"; };
+		BE2C6D472B2D7ED000FC4112 /* DoubleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoubleExtensions.swift; sourceTree = "<group>"; };
+		BE2C6D492B2D7ED000FC4112 /* BundleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
+		BE2C6D4A2B2D7ED000FC4112 /* IntExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntExtensions.swift; sourceTree = "<group>"; };
+		BE2C6D4C2B2D7ED000FC4112 /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
+		BE2C6D612B2D80D100FC4112 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
+		BE2C6D622B2D80D100FC4112 /* ButtonStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
+		BE2C6D682B2D81A300FC4112 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BEA770E32B2C904900AFA2F0 /* OpenCCman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenCCman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEA770E62B2C904900AFA2F0 /* OpenCCmanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCmanApp.swift; sourceTree = "<group>"; };
 		BEA770E82B2C904900AFA2F0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -30,12 +58,40 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEA770F72B2C92B700AFA2F0 /* OpenCC in Frameworks */,
+				BE2C6D3E2B2D7EA700FC4112 /* SwiftUIIntrospect in Frameworks */,
+				BE2C6D672B2D817100FC4112 /* Neumorphic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE2C6D3F2B2D7ED000FC4112 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				BE2C6D402B2D7ED000FC4112 /* ViewExtensions.swift */,
+				BE2C6D412B2D7ED000FC4112 /* SKProductExtensions.swift */,
+				BE2C6D422B2D7ED000FC4112 /* ImageExtensions.swift */,
+				BE2C6D442B2D7ED000FC4112 /* StringExtensions.swift */,
+				BE2C6D452B2D7ED000FC4112 /* ColorExtensions.swift */,
+				BE2C6D462B2D7ED000FC4112 /* BoolExtensions.swift */,
+				BE2C6D472B2D7ED000FC4112 /* DoubleExtensions.swift */,
+				BE2C6D492B2D7ED000FC4112 /* BundleExtensions.swift */,
+				BE2C6D4A2B2D7ED000FC4112 /* IntExtensions.swift */,
+				BE2C6D4C2B2D7ED000FC4112 /* DateExtensions.swift */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		BE2C6D602B2D80D100FC4112 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				BE2C6D612B2D80D100FC4112 /* Styles.swift */,
+				BE2C6D622B2D80D100FC4112 /* ButtonStyles.swift */,
+			);
+			path = Styles;
+			sourceTree = "<group>";
+		};
 		BEA770DA2B2C904900AFA2F0 = {
 			isa = PBXGroup;
 			children = (
@@ -60,8 +116,11 @@
 				BEA770F82B2CAEA900AFA2F0 /* Info.plist */,
 				BEA770E62B2C904900AFA2F0 /* OpenCCmanApp.swift */,
 				BEA770E82B2C904900AFA2F0 /* ContentView.swift */,
+				BE2C6D682B2D81A300FC4112 /* Constants.swift */,
 				BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */,
 				BEA770EC2B2C904A00AFA2F0 /* OpenCCman.entitlements */,
+				BE2C6D602B2D80D100FC4112 /* Styles */,
+				BE2C6D3F2B2D7ED000FC4112 /* extensions */,
 				BEA770ED2B2C904A00AFA2F0 /* Preview Content */,
 			);
 			path = OpenCCman;
@@ -93,6 +152,8 @@
 			name = OpenCCman;
 			packageProductDependencies = (
 				BEA770F62B2C92B700AFA2F0 /* OpenCC */,
+				BE2C6D3D2B2D7EA700FC4112 /* SwiftUIIntrospect */,
+				BE2C6D662B2D817100FC4112 /* Neumorphic */,
 			);
 			productName = OpenCCman;
 			productReference = BEA770E32B2C904900AFA2F0 /* OpenCCman.app */;
@@ -124,6 +185,8 @@
 			mainGroup = BEA770DA2B2C904900AFA2F0;
 			packageReferences = (
 				BEA770F52B2C92B700AFA2F0 /* XCRemoteSwiftPackageReference "SwiftyOpenCC" */,
+				BE2C6D3C2B2D7EA700FC4112 /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
+				BE2C6D652B2D817100FC4112 /* XCRemoteSwiftPackageReference "neumorphic" */,
 			);
 			productRefGroup = BEA770E42B2C904900AFA2F0 /* Products */;
 			projectDirPath = "";
@@ -151,8 +214,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE2C6D522B2D7ED000FC4112 /* ImageExtensions.swift in Sources */,
 				BEA770E92B2C904900AFA2F0 /* ContentView.swift in Sources */,
+				BE2C6D632B2D80D100FC4112 /* Styles.swift in Sources */,
+				BE2C6D572B2D7ED000FC4112 /* DoubleExtensions.swift in Sources */,
+				BE2C6D542B2D7ED000FC4112 /* StringExtensions.swift in Sources */,
+				BE2C6D692B2D81A300FC4112 /* Constants.swift in Sources */,
+				BE2C6D502B2D7ED000FC4112 /* ViewExtensions.swift in Sources */,
+				BE2C6D5A2B2D7ED000FC4112 /* IntExtensions.swift in Sources */,
 				BEA770E72B2C904900AFA2F0 /* OpenCCmanApp.swift in Sources */,
+				BE2C6D562B2D7ED000FC4112 /* BoolExtensions.swift in Sources */,
+				BE2C6D512B2D7ED000FC4112 /* SKProductExtensions.swift in Sources */,
+				BE2C6D5C2B2D7ED000FC4112 /* DateExtensions.swift in Sources */,
+				BE2C6D642B2D80D100FC4112 /* ButtonStyles.swift in Sources */,
+				BE2C6D552B2D7ED000FC4112 /* ColorExtensions.swift in Sources */,
+				BE2C6D592B2D7ED000FC4112 /* BundleExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +453,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		BE2C6D3C2B2D7EA700FC4112 /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/swiftui-introspect";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.1;
+			};
+		};
+		BE2C6D652B2D817100FC4112 /* XCRemoteSwiftPackageReference "neumorphic" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gewill/neumorphic.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		BEA770F52B2C92B700AFA2F0 /* XCRemoteSwiftPackageReference "SwiftyOpenCC" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gewill/SwiftyOpenCC";
@@ -388,6 +480,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BE2C6D3D2B2D7EA700FC4112 /* SwiftUIIntrospect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE2C6D3C2B2D7EA700FC4112 /* XCRemoteSwiftPackageReference "swiftui-introspect" */;
+			productName = SwiftUIIntrospect;
+		};
+		BE2C6D662B2D817100FC4112 /* Neumorphic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE2C6D652B2D817100FC4112 /* XCRemoteSwiftPackageReference "neumorphic" */;
+			productName = Neumorphic;
+		};
 		BEA770F62B2C92B700AFA2F0 /* OpenCC */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BEA770F52B2C92B700AFA2F0 /* XCRemoteSwiftPackageReference "SwiftyOpenCC" */;
