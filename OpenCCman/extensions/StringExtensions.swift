@@ -12,7 +12,7 @@ extension String {
   static var noValueSymbol = "--"
 
   func replaceEmpty(with str: String = .noValueSymbol) -> String {
-    self.isEmpty ? str : self
+    isEmpty ? str : self
   }
 }
 
@@ -26,6 +26,29 @@ extension String {
   }
 
   func toBase64() -> String {
-    return Data(self.utf8).base64EncodedString()
+    return Data(utf8).base64EncodedString()
   }
+}
+
+func copyToClipboard(text: String) {
+  #if os(iOS)
+    UIPasteboard.general.string = text
+  #endif
+
+  #if os(macOS)
+    let pasteBoard = NSPasteboard.general
+    pasteBoard.clearContents()
+    pasteBoard.setString(text, forType: .string)
+  #endif
+}
+
+func getClipboardString() -> String? {
+  #if os(iOS)
+    return UIPasteboard.general.string
+  #endif
+
+  #if os(macOS)
+    let pasteBoard = NSPasteboard.general
+    return pasteBoard.string(forType: .string)
+  #endif
 }

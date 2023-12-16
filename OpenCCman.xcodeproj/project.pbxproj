@@ -22,6 +22,10 @@
 		BE2C6D642B2D80D100FC4112 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D622B2D80D100FC4112 /* ButtonStyles.swift */; };
 		BE2C6D672B2D817100FC4112 /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = BE2C6D662B2D817100FC4112 /* Neumorphic */; };
 		BE2C6D692B2D81A300FC4112 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D682B2D81A300FC4112 /* Constants.swift */; };
+		BE727E2C2B2DE16400C63DB2 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE727E2B2B2DE16400C63DB2 /* ViewModel.swift */; };
+		BE727E2E2B2DF60400C63DB2 /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE727E2D2B2DF60400C63DB2 /* SegmentView.swift */; };
+		BE727E322B2DF65D00C63DB2 /* VisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = BE727E312B2DF65D00C63DB2 /* VisualEffects */; };
+		BE727E342B2DF85E00C63DB2 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE727E332B2DF85E00C63DB2 /* UserDefaultsKeys.swift */; };
 		BEA770E72B2C904900AFA2F0 /* OpenCCmanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA770E62B2C904900AFA2F0 /* OpenCCmanApp.swift */; };
 		BEA770E92B2C904900AFA2F0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA770E82B2C904900AFA2F0 /* ContentView.swift */; };
 		BEA770EB2B2C904A00AFA2F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */; };
@@ -43,6 +47,9 @@
 		BE2C6D612B2D80D100FC4112 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
 		BE2C6D622B2D80D100FC4112 /* ButtonStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		BE2C6D682B2D81A300FC4112 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		BE727E2B2B2DE16400C63DB2 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		BE727E2D2B2DF60400C63DB2 /* SegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
+		BE727E332B2DF85E00C63DB2 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		BEA770E32B2C904900AFA2F0 /* OpenCCman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenCCman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEA770E62B2C904900AFA2F0 /* OpenCCmanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCmanApp.swift; sourceTree = "<group>"; };
 		BEA770E82B2C904900AFA2F0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -58,6 +65,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEA770F72B2C92B700AFA2F0 /* OpenCC in Frameworks */,
+				BE727E322B2DF65D00C63DB2 /* VisualEffects in Frameworks */,
 				BE2C6D3E2B2D7EA700FC4112 /* SwiftUIIntrospect in Frameworks */,
 				BE2C6D672B2D817100FC4112 /* Neumorphic in Frameworks */,
 			);
@@ -92,6 +100,22 @@
 			path = Styles;
 			sourceTree = "<group>";
 		};
+		BE727E2F2B2DF60E00C63DB2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BE727E2D2B2DF60400C63DB2 /* SegmentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BE727E352B2DF86500C63DB2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BE727E332B2DF85E00C63DB2 /* UserDefaultsKeys.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		BEA770DA2B2C904900AFA2F0 = {
 			isa = PBXGroup;
 			children = (
@@ -116,9 +140,12 @@
 				BEA770F82B2CAEA900AFA2F0 /* Info.plist */,
 				BEA770E62B2C904900AFA2F0 /* OpenCCmanApp.swift */,
 				BEA770E82B2C904900AFA2F0 /* ContentView.swift */,
+				BE727E2B2B2DE16400C63DB2 /* ViewModel.swift */,
 				BE2C6D682B2D81A300FC4112 /* Constants.swift */,
 				BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */,
 				BEA770EC2B2C904A00AFA2F0 /* OpenCCman.entitlements */,
+				BE727E2F2B2DF60E00C63DB2 /* View */,
+				BE727E352B2DF86500C63DB2 /* Model */,
 				BE2C6D602B2D80D100FC4112 /* Styles */,
 				BE2C6D3F2B2D7ED000FC4112 /* extensions */,
 				BEA770ED2B2C904A00AFA2F0 /* Preview Content */,
@@ -154,6 +181,7 @@
 				BEA770F62B2C92B700AFA2F0 /* OpenCC */,
 				BE2C6D3D2B2D7EA700FC4112 /* SwiftUIIntrospect */,
 				BE2C6D662B2D817100FC4112 /* Neumorphic */,
+				BE727E312B2DF65D00C63DB2 /* VisualEffects */,
 			);
 			productName = OpenCCman;
 			productReference = BEA770E32B2C904900AFA2F0 /* OpenCCman.app */;
@@ -181,12 +209,15 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = BEA770DA2B2C904900AFA2F0;
 			packageReferences = (
 				BEA770F52B2C92B700AFA2F0 /* XCRemoteSwiftPackageReference "SwiftyOpenCC" */,
 				BE2C6D3C2B2D7EA700FC4112 /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
 				BE2C6D652B2D817100FC4112 /* XCRemoteSwiftPackageReference "neumorphic" */,
+				BE727E302B2DF65D00C63DB2 /* XCRemoteSwiftPackageReference "VisualEffects" */,
 			);
 			productRefGroup = BEA770E42B2C904900AFA2F0 /* Products */;
 			projectDirPath = "";
@@ -218,12 +249,15 @@
 				BEA770E92B2C904900AFA2F0 /* ContentView.swift in Sources */,
 				BE2C6D632B2D80D100FC4112 /* Styles.swift in Sources */,
 				BE2C6D572B2D7ED000FC4112 /* DoubleExtensions.swift in Sources */,
+				BE727E342B2DF85E00C63DB2 /* UserDefaultsKeys.swift in Sources */,
 				BE2C6D542B2D7ED000FC4112 /* StringExtensions.swift in Sources */,
 				BE2C6D692B2D81A300FC4112 /* Constants.swift in Sources */,
+				BE727E2C2B2DE16400C63DB2 /* ViewModel.swift in Sources */,
 				BE2C6D502B2D7ED000FC4112 /* ViewExtensions.swift in Sources */,
 				BE2C6D5A2B2D7ED000FC4112 /* IntExtensions.swift in Sources */,
 				BEA770E72B2C904900AFA2F0 /* OpenCCmanApp.swift in Sources */,
 				BE2C6D562B2D7ED000FC4112 /* BoolExtensions.swift in Sources */,
+				BE727E2E2B2DF60400C63DB2 /* SegmentView.swift in Sources */,
 				BE2C6D512B2D7ED000FC4112 /* SKProductExtensions.swift in Sources */,
 				BE2C6D5C2B2D7ED000FC4112 /* DateExtensions.swift in Sources */,
 				BE2C6D642B2D80D100FC4112 /* ButtonStyles.swift in Sources */,
@@ -469,6 +503,14 @@
 				kind = branch;
 			};
 		};
+		BE727E302B2DF65D00C63DB2 /* XCRemoteSwiftPackageReference "VisualEffects" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/VisualEffects";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
 		BEA770F52B2C92B700AFA2F0 /* XCRemoteSwiftPackageReference "SwiftyOpenCC" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gewill/SwiftyOpenCC";
@@ -489,6 +531,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BE2C6D652B2D817100FC4112 /* XCRemoteSwiftPackageReference "neumorphic" */;
 			productName = Neumorphic;
+		};
+		BE727E312B2DF65D00C63DB2 /* VisualEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE727E302B2DF65D00C63DB2 /* XCRemoteSwiftPackageReference "VisualEffects" */;
+			productName = VisualEffects;
 		};
 		BEA770F62B2C92B700AFA2F0 /* OpenCC */ = {
 			isa = XCSwiftPackageProductDependency;
