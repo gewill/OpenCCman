@@ -14,7 +14,7 @@ struct HelpScene: View {
 
   var navi: some View {
     ZStack(alignment: .center) {
-      Text("Relationship Calculator")
+      Text("Help")
         .font(.title)
         .foregroundColor(Color.Neumorphic.secondary)
       HStack {
@@ -39,30 +39,11 @@ struct HelpScene: View {
             RoundedRectangle(cornerRadius: 4)
               .stroke(Color.accent, lineWidth: 1)
           )
-        HStack {
-          Text("Thanks").bold()
-          Link(destination: URL(string: "https://github.com/mumuy/relationship/")!, label: {
-            Text("Open source algorithm")
-              .padding(4)
-              .overlay(
-                RoundedRectangle(cornerRadius: 4)
-                  .stroke(Color.accent, lineWidth: 1)
-              )
-          })
-        }
+        Text("Convert Chinese text with [OpenCC](https://github.com/BYVoid/OpenCC)")
 
         ScrollView {
           VStack(alignment: .leading, spacing: 10.0) {
-            Group {
-              Text("help title")
-            }
-            .font(.title3)
-
             Text("help description")
-
-            Text("All featrues")
-              .font(.title3)
-              .padding(.vertical)
           }
         }
       }

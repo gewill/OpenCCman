@@ -61,16 +61,14 @@ enum LocaleConstants: String, CaseIterable, Identifiable {
   }
 
   var helpUrl: String {
-    switch identifier {
-    case Self.zh_Hant.identifier: "https://gewill.org/2023/01/20/introducing-Relationship-zh-Hant/"
-    default: "https://gewill.org/2023/01/20/introducing-Relationship/"
-    }
+    "https://gewill.org/2023/12/17/introducing-OpenCCman-\(identifier)/"
   }
 
   var privacyUrl: String {
     switch identifier {
-    case Self.zh_Hant.identifier: "https://gewill.org/2023/01/20/introducing-Relationship-zh-Hant/#%E9%9A%B1%E7%A7%81%E6%94%BF%E7%AD%96"
-    default: "https://gewill.org/2023/01/20/introducing-Relationship/#%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96"
+    case Self.zh_Hant.identifier: "\(helpUrl)#%E9%9A%B1%E7%A7%81%E6%94%BF%E7%AD%96"
+    case Self.zh_Hans.identifier: "\(helpUrl)#%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96"
+    default: "\(helpUrl)#Privacy-policy"
     }
   }
 
@@ -110,13 +108,21 @@ enum Constant {
     static let padding: CGFloat = 12
     static let smallButtonSize: CGSize = .init(width: 30, height: 30)
   #else
-    static let padding: CGFloat = 6
+    static let padding: CGFloat = 12
     static let smallButtonSize: CGSize = .init(width: 40, height: 40)
   #endif
   static let cornerRadius: CGFloat = 20
   static let maxiPhoneScreenWidth: CGFloat = 428
   static let maxiPhoneScreenHeight: CGFloat = 926
   static let tabBarHeight: CGFloat = 94
+}
+
+enum Padding {
+  static let verySmall: CGFloat = 3
+  static let small: CGFloat = 6
+  static let normal: CGFloat = 12
+  static let large: CGFloat = 18
+  static let verLarge: CGFloat = 24
 }
 
 enum UserInterfaceIdiom: Int {

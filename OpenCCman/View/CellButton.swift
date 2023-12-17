@@ -14,6 +14,7 @@ struct CellButton: View {
         Image(systemName: "chevron.right")
       }
     }
+    .buttonStyle(.plain)
   }
 }
 

@@ -39,8 +39,8 @@ struct SettingsScene: View {
 
   var list: some View {
     ScrollView {
-      VStack {
-        VStack(spacing: Constant.padding * 2) {
+      VStack(spacing: Padding.verLarge) {
+        VStack(spacing: Constant.padding) {
           HStack(alignment: .center, spacing: 6) {
             Text("App Version")
             Spacer()
@@ -82,13 +82,10 @@ struct SettingsScene: View {
           }
         }.softRectangleStyle()
 
-        VStack(spacing: Constant.padding * 2) {
-          CellButton(title: "Language & Font") {
+        VStack(spacing: Constant.padding) {
+          CellButton(title: "Language") {
             navigator.navigate("/settings/changeLanguage")
           }
-          Divider()
-          Toggle("Haptic Feedback", isOn: $hasHapticFeedback)
-            .switchToggleStyle(tint: .accentColor)
         }
         .softRectangleStyle()
 
