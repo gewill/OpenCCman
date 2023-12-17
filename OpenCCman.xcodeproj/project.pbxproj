@@ -46,6 +46,7 @@
 		BE3AECB82B2EF6F700820673 /* ProAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3AECB32B2EF6F700820673 /* ProAlertView.swift */; };
 		BE3F71DF2B2F4F47001496EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3F71DE2B2F4F47001496EA /* AppDelegate.swift */; };
 		BE3F71E22B2F4F8F001496EA /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = BE3F71E12B2F4F8F001496EA /* IQKeyboardManagerSwift */; };
+		BE3F71E42B2F5377001496EA /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3F71E32B2F5377001496EA /* UIApplicationExtensions.swift */; };
 		BE727E2C2B2DE16400C63DB2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE727E2B2B2DE16400C63DB2 /* HomeViewModel.swift */; };
 		BE727E2E2B2DF60400C63DB2 /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE727E2D2B2DF60400C63DB2 /* SegmentView.swift */; };
 		BE727E322B2DF65D00C63DB2 /* VisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = BE727E312B2DF65D00C63DB2 /* VisualEffects */; };
@@ -91,6 +92,7 @@
 		BE3AECB22B2EF6F700820673 /* MyAppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAppView.swift; sourceTree = "<group>"; };
 		BE3AECB32B2EF6F700820673 /* ProAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProAlertView.swift; sourceTree = "<group>"; };
 		BE3F71DE2B2F4F47001496EA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BE3F71E32B2F5377001496EA /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
 		BE727E2B2B2DE16400C63DB2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		BE727E2D2B2DF60400C63DB2 /* SegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
 		BE727E332B2DF85E00C63DB2 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				BE2C6D492B2D7ED000FC4112 /* BundleExtensions.swift */,
 				BE2C6D4A2B2D7ED000FC4112 /* IntExtensions.swift */,
 				BE2C6D4C2B2D7ED000FC4112 /* DateExtensions.swift */,
+				BE3F71E32B2F5377001496EA /* UIApplicationExtensions.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				BE2C6D642B2D80D100FC4112 /* ButtonStyles.swift in Sources */,
 				BE3AECAB2B2EF46A00820673 /* TestNumbersPerDayManager.swift in Sources */,
 				BE3AECA42B2EF3B200820673 /* BackButton.swift in Sources */,
+				BE3F71E42B2F5377001496EA /* UIApplicationExtensions.swift in Sources */,
 				BE2C6D552B2D7ED000FC4112 /* ColorExtensions.swift in Sources */,
 				BE3AECB42B2EF6F700820673 /* AlertView.swift in Sources */,
 				BE2C6D592B2D7ED000FC4112 /* BundleExtensions.swift in Sources */,

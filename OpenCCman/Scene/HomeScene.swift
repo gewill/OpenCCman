@@ -91,7 +91,20 @@ struct HomeScene: View {
       )
 
       VStack(alignment: .leading, spacing: Constant.padding) {
-        Text("Source").font(.headline)
+        HStack {
+          Text("Source").font(.headline)
+          Spacer()
+          Button(action: {
+            #if os(iOS)
+              UIApplication.shared.endEditing()
+            #endif
+            viewModel.translate()
+          }, label: {
+            Text("Convert")
+              .font(.headline)
+          })
+          .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10, mainColor: Color.accentColor, textColor: Color.Neumorphic.main)
+        }
         TextEditor(text: $viewModel.inputText)
           .clearTextEdtorStyle()
           .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 300)
@@ -118,13 +131,6 @@ struct HomeScene: View {
           })
           .softButtonStyle(Circle(), padding: 6)
           Spacer()
-          Button(action: {
-            viewModel.translate()
-          }, label: {
-            Text("Convert")
-              .font(.headline)
-          })
-          .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10, mainColor: Color.accentColor, textColor: Color.Neumorphic.main)
         }
         Text(viewModel.resultText)
           .textSelectable()
