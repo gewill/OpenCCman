@@ -8,7 +8,8 @@ struct ProScene: View {
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @State var isLoading: Bool = false
   @State var errorMessage: String = ""
-
+  var isPresented: Bool = false
+  
   // MARK: - life cycle
 
   var body: some View {
@@ -23,7 +24,7 @@ struct ProScene: View {
     ZStack(alignment: .center) {
       Text("Pro").font(.title)
       HStack {
-        BackButton()
+        BackButton(isPresented: isPresented)
         Spacer()
 
         Button {

@@ -27,7 +27,7 @@ struct ProAlertView: View {
         }
       }
       .sheet(isPresented: $showingProScene) {
-        ProScene()
+        ProScene(isPresented: true)
       }
       .font(.body)
   }

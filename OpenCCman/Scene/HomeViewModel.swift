@@ -12,6 +12,7 @@ class HomeViewModel: ObservableObject {
   @Published var variantOptions: Variant = .openCC
   @Published var regionOptions: Region = .notConvert
 
+  @Published var showingProAlert: Bool = false
   @Published var error: Error?
   @Published var isLoading: Bool = false
   private var cancellables = Set<AnyCancellable>()
@@ -47,9 +48,15 @@ class HomeViewModel: ObservableObject {
   // MARK: - response methods
 
   func translate() {
+    guard TestNumbersPerDayManager.isToMax == false else {
+      showingProAlert.toggle()
+      return
+    }
+    
     do {
       let converter = try ChineseConverter(options: options)
       resultText = converter.convert(inputText)
+      TestNumbersPerDayManager.add()
     } catch {
       self.error = error
       print(error.localizedDescription)

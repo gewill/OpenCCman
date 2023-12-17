@@ -5,9 +5,12 @@ import SwiftUIRouter
 struct BackButton: View {
   @EnvironmentObject private var navigator: Navigator
   @Environment(\.presentationMode) private var presentationMode
+  var isPresented: Bool = false
+
   var body: some View {
     Button {
-      if presentationMode.wrappedValue.isPresented {
+      if isPresented,
+         presentationMode.wrappedValue.isPresented {
         presentationMode.wrappedValue.dismiss()
       } else {
         navigator.goBack()

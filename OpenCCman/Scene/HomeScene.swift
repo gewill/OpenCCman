@@ -14,6 +14,7 @@ struct HomeScene: View {
       navi
       list
     }
+    .overlay(ProAlertView(showingProAlert: $viewModel.showingProAlert))
   }
 
   var navi: some View {
