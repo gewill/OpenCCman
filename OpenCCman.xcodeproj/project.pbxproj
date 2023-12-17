@@ -44,6 +44,8 @@
 		BE3AECB62B2EF6F700820673 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3AECB12B2EF6F700820673 /* LoadingView.swift */; };
 		BE3AECB72B2EF6F700820673 /* MyAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3AECB22B2EF6F700820673 /* MyAppView.swift */; };
 		BE3AECB82B2EF6F700820673 /* ProAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3AECB32B2EF6F700820673 /* ProAlertView.swift */; };
+		BE3F71DF2B2F4F47001496EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3F71DE2B2F4F47001496EA /* AppDelegate.swift */; };
+		BE3F71E22B2F4F8F001496EA /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = BE3F71E12B2F4F8F001496EA /* IQKeyboardManagerSwift */; };
 		BE727E2C2B2DE16400C63DB2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE727E2B2B2DE16400C63DB2 /* HomeViewModel.swift */; };
 		BE727E2E2B2DF60400C63DB2 /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE727E2D2B2DF60400C63DB2 /* SegmentView.swift */; };
 		BE727E322B2DF65D00C63DB2 /* VisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = BE727E312B2DF65D00C63DB2 /* VisualEffects */; };
@@ -88,6 +90,7 @@
 		BE3AECB12B2EF6F700820673 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		BE3AECB22B2EF6F700820673 /* MyAppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyAppView.swift; sourceTree = "<group>"; };
 		BE3AECB32B2EF6F700820673 /* ProAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProAlertView.swift; sourceTree = "<group>"; };
+		BE3F71DE2B2F4F47001496EA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE727E2B2B2DE16400C63DB2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		BE727E2D2B2DF60400C63DB2 /* SegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
 		BE727E332B2DF85E00C63DB2 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
@@ -113,6 +116,7 @@
 				BE3AEC8D2B2EF1DF00820673 /* SwiftUIRouter in Frameworks */,
 				BE727E322B2DF65D00C63DB2 /* VisualEffects in Frameworks */,
 				BE2C6D3E2B2D7EA700FC4112 /* SwiftUIIntrospect in Frameworks */,
+				BE3F71E22B2F4F8F001496EA /* IQKeyboardManagerSwift in Frameworks */,
 				BE3AECA12B2EF36500820673 /* BetterSafariView in Frameworks */,
 				BE2C6D672B2D817100FC4112 /* Neumorphic in Frameworks */,
 				BE3AECAE2B2EF4FA00820673 /* SwiftyUserDefaults in Frameworks */,
@@ -213,6 +217,7 @@
 			children = (
 				BEA770F82B2CAEA900AFA2F0 /* Info.plist */,
 				BEA770E62B2C904900AFA2F0 /* OpenCCmanApp.swift */,
+				BE3F71DE2B2F4F47001496EA /* AppDelegate.swift */,
 				BE2C6D682B2D81A300FC4112 /* Constants.swift */,
 				BE3AEC9D2B2EF2D400820673 /* IAPManager.swift */,
 				BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */,
@@ -261,6 +266,7 @@
 				BE3AEC9B2B2EF2C000820673 /* Glassfy */,
 				BE3AECA02B2EF36500820673 /* BetterSafariView */,
 				BE3AECAD2B2EF4FA00820673 /* SwiftyUserDefaults */,
+				BE3F71E12B2F4F8F001496EA /* IQKeyboardManagerSwift */,
 			);
 			productName = OpenCCman;
 			productReference = BEA770E32B2C904900AFA2F0 /* OpenCCman.app */;
@@ -301,6 +307,7 @@
 				BE3AEC9A2B2EF2C000820673 /* XCRemoteSwiftPackageReference "ios-sdk" */,
 				BE3AEC9F2B2EF36500820673 /* XCRemoteSwiftPackageReference "BetterSafariView" */,
 				BE3AECAC2B2EF4FA00820673 /* XCRemoteSwiftPackageReference "SwiftyUserDefaults" */,
+				BE3F71E02B2F4F8F001496EA /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = BEA770E42B2C904900AFA2F0 /* Products */;
 			projectDirPath = "";
@@ -342,6 +349,7 @@
 				BE3AEC942B2EF25000820673 /* ProScene.swift in Sources */,
 				BE727E2C2B2DE16400C63DB2 /* HomeViewModel.swift in Sources */,
 				BE2C6D502B2D7ED000FC4112 /* ViewExtensions.swift in Sources */,
+				BE3F71DF2B2F4F47001496EA /* AppDelegate.swift in Sources */,
 				BE2C6D5A2B2D7ED000FC4112 /* IntExtensions.swift in Sources */,
 				BEA770E72B2C904900AFA2F0 /* OpenCCmanApp.swift in Sources */,
 				BE3AEC992B2EF25000820673 /* OpenSourceScene.swift in Sources */,
@@ -650,6 +658,14 @@
 				minimumVersion = 5.3.0;
 			};
 		};
+		BE3F71E02B2F4F8F001496EA /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.16;
+			};
+		};
 		BE727E302B2DF65D00C63DB2 /* XCRemoteSwiftPackageReference "VisualEffects" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/twostraws/VisualEffects";
@@ -698,6 +714,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BE3AECAC2B2EF4FA00820673 /* XCRemoteSwiftPackageReference "SwiftyUserDefaults" */;
 			productName = SwiftyUserDefaults;
+		};
+		BE3F71E12B2F4F8F001496EA /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE3F71E02B2F4F8F001496EA /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 		BE727E312B2DF65D00C63DB2 /* VisualEffects */ = {
 			isa = XCSwiftPackageProductDependency;

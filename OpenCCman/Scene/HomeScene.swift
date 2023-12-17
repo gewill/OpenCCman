@@ -141,6 +141,7 @@ struct HomeScene: View {
           .fill(Color.Neumorphic.main)
           .softOuterShadow()
       )
+      Spacer()
     }
     .foregroundColor(Color.Neumorphic.secondary)
     .padding(Constant.padding)

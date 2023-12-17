@@ -10,6 +10,10 @@ import SwiftUIRouter
 
 @main
 struct OpenCCmanApp: App {
+  #if os(iOS)
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+  #endif
+
   @AppStorage(UserDefaultsKeys.selectedLocale.rawValue) var selectedLocale: LocaleConstants = .system
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @AppStorage(UserDefaultsKeys.lastCheckProDate.rawValue) var lastCheckProDate: TimeInterval = Date().yesterday.unixTimestamp
