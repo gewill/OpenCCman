@@ -60,6 +60,20 @@ enum LocaleConstants: String, CaseIterable, Identifiable {
     }
   }
 
+  var helpUrl: String {
+    switch identifier {
+    case Self.zh_Hant.identifier: "https://gewill.org/2023/01/20/introducing-Relationship-zh-Hant/"
+    default: "https://gewill.org/2023/01/20/introducing-Relationship/"
+    }
+  }
+
+  var privacyUrl: String {
+    switch identifier {
+    case Self.zh_Hant.identifier: "https://gewill.org/2023/01/20/introducing-Relationship-zh-Hant/#%E9%9A%B1%E7%A7%81%E6%94%BF%E7%AD%96"
+    default: "https://gewill.org/2023/01/20/introducing-Relationship/#%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96"
+    }
+  }
+
   var id: LocaleConstants { self }
 }
 

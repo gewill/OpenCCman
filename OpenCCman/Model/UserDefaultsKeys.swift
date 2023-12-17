@@ -1,4 +1,11 @@
 import Foundation
+import SwiftyUserDefaults
+
+let appDefaults = Defaults
+
+extension DefaultsKeys {
+  var testNumbersPerDay: DefaultsKey<[String: Int]> { .init(UserDefaultsKeys.testNumbersPerDay.rawValue, defaultValue: [:]) }
+}
 
 enum UserDefaultsKeys: String {
   case hasHapticFeedback

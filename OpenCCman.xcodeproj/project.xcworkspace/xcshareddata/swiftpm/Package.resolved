@@ -1,6 +1,24 @@
 {
   "pins" : [
     {
+      "identity" : "bettersafariview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/stleamist/BetterSafariView",
+      "state" : {
+        "revision" : "884533749e55949b2566030948c6fdbe2873ed0c",
+        "version" : "2.4.2"
+      }
+    },
+    {
+      "identity" : "ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/glassfy/ios-sdk",
+      "state" : {
+        "revision" : "fff920920656555fbd40137a2a9397edb46f96f1",
+        "version" : "1.4.0"
+      }
+    },
+    {
       "identity" : "neumorphic",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gewill/neumorphic.git",
@@ -19,12 +37,30 @@
       }
     },
     {
+      "identity" : "swiftuirouter",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/frzi/SwiftUIRouter.git",
+      "state" : {
+        "revision" : "cd8c2bb32019082075456afa9521ec3ec7499ffa",
+        "version" : "1.3.2"
+      }
+    },
+    {
       "identity" : "swiftyopencc",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gewill/SwiftyOpenCC",
       "state" : {
         "branch" : "master",
         "revision" : "9b689cc4bd88fa7f703618387ed8512d83a0a0e7"
+      }
+    },
+    {
+      "identity" : "swiftyuserdefaults",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sunshinejr/SwiftyUserDefaults",
+      "state" : {
+        "revision" : "f66bcd04088582c8fbb5cb8554d577e303bae396",
+        "version" : "5.3.0"
       }
     },
     {

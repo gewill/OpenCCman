@@ -1,16 +1,9 @@
-//
-//  ViewModel.swift
-//  OpenCCman
-//
-//  Created by will on 2023/12/16.
-//
-
 import Combine
 import Foundation
 import OpenCC
 import SwiftUI
 
-class ViewModel: ObservableObject {
+class HomeViewModel: ObservableObject {
   @Published var inputText: String = "鼠标里面的硅二极管坏了，导致光标分辨率降低。"
   @Published var resultText: String = ""
 

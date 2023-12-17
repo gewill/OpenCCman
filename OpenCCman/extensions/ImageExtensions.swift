@@ -14,4 +14,5 @@ extension Image {
   // MARK: - Settings
 
   static let settings = Image(systemName: "gear")
+  static let crown = Image(systemName: "crown")
 }

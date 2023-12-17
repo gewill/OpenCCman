@@ -41,18 +41,19 @@ struct SegmentView<T: Segmentable>: View {
               .frame(minWidth: 60)
               .onTapGesture {
                 seleted = option
-//                generateHapticFeedback(for: .selection)
               }
             }
           }
           .padding(6)
-//          .modify {
-//            if #available(iOS 15, *) {
-//              $0.background(.ultraThinMaterial)
-//            } else {
-//              $0.background(VisualEffectBlur(blurStyle: .systemUltraThinMaterial))
-//            }
-//          }
+          .modify {
+            if #available(iOS 15, macOS 12,*) {
+              $0.background(.ultraThinMaterial)
+            } else {
+              #if os(iOS)
+                $0.background(VisualEffectBlur(blurStyle: .systemUltraThinMaterial))
+              #endif
+            }
+          }
           .cornerRadius(Constant.cornerRadius)
         }
       }
