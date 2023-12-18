@@ -19,6 +19,13 @@ struct HomeScene: View {
           list
         }
       }
+      if isPro == false {
+        VStack {
+          Spacer()
+          MyAppView()
+            .padding(.bottom)
+        }
+      }
     }
     .frame(minWidth: 300)
     .overlay(ProAlertView(showingProAlert: $viewModel.showingProAlert))

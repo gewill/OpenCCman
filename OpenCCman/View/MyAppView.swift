@@ -51,6 +51,7 @@ struct MyAppView: View {
             .font(.system(size: 30))
         }
         .offset(x: -10, y: -10)
+        .buttonStyle(.plain)
       }
       .onAppear { requestTrack() }
     }
