@@ -100,6 +100,18 @@ struct HomeScene: View {
       VStack(alignment: .leading, spacing: Constant.padding) {
         HStack {
           Text("Source").font(.headline)
+          Button {
+            guard let string = getClipboardString(),
+                  string.isEmpty == false
+            else {
+              return
+            }
+            viewModel.inputText = string
+          } label: {
+            Image(systemName: "doc.on.clipboard")
+          }
+          .softButtonStyle(Circle(), padding: Padding.small)
+
           Spacer()
           Button(action: {
             #if os(iOS)
@@ -136,7 +148,7 @@ struct HomeScene: View {
           }, label: {
             Image(systemName: "doc.on.doc")
           })
-          .softButtonStyle(Circle(), padding: 6)
+          .softButtonStyle(Circle(), padding: Padding.small)
           Spacer()
         }
         Text(viewModel.resultText)
