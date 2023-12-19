@@ -8,7 +8,7 @@ class HomeViewModel: ObservableObject {
   @Published var resultText: String = ""
 
   @Published var options: ChineseConverter.Options = []
-  @Published var targetOptions: Language = .simplified
+  @Published var targetOptions: Language = .traditional
   @Published var variantOptions: Variant = .openCC
   @Published var regionOptions: Region = .notConvert
 
