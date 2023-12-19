@@ -11,7 +11,7 @@ struct HomeScene: View {
 
   var body: some View {
     ZStack(alignment: .top) {
-      Color.main
+      Color.Neumorphic.main
         .ignoresSafeArea()
       ScrollView {
         VStack(alignment: .leading, spacing: 0) {
@@ -77,7 +77,6 @@ struct HomeScene: View {
       .padding(.horizontal, Constant.padding)
     }
     .padding(.vertical, Constant.padding)
-    .background(Color.Neumorphic.main)
   }
 
   var list: some View {
