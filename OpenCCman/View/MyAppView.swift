@@ -1,5 +1,3 @@
-import AdSupport
-import AppTrackingTransparency
 import SwiftUI
 import SwiftUIRouter
 
@@ -52,19 +50,6 @@ struct MyAppView: View {
         }
         .offset(x: -10, y: -10)
         .buttonStyle(.plain)
-      }
-      .onAppear { requestTrack() }
-    }
-  }
-
-  // MARK: - private methods
-
-  func requestTrack() {
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-      print(Thread.isMainThread)
-      ATTrackingManager.requestTrackingAuthorization { status in
-        print("ATTrackingManager.AuthorizationStatus: ", status.rawValue.description,
-              ASIdentifierManager.shared().advertisingIdentifier.uuidString)
       }
     }
   }
