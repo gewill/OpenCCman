@@ -15,6 +15,7 @@ struct OpenCCmanApp: App {
   #endif
 
   @AppStorage(UserDefaultsKeys.selectedLocale.rawValue) var selectedLocale: LocaleConstants = .system
+  @AppStorage(UserDefaultsKeys.selectedTheme.rawValue) var selectedTheme: Theme = .system
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @AppStorage(UserDefaultsKeys.lastCheckProDate.rawValue) var lastCheckProDate: TimeInterval = Date().yesterday.unixTimestamp
 
@@ -31,6 +32,7 @@ struct OpenCCmanApp: App {
           }
       }
       .environment(\.locale, Locale(identifier: selectedLocale.identifier))
+      .preferredColorScheme(selectedTheme.colorScheme)
     }
     #if os(macOS)
     .windowStyle(.hiddenTitleBar)

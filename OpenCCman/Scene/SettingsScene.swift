@@ -86,6 +86,10 @@ struct SettingsScene: View {
           CellButton(title: "Language") {
             navigator.navigate("/settings/changeLanguage")
           }
+          Divider()
+          CellButton(title: "Appearance") {
+            navigator.navigate("/settings/changeAppearance")
+          }
         }
         .softRectangleStyle()
 

@@ -11,6 +11,7 @@ enum UserDefaultsKeys: String {
   case hasHapticFeedback
   case fontName
   case selectedLocale
+  case selectedTheme
   case isPro
   case lastCheckProDate
   case testNumbersPerDay

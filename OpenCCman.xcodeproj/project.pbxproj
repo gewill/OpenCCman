@@ -58,6 +58,7 @@
 		BEA770EF2B2C904A00AFA2F0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA770EE2B2C904A00AFA2F0 /* Preview Assets.xcassets */; };
 		BEA770F72B2C92B700AFA2F0 /* OpenCC in Frameworks */ = {isa = PBXBuildFile; productRef = BEA770F62B2C92B700AFA2F0 /* OpenCC */; };
 		BEA956392B31EB7B00E04625 /* ColorfulX in Frameworks */ = {isa = PBXBuildFile; productRef = BEA956382B31EB7B00E04625 /* ColorfulX */; };
+		BEA9563D2B31FF8C00E04625 /* ChangeColorSchemeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9563C2B31FF8C00E04625 /* ChangeColorSchemeScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +108,7 @@
 		BEA770EC2B2C904A00AFA2F0 /* OpenCCman.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenCCman.entitlements; sourceTree = "<group>"; };
 		BEA770EE2B2C904A00AFA2F0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BEA770F82B2CAEA900AFA2F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BEA9563C2B31FF8C00E04625 /* ChangeColorSchemeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeColorSchemeScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 				BE3AEC932B2EF25000820673 /* OpenSourceScene.swift */,
 				BE3AEC8E2B2EF25000820673 /* ProScene.swift */,
 				BE3AEC8F2B2EF25000820673 /* SettingsScene.swift */,
+				BEA9563C2B31FF8C00E04625 /* ChangeColorSchemeScene.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				BE3AEC992B2EF25000820673 /* OpenSourceScene.swift in Sources */,
 				BE2C6D562B2D7ED000FC4112 /* BoolExtensions.swift in Sources */,
 				BE727E2E2B2DF60400C63DB2 /* SegmentView.swift in Sources */,
+				BEA9563D2B31FF8C00E04625 /* ChangeColorSchemeScene.swift in Sources */,
 				BE3AEC952B2EF25000820673 /* SettingsScene.swift in Sources */,
 				BE2C6D512B2D7ED000FC4112 /* SKProductExtensions.swift in Sources */,
 				BE3AEC982B2EF25000820673 /* FeedbackScene.swift in Sources */,

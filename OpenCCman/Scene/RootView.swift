@@ -71,6 +71,10 @@ struct SettingsRoutes: View {
         ChangeLanguageScene()
       }
 
+      Route("/settings/changeAppearance") {
+        ChangeColorSchemeScene()
+      }
+
       Route("/settings") {
         SettingsScene()
       }
