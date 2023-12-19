@@ -57,6 +57,7 @@
 		BEA770EB2B2C904A00AFA2F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */; };
 		BEA770EF2B2C904A00AFA2F0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA770EE2B2C904A00AFA2F0 /* Preview Assets.xcassets */; };
 		BEA770F72B2C92B700AFA2F0 /* OpenCC in Frameworks */ = {isa = PBXBuildFile; productRef = BEA770F62B2C92B700AFA2F0 /* OpenCC */; };
+		BEA956392B31EB7B00E04625 /* ColorfulX in Frameworks */ = {isa = PBXBuildFile; productRef = BEA956382B31EB7B00E04625 /* ColorfulX */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,6 +115,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE3AEC9C2B2EF2C000820673 /* Glassfy in Frameworks */,
+				BEA956392B31EB7B00E04625 /* ColorfulX in Frameworks */,
 				BEA770F72B2C92B700AFA2F0 /* OpenCC in Frameworks */,
 				BE3AEC8D2B2EF1DF00820673 /* SwiftUIRouter in Frameworks */,
 				BE727E322B2DF65D00C63DB2 /* VisualEffects in Frameworks */,
@@ -270,6 +272,7 @@
 				BE3AECA02B2EF36500820673 /* BetterSafariView */,
 				BE3AECAD2B2EF4FA00820673 /* SwiftyUserDefaults */,
 				BE3F71E12B2F4F8F001496EA /* IQKeyboardManagerSwift */,
+				BEA956382B31EB7B00E04625 /* ColorfulX */,
 			);
 			productName = OpenCCman;
 			productReference = BEA770E32B2C904900AFA2F0 /* OpenCCman.app */;
@@ -311,6 +314,7 @@
 				BE3AEC9F2B2EF36500820673 /* XCRemoteSwiftPackageReference "BetterSafariView" */,
 				BE3AECAC2B2EF4FA00820673 /* XCRemoteSwiftPackageReference "SwiftyUserDefaults" */,
 				BE3F71E02B2F4F8F001496EA /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				BEA956372B31EB7B00E04625 /* XCRemoteSwiftPackageReference "ColorfulX" */,
 			);
 			productRefGroup = BEA770E42B2C904900AFA2F0 /* Products */;
 			projectDirPath = "";
@@ -686,6 +690,14 @@
 				kind = branch;
 			};
 		};
+		BEA956372B31EB7B00E04625 /* XCRemoteSwiftPackageReference "ColorfulX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Lakr233/ColorfulX";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -733,6 +745,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BEA770F52B2C92B700AFA2F0 /* XCRemoteSwiftPackageReference "SwiftyOpenCC" */;
 			productName = OpenCC;
+		};
+		BEA956382B31EB7B00E04625 /* ColorfulX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BEA956372B31EB7B00E04625 /* XCRemoteSwiftPackageReference "ColorfulX" */;
+			productName = ColorfulX;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
