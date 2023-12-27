@@ -56,7 +56,7 @@ struct SettingsScene: View {
           }
           Divider()
           #if os(macOS)
-            CellButton(title: "Review on App Store") {
+            CellButton(title: "Privacy Policy") {
               openURL(URL(string: selectedLocale.privacyUrl)!)
             }
           #elseif os(iOS)
