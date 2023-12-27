@@ -52,3 +52,10 @@ func getClipboardString() -> String? {
     return pasteBoard.string(forType: .string)
   #endif
 }
+
+extension String {
+  /// add percent encoding for special characters
+  var percentEncoding: String {
+    addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? self
+  }
+}
