@@ -13,7 +13,7 @@ struct MyAppModel: Codable, Identifiable {
   init(name: String, des: String, appId: String, iconName: String) {
     self.name = name
     self.des = des
-    link = "https://apps.apple.com/app/id\(appId)" + MyAppModel.campaigns
+    link = "https://apps.apple.com/app/apple-store/id\(appId)" + MyAppModel.campaigns
     self.iconName = iconName
   }
 }
