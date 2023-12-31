@@ -18,4 +18,5 @@ enum UserDefaultsKeys: String {
   case targetOptions
   case variantOptions
   case regionOptions
+  case lastVersionPromptedForReview
 }

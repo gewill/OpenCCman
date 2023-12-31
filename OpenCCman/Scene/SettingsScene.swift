@@ -48,7 +48,7 @@ struct SettingsScene: View {
           }
           Divider()
           CellButton(title: "Review on App Store") {
-            openURL(URL(string: "https://apps.apple.com/app/relationship/id1665455216")!)
+            openURL(URL(string: "https://apps.apple.com/app/relationship/id1665455216?mt=12&action=write-review")!)
           }
           Divider()
           CellButton(title: "Open Source") {

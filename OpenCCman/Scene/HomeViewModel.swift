@@ -12,6 +12,8 @@ class HomeViewModel: ObservableObject {
   @Published var variantOptions: Variant = .openCC
   @Published var regionOptions: Region = .notConvert
 
+  @AppStorage(UserDefaultsKeys.lastVersionPromptedForReview.rawValue) var lastVersionPromptedForReview: String = ""
+
   @Published var showingProAlert: Bool = false
   @Published var error: Error?
   @Published var isLoading: Bool = false
@@ -52,15 +54,25 @@ class HomeViewModel: ObservableObject {
       showingProAlert.toggle()
       return
     }
-    
+
     do {
       let converter = try ChineseConverter(options: options)
       resultText = converter.convert(inputText)
       TestNumbersPerDayManager.add()
+      showReview()
     } catch {
       self.error = error
       print(error.localizedDescription)
     }
+  }
+
+  // MARK: - Review
+
+  func showReview() {
+    guard lastVersionPromptedForReview != Bundle.main.appVersion else { return }
+
+    ReviewHandler.requestReview()
+    lastVersionPromptedForReview = Bundle.main.appVersion
   }
 
   // MARK: - Options
