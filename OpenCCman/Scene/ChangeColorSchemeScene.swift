@@ -32,17 +32,17 @@ struct ChangeColorSchemeScene: View {
   }
 
   var list: some View {
-    List {
-      Picker("Appearance", selection: $selectedTheme) {
-        ForEach(Theme.allCases) {
-          Text($0.title)
+    ScrollView {
+      VStack {
+        PickableView(
+          options: Theme.allCases,
+          initialContent: selectedTheme
+        ) { item in
+          selectedTheme = item
         }
       }
-      .pickerStyle(InlinePickerStyle())
+      .padding()
     }
-    #if os(iOS)
-    .listStyle(.insetGrouped)
-    #endif
   }
 }
 

@@ -11,7 +11,7 @@ enum ChineseLanguageConstant: String {
   case traditionalScriptCode = "Hant"
 }
 
-enum LocaleConstants: String, CaseIterable, Identifiable {
+enum LocaleConstants: String, CaseIterable, Identifiable, Pickable {
   case system
   case en
   case zh_Hans
@@ -75,7 +75,7 @@ enum LocaleConstants: String, CaseIterable, Identifiable {
   var id: LocaleConstants { self }
 }
 
-enum Theme: String, CaseIterable, Identifiable {
+enum Theme: String, CaseIterable, Identifiable, Pickable {
   case system, light, dark
 
   var colorScheme: ColorScheme? {

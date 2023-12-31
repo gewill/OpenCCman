@@ -25,17 +25,17 @@ struct ChangeLanguageScene: View {
   }
 
   var list: some View {
-    List {
-      Picker("Language", selection: $selectedLocale) {
-        ForEach(LocaleConstants.allCases) {
-          Text($0.title)
+    ScrollView {
+      VStack {
+        PickableView(
+          options: LocaleConstants.allCases,
+          initialContent: selectedLocale
+        ) { item in
+          selectedLocale = item
         }
       }
-      .pickerStyle(InlinePickerStyle())
+      .padding()
     }
-    #if os(iOS)
-    .listStyle(.insetGrouped)
-    #endif
   }
 }
 
