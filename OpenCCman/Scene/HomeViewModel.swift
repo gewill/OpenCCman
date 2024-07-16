@@ -2,15 +2,16 @@ import Combine
 import Foundation
 import OpenCC
 import SwiftUI
+import SwiftyUserDefaults
 
 class HomeViewModel: ObservableObject {
   @Published var inputText: String = "鼠标里面的硅二极管坏了，导致光标分辨率降低。"
   @Published var resultText: String = ""
 
   @Published var options: ChineseConverter.Options = []
-  @Published var targetOptions: Language = .traditional
-  @Published var variantOptions: Variant = .openCC
-  @Published var regionOptions: Region = .notConvert
+  @Published var targetOptions: Language = appDefaults[\.targetOptions]
+  @Published var variantOptions: Variant = appDefaults[\.variantOptions]
+  @Published var regionOptions: Region = appDefaults[\.regionOptions]
 
   @AppStorage(UserDefaultsKeys.lastVersionPromptedForReview.rawValue) var lastVersionPromptedForReview: String = ""
 
@@ -45,6 +46,19 @@ class HomeViewModel: ObservableObject {
       }
       .assign(to: \.options, on: self)
       .store(in: &cancellables)
+
+    $targetOptions.dropFirst()
+      .sink { targetOptions in
+        appDefaults[\.targetOptions] = targetOptions
+      }.store(in: &cancellables)
+    $variantOptions.dropFirst()
+      .sink { variantOptions in
+        appDefaults[\.variantOptions] = variantOptions
+      }.store(in: &cancellables)
+    $regionOptions.dropFirst()
+      .sink { regionOptions in
+        appDefaults[\.regionOptions] = regionOptions
+      }.store(in: &cancellables)
   }
 
   // MARK: - response methods
@@ -77,7 +91,7 @@ class HomeViewModel: ObservableObject {
 
   // MARK: - Options
 
-  enum Language: String, CaseIterable, Identifiable, Segmentable {
+  enum Language: String, CaseIterable, Identifiable, Segmentable, DefaultsSerializable {
     case simplified = "Simplified Chinese"
     case traditional = "Traditional Chinese"
 
@@ -85,7 +99,7 @@ class HomeViewModel: ObservableObject {
     var title: String { rawValue }
   }
 
-  enum Variant: String, CaseIterable, Identifiable, Segmentable {
+  enum Variant: String, CaseIterable, Identifiable, Segmentable, DefaultsSerializable {
     case openCC = "OpenCC Standard"
     case taiwan = "Taiwan Standard"
     case hongKong = "HongKong Standard"
@@ -94,7 +108,7 @@ class HomeViewModel: ObservableObject {
     var title: String { rawValue }
   }
 
-  enum Region: String, CaseIterable, Identifiable, Segmentable {
+  enum Region: String, CaseIterable, Identifiable, Segmentable, DefaultsSerializable {
     case notConvert = "Not convert"
     case taiwan = "Taiwan Idiom"
 

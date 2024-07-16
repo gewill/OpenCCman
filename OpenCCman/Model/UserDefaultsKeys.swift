@@ -5,6 +5,9 @@ let appDefaults = Defaults
 
 extension DefaultsKeys {
   var testNumbersPerDay: DefaultsKey<[String: Int]> { .init(UserDefaultsKeys.testNumbersPerDay.rawValue, defaultValue: [:]) }
+  var targetOptions: DefaultsKey<HomeViewModel.Language> { .init(UserDefaultsKeys.targetOptions.rawValue, defaultValue: .traditional) }
+  var variantOptions: DefaultsKey<HomeViewModel.Variant> { .init(UserDefaultsKeys.variantOptions.rawValue, defaultValue: .openCC) }
+  var regionOptions: DefaultsKey<HomeViewModel.Region> { .init(UserDefaultsKeys.regionOptions.rawValue, defaultValue: .notConvert) }
 }
 
 enum UserDefaultsKeys: String {
