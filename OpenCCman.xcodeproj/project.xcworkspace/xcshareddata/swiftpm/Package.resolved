@@ -1,4 +1,5 @@
 {
+  "originHash" : "318b46eb097fd287ff72aaf203dab9ed99eee94a1b37d1a6ee8325b3ae2fd871",
   "pins" : [
     {
       "identity" : "bettersafariview",
@@ -19,15 +20,6 @@
       }
     },
     {
-      "identity" : "ios-sdk",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/glassfy/ios-sdk",
-      "state" : {
-        "revision" : "fff920920656555fbd40137a2a9397edb46f96f1",
-        "version" : "1.4.0"
-      }
-    },
-    {
       "identity" : "iqkeyboardmanager",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hackiftekhar/IQKeyboardManager",
@@ -43,6 +35,15 @@
       "state" : {
         "branch" : "master",
         "revision" : "3e54160a6a72596fb95b110fc160de5116429ec2"
+      }
+    },
+    {
+      "identity" : "purchases-ios-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RevenueCat/purchases-ios-spm.git",
+      "state" : {
+        "revision" : "dab15ad6125f78c79f7397e7c9af8f5be00c0ad6",
+        "version" : "5.3.4"
       }
     },
     {
@@ -100,5 +101,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

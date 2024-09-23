@@ -1,5 +1,5 @@
 import Foundation
-import Glassfy
+import RevenueCat
 import SwiftUI
 
 enum FreeFeature: String, CaseIterable, Identifiable {
@@ -59,46 +59,18 @@ final class IAPManager {
   private init() {}
 
   func configure() {
-    Glassfy.initialize(apiKey: "5c8f0f454192402bb96b6d1b2f841769")
+    Purchases.configure(withAPIKey: "appl_EJkSanbpeFhoNJsZaUbpIZPduCi")
   }
 
   func checkProLifetime(completion: @escaping (Bool) -> Void) {
-    Glassfy.permissions { permissions, error in
-      guard let permissions = permissions, error == nil else {
-        completion(false)
-        return
-      }
-
-      if let permission = permissions[Permission.pro_lifetime.rawValue],
-         permission.isValid {
+    Purchases.shared.getCustomerInfo { customerInfo, _ in
+      if let infos = customerInfo?.entitlements.active,
+         let _ = infos[IAPManager.Permission.pro_lifetime.rawValue] {
         completion(true)
       } else {
         completion(false)
       }
     }
-  }
-
-  func purchase(sku: Glassfy.Sku) {
-    Glassfy.purchase(sku: sku) { transaction, error in
-      guard let t = transaction, error == nil else {
-        return
-      }
-    }
-  }
-
-  func getPermissions() {
-    Glassfy.permissions { permissions, error in
-      guard let permissions = permissions, error == nil else {
-        return
-      }
-    }
-  }
-
-  func restorePurchases() {
-    Glassfy.restorePurchases { permissions, error in
-      guard let permissions = permissions, error == nil else {
-        return
-      }
-    }
+    Purchases.shared.restorePurchases()
   }
 }

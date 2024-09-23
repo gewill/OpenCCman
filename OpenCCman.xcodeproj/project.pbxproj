@@ -30,7 +30,6 @@
 		BE3AEC972B2EF25000820673 /* ChangeLanguageScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3AEC912B2EF25000820673 /* ChangeLanguageScene.swift */; };
 		BE3AEC982B2EF25000820673 /* FeedbackScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3AEC922B2EF25000820673 /* FeedbackScene.swift */; };
 		BE3AEC992B2EF25000820673 /* OpenSourceScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3AEC932B2EF25000820673 /* OpenSourceScene.swift */; };
-		BE3AEC9C2B2EF2C000820673 /* Glassfy in Frameworks */ = {isa = PBXBuildFile; productRef = BE3AEC9B2B2EF2C000820673 /* Glassfy */; };
 		BE3AEC9E2B2EF2D400820673 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3AEC9D2B2EF2D400820673 /* IAPManager.swift */; };
 		BE3AECA12B2EF36500820673 /* BetterSafariView in Frameworks */ = {isa = PBXBuildFile; productRef = BE3AECA02B2EF36500820673 /* BetterSafariView */; };
 		BE3AECA42B2EF3B200820673 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3AECA22B2EF3B200820673 /* BackButton.swift */; };
@@ -54,6 +53,8 @@
 		BE727E322B2DF65D00C63DB2 /* VisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = BE727E312B2DF65D00C63DB2 /* VisualEffects */; };
 		BE727E342B2DF85E00C63DB2 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE727E332B2DF85E00C63DB2 /* UserDefaultsKeys.swift */; };
 		BE727E382B2E00D000C63DB2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE727E3A2B2E00D000C63DB2 /* Localizable.strings */; };
+		BE781CB22CA131790022C4B8 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = BE781CB12CA131790022C4B8 /* RevenueCat */; };
+		BE781CB42CA131790022C4B8 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = BE781CB32CA131790022C4B8 /* RevenueCatUI */; };
 		BEA770E72B2C904900AFA2F0 /* OpenCCmanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA770E62B2C904900AFA2F0 /* OpenCCmanApp.swift */; };
 		BEA770E92B2C904900AFA2F0 /* HomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA770E82B2C904900AFA2F0 /* HomeScene.swift */; };
 		BEA770EB2B2C904A00AFA2F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */; };
@@ -120,13 +121,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE3AEC9C2B2EF2C000820673 /* Glassfy in Frameworks */,
 				BEA956392B31EB7B00E04625 /* ColorfulX in Frameworks */,
 				BEA770F72B2C92B700AFA2F0 /* OpenCC in Frameworks */,
 				BE3AEC8D2B2EF1DF00820673 /* SwiftUIRouter in Frameworks */,
+				BE781CB22CA131790022C4B8 /* RevenueCat in Frameworks */,
 				BE727E322B2DF65D00C63DB2 /* VisualEffects in Frameworks */,
 				BE2C6D3E2B2D7EA700FC4112 /* SwiftUIIntrospect in Frameworks */,
 				BE3F71E22B2F4F8F001496EA /* IQKeyboardManagerSwift in Frameworks */,
+				BE781CB42CA131790022C4B8 /* RevenueCatUI in Frameworks */,
 				BE3AECA12B2EF36500820673 /* BetterSafariView in Frameworks */,
 				BE2C6D672B2D817100FC4112 /* Neumorphic in Frameworks */,
 				BE3AECAE2B2EF4FA00820673 /* SwiftyUserDefaults in Frameworks */,
@@ -285,11 +287,12 @@
 				BE2C6D662B2D817100FC4112 /* Neumorphic */,
 				BE727E312B2DF65D00C63DB2 /* VisualEffects */,
 				BE3AEC8C2B2EF1DF00820673 /* SwiftUIRouter */,
-				BE3AEC9B2B2EF2C000820673 /* Glassfy */,
 				BE3AECA02B2EF36500820673 /* BetterSafariView */,
 				BE3AECAD2B2EF4FA00820673 /* SwiftyUserDefaults */,
 				BE3F71E12B2F4F8F001496EA /* IQKeyboardManagerSwift */,
 				BEA956382B31EB7B00E04625 /* ColorfulX */,
+				BE781CB12CA131790022C4B8 /* RevenueCat */,
+				BE781CB32CA131790022C4B8 /* RevenueCatUI */,
 			);
 			productName = OpenCCman;
 			productReference = BEA770E32B2C904900AFA2F0 /* OpenCCman.app */;
@@ -327,11 +330,11 @@
 				BE2C6D652B2D817100FC4112 /* XCRemoteSwiftPackageReference "neumorphic" */,
 				BE727E302B2DF65D00C63DB2 /* XCRemoteSwiftPackageReference "VisualEffects" */,
 				BE3AEC8B2B2EF1DF00820673 /* XCRemoteSwiftPackageReference "SwiftUIRouter" */,
-				BE3AEC9A2B2EF2C000820673 /* XCRemoteSwiftPackageReference "ios-sdk" */,
 				BE3AEC9F2B2EF36500820673 /* XCRemoteSwiftPackageReference "BetterSafariView" */,
 				BE3AECAC2B2EF4FA00820673 /* XCRemoteSwiftPackageReference "SwiftyUserDefaults" */,
 				BE3F71E02B2F4F8F001496EA /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				BEA956372B31EB7B00E04625 /* XCRemoteSwiftPackageReference "ColorfulX" */,
+				BE781CB02CA131790022C4B8 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 			);
 			productRefGroup = BEA770E42B2C904900AFA2F0 /* Products */;
 			projectDirPath = "";
@@ -662,14 +665,6 @@
 				minimumVersion = 1.3.2;
 			};
 		};
-		BE3AEC9A2B2EF2C000820673 /* XCRemoteSwiftPackageReference "ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/glassfy/ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.4.0;
-			};
-		};
 		BE3AEC9F2B2EF36500820673 /* XCRemoteSwiftPackageReference "BetterSafariView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stleamist/BetterSafariView";
@@ -700,6 +695,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.3;
+			};
+		};
+		BE781CB02CA131790022C4B8 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.3.4;
 			};
 		};
 		BEA770F52B2C92B700AFA2F0 /* XCRemoteSwiftPackageReference "SwiftyOpenCC" */ = {
@@ -736,11 +739,6 @@
 			package = BE3AEC8B2B2EF1DF00820673 /* XCRemoteSwiftPackageReference "SwiftUIRouter" */;
 			productName = SwiftUIRouter;
 		};
-		BE3AEC9B2B2EF2C000820673 /* Glassfy */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BE3AEC9A2B2EF2C000820673 /* XCRemoteSwiftPackageReference "ios-sdk" */;
-			productName = Glassfy;
-		};
 		BE3AECA02B2EF36500820673 /* BetterSafariView */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BE3AEC9F2B2EF36500820673 /* XCRemoteSwiftPackageReference "BetterSafariView" */;
@@ -760,6 +758,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BE727E302B2DF65D00C63DB2 /* XCRemoteSwiftPackageReference "VisualEffects" */;
 			productName = VisualEffects;
+		};
+		BE781CB12CA131790022C4B8 /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE781CB02CA131790022C4B8 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+		BE781CB32CA131790022C4B8 /* RevenueCatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BE781CB02CA131790022C4B8 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCatUI;
 		};
 		BEA770F62B2C92B700AFA2F0 /* OpenCC */ = {
 			isa = XCSwiftPackageProductDependency;
