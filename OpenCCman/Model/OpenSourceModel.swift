@@ -188,10 +188,10 @@ let allOpenSourceModels =
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
     """),
-    OpenSourceModel(name: "Glassfy iOS SDK", link: "https://github.com/glassfy/ios-sdk", licence: """
+    OpenSourceModel(name: "RevenueCat iOS SDK", link: "https://github.com/RevenueCat/purchases-ios", licence: """
     MIT License
 
-    Copyright (c) 2020 Glassfy Ltd
+    Copyright (c) 2017 Jacob Eiting
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
