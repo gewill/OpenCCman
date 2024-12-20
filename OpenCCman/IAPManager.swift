@@ -60,6 +60,7 @@ final class IAPManager {
 
   func configure() {
     Purchases.configure(withAPIKey: "appl_EJkSanbpeFhoNJsZaUbpIZPduCi")
+    Purchases.proxyURL = URL(string: "https://api.rc-backup.com/")!
   }
 
   func checkProLifetime(completion: @escaping (Bool) -> Void) {
