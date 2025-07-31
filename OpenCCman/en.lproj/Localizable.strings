@@ -12,6 +12,17 @@ Strictly differentiate between 「one simplified to many traditionals」 and 「
 Completely compatible with different variants and can realize dynamic substitution.
 Strictly scrutinize one-simplified-to-multiple-traditional entries, and the principle is 「if it can be divided, then it will be divided」.
 Support Mainland China, Taiwan, Hong Kong, different variants and regional customary word conversion, such as 「裏」「裡」、「鼠標」「滑鼠」.
+
+**Global Service (macOS)**
+
+OpenCCman provides a system-wide service that allows you to convert Chinese text from any application:
+
+1. Select text in any app (Safari, TextEdit, etc.)
+2. Right-click and choose \"Convert Chinese Text with OpenCCman\" from the Services menu
+3. The selected text will be automatically converted and replaced
+4. OpenCCman will open showing both original and converted text
+
+You can also assign a keyboard shortcut to this service in System Preferences > Keyboard > Shortcuts > Services for even faster access.
 ";
 
 // MARK: - Services
