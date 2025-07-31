@@ -14,6 +14,10 @@ struct OpenCCmanApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
   #endif
 
+  #if os(macOS)
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+  #endif
+
   @AppStorage(UserDefaultsKeys.selectedLocale.rawValue) var selectedLocale: LocaleConstants = .system
   @AppStorage(UserDefaultsKeys.selectedTheme.rawValue) var selectedTheme: Theme = .system
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false

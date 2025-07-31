@@ -4,6 +4,12 @@ import OpenCC
 import SwiftUI
 import SwiftyUserDefaults
 
+#if os(macOS)
+extension Notification.Name {
+  static let textConversionServiceDidReceiveText = Notification.Name("TextConversionServiceDidReceiveText")
+}
+#endif
+
 class HomeViewModel: ObservableObject {
   @Published var inputText: String = "鼠标里面的硅二极管坏了，导致光标分辨率降低。"
   @Published var resultText: String = ""
@@ -59,6 +65,25 @@ class HomeViewModel: ObservableObject {
       .sink { regionOptions in
         appDefaults[\.regionOptions] = regionOptions
       }.store(in: &cancellables)
+
+    // Listen for text conversion service notifications
+    #if os(macOS)
+    NotificationCenter.default.publisher(for: .textConversionServiceDidReceiveText)
+      .sink { [weak self] notification in
+        guard let self = self,
+              let userInfo = notification.userInfo,
+              let originalText = userInfo["originalText"] as? String,
+              let convertedText = userInfo["convertedText"] as? String else {
+          return
+        }
+
+        DispatchQueue.main.async {
+          self.inputText = originalText
+          self.resultText = convertedText
+        }
+      }
+      .store(in: &cancellables)
+    #endif
   }
 
   // MARK: - response methods
