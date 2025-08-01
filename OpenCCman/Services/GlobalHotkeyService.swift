@@ -37,7 +37,6 @@ class GlobalHotkeyService: ObservableObject {
     }
 
     @Published var hasAccessibilityPermission = false
-    @Published var hasAppleEventsPermission = false
 
     private init() {
         checkAccessibilityPermission()
@@ -64,8 +63,6 @@ class GlobalHotkeyService: ObservableObject {
         let trusted = AXIsProcessTrusted()
         DispatchQueue.main.async {
             self.hasAccessibilityPermission = trusted
-            // For simplicity, we'll consider Apple Events permission the same as Accessibility
-            self.hasAppleEventsPermission = trusted
         }
     }
 
@@ -88,10 +85,7 @@ class GlobalHotkeyService: ObservableObject {
         }
     }
 
-    func requestAppleEventsPermission() {
-        // Since we're using Accessibility-based text capture, just request Accessibility permission
-        requestAccessibilityPermission()
-    }
+
 
 
 
@@ -143,8 +137,8 @@ class GlobalHotkeyService: ObservableObject {
 
         let response = alert.runModal()
         if response == .alertFirstButtonReturn {
-            // Try again - this should trigger the system dialog
-            requestAppleEventsPermission()
+            // Try again - request accessibility permission
+            requestAccessibilityPermission()
         } else if response == .alertSecondButtonReturn {
             openAutomationPreferences()
         }
@@ -165,12 +159,8 @@ class GlobalHotkeyService: ObservableObject {
             return
         }
 
-        // Check Apple Events permission
-        guard hasAppleEventsPermission else {
-            print("Apple Events permission not granted")
-            requestAppleEventsPermission()
-            return
-        }
+        // For sandbox apps, we only need Accessibility permission
+        // The simulated key method works with just Accessibility permission
 
         // Get the currently selected text using improved method
         getSelectedTextImproved { [weak self] selectedText in
@@ -201,76 +191,67 @@ class GlobalHotkeyService: ObservableObject {
     
     // MARK: - Text Capture
 
-    // MARK: - Improved Text Capture (based on Easydict)
+    // MARK: - Mac App Store Sandbox-Optimized Text Capture
 
+    /// Optimized text capture for Mac App Store sandbox environment
+    /// Uses simulated Cmd+C which works reliably with proper entitlements:
+    /// - com.apple.security.automation.apple-events
+    /// - Accessibility permission from user
+    /// This approach is more reliable than Accessibility API for sandbox apps
     private func getSelectedTextImproved(completion: @escaping (String?) -> Void) {
-        print("Starting improved text capture process")
+        print("🔄 Starting Mac App Store optimized text capture")
 
-        // 1. Try Accessibility first
-        getSelectedTextByAccessibility { [weak self] text, error in
+        // Simulated key method is the gold standard for sandbox apps
+        // It works consistently across all applications and doesn't require
+        // complex Accessibility API calls that can be problematic in sandbox
+        getSelectedTextBySimulatedKey { text in
             if let text = text, !text.isEmpty {
-                print("Accessibility method succeeded")
+                print("✅ Text capture successful")
                 completion(text)
-                return
-            }
-
-            print("Accessibility method failed, trying simulated key")
-            // 2. If Accessibility fails, try simulated key
-            self?.getSelectedTextBySimulatedKey { text in
-                if let text = text, !text.isEmpty {
-                    print("Simulated key method succeeded")
-                    completion(text)
-                    return
-                }
-
-                print("All text capture methods failed")
+            } else {
+                print("⚠️ No text captured - ensure text is selected first")
                 completion(nil)
             }
         }
     }
 
-    private func getSelectedTextByAccessibility(completion: @escaping (String?, Error?) -> Void) {
-        print("Attempting Accessibility method")
-
-        // For now, let's skip the complex Accessibility implementation and go straight to simulated key
-        // This avoids the complex pointer handling issues
-        completion(nil, NSError(domain: "GlobalHotkeyService", code: -1, userInfo: [
-            NSLocalizedDescriptionKey: "Accessibility method skipped, using simulated key instead"
-        ]))
-    }
+    // Accessibility method removed - simulated key is more reliable for sandbox apps
 
     private func getSelectedTextBySimulatedKey(completion: @escaping (String?) -> Void) {
-        print("Attempting simulated key method")
+        print("Using sandbox-optimized simulated key method")
 
-        // Store current clipboard content
+        // Store current clipboard content to restore later
         let pasteboard = NSPasteboard.general
         let originalClipboard = pasteboard.string(forType: .string)
+        let originalChangeCount = pasteboard.changeCount
 
-        // Clear clipboard to detect new content
+        // Clear clipboard to ensure we can detect new content
         pasteboard.clearContents()
 
-        // Simulate Cmd+C using CGEvent
+        // Simulate Cmd+C using CGEvent (works reliably in sandbox)
         simulateKeyPress(keyCode: CGKeyCode(8), modifiers: .maskCommand) { // 8 is kVK_ANSI_C
-            // Wait for clipboard to update
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            // Wait for clipboard to update (optimized timing for sandbox)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 let selectedText = pasteboard.string(forType: .string)
+                let newChangeCount = pasteboard.changeCount
 
-                // Restore original clipboard after a delay
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                // Restore original clipboard content after a short delay
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                     if let original = originalClipboard {
                         pasteboard.clearContents()
                         pasteboard.setString(original, forType: .string)
                     }
                 }
 
-                // Check if we got new content
-                if let text = selectedText,
+                // Check if we got new content (more robust detection)
+                if newChangeCount > originalChangeCount,
+                   let text = selectedText,
                    text != originalClipboard,
-                   !text.isEmpty {
-                    print("Simulated key got text: \(text)")
+                   !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    print("✅ Captured text: \(text.prefix(50))...")
                     completion(text)
                 } else {
-                    print("Simulated key got no new text")
+                    print("⚠️ No text captured - ensure text is selected")
                     completion(nil)
                 }
             }
@@ -278,8 +259,9 @@ class GlobalHotkeyService: ObservableObject {
     }
 
     private func simulateKeyPress(keyCode: CGKeyCode, modifiers: CGEventFlags, completion: @escaping () -> Void) {
-        // Create key down event
+        // Create key down event (sandbox-compatible)
         guard let keyDownEvent = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: true) else {
+            print("❌ Failed to create key down event")
             completion()
             return
         }
@@ -287,16 +269,20 @@ class GlobalHotkeyService: ObservableObject {
 
         // Create key up event
         guard let keyUpEvent = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: false) else {
+            print("❌ Failed to create key up event")
             completion()
             return
         }
         keyUpEvent.flags = modifiers
 
-        // Post events
+        // Post events to system (works in sandbox with proper entitlements)
         keyDownEvent.post(tap: .cghidEventTap)
-        keyUpEvent.post(tap: .cghidEventTap)
 
-        completion()
+        // Small delay between key down and up for better reliability
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            keyUpEvent.post(tap: .cghidEventTap)
+            completion()
+        }
     }
     
     // MARK: - Text Conversion

@@ -53,51 +53,26 @@ struct HotkeySettingsScene: View {
                         Text("Permissions".localizedStringKey)
                             .font(.headline)
 
-                        VStack(alignment: .leading, spacing: 8) {
-                            // Accessibility Permission
-                            HStack {
-                                Image(systemName: hotkeyService.hasAccessibilityPermission ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
-                                    .foregroundColor(hotkeyService.hasAccessibilityPermission ? .green : .orange)
+                        HStack {
+                            Image(systemName: hotkeyService.hasAccessibilityPermission ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
+                                .foregroundColor(hotkeyService.hasAccessibilityPermission ? .green : .orange)
 
-                                Text(hotkeyService.hasAccessibilityPermission ? "Accessibility permission granted".localizedStringKey : "Accessibility permission required".localizedStringKey)
-                                    .font(.body)
+                            Text(hotkeyService.hasAccessibilityPermission ? "Accessibility permission granted".localizedStringKey : "Accessibility permission required".localizedStringKey)
+                                .font(.body)
 
-                                Spacer()
+                            Spacer()
 
-                                if !hotkeyService.hasAccessibilityPermission {
-                                    Button("Grant Permission".localizedStringKey) {
-                                        hotkeyService.requestAccessibilityPermission()
-                                    }
-                                    .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 6)
+                            if !hotkeyService.hasAccessibilityPermission {
+                                Button("Grant Permission".localizedStringKey) {
+                                    hotkeyService.requestAccessibilityPermission()
                                 }
+                                .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 6)
                             }
 
-                            // Apple Events Permission
-                            HStack {
-                                Image(systemName: hotkeyService.hasAppleEventsPermission ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
-                                    .foregroundColor(hotkeyService.hasAppleEventsPermission ? .green : .orange)
-
-                                Text(hotkeyService.hasAppleEventsPermission ? "Apple Events permission granted".localizedStringKey : "Apple Events permission required".localizedStringKey)
-                                    .font(.body)
-
-                                Spacer()
-
-                                if !hotkeyService.hasAppleEventsPermission {
-                                    Button("Grant Permission".localizedStringKey) {
-                                        hotkeyService.requestAppleEventsPermission()
-                                    }
-                                    .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 6)
-                                }
+                            Button("Refresh".localizedStringKey) {
+                                hotkeyService.checkAccessibilityPermission()
                             }
-
-                            // Refresh Button
-                            HStack {
-                                Spacer()
-                                Button("Refresh".localizedStringKey) {
-                                    hotkeyService.checkAccessibilityPermission()
-                                }
-                                .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 8)
-                            }
+                            .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 6)
                         }
                     }
                     .padding()
