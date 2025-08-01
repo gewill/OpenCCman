@@ -37,6 +37,7 @@ struct OpenCCmanApp: App {
       }
       .environment(\.locale, Locale(identifier: selectedLocale.identifier))
       .preferredColorScheme(selectedTheme.colorScheme)
+
     }
     #if os(macOS)
     .windowStyle(.hiddenTitleBar)

@@ -117,37 +117,7 @@ class GlobalHotkeyService: ObservableObject {
         NSWorkspace.shared.open(url)
     }
 
-    private func showAppleEventsPermissionAlert() {
-        let alert = NSAlert()
-        alert.messageText = NSLocalizedString("Apple Events Permission Required", comment: "")
-        alert.informativeText = NSLocalizedString("""
-        OpenCCman needs permission to control other applications for text conversion.
-
-        When you click "Try Again", a system dialog will appear asking for permission.
-        Click "OK" in that dialog to grant permission.
-
-        If no dialog appears, you may need to manually enable it in:
-        System Preferences → Security & Privacy → Privacy → Automation
-        """, comment: "")
-
-        alert.addButton(withTitle: NSLocalizedString("Try Again", comment: ""))
-        alert.addButton(withTitle: NSLocalizedString("Open System Preferences", comment: ""))
-        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
-        alert.alertStyle = .informational
-
-        let response = alert.runModal()
-        if response == .alertFirstButtonReturn {
-            // Try again - request accessibility permission
-            requestAccessibilityPermission()
-        } else if response == .alertSecondButtonReturn {
-            openAutomationPreferences()
-        }
-    }
-
-    private func openAutomationPreferences() {
-        let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Automation")!
-        NSWorkspace.shared.open(url)
-    }
+    // Apple Events permission methods removed - using Accessibility-only approach
 
     // MARK: - Public Methods
 
