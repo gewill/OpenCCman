@@ -83,6 +83,23 @@ class HomeViewModel: ObservableObject {
         }
       }
       .store(in: &cancellables)
+
+    // Listen for global hotkey notifications
+    NotificationCenter.default.publisher(for: .globalHotkeyDidConvertText)
+      .sink { [weak self] notification in
+        guard let self = self,
+              let userInfo = notification.userInfo,
+              let originalText = userInfo["originalText"] as? String,
+              let convertedText = userInfo["convertedText"] as? String else {
+          return
+        }
+
+        DispatchQueue.main.async {
+          self.inputText = originalText
+          self.resultText = convertedText
+        }
+      }
+      .store(in: &cancellables)
     #endif
   }
 

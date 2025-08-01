@@ -29,6 +29,36 @@
     func applicationDidFinishLaunching(_ notification: Notification) {
       // Register the text conversion service
       NSApp.servicesProvider = TextConversionService.shared
+
+      // Initialize services
+      #if os(macOS)
+      _ = GlobalHotkeyService.shared
+      setupMenuBar()
+      #endif
+    }
+
+    private func setupMenuBar() {
+      // Add a menu item for testing the hotkey functionality
+      if let mainMenu = NSApp.mainMenu {
+        let testMenu = NSMenu(title: "Test")
+        let testMenuItem = NSMenuItem(title: "Test", action: nil, keyEquivalent: "")
+        testMenuItem.submenu = testMenu
+
+        let convertSelectedTextItem = NSMenuItem(
+          title: "Convert Selected Text",
+          action: #selector(convertSelectedText),
+          keyEquivalent: "r"
+        )
+        convertSelectedTextItem.keyEquivalentModifierMask = [.command, .option]
+        convertSelectedTextItem.target = self
+
+        testMenu.addItem(convertSelectedTextItem)
+        mainMenu.addItem(testMenuItem)
+      }
+    }
+
+    @objc private func convertSelectedText() {
+      GlobalHotkeyService.shared.convertSelectedText()
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {

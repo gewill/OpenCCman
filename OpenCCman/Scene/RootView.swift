@@ -3,7 +3,7 @@ import SwiftUI
 import SwiftUIRouter
 
 struct RootView: View {
-  @EnvironmentObject private var navigator: Navigator 
+  @EnvironmentObject private var navigator: Navigator
   @State private var showAd: Bool = false
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
 
@@ -73,6 +73,10 @@ struct SettingsRoutes: View {
 
       Route("/settings/changeAppearance") {
         ChangeColorSchemeScene()
+      }
+
+      Route("/settings/hotkey") {
+        HotkeySettingsScene()
       }
 
       Route("/settings") {

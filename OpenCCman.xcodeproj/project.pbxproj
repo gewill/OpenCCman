@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09DBEC4F2E3BC32F00DD9C5B /* HotkeySettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC4E2E3BC32F00DD9C5B /* HotkeySettingsScene.swift */; };
+		09DBEC522E3BC4BC00DD9C5B /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 09DBEC512E3BC4BC00DD9C5B /* KeyboardShortcuts */; };
+		09DBEC552E3BC69000DD9C5B /* GlobalHotkeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC532E3BC69000DD9C5B /* GlobalHotkeyService.swift */; };
 		BE2C6D3E2B2D7EA700FC4112 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = BE2C6D3D2B2D7EA700FC4112 /* SwiftUIIntrospect */; };
 		BE2C6D502B2D7ED000FC4112 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D402B2D7ED000FC4112 /* ViewExtensions.swift */; };
 		BE2C6D512B2D7ED000FC4112 /* SKProductExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D412B2D7ED000FC4112 /* SKProductExtensions.swift */; };
@@ -65,6 +68,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09DBEC4E2E3BC32F00DD9C5B /* HotkeySettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeySettingsScene.swift; sourceTree = "<group>"; };
+		09DBEC532E3BC69000DD9C5B /* GlobalHotkeyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotkeyService.swift; sourceTree = "<group>"; };
 		BE2C6D402B2D7ED000FC4112 /* ViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		BE2C6D412B2D7ED000FC4112 /* SKProductExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKProductExtensions.swift; sourceTree = "<group>"; };
 		BE2C6D422B2D7ED000FC4112 /* ImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
@@ -126,6 +131,7 @@
 				BE3AEC8D2B2EF1DF00820673 /* SwiftUIRouter in Frameworks */,
 				BE781CB22CA131790022C4B8 /* RevenueCat in Frameworks */,
 				BE727E322B2DF65D00C63DB2 /* VisualEffects in Frameworks */,
+				09DBEC522E3BC4BC00DD9C5B /* KeyboardShortcuts in Frameworks */,
 				BE2C6D3E2B2D7EA700FC4112 /* SwiftUIIntrospect in Frameworks */,
 				BE3F71E22B2F4F8F001496EA /* IQKeyboardManagerSwift in Frameworks */,
 				BE781CB42CA131790022C4B8 /* RevenueCatUI in Frameworks */,
@@ -138,6 +144,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		09DBEC542E3BC69000DD9C5B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				09DBEC532E3BC69000DD9C5B /* GlobalHotkeyService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		BE2C6D3F2B2D7ED000FC4112 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +186,7 @@
 				BEA770E82B2C904900AFA2F0 /* HomeScene.swift */,
 				BE727E2B2B2DE16400C63DB2 /* HomeViewModel.swift */,
 				BE3AEC8F2B2EF25000820673 /* SettingsScene.swift */,
+				09DBEC4E2E3BC32F00DD9C5B /* HotkeySettingsScene.swift */,
 				BE3AEC922B2EF25000820673 /* FeedbackScene.swift */,
 				BE3AEC902B2EF25000820673 /* HelpScene.swift */,
 				BE3AEC932B2EF25000820673 /* OpenSourceScene.swift */,
@@ -246,6 +261,7 @@
 				BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */,
 				BEA770EC2B2C904A00AFA2F0 /* OpenCCman.entitlements */,
 				BE727E3A2B2E00D000C63DB2 /* Localizable.strings */,
+				09DBEC542E3BC69000DD9C5B /* Services */,
 				BE3AEC8A2B2EF18F00820673 /* Scene */,
 				BE727E2F2B2DF60E00C63DB2 /* View */,
 				BE727E352B2DF86500C63DB2 /* Model */,
@@ -293,6 +309,7 @@
 				BEA956382B31EB7B00E04625 /* ColorfulX */,
 				BE781CB12CA131790022C4B8 /* RevenueCat */,
 				BE781CB32CA131790022C4B8 /* RevenueCatUI */,
+				09DBEC512E3BC4BC00DD9C5B /* KeyboardShortcuts */,
 			);
 			productName = OpenCCman;
 			productReference = BEA770E32B2C904900AFA2F0 /* OpenCCman.app */;
@@ -335,6 +352,7 @@
 				BE3F71E02B2F4F8F001496EA /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				BEA956372B31EB7B00E04625 /* XCRemoteSwiftPackageReference "ColorfulX" */,
 				BE781CB02CA131790022C4B8 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
+				09DBEC502E3BC4BC00DD9C5B /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 			);
 			productRefGroup = BEA770E42B2C904900AFA2F0 /* Products */;
 			projectDirPath = "";
@@ -369,6 +387,7 @@
 				BE2C6D632B2D80D100FC4112 /* Styles.swift in Sources */,
 				BE2C6D572B2D7ED000FC4112 /* DoubleExtensions.swift in Sources */,
 				BE3AECB82B2EF6F700820673 /* ProAlertView.swift in Sources */,
+				09DBEC552E3BC69000DD9C5B /* GlobalHotkeyService.swift in Sources */,
 				BE727E342B2DF85E00C63DB2 /* UserDefaultsKeys.swift in Sources */,
 				BE2C6D542B2D7ED000FC4112 /* StringExtensions.swift in Sources */,
 				BE3AEC892B2EF17700820673 /* RootView.swift in Sources */,
@@ -386,6 +405,7 @@
 				BEA9563D2B31FF8C00E04625 /* ChangeColorSchemeScene.swift in Sources */,
 				BE3AEC952B2EF25000820673 /* SettingsScene.swift in Sources */,
 				BE2C6D512B2D7ED000FC4112 /* SKProductExtensions.swift in Sources */,
+				09DBEC4F2E3BC32F00DD9C5B /* HotkeySettingsScene.swift in Sources */,
 				BE3AEC982B2EF25000820673 /* FeedbackScene.swift in Sources */,
 				BE3AECA52B2EF3B200820673 /* CellButton.swift in Sources */,
 				BE3AECB62B2EF6F700820673 /* LoadingView.swift in Sources */,
@@ -641,6 +661,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		09DBEC502E3BC4BC00DD9C5B /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.0;
+			};
+		};
 		BE2C6D3C2B2D7EA700FC4112 /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/swiftui-introspect";
@@ -724,6 +752,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		09DBEC512E3BC4BC00DD9C5B /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09DBEC502E3BC4BC00DD9C5B /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
+		};
 		BE2C6D3D2B2D7EA700FC4112 /* SwiftUIIntrospect */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BE2C6D3C2B2D7EA700FC4112 /* XCRemoteSwiftPackageReference "swiftui-introspect" */;

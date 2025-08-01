@@ -90,6 +90,12 @@ struct SettingsScene: View {
           CellButton(title: "Appearance") {
             navigator.navigate("/settings/changeAppearance")
           }
+          #if os(macOS)
+          Divider()
+          CellButton(title: "Global Hotkey") {
+            navigator.navigate("/settings/hotkey")
+          }
+          #endif
         }
         .softRectangleStyle()
 

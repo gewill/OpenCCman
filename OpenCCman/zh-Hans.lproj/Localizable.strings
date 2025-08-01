@@ -91,15 +91,48 @@
 
 **全局服务 (macOS)**
 
-OpenCCman 提供系统级服务，让您可以在任何应用程序中转换中文文本：
+OpenCCman 提供多种方式在任何应用程序中转换中文文本：
 
+**方法一：全局键盘快捷键（推荐）**
+1. 前往「设置 > 全局快捷键」配置您的快捷键
+2. 在任何应用程序中选择中文文本
+3. 按下您配置的快捷键（默认：⌘⌥R）
+4. 文本将自动转换并替换
+5. OpenCCman 将打开并显示原文和转换后的文本
+
+**方法二：右键服务**
 1. 在任何应用（Safari、文本编辑等）中选择文本
 2. 右键点击并从「服务」菜单中选择「使用 OpenCCman 转换中文文本」
 3. 选中的文本将自动转换并替换
-4. OpenCCman 将打开并显示原文和转换后的文本
 
-您还可以在「系统偏好设置 > 键盘 > 快捷键 > 服务」中为此服务分配键盘快捷键，以便更快速地访问。
+键盘快捷键方式更快速，适合频繁使用。
 ";
 
 // MARK: - Services
 "Convert Chinese Text with OpenCCman" = "使用 OpenCCman 转换中文文本";
+
+// MARK: - Hotkey Settings
+"Global Hotkey" = "全局快捷键";
+"Hotkey Settings" = "快捷键设置";
+"Enable Global Hotkey" = "启用全局快捷键";
+"Keyboard Shortcut" = "键盘快捷键";
+"How to Use" = "使用方法";
+"Tips" = "提示";
+"Test" = "测试";
+"Permissions" = "权限";
+"Accessibility Permission Required" = "需要辅助功能权限";
+"Open System Preferences" = "打开系统偏好设置";
+"Cancel" = "取消";
+"Grant Permission" = "授予权限";
+"Try Again" = "重试";
+"Refresh" = "刷新";
+"No Text Selected" = "未选择文本";
+"Please select some Chinese text first, then try the shortcut again." = "请先选择一些中文文本，然后再试一次快捷键。";
+"OK" = "确定";
+"Accessibility permission granted" = "已授予辅助功能权限";
+"Accessibility permission required" = "需要辅助功能权限";
+
+"Global hotkey feature is only available on macOS" = "全局快捷键功能仅在 macOS 上可用";
+"hotkey_instructions_enabled" = "1. 启用上面的全局快捷键\n2. 点击快捷键录制器设置您喜欢的按键组合\n3. 在任何应用程序中选择中文文本\n4. 按下您配置的快捷键转换文本\n5. 转换后的文本将替换选中的文本\n6. OpenCCman 将打开并显示转换结果";
+"hotkey_instructions_disabled" = "要使用全局快捷键功能：\n1. 首先授予上面的辅助功能权限\n2. 授予权限后，点击「刷新」更新状态\n3. 然后启用全局快捷键并配置您的快捷键\n\n辅助功能权限允许 OpenCCman 从其他应用程序读取和转换选中的文本。";
+"hotkey_tips" = "• 快捷键录制器允许您轻松设置任何按键组合\n• 常用快捷键如 ⌘⌥R、⌘⌥T、⌘⌥C 效果很好\n• 避免与系统快捷键冲突\n• 快捷键在所有应用程序中全局工作";
