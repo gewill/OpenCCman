@@ -32,7 +32,7 @@
 
       // Initialize services
       #if os(macOS)
-      _ = GlobalHotkeyService.shared
+      _ = GlobalShortcutService.shared
       setupMenuBar()
       #endif
     }
@@ -58,7 +58,7 @@
     }
 
     @objc private func convertSelectedText() {
-      GlobalHotkeyService.shared.convertSelectedText()
+      GlobalShortcutService.shared.convertSelectedText()
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {

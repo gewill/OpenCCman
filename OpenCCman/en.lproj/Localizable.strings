@@ -3,42 +3,31 @@
 "pro_lifetime_des" = "Pay once, use for a lifetime.";
 
 // MARK: - Help
-"help description" =  "
-Open Chinese Convert (OpenCC, 開放中文轉換) is an opensource project for conversions between Traditional Chinese, Simplified Chinese and Japanese Kanji (Shinjitai). It supports character-level and phrase-level conversion, character variant conversion and regional idioms among Mainland China, Taiwan and Hong Kong. This is not translation tool between Mandarin and Cantonese, etc.
+"help_intro" = "Open Chinese Convert (OpenCC, 開放中文轉換) is an opensource project for conversions between Traditional Chinese, Simplified Chinese and Japanese Kanji (Shinjitai). It supports character-level and phrase-level conversion, character variant conversion and regional idioms among Mainland China, Taiwan and Hong Kong. This is not translation tool between Mandarin and Cantonese, etc.";
 
-**Features**
+"help_features_title" = "Features";
+"help_features_content" = "Strictly differentiate between 「one simplified to many traditionals」 and 「one simplified to many variants」.\nCompletely compatible with different variants and can realize dynamic substitution.\nStrictly scrutinize one-simplified-to-multiple-traditional entries, and the principle is 「if it can be divided, then it will be divided」.\nSupport Mainland China, Taiwan, Hong Kong, different variants and regional customary word conversion, such as 「裏」「裡」、「鼠標」「滑鼠」.";
 
-Strictly differentiate between 「one simplified to many traditionals」 and 「one simplified to many variants」.
-Completely compatible with different variants and can realize dynamic substitution.
-Strictly scrutinize one-simplified-to-multiple-traditional entries, and the principle is 「if it can be divided, then it will be divided」.
-Support Mainland China, Taiwan, Hong Kong, different variants and regional customary word conversion, such as 「裏」「裡」、「鼠標」「滑鼠」.
+"help_global_service_title" = "Global Service (macOS)";
+"help_global_service_intro" = "OpenCCman provides multiple ways to convert Chinese text from any application:";
 
-**Global Service (macOS)**
+"help_method1_title" = "Method 1: Global Keyboard Shortcut (Recommended)";
+"help_method1_content" = "1. Go to Settings > Global Shortcut to configure your shortcut\n2. Select any Chinese text in any application\n3. Press your configured shortcut (default: ⌘⌥R)\n4. The text will be automatically converted and replaced\n5. OpenCCman will open showing both original and converted text";
 
-OpenCCman provides multiple ways to convert Chinese text from any application:
+"help_method2_title" = "Method 2: Right-click Service";
+"help_method2_content" = "1. Select text in any app (Safari, TextEdit, etc.)\n2. Right-click and choose \"Convert Chinese Text with OpenCCman\" from the Services menu\n3. The selected text will be automatically converted and replaced";
 
-**Method 1: Global Keyboard Shortcut (Recommended)**
-1. Go to Settings > Global Hotkey to configure your shortcut
-2. Select any Chinese text in any application
-3. Press your configured shortcut (default: ⌘⌥R)
-4. The text will be automatically converted and replaced
-5. OpenCCman will open showing both original and converted text
+"help_service_tip" = "You can also assign a keyboard shortcut to the Right-click Service in System Settings > Keyboard > Keyboard Shortcuts > Services > Text for even faster access.";
 
-**Method 2: Right-click Service**
-1. Select text in any app (Safari, TextEdit, etc.)
-2. Right-click and choose \"Convert Chinese Text with OpenCCman\" from the Services menu
-3. The selected text will be automatically converted and replaced
-
-The keyboard shortcut method is faster and more convenient for frequent use.
-";
+"help_conclusion" = "The keyboard shortcut method is faster and more convenient for frequent use.";
 
 // MARK: - Services
 "Convert Chinese Text with OpenCCman" = "Convert Chinese Text with OpenCCman";
 
-// MARK: - Hotkey Settings
-"Global Hotkey" = "Global Hotkey";
-"Hotkey Settings" = "Hotkey Settings";
-"Enable Global Hotkey" = "Enable Global Hotkey";
+// MARK: - Shortcut Settings
+"Global Shortcut" = "Global Shortcut";
+"Shortcut Settings" = "Shortcut Settings";
+"Enable Global Shortcut" = "Enable Global Shortcut";
 "Keyboard Shortcut" = "Keyboard Shortcut";
 "How to Use" = "How to Use";
 "Tips" = "Tips";
@@ -56,7 +45,15 @@ The keyboard shortcut method is faster and more convenient for frequent use.
 "Accessibility permission granted" = "Accessibility permission granted";
 "Accessibility permission required" = "Accessibility permission required";
 
-"Global hotkey feature is only available on macOS" = "Global hotkey feature is only available on macOS";
-"hotkey_instructions_enabled" = "1. Enable the global hotkey above\n2. Click in the shortcut recorder to set your preferred key combination\n3. Select any Chinese text in any application\n4. Press your configured shortcut to convert the text\n5. The converted text will replace the selected text\n6. OpenCCman will open showing the conversion";
-"hotkey_instructions_disabled" = "To use the global hotkey feature:\n1. First grant accessibility permission above\n2. After granting permission, click \"Refresh\" to update status\n3. Then enable the global hotkey and configure your shortcut\n\nAccessibility permission allows OpenCCman to read and convert selected text from other applications.";
-"hotkey_tips" = "• The shortcut recorder allows you to easily set any key combination\n• Common shortcuts like ⌘⌥R, ⌘⌥T, ⌘⌥C work well\n• Avoid conflicts with system shortcuts\n• The shortcut works globally across all applications";
+"Global shortcut feature is only available on macOS" = "Global shortcut feature is only available on macOS";
+"shortcut_instructions_enabled" = "1. Enable the global shortcut above\n2. Click in the shortcut recorder to set your preferred key combination\n3. Select any Chinese text in any application\n4. Press your configured shortcut to convert the text\n5. The converted text will replace the selected text\n6. OpenCCman will open showing the conversion";
+"shortcut_instructions_disabled" = "To use the global shortcut feature:\n1. First grant accessibility permission above\n2. After granting permission, click \"Refresh\" to update status\n3. Then enable the global shortcut and configure your shortcut\n\nAccessibility permission allows OpenCCman to read and convert selected text from other applications.";
+"shortcut_tips" = "• The shortcut recorder allows you to easily set any key combination\n• Common shortcuts like ⌘⌥R, ⌘⌥T, ⌘⌥C work well\n• Avoid conflicts with system shortcuts\n• The shortcut works globally across all applications";
+
+// MARK: - Accessibility Permission Alert
+"accessibility_permission_intro" = "OpenCCman needs accessibility permission to read selected text from other applications.";
+"accessibility_permission_instructions_title" = "Please:";
+"accessibility_permission_step1" = "1. Click \"Open System Preferences\" below";
+"accessibility_permission_step2" = "2. Find \"OpenCCman\" in the list";
+"accessibility_permission_step3" = "3. Check the box next to it";
+"accessibility_permission_step4" = "4. Return to OpenCCman and try again";

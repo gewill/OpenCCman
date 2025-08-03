@@ -1,5 +1,5 @@
 //
-//  HotkeySettingsScene.swift
+//  ShortcutSettingsScene.swift
 //  OpenCCman
 //
 //  Created by will on 2024/07/30.
@@ -11,9 +11,9 @@ import Neumorphic
 import KeyboardShortcuts
 #endif
 
-struct HotkeySettingsScene: View {
+struct ShortcutSettingsScene: View {
     #if os(macOS)
-    @ObservedObject private var hotkeyService = GlobalHotkeyService.shared
+    @ObservedObject private var shortcutService = GlobalShortcutService.shared
     #endif
 
     var body: some View {
@@ -26,7 +26,7 @@ struct HotkeySettingsScene: View {
     
     var navi: some View {
         ZStack(alignment: .center) {
-            Text("Hotkey Settings".localizedStringKey)
+            Text("Shortcut Settings".localizedStringKey)
                 .font(.title)
                 .foregroundColor(Color.Neumorphic.secondary)
             HStack {
@@ -54,23 +54,23 @@ struct HotkeySettingsScene: View {
                             .font(.headline)
 
                         HStack {
-                            Image(systemName: hotkeyService.hasAccessibilityPermission ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
-                                .foregroundColor(hotkeyService.hasAccessibilityPermission ? .green : .orange)
+                            Image(systemName: shortcutService.hasAccessibilityPermission ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
+                                .foregroundColor(shortcutService.hasAccessibilityPermission ? .green : .orange)
 
-                            Text(hotkeyService.hasAccessibilityPermission ? "Accessibility permission granted".localizedStringKey : "Accessibility permission required".localizedStringKey)
+                            Text(shortcutService.hasAccessibilityPermission ? "Accessibility permission granted".localizedStringKey : "Accessibility permission required".localizedStringKey)
                                 .font(.body)
 
                             Spacer()
 
-                            if !hotkeyService.hasAccessibilityPermission {
+                            if !shortcutService.hasAccessibilityPermission {
                                 Button("Grant Permission".localizedStringKey) {
-                                    hotkeyService.requestAccessibilityPermission()
+                                    shortcutService.requestAccessibilityPermission()
                                 }
                                 .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 6)
                             }
 
                             Button("Refresh".localizedStringKey) {
-                                hotkeyService.checkAccessibilityPermission()
+                                shortcutService.checkAccessibilityPermission()
                             }
                             .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 6)
                         }
@@ -84,12 +84,12 @@ struct HotkeySettingsScene: View {
 
                     // Enable/Disable Toggle
                     HStack {
-                        Text("Enable Global Hotkey".localizedStringKey)
+                        Text("Enable Global Shortcut".localizedStringKey)
                             .font(.headline)
                         Spacer()
-                        Toggle("", isOn: $hotkeyService.isEnabled)
+                        Toggle("", isOn: $shortcutService.isEnabled)
                             .toggleStyle(SwitchToggleStyle())
-                            .disabled(!hotkeyService.hasAccessibilityPermission)
+                            .disabled(!shortcutService.hasAccessibilityPermission)
                     }
                     .padding()
                     .background(
@@ -110,7 +110,7 @@ struct HotkeySettingsScene: View {
                             Spacer()
 
                             Button("Test".localizedStringKey) {
-                                hotkeyService.convertSelectedText()
+                                shortcutService.convertSelectedText()
                             }
                             .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 8)
                         }
@@ -127,9 +127,9 @@ struct HotkeySettingsScene: View {
                         Text("How to Use".localizedStringKey)
                             .font(.headline)
 
-                        Text(hotkeyService.hasAccessibilityPermission ?
-                            "hotkey_instructions_enabled".localizedStringKey :
-                            "hotkey_instructions_disabled".localizedStringKey)
+                        Text(shortcutService.hasAccessibilityPermission ?
+                            "shortcut_instructions_enabled".localizedStringKey :
+                            "shortcut_instructions_disabled".localizedStringKey)
                         .font(.body)
                         .foregroundColor(Color.Neumorphic.secondary.opacity(0.8))
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -146,7 +146,7 @@ struct HotkeySettingsScene: View {
                         Text("Tips".localizedStringKey)
                             .font(.headline)
 
-                        Text("hotkey_tips".localizedStringKey)
+                        Text("shortcut_tips".localizedStringKey)
                         .font(.body)
                         .foregroundColor(Color.Neumorphic.secondary.opacity(0.8))
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -165,11 +165,11 @@ struct HotkeySettingsScene: View {
                             .font(.system(size: 60))
                             .foregroundColor(Color.Neumorphic.secondary.opacity(0.5))
 
-                        Text("Global Hotkey".localizedStringKey)
+                        Text("Global Shortcut".localizedStringKey)
                             .font(.title2)
                             .fontWeight(.semibold)
 
-                        Text("Global hotkey feature is only available on macOS".localizedStringKey)
+                        Text("Global shortcut feature is only available on macOS".localizedStringKey)
                             .font(.body)
                             .multilineTextAlignment(.center)
                             .foregroundColor(Color.Neumorphic.secondary.opacity(0.7))
@@ -191,8 +191,8 @@ struct HotkeySettingsScene: View {
 
 }
 
-struct HotkeySettingsScene_Previews: PreviewProvider {
+struct ShortcutSettingsScene_Previews: PreviewProvider {
     static var previews: some View {
-        HotkeySettingsScene()
+        ShortcutSettingsScene()
     }
 }

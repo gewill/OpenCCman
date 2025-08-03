@@ -79,42 +79,31 @@
 
 // MARK: - Help
 "Help" = "帮助";
-"help description" =  "
-中文简繁转换开源项目，支持词汇级别的转换、异体字转换和地区习惯用词转换（中国大陆、台湾、香港、日本新字体）。不提供普通话与粤语的转换。
+"help_intro" = "中文简繁转换开源项目，支持词汇级别的转换、异体字转换和地区习惯用词转换（中国大陆、台湾、香港、日本新字体）。不提供普通话与粤语的转换。";
 
-**特点**
+"help_features_title" = "特点";
+"help_features_content" = "严格区分「一简对多繁」和「一简对多异」。\n完全兼容异体字，可以实现动态替换。\n严格审校一简对多繁词条，原则为「能分则不合」。\n支持中国大陆、台湾、香港异体字和地区习惯用词转换，如「裏」「裡」、「鼠標」「滑鼠」。";
 
-严格区分「一简对多繁」和「一简对多异」。
-完全兼容异体字，可以实现动态替换。
-严格审校一简对多繁词条，原则为「能分则不合」。
-支持中国大陆、台湾、香港异体字和地区习惯用词转换，如「裏」「裡」、「鼠標」「滑鼠」。
+"help_global_service_title" = "全局服务 (macOS)";
+"help_global_service_intro" = "OpenCCman 提供多种方式在任何应用程序中转换中文文本：";
 
-**全局服务 (macOS)**
+"help_method1_title" = "方法一：全局键盘快捷键（推荐）";
+"help_method1_content" = "1. 前往「设置 > 全局快捷键」配置您的快捷键\n2. 在任何应用程序中选择中文文本\n3. 按下您配置的快捷键（默认：⌘⌥R）\n4. 文本将自动转换并替换\n5. OpenCCman 将打开并显示原文和转换后的文本";
 
-OpenCCman 提供多种方式在任何应用程序中转换中文文本：
+"help_method2_title" = "方法二：右键服务";
+"help_method2_content" = "1. 在任何应用（Safari、文本编辑等）中选择文本\n2. 右键点击并从「服务」菜单中选择「使用 OpenCCman 转换中文文本」\n3. 选中的文本将自动转换并替换";
 
-**方法一：全局键盘快捷键（推荐）**
-1. 前往「设置 > 全局快捷键」配置您的快捷键
-2. 在任何应用程序中选择中文文本
-3. 按下您配置的快捷键（默认：⌘⌥R）
-4. 文本将自动转换并替换
-5. OpenCCman 将打开并显示原文和转换后的文本
+"help_service_tip" = "您也可以在「系统设置 > 键盘 > 键盘快捷键 > 服务 > 文本」中为右键服务分配键盘快捷键，以便更快速地访问。";
 
-**方法二：右键服务**
-1. 在任何应用（Safari、文本编辑等）中选择文本
-2. 右键点击并从「服务」菜单中选择「使用 OpenCCman 转换中文文本」
-3. 选中的文本将自动转换并替换
-
-键盘快捷键方式更快速，适合频繁使用。
-";
+"help_conclusion" = "键盘快捷键方式更快速，适合频繁使用。";
 
 // MARK: - Services
 "Convert Chinese Text with OpenCCman" = "使用 OpenCCman 转换中文文本";
 
-// MARK: - Hotkey Settings
-"Global Hotkey" = "全局快捷键";
-"Hotkey Settings" = "快捷键设置";
-"Enable Global Hotkey" = "启用全局快捷键";
+// MARK: - Shortcut Settings
+"Global Shortcut" = "全局快捷键";
+"Shortcut Settings" = "快捷键设置";
+"Enable Global Shortcut" = "启用全局快捷键";
 "Keyboard Shortcut" = "键盘快捷键";
 "How to Use" = "使用方法";
 "Tips" = "提示";
@@ -132,7 +121,15 @@ OpenCCman 提供多种方式在任何应用程序中转换中文文本：
 "Accessibility permission granted" = "已授予辅助功能权限";
 "Accessibility permission required" = "需要辅助功能权限";
 
-"Global hotkey feature is only available on macOS" = "全局快捷键功能仅在 macOS 上可用";
-"hotkey_instructions_enabled" = "1. 启用上面的全局快捷键\n2. 点击快捷键录制器设置您喜欢的按键组合\n3. 在任何应用程序中选择中文文本\n4. 按下您配置的快捷键转换文本\n5. 转换后的文本将替换选中的文本\n6. OpenCCman 将打开并显示转换结果";
-"hotkey_instructions_disabled" = "要使用全局快捷键功能：\n1. 首先授予上面的辅助功能权限\n2. 授予权限后，点击「刷新」更新状态\n3. 然后启用全局快捷键并配置您的快捷键\n\n辅助功能权限允许 OpenCCman 从其他应用程序读取和转换选中的文本。";
-"hotkey_tips" = "• 快捷键录制器允许您轻松设置任何按键组合\n• 常用快捷键如 ⌘⌥R、⌘⌥T、⌘⌥C 效果很好\n• 避免与系统快捷键冲突\n• 快捷键在所有应用程序中全局工作";
+"Global shortcut feature is only available on macOS" = "全局快捷键功能仅在 macOS 上可用";
+"shortcut_instructions_enabled" = "1. 启用上面的全局快捷键\n2. 点击快捷键录制器设置您喜欢的按键组合\n3. 在任何应用程序中选择中文文本\n4. 按下您配置的快捷键转换文本\n5. 转换后的文本将替换选中的文本\n6. OpenCCman 将打开并显示转换结果";
+"shortcut_instructions_disabled" = "要使用全局快捷键功能：\n1. 首先授予上面的辅助功能权限\n2. 授予权限后，点击「刷新」更新状态\n3. 然后启用全局快捷键并配置您的快捷键\n\n辅助功能权限允许 OpenCCman 从其他应用程序读取和转换选中的文本。";
+"shortcut_tips" = "• 快捷键录制器允许您轻松设置任何按键组合\n• 常用快捷键如 ⌘⌥R、⌘⌥T、⌘⌥C 效果很好\n• 避免与系统快捷键冲突\n• 快捷键在所有应用程序中全局工作";
+
+// MARK: - Accessibility Permission Alert
+"accessibility_permission_intro" = "OpenCCman 需要辅助功能权限来读取其他应用程序中的选中文本。";
+"accessibility_permission_instructions_title" = "请按以下步骤操作：";
+"accessibility_permission_step1" = "1. 点击下方的「打开系统偏好设置」";
+"accessibility_permission_step2" = "2. 在列表中找到「OpenCCman」";
+"accessibility_permission_step3" = "3. 勾选旁边的复选框";
+"accessibility_permission_step4" = "4. 返回 OpenCCman 并重试";

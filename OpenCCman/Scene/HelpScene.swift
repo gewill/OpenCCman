@@ -42,8 +42,62 @@ struct HelpScene: View {
         Text("Convert Chinese text with [OpenCC](https://github.com/BYVoid/OpenCC)")
 
         ScrollView {
-          VStack(alignment: .leading, spacing: 10.0) {
-            Text("help description")
+          VStack(alignment: .leading, spacing: 15.0) {
+            // Introduction
+            Text("help_intro".localizedStringKey)
+              .font(.body)
+
+            // Features section
+            VStack(alignment: .leading, spacing: 8) {
+              Text("help_features_title".localizedStringKey)
+                .font(.headline)
+                .fontWeight(.semibold)
+              Text("help_features_content".localizedStringKey)
+                .font(.body)
+            }
+
+            // Global Service section (macOS only)
+            #if os(macOS)
+            VStack(alignment: .leading, spacing: 8) {
+              Text("help_global_service_title".localizedStringKey)
+                .font(.headline)
+                .fontWeight(.semibold)
+              Text("help_global_service_intro".localizedStringKey)
+                .font(.body)
+
+              // Method 1
+              VStack(alignment: .leading, spacing: 4) {
+                Text("help_method1_title".localizedStringKey)
+                  .font(.subheadline)
+                  .fontWeight(.medium)
+                Text("help_method1_content".localizedStringKey)
+                  .font(.body)
+              }
+              .padding(.top, 8)
+
+              // Method 2
+              VStack(alignment: .leading, spacing: 4) {
+                Text("help_method2_title".localizedStringKey)
+                  .font(.subheadline)
+                  .fontWeight(.medium)
+                Text("help_method2_content".localizedStringKey)
+                  .font(.body)
+              }
+              .padding(.top, 8)
+
+              // Service tip
+              Text("help_service_tip".localizedStringKey)
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .padding(.top, 4)
+
+              // Conclusion
+              Text("help_conclusion".localizedStringKey)
+                .font(.body)
+                .fontWeight(.medium)
+                .padding(.top, 8)
+            }
+            #endif
           }
         }
       }

@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0920E96C2E3F4D3C003C9715 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */; };
 		09DBEC4F2E3BC32F00DD9C5B /* HotkeySettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC4E2E3BC32F00DD9C5B /* HotkeySettingsScene.swift */; };
 		09DBEC522E3BC4BC00DD9C5B /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 09DBEC512E3BC4BC00DD9C5B /* KeyboardShortcuts */; };
-		09DBEC552E3BC69000DD9C5B /* GlobalHotkeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC532E3BC69000DD9C5B /* GlobalHotkeyService.swift */; };
+		09DBEC552E3BC69000DD9C5B /* GlobalShortcutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */; };
 		09FB99902E3D060700DBDB5D /* SwiftUIOverlayContainer in Frameworks */ = {isa = PBXBuildFile; productRef = 09FB998F2E3D060700DBDB5D /* SwiftUIOverlayContainer */; };
 		BE2C6D3E2B2D7EA700FC4112 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = BE2C6D3D2B2D7EA700FC4112 /* SwiftUIIntrospect */; };
 		BE2C6D502B2D7ED000FC4112 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D402B2D7ED000FC4112 /* ViewExtensions.swift */; };
@@ -69,8 +70,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		09DBEC4E2E3BC32F00DD9C5B /* HotkeySettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeySettingsScene.swift; sourceTree = "<group>"; };
-		09DBEC532E3BC69000DD9C5B /* GlobalHotkeyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalHotkeyService.swift; sourceTree = "<group>"; };
+		09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalShortcutService.swift; sourceTree = "<group>"; };
 		BE2C6D402B2D7ED000FC4112 /* ViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		BE2C6D412B2D7ED000FC4112 /* SKProductExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKProductExtensions.swift; sourceTree = "<group>"; };
 		BE2C6D422B2D7ED000FC4112 /* ImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtensions.swift; sourceTree = "<group>"; };
@@ -149,7 +151,7 @@
 		09DBEC542E3BC69000DD9C5B /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				09DBEC532E3BC69000DD9C5B /* GlobalHotkeyService.swift */,
+				09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -262,6 +264,7 @@
 				BE3AEC9D2B2EF2D400820673 /* IAPManager.swift */,
 				BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */,
 				BEA770EC2B2C904A00AFA2F0 /* OpenCCman.entitlements */,
+				0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */,
 				BE727E3A2B2E00D000C63DB2 /* Localizable.strings */,
 				09DBEC542E3BC69000DD9C5B /* Services */,
 				BE3AEC8A2B2EF18F00820673 /* Scene */,
@@ -374,6 +377,7 @@
 			files = (
 				BEA770EF2B2C904A00AFA2F0 /* Preview Assets.xcassets in Resources */,
 				BE727E382B2E00D000C63DB2 /* Localizable.strings in Resources */,
+				0920E96C2E3F4D3C003C9715 /* InfoPlist.xcstrings in Resources */,
 				BEA770EB2B2C904A00AFA2F0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,7 +395,7 @@
 				BE2C6D632B2D80D100FC4112 /* Styles.swift in Sources */,
 				BE2C6D572B2D7ED000FC4112 /* DoubleExtensions.swift in Sources */,
 				BE3AECB82B2EF6F700820673 /* ProAlertView.swift in Sources */,
-				09DBEC552E3BC69000DD9C5B /* GlobalHotkeyService.swift in Sources */,
+				09DBEC552E3BC69000DD9C5B /* GlobalShortcutService.swift in Sources */,
 				BE727E342B2DF85E00C63DB2 /* UserDefaultsKeys.swift in Sources */,
 				BE2C6D542B2D7ED000FC4112 /* StringExtensions.swift in Sources */,
 				BE3AEC892B2EF17700820673 /* RootView.swift in Sources */,
@@ -575,7 +579,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OpenCCman/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "OpenCCman requires permission to execute AppleScript.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -615,7 +621,9 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = OpenCCman/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "OpenCCman requires permission to execute AppleScript.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

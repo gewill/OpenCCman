@@ -1,5 +1,5 @@
 //
-//  GlobalHotkeyService.swift
+//  GlobalShortcutService.swift
 //  OpenCCman
 //
 //  Created by will on 2024/07/30.
@@ -21,10 +21,10 @@ extension KeyboardShortcuts.Name {
     static let convertSelectedText = Self("convertSelectedText", default: .init(.r, modifiers: [.command, .option]))
 }
 
-// MARK: - Global Hotkey Service
+// MARK: - Global Shortcut Service
 
-class GlobalHotkeyService: ObservableObject {
-    static let shared = GlobalHotkeyService()
+class GlobalShortcutService: ObservableObject {
+    static let shared = GlobalShortcutService()
 
     @Published var isEnabled: Bool = true {
         didSet {
@@ -46,14 +46,14 @@ class GlobalHotkeyService: ObservableObject {
     private func setupKeyboardShortcut() {
         KeyboardShortcuts.onKeyUp(for: .convertSelectedText) { [weak self] in
             guard let self = self, self.isEnabled else { return }
-            self.handleHotkeyPressed()
+            self.handleShortcutPressed()
         }
     }
     
-    // MARK: - Hotkey Handling
+    // MARK: - Shortcut Handling
 
-    private func handleHotkeyPressed() {
-        print("Hotkey pressed! Converting selected text...")
+    private func handleShortcutPressed() {
+        print("Shortcut pressed! Converting selected text...")
         convertSelectedText()
     }
 
@@ -92,15 +92,16 @@ class GlobalHotkeyService: ObservableObject {
     private func showAccessibilityPermissionAlert() {
         let alert = NSAlert()
         alert.messageText = NSLocalizedString("Accessibility Permission Required", comment: "")
-        alert.informativeText = NSLocalizedString("""
-        OpenCCman needs accessibility permission to read selected text from other applications.
 
-        Please:
-        1. Click "Open System Preferences" below
-        2. Find "OpenCCman" in the list
-        3. Check the box next to it
-        4. Return to OpenCCman and try again
-        """, comment: "")
+        // Build the informative text using structured localization keys
+        let intro = NSLocalizedString("accessibility_permission_intro", comment: "")
+        let instructionsTitle = NSLocalizedString("accessibility_permission_instructions_title", comment: "")
+        let step1 = NSLocalizedString("accessibility_permission_step1", comment: "")
+        let step2 = NSLocalizedString("accessibility_permission_step2", comment: "")
+        let step3 = NSLocalizedString("accessibility_permission_step3", comment: "")
+        let step4 = NSLocalizedString("accessibility_permission_step4", comment: "")
+
+        alert.informativeText = "\(intro)\n\n\(instructionsTitle)\n\(step1)\n\(step2)\n\(step3)\n\(step4)"
 
         alert.addButton(withTitle: NSLocalizedString("Open System Preferences", comment: ""))
         alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
@@ -342,7 +343,7 @@ class GlobalHotkeyService: ObservableObject {
         
         // Post notification to update the UI
         NotificationCenter.default.post(
-            name: .globalHotkeyDidConvertText,
+            name: .globalShortcutDidConvertText,
             object: nil,
             userInfo: [
                 "originalText": originalText,
@@ -359,7 +360,7 @@ class GlobalHotkeyService: ObservableObject {
 // MARK: - Notification Extension
 
 extension Notification.Name {
-    static let globalHotkeyDidConvertText = Notification.Name("GlobalHotkeyDidConvertText")
+    static let globalShortcutDidConvertText = Notification.Name("GlobalShortcutDidConvertText")
 }
 
 // MARK: - Helper Functions

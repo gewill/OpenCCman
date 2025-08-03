@@ -92,8 +92,8 @@ struct SettingsScene: View {
           }
           #if os(macOS)
           Divider()
-          CellButton(title: "Global Hotkey") {
-            navigator.navigate("/settings/hotkey")
+          CellButton(title: "Global Shortcut") {
+            navigator.navigate("/settings/shortcut")
           }
           #endif
         }

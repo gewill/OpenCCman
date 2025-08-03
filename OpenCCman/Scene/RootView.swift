@@ -75,8 +75,8 @@ struct SettingsRoutes: View {
         ChangeColorSchemeScene()
       }
 
-      Route("/settings/hotkey") {
-        HotkeySettingsScene()
+      Route("/settings/shortcut") {
+        ShortcutSettingsScene()
       }
 
       Route("/settings") {

@@ -84,8 +84,8 @@ class HomeViewModel: ObservableObject {
       }
       .store(in: &cancellables)
 
-    // Listen for global hotkey notifications
-    NotificationCenter.default.publisher(for: .globalHotkeyDidConvertText)
+    // Listen for global shortcut notifications
+    NotificationCenter.default.publisher(for: .globalShortcutDidConvertText)
       .sink { [weak self] notification in
         guard let self = self,
               let userInfo = notification.userInfo,

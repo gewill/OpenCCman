@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>NSServices</key>
 	<array>
 		<dict>
@@ -16,11 +14,11 @@
 			<string>convertSelectedText</string>
 			<key>NSPortName</key>
 			<string>OpenCCman</string>
-			<key>NSSendTypes</key>
+			<key>NSReturnTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
 			</array>
-			<key>NSReturnTypes</key>
+			<key>NSSendTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
 			</array>
