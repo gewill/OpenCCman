@@ -109,6 +109,7 @@ struct HelpScene: View {
             }
             #endif
           }
+          .textSelectable()
         }
       }
       .padding(Constant.padding)
