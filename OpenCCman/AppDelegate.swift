@@ -47,18 +47,31 @@
         let convertSelectedTextItem = NSMenuItem(
           title: "Convert Selected Text",
           action: #selector(convertSelectedText),
-          keyEquivalent: "r"
+          keyEquivalent: "t"
         )
         convertSelectedTextItem.keyEquivalentModifierMask = [.command, .option]
         convertSelectedTextItem.target = self
 
+        let openSelectedTextItem = NSMenuItem(
+          title: "Open Selected Text",
+          action: #selector(openSelectedText),
+          keyEquivalent: "r"
+        )
+        openSelectedTextItem.keyEquivalentModifierMask = [.command, .option]
+        openSelectedTextItem.target = self
+
         testMenu.addItem(convertSelectedTextItem)
+        testMenu.addItem(openSelectedTextItem)
         mainMenu.addItem(testMenuItem)
       }
     }
 
     @objc private func convertSelectedText() {
       GlobalShortcutService.shared.convertSelectedText()
+    }
+
+    @objc private func openSelectedText() {
+      GlobalShortcutService.shared.openSelectedText()
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {

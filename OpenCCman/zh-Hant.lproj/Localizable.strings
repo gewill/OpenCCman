@@ -88,7 +88,7 @@
 "help_global_service_intro" = "OpenCCman 提供多種方式在任何應用程式中轉換中文文字：";
 
 "help_method1_title" = "方法一：全域鍵盤快速鍵（推薦）";
-"help_method1_content" = "1. 前往「設定 > 全域快速鍵」配置您的快速鍵\n2. 在任何應用程式中選取中文文字\n3. 按下您配置的快速鍵（預設：⌘⌥R）\n4. 文字將自動轉換並替換\n5. OpenCCman 將開啟並顯示原文和轉換後的文字";
+"help_method1_content" = "OpenCCman 提供兩種全域鍵盤快速鍵：\n\n• 轉換選取文字（預設：⌘⌥T）- 自動轉換並在可編輯欄位中替換選取的文字\n• 開啟選取文字（預設：⌘⌥R）- 在 OpenCCman 中開啟選取文字以便手動轉換\n\n1. 前往「設定 > 全域快速鍵」配置您的快速鍵\n2. 在任何應用程式中選取中文文字\n3. 按下您配置的快速鍵\n4. 轉換快速鍵：文字將自動轉換並就地替換（適用於文字編輯器、瀏覽器等）\n5. 開啟快速鍵：OpenCCman 將開啟並載入文字，準備進行轉換";
 
 "help_method2_title" = "方法二：右鍵服務";
 "help_method2_content" = "OpenCCman 提供兩種右鍵服務：\n\n• 「使用 OpenCCman 轉換中文文本」- 自動轉換並替換選取的文字\n• 「在 OpenCCman 中開啟選取文字」- 開啟應用程式，將選取文字載入以便手動轉換\n\n1. 在任何應用程式（Safari、文字編輯等）中選取文字\n2. 右鍵點擊並從「服務」選單中選擇您偏好的服務\n3. 轉換服務：文字將自動轉換並替換\n4. 開啟服務：OpenCCman 將開啟並載入文字，準備進行轉換";
@@ -109,6 +109,8 @@
 "Shortcut Settings" = "快速鍵設定";
 "Enable Global Shortcut" = "啟用全域快速鍵";
 "Keyboard Shortcut" = "鍵盤快速鍵";
+"Convert Selected Text Shortcut" = "轉換選中文本快速鍵";
+"Open Selected Text Shortcut" = "打開選中文本快速鍵";
 "How to Use" = "使用方法";
 "Tips" = "提示";
 "Test" = "測試";
@@ -126,9 +128,9 @@
 "Accessibility permission required" = "需要輔助功能權限";
 
 "Global shortcut feature is only available on macOS" = "全域快速鍵功能僅在 macOS 上可用";
-"shortcut_instructions_enabled" = "1. 啟用上面的全域快速鍵\n2. 點擊快速鍵錄製器設定您喜歡的按鍵組合\n3. 在任何應用程式中選取中文文字\n4. 按下您配置的快速鍵轉換文字\n5. 轉換後的文字將替換選取的文字\n6. OpenCCman 將開啟並顯示轉換結果";
-"shortcut_instructions_disabled" = "要使用全域快速鍵功能：\n1. 首先授予上面的輔助功能權限\n2. 授予權限後，點擊「重新整理」更新狀態\n3. 然後啟用全域快速鍵並配置您的快速鍵\n\n輔助功能權限允許 OpenCCman 從其他應用程式讀取和轉換選取的文字。";
-"shortcut_tips" = "• 快速鍵錄製器允許您輕鬆設定任何按鍵組合\n• 常用快速鍵如 ⌘⌥R、⌘⌥T、⌘⌥C 效果很好\n• 避免與系統快速鍵衝突\n• 快速鍵在所有應用程式中全域工作";
+"shortcut_instructions_enabled" = "1. 啟用上面的全域快速鍵\n2. 點擊快速鍵錄製器設定您喜歡的按鍵組合\n3. 在任何應用程式中選取中文文字\n4. 按下您配置的快速鍵：\n   • 轉換快速鍵：文字將自動轉換並就地替換（適用於可編輯欄位）\n   • 開啟快速鍵：OpenCCman 將開啟並載入文字，準備進行轉換\n5. OpenCCman 也會顯示轉換結果以供參考";
+"shortcut_instructions_disabled" = "要使用全域快速鍵功能：\n1. 首先授予上面的輔助功能權限\n2. 授予權限後，點擊「重新整理」更新狀態\n3. 然後啟用全域快速鍵並配置您的快速鍵\n\n輔助功能權限允許 OpenCCman 從其他應用程式讀取選取的文字。";
+"shortcut_tips" = "• 快速鍵錄製器允許您輕鬆設定任何按鍵組合\n• 常用快速鍵如 ⌘⌥T、⌘⌥R、⌘⌥C 效果很好\n• 避免與系統快速鍵衝突\n• 兩個快速鍵都在所有應用程式中全域工作";
 
 // MARK: - Accessibility Permission Alert
 "accessibility_permission_intro" = "OpenCCman 需要輔助功能權限來讀取其他應用程式中的選取文字。";

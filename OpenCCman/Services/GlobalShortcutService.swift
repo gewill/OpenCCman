@@ -18,7 +18,8 @@ import Carbon
 // MARK: - Keyboard Shortcuts Extension
 
 extension KeyboardShortcuts.Name {
-    static let convertSelectedText = Self("convertSelectedText", default: .init(.r, modifiers: [.command, .option]))
+    static let convertSelectedText = Self("convertSelectedText", default: .init(.t, modifiers: [.command, .option]))
+    static let openSelectedText = Self("openSelectedText", default: .init(.r, modifiers: [.command, .option]))
 }
 
 // MARK: - Global Shortcut Service
@@ -29,9 +30,10 @@ class GlobalShortcutService: ObservableObject {
     @Published var isEnabled: Bool = true {
         didSet {
             if isEnabled {
-                setupKeyboardShortcut()
+                setupKeyboardShortcuts()
             } else {
                 KeyboardShortcuts.disable(.convertSelectedText)
+                KeyboardShortcuts.disable(.openSelectedText)
             }
         }
     }
@@ -40,21 +42,31 @@ class GlobalShortcutService: ObservableObject {
 
     private init() {
         checkAccessibilityPermission()
-        setupKeyboardShortcut()
+        setupKeyboardShortcuts()
     }
 
-    private func setupKeyboardShortcut() {
+    private func setupKeyboardShortcuts() {
         KeyboardShortcuts.onKeyUp(for: .convertSelectedText) { [weak self] in
             guard let self = self, self.isEnabled else { return }
-            self.handleShortcutPressed()
+            self.handleConvertShortcutPressed()
+        }
+
+        KeyboardShortcuts.onKeyUp(for: .openSelectedText) { [weak self] in
+            guard let self = self, self.isEnabled else { return }
+            self.handleOpenShortcutPressed()
         }
     }
     
     // MARK: - Shortcut Handling
 
-    private func handleShortcutPressed() {
-        print("Shortcut pressed! Converting selected text...")
+    private func handleConvertShortcutPressed() {
+        print("Convert shortcut pressed! Converting selected text...")
         convertSelectedText()
+    }
+
+    private func handleOpenShortcutPressed() {
+        print("Open shortcut pressed! Opening selected text...")
+        openSelectedText()
     }
 
     // MARK: - Permission Management
@@ -145,6 +157,30 @@ class GlobalShortcutService: ObservableObject {
                 print("Selected text: \(text)")
                 // Convert the text
                 self.convertText(text)
+            }
+        }
+    }
+
+    func openSelectedText() {
+        // Check accessibility permission first
+        guard hasAccessibilityPermission else {
+            print("Accessibility permission not granted")
+            requestAccessibilityPermission()
+            return
+        }
+
+        // Get the currently selected text using improved method
+        getSelectedTextImproved { [weak self] selectedText in
+            DispatchQueue.main.async {
+                guard let self = self, let text = selectedText, !text.isEmpty else {
+                    print("No text selected or text is empty")
+                    self?.showNoTextSelectedAlert()
+                    return
+                }
+
+                print("Selected text: \(text)")
+                // Open the text in app without conversion
+                self.bringAppToFrontAndSetTextOnly(originalText: text)
             }
         }
     }
@@ -286,50 +322,55 @@ class GlobalShortcutService: ObservableObject {
         do {
             let converter = try ChineseConverter(options: options)
             let convertedText = converter.convert(text)
-            
-            // Replace the selected text with converted text
+
+            print("📝 Original text: \(text)")
+            print("🔄 Converted text: \(convertedText)")
+
+            // Always try to replace the selected text in-place first
+            // This works for editable fields like text editors, browsers, etc.
             replaceSelectedText(with: convertedText)
-            
-            // Bring the app to front and populate the input field
-            bringAppToFrontAndSetText(originalText: text, convertedText: convertedText)
-            
+
+            // Also bring the app to front and populate the input field for reference
+            // This provides a backup and shows the conversion result
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.bringAppToFrontAndSetText(originalText: text, convertedText: convertedText)
+            }
+
         } catch {
-            print("Conversion failed: \(error.localizedDescription)")
+            print("❌ Conversion failed: \(error.localizedDescription)")
         }
     }
     
     // MARK: - Text Replacement
     
     private func replaceSelectedText(with convertedText: String) {
-        // Copy converted text to clipboard
+        print("🔄 Attempting to replace selected text with converted text")
+
+        // Store original clipboard content
         let pasteboard = NSPasteboard.general
+        let originalClipboard = pasteboard.string(forType: .string)
+
+        // Copy converted text to clipboard
         pasteboard.clearContents()
         pasteboard.setString(convertedText, forType: .string)
-        
-        // Use improved AppleScript to paste the converted text
-        let script = """
-        try
-            tell application "System Events"
-                if not running then launch
-                set frontApp to name of first application process whose frontmost is true
-                tell application process frontApp
-                    keystroke "v" using command down
-                end tell
-            end tell
-            return "success"
-        on error errMsg
-            return "error: " & errMsg
-        end try
-        """
 
-        let appleScript = NSAppleScript(source: script)
-        var error: NSDictionary?
-        let result = appleScript?.executeAndReturnError(&error)
+        // Use CGEvent to simulate Cmd+V for more reliable pasting
+        // This works in most editable fields including text editors, browsers, etc.
+        simulateKeyPress(keyCode: CGKeyCode(9), modifiers: .maskCommand) { // 9 is kVK_ANSI_V
+            print("✅ Paste command sent - text should be replaced in editable field")
 
-        if let error = error {
-            print("AppleScript paste error: \(error)")
-        } else if let resultString = result?.stringValue, resultString.hasPrefix("error:") {
-            print("AppleScript paste execution error: \(resultString)")
+            // Restore original clipboard content after a delay
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                if let original = originalClipboard {
+                    pasteboard.clearContents()
+                    pasteboard.setString(original, forType: .string)
+                    print("🔄 Original clipboard content restored")
+                } else {
+                    // If there was no original content, clear the clipboard
+                    pasteboard.clearContents()
+                    print("🧹 Clipboard cleared (no original content)")
+                }
+            }
         }
     }
     
@@ -338,7 +379,7 @@ class GlobalShortcutService: ObservableObject {
     private func bringAppToFrontAndSetText(originalText: String, convertedText: String) {
         // Activate the app
         NSApp.activate(ignoringOtherApps: true)
-        
+
         // Post notification to update the UI
         NotificationCenter.default.post(
             name: .globalShortcutDidConvertText,
@@ -346,6 +387,20 @@ class GlobalShortcutService: ObservableObject {
             userInfo: [
                 "originalText": originalText,
                 "convertedText": convertedText
+            ]
+        )
+    }
+
+    private func bringAppToFrontAndSetTextOnly(originalText: String) {
+        // Activate the app
+        NSApp.activate(ignoringOtherApps: true)
+
+        // Post notification to update the UI with just the original text
+        NotificationCenter.default.post(
+            name: .textServiceDidReceiveText,
+            object: nil,
+            userInfo: [
+                "originalText": originalText
             ]
         )
     }

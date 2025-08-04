@@ -98,9 +98,9 @@ struct ShortcutSettingsScene: View {
                             .softOuterShadow()
                     )
 
-                    // Keyboard Shortcut Recorder
+                    // Convert Selected Text Shortcut
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Keyboard Shortcut".localizedStringKey)
+                        Text("Convert Selected Text Shortcut".localizedStringKey)
                             .font(.headline)
 
                         HStack {
@@ -111,6 +111,30 @@ struct ShortcutSettingsScene: View {
 
                             Button("Test".localizedStringKey) {
                                 shortcutService.convertSelectedText()
+                            }
+                            .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 8)
+                        }
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: Constant.cornerRadius)
+                            .fill(Color.Neumorphic.main)
+                            .softOuterShadow()
+                    )
+
+                    // Open Selected Text Shortcut
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Open Selected Text Shortcut".localizedStringKey)
+                            .font(.headline)
+
+                        HStack {
+                            KeyboardShortcuts.Recorder("", name: .openSelectedText)
+                                .frame(minWidth: 150)
+
+                            Spacer()
+
+                            Button("Test".localizedStringKey) {
+                                shortcutService.openSelectedText()
                             }
                             .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 8)
                         }
