@@ -7,6 +7,7 @@ import SwiftyUserDefaults
 #if os(macOS)
 extension Notification.Name {
   static let textConversionServiceDidReceiveText = Notification.Name("TextConversionServiceDidReceiveText")
+  static let textServiceDidReceiveText = Notification.Name("TextServiceDidReceiveText")
 }
 #endif
 
@@ -97,6 +98,22 @@ class HomeViewModel: ObservableObject {
         DispatchQueue.main.async {
           self.inputText = originalText
           self.resultText = convertedText
+        }
+      }
+      .store(in: &cancellables)
+
+    // Listen for text service notifications (just open text without conversion)
+    NotificationCenter.default.publisher(for: .textServiceDidReceiveText)
+      .sink { [weak self] notification in
+        guard let self = self,
+              let userInfo = notification.userInfo,
+              let originalText = userInfo["originalText"] as? String else {
+          return
+        }
+
+        DispatchQueue.main.async {
+          self.inputText = originalText
+          self.resultText = "" // Clear result text since we're not converting
         }
       }
       .store(in: &cancellables)

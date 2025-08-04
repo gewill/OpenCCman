@@ -91,14 +91,18 @@
 "help_method1_content" = "1. 前往「设置 > 全局快捷键」配置您的快捷键\n2. 在任何应用程序中选择中文文本\n3. 按下您配置的快捷键（默认：⌘⌥R）\n4. 文本将自动转换并替换\n5. OpenCCman 将打开并显示原文和转换后的文本";
 
 "help_method2_title" = "方法二：右键服务";
-"help_method2_content" = "1. 在任何应用（Safari、文本编辑等）中选择文本\n2. 右键点击并从「服务」菜单中选择「使用 OpenCCman 转换中文文本」\n3. 选中的文本将自动转换并替换";
+"help_method2_content" = "OpenCCman 提供两种右键服务：\n\n• 「使用 OpenCCman 转换中文文本」- 自动转换并替换选中的文本\n• 「在 OpenCCman 中打开选中文本」- 打开应用程序，将选中文本载入以便手动转换\n\n1. 在任何应用（Safari、文本编辑等）中选择文本\n2. 右键点击并从「服务」菜单中选择您偏好的服务\n3. 转换服务：文本将自动转换并替换\n4. 打开服务：OpenCCman 将打开并载入文本，准备进行转换";
 
-"help_service_tip" = "您也可以在「系统设置 > 键盘 > 键盘快捷键 > 服务 > 文本」中为右键服务分配键盘快捷键，以便更快速地访问。";
+"help_service_tip" = "您也可以在「系统设置 > 键盘 > 键盘快捷键 > 服务 > 文本」中为这些服务分配键盘快捷键，以便更快速地访问。";
 
-"help_conclusion" = "键盘快捷键方式更快速，适合频繁使用。";
+"help_service_details_title" = "服务详情";
+"help_service_details_content" = "• 转换服务：适合快速自动转换，当您对当前设置有信心时使用\n• 打开服务：适合想要查看文本、调整转换设置或保持原文和转换文本同时可见时使用\n• 两种服务都可在任何支持文本选择的 macOS 应用程序中使用";
+
+"help_conclusion" = "键盘快捷键方式最快速，适合立即转换。当您想要在转换前查看或调整设置时，请使用「打开选中文本」服务。";
 
 // MARK: - Services
 "Convert Chinese Text with OpenCCman" = "使用 OpenCCman 转换中文文本";
+"Open Selected Text in OpenCCman" = "在 OpenCCman 中打开选中文本";
 
 // MARK: - Shortcut Settings
 "Global Shortcut" = "全局快捷键";

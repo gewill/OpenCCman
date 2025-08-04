@@ -129,6 +129,20 @@
           }
       }
 
+      // MARK: - Service Handler for Opening Text in App
+
+      @objc func openSelectedTextInApp(_ pboard: NSPasteboard, userData: String, error: AutoreleasingUnsafeMutablePointer<NSString>) {
+          guard let string = pboard.string(forType: .string), !string.isEmpty else {
+              error.pointee = "No text found in pasteboard" as NSString
+              return
+          }
+
+          // Just bring the app to front and set the text without conversion
+          DispatchQueue.main.async {
+              self.bringAppToFrontAndSetTextOnly(originalText: string)
+          }
+      }
+
       // MARK: - App Integration
 
       private func bringAppToFrontAndSetText(originalText: String, convertedText: String) {
@@ -142,6 +156,20 @@
               userInfo: [
                   "originalText": originalText,
                   "convertedText": convertedText
+              ]
+          )
+      }
+
+      private func bringAppToFrontAndSetTextOnly(originalText: String) {
+          // Activate the app
+          NSApp.activate(ignoringOtherApps: true)
+
+          // Post notification to update the UI with just the original text
+          NotificationCenter.default.post(
+              name: .textServiceDidReceiveText,
+              object: nil,
+              userInfo: [
+                  "originalText": originalText
               ]
           )
       }

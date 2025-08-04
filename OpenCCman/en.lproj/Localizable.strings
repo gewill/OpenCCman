@@ -14,15 +14,19 @@
 "help_method1_title" = "Method 1: Global Keyboard Shortcut (Recommended)";
 "help_method1_content" = "1. Go to Settings > Global Shortcut to configure your shortcut\n2. Select any Chinese text in any application\n3. Press your configured shortcut (default: ⌘⌥R)\n4. The text will be automatically converted and replaced\n5. OpenCCman will open showing both original and converted text";
 
-"help_method2_title" = "Method 2: Right-click Service";
-"help_method2_content" = "1. Select text in any app (Safari, TextEdit, etc.)\n2. Right-click and choose \"Convert Chinese Text with OpenCCman\" from the Services menu\n3. The selected text will be automatically converted and replaced";
+"help_method2_title" = "Method 2: Right-click Services";
+"help_method2_content" = "OpenCCman provides two right-click services:\n\n• \"Convert Chinese Text with OpenCCman\" - Automatically converts and replaces the selected text\n• \"Open Selected Text in OpenCCman\" - Opens the app with the selected text for manual conversion\n\n1. Select text in any app (Safari, TextEdit, etc.)\n2. Right-click and choose your preferred service from the Services menu\n3. For convert service: text is automatically converted and replaced\n4. For open service: OpenCCman opens with the text ready for conversion";
 
-"help_service_tip" = "You can also assign a keyboard shortcut to the Right-click Service in System Settings > Keyboard > Keyboard Shortcuts > Services > Text for even faster access.";
+"help_service_tip" = "You can also assign keyboard shortcuts to these services in System Settings > Keyboard > Keyboard Shortcuts > Services > Text for even faster access.";
 
-"help_conclusion" = "The keyboard shortcut method is faster and more convenient for frequent use.";
+"help_service_details_title" = "Service Details";
+"help_service_details_content" = "• Convert Service: Best for quick, automatic conversion when you're confident with current settings\n• Open Service: Perfect when you want to review the text, adjust conversion settings, or keep both original and converted text visible\n• Both services work in any macOS application that supports text selection";
+
+"help_conclusion" = "The keyboard shortcut method is fastest for immediate conversion. Use the \"Open Selected Text\" service when you want to review or adjust settings before converting.";
 
 // MARK: - Services
 "Convert Chinese Text with OpenCCman" = "Convert Chinese Text with OpenCCman";
+"Open Selected Text in OpenCCman" = "Open Selected Text in OpenCCman";
 
 // MARK: - Shortcut Settings
 "Global Shortcut" = "Global Shortcut";

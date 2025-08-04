@@ -91,6 +91,16 @@ struct HelpScene: View {
                 .foregroundColor(.secondary)
                 .padding(.top, 4)
 
+              // Service Details section
+              VStack(alignment: .leading, spacing: 4) {
+                Text("help_service_details_title".localizedStringKey)
+                  .font(.subheadline)
+                  .fontWeight(.medium)
+                Text("help_service_details_content".localizedStringKey)
+                  .font(.body)
+              }
+              .padding(.top, 8)
+
               // Conclusion
               Text("help_conclusion".localizedStringKey)
                 .font(.body)
