@@ -122,6 +122,7 @@ struct HomeScene: View {
               .font(.headline)
           })
           .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10, mainColor: Color.accentColor, textColor: Color.Neumorphic.main)
+          .keyboardShortcut("t")
         }
         TextEditor(text: $viewModel.inputText)
           .clearTextEdtorStyle()

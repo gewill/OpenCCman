@@ -8,6 +8,7 @@ import SwiftyUserDefaults
 extension Notification.Name {
   static let textConversionServiceDidReceiveText = Notification.Name("TextConversionServiceDidReceiveText")
   static let textServiceDidReceiveText = Notification.Name("TextServiceDidReceiveText")
+  static let convertTextFromMenu = Notification.Name("ConvertTextFromMenu")
 }
 #endif
 
@@ -114,6 +115,17 @@ class HomeViewModel: ObservableObject {
         DispatchQueue.main.async {
           self.inputText = originalText
           self.resultText = "" // Clear result text since we're not converting
+        }
+      }
+      .store(in: &cancellables)
+
+    // Listen for menu convert notifications
+    NotificationCenter.default.publisher(for: .convertTextFromMenu)
+      .sink { [weak self] _ in
+        guard let self = self else { return }
+
+        DispatchQueue.main.async {
+          self.translate()
         }
       }
       .store(in: &cancellables)

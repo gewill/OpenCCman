@@ -37,10 +37,17 @@ struct OpenCCmanApp: App {
       }
       .environment(\.locale, Locale(identifier: selectedLocale.identifier))
       .preferredColorScheme(selectedTheme.colorScheme)
-
     }
     #if os(macOS)
     .windowStyle(.hiddenTitleBar)
+    .commands {
+      CommandGroup(after: .textEditing) {
+        Button("Convert".localizedStringKey, systemImage: "arrow.trianglehead.2.counterclockwise") {
+          NotificationCenter.default.post(name: Notification.Name("ConvertTextFromMenu"), object: nil)
+        }
+        .keyboardShortcut("t")
+      }
+    }
     #endif
   }
 
