@@ -311,12 +311,10 @@ class GlobalShortcutService: ObservableObject {
         try
             tell application "System Events"
                 if not running then launch
-                delay 0.2
                 set frontApp to name of first application process whose frontmost is true
                 tell application process frontApp
                     keystroke "v" using command down
                 end tell
-                delay 0.1
             end tell
             return "success"
         on error errMsg
