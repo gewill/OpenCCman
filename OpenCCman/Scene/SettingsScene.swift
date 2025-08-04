@@ -14,6 +14,9 @@ struct SettingsScene: View {
     @State private var presentingSafariView: Bool = false
   #endif
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
+  #if os(macOS)
+    @AppStorage(UserDefaultsKeys.showMenuBarIcon.rawValue) var showMenuBarIcon: Bool = false
+  #endif
 
   var body: some View {
     VStack {
@@ -82,6 +85,22 @@ struct SettingsScene: View {
           }
         }.softRectangleStyle()
 
+        #if os(macOS)
+          VStack(spacing: Constant.padding) {
+            HStack(alignment: .center, spacing: 6) {
+              Text("Show Menu Bar Icon".localizedStringKey)
+              Spacer()
+              Toggle("", isOn: $showMenuBarIcon)
+                .toggleStyle(SwitchToggleStyle())
+            }
+
+            Divider()
+            CellButton(title: "Global Shortcut") {
+              navigator.navigate("/settings/shortcut")
+            }
+          }.softRectangleStyle()
+        #endif
+
         VStack(spacing: Constant.padding) {
           CellButton(title: "Language") {
             navigator.navigate("/settings/changeLanguage")
@@ -90,12 +109,6 @@ struct SettingsScene: View {
           CellButton(title: "Appearance") {
             navigator.navigate("/settings/changeAppearance")
           }
-          #if os(macOS)
-          Divider()
-          CellButton(title: "Global Shortcut") {
-            navigator.navigate("/settings/shortcut")
-          }
-          #endif
         }
         .softRectangleStyle()
 

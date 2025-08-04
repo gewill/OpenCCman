@@ -24,8 +24,10 @@
   import OpenCC
   import SwiftUI
   import SwiftyUserDefaults
+  import KeyboardShortcuts
 
   class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
+    private var statusItem: NSStatusItem?
     func applicationDidFinishLaunching(_ notification: Notification) {
       // Register the text conversion service
       NSApp.servicesProvider = TextConversionService.shared
@@ -34,6 +36,15 @@
       #if os(macOS)
       _ = GlobalShortcutService.shared
       setupMenuBar()
+      setupStatusBar()
+
+      // 监听UserDefaults变化
+      NotificationCenter.default.addObserver(
+        self,
+        selector: #selector(userDefaultsDidChange),
+        name: UserDefaults.didChangeNotification,
+        object: nil
+      )
       #endif
     }
 
@@ -80,6 +91,176 @@
         NSApp.activate(ignoringOtherApps: true)
       }
       return true
+    }
+
+    // MARK: - Status Bar Methods
+
+    private func setupStatusBar() {
+      updateStatusBarVisibility()
+    }
+
+    @objc private func userDefaultsDidChange() {
+      updateStatusBarVisibility()
+    }
+
+    private func updateStatusBarVisibility() {
+      let shouldShow = appDefaults[\.showMenuBarIcon]
+
+      if shouldShow {
+        createStatusBar()
+      } else {
+        removeStatusBar()
+      }
+    }
+
+    private func createStatusBar() {
+      guard statusItem == nil else { return }
+
+      statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+
+      if let button = statusItem?.button {
+        button.image = NSImage(named: "StatusBarIcon")
+        button.image?.isTemplate = true
+        button.toolTip = "OpenCCman - Chinese Text Converter"
+      }
+
+      statusItem?.menu = createStatusMenu()
+    }
+
+    private func removeStatusBar() {
+      if let statusItem = statusItem {
+        NSStatusBar.system.removeStatusItem(statusItem)
+        self.statusItem = nil
+      }
+    }
+
+    private func createStatusMenu() -> NSMenu {
+      let menu = NSMenu()
+
+      // 应用名称和版本
+      let titleItem = NSMenuItem(title: "OpenCCman \(Bundle.main.appVersion)", action: nil, keyEquivalent: "")
+      titleItem.isEnabled = false
+      menu.addItem(titleItem)
+
+      menu.addItem(NSMenuItem.separator())
+
+      // 转换功能
+      let convertItem = NSMenuItem(
+        title: NSLocalizedString("Convert", comment: ""),
+        action: #selector(convertTextFromStatusBar),
+        keyEquivalent: "t"
+      )
+      convertItem.target = self
+      menu.addItem(convertItem)
+
+      // 转换选中文本
+      let convertSelectedItem = NSMenuItem(
+        title: NSLocalizedString("Convert Selected Text", comment: ""),
+        action: #selector(convertSelectedText),
+        keyEquivalent: ""
+      )
+      // 动态获取快捷键设置
+      if let shortcut = KeyboardShortcuts.getShortcut(for: .convertSelectedText), !shortcut.keyEquivalent.isEmpty {
+        convertSelectedItem.keyEquivalent = shortcut.keyEquivalent
+        convertSelectedItem.keyEquivalentModifierMask = shortcut.modifierMask
+      }
+      convertSelectedItem.target = self
+      menu.addItem(convertSelectedItem)
+
+      // 打开选中文本
+      let openSelectedItem = NSMenuItem(
+        title: NSLocalizedString("Open Selected Text", comment: ""),
+        action: #selector(openSelectedText),
+        keyEquivalent: ""
+      )
+      // 动态获取快捷键设置
+      if let shortcut = KeyboardShortcuts.getShortcut(for: .openSelectedText), !shortcut.keyEquivalent.isEmpty {
+        openSelectedItem.keyEquivalent = shortcut.keyEquivalent
+        openSelectedItem.keyEquivalentModifierMask = shortcut.modifierMask
+      }
+      openSelectedItem.target = self
+      menu.addItem(openSelectedItem)
+
+      menu.addItem(NSMenuItem.separator())
+
+      // 设置
+      let settingsItem = NSMenuItem(
+        title: NSLocalizedString("Settings", comment: ""),
+        action: #selector(openSettingsFromStatusBar),
+        keyEquivalent: ","
+      )
+      settingsItem.target = self
+      menu.addItem(settingsItem)
+
+      // 帮助
+      let helpItem = NSMenuItem(
+        title: NSLocalizedString("Help", comment: ""),
+        action: #selector(openHelpFromStatusBar),
+        keyEquivalent: "?"
+      )
+      helpItem.target = self
+      menu.addItem(helpItem)
+
+      menu.addItem(NSMenuItem.separator())
+
+      // 退出
+      let quitItem = NSMenuItem(
+        title: NSLocalizedString("Quit", comment: ""),
+        action: #selector(quitApp),
+        keyEquivalent: "q"
+      )
+      quitItem.target = self
+      menu.addItem(quitItem)
+
+      return menu
+    }
+
+    // MARK: - Status Bar Menu Actions
+
+    @objc private func convertTextFromStatusBar() {
+      // 激活应用并发送转换通知
+      NSApp.activate(ignoringOtherApps: true)
+      NotificationCenter.default.post(name: Notification.Name("ConvertTextFromMenu"), object: nil)
+    }
+
+    @objc private func openSettingsFromStatusBar() {
+      NSApp.activate(ignoringOtherApps: true)
+      NotificationCenter.default.post(name: Notification.Name("OpenSettingsFromMenu"), object: nil)
+    }
+
+    @objc private func openHelpFromStatusBar() {
+      NSApp.activate(ignoringOtherApps: true)
+      NotificationCenter.default.post(name: Notification.Name("OpenHelpFromMenu"), object: nil)
+    }
+
+    @objc private func quitApp() {
+      NSApp.terminate(nil)
+    }
+  }
+
+  // MARK: - KeyboardShortcuts Extension
+
+  extension KeyboardShortcuts.Shortcut {
+    var keyEquivalent: String {
+      switch self.key {
+      case .t: return "t"
+      case .r: return "r"
+      case .o: return "o"
+      case .c: return "c"
+      case .comma: return ","
+      case .slash: return "?"
+      case .q: return "q"
+      default: return ""
+      }
+    }
+
+    var modifierMask: NSEvent.ModifierFlags {
+      var flags: NSEvent.ModifierFlags = []
+      if self.modifiers.contains(.command) { flags.insert(.command) }
+      if self.modifiers.contains(.option) { flags.insert(.option) }
+      if self.modifiers.contains(.control) { flags.insert(.control) }
+      if self.modifiers.contains(.shift) { flags.insert(.shift) }
+      return flags
     }
   }
 
