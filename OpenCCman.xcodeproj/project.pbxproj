@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0920E96C2E3F4D3C003C9715 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */; };
+		095E17452E40746F0051BBB7 /* ServicesMenu.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */; };
 		09DBEC4F2E3BC32F00DD9C5B /* HotkeySettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC4E2E3BC32F00DD9C5B /* HotkeySettingsScene.swift */; };
 		09DBEC522E3BC4BC00DD9C5B /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 09DBEC512E3BC4BC00DD9C5B /* KeyboardShortcuts */; };
 		09DBEC552E3BC69000DD9C5B /* GlobalShortcutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */; };
@@ -71,6 +72,7 @@
 
 /* Begin PBXFileReference section */
 		0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = ServicesMenu.xcstrings; sourceTree = "<group>"; };
 		09DBEC4E2E3BC32F00DD9C5B /* HotkeySettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeySettingsScene.swift; sourceTree = "<group>"; };
 		09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalShortcutService.swift; sourceTree = "<group>"; };
 		BE2C6D402B2D7ED000FC4112 /* ViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 				BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */,
 				BEA770EC2B2C904A00AFA2F0 /* OpenCCman.entitlements */,
 				0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */,
+				095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */,
 				BE727E3A2B2E00D000C63DB2 /* Localizable.strings */,
 				09DBEC542E3BC69000DD9C5B /* Services */,
 				BE3AEC8A2B2EF18F00820673 /* Scene */,
@@ -376,6 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEA770EF2B2C904A00AFA2F0 /* Preview Assets.xcassets in Resources */,
+				095E17452E40746F0051BBB7 /* ServicesMenu.xcstrings in Resources */,
 				BE727E382B2E00D000C63DB2 /* Localizable.strings in Resources */,
 				0920E96C2E3F4D3C003C9715 /* InfoPlist.xcstrings in Resources */,
 				BEA770EB2B2C904A00AFA2F0 /* Assets.xcassets in Resources */,
@@ -508,6 +512,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -562,6 +567,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};
@@ -572,7 +578,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = OpenCCman/OpenCCman.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenCCman/Preview Content\"";
 				DEVELOPMENT_TEAM = RLK76T8Y89;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -582,6 +588,7 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "OpenCCman requires permission to execute AppleScript.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Ge Will. All rights reserved.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -614,7 +621,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = OpenCCman/OpenCCman.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenCCman/Preview Content\"";
 				DEVELOPMENT_TEAM = RLK76T8Y89;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -624,6 +631,7 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "OpenCCman requires permission to execute AppleScript.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Ge Will. All rights reserved.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
