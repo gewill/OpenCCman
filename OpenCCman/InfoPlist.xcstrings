@@ -25,6 +25,30 @@
         }
       }
     },
+    "Convert Chinese Text with OpenCCman" : {
+      "comment" : "Service menu item for converting Chinese text",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Convert Chinese Text with OpenCCman"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 OpenCCman 转换中文文本"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 OpenCCman 轉換中文文字"
+          }
+        }
+      }
+    },
     "NSAppleEventsUsageDescription" : {
       "comment" : "Privacy - AppleEvents Sending Usage Description",
       "extractionState" : "extracted_with_value",
@@ -45,6 +69,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OpenCCman 需要權限來執行 AppleScript。"
+          }
+        }
+      }
+    },
+    "NSHumanReadableCopyright" : {
+      "comment" : "Copyright notice",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2025 Ge Will. All rights reserved."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版权所有 © 2025 Ge Will。保留所有权利。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版權所有 © 2025 Ge Will。保留所有權利。"
+          }
+        }
+      }
+    },
+    "Open Selected Text in OpenCCman" : {
+      "comment" : "Service menu item for opening selected text in OpenCCman",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open Selected Text in OpenCCman"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 OpenCCman 中打开所选文本"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 OpenCCman 中開啟所選文字"
           }
         }
       }
