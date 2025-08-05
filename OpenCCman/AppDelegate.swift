@@ -159,11 +159,6 @@
         action: #selector(convertSelectedText),
         keyEquivalent: ""
       )
-      // 动态获取快捷键设置
-      if let shortcut = KeyboardShortcuts.getShortcut(for: .convertSelectedText), !shortcut.keyEquivalent.isEmpty {
-        convertSelectedItem.keyEquivalent = shortcut.keyEquivalent
-        convertSelectedItem.keyEquivalentModifierMask = shortcut.modifierMask
-      }
       convertSelectedItem.target = self
       menu.addItem(convertSelectedItem)
 
@@ -173,11 +168,6 @@
         action: #selector(openSelectedText),
         keyEquivalent: ""
       )
-      // 动态获取快捷键设置
-      if let shortcut = KeyboardShortcuts.getShortcut(for: .openSelectedText), !shortcut.keyEquivalent.isEmpty {
-        openSelectedItem.keyEquivalent = shortcut.keyEquivalent
-        openSelectedItem.keyEquivalentModifierMask = shortcut.modifierMask
-      }
       openSelectedItem.target = self
       menu.addItem(openSelectedItem)
 
@@ -235,32 +225,6 @@
 
     @objc private func quitApp() {
       NSApp.terminate(nil)
-    }
-  }
-
-  // MARK: - KeyboardShortcuts Extension
-
-  extension KeyboardShortcuts.Shortcut {
-    var keyEquivalent: String {
-      switch self.key {
-      case .t: return "t"
-      case .r: return "r"
-      case .o: return "o"
-      case .c: return "c"
-      case .comma: return ","
-      case .slash: return "?"
-      case .q: return "q"
-      default: return ""
-      }
-    }
-
-    var modifierMask: NSEvent.ModifierFlags {
-      var flags: NSEvent.ModifierFlags = []
-      if self.modifiers.contains(.command) { flags.insert(.command) }
-      if self.modifiers.contains(.option) { flags.insert(.option) }
-      if self.modifiers.contains(.control) { flags.insert(.control) }
-      if self.modifiers.contains(.shift) { flags.insert(.shift) }
-      return flags
     }
   }
 

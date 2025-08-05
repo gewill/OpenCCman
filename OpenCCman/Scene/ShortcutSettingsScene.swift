@@ -104,15 +104,13 @@ struct ShortcutSettingsScene: View {
                             .font(.headline)
 
                         HStack {
-                            KeyboardShortcuts.Recorder("", name: .convertSelectedText)
-                                .frame(minWidth: 150)
+                            // Removed: KeyboardShortcuts.Recorder("", name: .convertSelectedText)
+                            // Removed: .frame(minWidth: 150)
 
                             Spacer()
 
-                            Button("Test".localizedStringKey) {
-                                shortcutService.convertSelectedText()
-                            }
-                            .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 8)
+                            // Removed: Button("Test".localizedStringKey) { shortcutService.convertSelectedText() }
+                            // Removed: .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 8)
                         }
                     }
                     .padding()
@@ -128,15 +126,13 @@ struct ShortcutSettingsScene: View {
                             .font(.headline)
 
                         HStack {
-                            KeyboardShortcuts.Recorder("", name: .openSelectedText)
-                                .frame(minWidth: 150)
+                            // Removed: KeyboardShortcuts.Recorder("", name: .openSelectedText)
+                            // Removed: .frame(minWidth: 150)
 
                             Spacer()
 
-                            Button("Test".localizedStringKey) {
-                                shortcutService.openSelectedText()
-                            }
-                            .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 8)
+                            // Removed: Button("Test".localizedStringKey) { shortcutService.openSelectedText() }
+                            // Removed: .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 8)
                         }
                     }
                     .padding()
@@ -220,3 +216,4 @@ struct ShortcutSettingsScene_Previews: PreviewProvider {
         ShortcutSettingsScene()
     }
 }
+

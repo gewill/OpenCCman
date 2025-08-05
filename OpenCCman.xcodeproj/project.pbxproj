@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0920E96C2E3F4D3C003C9715 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */; };
 		095E17452E40746F0051BBB7 /* ServicesMenu.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */; };
-		09DBEC4F2E3BC32F00DD9C5B /* HotkeySettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC4E2E3BC32F00DD9C5B /* HotkeySettingsScene.swift */; };
+		09DBEC4F2E3BC32F00DD9C5B /* ShortcutSettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC4E2E3BC32F00DD9C5B /* ShortcutSettingsScene.swift */; };
 		09DBEC522E3BC4BC00DD9C5B /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 09DBEC512E3BC4BC00DD9C5B /* KeyboardShortcuts */; };
 		09DBEC552E3BC69000DD9C5B /* GlobalShortcutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */; };
 		09FB99902E3D060700DBDB5D /* SwiftUIOverlayContainer in Frameworks */ = {isa = PBXBuildFile; productRef = 09FB998F2E3D060700DBDB5D /* SwiftUIOverlayContainer */; };
@@ -73,7 +73,7 @@
 /* Begin PBXFileReference section */
 		0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = ServicesMenu.xcstrings; sourceTree = "<group>"; };
-		09DBEC4E2E3BC32F00DD9C5B /* HotkeySettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeySettingsScene.swift; sourceTree = "<group>"; };
+		09DBEC4E2E3BC32F00DD9C5B /* ShortcutSettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSettingsScene.swift; sourceTree = "<group>"; };
 		09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalShortcutService.swift; sourceTree = "<group>"; };
 		BE2C6D402B2D7ED000FC4112 /* ViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		BE2C6D412B2D7ED000FC4112 /* SKProductExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKProductExtensions.swift; sourceTree = "<group>"; };
@@ -192,7 +192,7 @@
 				BEA770E82B2C904900AFA2F0 /* HomeScene.swift */,
 				BE727E2B2B2DE16400C63DB2 /* HomeViewModel.swift */,
 				BE3AEC8F2B2EF25000820673 /* SettingsScene.swift */,
-				09DBEC4E2E3BC32F00DD9C5B /* HotkeySettingsScene.swift */,
+				09DBEC4E2E3BC32F00DD9C5B /* ShortcutSettingsScene.swift */,
 				BE3AEC922B2EF25000820673 /* FeedbackScene.swift */,
 				BE3AEC902B2EF25000820673 /* HelpScene.swift */,
 				BE3AEC932B2EF25000820673 /* OpenSourceScene.swift */,
@@ -417,7 +417,7 @@
 				BEA9563D2B31FF8C00E04625 /* ChangeColorSchemeScene.swift in Sources */,
 				BE3AEC952B2EF25000820673 /* SettingsScene.swift in Sources */,
 				BE2C6D512B2D7ED000FC4112 /* SKProductExtensions.swift in Sources */,
-				09DBEC4F2E3BC32F00DD9C5B /* HotkeySettingsScene.swift in Sources */,
+				09DBEC4F2E3BC32F00DD9C5B /* ShortcutSettingsScene.swift in Sources */,
 				BE3AEC982B2EF25000820673 /* FeedbackScene.swift in Sources */,
 				BE3AECA52B2EF3B200820673 /* CellButton.swift in Sources */,
 				BE3AECB62B2EF6F700820673 /* LoadingView.swift in Sources */,
