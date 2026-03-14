@@ -47,13 +47,13 @@ extension View {
 
   func clearTextEdtorStyle() -> some View {
     #if os(macOS)
-      introspect(.textEditor, on: .macOS(.v11, .v12, .v13, .v14)) { textEditor in
-        textEditor.textContainerInset = .zero
+      introspect(.textEditor, on: .macOS(.v11, .v12, .v13, .v14, .v15, .v26)) { textEditor in
+        textEditor.textContainerInset = NSSize.init(width: 0, height: 1)
         textEditor.textContainer?.lineFragmentPadding = 0
         textEditor.backgroundColor = .clear
       }
     #else
-      introspect(.textEditor, on: .iOS(.v14, .v15, .v16, .v17)) { textEditor in
+      introspect(.textEditor, on: .iOS(.v14, .v15, .v16, .v17, .v18, .v26)) { textEditor in
         textEditor.textContainerInset = .zero
         textEditor.textContainer.lineFragmentPadding = 0
         textEditor.backgroundColor = .clear
