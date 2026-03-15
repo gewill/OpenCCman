@@ -150,6 +150,21 @@ struct HomeScene: View {
           })
           .softButtonStyle(Circle(), padding: Padding.small)
           Spacer()
+          if viewModel.isLoading {
+            ProgressView()
+              .progressViewStyle(.circular)
+              .modify {
+                if #available(iOS 15, macOS 11,*) {
+                  $0.controlSize(.small)
+                }
+              }
+          }
+          Text("\(viewModel.localProgressPercent)%")
+            .modify {
+              if #available(iOS 15, macOS 12,*) {
+                $0.monospacedDigit()
+              }
+            }
         }
         Text(viewModel.resultText)
           .textSelectable()
