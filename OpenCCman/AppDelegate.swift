@@ -300,29 +300,11 @@
               return
           }
 
-          // Get current conversion options from UserDefaults
-          let targetOptions = appDefaults[\.targetOptions]
-          let variantOptions = appDefaults[\.variantOptions]
-          let regionOptions = appDefaults[\.regionOptions]
-
-          // Build conversion options
-          var options: ChineseConverter.Options = []
-          if targetOptions == .traditional {
-              options.formUnion(.traditionalize)
-              switch variantOptions {
-              case .openCC:
-                  break
-              case .taiwan:
-                  options.formUnion(.twStandard)
-              case .hongKong:
-                  options.formUnion(.hkStandard)
-              }
-              if regionOptions == .taiwan {
-                  options.formUnion(.twIdiom)
-              }
-          } else {
-              options.formUnion(.simplify)
-          }
+          let options = ConversionConfiguration(
+              target: appDefaults[\.targetOptions],
+              variant: appDefaults[\.variantOptions],
+              region: appDefaults[\.regionOptions]
+          ).options
 
           do {
               let convertedText = try ChineseConversionService.convertSynchronously(string, options: options)

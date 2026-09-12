@@ -1,0 +1,33 @@
+name: App Regression
+
+on:
+  pull_request:
+    branches: [build]
+  push:
+    branches: [build]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: app-regression-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    name: App Regression
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Check project and source syntax
+        run: bash scripts/check-project.sh
+      - name: Check real conversion, presets and file workflow
+        run: python3 scripts/check-core.py
+      - name: Check quota reservations
+        run: bash scripts/check-quota.sh
+      - name: Check isolated pasteboard preservation
+        run: bash scripts/check-pasteboard.sh

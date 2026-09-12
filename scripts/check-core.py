@@ -36,11 +36,18 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
     sources.mkdir(parents=True)
     for path in [
         root / "OpenCCman/Services/ChineseConversionService.swift",
+        root / "OpenCCman/Services/TextFileService.swift",
+        root / "OpenCCman/Model/ConversionConfiguration.swift",
+        root / "OpenCCman/Model/ConvertedTextDocument.swift",
+        root / "OpenCCman/Model/TestNumbersPerDayManager.swift",
         root / "OpenCCman/Scene/HomeViewModel.swift",
         root / "Tests/Regression/CoreSupport.swift",
         root / ("Tests/Benchmarks/ConversionBenchmark.swift" if args.benchmark else "Tests/Regression/CoreChecks.swift"),
     ]:
         shutil.copy2(path, sources / path.name)
+    if not args.benchmark:
+        shutil.copy2(root / "Tests/Regression/FileChecks.swift", sources / "FileChecks.swift")
+        shutil.copy2(root / "Tests/Regression/ProviderChecks.swift", sources / "ProviderChecks.swift")
     (package / "Package.swift").write_text('''// swift-tools-version: 5.9
 import PackageDescription
 let package = Package(
@@ -53,4 +60,4 @@ let package = Package(
     ])]
 )
 ''')
-    subprocess.run(["swift", "run", "-c", "release", "--package-path", str(package), "CoreChecks"], check=True)
+    subprocess.run(["swift", "run", "-c", "release", "--package-path", str(package), "CoreChecks"], check=True, timeout=600)

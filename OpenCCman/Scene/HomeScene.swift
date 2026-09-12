@@ -2,12 +2,18 @@ import Neumorphic
 import OpenCC
 import SwiftUI
 import SwiftUIRouter
+import UniformTypeIdentifiers
 
 struct HomeScene: View {
   @EnvironmentObject var navigator: Navigator
 
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @EnvironmentObject private var viewModel: HomeViewModel
+  @State private var showingImporter = false
+  @State private var showingExporter = false
+  @State private var exportDocument: ConvertedTextDocument?
+  @State private var exportFilename = "OpenCCman-converted.txt"
+  @State private var isDropTargeted = false
 
   var body: some View {
     ZStack(alignment: .top) {
@@ -29,6 +35,17 @@ struct HomeScene: View {
     }
     .frame(minWidth: 300)
     .overlay(ProAlertView(showingProAlert: $viewModel.showingProAlert))
+    .fileImporter(isPresented: $showingImporter, allowedContentTypes: [.plainText]) { result in
+      switch result {
+      case .success(let url): viewModel.importFile(url)
+      case .failure(let error): viewModel.handleFileFailure(error)
+      }
+    }
+    .fileExporter(isPresented: $showingExporter, document: exportDocument,
+                  contentType: .plainText, defaultFilename: exportFilename) { result in
+      if case .failure(let error) = result { viewModel.handleFileFailure(error) }
+      exportDocument = nil
+    }
     .alert(isPresented: Binding(
       get: { viewModel.error != nil },
       set: { if !$0 { viewModel.error = nil } }
@@ -87,7 +104,29 @@ struct HomeScene: View {
 
   var list: some View {
     VStack(alignment: .leading, spacing: Constant.padding) {
-      VStack(alignment: .leading) {
+      VStack(alignment: .leading, spacing: Constant.padding) {
+        HStack {
+          Text("Conversion Preset").font(.headline)
+          Spacer()
+          Menu {
+            ForEach(ConversionConfiguration.Preset.allCases) { preset in
+              Button {
+                viewModel.applyPreset(preset)
+              } label: {
+                if viewModel.selectedPreset == preset {
+                  Label(preset.title.localizedStringKey, systemImage: "checkmark")
+                } else {
+                  Text(preset.title.localizedStringKey)
+                }
+              }
+            }
+          } label: {
+            Label((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey,
+                  systemImage: "chevron.down")
+          }
+          .accessibilityLabel(Text("Conversion Preset"))
+          .accessibilityValue(Text((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey))
+        }
         SegmentView(title: "Target Language", options: HomeViewModel.Language.allCases, seleted: $viewModel.targetOptions)
         Group {
           SegmentView(title: "Variant", options: HomeViewModel.Variant.allCases, seleted: $viewModel.variantOptions)
@@ -111,28 +150,67 @@ struct HomeScene: View {
             else {
               return
             }
-            viewModel.inputText = string
+            viewModel.replaceSource(string)
           } label: {
             Image(systemName: "doc.on.clipboard")
           }
           .softButtonStyle(Circle(), padding: Padding.small)
+          .accessibilityLabel(Text("Paste Text"))
 
           Spacer()
-          Button(action: {
-            #if os(iOS)
-              UIApplication.shared.endEditing()
-            #endif
-            viewModel.translate()
-          }, label: {
-            Text("Convert")
-              .font(.headline)
-          })
-          .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10, mainColor: Color.accentColor, textColor: Color.Neumorphic.main)
-          .keyboardShortcut("t")
-          .disabled(viewModel.isLoading || viewModel.inputText.isEmpty)
+          if viewModel.isLoading {
+            Button("Cancel") { viewModel.cancelConversion() }
+              .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10)
+          } else {
+            Button(action: {
+              #if os(iOS)
+                UIApplication.shared.endEditing()
+              #endif
+              viewModel.translate()
+            }, label: {
+              Text("Convert")
+                .font(.headline)
+            })
+            .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10, mainColor: Color.accentColor, textColor: Color.Neumorphic.main)
+            .keyboardShortcut("t")
+            .disabled(viewModel.isImporting || viewModel.inputText.isEmpty)
+          }
         }
+        HStack {
+          Button {
+            showingImporter = true
+          } label: {
+            Label("Import TXT", systemImage: "square.and.arrow.down")
+          }
+          .disabled(viewModel.isImporting)
+          Spacer()
+          if viewModel.isImporting {
+            ProgressView().progressViewStyle(.circular)
+            Button("Cancel") { viewModel.cancelImport() }
+          }
+        }
+        if let filename = viewModel.sourceFilename {
+          Text(filename).font(.caption).lineLimit(1).truncationMode(.middle)
+        }
+        Text("text_file_hint")
+          .font(.caption)
+          .foregroundColor(.secondary)
+          .frame(maxWidth: .infinity, alignment: .leading)
+          .padding(10)
+          .contentShape(Rectangle())
+          .overlay(
+            RoundedRectangle(cornerRadius: 10)
+              .stroke(isDropTargeted ? Color.accentColor : Color.secondary.opacity(0.4),
+                      style: StrokeStyle(lineWidth: 1, dash: [4]))
+              .allowsHitTesting(false)
+          )
+          .onDrop(of: [.fileURL, .plainText], isTargeted: $isDropTargeted) { providers in
+            viewModel.importDroppedItems(providers)
+          }
         TextEditor(text: $viewModel.inputText)
           .clearTextEdtorStyle()
+          .accessibilityLabel(Text("Source"))
+          .disabled(viewModel.isImporting)
           .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 300)
           .padding(Constant.padding)
           .background(
@@ -156,6 +234,19 @@ struct HomeScene: View {
             Image(systemName: "doc.on.doc")
           })
           .softButtonStyle(Circle(), padding: Padding.small)
+          .accessibilityLabel(Text("Copy Result"))
+          .disabled(viewModel.resultText.isEmpty)
+          Button {
+            guard let snapshot = viewModel.exportSnapshot else { return }
+            exportDocument = ConvertedTextDocument(text: snapshot.text)
+            exportFilename = snapshot.filename
+            showingExporter = true
+          } label: {
+            Image(systemName: "square.and.arrow.up")
+          }
+          .softButtonStyle(Circle(), padding: Padding.small)
+          .accessibilityLabel(Text("Export TXT"))
+          .disabled(viewModel.exportSnapshot == nil)
           Spacer()
           if viewModel.isLoading {
             ProgressView()
@@ -174,6 +265,9 @@ struct HomeScene: View {
                 }
               }
           }
+        }
+        if viewModel.resultText.isEmpty && viewModel.exportSnapshot != nil {
+          Text("previous_result_available").font(.caption).foregroundColor(.secondary)
         }
         TextEditor(text: .constant(viewModel.resultText))
           .clearTextEdtorStyle(isEditable: false)
