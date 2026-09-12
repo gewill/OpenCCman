@@ -29,6 +29,28 @@ jobs:
         with:
           persist-credentials: false
       - run: python3 -m unittest discover -s tests -p 'test_*.py'
+      - name: Verify read token on public check APIs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_READ_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import importlib.util
+          import json
+          from pathlib import Path
+          path = Path('scripts/sync-upstream.py')
+          spec = importlib.util.spec_from_file_location('sync_upstream', path)
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+          config = json.loads(path.with_name('upstream-sync.json').read_text())
+          for stage in ('fork', 'app'):
+              target = config[stage]
+              response = module.GitHub().api(f"repos/{target['repository']}/commits/{target['base']}/check-runs?per_page=1")
+              if not isinstance(response.get('check_runs'), list):
+                  raise SystemExit(f"Cannot read public checks for {target['repository']}")
+              print(f"Read token verified: {target['repository']}")
+          PY
 
   detect:
     needs: coordinator-tests
@@ -160,8 +182,8 @@ jobs:
       - name: Publish the already validated commit
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_READ_TOKEN: ${{ github.token }}
           SYNC_STAGE: ${{ needs.detect.outputs.stage }}
-          OPENCC_SYNC_WRITE_REPOSITORY: ${{ needs.detect.outputs.stage == 'fork' && 'gewill/SwiftyOpenCC' || 'gewill/OpenCCman' }}
         shell: bash
         run: |
           set -euo pipefail

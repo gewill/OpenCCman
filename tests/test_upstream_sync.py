@@ -405,10 +405,10 @@ class SyncIntegrationTests(unittest.TestCase):
              "head_sha": commit, "status": "completed", "conclusion": "success", "id": 1},
             {"name": "OpenCC Compatibility", "app": {"slug": "github-actions"},
              "head_sha": commit, "status": "completed", "conclusion": "failure", "id": 2}]}
-        with patch.object(github, "public_api", return_value=checks):
+        with patch.object(github, "api", return_value=checks):
             self.assertFalse(github.check_passed("fixture/repo", commit, "OpenCC Compatibility"))
         checks["check_runs"][1]["head_sha"] = "b" * 40
-        with patch.object(github, "public_api", return_value=checks):
+        with patch.object(github, "api", return_value=checks):
             self.assertTrue(github.check_passed("fixture/repo", commit, "OpenCC Compatibility"))
 
     def test_git_credential_protocol_accepts_github_token_or_persistent_gh_login(self):
@@ -433,13 +433,80 @@ class SyncIntegrationTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("password=" + (token or "fixture-persistent-login"), result.stdout)
 
+    def test_public_get_uses_read_auth_while_post_retains_write_auth(self):
+        binary = self.root / "api-bin"
+        binary.mkdir()
+        fake = binary / "gh"
+        fake.write_text('''#!/usr/bin/env python3
+import json, os, sys
+args = sys.argv[1:]
+assert args[0] == 'api'
+assert args[args.index('--hostname') + 1] == 'github.com'
+method = args[args.index('--method') + 1]
+expected = 'fixture-reader' if method == 'GET' else 'fixture-writer'
+assert os.environ['GH_TOKEN'] == expected
+if '--paginate' in args:
+    assert '--slurp' in args
+    print(json.dumps([[{'page': 1}], [{'page': 2}]]))
+else:
+    if method == 'POST':
+        with open(args[args.index('--input') + 1]) as stream:
+            assert json.load(stream)['body'] == 'literal\\nbody'
+    print(json.dumps({'method': method}))
+''')
+        fake.chmod(0o755)
+        env = {"PATH": str(binary) + os.pathsep + os.environ["PATH"],
+               "GH_READ_TOKEN": "fixture-reader", "GH_TOKEN": "fixture-writer", "GH_HOST": "outside.test"}
+        github = sync.GitHub()
+        with patch.dict(os.environ, env):
+            self.assertEqual(github.api("repos/other/public/check-runs")["method"], "GET")
+            self.assertEqual(github.api("repos/other/public/releases", paginate=True), [{"page": 1}, {"page": 2}])
+            self.assertEqual(github.api("repos/target/public/pulls", "POST", {"body": "literal\nbody"})["method"], "POST")
+
+    def test_authenticated_rate_limit_is_an_error_without_anonymous_fallback(self):
+        binary = self.root / "rate-limit-bin"
+        binary.mkdir()
+        calls = self.root / "api-calls"
+        fake = binary / "gh"
+        fake.write_text('''#!/usr/bin/env python3
+import os, pathlib, sys
+assert os.environ['GH_TOKEN'] == 'fixture-reader'
+with pathlib.Path(os.environ['FIXTURE_CALLS']).open('a') as stream:
+    stream.write('request\\n')
+print('gh: API rate limit exceeded (HTTP 403)', file=sys.stderr)
+raise SystemExit(1)
+''')
+        fake.chmod(0o755)
+        with patch.dict(os.environ, {"PATH": str(binary) + os.pathsep + os.environ["PATH"],
+                                     "GH_READ_TOKEN": "fixture-reader", "FIXTURE_CALLS": str(calls)}):
+            with self.assertRaises(sync.SyncError) as context:
+                sync.GitHub().check_passed("other/public", "a" * 40, "Example Check")
+        self.assertEqual(context.exception.code, 5)
+        self.assertIn("HTTP 403", str(context.exception))
+        self.assertEqual(calls.read_text(), "request\n")
+
+    def test_absolute_or_traversing_api_endpoints_are_rejected_before_gh(self):
+        for endpoint in ("https://outside.test/repos/owner/repo/pulls", "//outside.test/repos/owner/repo/pulls",
+                         "repos/owner/repo/../../outside", "repos/owner/repo/pulls\nInjected"):
+            with patch.object(sync, "run") as process:
+                with self.assertRaises(sync.SyncError):
+                    sync.GitHub().api(endpoint)
+            process.assert_not_called()
+
+    def test_read_token_is_redacted_from_command_logs(self):
+        start = len(sync.RUN_LOG)
+        with patch.dict(os.environ, {"GH_READ_TOKEN": "fixture-reader-secret"}):
+            sync.run(["python3", "-c", "import os; print(os.environ['GH_READ_TOKEN'])"])
+        self.assertNotIn("fixture-reader-secret", "\n".join(sync.RUN_LOG[start:]))
+        self.assertIn("[REDACTED]", "\n".join(sync.RUN_LOG[start:]))
+
     def test_validation_subprocesses_receive_no_tokens(self):
         commands = []
-        with patch.dict(os.environ, {"GH_TOKEN": "fixture-secret", "GITHUB_TOKEN": "fixture-secret"}):
+        with patch.dict(os.environ, {"GH_READ_TOKEN": "fixture-reader", "GH_TOKEN": "fixture-secret", "GITHUB_TOKEN": "fixture-secret"}):
             with patch.object(sync, "run", side_effect=lambda args, **kwargs: commands.append(kwargs["env"])):
                 sync.validate_candidate(self.config, {"stage": "fork"}, self.root)
         self.assertEqual(len(commands), 3)
-        self.assertTrue(all("GH_TOKEN" not in e and "GITHUB_TOKEN" not in e for e in commands))
+        self.assertTrue(all("GH_READ_TOKEN" not in e and "GH_TOKEN" not in e and "GITHUB_TOKEN" not in e for e in commands))
 
 
 if __name__ == "__main__":

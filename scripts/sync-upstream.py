@@ -16,9 +16,7 @@ import re
 import subprocess
 import sys
 import tempfile
-from urllib.parse import quote
-from urllib.error import HTTPError, URLError
-from urllib.request import Request, urlopen
+from urllib.parse import quote, urlsplit
 
 SHA = re.compile(r"^[0-9a-f]{40}$")
 TAG = re.compile(r"^ver\.(\d+)\.(\d+)\.(\d+)$")
@@ -36,7 +34,7 @@ def run(args, cwd=None, env=None, code=4):
     result = subprocess.run(args, cwd=cwd, env=env, text=True,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     logged = f"$ {Path(args[0]).name}\n{result.stdout}\n{result.stderr}\n"
-    for key in ("GH_TOKEN", "GITHUB_TOKEN", "GH_ENTERPRISE_TOKEN", "GITHUB_ENTERPRISE_TOKEN"):
+    for key in ("GH_READ_TOKEN", "GH_TOKEN", "GITHUB_TOKEN", "GH_ENTERPRISE_TOKEN", "GITHUB_ENTERPRISE_TOKEN"):
         secret = (env or os.environ).get(key)
         if secret:
             logged = logged.replace(secret, "[REDACTED]")
@@ -68,45 +66,38 @@ def version(tag):
 
 
 class GitHub:
-    def public_api(self, endpoint, paginate=False):
-        """Read public sources without widening a publishing token's scope."""
-        url = "https://api.github.com/" + endpoint
-        pages = []
-        while url:
-            if not url.startswith("https://api.github.com/"):
-                raise SyncError("Unexpected public API pagination host", 5)
-            request = Request(url, headers={"Accept": "application/vnd.github+json",
-                                           "User-Agent": "opencc-upstream-sync"})
-            try:
-                with urlopen(request, timeout=30) as response:
-                    value = json.load(response)
-                    link = response.headers.get("Link", "")
-            except (HTTPError, URLError) as error:
-                raise SyncError(f"Public GitHub read failed: {error}", 5) from error
-            if not paginate:
-                return value
-            pages.extend(value)
-            next_link = re.search(r'<([^>]+)>; rel="next"', link)
-            url = next_link[1] if next_link else None
-        return pages
+    @staticmethod
+    def endpoint(endpoint):
+        # gh accepts complete URLs; only our GitHub repository API paths are
+        # valid here. Pin --hostname too, regardless of a local GH_HOST value.
+        parsed = urlsplit(endpoint)
+        if (parsed.scheme or parsed.netloc or parsed.fragment or "\\" in endpoint
+                or "\r" in endpoint or "\n" in endpoint
+                or not re.match(r"^(repos/[^/?]+/[^/?]+/|repositories/[0-9]+/)", endpoint)
+                or any(part in (".", "..") for part in parsed.path.split("/"))):
+            raise SyncError("Unexpected GitHub API endpoint", 5)
+        return endpoint
 
     def api(self, endpoint, method="GET", body=None, paginate=False):
-        # A publish token is deliberately scoped to only its write destination.
-        # Other public repositories remain readable without granting it access.
-        destination = os.environ.get("OPENCC_SYNC_WRITE_REPOSITORY")
-        if method == "GET" and destination and not endpoint.startswith(f"repos/{destination}/"):
-            return self.public_api(endpoint, paginate)
-        args = ["gh", "api", endpoint, "--method", method]
+        # Public checks remain public, but authentication avoids the shared
+        # runner IP's anonymous API quota. Publishing keeps GET credentials
+        # separate from the App token used by mutations and Git pushes.
+        env = dict(os.environ)
+        if method == "GET" and env.get("GH_READ_TOKEN"):
+            env["GH_TOKEN"] = env["GH_READ_TOKEN"]
+        endpoint = self.endpoint(endpoint)
+        args = ["gh", "api", endpoint, "--hostname", "github.com", "--method", method]
         if paginate:
             args += ["--paginate", "--slurp"]
         if body is None:
-            raw = run(args, code=5)
+            raw = run(args, code=5, env=env)
         else:
-            # gh --input consumes a file, preserving literal text/newlines.
+            # gh --input preserves literal text/newlines; tokens never enter
+            # command arguments or captured `gh auth token` output.
             with tempfile.NamedTemporaryFile(mode="w", suffix=".json") as stream:
                 json.dump(body, stream)
                 stream.flush()
-                raw = run(args + ["--input", stream.name], code=5)
+                raw = run(args + ["--input", stream.name], code=5, env=env)
         result = json.loads(raw) if raw else None
         return [item for page in result for item in page] if paginate else result
 
@@ -137,8 +128,7 @@ class GitHub:
 
     def check_passed(self, repo, commit, name):
         # Latest run of the named check wins; never accept an older green retry.
-        # Public checks need no token; the sync App does not need Checks:read.
-        pages = self.public_api(f"repos/{repo}/commits/{sha(commit)}/check-runs?filter=latest&per_page=100")
+        pages = self.api(f"repos/{repo}/commits/{sha(commit)}/check-runs?filter=latest&per_page=100")
         checks = [c for c in pages["check_runs"] if c["name"] == name
                   and c.get("app", {}).get("slug") == "github-actions"
                   and c.get("head_sha") == commit]
@@ -335,7 +325,7 @@ def validate_candidate(config, data, path):
     # CI injects no write credential here. Strip explicit token variables too;
     # this is not a sandbox for a local developer's keychain/Git configuration.
     clean = {k: v for k, v in os.environ.items() if k not in
-             {"GH_TOKEN", "GITHUB_TOKEN", "GH_ENTERPRISE_TOKEN", "GITHUB_ENTERPRISE_TOKEN"}}
+             {"GH_READ_TOKEN", "GH_TOKEN", "GITHUB_TOKEN", "GH_ENTERPRISE_TOKEN", "GITHUB_ENTERPRISE_TOKEN"}}
     if data["stage"] == "fork":
         run(["python3", cfg["generator"]], cwd=path, env=clean)
         run(["python3", cfg["generator"], "--check"], cwd=path, env=clean)
