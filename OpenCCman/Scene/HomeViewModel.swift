@@ -12,6 +12,7 @@ import SwiftyUserDefaults
   }
 #endif
 
+@MainActor
 class HomeViewModel: ObservableObject {
   @Published var inputText: String = "鼠标里面的硅二极管坏了，导致光标分辨率降低。"
   @Published var resultText: String = ""
@@ -33,6 +34,15 @@ class HomeViewModel: ObservableObject {
   }
 
   private var cancellables = Set<AnyCancellable>()
+  private var conversionTask: Task<Void, Never>?
+  #if os(macOS)
+    weak var window: NSWindow?
+
+    private func accepts(_ notification: Notification) -> Bool {
+      guard let window else { return false }
+      return window === ((notification.object as? NSWindow) ?? NSApp.keyWindow)
+    }
+  #endif
 
   // MARK: - life cycle
 
@@ -56,11 +66,10 @@ class HomeViewModel: ObservableObject {
         } else {
           options.formUnion(.simplify)
         }
-        print("options:", options)
         return options
       }
-      .assign(to: \.options, on: self)
-      .store(in: &cancellables)
+      .removeDuplicates()
+      .assign(to: &$options)
 
     $targetOptions.dropFirst()
       .sink { targetOptions in
@@ -87,8 +96,11 @@ class HomeViewModel: ObservableObject {
           }
 
           DispatchQueue.main.async {
+            guard self.accepts(notification) else { return }
+            self.cancelConversion()
             self.inputText = originalText
             self.resultText = convertedText
+            self.localProgress = 1.0
           }
         }
         .store(in: &cancellables)
@@ -104,8 +116,11 @@ class HomeViewModel: ObservableObject {
           }
 
           DispatchQueue.main.async {
+            guard self.accepts(notification) else { return }
+            self.cancelConversion()
             self.inputText = originalText
             self.resultText = convertedText
+            self.localProgress = 1.0
           }
         }
         .store(in: &cancellables)
@@ -120,6 +135,8 @@ class HomeViewModel: ObservableObject {
           }
 
           DispatchQueue.main.async {
+            guard self.accepts(notification) else { return }
+            self.cancelConversion()
             self.inputText = originalText
             self.resultText = "" // Clear result text since we're not converting
           }
@@ -128,10 +145,11 @@ class HomeViewModel: ObservableObject {
 
       // Listen for menu convert notifications
       NotificationCenter.default.publisher(for: .convertTextFromMenu)
-        .sink { [weak self] _ in
+        .sink { [weak self] notification in
           guard let self = self else { return }
 
           DispatchQueue.main.async {
+            guard self.accepts(notification) else { return }
             self.translate()
           }
         }
@@ -142,8 +160,9 @@ class HomeViewModel: ObservableObject {
   // MARK: - response methods
 
   func translate() {
+    guard !isLoading, !inputText.isEmpty else { return }
     guard TestNumbersPerDayManager.isToMax == false else {
-      showingProAlert.toggle()
+      showingProAlert = true
       return
     }
 
@@ -151,62 +170,42 @@ class HomeViewModel: ObservableObject {
     isLoading = true
     resultText = ""
     localProgress = 0.0
+    error = nil
 
     let currentInput = inputText
     let currentOptions = options
 
-    // Pre-create converter on background thread once to amortize cost
-    Task(priority: .userInitiated) { [weak self] in
-      guard let self else { return }
+    conversionTask = Task(priority: .userInitiated) { [weak self] in
       do {
-        let converter: ChineseConverter = try await withCheckedThrowingContinuation { continuation in
-          DispatchQueue.global(qos: .userInitiated).async {
-            do {
-              let conv = try ChineseConverter(options: currentOptions)
-              continuation.resume(returning: conv)
-            } catch {
-              continuation.resume(throwing: error)
-            }
-          }
-        }
-
-        let chunks = self.chunked(text: currentInput)
-        let total = max(chunks.count, 1)
-
-        // Convert each chunk sequentially on a background queue and append on main
-        for (index, chunk) in chunks.enumerated() {
-          let convertedChunk: String = await withCheckedContinuation { continuation in
-            DispatchQueue.global(qos: .userInitiated).async {
-              let out = converter.convert(chunk)
-              continuation.resume(returning: out)
-            }
-          }
-
-          await MainActor.run {
-            if self.resultText.isEmpty {
-              self.resultText = convertedChunk
-            } else {
-              self.resultText += "\n" + convertedChunk
-            }
-            self.localProgress = Double(index + 1) / Double(total)
-          }
-        }
-
-        await MainActor.run {
-          TestNumbersPerDayManager.add()
-          self.showReview()
-          self.localProgress = 1.0
-          self.isLoading = false
-        }
+        let result = try await ChineseConversionService.shared.convert(currentInput, options: currentOptions)
+        try Task.checkCancellation()
+        guard let self else { return }
+        self.resultText = result
+        TestNumbersPerDayManager.add()
+        self.showReview()
+        self.localProgress = 1.0
+        self.isLoading = false
+        self.conversionTask = nil
       } catch {
-        await MainActor.run {
-          self.error = error
-          self.isLoading = false
-          self.localProgress = 0.0
-          print(error.localizedDescription)
-        }
+        guard !Task.isCancelled, let self else { return }
+        self.error = error
+        self.isLoading = false
+        self.localProgress = 0.0
+        self.conversionTask = nil
       }
     }
+  }
+
+  func cancelConversion() {
+    conversionTask?.cancel()
+    conversionTask = nil
+    isLoading = false
+    localProgress = 0.0
+    error = nil
+  }
+
+  deinit {
+    conversionTask?.cancel()
   }
 
   // MARK: - Review
@@ -245,49 +244,4 @@ class HomeViewModel: ObservableObject {
     var title: String { rawValue }
   }
 
-  // Chunking helper: split large text by paragraphs first, then by size
-  private func chunked(text: String, maxChunkLength: Int = 4000) -> [String] {
-    guard !text.isEmpty else { return [] }
-
-    // Prefer splitting by double newlines (paragraphs)
-    let paragraphs = text.components(separatedBy: "\n\n").filter { !$0.isEmpty }
-
-    var chunks: [String] = []
-    var current = ""
-
-    func flushCurrent() {
-      if !current.isEmpty { chunks.append(current); current.removeAll(keepingCapacity: true) }
-    }
-
-    if paragraphs.count > 1 {
-      for para in paragraphs {
-        if current.count + para.count + 2 <= maxChunkLength {
-          if current.isEmpty { current = para } else { current += "\n\n" + para }
-        } else if para.count <= maxChunkLength {
-          flushCurrent()
-          current = para
-        } else {
-          // Paragraph itself is too big, hard-split by size
-          var start = para.startIndex
-          while start < para.endIndex {
-            let end = para.index(start, offsetBy: maxChunkLength, limitedBy: para.endIndex) ?? para.endIndex
-            chunks.append(String(para[start ..< end]))
-            start = end
-          }
-          current.removeAll(keepingCapacity: true)
-        }
-      }
-      flushCurrent()
-    } else {
-      // No clear paragraph boundaries, split by size
-      var start = text.startIndex
-      while start < text.endIndex {
-        let end = text.index(start, offsetBy: maxChunkLength, limitedBy: text.endIndex) ?? text.endIndex
-        chunks.append(String(text[start ..< end]))
-        start = end
-      }
-    }
-
-    return chunks
-  }
 }

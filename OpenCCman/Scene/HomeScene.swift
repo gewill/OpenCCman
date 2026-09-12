@@ -7,7 +7,7 @@ struct HomeScene: View {
   @EnvironmentObject var navigator: Navigator
 
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
-  @ObservedObject var viewModel = HomeViewModel()
+  @EnvironmentObject private var viewModel: HomeViewModel
 
   var body: some View {
     ZStack(alignment: .top) {
@@ -29,6 +29,12 @@ struct HomeScene: View {
     }
     .frame(minWidth: 300)
     .overlay(ProAlertView(showingProAlert: $viewModel.showingProAlert))
+    .alert(isPresented: Binding(
+      get: { viewModel.error != nil },
+      set: { if !$0 { viewModel.error = nil } }
+    )) {
+      Alert(title: Text("Error"), message: Text(viewModel.error?.localizedDescription ?? ""))
+    }
   }
 
   var navi: some View {
@@ -123,6 +129,7 @@ struct HomeScene: View {
           })
           .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10, mainColor: Color.accentColor, textColor: Color.Neumorphic.main)
           .keyboardShortcut("t")
+          .disabled(viewModel.isLoading || viewModel.inputText.isEmpty)
         }
         TextEditor(text: $viewModel.inputText)
           .clearTextEdtorStyle()
@@ -159,15 +166,18 @@ struct HomeScene: View {
                 }
               }
           }
-          Text("\(viewModel.localProgressPercent)%")
-            .modify {
-              if #available(iOS 15, macOS 12,*) {
-                $0.monospacedDigit()
+          if !viewModel.isLoading {
+            Text("\(viewModel.localProgressPercent)%")
+              .modify {
+                if #available(iOS 15, macOS 12, *) {
+                  $0.monospacedDigit()
+                }
               }
-            }
+          }
         }
-        Text(viewModel.resultText)
-          .textSelectable()
+        TextEditor(text: .constant(viewModel.resultText))
+          .clearTextEdtorStyle(isEditable: false)
+          .accessibilityLabel(Text("Result"))
           .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 300, alignment: .topLeading)
           .padding(Constant.padding)
           .background(
@@ -189,5 +199,8 @@ struct HomeScene: View {
 }
 
 #Preview {
-  HomeScene()
+  Router {
+    HomeScene()
+      .environmentObject(HomeViewModel())
+  }
 }

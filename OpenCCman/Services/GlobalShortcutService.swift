@@ -24,21 +24,19 @@ extension KeyboardShortcuts.Name {
 
 // MARK: - Global Shortcut Service
 
+@MainActor
 class GlobalShortcutService: ObservableObject {
     static let shared = GlobalShortcutService()
 
     @Published var isEnabled: Bool = true {
         didSet {
-            if isEnabled {
-                setupKeyboardShortcuts()
-            } else {
-                KeyboardShortcuts.disable(.convertSelectedText)
-                KeyboardShortcuts.disable(.openSelectedText)
-            }
+            guard isEnabled != oldValue else { return }
+            KeyboardShortcuts.isEnabled = isEnabled
         }
     }
 
-    @Published var hasAccessibilityPermission = false
+    @Published private(set) var hasAccessibilityPermission = false
+    private var isPerformingAction = false
 
     private init() {
         checkAccessibilityPermission()
@@ -60,46 +58,25 @@ class GlobalShortcutService: ObservableObject {
     // MARK: - Shortcut Handling
 
     private func handleConvertShortcutPressed() {
-        print("Convert shortcut pressed! Converting selected text...")
         convertSelectedText()
     }
 
     private func handleOpenShortcutPressed() {
-        print("Open shortcut pressed! Opening selected text...")
         openSelectedText()
     }
 
     // MARK: - Permission Management
 
     func checkAccessibilityPermission() {
-        let trusted = AXIsProcessTrusted()
-        DispatchQueue.main.async {
-            self.hasAccessibilityPermission = trusted
-        }
-    }
-
-    private func isAccessibilityEnabled() -> Bool {
-        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue(): true] as CFDictionary
-        let accessibilityEnabled = AXIsProcessTrustedWithOptions(options)
-        return accessibilityEnabled
+        hasAccessibilityPermission = AXIsProcessTrusted()
     }
 
     func requestAccessibilityPermission() {
-        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue(): true] as CFDictionary
-        let trusted = AXIsProcessTrustedWithOptions(options)
-
-        DispatchQueue.main.async {
-            self.hasAccessibilityPermission = trusted
-        }
-
-        if !trusted {
+        checkAccessibilityPermission()
+        if !hasAccessibilityPermission {
             showAccessibilityPermissionAlert()
         }
     }
-
-
-
-
 
     private func showAccessibilityPermissionAlert() {
         let alert = NSAlert()
@@ -130,57 +107,37 @@ class GlobalShortcutService: ObservableObject {
         NSWorkspace.shared.open(url)
     }
 
-    // Apple Events permission methods removed - using Accessibility-only approach
-
     // MARK: - Public Methods
 
     func convertSelectedText() {
-        // Check accessibility permission first
-        guard hasAccessibilityPermission else {
-            print("Accessibility permission not granted")
-            requestAccessibilityPermission()
-            return
-        }
-
-        // For sandbox apps, we only need Accessibility permission
-        // The simulated key method works with just Accessibility permission
-
-        // Get the currently selected text using improved method
-        getSelectedTextImproved { [weak self] selectedText in
-            DispatchQueue.main.async {
-                guard let self = self, let text = selectedText, !text.isEmpty else {
-                    print("No text selected or text is empty")
-                    self?.showNoTextSelectedAlert()
-                    return
-                }
-
-                print("Selected text: \(text)")
-                // Convert the text
-                self.convertText(text)
-            }
-        }
+        performAction(convert: true)
     }
 
     func openSelectedText() {
-        // Check accessibility permission first
+        performAction(convert: false)
+    }
+
+    private func performAction(convert: Bool) {
+        guard !isPerformingAction else { return }
+        checkAccessibilityPermission()
         guard hasAccessibilityPermission else {
-            print("Accessibility permission not granted")
             requestAccessibilityPermission()
             return
         }
+        guard let sourceApplication = NSWorkspace.shared.frontmostApplication else { return }
 
-        // Get the currently selected text using improved method
-        getSelectedTextImproved { [weak self] selectedText in
-            DispatchQueue.main.async {
-                guard let self = self, let text = selectedText, !text.isEmpty else {
-                    print("No text selected or text is empty")
-                    self?.showNoTextSelectedAlert()
-                    return
-                }
+        isPerformingAction = true
+        Task {
+            defer { isPerformingAction = false }
+            guard let text = await getSelectedText(from: sourceApplication), !text.isEmpty else {
+                showNoTextSelectedAlert()
+                return
+            }
 
-                print("Selected text: \(text)")
-                // Open the text in app without conversion
-                self.bringAppToFrontAndSetTextOnly(originalText: text)
+            if convert {
+                await convertText(text, in: sourceApplication)
+            } else {
+                bringAppToFrontAndSetTextOnly(originalText: text)
             }
         }
     }
@@ -198,103 +155,46 @@ class GlobalShortcutService: ObservableObject {
     
     // MARK: - Text Capture
 
-    // MARK: - Mac App Store Sandbox-Optimized Text Capture
-
-    /// Optimized text capture for Mac App Store sandbox environment
-    /// Uses simulated Cmd+C which works reliably with proper entitlements:
-    /// - com.apple.security.automation.apple-events
-    /// - Accessibility permission from user
-    /// This approach is more reliable than Accessibility API for sandbox apps
-    private func getSelectedTextImproved(completion: @escaping (String?) -> Void) {
-        print("🔄 Starting Mac App Store optimized text capture")
-
-        // Simulated key method is the gold standard for sandbox apps
-        // It works consistently across all applications and doesn't require
-        // complex Accessibility API calls that can be problematic in sandbox
-        getSelectedTextBySimulatedKey { text in
-            if let text = text, !text.isEmpty {
-                print("✅ Text capture successful")
-                completion(text)
-            } else {
-                print("⚠️ No text captured - ensure text is selected first")
-                completion(nil)
-            }
-        }
-    }
-
-    // Accessibility method removed - simulated key is more reliable for sandbox apps
-
-    private func getSelectedTextBySimulatedKey(completion: @escaping (String?) -> Void) {
-        print("Using sandbox-optimized simulated key method")
-
-        // Store current clipboard content to restore later
+    private func getSelectedText(from application: NSRunningApplication) async -> String? {
         let pasteboard = NSPasteboard.general
-        let originalClipboard = pasteboard.string(forType: .string)
-        let originalChangeCount = pasteboard.changeCount
+        guard let originalClipboard = PasteboardSnapshot(pasteboard) else { return nil }
+        let originalChangeCount = originalClipboard.changeCount
 
-        // Clear clipboard to ensure we can detect new content
-        pasteboard.clearContents()
-
-        // Simulate Cmd+C using CGEvent (works reliably in sandbox)
-        simulateKeyPress(keyCode: CGKeyCode(8), modifiers: .maskCommand) { // 8 is kVK_ANSI_C
-            // Wait for clipboard to update (optimized timing for sandbox)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                let selectedText = pasteboard.string(forType: .string)
-                let newChangeCount = pasteboard.changeCount
-
-                // Restore original clipboard content after a short delay
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                    if let original = originalClipboard {
-                        pasteboard.clearContents()
-                        pasteboard.setString(original, forType: .string)
-                    }
-                }
-
-                // Check if we got new content (more robust detection)
-                if newChangeCount > originalChangeCount,
-                   let text = selectedText,
-                   text != originalClipboard,
-                   !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    print("✅ Captured text: \(text.prefix(50))...")
-                    completion(text)
-                } else {
-                    print("⚠️ No text captured - ensure text is selected")
-                    completion(nil)
-                }
+        // A copy changes ownership even when its text matches the existing clipboard.
+        // Leave the current contents intact if the source application cannot copy.
+        guard pasteboard.changeCount == originalChangeCount,
+              await simulateKeyPress(keyCode: CGKeyCode(kVK_ANSI_C), in: application) else { return nil }
+        for _ in 0..<20 {
+            guard (try? await Task.sleep(nanoseconds: 50_000_000)) != nil else { return nil }
+            guard NSWorkspace.shared.frontmostApplication?.processIdentifier == application.processIdentifier else { return nil }
+            let copiedChangeCount = pasteboard.changeCount
+            if copiedChangeCount != originalChangeCount {
+                let text = pasteboard.string(forType: .string)
+                originalClipboard.restore(to: pasteboard, ifUnchangedSince: copiedChangeCount)
+                return text
             }
         }
+        return nil
     }
 
-    private func simulateKeyPress(keyCode: CGKeyCode, modifiers: CGEventFlags, completion: @escaping () -> Void) {
-        // Create key down event (sandbox-compatible)
-        guard let keyDownEvent = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: true) else {
-            print("❌ Failed to create key down event")
-            completion()
-            return
+    private func simulateKeyPress(keyCode: CGKeyCode, in application: NSRunningApplication) async -> Bool {
+        guard NSWorkspace.shared.frontmostApplication?.processIdentifier == application.processIdentifier,
+              let keyDownEvent = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: true),
+              let keyUpEvent = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: false) else {
+            return false
         }
-        keyDownEvent.flags = modifiers
-
-        // Create key up event
-        guard let keyUpEvent = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: false) else {
-            print("❌ Failed to create key up event")
-            completion()
-            return
-        }
-        keyUpEvent.flags = modifiers
-
-        // Post events to system (works in sandbox with proper entitlements)
-        keyDownEvent.post(tap: .cghidEventTap)
-
-        // Small delay between key down and up for better reliability
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-            keyUpEvent.post(tap: .cghidEventTap)
-            completion()
-        }
+        keyDownEvent.flags = .maskCommand
+        keyUpEvent.flags = .maskCommand
+        keyDownEvent.postToPid(application.processIdentifier)
+        // Always balance key down with key up, even if the task was cancelled.
+        try? await Task.sleep(nanoseconds: 10_000_000)
+        keyUpEvent.postToPid(application.processIdentifier)
+        return true
     }
-    
+
     // MARK: - Text Conversion
     
-    private func convertText(_ text: String) {
+    private func convertText(_ text: String, in application: NSRunningApplication) async {
         // Get current conversion options from UserDefaults
         let targetOptions = appDefaults[\.targetOptions]
         let variantOptions = appDefaults[\.variantOptions]
@@ -320,70 +220,38 @@ class GlobalShortcutService: ObservableObject {
         }
         
         do {
-            let converter = try ChineseConverter(options: options)
-            let convertedText = converter.convert(text)
-
-            print("📝 Original text: \(text)")
-            print("🔄 Converted text: \(convertedText)")
-
-            // Always try to replace the selected text in-place first
-            // This works for editable fields like text editors, browsers, etc.
-            replaceSelectedText(with: convertedText)
-
-            // Also bring the app to front and populate the input field for reference
-            // This provides a backup and shows the conversion result
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.bringAppToFrontAndSetText(originalText: text, convertedText: convertedText)
-            }
-
+            let convertedText = try await ChineseConversionService.shared.convert(text, options: options)
+            await replaceSelectedText(with: convertedText, in: application)
+            bringAppToFrontAndSetText(originalText: text, convertedText: convertedText)
         } catch {
-            print("❌ Conversion failed: \(error.localizedDescription)")
+            NSAlert(error: error).runModal()
         }
     }
-    
+
     // MARK: - Text Replacement
-    
-    private func replaceSelectedText(with convertedText: String) {
-        print("🔄 Attempting to replace selected text with converted text")
 
-        // Store original clipboard content
+    private func replaceSelectedText(with convertedText: String, in application: NSRunningApplication) async {
+        // Conversion may finish after the user has switched apps. Never paste into a new target.
+        guard NSWorkspace.shared.frontmostApplication?.processIdentifier == application.processIdentifier else { return }
         let pasteboard = NSPasteboard.general
-        let originalClipboard = pasteboard.string(forType: .string)
-
-        // Copy converted text to clipboard
-        pasteboard.clearContents()
-        pasteboard.setString(convertedText, forType: .string)
-
-        // Use CGEvent to simulate Cmd+V for more reliable pasting
-        // This works in most editable fields including text editors, browsers, etc.
-        simulateKeyPress(keyCode: CGKeyCode(9), modifiers: .maskCommand) { // 9 is kVK_ANSI_V
-            print("✅ Paste command sent - text should be replaced in editable field")
-
-            // Restore original clipboard content after a delay
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                if let original = originalClipboard {
-                    pasteboard.clearContents()
-                    pasteboard.setString(original, forType: .string)
-                    print("🔄 Original clipboard content restored")
-                } else {
-                    // If there was no original content, clear the clipboard
-                    pasteboard.clearContents()
-                    print("🧹 Clipboard cleared (no original content)")
-                }
-            }
+        guard let originalClipboard = PasteboardSnapshot(pasteboard),
+              pasteboard.changeCount == originalClipboard.changeCount else { return }
+        let replacementChangeCount = pasteboard.clearContents()
+        let written = pasteboard.setString(convertedText, forType: .string)
+        defer {
+            originalClipboard.restore(to: pasteboard, ifUnchangedSince: replacementChangeCount)
         }
+        guard written,
+              await simulateKeyPress(keyCode: CGKeyCode(kVK_ANSI_V), in: application) else { return }
+        // Event posting has no paste-completion callback. Allow the receiving app to read first.
+        try? await Task.sleep(nanoseconds: 800_000_000)
     }
-    
+
     // MARK: - App Integration
     
     private func bringAppToFrontAndSetText(originalText: String, convertedText: String) {
-        // Activate the app
-        NSApp.activate(ignoringOtherApps: true)
-
-        // Post notification to update the UI
-        NotificationCenter.default.post(
+        AppDelegate.postWindowNotification(
             name: .globalShortcutDidConvertText,
-            object: nil,
             userInfo: [
                 "originalText": originalText,
                 "convertedText": convertedText
@@ -392,22 +260,45 @@ class GlobalShortcutService: ObservableObject {
     }
 
     private func bringAppToFrontAndSetTextOnly(originalText: String) {
-        // Activate the app
-        NSApp.activate(ignoringOtherApps: true)
-
-        // Post notification to update the UI with just the original text
-        NotificationCenter.default.post(
+        AppDelegate.postWindowNotification(
             name: .textServiceDidReceiveText,
-            object: nil,
             userInfo: [
                 "originalText": originalText
             ]
         )
     }
 
-    // MARK: - Debug and Testing
+}
 
+// Preserve every item and representation, including rich text, images, and file URLs.
+// Refuse a partial snapshot rather than replacing clipboard data we cannot restore.
+struct PasteboardSnapshot {
+    private let items: [NSPasteboardItem]
+    let changeCount: Int
 
+    init?(_ pasteboard: NSPasteboard) {
+        let changeCount = pasteboard.changeCount
+        var copies: [NSPasteboardItem] = []
+        for item in pasteboard.pasteboardItems ?? [] {
+            let copy = NSPasteboardItem()
+            for type in item.types {
+                guard let data = item.data(forType: type), copy.setData(data, forType: type) else { return nil }
+            }
+            copies.append(copy)
+        }
+        guard pasteboard.changeCount == changeCount else { return nil }
+        items = copies
+        self.changeCount = changeCount
+    }
+
+    func restore(to pasteboard: NSPasteboard, ifUnchangedSince changeCount: Int) {
+        // Another copy belongs to the user and must survive our delayed restoration.
+        guard pasteboard.changeCount == changeCount else { return }
+        pasteboard.clearContents()
+        if !items.isEmpty {
+            pasteboard.writeObjects(items)
+        }
+    }
 }
 
 // MARK: - Notification Extension

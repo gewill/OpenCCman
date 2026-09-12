@@ -26,8 +26,18 @@
   import SwiftyUserDefaults
   import KeyboardShortcuts
 
-  class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
+  @MainActor
+  class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, ObservableObject {
     private var statusItem: NSStatusItem?
+    private static let readyWindows = NSHashTable<NSWindow>.weakObjects()
+    private static var pendingWindowNotification: PendingWindowNotification?
+
+    private struct PendingWindowNotification {
+      let name: Notification.Name
+      let userInfo: [AnyHashable: Any]?
+      weak var window: NSWindow?
+    }
+
     func applicationDidFinishLaunching(_ notification: Notification) {
       // Register the text conversion service
       NSApp.servicesProvider = TextConversionService.shared
@@ -52,23 +62,24 @@
       // Add a menu item for testing the hotkey functionality
       if let mainMenu = NSApp.mainMenu {
         let testMenu = NSMenu(title: "Test")
+        testMenu.delegate = self
         let testMenuItem = NSMenuItem(title: "Test", action: nil, keyEquivalent: "")
         testMenuItem.submenu = testMenu
 
         let convertSelectedTextItem = NSMenuItem(
           title: "Convert Selected Text",
           action: #selector(convertSelectedText),
-          keyEquivalent: "t"
+          keyEquivalent: ""
         )
-        convertSelectedTextItem.keyEquivalentModifierMask = [.command, .option]
+        convertSelectedTextItem.setShortcut(for: .convertSelectedText)
         convertSelectedTextItem.target = self
 
         let openSelectedTextItem = NSMenuItem(
           title: "Open Selected Text",
           action: #selector(openSelectedText),
-          keyEquivalent: "r"
+          keyEquivalent: ""
         )
-        openSelectedTextItem.keyEquivalentModifierMask = [.command, .option]
+        openSelectedTextItem.setShortcut(for: .openSelectedText)
         openSelectedTextItem.target = self
 
         testMenu.addItem(convertSelectedTextItem)
@@ -85,10 +96,54 @@
       GlobalShortcutService.shared.openSelectedText()
     }
 
+    func applicationDidBecomeActive(_ notification: Notification) {
+      GlobalShortcutService.shared.checkAccessibilityPermission()
+    }
+
+    func menuWillOpen(_ menu: NSMenu) {
+      KeyboardShortcuts.isEnabled = false
+    }
+
+    func menuDidClose(_ menu: NSMenu) {
+      KeyboardShortcuts.isEnabled = GlobalShortcutService.shared.isEnabled
+    }
+
+    @discardableResult
+    static func activateMainWindow() -> NSWindow? {
+      let keyWindow = NSApp.keyWindow.flatMap { $0.canBecomeMain ? $0 : nil }
+      let window = keyWindow ?? NSApp.mainWindow ?? NSApp.windows.first(where: { $0.canBecomeMain })
+      window?.makeKeyAndOrderFront(nil)
+      NSApp.activate(ignoringOtherApps: true)
+      return window
+    }
+
+    static func postWindowNotification(name: Notification.Name, userInfo: [AnyHashable: Any]? = nil) {
+      let window = activateMainWindow()
+      // Only the latest request is retained while SwiftUI creates and binds its window.
+      pendingWindowNotification = nil
+      guard let window, readyWindows.contains(window) else {
+        pendingWindowNotification = PendingWindowNotification(name: name, userInfo: userInfo, window: window)
+        return
+      }
+      NotificationCenter.default.post(name: name, object: window, userInfo: userInfo)
+    }
+
+    static func registerReadyWindow(_ window: NSWindow) {
+      // Let Root's window state and notification subscriptions settle before delivery.
+      DispatchQueue.main.async { [weak window] in
+        guard let window else { return }
+        readyWindows.add(window)
+        guard let pending = pendingWindowNotification,
+              pending.window == nil || pending.window === window else { return }
+        pendingWindowNotification = nil
+        NotificationCenter.default.post(name: pending.name, object: window, userInfo: pending.userInfo)
+      }
+    }
+
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
       // Bring the app to front when clicked in dock
       if !flag {
-        NSApp.activate(ignoringOtherApps: true)
+        Self.activateMainWindow()
       }
       return true
     }
@@ -99,8 +154,10 @@
       updateStatusBarVisibility()
     }
 
-    @objc private func userDefaultsDidChange() {
-      updateStatusBarVisibility()
+    @objc nonisolated private func userDefaultsDidChange() {
+      DispatchQueue.main.async { [weak self] in
+        self?.updateStatusBarVisibility()
+      }
     }
 
     private func updateStatusBarVisibility() {
@@ -136,6 +193,7 @@
 
     private func createStatusMenu() -> NSMenu {
       let menu = NSMenu()
+      menu.delegate = self
 
       // 应用名称和版本
       let titleItem = NSMenuItem(title: "OpenCCman \(Bundle.main.appVersion)", action: nil, keyEquivalent: "")
@@ -209,18 +267,15 @@
 
     @objc private func convertTextFromStatusBar() {
       // 激活应用并发送转换通知
-      NSApp.activate(ignoringOtherApps: true)
-      NotificationCenter.default.post(name: Notification.Name("ConvertTextFromMenu"), object: nil)
+      Self.postWindowNotification(name: Notification.Name("ConvertTextFromMenu"))
     }
 
     @objc private func openSettingsFromStatusBar() {
-      NSApp.activate(ignoringOtherApps: true)
-      NotificationCenter.default.post(name: Notification.Name("OpenSettingsFromMenu"), object: nil)
+      Self.postWindowNotification(name: Notification.Name("OpenSettingsFromMenu"))
     }
 
     @objc private func openHelpFromStatusBar() {
-      NSApp.activate(ignoringOtherApps: true)
-      NotificationCenter.default.post(name: Notification.Name("OpenHelpFromMenu"), object: nil)
+      Self.postWindowNotification(name: Notification.Name("OpenHelpFromMenu"))
     }
 
     @objc private func quitApp() {
@@ -270,12 +325,14 @@
           }
 
           do {
-              let converter = try ChineseConverter(options: options)
-              let convertedText = converter.convert(string)
+              let convertedText = try ChineseConversionService.convertSynchronously(string, options: options)
 
               // Clear the pasteboard and set the converted text
               pboard.clearContents()
-              pboard.setString(convertedText, forType: .string)
+              guard pboard.setString(convertedText, forType: .string) else {
+                  error.pointee = "Could not write converted text to pasteboard" as NSString
+                  return
+              }
 
               // Bring the app to front and populate the input field
               DispatchQueue.main.async {
@@ -303,14 +360,9 @@
 
       // MARK: - App Integration
 
-      private func bringAppToFrontAndSetText(originalText: String, convertedText: String) {
-          // Activate the app
-          NSApp.activate(ignoringOtherApps: true)
-
-          // Post notification to update the UI
-          NotificationCenter.default.post(
+      @MainActor private func bringAppToFrontAndSetText(originalText: String, convertedText: String) {
+          AppDelegate.postWindowNotification(
               name: .textConversionServiceDidReceiveText,
-              object: nil,
               userInfo: [
                   "originalText": originalText,
                   "convertedText": convertedText
@@ -318,14 +370,9 @@
           )
       }
 
-      private func bringAppToFrontAndSetTextOnly(originalText: String) {
-          // Activate the app
-          NSApp.activate(ignoringOtherApps: true)
-
-          // Post notification to update the UI with just the original text
-          NotificationCenter.default.post(
+      @MainActor private func bringAppToFrontAndSetTextOnly(originalText: String) {
+          AppDelegate.postWindowNotification(
               name: .textServiceDidReceiveText,
-              object: nil,
               userInfo: [
                   "originalText": originalText
               ]
