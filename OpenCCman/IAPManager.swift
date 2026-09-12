@@ -41,7 +41,7 @@ enum ProFeature: String, CaseIterable, Identifiable {
   var id: ProFeature { self }
 }
 
-final class IAPManager {
+final class IAPManager: NSObject, PurchasesDelegate {
   enum Sku: String {
     case ios_openccman_pro_lifetime_3
   }
@@ -56,22 +56,26 @@ final class IAPManager {
 
   static let shared = IAPManager()
 
-  private init() {}
-
-  func configure() {
-    Purchases.configure(withAPIKey: "appl_EJkSanbpeFhoNJsZaUbpIZPduCi")
-    Purchases.proxyURL = URL(string: "https://api.rc-backup.com/")!
+  private override init() {
+    super.init()
   }
 
-  func checkProLifetime(completion: @escaping (Bool) -> Void) {
+  func configure() {
+    guard Purchases.isConfigured == false else { return }
+
+    Purchases.proxyURL = URL(string: "https://api.rc-backup.com/")!
+    Purchases.configure(withAPIKey: "appl_EJkSanbpeFhoNJsZaUbpIZPduCi")
+    Purchases.shared.delegate = self
+  }
+
+  func checkProLifetime(completion: @escaping (Bool?) -> Void) {
     Purchases.shared.getCustomerInfo { customerInfo, _ in
-      if let infos = customerInfo?.entitlements.active,
-         let _ = infos[IAPManager.Permission.pro_lifetime.rawValue] {
-        completion(true)
-      } else {
-        completion(false)
-      }
+      completion(customerInfo.map { $0.entitlements.active[Permission.pro_lifetime.rawValue] != nil })
     }
-    Purchases.shared.restorePurchases()
+  }
+
+  func purchases(_ purchases: Purchases, receivedUpdated customerInfo: CustomerInfo) {
+    let isPro = customerInfo.entitlements.active[Permission.pro_lifetime.rawValue] != nil
+    UserDefaults.standard.set(isPro, forKey: UserDefaultsKeys.isPro.rawValue)
   }
 }

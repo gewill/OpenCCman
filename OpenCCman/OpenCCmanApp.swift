@@ -43,7 +43,7 @@ struct OpenCCmanApp: App {
     .commands {
       CommandGroup(after: .textEditing) {
         Button("Convert".localizedStringKey, systemImage: "arrow.trianglehead.2.counterclockwise") {
-          NotificationCenter.default.post(name: Notification.Name("ConvertTextFromMenu"), object: nil)
+          NotificationCenter.default.post(name: Notification.Name("ConvertTextFromMenu"), object: NSApp.keyWindow)
         }
         .keyboardShortcut("t")
       }
@@ -56,6 +56,7 @@ struct OpenCCmanApp: App {
   func checkPro() {
     if Date().yesterday.unixTimestamp >= lastCheckProDate {
       IAPManager.shared.checkProLifetime { isPro in
+        guard let isPro else { return }
         self.isPro = isPro
         lastCheckProDate = Date().unixTimestamp
       }

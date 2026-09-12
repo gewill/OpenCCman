@@ -22,6 +22,11 @@ struct ShortcutSettingsScene: View {
             list
         }
         .background(Color.Neumorphic.main)
+        #if os(macOS)
+        .onAppear {
+            shortcutService.checkAccessibilityPermission()
+        }
+        #endif
     }
     
     var navi: some View {
@@ -89,7 +94,6 @@ struct ShortcutSettingsScene: View {
                         Spacer()
                         Toggle("", isOn: $shortcutService.isEnabled)
                             .toggleStyle(SwitchToggleStyle())
-                            .disabled(!shortcutService.hasAccessibilityPermission)
                     }
                     .padding()
                     .background(
@@ -219,4 +223,3 @@ struct ShortcutSettingsScene_Previews: PreviewProvider {
         ShortcutSettingsScene()
     }
 }
-

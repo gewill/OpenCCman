@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC0912202600000000000001 /* ChineseConversionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000002 /* ChineseConversionService.swift */; };
 		0920E96C2E3F4D3C003C9715 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */; };
 		095E17452E40746F0051BBB7 /* ServicesMenu.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */; };
+		CC0912202600000000000011 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000012 /* PrivacyInfo.xcprivacy */; };
 		09DBEC4F2E3BC32F00DD9C5B /* ShortcutSettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC4E2E3BC32F00DD9C5B /* ShortcutSettingsScene.swift */; };
 		09DBEC522E3BC4BC00DD9C5B /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 09DBEC512E3BC4BC00DD9C5B /* KeyboardShortcuts */; };
 		09DBEC552E3BC69000DD9C5B /* GlobalShortcutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */; };
@@ -71,8 +73,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CC0912202600000000000002 /* ChineseConversionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseConversionService.swift; sourceTree = "<group>"; };
 		0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = ServicesMenu.xcstrings; sourceTree = "<group>"; };
+		CC0912202600000000000012 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		09DBEC4E2E3BC32F00DD9C5B /* ShortcutSettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSettingsScene.swift; sourceTree = "<group>"; };
 		09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalShortcutService.swift; sourceTree = "<group>"; };
 		BE2C6D402B2D7ED000FC4112 /* ViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 		09DBEC542E3BC69000DD9C5B /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CC0912202600000000000002 /* ChineseConversionService.swift */,
 				09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */,
 			);
 			path = Services;
@@ -266,6 +271,7 @@
 				BE3AEC9D2B2EF2D400820673 /* IAPManager.swift */,
 				BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */,
 				BEA770EC2B2C904A00AFA2F0 /* OpenCCman.entitlements */,
+				CC0912202600000000000012 /* PrivacyInfo.xcprivacy */,
 				0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */,
 				095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */,
 				BE727E3A2B2E00D000C63DB2 /* Localizable.strings */,
@@ -380,6 +386,7 @@
 			files = (
 				BEA770EF2B2C904A00AFA2F0 /* Preview Assets.xcassets in Resources */,
 				095E17452E40746F0051BBB7 /* ServicesMenu.xcstrings in Resources */,
+				CC0912202600000000000011 /* PrivacyInfo.xcprivacy in Resources */,
 				BE727E382B2E00D000C63DB2 /* Localizable.strings in Resources */,
 				0920E96C2E3F4D3C003C9715 /* InfoPlist.xcstrings in Resources */,
 				BEA770EB2B2C904A00AFA2F0 /* Assets.xcassets in Resources */,
@@ -393,6 +400,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC0912202600000000000001 /* ChineseConversionService.swift in Sources */,
 				BE2C6D522B2D7ED000FC4112 /* ImageExtensions.swift in Sources */,
 				BEA770E92B2C904900AFA2F0 /* HomeScene.swift in Sources */,
 				BE3AECB52B2EF6F700820673 /* CardReflectionView.swift in Sources */,

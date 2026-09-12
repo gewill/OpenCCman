@@ -1,13 +1,18 @@
 import Neumorphic
 import SwiftUI
 import SwiftUIRouter
-import Combine
+#if os(macOS)
+  import SwiftUIIntrospect
+#endif
 
 struct RootView: View {
   @EnvironmentObject private var navigator: Navigator
+  @StateObject private var viewModel = HomeViewModel()
   @State private var showAd: Bool = false
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
-  @State private var cancellables = Set<AnyCancellable>()
+  #if os(macOS)
+    @State private var windowID: ObjectIdentifier?
+  #endif
 
   var body: some View {
     ZStack(alignment: .bottom) {
@@ -16,6 +21,7 @@ struct RootView: View {
 
       VStack(alignment: .center, spacing: Constant.padding) {
         RootRoutes()
+          .environmentObject(viewModel)
       }
     }
     .background(Color.Neumorphic.main)
@@ -23,28 +29,50 @@ struct RootView: View {
     .onChange(of: navigator.path) { newPath in
       print("Current path:", newPath)
     }
-    .onAppear {
-      setupMenuBarNotifications()
-    }
-  }
-
-  private func setupMenuBarNotifications() {
+    .onDisappear { viewModel.cancelConversion() }
     #if os(macOS)
-    // 监听菜单栏设置通知
-    NotificationCenter.default.publisher(for: Notification.Name("OpenSettingsFromMenu"))
-      .sink { _ in
-        navigator.navigate("/settings")
-      }
-      .store(in: &cancellables)
-
-    // 监听菜单栏帮助通知
-    NotificationCenter.default.publisher(for: Notification.Name("OpenHelpFromMenu"))
-      .sink { _ in
-        navigator.navigate("/help")
-      }
-      .store(in: &cancellables)
+    .introspect(.window, on: .macOS(.v11, .v12, .v13, .v14, .v15, .v26)) { window in
+      windowID = ObjectIdentifier(window)
+      viewModel.window = window
+      AppDelegate.registerReadyWindow(window)
+    }
+    .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenSettingsFromMenu"))) { notification in
+      guard isTargetWindow(for: notification) else { return }
+      navigator.navigate("/settings")
+    }
+    .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenHelpFromMenu"))) { notification in
+      guard isTargetWindow(for: notification) else { return }
+      navigator.navigate("/help")
+    }
+    .onReceive(NotificationCenter.default.publisher(for: .textConversionServiceDidReceiveText)) { notification in
+      navigateToHome(for: notification)
+    }
+    .onReceive(NotificationCenter.default.publisher(for: .globalShortcutDidConvertText)) { notification in
+      navigateToHome(for: notification)
+    }
+    .onReceive(NotificationCenter.default.publisher(for: .textServiceDidReceiveText)) { notification in
+      navigateToHome(for: notification)
+    }
+    .onReceive(NotificationCenter.default.publisher(for: .convertTextFromMenu)) { notification in
+      navigateToHome(for: notification)
+    }
     #endif
   }
+
+  #if os(macOS)
+  private func navigateToHome(for notification: Notification) {
+    guard isTargetWindow(for: notification), navigator.path != "/home" else { return }
+    navigator.navigate("/home")
+  }
+
+  private func isTargetWindow(for notification: Notification) -> Bool {
+    guard let windowID,
+          let targetWindow = notification.object as? NSWindow ?? NSApp.keyWindow else {
+      return false
+    }
+    return ObjectIdentifier(targetWindow) == windowID
+  }
+  #endif
 }
 
 struct MainView_Previews: PreviewProvider {
