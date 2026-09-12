@@ -57,12 +57,17 @@ import OpenCC
     model.translate()
     model.translate()
     await waitUntilIdle(model)
-    precondition(TestNumbersPerDayManager.count == 1, "Repeated taps must not overlap or consume two uses")
+    precondition(coreQuotaCount == 1, "Repeated taps must not overlap or consume two uses")
     precondition(nonemptyResults == 1, "Publish the final text once")
     precondition(model.resultText.hasPrefix("前段\n\n"), "Do not drop the paragraph preceding a long paragraph")
     precondition(model.localProgress == 1 && model.error == nil)
     observation.cancel()
 
+    let previousExport = model.exportSnapshot
+    precondition(previousExport != nil)
+    model.translate()
+    model.cancelConversion()
+    precondition(model.exportSnapshot == previousExport, "Cancellation keeps the latest successful export")
     model.inputText = fixtures.last!
     model.translate()
     model.cancelConversion()
@@ -71,16 +76,18 @@ import OpenCC
     model.translate()
     await waitUntilIdle(model)
     precondition(model.resultText == "滑鼠", "Cancelled work must not overwrite its replacement")
-    precondition(TestNumbersPerDayManager.count == 2, "Cancelled work must not consume quota")
+    precondition(coreQuotaCount == 2, "Cancelled work must not consume quota")
     model.inputText = ""
     model.translate()
-    precondition(!model.isLoading && TestNumbersPerDayManager.count == 2)
-    TestNumbersPerDayManager.isToMax = true
+    precondition(!model.isLoading && coreQuotaCount == 2)
+    for _ in 2..<12 { TestNumbersPerDayManager.reserve()!.commit() }
     model.inputText = "汉"
     model.translate()
     model.translate()
     precondition(model.showingProAlert && !model.isLoading, "A repeated limit action must not hide the alert")
     print("PASS: model release, repeated taps, single publication, cancellation/replacement, empty input and quota guard")
+    try await checkPresetsAndFiles()
+    try await checkProviders()
   }
 
   @MainActor private static func waitUntilIdle(_ model: HomeViewModel) async {

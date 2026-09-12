@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC0912202600000000000041 /* TextFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000042 /* TextFileService.swift */; };
+		CC0912202600000000000031 /* ConvertedTextDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000032 /* ConvertedTextDocument.swift */; };
+		CC0912202600000000000021 /* ConversionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000022 /* ConversionConfiguration.swift */; };
 		CC0912202600000000000001 /* ChineseConversionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000002 /* ChineseConversionService.swift */; };
 		0920E96C2E3F4D3C003C9715 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */; };
 		095E17452E40746F0051BBB7 /* ServicesMenu.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */; };
@@ -73,6 +76,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CC0912202600000000000042 /* TextFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFileService.swift; sourceTree = "<group>"; };
+		CC0912202600000000000032 /* ConvertedTextDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertedTextDocument.swift; sourceTree = "<group>"; };
+		CC0912202600000000000022 /* ConversionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionConfiguration.swift; sourceTree = "<group>"; };
 		CC0912202600000000000002 /* ChineseConversionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseConversionService.swift; sourceTree = "<group>"; };
 		0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = ServicesMenu.xcstrings; sourceTree = "<group>"; };
@@ -158,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				CC0912202600000000000002 /* ChineseConversionService.swift */,
+				CC0912202600000000000042 /* TextFileService.swift */,
 				09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */,
 			);
 			path = Services;
@@ -239,6 +246,8 @@
 				BE3AECA62B2EF43C00820673 /* MyAppModel.swift */,
 				BE3AECA82B2EF46000820673 /* OpenSourceModel.swift */,
 				BE3AECAA2B2EF46A00820673 /* TestNumbersPerDayManager.swift */,
+				CC0912202600000000000032 /* ConvertedTextDocument.swift */,
+				CC0912202600000000000022 /* ConversionConfiguration.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -401,6 +410,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC0912202600000000000001 /* ChineseConversionService.swift in Sources */,
+				CC0912202600000000000041 /* TextFileService.swift in Sources */,
+				CC0912202600000000000031 /* ConvertedTextDocument.swift in Sources */,
+				CC0912202600000000000021 /* ConversionConfiguration.swift in Sources */,
 				BE2C6D522B2D7ED000FC4112 /* ImageExtensions.swift in Sources */,
 				BEA770E92B2C904900AFA2F0 /* HomeScene.swift in Sources */,
 				BE3AECB52B2EF6F700820673 /* CardReflectionView.swift in Sources */,
@@ -586,7 +598,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = OpenCCman/OpenCCman.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenCCman/Preview Content\"";
 				DEVELOPMENT_TEAM = RLK76T8Y89;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -611,7 +623,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.OpenCCman;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -629,7 +641,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = OpenCCman/OpenCCman.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_ASSET_PATHS = "\"OpenCCman/Preview Content\"";
 				DEVELOPMENT_TEAM = RLK76T8Y89;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -654,7 +666,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.OpenCCman;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
