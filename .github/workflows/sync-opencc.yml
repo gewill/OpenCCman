@@ -1,0 +1,182 @@
+name: Sync OpenCC
+
+on:
+  schedule:
+    - cron: '17 1 * * 1'
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - scripts/sync-upstream.py
+      - scripts/upstream-sync.json
+      - tests/test_upstream_sync.py
+      - .github/workflows/sync-opencc.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: opencc-upstream-sync
+  cancel-in-progress: false
+
+jobs:
+  coordinator-tests:
+    name: Upstream Coordinator Tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - run: python3 -m unittest discover -s tests -p 'test_*.py'
+
+  detect:
+    needs: coordinator-tests
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      stage: ${{ steps.detect.outputs.stage }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Select the next dependency layer
+        id: detect
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir detection
+          python3 scripts/sync-upstream.py check --stage fork > detection/fork.json
+          status=$(python3 -c 'import json; print(json.load(open("detection/fork.json"))["status"])')
+          if [ "$status" = changed ]; then
+            cp detection/fork.json detection/expected.json
+            echo 'stage=fork' >> "$GITHUB_OUTPUT"
+          elif [ "$status" = noop ]; then
+            python3 scripts/sync-upstream.py check --stage app > detection/app.json
+            status=$(python3 -c 'import json; print(json.load(open("detection/app.json"))["status"])')
+            if [ "$status" = changed ]; then
+              cp detection/app.json detection/expected.json
+              echo 'stage=app' >> "$GITHUB_OUTPUT"
+            fi
+          fi
+      - name: Detection summary
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          from pathlib import Path
+          for path in sorted(Path('detection').glob('*.json')):
+              if path.name == 'expected.json':
+                  continue
+              data = json.loads(path.read_text())
+              print(f"- {data['stage']}: **{data['status']}** — {data.get('reason', 'update available')}")
+              if data.get('pr_url'):
+                  print(f"  {data['pr_url']}")
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: detection
+          path: detection/
+          retention-days: 7
+
+  prepare:
+    needs: detect
+    if: needs.detect.outputs.stage != ''
+    runs-on: macos-15
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: detection
+          path: detection
+      - name: Build and validate without write credentials
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SYNC_STAGE: ${{ needs.detect.outputs.stage }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/sync-upstream.py prepare --stage "$SYNC_STAGE" --expected detection/expected.json --output candidate > preparation.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('preparation.json').read_text())
+          if data['status'] != 'changed' or not Path('candidate/candidate.json').exists():
+              raise SystemExit('Candidate no longer available; rerun after review/state change')
+          PY
+      - name: Preparation summary
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          from pathlib import Path
+          path = Path('preparation.json')
+          if path.exists():
+              data = json.loads(path.read_text())
+              print(f"**{data['status']}**: {data.get('reason', 'Candidate validation passed')}")
+          report = Path('candidate/report.md')
+          if report.exists():
+              print(report.read_text())
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: candidate
+          path: |
+            candidate/
+            preparation.json
+          retention-days: 7
+
+  publish:
+    needs: [detect, prepare]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: candidate
+          path: prepared
+      - uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2
+        id: app-token
+        with:
+          app-id: ${{ vars.OPENCC_SYNC_APP_ID }}
+          private-key: ${{ secrets.OPENCC_SYNC_APP_PRIVATE_KEY }}
+          owner: gewill
+          repositories: ${{ needs.detect.outputs.stage == 'fork' && 'SwiftyOpenCC' || 'OpenCCman' }}
+          permission-contents: write
+          permission-pull-requests: write
+      - name: Publish the already validated commit
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          SYNC_STAGE: ${{ needs.detect.outputs.stage }}
+          OPENCC_SYNC_WRITE_REPOSITORY: ${{ needs.detect.outputs.stage == 'fork' && 'gewill/SwiftyOpenCC' || 'gewill/OpenCCman' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/sync-upstream.py pr --stage "$SYNC_STAGE" --prepared prepared/candidate > publication.json
+      - name: Publication summary
+        if: always()
+        shell: bash
+        run: |
+          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          from pathlib import Path
+          path = Path('publication.json')
+          if path.exists():
+              data = json.loads(path.read_text())
+              print(f"**{data['status']}**: {data.get('reason', 'PR prepared for human review')}")
+              if data.get('pr_url'):
+                  print(data['pr_url'])
+          PY
