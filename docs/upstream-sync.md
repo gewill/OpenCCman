@@ -7,7 +7,7 @@
 1. 先人工合并 SwiftyOpenCC 的官方 `SimpleConverter`／JSON 配置迁移，使 fork/master 包含 `scripts/update-opencc-resources.py`、`Sources/OpenCC/Resources/manifest.json`（`schemaVersion=1`、`bridgeVersion=1`）与 `OpenCC Compatibility` CI。旧桥接不能仅替换子模块来升级。
 2. 让协调器进入 OpenCCman/main；让应用回归脚本与 `App Regression` CI 进入 build。两个 CI 的 **job 名称**也必须分别为 `OpenCC Compatibility`、`App Regression`。fork CI 必须测试 `push: master`，因为应用推广检查的是合并后的精确 SHA。
 3. 创建专用 GitHub App，仅安装至 `gewill/OpenCCman` 与 `gewill/SwiftyOpenCC`，仓库权限只选 **Contents: read/write、Pull requests: read/write**。不请求 Actions、Workflows、Administration 或自动批准权限。
-4. 在 OpenCCman 设置变量 `OPENCC_SYNC_APP_ID`、secret `OPENCC_SYNC_APP_PRIVATE_KEY`。这把私钥只传给发布 job；每次令牌仅允许写入当前目标仓库，任务结束撤销。App 私钥不进入检测／构建 job。写入另一公开仓库之外的来源与 check 信息用公开只读 API 获取，未扩大令牌权限。
+4. 在 OpenCCman 设置变量 `OPENCC_SYNC_APP_ID`、secret `OPENCC_SYNC_APP_PRIVATE_KEY`。这把私钥只传给发布 job；每次令牌仅允许写入当前目标仓库，任务结束撤销。App 私钥不进入检测／构建 job。公开来源与 check 信息使用当前 job 的只读 `GITHUB_TOKEN` 认证读取；发布步骤以 `GH_READ_TOKEN` 单独传入该读令牌，`GH_TOKEN` 中的 App 写令牌只供变更 API／Git push 使用，未扩大 App 权限。
 5. 给 fork/master、App/build 配置分支保护：要求 PR、相应 CI 成功、禁止 force-push。机器人不加入绕过列表。个人仓库单人维护时不强制另一位 reviewer，以免唯一维护者无法合并自己的人工 PR。
 
 GitHub 定时任务只从默认分支运行；公开仓库 60 天无活动会停用 schedule，定时运行也可能延迟，因此它不是可靠的定时提醒服务。[官方事件说明](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)
@@ -19,6 +19,8 @@ GitHub 定时任务只从默认分支运行；公开仓库 60 天无活动会停
 需要 Python 3、Git、已登录的 `gh`；准备候选还需要 macOS、Xcode 命令行工具、Swift、CMake，以及 fork 资源脚本声明的构建工具。执行位置任意，脚本配置相对脚本定位。
 
 本地发布通过命令专用 `gh auth git-credential` 使用 `gh` 登录、`GH_TOKEN` 或 `GITHUB_TOKEN`，不改全局 Git 凭证设置。准备进程会移除显式 token 环境变量；本地运行仍可访问开发者原有 Git／钥匙串配置，它不是无凭证沙箱。Actions 的写入私钥和令牌只存在于独立发布 job。
+
+GET 优先使用 `GH_READ_TOKEN`，未设置时复用 `gh` 的现有认证。公开 API 不再匿名请求，避免共享 runner 出口的每小时 60 次匿名限额。`Upstream Coordinator Tests` 会实际用只读 job token 验证两个仓库的 checks API 可读；403／限额错误仍返回退出码 5，不降级为匿名请求或解释为没有 CI。[GitHub API 限额](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api)、[公开 Checks API 权限](https://docs.github.com/en/rest/checks/runs#list-check-runs-for-a-git-reference)
 
 ```sh
 python3 scripts/sync-upstream.py check --stage fork
