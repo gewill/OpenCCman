@@ -13,6 +13,7 @@ An OpenCC UI for iOS、iPadOS、macOS by SwiftUI with ❤️
 - Export the latest successful conversion as a new UTF-8 file without BOM. Line endings, blank lines and Unicode are preserved.
 - Cancel conversion or import without accepting late results. Failed imports leave the current draft intact.
 - Daily homepage quota reservations are shared across windows; only successful conversions consume a use.
+- Localized What’s New cards appear once per supported marketing version and can be reopened in Settings. See the [presentation rules and validation record](docs/WHATS_NEW.md).
 
 iOS 14 / macOS 11 remain supported. Batch conversion, Shortcuts, history and custom dictionaries are not part of 1.3.
 
@@ -24,6 +25,7 @@ Run on macOS with Xcode command-line tools and Python 3; no simulator is require
 bash scripts/check-project.sh
 python3 scripts/check-core.py
 bash scripts/check-quota.sh
+bash scripts/check-whats-new.sh
 bash scripts/check-pasteboard.sh
 ```
 

@@ -73,6 +73,8 @@
 		BEA770F72B2C92B700AFA2F0 /* OpenCC in Frameworks */ = {isa = PBXBuildFile; productRef = BEA770F62B2C92B700AFA2F0 /* OpenCC */; };
 		BEA956392B31EB7B00E04625 /* ColorfulX in Frameworks */ = {isa = PBXBuildFile; productRef = BEA956382B31EB7B00E04625 /* ColorfulX */; };
 		BEA9563D2B31FF8C00E04625 /* ChangeColorSchemeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9563C2B31FF8C00E04625 /* ChangeColorSchemeScene.swift */; };
+		CC0913202600000000000001 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0913202600000000000002 /* WhatsNew.swift */; };
+		CC0913202600000000000101 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0913202600000000000102 /* WhatsNewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -134,6 +136,8 @@
 		BEA770EE2B2C904A00AFA2F0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BEA770F82B2CAEA900AFA2F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BEA9563C2B31FF8C00E04625 /* ChangeColorSchemeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeColorSchemeScene.swift; sourceTree = "<group>"; };
+		CC0913202600000000000002 /* WhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
+		CC0913202600000000000102 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +230,7 @@
 		BE727E2F2B2DF60E00C63DB2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CC0913202600000000000102 /* WhatsNewView.swift */,
 				BE3AECA22B2EF3B200820673 /* BackButton.swift */,
 				BE3AECA32B2EF3B200820673 /* CellButton.swift */,
 				BE3AECAF2B2EF6F700820673 /* AlertView.swift */,
@@ -242,6 +247,7 @@
 		BE727E352B2DF86500C63DB2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CC0913202600000000000002 /* WhatsNew.swift */,
 				BE727E332B2DF85E00C63DB2 /* UserDefaultsKeys.swift */,
 				BE3AECA62B2EF43C00820673 /* MyAppModel.swift */,
 				BE3AECA82B2EF46000820673 /* OpenSourceModel.swift */,
@@ -409,6 +415,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC0913202600000000000101 /* WhatsNewView.swift in Sources */,
+				CC0913202600000000000001 /* WhatsNew.swift in Sources */,
 				CC0912202600000000000001 /* ChineseConversionService.swift in Sources */,
 				CC0912202600000000000041 /* TextFileService.swift in Sources */,
 				CC0912202600000000000031 /* ConvertedTextDocument.swift in Sources */,

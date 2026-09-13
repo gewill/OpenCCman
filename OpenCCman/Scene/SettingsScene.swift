@@ -6,6 +6,8 @@ import SwiftUIRouter
 
 struct SettingsScene: View {
   @EnvironmentObject var navigator: Navigator
+  @EnvironmentObject private var whatsNew: WhatsNewCoordinator
+  @EnvironmentObject private var whatsNewWindow: WhatsNewWindowState
   @Environment(\.openURL) var openURL
 
   @AppStorage(UserDefaultsKeys.selectedLocale.rawValue) var selectedLocale: LocaleConstants = .system
@@ -50,6 +52,13 @@ struct SettingsScene: View {
             Text(Bundle.main.appVersionInfo)
           }
           Divider()
+          if whatsNew.release != nil {
+            CellButton(title: "whats_new_title") {
+              whatsNewWindow.manualRequest = UUID()
+            }
+            .accessibilityIdentifier("whats-new-settings")
+            Divider()
+          }
           CellButton(title: "Review on App Store") {
             openURL(URL(string: "https://apps.apple.com/app/relationship/id6474449401?mt=12&action=write-review")!)
           }
@@ -152,5 +161,7 @@ struct SettingsScene: View {
 struct SettingsScene_Previews: PreviewProvider {
   static var previews: some View {
     SettingsScene()
+      .environmentObject(WhatsNewCoordinator(version: "1.3", skipAutomatic: true))
+      .environmentObject(WhatsNewWindowState())
   }
 }

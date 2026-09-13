@@ -29,5 +29,7 @@ jobs:
         run: python3 scripts/check-core.py
       - name: Check quota reservations
         run: bash scripts/check-quota.sh
+      - name: Check What’s New presentation and localizations
+        run: bash scripts/check-whats-new.sh
       - name: Check isolated pasteboard preservation
         run: bash scripts/check-pasteboard.sh
