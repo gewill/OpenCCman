@@ -33,7 +33,6 @@ struct RootView: View {
       }
     }
     .background(Color.Neumorphic.main)
-
     .onChange(of: navigator.path) { newPath in
       print("Current path:", newPath)
     }
@@ -74,10 +73,14 @@ struct RootView: View {
       AppDelegate.registerReadyWindow(window)
     }
     .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeMainNotification)) { notification in
-      if isTargetWindow(for: notification) { isMainWindow = true }
+      if isTargetWindow(for: notification) {
+        isMainWindow = true
+      }
     }
     .onReceive(NotificationCenter.default.publisher(for: NSWindow.didResignMainNotification)) { notification in
-      if isTargetWindow(for: notification) { isMainWindow = false }
+      if isTargetWindow(for: notification) {
+        isMainWindow = false
+      }
     }
     .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenSettingsFromMenu"))) { notification in
       guard isTargetWindow(for: notification) else { return }
@@ -113,9 +116,10 @@ struct RootView: View {
       isSupportedRoute: navigator.path == "/home" || navigator.path == "/settings",
       isConverting: viewModel.isLoading,
       isImporting: viewModel.isImporting,
-      hasFilePanel: whatsNewWindow.showingImporter || whatsNewWindow.showingExporter || whatsNewWindow.showingConversionSettings,
+      hasFilePanel: whatsNewWindow.showingImporter || whatsNewWindow.showingExporter,
       hasAlert: viewModel.showingProAlert || viewModel.error != nil,
-      hasProSheet: whatsNewWindow.proSheetIsActive
+      hasProSheet: whatsNewWindow.proSheetIsActive,
+      hasSettingsSheet: whatsNewWindow.conversionSettingsIsActive
     )
   }
 
@@ -128,18 +132,19 @@ struct RootView: View {
   }
 
   #if os(macOS)
-  private func navigateToHome(for notification: Notification) {
-    guard isTargetWindow(for: notification), navigator.path != "/home" else { return }
-    navigator.navigate("/home")
-  }
-
-  private func isTargetWindow(for notification: Notification) -> Bool {
-    guard let windowID,
-          let targetWindow = notification.object as? NSWindow ?? NSApp.keyWindow else {
-      return false
+    private func navigateToHome(for notification: Notification) {
+      guard isTargetWindow(for: notification), navigator.path != "/home" else { return }
+      navigator.navigate("/home")
     }
-    return ObjectIdentifier(targetWindow) == windowID
-  }
+
+    private func isTargetWindow(for notification: Notification) -> Bool {
+      guard let windowID,
+            let targetWindow = notification.object as? NSWindow ?? NSApp.keyWindow
+      else {
+        return false
+      }
+      return ObjectIdentifier(targetWindow) == windowID
+    }
   #endif
 }
 

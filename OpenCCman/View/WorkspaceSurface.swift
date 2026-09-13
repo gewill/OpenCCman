@@ -52,7 +52,9 @@ struct WorkspaceSurface: View {
       .onAppear { previousAxis = resolution.axis }
       .onChange(of: resolution.axis) { previousAxis = $0 }
     }
-    .sheet(isPresented: $windowState.showingConversionSettings) {
+    .sheet(isPresented: $windowState.showingConversionSettings, onDismiss: {
+      windowState.conversionSettingsIsActive = false
+    }) {
       ConversionSettingsSheet()
         .environmentObject(viewModel)
         .environmentObject(windowState)

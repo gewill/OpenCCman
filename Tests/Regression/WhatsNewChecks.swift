@@ -22,7 +22,7 @@ enum WhatsNewChecks {
 
     // Every blocker defers both automatic and manual requests, without writing defaults.
     let blockers: [WritableKeyPath<WhatsNewEligibility, Bool>] = [
-      \.isConverting, \.isImporting, \.hasFilePanel, \.hasAlert, \.hasProSheet,
+      \.isConverting, \.isImporting, \.hasFilePanel, \.hasAlert, \.hasProSheet, \.hasSettingsSheet,
     ]
     for blocker in blockers {
       var busy = ready
@@ -48,6 +48,21 @@ enum WhatsNewChecks {
     windowState.showingProSheet = false
     precondition(windowState.proSheetIsActive, "Keep blocking until the Pro sheet’s onDismiss callback")
     windowState.proSheetIsActive = false
+
+    // Settings dismissal must defer a pending card until the system has finished.
+    let secondWindowState = WhatsNewWindowState()
+    windowState.showingConversionSettings = true
+    windowState.showingConversionSettings = false
+    precondition(windowState.conversionSettingsIsActive)
+    precondition(!secondWindowState.conversionSettingsIsActive)
+    var dismissing = ready
+    dismissing.hasSettingsSheet = windowState.conversionSettingsIsActive
+    precondition(coordinator.reserve(for: first, eligibility: dismissing, manually: true) == nil)
+    precondition(coordinator.owner == nil && defaults.string(forKey: key) == nil)
+    windowState.conversionSettingsIsActive = false // Host onDismiss.
+    dismissing.hasSettingsSheet = windowState.conversionSettingsIsActive
+    precondition(coordinator.reserve(for: first, eligibility: dismissing, manually: true) != nil)
+    coordinator.finish(in: first)
 
     precondition(coordinator.reserve(for: first, eligibility: ready, manually: false) != nil)
     precondition(defaults.string(forKey: key) == nil, "Reservation alone must not mark a version seen")

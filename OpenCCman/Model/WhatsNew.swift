@@ -5,13 +5,20 @@ struct WhatsNewRelease: Identifiable {
   struct Card: Identifiable {
     let id: String
     let symbol: String
-    var titleKey: String { "whats_new_\(id)_title" }
-    var detailKey: String { "whats_new_\(id)_detail" }
+    var titleKey: String {
+      "whats_new_\(id)_title"
+    }
+
+    var detailKey: String {
+      "whats_new_\(id)_detail"
+    }
   }
 
   let version: String
   let cards: [Card]
-  var id: String { version }
+  var id: String {
+    version
+  }
 
   static func content(for version: String) -> WhatsNewRelease? {
     guard version == "1.3" else { return nil }
@@ -70,20 +77,35 @@ struct WhatsNewEligibility: Equatable {
   var hasFilePanel = false
   var hasAlert = false
   var hasProSheet = false
+  var hasSettingsSheet = false
 
   var canPresent: Bool {
-    isActive && isSupportedRoute && !isConverting && !isImporting && !hasFilePanel && !hasAlert && !hasProSheet
+    isActive && isSupportedRoute && !isConverting && !isImporting && !hasFilePanel && !hasAlert && !hasProSheet && !hasSettingsSheet
   }
 }
 
 /// Window-local system presentations are visible to the root presentation host.
 final class WhatsNewWindowState: ObservableObject {
-  @Published var showingConversionSettings = false
+  @Published var showingConversionSettings = false {
+    didSet {
+      if showingConversionSettings {
+        conversionSettingsIsActive = true
+      }
+    }
+  }
+
+  // A false presentation binding starts dismissal; the host's onDismiss ends it.
+  @Published var conversionSettingsIsActive = false
   @Published var showingImporter = false
   @Published var showingExporter = false
   @Published var showingProSheet = false {
-    didSet { if showingProSheet { proSheetIsActive = true } }
+    didSet {
+      if showingProSheet {
+        proSheetIsActive = true
+      }
+    }
   }
+
   @Published var proSheetIsActive = false
   @Published var manualRequest: UUID?
 }
