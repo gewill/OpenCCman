@@ -5,9 +5,6 @@ import SwiftUIRouter
 import UniformTypeIdentifiers
 
 struct HomeScene: View {
-  @EnvironmentObject var navigator: Navigator
-
-  @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @EnvironmentObject private var viewModel: HomeViewModel
   @EnvironmentObject private var whatsNewWindow: WhatsNewWindowState
   @State private var exportDocument: ConvertedTextDocument?
@@ -23,15 +20,7 @@ struct HomeScene: View {
         if UserInterfaceIdiom.current == .pad {
           WorkspaceSurface(platform: .pad, export: exportResult)
         } else {
-          ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-              navi
-              list
-              if !isPro {
-                MyAppView().padding(Constant.padding)
-              }
-            }
-          }
+          PhoneWorkspace(export: exportResult)
         }
       #endif
     }
@@ -70,45 +59,6 @@ struct HomeScene: View {
     exportDocument = ConvertedTextDocument(text: snapshot.text)
     exportFilename = snapshot.filename
     whatsNewWindow.showingExporter = true
-  }
-
-  var navi: some View {
-    VStack(spacing: 8) {
-      HStack(spacing: 12) {
-        Text("OpenCCman").font(.title).fixedSize(horizontal: false, vertical: true)
-        Spacer(minLength: 0)
-        Menu {
-          Button("Help") { navigator.navigate("/help") }
-          Button("Pro") { navigator.navigate("/pro") }.keyboardShortcut("p")
-          Button("Settings") { navigator.navigate("/settings") }.keyboardShortcut(",")
-        } label: {
-          Image(systemName: "ellipsis.circle").frame(width: 44, height: 44)
-        }
-        .menuStyle(.borderlessButton)
-        .accessibilityLabel(Text("workspace_more"))
-      }
-      Text("Convert Chinese text with [OpenCC](https://github.com/BYVoid/OpenCC)")
-        .font(.caption)
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-    .foregroundColor(Color.Neumorphic.secondary)
-    .padding(Constant.padding)
-  }
-
-  var list: some View {
-    VStack(alignment: .leading, spacing: Constant.padding) {
-      ConversionInspector()
-      SourcePane()
-      ResultPane {
-        guard let snapshot = viewModel.exportSnapshot else { return }
-        exportDocument = ConvertedTextDocument(text: snapshot.text)
-        exportFilename = snapshot.filename
-        whatsNewWindow.showingExporter = true
-      }
-      Spacer()
-    }
-    .foregroundColor(Color.Neumorphic.secondary)
-    .padding(Constant.padding)
   }
 }
 

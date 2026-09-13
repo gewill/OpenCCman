@@ -5,7 +5,10 @@
 
   class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-      IQKeyboardManager.shared.enable = true
+      // SwiftUI owns keyboard avoidance; a second manager must not translate
+      // the hosting controller or inject a duplicate keyboard toolbar.
+      IQKeyboardManager.shared.enable = false
+      IQKeyboardManager.shared.enableAutoToolbar = false
       IQKeyboardManager.shared.shouldResignOnTouchOutside = true
 
       return true
