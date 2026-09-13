@@ -92,8 +92,9 @@ struct ShortcutSettingsScene: View {
                         Text("Enable Global Shortcut".localizedStringKey)
                             .font(.headline)
                         Spacer()
-                        Toggle("", isOn: $shortcutService.isEnabled)
-                            .toggleStyle(SwitchToggleStyle())
+                        Toggle("Enable Global Shortcut", isOn: $shortcutService.isEnabled)
+                            .neumorphicThemedSwitchStyle(tint: .accentColor, labelsHidden: true)
+                            .accessibilityLabel(Text("Enable Global Shortcut"))
                     }
                     .padding()
                     .background(

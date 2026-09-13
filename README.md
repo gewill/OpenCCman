@@ -28,12 +28,15 @@ bash scripts/check-project.sh
 python3 scripts/check-core.py
 bash scripts/check-quota.sh
 bash scripts/check-whats-new.sh
+bash scripts/check-control-labels.sh
 bash scripts/check-pasteboard.sh
 ```
 
 Core checks compile the actual app model/services with the dependencies pinned in `Package.resolved`. All preferences and pasteboards used by these checks are isolated from the running app. See [1.3 validation](docs/version-1.3-validation.md) for coverage and remaining release checks.
 
 ## Project status
+
+Neumorphic is pinned to the stable **2.4.1** release. See the [control adoption audit](docs/NEUMORPHIC_CONTROLS.md) for segmented selectors, switches, loading indicators, cards, and the controls that retain system behavior.
 
 See the [complete project status and follow-up report (2026-09-13)](docs/project-status-and-follow-up-2026-09-13.md) for delivered work, validation evidence, remaining release gates and concrete improvement recommendations.
 

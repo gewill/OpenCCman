@@ -5,19 +5,9 @@ struct SoftRectangleStyle: ViewModifier {
   var cornerRadius: CGFloat
   var padding: CGFloat?
   func body(content: Content) -> some View {
-    if let padding {
-      content
-        .padding(padding)
-        .background(
-          RoundedRectangle(cornerRadius: cornerRadius).fill(Color.main).softOuterShadow()
-        )
-    } else {
-      content
-        .padding()
-        .background(
-          RoundedRectangle(cornerRadius: cornerRadius).fill(Color.main).softOuterShadow()
-        )
-    }
+    content
+      .padding(.all, padding)
+      .neumorphicCard(RoundedRectangle(cornerRadius: cornerRadius), padding: 0)
   }
 }
 

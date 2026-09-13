@@ -2,6 +2,7 @@
   import BetterSafariView
 #endif
 import SwiftUI
+import Neumorphic
 import SwiftUIRouter
 
 struct SettingsScene: View {
@@ -99,8 +100,9 @@ struct SettingsScene: View {
             HStack(alignment: .center, spacing: 6) {
               Text("Show Menu Bar Icon".localizedStringKey)
               Spacer()
-              Toggle("", isOn: $showMenuBarIcon)
-                .toggleStyle(SwitchToggleStyle())
+              Toggle("Show Menu Bar Icon", isOn: $showMenuBarIcon)
+                .neumorphicThemedSwitchStyle(tint: .accentColor, labelsHidden: true)
+                .accessibilityLabel(Text("Show Menu Bar Icon"))
             }
 
             Divider()

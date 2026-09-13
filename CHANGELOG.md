@@ -49,6 +49,11 @@ and [What’s New validation record](docs/WHATS_NEW.md).
 
 ### Changed
 
+- Pin Neumorphic to the stable 2.4.1 release. Replace the three custom conversion
+  selectors with the library's segmented picker, adopt its switch, circular
+  loading and card APIs, and resolve picker labels in the current app language.
+  See the [control adoption audit](docs/NEUMORPHIC_CONTROLS.md) for retained system
+  controls and validation boundaries.
 - Upgrade the embedded OpenCC core from 1.2.0 to 1.4.2 through the compatible
   SwiftyOpenCC fork. Existing option meanings remain available; updated
   dictionaries can change conversion output ([#5]).

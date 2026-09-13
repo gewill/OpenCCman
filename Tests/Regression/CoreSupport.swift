@@ -21,7 +21,7 @@ enum UserDefaultsKeys: String {
 }
 enum FreeFeature { static let maxTestNumber = 12 }
 var coreQuotaCount: Int { appDefaults[\.testNumbersPerDay].values.reduce(0, +) }
-protocol Segmentable: Identifiable, Equatable { var title: String { get } }
+protocol Segmentable: Identifiable, Hashable { var title: String { get } }
 extension Bundle { var appVersion: String { "core-checks" } }
 @MainActor enum ReviewHandler {
   static var requests = 0
