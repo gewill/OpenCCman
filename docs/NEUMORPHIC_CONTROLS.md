@@ -58,6 +58,6 @@
 - Xcode 26.6：macOS 与 iOS Simulator Debug 构建成功，仍以应用原部署下限编译。
 - `scripts/check-control-labels.sh` 使用真实字符串资源和生产语言解析函数，验证英文、简繁、下划线 locale、切换语言和缺失键回退；已加入 App Regression CI。
 - 工程/字符串语法、What’s New 状态、核心/预设/文件、额度及剪贴板回归由现有脚本覆盖。
-- 实际界面验收暂未执行：Mac 锁定，无法打开隔离测试版。窄窗口、深色、大字号、选中/禁用状态及两个开关交互不能仅凭构建成功认定通过；解锁后应优先补验，跟踪于 [控件 UI 验收 #37](https://github.com/gewill/OpenCCman/issues/37)。
+- 2026-09-13 已执行隔离应用 UI 验收：普通字号核心交互通过，辅助功能大字号发现遮挡和重叠。**整体 UI 验收未通过，PR #39 保留草稿。** 逐项证据见 [本轮验收记录](NEUMORPHIC_ACCEPTANCE.md)，跟踪于 [#37](https://github.com/gewill/OpenCCman/issues/37)；布局修复见 [#40](https://github.com/gewill/OpenCCman/issues/40)。
 
 相关 API 以 [v2.4.1 源码](https://github.com/gewill/neumorphic/tree/v2.4.1/Sources/Neumorphic) 为准。
