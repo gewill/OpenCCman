@@ -56,12 +56,14 @@ asc xcode-cloud doctor --run-id <RUN_ID> --save-logs /tmp/openccman-cloud-logs
 
 2026-09-13 的本地导出补建了一个 Apple Distribution 身份和两个本地 App Store profiles，身份保存在登录 Keychain，生成时的明文私钥副本已删除；这不是正式发布前置步骤，不应在日常云端构建中重复执行。
 
-## 已知构建阻塞与证据
+## 资源签名阻塞与修复证据
+
+**后续验证已通过**：引擎修复及应用依赖 PR #32 已合并。Xcode Cloud #44 两平台归档和内部 TestFlight 分发成功，ASC 两 build 均为 VALID；macOS 已从 TestFlight 安装并完成启动/基本转换。详见 [#44 验证记录](xcode-cloud-44-testflight-validation.md)。以下 #42 为已解决问题的历史记录。
 
 云端 run **#42**（`2f6ea0dc-1f97-419a-a95c-c81b487712a3`，应用 SHA `c2c8581b8f1b781f5c05321f58fe484634341374`）中 macOS Archive 成功，iOS Archive 失败，两平台 TestFlight 内部测试动作被跳过。iOS 日志明确指向 `SwiftyOpenCC_OpenCC.bundle` 的 `bundle format unrecognized, invalid, or unsuitable`。
 
 本地对同一资源 bundle 执行云端使用的 ad-hoc `codesign` 可复现失败；去除 bundle 顶层名为 `Resources` 的目录后可签名。[引擎 PR #5](https://github.com/gewill/SwiftyOpenCC/pull/5) 已调整 SwiftPM 资源布局及读取路径，保留词典字节和公开接口，并加入通过本地验证的 iOS 资源 bundle 签名检查。不得禁用云端签名来掩盖错误。
 
-当前 run 不能作为 1.3 发布通过证据。修复合并并更新应用 revision 后，仍须由下一次 Xcode Cloud 构建验证结果。完整状态见 [1.3 收尾记录](v1.3-release-validation-2026-09-13.md) 和 [项目完整报告](project-status-and-follow-up-2026-09-13.md)。
+#42 不能作为发布通过证据；修复后的 #44 构建结果已补齐，但最终购买、跨 App 和旧系统等验收仍需完成。完整范围见 [1.3 收尾记录](v1.3-release-validation-2026-09-13.md) 和 [项目完整报告](project-status-and-follow-up-2026-09-13.md)。
 
 配置结构参考维护者提供的 iPerfman `docs/XCODE_CLOUD.md`；本项目数值与规则均独立核对。workflow 配置位于 App Store Connect，任何后续调整都应同步更新本文。
