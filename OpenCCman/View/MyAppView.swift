@@ -36,10 +36,10 @@ struct MyAppView: View {
   @ViewBuilder
   private func actions(link: String) -> some View {
     Button { if let url = URL(string: link) { openURL(url) } } label: {
-      Text("Get").frame(minHeight: 44).contentShape(Rectangle())
+      Text("Get").frame(minWidth: 44, minHeight: 44).contentShape(Rectangle())
     }
     Button { navigator.navigate("/pro") } label: {
-      Text("workspace_remove_recommendation").frame(minHeight: 44).contentShape(Rectangle())
+      Text("workspace_remove_recommendation").frame(minWidth: 44, minHeight: 44).contentShape(Rectangle())
     }
   }
 }

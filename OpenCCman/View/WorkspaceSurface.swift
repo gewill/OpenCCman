@@ -278,7 +278,9 @@ struct ConversionSettingsSheet: View {
       HStack {
         Text("workspace_settings").font(.headline)
         Spacer()
-        Button("Done") { windowState.showingConversionSettings = false }.frame(minHeight: 44)
+        Button { windowState.showingConversionSettings = false } label: {
+          Text("Done").frame(minWidth: 44, minHeight: 44).contentShape(Rectangle())
+        }
       }.padding()
       ScrollView { ConversionInspector(showsPresetList: true).padding() }
     }
