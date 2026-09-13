@@ -8,6 +8,7 @@ struct ProScene: View {
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @State var isLoading: Bool = false
   @State var errorMessage: String = ""
+  @State private var errorMessageID = UUID()
   var isPresented: Bool = false
 
   // MARK: - life cycle
@@ -29,6 +30,7 @@ struct ProScene: View {
 
         Button {
           self.isLoading = true
+          self.errorMessage = ""
           Purchases.shared.restorePurchases { customerInfo, error in
             self.isLoading = false
             self.showError(message: error?.localizedDescription)
@@ -143,8 +145,10 @@ struct ProScene: View {
 
         Button {
           self.isLoading = true
-          Purchases.shared.purchase(package: packages[0]) { _, customerInfo, error, _ in
+          self.errorMessage = ""
+          Purchases.shared.purchase(package: package) { _, customerInfo, error, userCancelled in
             self.isLoading = false
+            guard userCancelled == false else { return }
             self.showError(message: error?.localizedDescription)
             self.setEntitlementInfos(customerInfo?.entitlements.all)
           }
@@ -164,21 +168,22 @@ struct ProScene: View {
   // MARK: -
 
   func updateOfferingsAndPermissions() {
-    guard isPro == false else { return }
+    guard isLoading == false else { return }
 
     isLoading = true
+    errorMessage = ""
     let group = DispatchGroup()
     group.enter()
     Purchases.shared.getOfferings { offerings, error in
       self.showError(message: error?.localizedDescription)
+      self.setOfferings(offerings)
       group.leave()
-      self.packages = offerings?.all.flatMap { $0.value.availablePackages } ?? []
     }
     group.enter()
     Purchases.shared.getCustomerInfo { customerInfo, error in
       self.showError(message: error?.localizedDescription)
-      group.leave()
       self.setEntitlementInfos(customerInfo?.entitlements.all)
+      group.leave()
     }
     group.notify(queue: .main) {
       self.isLoading = false
@@ -190,7 +195,7 @@ struct ProScene: View {
     Purchases.shared.getOfferings { offerings, error in
       self.showError(message: error?.localizedDescription)
       self.isLoading = false
-      self.packages = offerings?.all.flatMap { $0.value.availablePackages } ?? []
+      self.setOfferings(offerings)
     }
   }
 
@@ -201,8 +206,10 @@ struct ProScene: View {
   }
 
   func setEntitlementInfos(_ entitlementInfos: [String: RevenueCat.EntitlementInfo]?) {
-    if let entitlementInfos,
-       let pro = entitlementInfos[IAPManager.Permission.pro_lifetime.rawValue],
+    // A failed request is not evidence that the customer lost their entitlement.
+    guard let entitlementInfos else { return }
+
+    if let pro = entitlementInfos[IAPManager.Permission.pro_lifetime.rawValue],
        pro.isActive
     {
       isPro = true
@@ -210,13 +217,22 @@ struct ProScene: View {
       isPro = false
     }
 
-    self.entitlementInfos = entitlementInfos ?? [:]
+    self.entitlementInfos = entitlementInfos
+  }
+
+  func setOfferings(_ offerings: RevenueCat.Offerings?) {
+    guard let offerings else { return }
+    let offering = offerings.current ?? offerings.all[IAPManager.Offering.pro_lifetime.rawValue]
+    self.packages = offering?.availablePackages ?? []
   }
 
   func showError(message: String?) {
     if let message, message.isEmpty == false {
+      let messageID = UUID()
+      errorMessageID = messageID
       errorMessage = message
       DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        guard self.errorMessageID == messageID else { return }
         self.errorMessage = ""
       }
     }

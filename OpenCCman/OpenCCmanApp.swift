@@ -14,6 +14,10 @@ struct OpenCCmanApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
   #endif
 
+  #if os(macOS)
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+  #endif
+
   @AppStorage(UserDefaultsKeys.selectedLocale.rawValue) var selectedLocale: LocaleConstants = .system
   @AppStorage(UserDefaultsKeys.selectedTheme.rawValue) var selectedTheme: Theme = .system
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
@@ -23,6 +27,11 @@ struct OpenCCmanApp: App {
     IAPManager.shared.configure()
   }
 
+  @StateObject private var whatsNew = WhatsNewCoordinator(
+    version: Bundle.main.appVersion,
+    skipAutomatic: ProcessInfo.processInfo.arguments.contains("-skip-whats-new")
+  )
+
   var body: some Scene {
     WindowGroup {
       Router {
@@ -31,11 +40,20 @@ struct OpenCCmanApp: App {
             checkPro()
           }
       }
+      .environmentObject(whatsNew)
       .environment(\.locale, Locale(identifier: selectedLocale.identifier))
       .preferredColorScheme(selectedTheme.colorScheme)
     }
     #if os(macOS)
     .windowStyle(.hiddenTitleBar)
+    .commands {
+      CommandGroup(after: .textEditing) {
+        Button("Convert".localizedStringKey, systemImage: "arrow.trianglehead.2.counterclockwise") {
+          NotificationCenter.default.post(name: Notification.Name("ConvertTextFromMenu"), object: NSApp.keyWindow)
+        }
+        .keyboardShortcut("t")
+      }
+    }
     #endif
   }
 
@@ -44,6 +62,7 @@ struct OpenCCmanApp: App {
   func checkPro() {
     if Date().yesterday.unixTimestamp >= lastCheckProDate {
       IAPManager.shared.checkProLifetime { isPro in
+        guard let isPro else { return }
         self.isPro = isPro
         lastCheckProDate = Date().unixTimestamp
       }

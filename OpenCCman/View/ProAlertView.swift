@@ -2,15 +2,16 @@ import SwiftUI
 
 struct ProAlertView: View {
   @Binding var showingProAlert: Bool
-  @State private var showingProScene = false
+  @Binding var showingProScene: Bool
+  var onProDismiss: () -> Void = {}
 
   var body: some View {
     EmptyView()
       .alertView(title: "Pro only feature", subtitle: ProFeature.unlimitedTestNumbers.rawValue.localizedStringKey, isPresented: $showingProAlert) {
         HStack(spacing: 10) {
           Button {
-            showingProAlert.toggle()
-            showingProScene.toggle()
+            showingProScene = true
+            showingProAlert = false
           } label: {
             Text("Pro")
               .frame(width: 120, height: 44)
@@ -26,7 +27,7 @@ struct ProAlertView: View {
           .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 0, mainColor: Color.accent, textColor: Color.Neumorphic.main)
         }
       }
-      .sheet(isPresented: $showingProScene) {
+      .sheet(isPresented: $showingProScene, onDismiss: onProDismiss) {
         ProScene(isPresented: true)
       }
       .font(.body)
@@ -35,6 +36,6 @@ struct ProAlertView: View {
 
 struct ProOverlayView_Previews: PreviewProvider {
   static var previews: some View {
-    ProAlertView(showingProAlert: .constant(true))
+    ProAlertView(showingProAlert: .constant(true), showingProScene: .constant(false))
   }
 }
