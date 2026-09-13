@@ -23,6 +23,10 @@ iOS 14 / macOS 11 remain supported. Batch conversion, Shortcuts, history and cus
 
 See the [branching policy](docs/BRANCHING.md) for PR targets and Xcode Cloud packaging branches. The [CI guide](docs/CI.md) describes checks, runner selection and migration status.
 
+## Adaptive workspace design
+
+The selected sidebar direction now has [detailed iPhone, iPad and Mac UI mockups](docs/design/adaptive-workspace/README.md), including side-by-side/stacked layouts, keyboard and task states. The [implementation plan](docs/design/adaptive-workspace/PLAN.md) tracks delivery and acceptance; these are design proposals, not implemented features.
+
 ## Development checks
 
 Run on macOS with Xcode command-line tools and Python 3; no simulator is required:
