@@ -15,9 +15,9 @@
     var body: some View {
       GeometryReader { geometry in
         VStack(spacing: 0) {
+          header.padding(.horizontal, 12).padding(.vertical, 8)
           ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-              header
               Button {
                 UIApplication.shared.endEditing()
                 windowState.showingConversionSettings = true
@@ -68,7 +68,7 @@
           Button("Help") { navigator.navigate("/help") }
           Button("Pro") { navigator.navigate("/pro") }.keyboardShortcut("p")
           Button("Settings") { navigator.navigate("/settings") }.keyboardShortcut(",")
-        } label: { Image(systemName: "ellipsis.circle").frame(width: 44, height: 44) }
+        } label: { Image(systemName: "ellipsis.circle").font(.system(size: 20)).frame(width: 44, height: 44) }
           .accessibilityLabel(Text("workspace_more"))
       }
       .foregroundColor(Color.Neumorphic.secondary)
