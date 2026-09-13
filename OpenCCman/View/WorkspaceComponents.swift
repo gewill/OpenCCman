@@ -224,7 +224,7 @@ struct ConversionAction: View {
           .font(.headline)
           .frame(minWidth: 24, minHeight: 24).contentShape(Rectangle())
       })
-      .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10, mainColor: Color.accentColor, textColor: Color.Neumorphic.main)
+      .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10, mainColor: Color.accentColor, textColor: .white)
       .keyboardShortcut("t")
       .disabled(viewModel.isImporting || viewModel.inputText.isEmpty)
     }
