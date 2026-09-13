@@ -9,6 +9,9 @@ enum ControlSizingChecks {
     let icon = Button {} label: { Image(systemName: "doc.on.doc") }
     let legacy = size(icon.fixedSizeSoftButtonStyle(Circle(), size: CGSize(width: 30, height: 30)))
     precondition(legacy.width == 44 && legacy.height == 44, "Pinned upstream reproduction changed")
+    let legacy28 = size(icon.fixedSizeSoftButtonStyle(Circle(), size: CGSize(width: 28, height: 28)))
+    let dynamic = size(icon.softButtonStyle(Circle(), padding: 0))
+    precondition(legacy28 == CGSize(width: 44, height: 44) && dynamic == legacy28)
     let compact = size(icon.appNeumorphicButtonStyle(Circle(), kind: .icon))
     precondition(compact.width == 28 && compact.height == 28, "Mac icon envelope must be 28×28")
     let text = size(Button("Import TXT") {}.appNeumorphicButtonStyle(Capsule()))

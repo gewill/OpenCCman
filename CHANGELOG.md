@@ -57,6 +57,12 @@ and [What’s New validation record](docs/WHATS_NEW.md).
 
 ### Changed
 
+- Size complete custom controls by platform: Mac icon/text buttons and segments
+  default to 28pt, primary actions to 32pt, and iPhone/iPad controls to 44pt.
+  Shadows and padding stay inside that envelope; larger text can grow naturally.
+  Segment seams remain clickable, and the Mac pane divider uses a 16pt drag band.
+  See the [measurements and before/after captures](docs/validation/control-sizing/README.md).
+
 - Keep the reading position anchored to text characters when macOS workspace
   panes reflow, instead of reusing a pixel offset that can jump to later paragraphs.
 
