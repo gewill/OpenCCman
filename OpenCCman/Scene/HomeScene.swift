@@ -17,6 +17,9 @@ struct HomeScene: View {
     ZStack(alignment: .top) {
       Color.Neumorphic.main
         .ignoresSafeArea()
+      #if os(macOS)
+      WorkspaceSurface(export: exportResult)
+      #else
       ScrollView {
         VStack(alignment: .leading, spacing: 0) {
           navi
@@ -24,6 +27,7 @@ struct HomeScene: View {
           if !isPro { MyAppView().padding(Constant.padding) }
         }
       }
+      #endif
 
     }
     .frame(minWidth: 300)
@@ -47,6 +51,13 @@ struct HomeScene: View {
     )) {
       Alert(title: Text("Error"), message: Text(viewModel.error?.localizedDescription ?? ""))
     }
+  }
+
+  private func exportResult() {
+    guard let snapshot = viewModel.exportSnapshot else { return }
+    exportDocument = ConvertedTextDocument(text: snapshot.text)
+    exportFilename = snapshot.filename
+    whatsNewWindow.showingExporter = true
   }
 
   var navi: some View {

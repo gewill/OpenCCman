@@ -45,8 +45,14 @@ struct OpenCCmanApp: App {
       .preferredColorScheme(selectedTheme.colorScheme)
     }
     #if os(macOS)
-    .windowStyle(.hiddenTitleBar)
+    .windowStyle(.titleBar)
     .commands {
+      CommandGroup(after: .toolbar) {
+        Button("workspace_horizontal") { workspaceCommand("horizontal") }.keyboardShortcut("1", modifiers: [.command, .option])
+        Button("workspace_vertical") { workspaceCommand("vertical") }.keyboardShortcut("2", modifiers: [.command, .option])
+        Button("workspace_equal") { workspaceCommand("equal") }
+        Button("workspace_settings") { workspaceCommand("inspector") }.keyboardShortcut("i", modifiers: [.command, .option])
+      }
       CommandGroup(after: .textEditing) {
         Button("Convert".localizedStringKey, systemImage: "arrow.trianglehead.2.counterclockwise") {
           NotificationCenter.default.post(name: Notification.Name("ConvertTextFromMenu"), object: NSApp.keyWindow)
@@ -56,6 +62,12 @@ struct OpenCCmanApp: App {
     }
     #endif
   }
+
+  #if os(macOS)
+  private func workspaceCommand(_ command: String) {
+    NotificationCenter.default.post(name: .workspaceCommand, object: NSApp.keyWindow, userInfo: ["command": command])
+  }
+  #endif
 
   // MARK: - private methods
 

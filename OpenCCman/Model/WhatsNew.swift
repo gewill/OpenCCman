@@ -78,6 +78,7 @@ struct WhatsNewEligibility: Equatable {
 
 /// Window-local system presentations are visible to the root presentation host.
 final class WhatsNewWindowState: ObservableObject {
+  @Published var showingConversionSettings = false
   @Published var showingImporter = false
   @Published var showingExporter = false
   @Published var showingProSheet = false {
