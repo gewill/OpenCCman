@@ -33,7 +33,14 @@ struct RootView: View {
       }
     }
     .background(Color.Neumorphic.main)
-    .ignoresSafeArea(.keyboard)
+    .modify {
+      #if os(iOS)
+      if UserInterfaceIdiom.current == .phone { $0.ignoresSafeArea(.keyboard) }
+      else { $0 }
+      #else
+      $0
+      #endif
+    }
     .onChange(of: navigator.path) { newPath in
       print("Current path:", newPath)
     }

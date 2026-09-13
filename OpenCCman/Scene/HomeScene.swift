@@ -18,17 +18,22 @@ struct HomeScene: View {
       Color.Neumorphic.main
         .ignoresSafeArea()
       #if os(macOS)
-      WorkspaceSurface(export: exportResult)
+        WorkspaceSurface(export: exportResult)
       #else
-      ScrollView {
-        VStack(alignment: .leading, spacing: 0) {
-          navi
-          list
-          if !isPro { MyAppView().padding(Constant.padding) }
+        if UserInterfaceIdiom.current == .pad {
+          WorkspaceSurface(platform: .pad, export: exportResult)
+        } else {
+          ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+              navi
+              list
+              if !isPro {
+                MyAppView().padding(Constant.padding)
+              }
+            }
+          }
         }
-      }
       #endif
-
     }
     .frame(minWidth: 300)
     .overlay(ProAlertView(showingProAlert: $viewModel.showingProAlert, showingProScene: $whatsNewWindow.showingProSheet) {
@@ -36,18 +41,25 @@ struct HomeScene: View {
     })
     .fileImporter(isPresented: $whatsNewWindow.showingImporter, allowedContentTypes: [.plainText]) { result in
       switch result {
-      case .success(let url): viewModel.importFile(url)
-      case .failure(let error): viewModel.handleFileFailure(error)
+      case let .success(url): viewModel.importFile(url)
+      case let .failure(error): viewModel.handleFileFailure(error)
       }
     }
     .fileExporter(isPresented: $whatsNewWindow.showingExporter, document: exportDocument,
-                  contentType: .plainText, defaultFilename: exportFilename) { result in
-      if case .failure(let error) = result { viewModel.handleFileFailure(error) }
+                  contentType: .plainText, defaultFilename: exportFilename)
+    { result in
+      if case let .failure(error) = result {
+        viewModel.handleFileFailure(error)
+      }
       exportDocument = nil
     }
     .alert(isPresented: Binding(
       get: { viewModel.error != nil },
-      set: { if !$0 { viewModel.error = nil } }
+      set: {
+        if !$0 {
+          viewModel.error = nil
+        }
+      }
     )) {
       Alert(title: Text("Error"), message: Text(viewModel.error?.localizedDescription ?? ""))
     }
