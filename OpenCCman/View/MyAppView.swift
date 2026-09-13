@@ -2,61 +2,42 @@ import SwiftUI
 import SwiftUIRouter
 
 struct MyAppView: View {
-  @EnvironmentObject var navigator: Navigator
-  @Environment(\.openURL) var openURL
-
-  @State var index = 0
-  let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
-  var model: MyAppModel? {
-    allMyApps[index]
-  }
-
-  // MARK: - life cycle
+  @EnvironmentObject private var navigator: Navigator
+  @Environment(\.openURL) private var openURL
+  @Environment(\.sizeCategory) private var sizeCategory
+  @State private var index = 0
+  private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
 
   var body: some View {
-    if let model {
-      ZStack(alignment: .topLeading) {
-        HStack(alignment: .center, spacing: 6) {
-          Image(model.iconName)
-            .resizable()
-            .frame(width: 30, height: 30)
-          VStack(alignment: .leading) {
-            Text(model.name.localizedStringKey)
-              .font(.headline)
-            Text(model.des.localizedStringKey)
-              .font(.body)
-          }
-          Spacer()
-
-          Button(action: {
-            openURL(URL(string: model.link)!)
-          }) {
-            Text("Get")
-          }
-          .softButtonStyle(Capsule(), padding: 10, mainColor: Color.accent, textColor: Color.Neumorphic.main)
+    let model = allMyApps[index]
+    VStack(alignment: .leading, spacing: 8) {
+      HStack(alignment: .top, spacing: 12) {
+        Image(model.iconName).resizable().frame(width: 32, height: 32)
+          .accessibilityHidden(true)
+        VStack(alignment: .leading, spacing: 4) {
+          Text(model.name.localizedStringKey).font(.headline)
+          Text(model.des.localizedStringKey).font(.callout)
+            .fixedSize(horizontal: false, vertical: true)
         }
-        .softRectangleStyle()
-        .frame(width: 300)
-        .onReceive(timer) { _ in
-          index = (index + 1) % allMyApps.count
-        }
-
-        Button {
-          navigator.navigate("/pro")
-        } label: {
-          Image(systemName: "xmark.circle")
-            .foregroundColor(Color.gray)
-            .font(.system(size: 30))
-        }
-        .offset(x: -10, y: -10)
-        .buttonStyle(.plain)
+        Spacer(minLength: 0)
+      }
+      if sizeCategory.isAccessibilityCategory {
+        VStack(alignment: .leading, spacing: 8) { actions(link: model.link) }
+      } else {
+        HStack(spacing: 16) { actions(link: model.link) }
       }
     }
+    .padding(12)
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .softRectangleStyle()
+    .onReceive(timer) { _ in index = (index + 1) % allMyApps.count }
   }
-}
 
-struct MyAppView_Previews: PreviewProvider {
-  static var previews: some View {
-    MyAppView()
+  @ViewBuilder
+  private func actions(link: String) -> some View {
+    Button("Get") { if let url = URL(string: link) { openURL(url) } }
+      .frame(minHeight: 44)
+    Button("workspace_remove_recommendation") { navigator.navigate("/pro") }
+      .frame(minHeight: 44)
   }
 }

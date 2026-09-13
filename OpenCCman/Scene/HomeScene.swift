@@ -21,15 +21,10 @@ struct HomeScene: View {
         VStack(alignment: .leading, spacing: 0) {
           navi
           list
+          if !isPro { MyAppView().padding(Constant.padding) }
         }
       }
-      if isPro == false {
-        VStack {
-          Spacer()
-          MyAppView()
-            .padding(.bottom)
-        }
-      }
+
     }
     .frame(minWidth: 300)
     .overlay(ProAlertView(showingProAlert: $viewModel.showingProAlert, showingProScene: $whatsNewWindow.showingProSheet) {
@@ -55,51 +50,26 @@ struct HomeScene: View {
   }
 
   var navi: some View {
-    ZStack(alignment: .center) {
-      HStack {
-        VStack {
-          HStack {
-            Text("OpenCCman").font(.title)
-            Button {
-              navigator.navigate("/help")
-            } label: {
-              Image.questionmark
-                .modify {
-                  if #available(iOS 15.0, macOS 12.0, *) {
-                    $0.symbolRenderingMode(.palette)
-                      .foregroundStyle(Color.Neumorphic.secondary, Color.accent)
-                  }
-                }
-            }
-            .buttonStyle(.plain)
-          }
-          Text("Convert Chinese text with [OpenCC](https://github.com/BYVoid/OpenCC)")
-        }
-        .frame(maxWidth: .infinity)
-        .foregroundColor(Color.Neumorphic.secondary)
-      }
-      HStack {
-        Button(action: {
-          navigator.navigate("/pro")
-        }, label: {
-          Image.crown
-        })
-        .fixedSizeSoftButtonStyle(textColor: isPro ? .yellow : .accentColor, size: Constant.smallButtonSize)
-        .keyboardShortcut("p")
-
-        Spacer()
-
-        Button {
-          navigator.navigate("/settings")
+    VStack(spacing: 8) {
+      HStack(spacing: 12) {
+        Text("OpenCCman").font(.title).fixedSize(horizontal: false, vertical: true)
+        Spacer(minLength: 0)
+        Menu {
+          Button("Help") { navigator.navigate("/help") }
+          Button("Pro") { navigator.navigate("/pro") }.keyboardShortcut("p")
+          Button("Settings") { navigator.navigate("/settings") }.keyboardShortcut(",")
         } label: {
-          Image.settings
+          Image(systemName: "ellipsis.circle").frame(width: 44, height: 44)
         }
-        .fixedSizeSoftButtonStyle(size: Constant.smallButtonSize)
-        .keyboardShortcut(",")
+        .menuStyle(.borderlessButton)
+        .accessibilityLabel(Text("workspace_more"))
       }
-      .padding(.horizontal, Constant.padding)
+      Text("Convert Chinese text with [OpenCC](https://github.com/BYVoid/OpenCC)")
+        .font(.caption)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
-    .padding(.vertical, Constant.padding)
+    .foregroundColor(Color.Neumorphic.secondary)
+    .padding(Constant.padding)
   }
 
   var list: some View {
