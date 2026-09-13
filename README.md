@@ -29,6 +29,10 @@ bash scripts/check-pasteboard.sh
 
 Core checks compile the actual app model/services with the dependencies pinned in `Package.resolved`. All preferences and pasteboards used by these checks are isolated from the running app. See [1.3 validation](docs/version-1.3-validation.md) for coverage and remaining release checks.
 
+## Project status
+
+See the [complete project status and follow-up report (2026-09-13)](docs/project-status-and-follow-up-2026-09-13.md) for delivered work, validation evidence, remaining release gates and concrete improvement recommendations.
+
 ## Upstream sync
 
 The coordinator lives on [`main`](https://github.com/gewill/OpenCCman/tree/main), while application updates target `build`. It proposes a SwiftyOpenCC PR first, then pins the merged, validated fork revision in an app PR. Maintainers review and merge each PR; all other dependencies remain locked.

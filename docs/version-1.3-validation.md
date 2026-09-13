@@ -1,5 +1,7 @@
 # OpenCCman 1.3 implementation and validation
 
+> Status update (2026-09-13): this document preserves the feature-stage validation record. OpenCC 1.4.2 and the app dependency PR have since merged; the app now pins `eacb73dcb28c26e7cc5d8d9cb405e88fa2d59b13`. Earlier Debug builds and development-signed file tests are not final-distribution acceptance for that engine revision. See the [complete status and follow-up report](project-status-and-follow-up-2026-09-13.md) for current evidence and remaining gates.
+
 Date: 2026-09-12. Baseline: PR #1, merged into `build` at `59fcad781045182bc7f032910a23be656dbe514b`.
 
 ## Implemented behavior
@@ -36,6 +38,6 @@ Build warnings observed were existing generated color-symbol collisions and the 
 
 ## Release gates and dependency separation
 
-The app still pins the previously accepted SwiftyOpenCC revision. OpenCC 1.4.2 migration and its resource/ownership/compatibility checks live in a separate fork PR. Only after that PR is reviewed and merged, and the exact fork commit passes `OpenCC Compatibility`, may the coordinator propose an app dependency PR. Engine benchmark results are not claims about this app build.
+At the feature-stage validation recorded above, the app still pinned the prior engine while the OpenCC 1.4.2 migration was reviewed separately. That dependency separation is now complete: [app PR #5](https://github.com/gewill/OpenCCman/pull/5) adopted `eacb73dcb28c26e7cc5d8d9cb405e88fa2d59b13` after the merged fork SHA passed `OpenCC Compatibility`. Future promotions retain the same gate. Final-distribution acceptance remains outstanding; engine benchmark results are not app-wide performance claims.
 
 Before App Store release, verify purchase/cancellation/restore with a StoreKit sandbox account or TestFlight and verify the signed distribution build's Services/global-shortcut permissions and cross-app behavior. No real purchase was made. TestFlight/distribution signing and older physical devices are not covered by local Debug builds.
