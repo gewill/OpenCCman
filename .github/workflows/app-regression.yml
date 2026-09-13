@@ -29,6 +29,8 @@ jobs:
         run: bash scripts/check-project.sh
       - name: Check real conversion, presets and file workflow
         run: python3 scripts/check-core.py
+      - name: Check window layout resolution and recovery
+        run: bash scripts/check-workspace.sh
       - name: Check quota reservations
         run: bash scripts/check-quota.sh
       - name: Check What’s New presentation and localizations
