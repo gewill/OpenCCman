@@ -27,7 +27,7 @@ Apple [Accessibility 平台表](https://developer.apple.com/design/human-interfa
 
 ## 上游反馈
 
-反馈仅提交给 [gewill/neumorphic](https://github.com/gewill/neumorphic/issues)。`561b886fc45d20938a2ac5f92c7a0d2f7b8c230c` 引入了无条件44pt框；`SoftButtonStyle.swift:108` 和 `FixedSizeSoftDynamicButtonStyle.swift:95` 在2.4.1仍保留它。没有把 fork 引入的行为报告为原始仓缺陷。应用修复不依赖上游发布。
+反馈已提交到 [gewill/neumorphic #7](https://github.com/gewill/neumorphic/issues/7)。`561b886fc45d20938a2ac5f92c7a0d2f7b8c230c` 引入了无条件44pt框；`SoftButtonStyle.swift:108` 和 `FixedSizeSoftDynamicButtonStyle.swift:95` 在2.4.1仍保留它。没有把 fork 引入的行为报告为原始仓缺陷。应用修复不依赖上游发布。
 
 建议以兼容入口保留旧默认，提供可配置命中/布局尺寸，并明确 `size`、padding、表面、阴影的含义；阴影收纳作为可选能力。Issue 附同进程运行测量与本修复 PR。
 
