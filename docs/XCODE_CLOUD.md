@@ -15,12 +15,12 @@ OpenCCman 正式构建和分发使用 Xcode Cloud。执行构建、修改 workfl
 | 自动触发 | 分支名以 `build` 开头：`pattern: build`、`isPrefix: true` |
 | 其他设置 | enabled、clean、autoCancel 均为 true |
 
-当前规则包含 `build` 本身及其他以 `build` 开头的分支，并不是仅匹配 `build/*`。应用 PR 合入 `build` 后就会自动触发；日常 `codex/` PR 分支和协调器 `main` 不符合该分支规则。不要为了补跑另建同名规则的 workflow，也不要照搬其他项目的 App ID、workflow 名称或分支模式。
+当前规则包含 `build` 本身及其他以 `build` 开头的分支，并不是仅匹配 `build/*`。向旧 `build` 合并仍会自动触发，因此日常应用 PR 改以 `develop` 为目标。`main`、`develop`、`release/*`、`hotfix/*` 和 `codex/*` 均不符合该打包规则。分支职责见 [分支规范](BRANCHING.md)，CI 迁移进度见 [CI 指南](CI.md)。不要为了补跑另建同名规则的 workflow，也不要照搬其他项目的 App ID、workflow 名称或分支模式。
 
 ## 构建顺序
 
-1. 应用修复以 PR 合入 `build`。引擎变更先合入 SwiftyOpenCC，通过检查后再以独立应用 PR 固定完整 revision；不从尚未合并的引擎分支发布。
-2. 合并或推送前确认 SHA、版本与 `Package.resolved`，预计该动作会触发 Xcode Cloud。正式发布记录使用云端 run/build 号、平台和 source commit；本地工程 build 号不能代替云端产物身份。
+1. 应用修复以 PR 合入 `develop`，从已集成代码建立 `release/*` 发布候选。引擎变更先合入 SwiftyOpenCC，通过检查后再以独立应用 PR 固定完整 revision；不从尚未合并的引擎分支发布。
+2. 仅在需要云端验收包时，从明确的 `release/*` 或 `main` 提交创建并推送临时 `build/<version>-<YYYYMMDD>`，事先确认 SHA、版本与 `Package.resolved`。旧 `build` 尚未退出前与 `build/*` 有引用命名冲突，先完成归档和退出迁移；普通 PR 合并不再承担打包入口。正式发布记录使用云端 run/build 号、平台和 source commit；本地工程 build 号不能代替云端产物身份。
 3. 推送后先检查是否已自动触发。只有自动触发失败且需要构建时才手动运行，避免重复归档。不要为了文档核对启动新的构建。
 4. 同时核对 iOS/macOS action 和 App Store Connect processing 状态。归档成功、整个 run 成功、处理为 `VALID`、可供 TestFlight 安装是不同阶段。
 5. 用本次云端产物完成购买、文件、跨 App 和旧系统验收。只有需要发布测试说明时才修改本次新 build 的 What to Test；不要误改旧 build 或顺带通知测试者。
@@ -34,13 +34,13 @@ asc xcode-cloud build-runs \
   --sort=-number --limit 5 --output json
 ```
 
-以下命令会真实启动构建；执行前确认远端 `build` 是要构建的提交，并确认没有同一提交的运行中任务：
+以下命令会真实启动构建；执行前将示例分支替换为已确认的远端打包分支，核对它指向要构建的提交，并确认没有同一提交的运行中任务：
 
 ```bash
 asc xcode-cloud run \
   --app 6474449401 \
   --workflow Default \
-  --branch build
+  --branch build/v1.3-YYYYMMDD
 ```
 
 用返回的 run ID 查询或诊断；只有任务明确要求等待检查、合并或发布时才持续等待。原始构建日志可能包含签名服务响应，先脱敏再附入公开 PR。

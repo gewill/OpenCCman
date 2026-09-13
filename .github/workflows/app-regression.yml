@@ -1,10 +1,12 @@
 name: App Regression
 
+# Keep the required check available for every PR, including documentation.
+# build* branches are reserved for Xcode Cloud, not integration CI.
 on:
   pull_request:
-    branches: [build]
+    branches: [main, develop, 'release/**', 'hotfix/**']
   push:
-    branches: [build]
+    branches: [main, develop, 'release/**', 'hotfix/**']
   workflow_dispatch:
 
 permissions:

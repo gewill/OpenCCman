@@ -82,6 +82,7 @@ class FakeGitHub:
             self.posts += 1
             repo = endpoint[len("repos/"):-len("/pulls")]
             pr = {"head": {"ref": body["head"], "sha": self.head(repo, body["head"]), "repo": {"full_name": repo}},
+                  "base": {"ref": body["base"]},
                   "state": "open", "merged_at": None, "body": body["body"],
                   "html_url": "https://example.test/pull/1"}
             self.prs[repo].append(pr)
@@ -122,7 +123,7 @@ class SyncIntegrationTests(unittest.TestCase):
         command(fork, "commit", "-m", "fork baseline")
         self.fork = fork
         self.old_fork = command(fork, "rev-parse", "HEAD")
-        app = self.init(self.config["app"]["repository"], "build")
+        app = self.init(self.config["app"]["repository"], self.config["app"]["base"])
         project = app / self.config["app"]["project"] / "project.pbxproj"
         project.parent.mkdir(parents=True)
         project.write_text('repositoryURL = "https://github.com/gewill/SwiftyOpenCC";\nrequirement = {\nbranch = master;\nkind = branch;\n};\n')
@@ -333,6 +334,19 @@ class SyncIntegrationTests(unittest.TestCase):
         with patch.object(sync, "validate_candidate", side_effect=drift):
             with self.assertRaisesRegex(sync.SyncError, "dependency drift"):
                 sync.prepare(self.config, "app", self.github, self.root / "drift")
+
+    def test_app_promotion_uses_develop_without_a_legacy_build_branch(self):
+        self.assertEqual(self.config["app"]["base"], "develop")
+        self.accept_core()
+        base = command(self.app, "rev-parse", "develop")
+        with self.assertRaises(subprocess.CalledProcessError):
+            command(self.app, "rev-parse", "--verify", "refs/heads/build")
+        data, output = self.prepare("app")
+        self.assertEqual(data["base_sha"], base)
+        sync.publish(self.config, "app", self.github, output)
+        pr = self.github.prs[self.config["app"]["repository"]][0]
+        self.assertEqual(pr["base"]["ref"], "develop")
+        self.assertEqual(command(self.app, "rev-parse", "develop"), base)
 
     def test_app_base_ci_must_pass_before_preparation_and_publication(self):
         self.accept_core()
