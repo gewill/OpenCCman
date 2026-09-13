@@ -737,8 +737,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gewill/neumorphic.git";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = exactVersion;
+				version = 2.4.1;
 			};
 		};
 		BE3AEC8B2B2EF1DF00820673 /* XCRemoteSwiftPackageReference "SwiftUIRouter" */ = {

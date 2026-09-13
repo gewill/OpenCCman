@@ -31,5 +31,7 @@ jobs:
         run: bash scripts/check-quota.sh
       - name: Check What’s New presentation and localizations
         run: bash scripts/check-whats-new.sh
+      - name: Check control labels in the selected app language
+        run: bash scripts/check-control-labels.sh
       - name: Check isolated pasteboard preservation
         run: bash scripts/check-pasteboard.sh

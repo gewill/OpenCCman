@@ -49,6 +49,12 @@ and [What’s New validation record](docs/WHATS_NEW.md).
 
 ### Changed
 
+- Pin Neumorphic to the stable 2.4.1 release. Use iPerfman-style joined conversion
+  segments with inset tracks, dividers and accent-filled selections; adopt the
+  library's switch, circular loading and card APIs. Picker labels follow the
+  app language and use a vertical layout at accessibility text sizes.
+  See the [control adoption audit](docs/NEUMORPHIC_CONTROLS.md) for retained system
+  controls and validation boundaries.
 - Upgrade the embedded OpenCC core from 1.2.0 to 1.4.2 through the compatible
   SwiftyOpenCC fork. Existing option meanings remain available; updated
   dictionaries can change conversion output ([#5]).

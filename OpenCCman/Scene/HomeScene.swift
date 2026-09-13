@@ -125,22 +125,18 @@ struct HomeScene: View {
             Label((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey,
                   systemImage: "chevron.down")
           }
+          .neumorphicThemedButtonStyle(Capsule(), padding: 8)
           .accessibilityLabel(Text("Conversion Preset"))
           .accessibilityValue(Text((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey))
         }
-        SegmentView(title: "Target Language", options: HomeViewModel.Language.allCases, seleted: $viewModel.targetOptions)
+        SegmentView(title: "Target Language", options: HomeViewModel.Language.allCases, selected: $viewModel.targetOptions)
         Group {
-          SegmentView(title: "Variant", options: HomeViewModel.Variant.allCases, seleted: $viewModel.variantOptions)
-          SegmentView(title: "Region Idiom", options: HomeViewModel.Region.allCases, seleted: $viewModel.regionOptions)
+          SegmentView(title: "Variant", options: HomeViewModel.Variant.allCases, selected: $viewModel.variantOptions)
+          SegmentView(title: "Region Idiom", options: HomeViewModel.Region.allCases, selected: $viewModel.regionOptions)
         }
         .disabled(viewModel.targetOptions == .simplified)
       }
-      .padding(Constant.padding)
-      .background(
-        RoundedRectangle(cornerRadius: Constant.cornerRadius)
-          .fill(Color.Neumorphic.main)
-          .softOuterShadow()
-      )
+      .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
 
       VStack(alignment: .leading, spacing: Constant.padding) {
         HStack {
@@ -183,11 +179,13 @@ struct HomeScene: View {
           } label: {
             Label("Import TXT", systemImage: "square.and.arrow.down")
           }
+          .softButtonStyle(RoundedRectangle(cornerRadius: 12), padding: 8)
           .disabled(viewModel.isImporting)
           Spacer()
           if viewModel.isImporting {
-            ProgressView().progressViewStyle(.circular)
+            LoadingView(width: 24, label: "Import TXT")
             Button("Cancel") { viewModel.cancelImport() }
+              .softButtonStyle(RoundedRectangle(cornerRadius: 12), padding: 8)
           }
         }
         if let filename = viewModel.sourceFilename {
@@ -219,12 +217,7 @@ struct HomeScene: View {
               .stroke(Color.secondary, lineWidth: 1)
           )
       }
-      .padding(Constant.padding)
-      .background(
-        RoundedRectangle(cornerRadius: Constant.cornerRadius)
-          .fill(Color.Neumorphic.main)
-          .softOuterShadow()
-      )
+      .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
 
       VStack(alignment: .leading, spacing: Constant.padding) {
         HStack {
@@ -250,13 +243,7 @@ struct HomeScene: View {
           .disabled(viewModel.exportSnapshot == nil)
           Spacer()
           if viewModel.isLoading {
-            ProgressView()
-              .progressViewStyle(.circular)
-              .modify {
-                if #available(iOS 15, macOS 11,*) {
-                  $0.controlSize(.small)
-                }
-              }
+            LoadingView(width: 24, label: "Convert")
           }
           if !viewModel.isLoading {
             Text("\(viewModel.localProgressPercent)%")
@@ -280,12 +267,7 @@ struct HomeScene: View {
               .stroke(Color.secondary, lineWidth: 1)
           )
       }
-      .padding(Constant.padding)
-      .background(
-        RoundedRectangle(cornerRadius: Constant.cornerRadius)
-          .fill(Color.Neumorphic.main)
-          .softOuterShadow()
-      )
+      .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
       Spacer()
     }
     .foregroundColor(Color.Neumorphic.secondary)
