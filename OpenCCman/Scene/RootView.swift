@@ -113,7 +113,7 @@ struct RootView: View {
       isSupportedRoute: navigator.path == "/home" || navigator.path == "/settings",
       isConverting: viewModel.isLoading,
       isImporting: viewModel.isImporting,
-      hasFilePanel: whatsNewWindow.showingImporter || whatsNewWindow.showingExporter,
+      hasFilePanel: whatsNewWindow.showingImporter || whatsNewWindow.showingExporter || whatsNewWindow.showingConversionSettings,
       hasAlert: viewModel.showingProAlert || viewModel.error != nil,
       hasProSheet: whatsNewWindow.proSheetIsActive
     )

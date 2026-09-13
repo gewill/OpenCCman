@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD0333357F8C4778BD8D3FC0 /* WorkspaceSurface.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F3D574C245439A9F95C6B1 /* WorkspaceSurface.swift */; };
 		65F0723944E44D75A8E21F63 /* WorkspaceComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9AF3BD81CB48F2AB40A779 /* WorkspaceComponents.swift */; };
 		F37DBF9DC8F743048617A866 /* WorkspacePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CEA5A92A9F470794A1D1CE /* WorkspacePreferences.swift */; };
 		C6DC3122255A43B8BDC575DD /* WorkspaceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C5B905AAE54E0EB4641B5D /* WorkspaceLayout.swift */; };
@@ -79,6 +80,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		83F3D574C245439A9F95C6B1 /* WorkspaceSurface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceSurface.swift; sourceTree = "<group>"; };
 		0F9AF3BD81CB48F2AB40A779 /* WorkspaceComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceComponents.swift; sourceTree = "<group>"; };
 		B0CEA5A92A9F470794A1D1CE /* WorkspacePreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacePreferences.swift; sourceTree = "<group>"; };
 		14C5B905AAE54E0EB4641B5D /* WorkspaceLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceLayout.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 		BE727E2F2B2DF60E00C63DB2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				83F3D574C245439A9F95C6B1 /* WorkspaceSurface.swift */,
 				0F9AF3BD81CB48F2AB40A779 /* WorkspaceComponents.swift */,
 				B0CEA5A92A9F470794A1D1CE /* WorkspacePreferences.swift */,
 				CC0913202600000000000102 /* WhatsNewView.swift */,
@@ -417,6 +420,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD0333357F8C4778BD8D3FC0 /* WorkspaceSurface.swift in Sources */,
 				65F0723944E44D75A8E21F63 /* WorkspaceComponents.swift in Sources */,
 				F37DBF9DC8F743048617A866 /* WorkspacePreferences.swift in Sources */,
 				C6DC3122255A43B8BDC575DD /* WorkspaceLayout.swift in Sources */,
