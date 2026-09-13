@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versions follow the app's marketing version, independently of the embedded
 OpenCC version and Xcode Cloud build number.
 
-Unreleased changes target the application's `build` branch. Historical entries
+Unreleased changes target the application's `develop` branch. Historical entries
 below are reconstructed from repository snapshots; unverified App Store release
 dates are intentionally omitted. Intermediate 1.0.x changes without release tags
 are grouped with the later 1.1 source snapshot rather than assigned release dates.
@@ -24,6 +24,14 @@ work is tracked in the [release validation record](docs/v1.3-release-validation-
 and [What’s New validation record](docs/WHATS_NEW.md).
 
 ### Added
+
+- Adaptive conversion workspace: independent per-window layout choices, macOS
+  and iPad horizontal/vertical panes, an inspector or settings sheet, pane-size
+  controls and keyboard alternatives. Narrow windows temporarily stack the panes
+  without overwriting the chosen layout ([#45](https://github.com/gewill/OpenCCman/issues/45)).
+- iPhone stacked workspace with a conversion settings sheet and a single action
+  area that remains reachable above the software keyboard. Recommendations hide
+  while typing; source and result use the same window model.
 
 - Four common presets: Simplified Chinese, OpenCC Traditional, Taiwan Standard
   with idioms, and Hong Kong Traditional. Advanced options remain available and
@@ -48,6 +56,12 @@ and [What’s New validation record](docs/WHATS_NEW.md).
   candidates; see the [upstream sync guide].
 
 ### Changed
+
+- Recommendations now participate in scrolling content instead of covering the
+  editor. Dynamic Type layouts and settings/action touch targets have been
+  improved; settings dismissal continues blocking What’s New until completion.
+  See the [adaptive workspace validation record](docs/validation/adaptive-workspace/README.md)
+  for completed checks and remaining device/accessibility acceptance.
 
 - Remove unused button styles and their dedicated preview, plus the unused
   VisualEffects package, project references and in-app license entry. The other
