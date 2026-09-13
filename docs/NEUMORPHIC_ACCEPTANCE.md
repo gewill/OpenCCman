@@ -48,3 +48,9 @@ iPhone 17 Pro 中通过 Simulator → Features → Increase Preferred Text Size 
 - iOS 14 / macOS 11 真机与最终分发产物验收，沿用 [#16](https://github.com/gewill/OpenCCman/issues/16)。模拟器及当前系统 Debug 运行不能替代这些项目。
 
 总清单：[控件 UI 验收 #37](https://github.com/gewill/OpenCCman/issues/37)。控件接入取舍见 [Neumorphic 控件清单](NEUMORPHIC_CONTROLS.md)。
+
+## 前后截图补充（2026-09-13）
+
+已重新构建 PR 基线并保存三组相同条件的实际窗口截图：浅色主页、深色主页、浅色设置开关。源码、窗口尺寸、主题、语言、状态及原图校验值见 [截图对比](images/pr-39/README.md)。六张原图嵌入 PR 描述。
+
+本轮只补充 macOS 普通字号对比，没有执行 iPhone 大字号基线 A/B；此前大字号问题的归因边界和未通过结论保持不变。Simulator 菜单交互失败导致该问题的补图尚未完成。
