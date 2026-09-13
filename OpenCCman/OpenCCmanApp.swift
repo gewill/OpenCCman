@@ -18,6 +18,10 @@ struct OpenCCmanApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
   #endif
 
+  #if DEBUG
+    @State private var showingSizingGallery = false
+  #endif
+
   @AppStorage(UserDefaultsKeys.selectedLocale.rawValue) var selectedLocale: LocaleConstants = .system
   @AppStorage(UserDefaultsKeys.selectedTheme.rawValue) var selectedTheme: Theme = .system
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
@@ -34,12 +38,7 @@ struct OpenCCmanApp: App {
 
   var body: some Scene {
     WindowGroup {
-      Router {
-        RootView()
-          .onAppear {
-            checkPro()
-          }
-      }
+      appContent
       .environmentObject(whatsNew)
       .environment(\.locale, Locale(identifier: selectedLocale.identifier))
       .preferredColorScheme(selectedTheme.colorScheme)
@@ -47,6 +46,12 @@ struct OpenCCmanApp: App {
     #if os(macOS)
     .windowStyle(.titleBar)
     .commands {
+      #if DEBUG
+        CommandMenu("Debug") {
+          Button("Control sizing gallery") { showingSizingGallery.toggle() }
+            .keyboardShortcut("d", modifiers: [.command, .option])
+        }
+      #endif
       CommandGroup(after: .toolbar) {
         Button("workspace_horizontal") { workspaceCommand("horizontal") }.keyboardShortcut("1", modifiers: [.command, .option])
         Button("workspace_vertical") { workspaceCommand("vertical") }.keyboardShortcut("2", modifiers: [.command, .option])
@@ -61,6 +66,28 @@ struct OpenCCmanApp: App {
       }
     }
     #endif
+  }
+
+  @ViewBuilder
+  private var appContent: some View {
+    #if DEBUG
+      if showingSizingGallery || ProcessInfo.processInfo.arguments.contains("-control-sizing-gallery") {
+        ControlSizingGallery()
+      } else {
+        routedApp
+      }
+    #else
+      routedApp
+    #endif
+  }
+
+  private var routedApp: some View {
+      Router {
+        RootView()
+          .onAppear {
+            checkPro()
+          }
+      }
   }
 
   #if os(macOS)

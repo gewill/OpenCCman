@@ -20,7 +20,7 @@ struct WorkspaceLayoutResolution: Equatable {
   enum Platform { case mac, pad, phone }
   static let enterHorizontal = 760.0
   static let retainHorizontal = 720.0
-  static let dividerSize = 44.0
+  let dividerSize: Double
   let axis: Axis
   let inspectorWidth: Double
   let editorWidth: Double
@@ -40,7 +40,7 @@ struct WorkspaceLayoutResolution: Equatable {
     let editorWidth = max(0, available - (sidebar > 0 ? sidebar + 24 : 0))
     let threshold = previousAxis == .horizontal ? retainHorizontal : enterHorizontal
     let horizontal = supportsColumns && preference.axis != .vertical && editorWidth >= threshold
-    return Self(axis: horizontal ? .horizontal : .vertical, inspectorWidth: sidebar,
+    return Self(dividerSize: platform == .mac ? 16 : 44, axis: horizontal ? .horizontal : .vertical, inspectorWidth: sidebar,
                 editorWidth: editorWidth,
                 isTemporaryVertical: !horizontal && preference.axis == .horizontal)
   }
@@ -49,7 +49,7 @@ struct WorkspaceLayoutResolution: Equatable {
   /// compressing either pane below its readable minimum.
   func paneLengths(totalLength: Double, preference: WorkspaceLayoutPreference) -> (source: Double, result: Double) {
     let minimum = axis == .horizontal ? 320.0 : 180.0
-    let available = max(minimum * 2, (totalLength.isFinite ? totalLength : 0) - Self.dividerSize)
+    let available = max(minimum * 2, (totalLength.isFinite ? totalLength : 0) - dividerSize)
     let source = min(available - minimum, max(minimum, available * preference.ratio(for: axis)))
     return (source, available - source)
   }

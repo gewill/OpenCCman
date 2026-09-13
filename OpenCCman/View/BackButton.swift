@@ -18,7 +18,7 @@ struct BackButton: View {
     } label: {
       Image(systemName: "chevron.backward")
     }
-    .fixedSizeSoftButtonStyle(Circle(), size: Constant.smallButtonSize)
+    .appNeumorphicButtonStyle(Circle(), kind: .icon)
   }
 }
 

@@ -34,6 +34,13 @@ struct WorkspaceChecks {
     preference.inspector = .hidden
     let hidden = WorkspaceLayoutResolution.resolve(preference: preference, width: 1050, platform: .mac, accessibility: false)
     precondition(hidden.editorWidth == 1050)
+    for platform in [WorkspaceLayoutResolution.Platform.mac, .pad] {
+      let resolved = WorkspaceLayoutResolution.resolve(preference: preference, width: 1200,
+                                                        platform: platform, accessibility: false)
+      let panes = resolved.paneLengths(totalLength: 1200, preference: preference)
+      precondition(resolved.dividerSize == (platform == .mac ? 16 : 44))
+      precondition(panes.source + panes.result + resolved.dividerSize == 1200)
+    }
     var otherWindow = preference
     otherWindow.axis = .vertical
     otherWindow.horizontalRatio = 0.7

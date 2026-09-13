@@ -103,6 +103,8 @@ struct PickableSingleChoiceView: View {
             .accessibilityHidden(true)
         }
       }
+      .padding(.vertical, AppControlMetrics.contentInset)
+      .frame(minHeight: AppControlMetrics.height)
       .contentShape(Rectangle())
     }
     .buttonStyle(.plain)

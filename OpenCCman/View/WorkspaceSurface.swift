@@ -96,7 +96,7 @@ struct WorkspaceSurface: View {
             Button("Help") { navigator.navigate("/help") }
             Button("Pro") { navigator.navigate("/pro") }.keyboardShortcut("p")
             Button("Settings") { navigator.navigate("/settings") }.keyboardShortcut(",")
-          } label: { Image(systemName: "ellipsis.circle").frame(width: 44, height: 44) }
+          } label: { Image(systemName: "ellipsis.circle").font(.system(size: AppControlMetrics.iconSize)).frame(width: AppControlMetrics.height, height: AppControlMetrics.height) }
             .accessibilityLabel(Text("workspace_more"))
         }
       #endif
@@ -119,7 +119,8 @@ struct WorkspaceSurface: View {
             } else {
               windowState.showingConversionSettings = true
             }
-          } label: { Image(systemName: "sidebar.left").frame(width: 44, height: 44) }
+          } label: { Image(systemName: "sidebar.left") }
+            .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 8), kind: .icon)
             .accessibilityLabel(Text("workspace_settings"))
           WorkspaceLayoutPicker(selection: Binding(get: { preferences.value.axis }, set: { preferences.value.axis = $0 }),
                                 effectiveAxis: resolution.axis)
@@ -136,7 +137,7 @@ struct WorkspaceSurface: View {
         Button("workspace_result_larger") { adjustRatio(by: -0.05, axis: resolution.axis) }
       }
       .font(.caption)
-      .frame(minHeight: 44)
+      .frame(minHeight: AppControlMetrics.height)
     }
   }
 
@@ -164,9 +165,8 @@ struct WorkspaceLayoutPicker: View {
       option(.horizontal, title: "workspace_horizontal", symbol: "rectangle.split.2x1")
       option(.vertical, title: "workspace_vertical", symbol: "rectangle.split.1x2")
     }
-    .padding(3)
-    .background(RoundedRectangle(cornerRadius: 11).fill(Color.Neumorphic.main)
-      .softInnerShadow(RoundedRectangle(cornerRadius: 11)))
+    .appSegmentTrack()
+    .fixedSize(horizontal: true, vertical: false)
     .accessibilityElement(children: .contain)
     .accessibilityLabel(Text("workspace_layout"))
   }
@@ -175,13 +175,8 @@ struct WorkspaceLayoutPicker: View {
     let selected = selection == axis || (selection == .automatic && effectiveAxis.rawValue == axis.rawValue)
     return Button { selection = axis } label: {
       Label(title.localizedStringKey, systemImage: symbol)
-        .fixedSize(horizontal: false, vertical: true)
-        .padding(.horizontal, 10).frame(minHeight: 44)
-        .contentShape(Rectangle())
-        .background(RoundedRectangle(cornerRadius: 8).fill(selected ? Color.accentColor : .clear))
-        .foregroundColor(selected ? .white : Color.Neumorphic.secondary)
     }
-    .buttonStyle(.plain)
+    .buttonStyle(AppSegmentButtonStyle(selected: selected))
     #if os(iOS)
       .keyboardShortcut(axis == .horizontal ? "1" : "2", modifiers: [.command, .option])
     #endif
@@ -208,7 +203,7 @@ struct WorkspacePanes: View {
     let resultEditorHeight = horizontal ? max(240, availableHeight - 100) : max(180, editorBudget * (1 - ratio))
     let sourceWidth = horizontal ? widths.source : max(0, resolution.editorWidth - 8)
     let resultWidth = horizontal ? widths.result : max(0, resolution.editorWidth - 8)
-    let divider = WorkspaceLayoutResolution.dividerSize
+    let divider = resolution.dividerSize
     ZStack(alignment: .topLeading) {
       SourcePane(editorHeight: sourceEditorHeight, paneHeight: horizontal ? availableHeight : nil, showsConversionAction: false)
         .frame(width: sourceWidth)
@@ -274,7 +269,6 @@ struct WorkspacePanes: View {
 struct ConversionSettingsSheet: View {
   @EnvironmentObject private var windowState: WhatsNewWindowState
   @Environment(\.sizeCategory) private var sizeCategory
-  @Environment(\.colorScheme) private var colorScheme
   var body: some View {
     VStack(spacing: 0) {
       Group {
@@ -302,9 +296,9 @@ struct ConversionSettingsSheet: View {
 
   private var doneButton: some View {
     Button { windowState.showingConversionSettings = false } label: {
-      Text("Done").frame(minWidth: 44, minHeight: 44).contentShape(Rectangle())
+      Text("Done")
     }
-    .foregroundColor(colorScheme == .dark ? Color.Neumorphic.secondary : .accentColor)
+    .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 8))
   }
 }
 

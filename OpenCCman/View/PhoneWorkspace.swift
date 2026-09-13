@@ -27,9 +27,9 @@
                   Text((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey)
                     .font(.subheadline).fixedSize(horizontal: false, vertical: true)
                 }
-                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
               }
-              .neumorphicThemedButtonStyle(RoundedRectangle(cornerRadius: 12), padding: 12)
+              .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 12))
               SourcePane(editorHeight: max(180, min(200, geometry.size.height * 0.25)), showsConversionAction: false)
               ResultPane(editorHeight: 200, export: export)
               if !isPro, !keyboardVisible {
@@ -41,8 +41,9 @@
           HStack(spacing: 16) {
             if keyboardVisible {
               Button { UIApplication.shared.endEditing() } label: {
-                Image(systemName: "keyboard.chevron.compact.down").frame(width: 44, height: 44)
+                Image(systemName: "keyboard.chevron.compact.down")
               }
+              .appNeumorphicButtonStyle(Circle(), kind: .icon)
               .accessibilityLabel(Text("workspace_dismiss_keyboard"))
             }
             Spacer(minLength: 0)
@@ -70,7 +71,7 @@
           Button("Help") { navigator.navigate("/help") }
           Button("Pro") { navigator.navigate("/pro") }.keyboardShortcut("p")
           Button("Settings") { navigator.navigate("/settings") }.keyboardShortcut(",")
-        } label: { Image(systemName: "ellipsis.circle").font(.system(size: 20)).frame(width: 44, height: 44) }
+        } label: { Image(systemName: "ellipsis.circle").font(.system(size: AppControlMetrics.iconSize)).frame(width: AppControlMetrics.height, height: AppControlMetrics.height) }
           .accessibilityLabel(Text("workspace_more"))
       }
       .foregroundColor(Color.Neumorphic.secondary)

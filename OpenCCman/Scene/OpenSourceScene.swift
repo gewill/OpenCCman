@@ -43,7 +43,7 @@ struct OpenSourceScene: View {
                   Divider()
                   Text(model.link)
                 }.foregroundColor(.accentColor)
-              }.softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 16)
+              }.appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 20))
             }
           ) {
             Text(model.licence)

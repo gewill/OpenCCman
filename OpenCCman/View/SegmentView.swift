@@ -8,7 +8,6 @@ protocol Segmentable: Identifiable, Hashable {
 struct SegmentView<T: Segmentable>: View {
   @Environment(\.locale) private var locale
   @Environment(\.sizeCategory) private var sizeCategory
-  @Environment(\.isEnabled) private var isEnabled
   let title: String
   let options: [T]
   @Binding var selected: T
@@ -18,14 +17,7 @@ struct SegmentView<T: Segmentable>: View {
       Text(title.localizedStringKey)
         .font(.headline)
       picker
-        .padding(3)
-        .background(
-          RoundedRectangle(cornerRadius: 11, style: .continuous)
-            .fill(Color.Neumorphic.main)
-            .softInnerShadow(RoundedRectangle(cornerRadius: 11, style: .continuous))
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 11, style: .continuous))
-        .opacity(isEnabled ? 1 : 0.5)
+        .appSegmentTrack()
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Text(title.localizedStringKey))
         .accessibilityIdentifier("conversion-segment-\(title)")
@@ -44,27 +36,17 @@ struct SegmentView<T: Segmentable>: View {
 
   private var segments: some View {
     ForEach(options) { option in
-      if option.id != options.first?.id {
-        SegmentGrooveDivider(isHorizontal: sizeCategory.isAccessibilityCategory)
-      }
       Button {
         selected = option
       } label: {
         Text(option.title.localized(in: locale))
-          .font(.body.weight(option == selected ? .semibold : .regular))
-          .multilineTextAlignment(.center)
-          .fixedSize(horizontal: false, vertical: true)
-          .padding(.horizontal, 8)
-          .padding(.vertical, 8)
-          .frame(maxWidth: .infinity, minHeight: 44)
-          .background(
-            RoundedRectangle(cornerRadius: 8, style: .continuous)
-              .fill(option == selected ? Color.accentColor : Color.clear)
-          )
-          .foregroundColor(option == selected ? .white : Color.Neumorphic.secondary)
-          .contentShape(Rectangle())
       }
-      .buttonStyle(.plain)
+      .buttonStyle(AppSegmentButtonStyle(selected: option == selected))
+      .overlay(
+        SegmentGrooveDivider(isHorizontal: sizeCategory.isAccessibilityCategory)
+          .opacity(option.id == options.first?.id ? 0 : 1),
+        alignment: sizeCategory.isAccessibilityCategory ? .top : .leading
+      )
       .accessibilityAddTraits(option == selected ? .isSelected : [])
     }
   }

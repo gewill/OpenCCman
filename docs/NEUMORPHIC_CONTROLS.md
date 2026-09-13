@@ -9,7 +9,13 @@
 - 该版本支持 iOS 13 / macOS 10.15，Menu/Link 需要 iOS 14 / macOS 11；应用部署下限继续为 iOS 14 / macOS 11。没有引入新的平台要求。
 - 正式版接入时其余 14 个依赖保持原锁定值。后续 #38 仅删除 VisualEffects，锁文件从 15 项变为 14 项；剩余各项与清理前逐字段一致，包括 OpenCC 1.4.2 对应的 SwiftyOpenCC revision。
 
-## 本次接入
+## 控件尺寸修正（2026-09-13）
+
+当前按钮改用内部 `AppControlMetrics` / `AppNeumorphicButtonStyle`，开关用 `AppNeumorphicSwitchStyle`；仍复用 2.4.1 的颜色、阴影及交互风格。完整占位包含内容、padding、边框和阴影，Mac 普通按钮/Segment 28pt、主操作32pt，触屏44pt；多行/大字号自然增长。Segment 外槽和分隔线不再增加总高度或留下命中死区。设置语言/外观的自定义选择行也使用对应平台最小高度。系统工具栏/菜单/文件面板和系统按钮保持原样。
+
+[完整尺寸规则、上游反馈、实际测量与前后截图](validation/control-sizing/README.md)。下文“本次接入”保留首次 2.4.1 接入的历史事实，原 44pt 统一约束与旧按钮 API 清单由本节取代。
+
+## 首次接入记录
 
 | 位置 | 控件或样式 | 处理 |
 | --- | --- | --- |

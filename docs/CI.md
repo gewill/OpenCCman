@@ -6,7 +6,7 @@ GitHub Actions 负责回归与依赖候选验证，Xcode Cloud 负责正式签�
 
 | 工作流 / 检查 | 触发条件 | 执行环境与范围 |
 | --- | --- | --- |
-| `App Regression` | 目标为 `main`、`develop`、`release/**`、`hotfix/**` 的 PR；这些分支的推送；手动运行 | `macos-15`，20 分钟；工程和 Swift 语法、真实转换/文件/预设、额度、What’s New、本地化和隔离剪贴板回归 |
+| `App Regression` | 目标为 `main`、`develop`、`release/**`、`hotfix/**` 的 PR；这些分支的推送；手动运行 | `macos-15`，20 分钟；工程和 Swift 语法、真实转换/文件/预设、窗口布局、原生控件完整尺寸、编辑器滚动、额度、What’s New、本地化和隔离剪贴板回归 |
 | `Upstream Coordinator Tests` | 上述分支中修改协调器源码、配置、测试或其 workflow 的 PR/推送；周检；手动运行 | `ubuntu-24.04`，5 分钟；临时 Git 仓库与假 GitHub API 测试，并验证公开 Checks API 的读权限 |
 | 上游检测 → 准备 → 发布 | **仅 `main`** 的周一 09:17（UTC+8）或手动运行 | 检测/发布用 Ubuntu；有候选才用 `macos-15` 验证；写令牌仅位于独立发布 job |
 
@@ -47,3 +47,7 @@ PR 与合并后真实 GitHub Actions 运行结果是线上验收依据。纯迁�
 - 在明确需要发布验收包时验证临时 `build/*` 的 Xcode Cloud 触发与 TestFlight 产物。
 
 历史验收报告继续保留当时的 `build` 分支事实；新的操作按本指南执行。
+
+## 控件尺寸回归
+
+`check-control-sizing.sh` 在临时目录按 `Package.resolved` 的精确 SHA 读取 Neumorphic，编译原生 SwiftUI/AppKit 测量程序。覆盖上游 28/30→44 复现、应用 Mac 28/32pt 完整外框、Segment 底座、开关及多行增长；不改依赖缓存。iOS 点击和布局证据见 [三端验收记录](validation/control-sizing/README.md)，此原生 Mac 检查不能代替触屏或 VoiceOver 验收。

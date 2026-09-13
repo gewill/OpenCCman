@@ -39,7 +39,7 @@ struct ProScene: View {
         } label: {
           Text("Restore")
         }
-        .softButtonStyle(RoundedRectangle(cornerRadius: 12), padding: 12)
+        .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 12))
         .disabled(self.isLoading)
       }
       .padding(.horizontal, Constant.padding)
@@ -154,11 +154,9 @@ struct ProScene: View {
           }
         } label: {
           Text("Buy Now")
-            .font(.title)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 6)
+            .font(.headline)
         }
-        .softButtonStyle(RoundedRectangle(cornerRadius: 30), padding: 6, mainColor: Color.accent, textColor: Color.Neumorphic.main)
+        .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 30), role: .accent)
         .disabled(self.isLoading)
         .padding(.bottom, 10)
       }

@@ -20,7 +20,7 @@ struct ConversionInspector: View {
                 Image(systemName: "checkmark")
               }
             }
-            .padding(.horizontal, 10).frame(minHeight: 44)
+            .padding(.horizontal, 10).padding(.vertical, AppControlMetrics.contentInset).frame(minHeight: AppControlMetrics.height)
             .contentShape(Rectangle())
           }
           .buttonStyle(.plain)
@@ -47,7 +47,7 @@ struct ConversionInspector: View {
             Label((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey,
                   systemImage: "chevron.down")
           }
-          .neumorphicThemedButtonStyle(Capsule(), padding: 8)
+          .appNeumorphicButtonStyle(Capsule())
           .accessibilityLabel(Text("Conversion Preset"))
           .accessibilityValue(Text((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey))
         }
@@ -85,9 +85,9 @@ struct SourcePane: View {
             }
             viewModel.replaceSource(string)
           } label: {
-            Image(systemName: "doc.on.clipboard").font(.system(size: 20)).frame(width: 32, height: 32)
+            Image(systemName: "doc.on.clipboard")
           }
-          .softButtonStyle(Circle(), padding: Padding.small)
+          .appNeumorphicButtonStyle(Circle(), kind: .icon)
           .accessibilityLabel(Text("Paste Text"))
 
           Spacer()
@@ -100,17 +100,16 @@ struct SourcePane: View {
             whatsNewWindow.showingImporter = true
           } label: {
             Label("Import TXT", systemImage: "square.and.arrow.down")
-              .frame(minHeight: 28).contentShape(Rectangle())
           }
-          .softButtonStyle(RoundedRectangle(cornerRadius: 12), padding: 8)
+          .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 12))
           .disabled(viewModel.isImporting)
           Spacer()
           if viewModel.isImporting {
             LoadingView(width: 24, label: "Import TXT")
             Button { viewModel.cancelImport() } label: {
-              Text("Cancel").frame(minHeight: 28).contentShape(Rectangle())
+              Text("Cancel")
             }
-            .softButtonStyle(RoundedRectangle(cornerRadius: 12), padding: 8)
+            .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 12))
           }
         }
         if let filename = viewModel.sourceFilename {
@@ -165,15 +164,15 @@ struct ResultPane: View {
           Button(action: {
             copyToClipboard(text: viewModel.resultText)
           }, label: {
-            Image(systemName: "doc.on.doc").font(.system(size: 20)).frame(width: 32, height: 32)
+            Image(systemName: "doc.on.doc")
           })
-          .softButtonStyle(Circle(), padding: Padding.small)
+          .appNeumorphicButtonStyle(Circle(), kind: .icon)
           .accessibilityLabel(Text("Copy Result"))
           .disabled(viewModel.resultText.isEmpty)
           Button(action: export) {
-            Image(systemName: "square.and.arrow.up").font(.system(size: 20)).frame(width: 32, height: 32)
+            Image(systemName: "square.and.arrow.up")
           }
-          .softButtonStyle(Circle(), padding: Padding.small)
+          .appNeumorphicButtonStyle(Circle(), kind: .icon)
           .accessibilityLabel(Text("Export TXT"))
           .disabled(viewModel.exportSnapshot == nil)
           Spacer()
@@ -213,9 +212,9 @@ struct ConversionAction: View {
   var body: some View {
     if viewModel.isLoading {
       Button { viewModel.cancelConversion() } label: {
-        Text("Cancel").frame(minWidth: 24, minHeight: 24).contentShape(Rectangle())
+        Text("Cancel")
       }
-      .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10)
+      .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 20), kind: .primary)
     } else {
       Button(action: {
         #if os(iOS)
@@ -225,9 +224,8 @@ struct ConversionAction: View {
       }, label: {
         Text("Convert")
           .font(.headline)
-          .frame(minWidth: 24, minHeight: 24).contentShape(Rectangle())
       })
-      .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10, mainColor: Color.accentColor, textColor: .white)
+      .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 20), kind: .primary, role: .accent)
       .keyboardShortcut("t")
       .disabled(viewModel.isImporting || viewModel.inputText.isEmpty)
     }
