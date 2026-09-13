@@ -53,7 +53,9 @@
         }
       }
       .background(WorkspaceKeyboardProbe(isVisible: $keyboardVisible).frame(width: 0, height: 0))
-      .sheet(isPresented: $windowState.showingConversionSettings) {
+      .sheet(isPresented: $windowState.showingConversionSettings, onDismiss: {
+        windowState.conversionSettingsIsActive = false
+      }) {
         ConversionSettingsSheet()
           .environmentObject(viewModel)
           .environmentObject(windowState)
