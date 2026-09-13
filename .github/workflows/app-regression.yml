@@ -31,6 +31,8 @@ jobs:
         run: python3 scripts/check-core.py
       - name: Check window layout resolution and recovery
         run: bash scripts/check-workspace.sh
+      - name: Check native editor scroll anchors
+        run: bash scripts/check-editor-scroll.sh
       - name: Check quota reservations
         run: bash scripts/check-quota.sh
       - name: Check What’s New presentation and localizations

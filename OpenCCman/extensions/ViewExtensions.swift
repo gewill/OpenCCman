@@ -15,7 +15,7 @@ extension View {
 
 struct SizePreferenceKey: PreferenceKey {
   static var defaultValue: CGSize = .zero
-  static func reduce(value: inout CGSize, nextValue: () -> CGSize) {}
+  static func reduce(value _: inout CGSize, nextValue _: () -> CGSize) {}
 }
 
 extension View {
@@ -49,7 +49,7 @@ extension View {
     #if os(macOS)
       introspect(.textEditor, on: .macOS(.v11, .v12, .v13, .v14, .v15, .v26)) { textEditor in
         textEditor.isEditable = isEditable
-        textEditor.textContainerInset = NSSize.init(width: 0, height: 1)
+        textEditor.textContainerInset = NSSize(width: 0, height: 1)
         textEditor.textContainer?.lineFragmentPadding = 0
         textEditor.backgroundColor = .clear
       }
@@ -60,6 +60,26 @@ extension View {
         textEditor.textContainer.lineFragmentPadding = 0
         textEditor.backgroundColor = .clear
       }
+    #endif
+  }
+}
+
+#if os(macOS)
+  private struct WorkspaceScrollModifier: ViewModifier {
+    @StateObject private var keeper = WorkspaceScrollKeeper()
+    func body(content: Content) -> some View {
+      content.introspect(.textEditor, on: .macOS(.v11, .v12, .v13, .v14, .v15, .v26)) { keeper.attach($0) }
+    }
+  }
+#endif
+
+extension View {
+  @ViewBuilder
+  func preserveWorkspaceScroll() -> some View {
+    #if os(macOS)
+      modifier(WorkspaceScrollModifier())
+    #else
+      self
     #endif
   }
 }

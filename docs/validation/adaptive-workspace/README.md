@@ -35,19 +35,20 @@
 
 | 跟踪 | 尚缺的实际证据 | 下一步 |
 |---|---|---|
-| #20 | VoiceOver 朗读/顺序/选中/禁用，中文 marked text，长文本滚动锚点，结果只读选择复制，最终SHA键盘流程 | Mac 解锁后接续宿主 UI；软件注入普通文字不能冒充真实输入法组合。iPad adjustable 在AXe中数值为nan但描述50%，需实际播报判断，不按工具格式臆测修复 |
+| #20 | VoiceOver 朗读/顺序/选中/禁用，中文 marked text，长文本滚动锚点，结果只读选择复制，最终SHA键盘流程 | Mac已恢复并完成[长文重排修复](20-scroll/README.md)；软件注入普通文字不能冒充真实输入法组合。iPad adjustable 在AXe中数值为nan但描述50%，需实际播报判断，不按工具格式臆测修复 |
 | #37 / #40 | 三语言、浅深色、高对比度、最大字号、Pro/非Pro的完整组合，Reduce Motion/加载/取消 | 用同一最终SHA定向补齐，早期截图只作历史证据 |
 | #34 | 未读卡片与真实转换/导入/系统面板、错误/Pro、交互下滑关闭/横屏全屏sheet的UI竞态 | 状态回归已覆盖guard；继续真实UI验收，不能以单元测试代替 |
 | #49 / #50 | Stage Manager自由窗口、真实软硬键盘细节，最低系统回退 | 需要相应设备/环境，保留 #16 |
 | #15 / #16 / #14 | 签名包文件权限/跨App、iOS14/macOS11与真实购买 | 本轮不发布；后续授权云端构建后使用准确SHA与分发包验收 |
 
-执行中 Mac 锁定，宿主 UI 工具明确拒绝交互；已请求解锁。独立模拟器 API 仍可检查其专用测试实例，未绕过锁屏，也未更改正式应用数据。
+执行中Mac曾锁定，之后宿主UI恢复。恢复后实测发现长段落换布局会跳段，已添加最小原生滚动锚点修复并补运行证据。用户明确确认没有iOS14/macOS11环境，保留为发布前验收。独立模拟器使用本次专用测试实例。
 
 ## 复验命令
 
 ```bash
 bash scripts/check-project.sh
 bash scripts/check-workspace.sh
+bash scripts/check-editor-scroll.sh
 bash scripts/check-whats-new.sh
 bash scripts/check-control-labels.sh
 bash scripts/check-quota.sh
@@ -58,3 +59,5 @@ python3 scripts/check-core.py --opencc-path <SwiftyOpenCC-checkout> --defaults-p
 构建使用 scheme OpenCCman、Debug、CODE_SIGNING_ALLOWED=NO、锁定的 SourcePackages，分别指定 platform=macOS 与 generic/platform=iOS Simulator。模拟器测试包只在本次创建的专用实例中完整 ad-hoc 签名后安装；不是签名分发包验收。
 
 补充：iPad 长文本补验中，AXe 的 HID 输入只支持US字符，Unicode测试输入被拒绝；后续设备AX树只返回空Application，无法证明注入或布局切换成功。因此没有把该尝试列为长文本、Unicode或输入法通过证据。
+
+Mac滚动锚点补验与修复：[原生回归和前后截图](20-scroll/README.md)。#62已经合并；后续滚动修复为独立codex/workspace-scroll-anchor分支。
