@@ -150,6 +150,7 @@ extension NeumorphicTheme {
 /// The two custom Mac switches share the same complete-bounds policy as buttons.
 struct AppNeumorphicSwitchStyle: ToggleStyle {
   @Environment(\.neumorphicTheme) private var theme
+  @Environment(\.isEnabled) private var isEnabled
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
   func makeBody(configuration: Configuration) -> some View {
@@ -174,6 +175,7 @@ struct AppNeumorphicSwitchStyle: ToggleStyle {
       .contentShape(Rectangle())
     }
     .buttonStyle(.plain)
+    .opacity(isEnabled ? 1 : 0.55)
     .accessibilityValue(Text(configuration.isOn ? "On" : "Off"))
     .accessibilityAddTraits(configuration.isOn ? .isSelected : [])
   }
