@@ -1,6 +1,6 @@
 # Neumorphic UI 验收记录
 
-日期：2026-09-13。PR：[#39](https://github.com/gewill/OpenCCman/pull/39)。测试源码：`26971f1783e9fedac408a7590e09c58628e9c859`。
+日期：2026-09-13。PR：[#39](https://github.com/gewill/OpenCCman/pull/39)。首轮测试源码：`26971f1783e9fedac408a7590e09c58628e9c859`；下方首轮结论仅对应当时版本。最新 segment 调整与复验见文末。
 
 ## 结论
 
@@ -54,3 +54,13 @@ iPhone 17 Pro 中通过 Simulator → Features → Increase Preferred Text Size 
 已重新构建 PR 基线并保存三组相同条件的实际窗口截图：浅色主页、深色主页、浅色设置开关。源码、窗口尺寸、主题、语言、状态及原图校验值见 [截图对比](images/pr-39/README.md)。六张原图嵌入 PR 描述。
 
 本轮只补充 macOS 普通字号对比，没有执行 iPhone 大字号基线 A/B；此前大字号问题的归因边界和未通过结论保持不变。Simulator 菜单交互失败导致该问题的补图尚未完成。
+
+## iPerfman 风格 segment 复验（2026-09-13）
+
+源码 `e1bf1ea35e9a5f46531b7693b5fcc922924674d6`：选择器现使用一体式内凹底座、细分隔线、蓝底白字选中项。参考 iPerfman `0360d9c` 的 OptionsPicker；没有修改 iPerfman 仓库或 OpenCCman 转换模型。
+
+- macOS 与 iOS Simulator Debug 构建均成功；部署下限仍为 iOS 14 / macOS 11，锁文件未变。
+- `check-project.sh`、`check-control-labels.sh` 通过。
+- macOS 实测：简体会禁用两组高级选项并保留台湾选择；点击繁体按钮右上角的文字外留白可切回，台湾预设恢复。AX selected/disabled 状态正确。
+- 浅色与深色普通窗口、300 点宽繁体窗口已观察；OpenCC 标准能换行显示，选项无横向溢出。三张 after 截图已经刷新。
+- 辅助功能字号纵向布局已经实现，但尚未完成设备复验；不将实现或编译成功记作大字号验收通过。#40 的推荐卡片遮挡、页头布局及其他待验收项仍然存在，PR 保留草稿。

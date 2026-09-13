@@ -13,7 +13,7 @@
 
 | 位置 | 控件或样式 | 处理 |
 | --- | --- | --- |
-| 主页：目标语言、异体字、地域用词 | `NeumorphicPicker` | 使用库提供的分段选择器，替换自行拼接的胶囊按钮、阴影和模糊背景；标题置于选项上方，移除横向滚动 |
+| 主页：目标语言、异体字、地域用词 | `SegmentView`，参考 iPerfman `OptionsPicker` | 一体式内凹圆角底座、细分隔线、蓝底白字选中项；标题上置，移除横向滚动；辅助功能字号改用纵向排列 |
 | 设置：菜单栏图标开关 | `neumorphicThemedSwitchStyle` | 原 `SwitchToggleStyle()` 为 SwiftUI 系统开关；现在明确调用库样式，并补齐辅助功能标签 |
 | 快捷键设置：启用开关 | `neumorphicThemedSwitchStyle` | 同上，绑定仍连接现有快捷键服务 |
 | 主页导入与转换、Pro 加载 | `NeumorphicCircularProgressView` | 共用 `LoadingView` 包装，取代原系统 spinner 和自绘三圆动画；没有可测连续进度时传 `nil`，不虚构百分比 |
@@ -21,9 +21,11 @@
 | 常用预设菜单触发器 | `neumorphicThemedButtonStyle` + SwiftUI `Menu` | 触发器使用库样式；菜单继续保留当前项勾选和“自定义”状态 |
 | 导入与取消导入按钮 | `softButtonStyle` | 补齐与其余文件操作一致的按钮样式 |
 
-`NeumorphicPicker` 是库公开 API 中的 segmented picker；本次没有另造一个分段选择器，也没有更换为系统 `PickerStyle.segmented`。转换模型与偏好键保持不变，选择简体时仍禁用异体字/地域用词两组。
+按照产品指定的 iPerfman 样式，选择器采用应用内 `SegmentView`，参考 [OptionsPicker](https://github.com/gewill/iperfman/blob/0360d9c74da45e9b815ddb3b4ff3c42b56bcec68/iperfman/components/OptionsPicker.swift)、`OptionsPickerIcon` 与 groove divider。共用 11 点圆角内凹底座、3 点内边距、8 点圆角选中块；保留 OpenCCman 蓝色，不引入 iPerfman 的橙色主题。库的 `NeumorphicPicker` 提供独立胶囊外观，不符合这次指定样式，因此改用库阴影 API 组合。转换模型与偏好键不变，简体仍禁用两组高级选项。
 
-该控件的 label 回调接收 `String`。`String.localized(in:bundle:)` 根据 SwiftUI 环境中的当前应用语言查找资源，处理 `zh_Hans`/`zh_Hant` 与 lproj 命名差异；不使用始终跟随系统语言的固定 `NSLocalizedString` 结果。现有标签文案原样保留。
+选项使用真实 `Button`，显式保留选中 trait 和整个按钮矩形命中区域；可点击高度至少 44 点。普通字号等宽横排，文字可换行而不截断；辅助功能字号纵排，状态仍由原 Binding 持有。通过 `sizeCategory` 保持 iOS 14 / macOS 11 兼容，不照搬参考控件的固定行高与单行缩字。
+
+`String.localized(in:bundle:)` 根据当前应用语言解析标签，处理 `zh_Hans`/`zh_Hant` 与 lproj 命名差异；现有标签文案保留。
 
 ## 其余控件是否都用了库
 
