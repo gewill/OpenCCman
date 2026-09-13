@@ -5,7 +5,15 @@ on:
     - cron: '17 1 * * 1'
   workflow_dispatch:
   pull_request:
-    branches: [main]
+    branches: [main, develop, 'release/**', 'hotfix/**']
+    paths:
+      - scripts/sync-upstream.py
+      - scripts/upstream-sync.json
+      - tests/test_upstream_sync.py
+      - .github/workflows/sync-opencc.yml
+
+  push:
+    branches: [main, develop, 'release/**', 'hotfix/**']
     paths:
       - scripts/sync-upstream.py
       - scripts/upstream-sync.json
@@ -16,7 +24,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: opencc-upstream-sync
+  group: opencc-upstream-sync-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -54,7 +62,8 @@ jobs:
 
   detect:
     needs: coordinator-tests
-    if: github.event_name != 'pull_request'
+    # Only reviewed default-branch code may prepare or publish candidates.
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     outputs:

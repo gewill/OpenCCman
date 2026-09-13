@@ -229,7 +229,7 @@ def discover(config, stage, github):
             return {**result, "status": "waiting", "reason": "Fork master needs a passing OpenCC Compatibility check",
                     "fork_sha": target_sha}
         if not github.check_passed(cfg["repository"], base, cfg["requiredCheck"]):
-            return {**result, "status": "waiting", "reason": "App build needs a passing App Regression check before a pin upgrade",
+            return {**result, "status": "waiting", "reason": f"App {cfg['base']} needs a passing App Regression check before a pin upgrade",
                     "fork_sha": target_sha}
         comparison = github.compare(fork["repository"], old_sha, target_sha)
         if comparison["status"] != "ahead":

@@ -10,17 +10,23 @@
 | `BYVoid/OpenCC` 正式 Release | OpenCC 核心与词库来源 | 同步锁定版本的源码、配置、生成词典和测试语料 |
 | [SwiftyOpenCC/master](https://github.com/gewill/SwiftyOpenCC/tree/master) | 兼容桥接、资源与引擎 CI | 第一层 PR，使用 merge commit 合并 |
 | [OpenCCman/main](https://github.com/gewill/OpenCCman/tree/main) | 协调器、配置、定时工作流 | 自动化改动单独向 main 提 PR |
-| [OpenCCman/build](https://github.com/gewill/OpenCCman/tree/build) | 应用代码、精确依赖与应用 CI | 第二层 PR，采用已合并且验证成功的 fork SHA |
+| [OpenCCman/develop](https://github.com/gewill/OpenCCman/tree/develop) | 应用代码、精确依赖与应用 CI | 第二层 PR，采用已合并且验证成功的 fork SHA |
 
 ```text
 ddddxxx/SwiftyOpenCC 提交 + BYVoid/OpenCC 正式版
   → SwiftyOpenCC/master 同步 PR
   → 维护者以 merge commit 合并，等待合并后 OpenCC Compatibility 成功
-  → OpenCCman/build 精确 revision PR
+  → OpenCCman/develop 精确 revision PR
   → 维护者审查 App Regression 后合并
 ```
 
-协调器只开 PR，不自动合并；所有候选都在临时 checkout 准备，不切换或重置开发者工作区。不要为了同步依赖把 main 的旧应用代码合入 build。
+协调器只开 PR，不自动合并；所有候选都在临时 checkout 准备，不切换或重置开发者工作区。应用与协调器的历史迁移独立审查并保留 merge commit，不用重置分支来对齐。
+
+## CI 分支迁移
+
+先合并应用历史与回归工作流迁移 PR 到 `develop`，等待合并后的精确 SHA 上 `App Regression` 成功，再合并默认分支协调器 PR，将 `app.base` 切换为 `develop`。文档或配置尚在 PR 中时不代表线上已经切换；运行配置始终以 `main` 为准。切换前检查两层待审 PR，处理仍指向旧 `build` 的候选，避免重复发布。
+
+协调器回归覆盖 `main`、`develop`、`release/*`、`hotfix/*` 上涉及协调器的 PR 和推送；这些事件只运行测试。准备和发布仅允许 `main` 上的周检或手动运行，其他分支手动运行也只测试。原有验证 job 与写令牌分离、每周调度及人工合并规则保持不变。
 
 ## 日常操作
 
@@ -35,10 +41,10 @@ ddddxxx/SwiftyOpenCC 提交 + BYVoid/OpenCC 正式版
 以下用于新环境配置或恢复现有集成；日常同步不需要重新创建 App 或私钥。
 
 1. 先人工合并 SwiftyOpenCC 的官方 `SimpleConverter`／JSON 配置迁移，使 fork/master 包含 `scripts/update-opencc-resources.py`、`Sources/OpenCC/Resources/manifest.json`（`schemaVersion=1`、`bridgeVersion=1`）与 `OpenCC Compatibility` CI。旧桥接不能仅替换子模块来升级。
-2. 让协调器进入 OpenCCman/main；让应用回归脚本与 `App Regression` CI 进入 build。两个 CI 的 **job 名称**也必须分别为 `OpenCC Compatibility`、`App Regression`。fork CI 必须测试 `push: master`，因为应用推广检查的是合并后的精确 SHA。
+2. 让协调器进入 OpenCCman/main；让应用回归脚本与 `App Regression` CI 进入 develop，并对 `push: develop` 运行，供后续精确 SHA 门禁使用。两个 CI 的 **job 名称**也必须分别为 `OpenCC Compatibility`、`App Regression`。fork CI 必须测试 `push: master`，因为应用推广检查的是合并后的精确 SHA。
 3. 创建专用 GitHub App，仅安装至 `gewill/OpenCCman` 与 `gewill/SwiftyOpenCC`，仓库权限只选 **Contents: read/write、Pull requests: read/write**。不请求 Actions、Workflows、Administration 或自动批准权限。
 4. 在 OpenCCman 设置变量 `OPENCC_SYNC_APP_ID`、secret `OPENCC_SYNC_APP_PRIVATE_KEY`。这把私钥只传给发布 job；每次令牌仅允许写入当前目标仓库，任务结束撤销。App 私钥不进入检测／构建 job。公开来源与 check 信息使用当前 job 的只读 `GITHUB_TOKEN` 认证读取；发布步骤以 `GH_READ_TOKEN` 单独传入该读令牌，`GH_TOKEN` 中的 App 写令牌只供变更 API／Git push 使用，未扩大 App 权限。
-5. 给 fork/master、App/build 配置分支保护：要求 PR、相应 CI 成功、禁止 force-push。机器人不加入绕过列表。个人仓库单人维护时不强制另一位 reviewer，以免唯一维护者无法合并自己的人工 PR。
+5. 给 fork/master、App/develop 配置分支保护：要求 PR、相应 CI 成功、禁止 force-push。机器人不加入绕过列表。个人仓库单人维护时不强制另一位 reviewer，以免唯一维护者无法合并自己的人工 PR。
 
 GitHub 定时任务只从默认分支运行；公开仓库 60 天无活动会停用 schedule，定时运行也可能延迟，因此它不是可靠的定时提醒服务。[官方事件说明](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)
 
@@ -65,7 +71,7 @@ python3 scripts/sync-upstream.py pr --stage app
 - `check` 读取远端状态；`prepare` 在独立临时 checkout 生成、测试候选，不 push。未传 `--output` 时创建持久临时目录，JSON 的 `artifact_directory` 返回路径。
 - 本地 `pr` 先准备、验证，然后发布。复用已验证产物可执行 `pr --stage fork --prepared /绝对路径/产物目录`；此路径完全不运行候选代码。Actions 强制使用此模式，把验证和写权限隔离。
 - 一次只推进一层。fork PR 人工 **Create a merge commit** 合入 master 后，再手动运行 workflow，或等下一次周检，才生成 App PR。也可把上述命令的 `--stage fork` 换为 `--stage app`。
-- App 只采用 fork/master 已合入且精确 SHA 上 `OpenCC Compatibility` 成功的版本；App/build 当前精确 SHA 也必须已有成功的 `App Regression`，发布前再核对两项。修改工程 requirement 为 revision，并更新 `Package.resolved` 中该 pin。执行 `xcodebuild -resolvePackageDependencies -skipPackageUpdates` 校验依赖解析，允许 Xcode 管理 `originHash`，但其他 pin／锁文件字段有任何变化立即失败，不提交。
+- App 只采用 fork/master 已合入且精确 SHA 上 `OpenCC Compatibility` 成功的版本；App/develop 当前精确 SHA 也必须已有成功的 `App Regression`，发布前再核对两项。修改工程 requirement 为 revision，并更新 `Package.resolved` 中该 pin。执行 `xcodebuild -resolvePackageDependencies -skipPackageUpdates` 校验依赖解析，允许 Xcode 管理 `originHash`，但其他 pin／锁文件字段有任何变化立即失败，不提交。
 
 应用层按 fork/master 的完整提交 SHA 判断更新，不按引擎版本号或文件类型过滤。因此 fork 上仅文档变更的合并，待 CI 通过后也可能产生新的应用 revision PR；这是当前实现的行为。
 
@@ -124,4 +130,4 @@ CMake 的版本与官方下载校验和由 fork 的 `BuildTools/cmake.json` 锁�
 
 隔离演练还使用临时 Git 仓库执行 fork merge commit → app 推广 → 新提交恢复旧 pin → revert 整个 fork merge，验证祖先关系保留、忽略清单阻止旧候选以及新来源仍可继续。生成器/编译器在该流程测试中使用替身；这不是生产仓库回滚或未来 OpenCC 版本的真实构建记录。
 
-应用正式打包使用 Xcode Cloud；分支名以 `build` 开头即符合现有自动触发规则，因此应用 PR 合入 `build` 会触发 iOS/macOS 归档。GitHub 回归与候选检查不等于云端分发通过。App ID、workflow 和构建记录规则见 [应用分支的 Xcode Cloud 指南](https://github.com/gewill/OpenCCman/blob/build/docs/XCODE_CLOUD.md)；该指南随应用收尾 PR 合入后生效。
+应用正式打包使用 Xcode Cloud；依赖 PR 合入 `develop` 后，在明确需要云端验收包时从发布候选建立临时 `build/*`，触发 iOS/macOS 归档。旧 `build` 引用退出前不能创建 `build/*`。GitHub 回归与候选检查不等于云端分发通过。App ID、workflow 和构建记录规则见 [应用分支的 Xcode Cloud 指南](https://github.com/gewill/OpenCCman/blob/develop/docs/XCODE_CLOUD.md)。
