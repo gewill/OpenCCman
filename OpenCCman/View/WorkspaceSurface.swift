@@ -273,13 +273,23 @@ struct WorkspacePanes: View {
 
 struct ConversionSettingsSheet: View {
   @EnvironmentObject private var windowState: WhatsNewWindowState
+  @Environment(\.sizeCategory) private var sizeCategory
+  @Environment(\.colorScheme) private var colorScheme
   var body: some View {
     VStack(spacing: 0) {
-      HStack {
-        Text("workspace_settings").font(.headline)
-        Spacer()
-        Button { windowState.showingConversionSettings = false } label: {
-          Text("Done").frame(minWidth: 44, minHeight: 44).contentShape(Rectangle())
+      Group {
+        if sizeCategory.isAccessibilityCategory {
+          VStack(alignment: .leading, spacing: 8) {
+            HStack { Spacer(); doneButton }
+            Text("workspace_settings").font(.headline)
+              .fixedSize(horizontal: false, vertical: true)
+          }
+        } else {
+          HStack {
+            Text("workspace_settings").font(.headline)
+            Spacer()
+            doneButton
+          }
         }
       }.padding()
       ScrollView { ConversionInspector(showsPresetList: true).padding() }
@@ -288,6 +298,13 @@ struct ConversionSettingsSheet: View {
     #if os(macOS)
       .frame(minWidth: 320, idealWidth: 380, minHeight: 400, idealHeight: 550)
     #endif
+  }
+
+  private var doneButton: some View {
+    Button { windowState.showingConversionSettings = false } label: {
+      Text("Done").frame(minWidth: 44, minHeight: 44).contentShape(Rectangle())
+    }
+    .foregroundColor(colorScheme == .dark ? Color.Neumorphic.secondary : .accentColor)
   }
 }
 

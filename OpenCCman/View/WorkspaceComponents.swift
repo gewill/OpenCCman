@@ -3,6 +3,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct ConversionInspector: View {
+  @Environment(\.colorScheme) private var colorScheme
   var showsPresetList = false
   @EnvironmentObject private var viewModel: HomeViewModel
 
@@ -23,7 +24,7 @@ struct ConversionInspector: View {
             .contentShape(Rectangle())
           }
           .buttonStyle(.plain)
-          .foregroundColor(viewModel.selectedPreset == preset ? Color.accentColor : Color.Neumorphic.secondary)
+          .foregroundColor(viewModel.selectedPreset == preset && colorScheme != .dark ? Color.accentColor : Color.Neumorphic.secondary)
           .accessibilityAddTraits(viewModel.selectedPreset == preset ? .isSelected : [])
         }
       } else {
@@ -224,7 +225,7 @@ struct ConversionAction: View {
           .font(.headline)
           .frame(minWidth: 24, minHeight: 24).contentShape(Rectangle())
       })
-      .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10, mainColor: Color.accentColor, textColor: Color.Neumorphic.main)
+      .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10, mainColor: Color.accentColor, textColor: .white)
       .keyboardShortcut("t")
       .disabled(viewModel.isImporting || viewModel.inputText.isEmpty)
     }

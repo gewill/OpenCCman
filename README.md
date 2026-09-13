@@ -68,3 +68,11 @@ See the shared [upstream sync guide](https://github.com/gewill/OpenCCman/blob/ma
 ## License
 
 MIT License
+
+### Adaptive workspace
+
+macOS and iPad support horizontal or vertical source/result panes, a settings
+inspector or sheet, and independent window layout preferences. iPhone uses a
+stacked workspace with a keyboard-aware conversion action. Narrow windows fall
+back without overwriting the chosen layout. See the [UI specification and designs](docs/design/adaptive-workspace/README.md)
+and [runtime screenshots, checks and remaining acceptance](docs/validation/adaptive-workspace/README.md).
