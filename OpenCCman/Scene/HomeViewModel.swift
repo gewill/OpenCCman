@@ -41,6 +41,11 @@ class HomeViewModel: ObservableObject {
     let text: String
     let filename: String
   }
+  @Published private(set) var resultConfiguration: ConversionConfiguration?
+  var resultConfigurationChanged: Bool {
+    guard !resultText.isEmpty, let resultConfiguration else { return false }
+    return resultConfiguration.options != configuration.options
+  }
   @Published private(set) var exportSnapshot: ExportSnapshot?
   var resultFilename: String { exportSnapshot?.filename ?? "OpenCCman-converted.txt" }
   @Published var localProgress: Double = 0.0 // 0.0 ~ 1.0
@@ -102,6 +107,7 @@ class HomeViewModel: ObservableObject {
             guard self.accepts(notification) else { return }
             self.cancelConversion()
             self.replaceSource(originalText)
+            self.resultConfiguration = nil // External Services do not supply configuration provenance.
             self.resultText = convertedText
             self.exportSnapshot = ExportSnapshot(text: convertedText, filename: "OpenCCman-converted.txt")
             self.localProgress = 1.0
@@ -123,6 +129,7 @@ class HomeViewModel: ObservableObject {
             guard self.accepts(notification) else { return }
             self.cancelConversion()
             self.replaceSource(originalText)
+            self.resultConfiguration = nil // External Services do not supply configuration provenance.
             self.resultText = convertedText
             self.exportSnapshot = ExportSnapshot(text: convertedText, filename: "OpenCCman-converted.txt")
             self.localProgress = 1.0
@@ -191,6 +198,7 @@ class HomeViewModel: ObservableObject {
     error = nil
 
     let currentInput = inputText
+    let currentConfiguration = configuration
     let currentOptions = options
     let filename = TextFileService.ImportedText(text: "", sourceFilename: sourceFilename).exportFilename
     let identifier = UUID()
@@ -205,6 +213,7 @@ class HomeViewModel: ObservableObject {
           reservation.release()
           return
         }
+        self.resultConfiguration = currentConfiguration
         self.resultText = result
         self.exportSnapshot = ExportSnapshot(text: result, filename: filename)
         reservation.commit()
