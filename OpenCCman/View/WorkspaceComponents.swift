@@ -84,7 +84,7 @@ struct SourcePane: View {
             }
             viewModel.replaceSource(string)
           } label: {
-            Image(systemName: "doc.on.clipboard")
+            Image(systemName: "doc.on.clipboard").frame(width: 32, height: 32)
           }
           .softButtonStyle(Circle(), padding: Padding.small)
           .accessibilityLabel(Text("Paste Text"))
@@ -160,13 +160,13 @@ struct ResultPane: View {
           Button(action: {
             copyToClipboard(text: viewModel.resultText)
           }, label: {
-            Image(systemName: "doc.on.doc")
+            Image(systemName: "doc.on.doc").frame(width: 32, height: 32)
           })
           .softButtonStyle(Circle(), padding: Padding.small)
           .accessibilityLabel(Text("Copy Result"))
           .disabled(viewModel.resultText.isEmpty)
           Button(action: export) {
-            Image(systemName: "square.and.arrow.up")
+            Image(systemName: "square.and.arrow.up").frame(width: 32, height: 32)
           }
           .softButtonStyle(Circle(), padding: Padding.small)
           .accessibilityLabel(Text("Export TXT"))
