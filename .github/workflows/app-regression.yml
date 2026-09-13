@@ -1,0 +1,39 @@
+name: App Regression
+
+# Keep the required check available for every PR, including documentation.
+# build* branches are reserved for Xcode Cloud, not integration CI.
+on:
+  pull_request:
+    branches: [main, develop, 'release/**', 'hotfix/**']
+  push:
+    branches: [main, develop, 'release/**', 'hotfix/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: app-regression-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    name: App Regression
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Check project and source syntax
+        run: bash scripts/check-project.sh
+      - name: Check real conversion, presets and file workflow
+        run: python3 scripts/check-core.py
+      - name: Check quota reservations
+        run: bash scripts/check-quota.sh
+      - name: Check What’s New presentation and localizations
+        run: bash scripts/check-whats-new.sh
+      - name: Check control labels in the selected app language
+        run: bash scripts/check-control-labels.sh
+      - name: Check isolated pasteboard preservation
+        run: bash scripts/check-pasteboard.sh

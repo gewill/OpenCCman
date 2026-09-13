@@ -79,13 +79,104 @@
 
 // MARK: - Help
 "Help" = "幫助";
-"help description" =  "
-中文簡繁轉換開源項目，支持詞彙級別的轉換、異體字轉換和地區習慣用詞轉換（中國大陸、臺灣、香港、日本新字體）。不提供普通話與粵語的轉換。
+"help_intro" = "中文簡繁轉換開源項目，支持詞彙級別的轉換、異體字轉換和地區習慣用詞轉換（中國大陸、臺灣、香港、日本新字體）。不提供普通話與粵語的轉換。";
 
-**特點**
+"help_features_title" = "特點";
+"help_features_content" = "嚴格區分「一簡對多繁」和「一簡對多異」。\n完全兼容異體字，可以實現動態替換。\n嚴格審校一簡對多繁詞條，原則爲「能分則不合」。\n支持中國大陸、臺灣、香港異體字和地區習慣用詞轉換，如「裏」「裡」、「鼠標」「滑鼠」。";
 
-嚴格區分「一簡對多繁」和「一簡對多異」。
-完全兼容異體字，可以實現動態替換。
-嚴格審校一簡對多繁詞條，原則爲「能分則不合」。
-支持中國大陸、臺灣、香港異體字和地區習慣用詞轉換，如「裏」「裡」、「鼠標」「滑鼠」。
-";
+"help_global_service_title" = "全域服務 (macOS)";
+"help_global_service_intro" = "OpenCCman 提供多種方式在任何應用程式中轉換中文文字：";
+
+"help_method1_title" = "方法一：全域鍵盤快速鍵（推薦）";
+"help_method1_content" = "OpenCCman 提供兩種全域鍵盤快速鍵：\n\n• 轉換選取文字（預設：⌘⌥T）- 自動轉換並在可編輯欄位中替換選取的文字\n• 開啟選取文字（預設：⌘⌥R）- 在 OpenCCman 中開啟選取文字以便手動轉換\n\n1. 前往「設定 > 全域快速鍵」配置您的快速鍵\n2. 在任何應用程式中選取中文文字\n3. 按下您配置的快速鍵\n4. 轉換快速鍵：文字將自動轉換並就地替換（適用於文字編輯器、瀏覽器等）\n5. 開啟快速鍵：OpenCCman 將開啟並載入文字，準備進行轉換";
+
+"help_method2_title" = "方法二：右鍵服務";
+"help_method2_content" = "OpenCCman 提供兩種右鍵服務：\n\n• 「使用 OpenCCman 轉換中文文本」- 自動轉換並替換選取的文字\n• 「在 OpenCCman 中開啟選取文字」- 開啟應用程式，將選取文字載入以便手動轉換\n\n1. 在任何應用程式（Safari、文字編輯等）中選取文字\n2. 右鍵點擊並從「服務」選單中選擇您偏好的服務\n3. 轉換服務：文字將自動轉換並替換\n4. 開啟服務：OpenCCman 將開啟並載入文字，準備進行轉換";
+
+"help_service_tip" = "您也可以在「系統設定 > 鍵盤 > 鍵盤快速鍵 > 服務 > 文字」中為這些服務分配鍵盤快捷鍵，以便更快速地訪問。";
+
+"help_service_details_title" = "服務詳情";
+"help_service_details_content" = "• 轉換服務：適合快速自動轉換，當您對目前設定有信心時使用\n• 開啟服務：適合想要查看文字、調整轉換設定或保持原文和轉換文字同時可見時使用\n• 兩種服務都可在任何支援文字選取的 macOS 應用程式中使用";
+
+"help_conclusion" = "鍵盤快速鍵方式最快速，適合立即轉換。當您想要在轉換前查看或調整設定時，請使用「開啟選取文字」服務。";
+
+// MARK: - Services
+"Convert Chinese Text with OpenCCman" = "使用 OpenCCman 轉換中文文本";
+"Open Selected Text in OpenCCman" = "在 OpenCCman 中開啟選取文字";
+
+// MARK: - Shortcut Settings
+"Global Shortcut" = "全域快速鍵";
+"Shortcut Settings" = "快速鍵設定";
+"Enable Global Shortcut" = "啟用全域快速鍵";
+"Keyboard Shortcut" = "鍵盤快速鍵";
+"Convert Selected Text Shortcut" = "轉換選中文本快速鍵";
+"Open Selected Text Shortcut" = "打開選中文本快速鍵";
+"Convert Selected Text" = "轉換選取文字";
+"Open Selected Text" = "開啟選取文字";
+"Settings" = "設定";
+"Help" = "說明";
+"Quit" = "結束";
+"Show Menu Bar Icon" = "顯示選單列圖示";
+"How to Use" = "使用方法";
+"Tips" = "提示";
+"Test" = "測試";
+"Permissions" = "權限";
+"Accessibility Permission Required" = "需要輔助功能權限";
+"Open System Preferences" = "開啟系統偏好設定";
+"Cancel" = "取消";
+"Grant Permission" = "授予權限";
+"Try Again" = "重試";
+"Refresh" = "重新整理";
+"No Text Selected" = "未選取文字";
+"Please select some Chinese text first, then try the shortcut again." = "請先選取一些中文文字，然後再試一次快速鍵。";
+"OK" = "確定";
+"Accessibility permission granted" = "已授予輔助功能權限";
+"Accessibility permission required" = "需要輔助功能權限";
+
+"Global shortcut feature is only available on macOS" = "全域快速鍵功能僅在 macOS 上可用";
+"shortcut_instructions_enabled" = "1. 啟用上面的全域快速鍵\n2. 點擊快速鍵錄製器設定您喜歡的按鍵組合\n3. 在任何應用程式中選取中文文字\n4. 按下您配置的快速鍵：\n   • 轉換快速鍵：文字將自動轉換並就地替換（適用於可編輯欄位）\n   • 開啟快速鍵：OpenCCman 將開啟並載入文字，準備進行轉換\n5. OpenCCman 也會顯示轉換結果以供參考";
+"shortcut_instructions_disabled" = "要使用全域快速鍵功能：\n1. 首先授予上面的輔助功能權限\n2. 授予權限後，點擊「重新整理」更新狀態\n3. 然後啟用全域快速鍵並配置您的快速鍵\n\n輔助功能權限允許 OpenCCman 從其他應用程式讀取選取的文字。";
+"shortcut_tips" = "• 快速鍵錄製器允許您輕鬆設定任何按鍵組合\n• 常用快速鍵如 ⌘⌥T、⌘⌥R、⌘⌥C 效果很好\n• 避免與系統快速鍵衝突\n• 兩個快速鍵都在所有應用程式中全域工作";
+
+// MARK: - Accessibility Permission Alert
+"accessibility_permission_intro" = "OpenCCman 需要輔助功能權限來讀取其他應用程式中的選取文字。";
+"accessibility_permission_instructions_title" = "請按以下步驟操作：";
+"accessibility_permission_step1" = "1. 點擊下方的「開啟系統偏好設定」";
+"accessibility_permission_step2" = "2. 在列表中找到「OpenCCman」";
+"accessibility_permission_step3" = "3. 勾選旁邊的核取方塊";
+"accessibility_permission_step4" = "4. 返回 OpenCCman 並重試";
+"Error" = "錯誤";
+
+// MARK: - Presets and text files
+"Conversion Preset" = "轉換預設";
+"preset_simplified" = "簡體中文";
+"preset_traditional" = "繁體 · OpenCC";
+"preset_taiwan" = "臺灣正體＋臺灣詞組";
+"preset_hong_kong" = "香港繁體";
+"preset_custom" = "自訂";
+"Import TXT" = "匯入 TXT";
+"Export TXT" = "匯出 TXT";
+"Paste Text" = "貼上文字";
+"Copy Result" = "複製結果";
+"previous_result_available" = "仍可匯出上一次成功轉換的結果。";
+"text_file_hint" = "匯入或拖至此處：單個 UTF-8 TXT 檔案或純文字，上限 10 MiB。";
+"file_error_type" = "請選擇 UTF-8 編碼的一般 TXT 檔案，或拖入純文字。";
+"file_error_size" = "文字超過 10 MiB 匯入上限。";
+"file_error_encoding" = "檔案不是有效的 UTF-8 編碼。請另存為 UTF-8 後重試。";
+"file_error_single_item" = "一次只能匯入一個檔案或文字項目。";
+
+// MARK: - What’s New
+"whats_new_title" = "新功能";
+"whats_new_done" = "完成";
+"whats_new_presets_title" = "常用轉換，一選即用";
+"whats_new_presets_detail" = "快速選擇簡體、OpenCC 繁體、臺灣正體與詞組，或香港繁體。進階選項依然保留。";
+"whats_new_files_title" = "直接轉換 TXT 文稿";
+"whats_new_files_detail" = "匯入或拖入一個不超過 10 MiB 的 UTF-8 TXT 檔案，轉換後匯出到你選擇的位置。";
+"whats_new_reliability_title" = "轉換過程，由你掌控";
+"whats_new_reliability_detail" = "取消轉換即可阻止結果寫回。匯入失敗時保留原稿，未完成的轉換不占每日額度。";
+
+"On" = "開";
+
+"Off" = "關";
+
+"In progress" = "處理中";

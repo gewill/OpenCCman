@@ -5,6 +5,16 @@ extension String {
     LocalizedStringKey(self)
   }
 
+  /// Resolve String-only control labels using the app's selected locale.
+  func localized(in locale: Locale, bundle: Bundle = .main) -> String {
+    let preferred = locale.identifier.replacingOccurrences(of: "_", with: "-")
+    let language = Bundle.preferredLocalizations(from: bundle.localizations, forPreferences: [preferred]).first
+    let localizedBundle = language
+      .flatMap { bundle.path(forResource: $0, ofType: "lproj") }
+      .flatMap(Bundle.init(path:)) ?? bundle
+    return localizedBundle.localizedString(forKey: self, value: self, table: nil)
+  }
+
   var url: URL? {
     return URL(string: self)
   }

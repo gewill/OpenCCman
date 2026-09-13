@@ -2,10 +2,13 @@
   import BetterSafariView
 #endif
 import SwiftUI
+import Neumorphic
 import SwiftUIRouter
 
 struct SettingsScene: View {
   @EnvironmentObject var navigator: Navigator
+  @EnvironmentObject private var whatsNew: WhatsNewCoordinator
+  @EnvironmentObject private var whatsNewWindow: WhatsNewWindowState
   @Environment(\.openURL) var openURL
 
   @AppStorage(UserDefaultsKeys.selectedLocale.rawValue) var selectedLocale: LocaleConstants = .system
@@ -14,6 +17,9 @@ struct SettingsScene: View {
     @State private var presentingSafariView: Bool = false
   #endif
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
+  #if os(macOS)
+    @AppStorage(UserDefaultsKeys.showMenuBarIcon.rawValue) var showMenuBarIcon: Bool = false
+  #endif
 
   var body: some View {
     VStack {
@@ -47,8 +53,15 @@ struct SettingsScene: View {
             Text(Bundle.main.appVersionInfo)
           }
           Divider()
+          if whatsNew.release != nil {
+            CellButton(title: "whats_new_title") {
+              whatsNewWindow.manualRequest = UUID()
+            }
+            .accessibilityIdentifier("whats-new-settings")
+            Divider()
+          }
           CellButton(title: "Review on App Store") {
-            openURL(URL(string: "https://apps.apple.com/app/relationship/id1665455216?mt=12&action=write-review")!)
+            openURL(URL(string: "https://apps.apple.com/app/relationship/id6474449401?mt=12&action=write-review")!)
           }
           Divider()
           CellButton(title: "Open Source") {
@@ -81,6 +94,23 @@ struct SettingsScene: View {
             navigator.navigate("/settings/feedback")
           }
         }.softRectangleStyle()
+
+        #if os(macOS)
+          VStack(spacing: Constant.padding) {
+            HStack(alignment: .center, spacing: 6) {
+              Text("Show Menu Bar Icon".localizedStringKey)
+              Spacer()
+              Toggle("Show Menu Bar Icon", isOn: $showMenuBarIcon)
+                .neumorphicThemedSwitchStyle(tint: .accentColor, labelsHidden: true)
+                .accessibilityLabel(Text("Show Menu Bar Icon"))
+            }
+
+            Divider()
+            CellButton(title: "Global Shortcut") {
+              navigator.navigate("/settings/shortcut")
+            }
+          }.softRectangleStyle()
+        #endif
 
         VStack(spacing: Constant.padding) {
           CellButton(title: "Language") {
@@ -133,5 +163,7 @@ struct SettingsScene: View {
 struct SettingsScene_Previews: PreviewProvider {
   static var previews: some View {
     SettingsScene()
+      .environmentObject(WhatsNewCoordinator(version: "1.3", skipAutomatic: true))
+      .environmentObject(WhatsNewWindowState())
   }
 }
