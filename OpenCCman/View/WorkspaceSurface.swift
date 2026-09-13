@@ -29,11 +29,10 @@ struct WorkspaceSurface: View {
       VStack(spacing: 12) {
         controls(resolution: resolution)
         HStack(alignment: .top, spacing: 0) {
-          ScrollView { ConversionInspector().padding(4) }
-            .frame(width: resolution.inspectorWidth)
-            .opacity(resolution.inspectorWidth > 0 ? 1 : 0)
-            .accessibilityHidden(resolution.inspectorWidth == 0)
-            .allowsHitTesting(resolution.inspectorWidth > 0)
+          if resolution.inspectorWidth > 0 {
+            ScrollView { ConversionInspector().padding(4) }
+              .frame(width: resolution.inspectorWidth)
+          }
           ScrollView {
             VStack(spacing: 20) {
               WorkspacePanes(resolution: resolution, preference: Binding(
@@ -87,6 +86,18 @@ struct WorkspaceSurface: View {
 
   private func controls(resolution: WorkspaceLayoutResolution) -> some View {
     VStack(alignment: .leading, spacing: 8) {
+      #if os(iOS)
+        HStack {
+          Text("OpenCCman").font(.headline)
+          Spacer()
+          Menu {
+            Button("Help") { navigator.navigate("/help") }
+            Button("Pro") { navigator.navigate("/pro") }.keyboardShortcut("p")
+            Button("Settings") { navigator.navigate("/settings") }.keyboardShortcut(",")
+          } label: { Image(systemName: "ellipsis.circle").frame(width: 44, height: 44) }
+            .accessibilityLabel(Text("workspace_more"))
+        }
+      #endif
       if sizeCategory.isAccessibilityCategory || resolution.editorWidth < 460 {
         VStack(alignment: .leading, spacing: 8) {
           Button("workspace_settings") { windowState.showingConversionSettings = true }
@@ -123,6 +134,7 @@ struct WorkspaceSurface: View {
         Button("workspace_result_larger") { adjustRatio(by: -0.05, axis: resolution.axis) }
       }
       .font(.caption)
+      .frame(minHeight: 44)
     }
   }
 
@@ -163,12 +175,16 @@ struct WorkspaceLayoutPicker: View {
       Label(title.localizedStringKey, systemImage: symbol)
         .fixedSize(horizontal: false, vertical: true)
         .padding(.horizontal, 10).frame(minHeight: 44)
+        .contentShape(Rectangle())
         .background(RoundedRectangle(cornerRadius: 8).fill(selected ? Color.accentColor : .clear))
         .foregroundColor(selected ? .white : Color.Neumorphic.secondary)
     }
     .buttonStyle(.plain)
-    .accessibilityIdentifier("workspace-\(axis.rawValue)")
-    .accessibilityAddTraits(selected ? .isSelected : [])
+    #if os(iOS)
+      .keyboardShortcut(axis == .horizontal ? "1" : "2", modifiers: [.command, .option])
+    #endif
+      .accessibilityIdentifier("workspace-\(axis.rawValue)")
+      .accessibilityAddTraits(selected ? .isSelected : [])
   }
 }
 
