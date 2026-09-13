@@ -33,7 +33,6 @@ struct RootView: View {
       }
     }
     .background(Color.Neumorphic.main)
-    .ignoresSafeArea(.keyboard)
     .onChange(of: navigator.path) { newPath in
       print("Current path:", newPath)
     }

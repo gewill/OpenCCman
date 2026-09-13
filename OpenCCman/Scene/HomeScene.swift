@@ -20,13 +20,7 @@ struct HomeScene: View {
       #if os(macOS)
       WorkspaceSurface(export: exportResult)
       #else
-      ScrollView {
-        VStack(alignment: .leading, spacing: 0) {
-          navi
-          list
-          if !isPro { MyAppView().padding(Constant.padding) }
-        }
-      }
+      PhoneWorkspace(export: exportResult)
       #endif
 
     }

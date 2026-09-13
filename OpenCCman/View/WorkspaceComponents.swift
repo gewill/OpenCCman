@@ -3,32 +3,53 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct ConversionInspector: View {
+  var showsPresetList = false
   @EnvironmentObject private var viewModel: HomeViewModel
 
   var body: some View {
     VStack(alignment: .leading, spacing: Constant.padding) {
-      HStack {
+      if showsPresetList {
         Text("Conversion Preset").font(.headline)
-        Spacer()
-        Menu {
-          ForEach(ConversionConfiguration.Preset.allCases) { preset in
-            Button {
-              viewModel.applyPreset(preset)
-            } label: {
+        ForEach(ConversionConfiguration.Preset.allCases) { preset in
+          Button { viewModel.applyPreset(preset) } label: {
+            HStack {
+              Text(preset.title.localizedStringKey).fixedSize(horizontal: false, vertical: true)
+              Spacer(minLength: 8)
               if viewModel.selectedPreset == preset {
-                Label(preset.title.localizedStringKey, systemImage: "checkmark")
-              } else {
-                Text(preset.title.localizedStringKey)
+                Image(systemName: "checkmark")
               }
             }
+            .padding(.horizontal, 10).frame(minHeight: 44)
+            .contentShape(Rectangle())
           }
-        } label: {
-          Label((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey,
-                systemImage: "chevron.down")
+          .buttonStyle(.plain)
+          .foregroundColor(viewModel.selectedPreset == preset ? Color.accentColor : Color.Neumorphic.secondary)
+          .accessibilityAddTraits(viewModel.selectedPreset == preset ? .isSelected : [])
         }
-        .neumorphicThemedButtonStyle(Capsule(), padding: 8)
-        .accessibilityLabel(Text("Conversion Preset"))
-        .accessibilityValue(Text((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey))
+      } else {
+        HStack {
+          Text("Conversion Preset").font(.headline)
+          Spacer()
+          Menu {
+            ForEach(ConversionConfiguration.Preset.allCases) { preset in
+              Button {
+                viewModel.applyPreset(preset)
+              } label: {
+                if viewModel.selectedPreset == preset {
+                  Label(preset.title.localizedStringKey, systemImage: "checkmark")
+                } else {
+                  Text(preset.title.localizedStringKey)
+                }
+              }
+            }
+          } label: {
+            Label((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey,
+                  systemImage: "chevron.down")
+          }
+          .neumorphicThemedButtonStyle(Capsule(), padding: 8)
+          .accessibilityLabel(Text("Conversion Preset"))
+          .accessibilityValue(Text((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey))
+        }
       }
       SegmentView(title: "Target Language", options: HomeViewModel.Language.allCases, selected: $viewModel.targetOptions)
       Group {

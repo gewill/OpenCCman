@@ -262,7 +262,7 @@ struct ConversionSettingsSheet: View {
         Spacer()
         Button("Done") { windowState.showingConversionSettings = false }.frame(minHeight: 44)
       }.padding()
-      ScrollView { ConversionInspector().padding() }
+      ScrollView { ConversionInspector(showsPresetList: true).padding() }
     }
     .background(Color.Neumorphic.main)
     #if os(macOS)
