@@ -57,6 +57,9 @@ and [What’s New validation record](docs/WHATS_NEW.md).
 
 ### Changed
 
+- Keep the reading position anchored to text characters when macOS workspace
+  panes reflow, instead of reusing a pixel offset that can jump to later paragraphs.
+
 - Recommendations now participate in scrolling content instead of covering the
   editor. Dynamic Type layouts and settings/action touch targets have been
   improved; settings dismissal continues blocking What’s New until completion.
