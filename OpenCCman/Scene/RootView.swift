@@ -8,9 +8,16 @@ import SwiftUIRouter
 struct RootView: View {
   @EnvironmentObject private var navigator: Navigator
   @StateObject private var viewModel = HomeViewModel()
-  @State private var showAd: Bool = false
+  @EnvironmentObject private var whatsNew: WhatsNewCoordinator
+  @Environment(\.scenePhase) private var scenePhase
+  @Environment(\.locale) private var locale
+  @StateObject private var whatsNewWindow = WhatsNewWindowState()
+  @State private var presentationID = UUID()
+  @State private var whatsNewRelease: WhatsNewRelease?
+  @State private var isVisible = false
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   #if os(macOS)
+    @State private var isMainWindow = false
     @State private var windowID: ObjectIdentifier?
   #endif
 
@@ -22,6 +29,7 @@ struct RootView: View {
       VStack(alignment: .center, spacing: Constant.padding) {
         RootRoutes()
           .environmentObject(viewModel)
+          .environmentObject(whatsNewWindow)
       }
     }
     .background(Color.Neumorphic.main)
@@ -29,12 +37,47 @@ struct RootView: View {
     .onChange(of: navigator.path) { newPath in
       print("Current path:", newPath)
     }
-    .onDisappear { viewModel.cancelConversion() }
+    .sheet(item: $whatsNewRelease, onDismiss: {
+      whatsNew.finish(in: presentationID)
+    }) { release in
+      WhatsNewView(release: release)
+        .environment(\.locale, locale)
+        .onAppear {
+          whatsNew.didAppear(in: presentationID)
+          whatsNewWindow.manualRequest = nil
+        }
+    }
+    .onAppear {
+      isVisible = true
+      presentWhatsNewIfReady()
+    }
+    .onChange(of: whatsNewEligibility) { eligibility in
+      if !eligibility.canPresent, !whatsNew.hasAppeared, whatsNew.owner == presentationID {
+        whatsNewRelease = nil
+        whatsNew.finish(in: presentationID)
+      }
+      presentWhatsNewIfReady()
+    }
+    .onChange(of: whatsNew.owner) { _ in presentWhatsNewIfReady() }
+    .onChange(of: whatsNewWindow.manualRequest) { _ in presentWhatsNewIfReady() }
+    .onDisappear {
+      isVisible = false
+      viewModel.cancelConversion()
+      whatsNewRelease = nil
+      whatsNew.finish(in: presentationID)
+    }
     #if os(macOS)
     .introspect(.window, on: .macOS(.v11, .v12, .v13, .v14, .v15, .v26)) { window in
       windowID = ObjectIdentifier(window)
+      isMainWindow = window.isMainWindow
       viewModel.window = window
       AppDelegate.registerReadyWindow(window)
+    }
+    .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeMainNotification)) { notification in
+      if isTargetWindow(for: notification) { isMainWindow = true }
+    }
+    .onReceive(NotificationCenter.default.publisher(for: NSWindow.didResignMainNotification)) { notification in
+      if isTargetWindow(for: notification) { isMainWindow = false }
     }
     .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenSettingsFromMenu"))) { notification in
       guard isTargetWindow(for: notification) else { return }
@@ -59,6 +102,31 @@ struct RootView: View {
     #endif
   }
 
+  private var whatsNewEligibility: WhatsNewEligibility {
+    var active = isVisible && scenePhase == .active
+    #if os(macOS)
+      active = active && isMainWindow
+    #endif
+    return WhatsNewEligibility(
+      isActive: active,
+      isHome: navigator.path == "/home",
+      isSupportedRoute: navigator.path == "/home" || navigator.path == "/settings",
+      isConverting: viewModel.isLoading,
+      isImporting: viewModel.isImporting,
+      hasFilePanel: whatsNewWindow.showingImporter || whatsNewWindow.showingExporter,
+      hasAlert: viewModel.showingProAlert || viewModel.error != nil,
+      hasProSheet: whatsNewWindow.proSheetIsActive
+    )
+  }
+
+  private func presentWhatsNewIfReady() {
+    guard whatsNewRelease == nil else { return }
+    whatsNewRelease = whatsNew.reserve(
+      for: presentationID, eligibility: whatsNewEligibility,
+      manually: whatsNewWindow.manualRequest != nil
+    )
+  }
+
   #if os(macOS)
   private func navigateToHome(for notification: Notification) {
     guard isTargetWindow(for: notification), navigator.path != "/home" else { return }
@@ -79,6 +147,7 @@ struct MainView_Previews: PreviewProvider {
   static var previews: some View {
     Router {
       RootView()
+        .environmentObject(WhatsNewCoordinator(version: "1.3", skipAutomatic: true))
     }
   }
 }

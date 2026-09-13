@@ -27,6 +27,11 @@ struct OpenCCmanApp: App {
     IAPManager.shared.configure()
   }
 
+  @StateObject private var whatsNew = WhatsNewCoordinator(
+    version: Bundle.main.appVersion,
+    skipAutomatic: ProcessInfo.processInfo.arguments.contains("-skip-whats-new")
+  )
+
   var body: some Scene {
     WindowGroup {
       Router {
@@ -35,6 +40,7 @@ struct OpenCCmanApp: App {
             checkPro()
           }
       }
+      .environmentObject(whatsNew)
       .environment(\.locale, Locale(identifier: selectedLocale.identifier))
       .preferredColorScheme(selectedTheme.colorScheme)
     }

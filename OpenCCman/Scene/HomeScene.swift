@@ -9,8 +9,7 @@ struct HomeScene: View {
 
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @EnvironmentObject private var viewModel: HomeViewModel
-  @State private var showingImporter = false
-  @State private var showingExporter = false
+  @EnvironmentObject private var whatsNewWindow: WhatsNewWindowState
   @State private var exportDocument: ConvertedTextDocument?
   @State private var exportFilename = "OpenCCman-converted.txt"
   @State private var isDropTargeted = false
@@ -34,14 +33,16 @@ struct HomeScene: View {
       }
     }
     .frame(minWidth: 300)
-    .overlay(ProAlertView(showingProAlert: $viewModel.showingProAlert))
-    .fileImporter(isPresented: $showingImporter, allowedContentTypes: [.plainText]) { result in
+    .overlay(ProAlertView(showingProAlert: $viewModel.showingProAlert, showingProScene: $whatsNewWindow.showingProSheet) {
+      whatsNewWindow.proSheetIsActive = false
+    })
+    .fileImporter(isPresented: $whatsNewWindow.showingImporter, allowedContentTypes: [.plainText]) { result in
       switch result {
       case .success(let url): viewModel.importFile(url)
       case .failure(let error): viewModel.handleFileFailure(error)
       }
     }
-    .fileExporter(isPresented: $showingExporter, document: exportDocument,
+    .fileExporter(isPresented: $whatsNewWindow.showingExporter, document: exportDocument,
                   contentType: .plainText, defaultFilename: exportFilename) { result in
       if case .failure(let error) = result { viewModel.handleFileFailure(error) }
       exportDocument = nil
@@ -178,7 +179,7 @@ struct HomeScene: View {
         }
         HStack {
           Button {
-            showingImporter = true
+            whatsNewWindow.showingImporter = true
           } label: {
             Label("Import TXT", systemImage: "square.and.arrow.down")
           }
@@ -240,7 +241,7 @@ struct HomeScene: View {
             guard let snapshot = viewModel.exportSnapshot else { return }
             exportDocument = ConvertedTextDocument(text: snapshot.text)
             exportFilename = snapshot.filename
-            showingExporter = true
+            whatsNewWindow.showingExporter = true
           } label: {
             Image(systemName: "square.and.arrow.up")
           }
@@ -296,5 +297,6 @@ struct HomeScene: View {
   Router {
     HomeScene()
       .environmentObject(HomeViewModel())
+      .environmentObject(WhatsNewWindowState())
   }
 }
