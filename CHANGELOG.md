@@ -49,6 +49,9 @@ and [What’s New validation record](docs/WHATS_NEW.md).
 
 ### Changed
 
+- Remove unused button styles and their dedicated preview, plus the unused
+  VisualEffects package, project references and in-app license entry. The other
+  14 dependency pins remain unchanged ([#38](https://github.com/gewill/OpenCCman/issues/38)).
 - Pin Neumorphic to the stable 2.4.1 release. Use iPerfman-style joined conversion
   segments with inset tracks, dividers and accent-filled selections; adopt the
   library's switch, circular loading and card APIs. Picker labels follow the

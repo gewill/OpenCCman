@@ -36,7 +36,7 @@ Core checks compile the actual app model/services with the dependencies pinned i
 
 ## Project status
 
-Neumorphic is pinned to the stable **2.4.1** release. See the [control adoption audit](docs/NEUMORPHIC_CONTROLS.md) for segmented selectors, switches, loading indicators, cards, and the controls that retain system behavior.
+Neumorphic is pinned to the stable **2.4.1** release. Unused button styles and the obsolete VisualEffects dependency/credit have been removed; the remaining 14 dependency pins are unchanged. See the [control adoption audit](docs/NEUMORPHIC_CONTROLS.md) for segmented selectors, switches, loading indicators, cards, and the controls that retain system behavior.
 
 See the [complete project status and follow-up report (2026-09-13)](docs/project-status-and-follow-up-2026-09-13.md) for delivered work, validation evidence, remaining release gates and concrete improvement recommendations.
 

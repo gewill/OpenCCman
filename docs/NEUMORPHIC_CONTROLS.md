@@ -7,7 +7,7 @@
 - 使用 [gewill/neumorphic v2.4.1 正式版](https://github.com/gewill/neumorphic/releases/tag/v2.4.1)，取代 `master` 分支依赖。
 - 工程使用 `exactVersion = 2.4.1`；锁文件记录该 tag 对应的 commit `1f5745173dedddf0227fffc47cbdaa3100e5569a`。此前分支锁定为 `e64d6240415537c0b9a1f289e46b92b592dc94db`。
 - 该版本支持 iOS 13 / macOS 10.15，Menu/Link 需要 iOS 14 / macOS 11；应用部署下限继续为 iOS 14 / macOS 11。没有引入新的平台要求。
-- 其余 14 个依赖保持原锁定值，包括 OpenCC 1.4.2 对应的 SwiftyOpenCC revision。
+- 正式版接入时其余 14 个依赖保持原锁定值。后续 #38 仅删除 VisualEffects，锁文件从 15 项变为 14 项；剩余各项与清理前逐字段一致，包括 OpenCC 1.4.2 对应的 SwiftyOpenCC revision。
 
 ## 本次接入
 
@@ -47,12 +47,12 @@
 | Slider、Stepper、DatePicker、Checkbox、DisclosureGroup | 应用无对应操作 | 未使用，不为接库新增无关输入项 |
 | 线性 Progress | 未使用 | 转换引擎不提供可测连续进度，当前圆形不定进度更符合实际状态 |
 
-## 后续可精简项
+## 闲置样式与依赖清理
 
-清理任务：[未使用样式与 VisualEffects #38](https://github.com/gewill/OpenCCman/issues/38)。
+清理任务：[未使用样式与 VisualEffects #38](https://github.com/gewill/OpenCCman/issues/38)。详见 [清理验证与前后截图](UNUSED_CONTROLS_CLEANUP.md)。
 
-- `smallButtonStyle`、`MacButtonStyle` 没有运行时调用；`smallSizeSoftButtonStyle` 只用于自身预览。可在单独清理中移除，避免维护多套未使用样式。
-- 分段选择器移除模糊背景后，应用 Swift 源码已没有 `VisualEffects` 的调用；它仍在 SPM 和开源声明中。本次保持其他依赖锁定，建议单独验证后连同无用引用和声明一起移除。
+- 已移除无运行时调用的 `SmallButtonStyle` / `smallButtonStyle`、`MacButtonStyle`，以及只用于自身预览的 `smallSizeSoftButtonStyle`；删除专用 `ButtonStyles.swift` 和工程中的源文件引用。现用的 `softRectangleStyle` 和 `modify` 保留。
+- 分段选择器移除模糊背景后，VisualEffects 已无源码调用或其他包的依赖入口；已删除 package/product/framework、锁文件 pin 及应用内开源声明，其他依赖不变。历史截图/验收文档中的旧版记录保留。
 - 高对比主题、VoiceOver、键盘与最大字号需要整体页面验收；仅使用库不能证明整页对比度或焦点顺序已合格。沿用 [#20](https://github.com/gewill/OpenCCman/issues/20) 和 [#16](https://github.com/gewill/OpenCCman/issues/16) 的设备验收范围。
 
 ## 验证

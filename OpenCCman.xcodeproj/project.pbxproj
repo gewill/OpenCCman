@@ -30,7 +30,6 @@
 		BE2C6D5A2B2D7ED000FC4112 /* IntExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D4A2B2D7ED000FC4112 /* IntExtensions.swift */; };
 		BE2C6D5C2B2D7ED000FC4112 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D4C2B2D7ED000FC4112 /* DateExtensions.swift */; };
 		BE2C6D632B2D80D100FC4112 /* Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D612B2D80D100FC4112 /* Styles.swift */; };
-		BE2C6D642B2D80D100FC4112 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D622B2D80D100FC4112 /* ButtonStyles.swift */; };
 		BE2C6D672B2D817100FC4112 /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = BE2C6D662B2D817100FC4112 /* Neumorphic */; };
 		BE2C6D692B2D81A300FC4112 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D682B2D81A300FC4112 /* Constants.swift */; };
 		BE3AEC892B2EF17700820673 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3AEC882B2EF17700820673 /* RootView.swift */; };
@@ -61,7 +60,6 @@
 		BE4296862B41BF3100AA1139 /* PickableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE4296852B41BF3100AA1139 /* PickableView.swift */; };
 		BE727E2C2B2DE16400C63DB2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE727E2B2B2DE16400C63DB2 /* HomeViewModel.swift */; };
 		BE727E2E2B2DF60400C63DB2 /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE727E2D2B2DF60400C63DB2 /* SegmentView.swift */; };
-		BE727E322B2DF65D00C63DB2 /* VisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = BE727E312B2DF65D00C63DB2 /* VisualEffects */; };
 		BE727E342B2DF85E00C63DB2 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE727E332B2DF85E00C63DB2 /* UserDefaultsKeys.swift */; };
 		BE727E382B2E00D000C63DB2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE727E3A2B2E00D000C63DB2 /* Localizable.strings */; };
 		BE781CB22CA131790022C4B8 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = BE781CB12CA131790022C4B8 /* RevenueCat */; };
@@ -98,7 +96,6 @@
 		BE2C6D4A2B2D7ED000FC4112 /* IntExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntExtensions.swift; sourceTree = "<group>"; };
 		BE2C6D4C2B2D7ED000FC4112 /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		BE2C6D612B2D80D100FC4112 /* Styles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Styles.swift; sourceTree = "<group>"; };
-		BE2C6D622B2D80D100FC4112 /* ButtonStyles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		BE2C6D682B2D81A300FC4112 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BE3AEC882B2EF17700820673 /* RootView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		BE3AEC8E2B2EF25000820673 /* ProScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProScene.swift; sourceTree = "<group>"; };
@@ -149,7 +146,6 @@
 				BEA770F72B2C92B700AFA2F0 /* OpenCC in Frameworks */,
 				BE3AEC8D2B2EF1DF00820673 /* SwiftUIRouter in Frameworks */,
 				BE781CB22CA131790022C4B8 /* RevenueCat in Frameworks */,
-				BE727E322B2DF65D00C63DB2 /* VisualEffects in Frameworks */,
 				09FB99902E3D060700DBDB5D /* SwiftUIOverlayContainer in Frameworks */,
 				09DBEC522E3BC4BC00DD9C5B /* KeyboardShortcuts in Frameworks */,
 				BE2C6D3E2B2D7EA700FC4112 /* SwiftUIIntrospect in Frameworks */,
@@ -196,7 +192,6 @@
 			isa = PBXGroup;
 			children = (
 				BE2C6D612B2D80D100FC4112 /* Styles.swift */,
-				BE2C6D622B2D80D100FC4112 /* ButtonStyles.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -330,7 +325,6 @@
 				BEA770F62B2C92B700AFA2F0 /* OpenCC */,
 				BE2C6D3D2B2D7EA700FC4112 /* SwiftUIIntrospect */,
 				BE2C6D662B2D817100FC4112 /* Neumorphic */,
-				BE727E312B2DF65D00C63DB2 /* VisualEffects */,
 				BE3AEC8C2B2EF1DF00820673 /* SwiftUIRouter */,
 				BE3AECA02B2EF36500820673 /* BetterSafariView */,
 				BE3AECAD2B2EF4FA00820673 /* SwiftyUserDefaults */,
@@ -375,7 +369,6 @@
 				BEA770F52B2C92B700AFA2F0 /* XCRemoteSwiftPackageReference "SwiftyOpenCC" */,
 				BE2C6D3C2B2D7EA700FC4112 /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
 				BE2C6D652B2D817100FC4112 /* XCRemoteSwiftPackageReference "neumorphic" */,
-				BE727E302B2DF65D00C63DB2 /* XCRemoteSwiftPackageReference "VisualEffects" */,
 				BE3AEC8B2B2EF1DF00820673 /* XCRemoteSwiftPackageReference "SwiftUIRouter" */,
 				BE3AEC9F2B2EF36500820673 /* XCRemoteSwiftPackageReference "BetterSafariView" */,
 				BE3AECAC2B2EF4FA00820673 /* XCRemoteSwiftPackageReference "SwiftyUserDefaults" */,
@@ -454,7 +447,6 @@
 				BE3AEC972B2EF25000820673 /* ChangeLanguageScene.swift in Sources */,
 				BE3AEC9E2B2EF2D400820673 /* IAPManager.swift in Sources */,
 				BE2C6D5C2B2D7ED000FC4112 /* DateExtensions.swift in Sources */,
-				BE2C6D642B2D80D100FC4112 /* ButtonStyles.swift in Sources */,
 				BE3AECAB2B2EF46A00820673 /* TestNumbersPerDayManager.swift in Sources */,
 				BE3AECA42B2EF3B200820673 /* BackButton.swift in Sources */,
 				BE3F71E42B2F5377001496EA /* UIApplicationExtensions.swift in Sources */,
@@ -773,14 +765,6 @@
 				minimumVersion = 6.5.16;
 			};
 		};
-		BE727E302B2DF65D00C63DB2 /* XCRemoteSwiftPackageReference "VisualEffects" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/twostraws/VisualEffects";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.3;
-			};
-		};
 		BE781CB02CA131790022C4B8 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
@@ -847,11 +831,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BE3F71E02B2F4F8F001496EA /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
-		};
-		BE727E312B2DF65D00C63DB2 /* VisualEffects */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BE727E302B2DF65D00C63DB2 /* XCRemoteSwiftPackageReference "VisualEffects" */;
-			productName = VisualEffects;
 		};
 		BE781CB12CA131790022C4B8 /* RevenueCat */ = {
 			isa = XCSwiftPackageProductDependency;
