@@ -101,7 +101,7 @@ struct SettingsScene: View {
               Text("Show Menu Bar Icon".localizedStringKey)
               Spacer()
               Toggle("Show Menu Bar Icon", isOn: $showMenuBarIcon)
-                .neumorphicThemedSwitchStyle(tint: .accentColor, labelsHidden: true)
+                .toggleStyle(AppNeumorphicSwitchStyle())
                 .accessibilityLabel(Text("Show Menu Bar Icon"))
             }
 
@@ -146,7 +146,7 @@ struct SettingsScene: View {
                 }) {
                   Text("Get")
                 }
-                .softButtonStyle(Capsule(), padding: 12, mainColor: Color.accent, textColor: Color.Neumorphic.main)
+                .appNeumorphicButtonStyle(Capsule(), role: .accent)
               }
             }
           }

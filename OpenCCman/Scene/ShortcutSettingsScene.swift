@@ -71,13 +71,13 @@ struct ShortcutSettingsScene: View {
                                 Button("Grant Permission".localizedStringKey) {
                                     shortcutService.requestAccessibilityPermission()
                                 }
-                                .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 6)
+                                .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 8))
                             }
 
                             Button("Refresh".localizedStringKey) {
                                 shortcutService.checkAccessibilityPermission()
                             }
-                            .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 6)
+                            .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 8))
                         }
                     }
                     .padding()
@@ -93,7 +93,7 @@ struct ShortcutSettingsScene: View {
                             .font(.headline)
                         Spacer()
                         Toggle("Enable Global Shortcut", isOn: $shortcutService.isEnabled)
-                            .neumorphicThemedSwitchStyle(tint: .accentColor, labelsHidden: true)
+                            .toggleStyle(AppNeumorphicSwitchStyle())
                             .accessibilityLabel(Text("Enable Global Shortcut"))
                     }
                     .padding()
@@ -116,7 +116,7 @@ struct ShortcutSettingsScene: View {
                           Button("Test".localizedStringKey) {
                               shortcutService.convertSelectedText()
                           }
-                          .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 8)
+                          .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 8))
                         }
                     }
                     .padding()
@@ -140,7 +140,7 @@ struct ShortcutSettingsScene: View {
                           Button("Test".localizedStringKey) {
                               shortcutService.openSelectedText()
                           }
-                          .softButtonStyle(RoundedRectangle(cornerRadius: 8), padding: 8)
+                          .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 8))
                         }
                     }
                     .padding()

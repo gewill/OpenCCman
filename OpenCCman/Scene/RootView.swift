@@ -33,6 +33,7 @@ struct RootView: View {
       }
     }
     .background(Color.Neumorphic.main)
+    .neumorphicTheme(.openCCman)
     .onChange(of: navigator.path) { newPath in
       print("Current path:", newPath)
     }

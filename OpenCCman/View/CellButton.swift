@@ -13,6 +13,7 @@ struct CellButton: View {
         Spacer()
         Image(systemName: "chevron.right")
       }
+      .frame(minHeight: AppControlMetrics.height)
       .contentShape(Rectangle())
     }
     .buttonStyle(.plain)

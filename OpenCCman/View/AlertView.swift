@@ -81,16 +81,16 @@ struct AlertViewBox: View {
           showGradient.toggle()
         } label: {
           Text("Delete")
-            .frame(width: 120, height: 44)
+            .frame(minWidth: 100)
         }
-        .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 0, textColor: Color.pink)
+        .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 20), foreground: .pink)
         Button {
           showingAlert.toggle()
         } label: {
           Text("Cancel")
-            .frame(width: 120, height: 44)
+            .frame(minWidth: 100)
         }
-        .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 0)
+        .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 20))
       }
     }
   }

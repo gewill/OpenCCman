@@ -14,17 +14,17 @@ struct ProAlertView: View {
             showingProAlert = false
           } label: {
             Text("Pro")
-              .frame(width: 120, height: 44)
+              .frame(minWidth: 100)
           }
-          .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 0, mainColor: Color.accent, textColor: Color.Neumorphic.main)
+          .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 20), role: .accent)
 
           Button {
             showingProAlert.toggle()
           } label: {
             Text("Cancel")
-              .frame(width: 120, height: 44)
+              .frame(minWidth: 100)
           }
-          .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 0, mainColor: Color.accent, textColor: Color.Neumorphic.main)
+          .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 20), role: .accent)
         }
       }
       .sheet(isPresented: $showingProScene, onDismiss: onProDismiss) {
