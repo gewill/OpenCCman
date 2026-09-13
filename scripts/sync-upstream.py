@@ -13,6 +13,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -330,6 +331,7 @@ def validate_candidate(config, data, path):
         run(["python3", cfg["generator"]], cwd=path, env=clean)
         run(["python3", cfg["generator"], "--check"], cwd=path, env=clean)
         run(["swift", "test"], cwd=path, env=clean)
+        run(["python3", "scripts/check-official-cli.py"], cwd=path, env=clean)
     else:
         run(["xcodebuild", "-resolvePackageDependencies", "-project", cfg["project"],
              "-scheme", cfg["scheme"], "-skipPackageUpdates"], cwd=path, env=clean)
@@ -363,6 +365,9 @@ def candidate_workspace(output, data):
         try:
             yield path
         except Exception as error:
+            cli_report = path / ".build/official-cli-report.json"
+            if cli_report.is_file():
+                shutil.copyfile(cli_report, output / "official-cli-report.json")
             failure = {**data, "status": "blocked", "reason": str(error),
                        "artifact_directory": str(output), **getattr(error, "details", {})}
             (output / "failure.json").write_text(json.dumps(failure, ensure_ascii=False, indent=2) + "\n")
@@ -422,13 +427,24 @@ def prepare(config, stage, github, output, expected=None):
             project = path / cfg["project"] / "project.pbxproj"
             project.write_text(pin_project(project.read_text(), data["fork_sha"]))
         validate_candidate(config, data, path)
+        if stage == "fork":
+            cli_report = path / ".build/official-cli-report.json"
+            if not cli_report.is_file():
+                raise SyncError("Official CLI report missing; first merge the fork validation tools", 4)
+            try:
+                comparison = json.loads(cli_report.read_text())
+            except (ValueError, OSError) as error:
+                raise SyncError("Official CLI report is unreadable or invalid JSON", 4) from error
+            if not isinstance(comparison, dict) or comparison.get("status") != "passed" or comparison.get("opencc") != {"tag": data["core_tag"], "revision": data["core_sha"]}:
+                raise SyncError("Official CLI validation does not match the selected core", 4)
+            shutil.copyfile(cli_report, output / "official-cli-report.json")
         git(path, "add", "--all")
         message = (f"chore: sync OpenCC {stage} ({data['candidate']})\n\n"
                    "Log:\n需求描述: 同步已核验的 OpenCC 依赖。\n实现思路: 固定来源 SHA，生成并校验资源，经人工 PR 合并。")
         core_time = int(git(path / cfg["corePath"], "show", "-s", "--format=%ct", data["core_sha"])) if stage == "fork" else 0
         git(path, "commit", "-m", message, env=commit_environment(path, "HEAD", minimum=core_time))
         data["head_sha"] = sha(git(path, "rev-parse", "HEAD"))
-        data["checks"] = (["resource generation", "manifest --check", "swift test"] if stage == "fork"
+        data["checks"] = (["pinned resource generation", "manifest --check", "swift test", "official CLI byte comparison"] if stage == "fork"
                           else ["locked package resolution", "core", "quota", "pasteboard"])
         verify_diff(config, data, path)
         git(path, "bundle", "create", str(output / "candidate.bundle"), f"refs/heads/{data['branch']}", f"^{data['base_sha']}")

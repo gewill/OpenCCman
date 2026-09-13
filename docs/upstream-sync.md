@@ -77,11 +77,11 @@ python3 scripts/sync-upstream.py pr --stage app
 
 相同来源与 base 的重新准备使用固定提交元数据，因此 push 成功、PR 创建失败后可以直接重跑并恢复。若在这两步之间 base 已前进，新候选与遗留分支必然不同，自动化会明确停止：先审查报告中的旧分支，确认没有 PR 或人工修改后由维护者删除该孤立分支，再重新运行；不能用 force-push 跳过这个检查。
 
-成功的 `prepare` 输出 `candidate.json`、`candidate.bundle`、`diff.patch`、`report.md`、`prepare.log`。发布再次核对 base、来源 SHA、bundle checksum 和变更范围，并从 bundle 推送经过验证的那个 commit。失败时保留 `failure.json`、报告、命令日志和可获得的 diff，随后删除隔离 checkout；失败候选不能发布。
+成功的 `prepare` 输出 `candidate.json`、`candidate.bundle`、`diff.patch`、`report.md`、`prepare.log`；fork 还保留 `official-cli-report.json`。发布再次核对 base、来源 SHA、bundle checksum 和变更范围，并从 bundle 推送经过验证的那个 commit。失败时保留 `failure.json`、报告、命令日志和可获得的 diff，随后删除隔离 checkout；失败候选不能发布。
 
 stdout 只输出一条 JSON；详细日志在 stderr／产物内。`status` 为 `noop`、`changed`、`waiting`、`blocked`、`error`。退出码：`0` 正常（包括无变化和等待），`2` 参数／迁移前置条件，`3` 冲突／策略阻断，`4` 验证失败，`5` 网络／认证失败。网络失败不解释为“没有更新”。
 
-无变化只用 Ubuntu；有候选才使用一个固定 macos-15 job。fork 执行资源生成、`--check`、`swift test`，App 执行锁定解析与 core／quota／pasteboard 回归；不启动模拟器或完整 App build。两仓库目前公开，标准 GitHub-hosted runner 免费，仍限制超时和并发以节省等待。[计费说明](https://docs.github.com/en/billing/concepts/product-billing/github-actions)
+无变化只用 Ubuntu；有候选才使用一个固定 macos-15 job。fork 执行锁定 CMake 的资源生成、`--check`、`swift test` 和同版本官方 CLI 逐字节对照，App 执行锁定解析与 core／quota／pasteboard 回归；不启动模拟器或完整 App build。两仓库目前公开，标准 GitHub-hosted runner 免费，仍限制超时和并发以节省等待。[计费说明](https://docs.github.com/en/billing/concepts/product-billing/github-actions)
 
 ## 常见状态与恢复
 
@@ -113,3 +113,15 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 - [协调器准备与发布成功](https://github.com/gewill/OpenCCman/actions/runs/34683913795)，通过 GitHub App 创建 [应用依赖 PR #5](https://github.com/gewill/OpenCCman/pull/5)，PR CI 自动启动。
 - PR #5 将应用固定到已通过 CI 的 fork `eacb73dcb28c26e7cc5d8d9cb405e88fa2d59b13`（OpenCC 1.4.2），其余 14 个依赖保持不变；[合并后应用 CI](https://github.com/gewill/OpenCCman/actions/runs/34684262879) 成功。
 - 当时两层 `check` 均返回 `noop`。以上是该次运行证据；以后升级仍须通过各自候选的检查，当前版本以工程锁文件及引擎 manifest 为准。
+
+## 1.3 验证补强
+
+fork 候选现在必须执行 `scripts/check-official-cli.py`，且报告为通过、核心 tag/SHA 与候选一致。先合入 [SwiftyOpenCC #4](https://github.com/gewill/SwiftyOpenCC/pull/4) 的工具锁定和 CLI 验证改动，再合入本协调器更新；缺少脚本或报告时按验证失败停止，不跳过检查。
+
+CMake 的版本与官方下载校验和由 fork 的 `BuildTools/cmake.json` 锁定；生成器记录参数、编译器及主机信息。官方 CLI 使用与 wrapper 相同的词典加载选项，兼容模式和 NUL workaround 仍单独验证。生成工具和引擎接口细节见引擎维护指南。
+
+成功与失败时可获得的 CLI JSON 都保存在 candidate artifact。状态或来源不符、没有报告均不能发布；29 个协调器 fixture 测试包含缺失报告、来源不符以及显式 token 不进入新增验证命令。CMake/CLI 补强不表示应用最终分发、购买或旧系统真机已验收。
+
+隔离演练还使用临时 Git 仓库执行 fork merge commit → app 推广 → 新提交恢复旧 pin → revert 整个 fork merge，验证祖先关系保留、忽略清单阻止旧候选以及新来源仍可继续。生成器/编译器在该流程测试中使用替身；这不是生产仓库回滚或未来 OpenCC 版本的真实构建记录。
+
+应用正式打包使用 Xcode Cloud；分支名以 `build` 开头即符合现有自动触发规则，因此应用 PR 合入 `build` 会触发 iOS/macOS 归档。GitHub 回归与候选检查不等于云端分发通过。App ID、workflow 和构建记录规则见 [应用分支的 Xcode Cloud 指南](https://github.com/gewill/OpenCCman/blob/build/docs/XCODE_CLOUD.md)；该指南随应用收尾 PR 合入后生效。
