@@ -99,14 +99,17 @@ struct SourcePane: View {
             whatsNewWindow.showingImporter = true
           } label: {
             Label("Import TXT", systemImage: "square.and.arrow.down")
+              .frame(minHeight: 28).contentShape(Rectangle())
           }
           .softButtonStyle(RoundedRectangle(cornerRadius: 12), padding: 8)
           .disabled(viewModel.isImporting)
           Spacer()
           if viewModel.isImporting {
             LoadingView(width: 24, label: "Import TXT")
-            Button("Cancel") { viewModel.cancelImport() }
-              .softButtonStyle(RoundedRectangle(cornerRadius: 12), padding: 8)
+            Button { viewModel.cancelImport() } label: {
+              Text("Cancel").frame(minHeight: 28).contentShape(Rectangle())
+            }
+            .softButtonStyle(RoundedRectangle(cornerRadius: 12), padding: 8)
           }
         }
         if let filename = viewModel.sourceFilename {
@@ -206,8 +209,10 @@ struct ConversionAction: View {
   @EnvironmentObject private var viewModel: HomeViewModel
   var body: some View {
     if viewModel.isLoading {
-      Button("Cancel") { viewModel.cancelConversion() }
-        .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10)
+      Button { viewModel.cancelConversion() } label: {
+        Text("Cancel").frame(minWidth: 24, minHeight: 24).contentShape(Rectangle())
+      }
+      .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10)
     } else {
       Button(action: {
         #if os(iOS)
@@ -217,6 +222,7 @@ struct ConversionAction: View {
       }, label: {
         Text("Convert")
           .font(.headline)
+          .frame(minWidth: 24, minHeight: 24).contentShape(Rectangle())
       })
       .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 10, mainColor: Color.accentColor, textColor: Color.Neumorphic.main)
       .keyboardShortcut("t")
