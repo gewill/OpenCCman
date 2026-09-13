@@ -25,11 +25,11 @@ A/B 先合并，避免三端各自复制业务逻辑。C 先实现参考方向�
 
 | 任务 | 依赖 | 代码范围与产物 | 关闭标准 |
 | --- | --- | --- | --- |
-| A · 布局状态与窗口恢复 | 设计规范 | 纯值布局偏好/实际布局解析、两轴比例、每窗口恢复接口；不改 HomeViewModel 转换/收费规则 | 719/720/759/760 临界缓冲、主动上下不被扩大覆盖、窄窗恢复左右、两个窗口隔离；纯值测试通过 |
-| B · 共用工作区组件 | A | 提取 ConversionInspector、SourcePane、ResultPane、LayoutPicker、状态呈现；参数来源和旧快照文案 | 复用同一个 HomeViewModel；导入/转换/取消/失败/快照可用性正确；输入法、选区、焦点和滚动不因换容器丢失 |
-| C · Mac 侧栏与两轴 | A/B | 系统窗口工具栏、可隐藏侧栏、两轴分割和键盘/菜单等价入口 | M01/M02，300 pt 到宽窗、拖动/均分、50次切换、两窗口不同稿/布局、任务中切换无重复预约 |
-| D · iPad 窗口适配 | A/B，复用 C 验证后的组件 | 侧栏/面板切换、两轴、触摸分隔线、窗口宽度/旋转/软硬键盘 | P01/P02/P03；宽窗上下和竖窗左右都能选，窄窗回退不覆盖偏好；单文件拖放、焦点与44pt命中区通过 |
-| E · iPhone 与键盘 | A/B | 上下可滚动页面、转换设置 sheet、更多菜单、唯一转换操作区和键盘 inset | F01/F02/F03；320–430pt、横屏和最大字号，光标/取消可达；复制/导出禁用正确，推荐不遮挡，iOS14回退通过 |
+| [#46](https://github.com/gewill/OpenCCman/issues/46) A · 布局状态与窗口恢复 | 设计规范 | 纯值布局偏好/实际布局解析、两轴比例、每窗口恢复接口；不改 HomeViewModel 转换/收费规则 | 719/720/759/760 临界缓冲、主动上下不被扩大覆盖、窄窗恢复左右、两个窗口隔离；纯值测试通过 |
+| [#47](https://github.com/gewill/OpenCCman/issues/47) B · 共用工作区组件 | A | 提取 ConversionInspector、SourcePane、ResultPane、LayoutPicker、状态呈现；参数来源和旧快照文案 | 复用同一个 HomeViewModel；导入/转换/取消/失败/快照可用性正确；输入法、选区、焦点和滚动不因换容器丢失 |
+| [#48](https://github.com/gewill/OpenCCman/issues/48) C · Mac 侧栏与两轴 | A/B | 系统窗口工具栏、可隐藏侧栏、两轴分割和键盘/菜单等价入口 | M01/M02，300 pt 到宽窗、拖动/均分、50次切换、两窗口不同稿/布局、任务中切换无重复预约 |
+| [#49](https://github.com/gewill/OpenCCman/issues/49) D · iPad 窗口适配 | A/B，复用 C 验证后的组件 | 侧栏/面板切换、两轴、触摸分隔线、窗口宽度/旋转/软硬键盘 | P01/P02/P03；宽窗上下和竖窗左右都能选，窄窗回退不覆盖偏好；单文件拖放、焦点与44pt命中区通过 |
+| [#50](https://github.com/gewill/OpenCCman/issues/50) E · iPhone 与键盘 | A/B | 上下可滚动页面、转换设置 sheet、更多菜单、唯一转换操作区和键盘 inset | F01/F02/F03；320–430pt、横屏和最大字号，光标/取消可达；复制/导出禁用正确，推荐不遮挡，iOS14回退通过 |
 
 A 的布局指标应集中维护；B 只有实际证据证明 `TextEditor` 无法保持状态时才引入最小原生适配。C/D/E 不应各写一份转换、配额、文件权限或词库映射逻辑。
 
@@ -67,4 +67,12 @@ A 的布局指标应集中维护；B 只有实际证据证明 `TextEditor` 无�
 
 ## GitHub 跟踪
 
-本节由本次任务创建后补入实际 Issue 链接；不把创建任务本身视为实现完成。
+总跟踪：[#45 自适应转换工作区](https://github.com/gewill/OpenCCman/issues/45)。
+
+- [ ] https://github.com/gewill/OpenCCman/issues/46 — [UI][A] 建立窗口独立的布局偏好、两轴解析与恢复
+- [ ] https://github.com/gewill/OpenCCman/issues/47 — [UI][B] 提取共用设置、编辑器与结果状态组件
+- [ ] https://github.com/gewill/OpenCCman/issues/48 — [UI][C] 实现Mac设置侧栏、左右/上下分栏与键盘操作
+- [ ] https://github.com/gewill/OpenCCman/issues/49 — [UI][D] 实现iPad双布局、窄窗口与软硬键盘适配
+- [ ] https://github.com/gewill/OpenCCman/issues/50 — [UI][E] 实现iPhone上下阅读、转换设置面板与键盘避让
+
+现有 #40/#37/#20/#34 已补充本轮设计关联；创建任务不表示实现或验收完成。
