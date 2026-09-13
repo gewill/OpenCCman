@@ -62,6 +62,17 @@ import OpenCC
     precondition(model.resultText.hasPrefix("前段\n\n"), "Do not drop the paragraph preceding a long paragraph")
     precondition(model.localProgress == 1 && model.error == nil)
     observation.cancel()
+    precondition(!model.resultConfigurationChanged)
+    let resultBeforeSettings = model.resultText
+    let configBeforeSettings = model.configuration
+    model.applyPreset(.hongKong)
+    precondition(model.resultConfigurationChanged)
+    precondition(model.resultText == resultBeforeSettings && coreQuotaCount == 1,
+                 "Changing settings retains prior result without charging")
+    model.targetOptions = configBeforeSettings.target
+    model.variantOptions = configBeforeSettings.variant
+    model.regionOptions = configBeforeSettings.region
+    precondition(!model.resultConfigurationChanged)
 
     let previousExport = model.exportSnapshot
     precondition(previousExport != nil)

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65F0723944E44D75A8E21F63 /* WorkspaceComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9AF3BD81CB48F2AB40A779 /* WorkspaceComponents.swift */; };
 		F37DBF9DC8F743048617A866 /* WorkspacePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CEA5A92A9F470794A1D1CE /* WorkspacePreferences.swift */; };
 		C6DC3122255A43B8BDC575DD /* WorkspaceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C5B905AAE54E0EB4641B5D /* WorkspaceLayout.swift */; };
 		CC0912202600000000000041 /* TextFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000042 /* TextFileService.swift */; };
@@ -78,6 +79,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F9AF3BD81CB48F2AB40A779 /* WorkspaceComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceComponents.swift; sourceTree = "<group>"; };
 		B0CEA5A92A9F470794A1D1CE /* WorkspacePreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspacePreferences.swift; sourceTree = "<group>"; };
 		14C5B905AAE54E0EB4641B5D /* WorkspaceLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceLayout.swift; sourceTree = "<group>"; };
 		CC0912202600000000000042 /* TextFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFileService.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 		BE727E2F2B2DF60E00C63DB2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0F9AF3BD81CB48F2AB40A779 /* WorkspaceComponents.swift */,
 				B0CEA5A92A9F470794A1D1CE /* WorkspacePreferences.swift */,
 				CC0913202600000000000102 /* WhatsNewView.swift */,
 				BE3AECA22B2EF3B200820673 /* BackButton.swift */,
@@ -414,6 +417,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65F0723944E44D75A8E21F63 /* WorkspaceComponents.swift in Sources */,
 				F37DBF9DC8F743048617A866 /* WorkspacePreferences.swift in Sources */,
 				C6DC3122255A43B8BDC575DD /* WorkspaceLayout.swift in Sources */,
 				CC0913202600000000000101 /* WhatsNewView.swift in Sources */,
