@@ -165,6 +165,11 @@ class SyncIntegrationTests(unittest.TestCase):
             value = json.loads(manifest.read_text())
             value["opencc"] = {"tag": data["core_tag"], "revision": data["core_sha"]}
             manifest.write_text(json.dumps(value))
+            cli_report = path / ".build/official-cli-report.json"
+            cli_report.parent.mkdir(exist_ok=True)
+            cli_report.write_text(json.dumps({"status": "passed", "opencc": value["opencc"]}))
+            # Production .build is ignored; keep fixture artifacts untracked too.
+            (path / ".git/info/exclude").write_text(".build/\n")
         else:
             lock = path / config["app"]["resolved"]
             value = json.loads(lock.read_text())
@@ -500,12 +505,80 @@ raise SystemExit(1)
         self.assertNotIn("fixture-reader-secret", "\n".join(sync.RUN_LOG[start:]))
         self.assertIn("[REDACTED]", "\n".join(sync.RUN_LOG[start:]))
 
+    def test_merge_promotion_and_rollback_ignore_candidates_without_rewriting_history(self):
+        fork_data, fork_artifact = self.prepare("fork")
+        sync.publish(self.config, "fork", self.github, fork_artifact)
+        command(self.fork, "merge", "--no-ff", fork_data["branch"], "-m", "Review and merge fork PR")
+        accepted = command(self.fork, "rev-parse", "HEAD")
+        fork_pr = self.github.prs[self.config["fork"]["repository"]][0]
+        fork_pr.update(state="closed", merged_at="fixture-merged")
+        self.assertEqual(sync.discover(self.config, "fork", self.github)["status"], "noop")
+        app_data, app_artifact = self.prepare("app")
+        sync.publish(self.config, "app", self.github, app_artifact)
+        command(self.app, "merge", "--no-ff", app_data["branch"], "-m", "Review and merge app PR")
+        promoted = command(self.app, "rev-parse", "HEAD")
+        app_pr = self.github.prs[self.config["app"]["repository"]][0]
+        app_pr.update(state="closed", merged_at="fixture-merged")
+        self.assertEqual(sync.discover(self.config, "app", self.github)["status"], "noop")
+
+        # Roll back through a new commit, preserving the promoted history.
+        lock = self.app / self.config["app"]["resolved"]
+        pins = json.loads(lock.read_text())
+        sync.get_pin(pins)["state"] = {"revision": self.old_fork}
+        lock.write_text(json.dumps(pins))
+        project = self.app / self.config["app"]["project"] / "project.pbxproj"
+        project.write_text(sync.pin_project(project.read_text(), self.old_fork))
+        command(self.app, "add", ".")
+        command(self.app, "commit", "-m", "Restore prior app revision")
+        self.config["ignoredCandidates"]["app"].append(app_data["candidate"])
+        ignored = sync.discover(self.config, "app", self.github)
+        self.assertEqual(ignored["status"], "noop")
+        self.assertIn("ignored", ignored["reason"])
+        command(self.app, "merge-base", "--is-ancestor", promoted, "HEAD")
+
+        # Revert the complete fork merge without deleting its ancestry.
+        command(self.fork, "revert", "--mainline", "1", "--no-edit", accepted)
+        command(self.fork, "merge-base", "--is-ancestor", accepted, "HEAD")
+        manifest = json.loads((self.fork / self.config["fork"]["manifest"]).read_text())
+        self.assertEqual(manifest["opencc"]["revision"], self.old_core)
+        self.config["ignoredCandidates"]["fork"].append(fork_data["candidate"])
+        ignored = sync.discover(self.config, "fork", self.github)
+        self.assertEqual(ignored["status"], "noop")
+        self.assertIn("ignored", ignored["reason"])
+
+        # A genuinely new source remains eligible; the old rejection is scoped.
+        upstream = self.github.repo(self.config["fork"]["upstreamRepository"])
+        self.write_commit(upstream, "wrapper.swift", "new reviewed upstream change\n")
+        self.assertEqual(sync.discover(self.config, "fork", self.github)["status"], "changed")
+
+    def test_fork_requires_cli_report_for_selected_core(self):
+        for state in ("missing", "wrong-source", "failed", "malformed", "list"):
+            output = self.root / ("cli-failure-" + state)
+            def validator(config, data, path):
+                self.validator(config, data, path)
+                report = path / ".build/official-cli-report.json"
+                if state == "missing":
+                    report.unlink()
+                elif state == "wrong-source":
+                    report.write_text(json.dumps({"status": "passed", "opencc": {"tag": "ver.1.4.1", "revision": self.old_core}}))
+                elif state == "failed":
+                    report.write_text(json.dumps({"status": "failed", "opencc": {"tag": data["core_tag"], "revision": data["core_sha"]}}))
+                else:
+                    report.write_text("[]" if state == "list" else "{broken")
+            with patch.object(sync, "validate_candidate", side_effect=validator):
+                with self.assertRaises(sync.SyncError) as failure:
+                    sync.prepare(self.config, "fork", self.github, output)
+            self.assertEqual(failure.exception.code, 4)
+            self.assertTrue((output / "failure.json").exists())
+            self.assertFalse((output / "candidate.bundle").exists())
+            self.assertEqual((output / "official-cli-report.json").exists(), state != "missing")
+
     def test_validation_subprocesses_receive_no_tokens(self):
         commands = []
         with patch.dict(os.environ, {"GH_READ_TOKEN": "fixture-reader", "GH_TOKEN": "fixture-secret", "GITHUB_TOKEN": "fixture-secret"}):
             with patch.object(sync, "run", side_effect=lambda args, **kwargs: commands.append(kwargs["env"])):
                 sync.validate_candidate(self.config, {"stage": "fork"}, self.root)
-        self.assertEqual(len(commands), 3)
+        self.assertEqual(len(commands), 4)
         self.assertTrue(all("GH_READ_TOKEN" not in e and "GH_TOKEN" not in e and "GITHUB_TOKEN" not in e for e in commands))
 
 
