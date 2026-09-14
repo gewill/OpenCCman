@@ -60,3 +60,16 @@ xcrun xctrace export --input /tmp/openccman-cpu.trace --toc
 - [Apple：Reducing your app’s launch time](https://developer.apple.com/documentation/xcode/reducing-your-app-s-launch-time)：用户感知的完成点与系统启动指标可能不同。
 - [Apple：Improving your app’s performance](https://developer.apple.com/documentation/xcode/improving-your-app-s-performance/)：结合测量与 Instruments 定位问题。
 - [已有项目审计](../project-status-and-follow-up-2026-09-13.md)：早期转换路径和引擎微基准，适用范围与本报告不同。
+
+## TextKit 重排回归（#65）
+
+同一份诊断入口可额外运行实际工作区的滚动与菜单命令。仅运行这套协议时使用独立目录，不能与默认转换协议的 `run-*.json` 混放：
+
+```bash
+python3 scripts/benchmark-app.py --output /tmp/openccman-reflow --build-only --packages /path/to/SourcePackages
+python3 scripts/benchmark-app.py --output /tmp/openccman-reflow --reuse-build --reflow --samples 3 --timeout 180
+```
+
+`--reflow` 使用 1/5/10 MiB，分别定位段首、文中、文末，发送生产代码的上下/左右布局命令。记录阶段开始/结束、动作耗时、进程 CPU/内存和 TextKit 2 是否保留，并断言原生编辑器身份、选区和完整文本/结果哈希未改变。动作耗时包含两个主队列 layout/display flush，不包含截图或 AX 查询，也不是显示器呈现时间。它不等价于拖动/VoiceOver 手工验收。
+
+`--timeout` 到期只终止拥有的诊断进程，保留未完成 JSON；缺少结束事件表示截断，不能当成耗时为零，也不能将进程总超时当成最后动作耗时。此协议的阶段集合与默认转换基线不同，不使用七配置比较器。可比性由同一源码入口哈希、环境、pin、语料和完整阶段判断；超时样本单独报告，不能混成完整样本中位数。

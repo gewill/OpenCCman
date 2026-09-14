@@ -45,6 +45,7 @@ enum EditorScrollChecks {
     settle()
     precondition(text.markedRange() == marked, "Scroll restoration cannot commit or discard composition")
     checkUnlaidOutDocumentEnd()
+    if #available(macOS 12.0, *) { checkModernEditor() }
     print("PASS: on-demand document end, native text reflow, selection, rapid resize, new-document reset and marked range preservation")
   }
 
@@ -52,6 +53,8 @@ enum EditorScrollChecks {
     let scroll = NSTextView.scrollableTextView()
     scroll.setFrameSize(NSSize(width: 420, height: 240))
     let text = scroll.documentView as! NSTextView
+    // This case exercises the macOS 11 / TextKit 1 compatibility path explicitly.
+    _ = text.layoutManager
     let keeper = WorkspaceScrollKeeper()
     keeper.attach(text)
     // No ensureLayout/sizeToFit prewarming: jump to text that has never been
@@ -67,6 +70,56 @@ enum EditorScrollChecks {
     scroll.setFrameSize(NSSize(width: 760, height: 260))
     settle()
     precondition(text.selectedRange() == NSRange(location: end, length: 1), "Tail selection must survive reflow")
+  }
+
+
+  @available(macOS 12.0, *)
+  @MainActor private static func checkModernEditor() {
+    let scroll = NSTextView.scrollableTextView()
+    let text = scroll.documentView as! NSTextView
+    guard let manager = text.textLayoutManager else { return }
+    let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 420, height: 240),
+                          styleMask: [.titled, .resizable], backing: .buffered, defer: false)
+    window.isReleasedWhenClosed = false
+    window.contentView = scroll
+    window.orderFront(nil)
+    defer { window.close() }
+    let keeper = WorkspaceScrollKeeper()
+    keeper.attach(text)
+    text.string = (0..<1000).map { "Paragraph \($0): " + String(repeating: "中文 é 👩🏽‍💻 reflow ", count: 30) + "\n" }.joined()
+    settle()
+    let target = (text.string as NSString).range(of: "Paragraph 500:").location
+    text.setSelectedRange(NSRange(location: target, length: 8))
+    text.scrollRangeToVisible(NSRange(location: target, length: 8))
+    settle()
+    let selected = text.selectedRange()
+    let top = text.characterIndexForInsertion(at: text.convert(scroll.contentView.bounds.origin, from: scroll.contentView))
+    window.setContentSize(NSSize(width: 760, height: 260))
+    settle()
+    precondition(text.textLayoutManager === manager, "Keeper must not force TextKit 1 fallback")
+    precondition(text.selectedRange() == selected, "Modern reflow must preserve selection")
+    let currentTop = text.characterIndexForInsertion(at: text.convert(scroll.contentView.bounds.origin, from: scroll.contentView))
+    precondition(abs(currentTop - top) < 100, "Modern reflow must preserve the top reading line")
+    let tail = (text.string as NSString).length - 2
+    text.setSelectedRange(NSRange(location: tail, length: 0))
+    text.scrollRangeToVisible(NSRange(location: tail, length: 1))
+    settle()
+    window.setContentSize(NSSize(width: 380, height: 260))
+    settle()
+    precondition(text.textLayoutManager === manager)
+    precondition(text.selectedRange().location == tail)
+    text.setMarkedText("pinyin", selectedRange: NSRange(location: 3, length: 0), replacementRange: NSRange(location: NSNotFound, length: 0))
+    let marked = text.markedRange()
+    window.setContentSize(NSSize(width: 600, height: 260))
+    settle()
+    precondition(text.markedRange() == marked)
+    precondition(text.textLayoutManager === manager)
+    text.unmarkText()
+    text.string = "New document\n"
+    scroll.contentView.scroll(to: .zero)
+    settle()
+    precondition(scroll.contentView.bounds.minY == 0)
+    print("PASS: TextKit 2 retained through attach, middle/tail resize, selection, composition and replacement")
   }
 
   @MainActor private static func topLine(_ text: NSTextView, _ scroll: NSScrollView) -> NSRange {

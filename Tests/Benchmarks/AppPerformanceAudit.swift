@@ -183,6 +183,49 @@ final class AppPerformanceAudit {
     return extra
   }
 
+
+  private func runReflow(_ model: HomeViewModel, window: NSWindow) async throws {
+    model.applyPreset(.taiwan)
+    for mib in [1, 5, 10] {
+      model.replaceSource(fixture(bytes: mib * 1024 * 1024))
+      try await awaitEditors(model, window: window)
+      try await convert(model, window: window, name: "reflow_convert_\(mib)MiB")
+      guard let root = window.contentView,
+            let source = editors(in: root).first(where: { $0.isEditable }) else { throw NSError(domain: "ReflowAudit", code: 1) }
+      let identity = ObjectIdentifier(source)
+      let inputHash = digest(model.inputText), resultHash = digest(model.resultText)
+      let count = (source.string as NSString).length
+      for position in [0, count / 2, max(0, count - 2)] {
+        // Land on a complete composed character, including at emoji boundaries.
+        let range = (source.string as NSString).rangeOfComposedCharacterSequence(at: position)
+        let scrollStart = now()
+        record("scroll_begin_\(mib)_\(position)")
+        source.setSelectedRange(NSRange(location: range.location, length: 0))
+        source.scrollRangeToVisible(range)
+        await yieldUI(window); await yieldUI(window)
+        record("scroll_end_\(mib)_\(position)", ["action_ms": ms(scrollStart)])
+        for axis in ["vertical", "horizontal"] {
+          record("layout_begin_\(mib)_\(position)_\(axis)")
+          let actionStart = now()
+          NotificationCenter.default.post(name: .workspaceCommand, object: window, userInfo: ["command": axis])
+          await yieldUI(window); await yieldUI(window)
+          let actionMS = ms(actionStart)
+          let current = editors(in: root).first(where: { $0.isEditable })
+          guard current.map(ObjectIdentifier.init) == identity,
+                source.selectedRange().location == range.location,
+                digest(model.inputText) == inputHash, digest(model.resultText) == resultHash else {
+            throw NSError(domain: "ReflowAudit", code: 2, userInfo: [NSLocalizedDescriptionKey: "Editor, selection or text changed during layout"])
+          }
+          var details: [String: Any] = ["action_ms": actionMS, "selection": range.location,
+            "input_sha256": inputHash, "output_sha256": resultHash,
+            "source_viewport_y": source.enclosingScrollView?.contentView.bounds.minY ?? -1]
+          if #available(macOS 12.0, *) { details["textkit2"] = source.textLayoutManager != nil }
+          record("layout_end_\(mib)_\(position)_\(axis)", details)
+        }
+      }
+    }
+  }
+
   private func run(_ model: HomeViewModel, window: NSWindow) async {
     await yieldUI(window)
     var processInfo = proc_bsdinfo()
@@ -204,6 +247,13 @@ final class AppPerformanceAudit {
       }
     }
     do {
+      if ProcessInfo.processInfo.arguments.contains("-performance-reflow") {
+        try await runReflow(model, window: window)
+        timer?.invalidate(); timer = nil
+        save(status: "complete")
+        NSApp.terminate(nil)
+        return
+      }
       if ProcessInfo.processInfo.arguments.contains("-performance-interactive") {
         model.applyPreset(.taiwan)
         model.replaceSource(fixture(bytes: 1024 * 1024))

@@ -53,6 +53,8 @@ def prepare(destination):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=pathlib.Path, required=True, help='New directory outside the repository')
+    parser.add_argument('--reflow', action='store_true', help='Measure native scrolling and layout commands instead of conversion suite')
+    parser.add_argument('--timeout', type=int, default=600, help='Per-process deadline in seconds, preserving partial output')
     parser.add_argument('--samples', type=int, default=5)
     parser.add_argument('--start-index', type=int, default=1)
     parser.add_argument('--packages', type=pathlib.Path, help='Existing SourcePackages copied privately with APFS clones')
@@ -61,7 +63,7 @@ def main():
     parser.add_argument('--reuse-build', action='store_true', help='Rerun the already built, recorded source snapshot')
     args = parser.parse_args()
     args.output = args.output.resolve()
-    if args.samples < 1 or args.start_index < 1 or args.output == ROOT or ROOT in args.output.parents:
+    if args.samples < 1 or args.start_index < 1 or args.timeout < 1 or args.output == ROOT or ROOT in args.output.parents:
         parser.error('Use positive samples and an output directory outside this repository')
     if args.engine_revision and not re.fullmatch(r'[0-9a-f]{40}', args.engine_revision):
         parser.error('Engine comparison revision must be a full lowercase SHA')
@@ -128,7 +130,7 @@ def main():
             raise RuntimeError(f'Refusing to overwrite existing sample {output}')
         launch = time.monotonic()
         process = subprocess.Popen(['open', '-n', '-W', '-a', str(app), '--args', '-performance-output', str(output),
-                                    '-skip-whats-new', '-AppleLanguages', '(en)', '-AppleInterfaceStyle', 'Light'])
+                                    '-skip-whats-new', '-AppleLanguages', '(en)', '-AppleInterfaceStyle', 'Light'] + (['-performance-reflow'] if args.reflow else []))
         # LaunchServices can create this SwiftUI process without an untitled window.
         # Send one reopen event after initialization; include this handshake in the
         # process-start metric instead of waiting for a human activation.
@@ -138,7 +140,7 @@ def main():
         if output.exists():
             subprocess.run(['open', '-a', str(app)], check=True)
         try:
-            process.wait(timeout=600)
+            process.wait(timeout=args.timeout)
         except subprocess.TimeoutExpired:
             # Kill only the PID written by this owned harness, leaving other apps alone.
             if output.exists():
@@ -159,6 +161,7 @@ def main():
     for name in [r['name'] for r in runs[0]['rows']]:
         rows = [next(r for r in run['rows'] if r['name'] == name) for run in runs]
         keys = ['process_cpu_ms', 'process_start_to_root_layout_ms', 'app_init_to_root_layout_ms', 'model_completion_ms', 'result_layout_flush_ms', 'read_decode_ms', 'source_layout_flush_ms']
+        keys.append('action_ms')
         summary[name] = {key: statistics.median(r[key] for r in rows) for key in keys if key in rows[0]}
         summary[name]['median_memory'] = {key: statistics.median(r['memory'][key] for r in rows) for key in rows[0]['memory']}
     (args.output / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
