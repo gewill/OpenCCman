@@ -1,6 +1,6 @@
 # 应用性能基线
 
-本目录跟踪 [#18](https://github.com/gewill/OpenCCman/issues/18)。先在固定环境测量，再决定优化；引擎微基准不能替代真实编辑器、窗口和应用进程的结果。
+本目录跟踪 [#18](https://github.com/gewill/OpenCCman/issues/18)。[2026-09-14 完整结果](2026-09-14/README.md) 保存同机对照和原始数据。先在固定环境测量，再决定优化；引擎微基准不能替代真实编辑器、窗口和应用进程的结果。
 
 ## 重复测量
 
@@ -33,6 +33,7 @@ python3 -m unittest discover -s Tests/Benchmarks -p 'test_*.py'
 - `read_decode_ms`：同进程生成的固定 UTF-8 文件经实际 `TextFileService.read` 读取与解码。是温文件缓存测试，排除用户选文件时间。
 - `source_layout_flush_ms`：替换原文到真实源编辑器收到内容并 flush。10 MiB 限额未改变。
 - `physical_footprint_bytes`、`rss_bytes` 是阶段快照；`process_peak_rss_bytes` 是**整个进程到当时为止**的 RSS 高水位，不能当成单阶段独占内存。测试语料生成、正确性哈希和 JSON 记录也在进程内，峰值包含其开销。
+- `process_cpu_ms`：进程累计 user + system CPU 时间（`getrusage`），不是墙钟时间或单阶段耗时。对照必须包含同一组操作，固定等待也保持一致。
 - `maximum_main_timer_gap_ms`：从主页就绪起累计的 20 ms 主线程 timer 最大间隔，包含调度、测试工具、哈希和文件生成；仅作定位线索，不是 FPS 或纯应用卡顿指标。
 - 多窗口阶段为同进程主窗口加两个独立 `NSWindow`/`NSHostingView<Router<RootView>>`，使用真实模型与编辑器；关闭窗口和移除 content view 后用弱引用观察模型。**不等价于系统 WindowGroup 的关闭/恢复验收**；存活对象不能直接称为泄漏。
 

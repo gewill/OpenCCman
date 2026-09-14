@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import statistics
 
-TIMINGS = ('process_start_to_root_layout_ms', 'app_init_to_root_layout_ms', 'model_completion_ms',
+TIMINGS = ('process_cpu_ms', 'process_start_to_root_layout_ms', 'app_init_to_root_layout_ms', 'model_completion_ms',
            'result_layout_flush_ms', 'read_decode_ms', 'source_layout_flush_ms')
 
 

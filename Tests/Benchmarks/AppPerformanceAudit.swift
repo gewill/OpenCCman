@@ -74,6 +74,11 @@ final class AppPerformanceAudit {
     row["visible_window_count"] = NSApp?.windows.filter { $0.isVisible }.count ?? 0
     row["elapsed_ms"] = ms(start)
     row["memory"] = memory()
+    var usage = rusage()
+    if getrusage(RUSAGE_SELF, &usage) == 0 {
+      row["process_cpu_ms"] = Double(usage.ru_utime.tv_sec + usage.ru_stime.tv_sec) * 1000
+        + Double(usage.ru_utime.tv_usec + usage.ru_stime.tv_usec) / 1000
+    }
     row["maximum_main_timer_gap_ms"] = maximumHeartbeatGap
     rows.append(row)
     // Persist after each stage so a timeout/crash still leaves useful evidence.
