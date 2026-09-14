@@ -45,7 +45,7 @@ enum EditorScrollChecks {
     settle()
     precondition(text.markedRange() == marked, "Scroll restoration cannot commit or discard composition")
     checkUnlaidOutDocumentEnd()
-    if #available(macOS 12.0, *) { checkModernEditor() }
+    checkLargeEditor()
     print("PASS: on-demand document end, native text reflow, selection, rapid resize, new-document reset and marked range preservation")
   }
 
@@ -73,11 +73,10 @@ enum EditorScrollChecks {
   }
 
 
-  @available(macOS 12.0, *)
-  @MainActor private static func checkModernEditor() {
+  @MainActor private static func checkLargeEditor() {
     let scroll = NSTextView.scrollableTextView()
     let text = scroll.documentView as! NSTextView
-    guard let manager = text.textLayoutManager else { return }
+    let manager = text.layoutManager!
     let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 420, height: 240),
                           styleMask: [.titled, .resizable], backing: .buffered, defer: false)
     window.isReleasedWhenClosed = false
@@ -86,6 +85,7 @@ enum EditorScrollChecks {
     defer { window.close() }
     let keeper = WorkspaceScrollKeeper()
     keeper.attach(text)
+    precondition(manager.allowsNonContiguousLayout && !manager.backgroundLayoutEnabled)
     text.string = (0..<1000).map { "Paragraph \($0): " + String(repeating: "中文 é 👩🏽‍💻 reflow ", count: 30) + "\n" }.joined()
     settle()
     let target = (text.string as NSString).range(of: "Paragraph 500:").location
@@ -96,30 +96,49 @@ enum EditorScrollChecks {
     let top = text.characterIndexForInsertion(at: text.convert(scroll.contentView.bounds.origin, from: scroll.contentView))
     window.setContentSize(NSSize(width: 760, height: 260))
     settle()
-    precondition(text.textLayoutManager === manager, "Keeper must not force TextKit 1 fallback")
-    precondition(text.selectedRange() == selected, "Modern reflow must preserve selection")
+    precondition(text.layoutManager === manager, "Keeper must retain the native layout manager")
+    precondition(text.selectedRange() == selected, "Noncontiguous reflow must preserve selection")
     let currentTop = text.characterIndexForInsertion(at: text.convert(scroll.contentView.bounds.origin, from: scroll.contentView))
-    precondition(abs(currentTop - top) < 100, "Modern reflow must preserve the top reading line")
+    precondition(abs(currentTop - top) < 100, "Noncontiguous reflow must preserve the top reading line")
     let tail = (text.string as NSString).length - 2
     text.setSelectedRange(NSRange(location: tail, length: 0))
     text.scrollRangeToVisible(NSRange(location: tail, length: 1))
     settle()
+    let lastVisible = text.characterIndexForInsertion(at: text.convert(
+      NSPoint(x: scroll.contentView.bounds.maxX, y: scroll.contentView.bounds.maxY - 1), from: scroll.contentView))
+    precondition(lastVisible >= tail, "First jump must make the previously unseen tail visible")
     window.setContentSize(NSSize(width: 380, height: 260))
     settle()
-    precondition(text.textLayoutManager === manager)
+    precondition(text.layoutManager === manager)
     precondition(text.selectedRange().location == tail)
     text.setMarkedText("pinyin", selectedRange: NSRange(location: 3, length: 0), replacementRange: NSRange(location: NSNotFound, length: 0))
     let marked = text.markedRange()
     window.setContentSize(NSSize(width: 600, height: 260))
     settle()
     precondition(text.markedRange() == marked)
-    precondition(text.textLayoutManager === manager)
+    precondition(text.layoutManager === manager)
     text.unmarkText()
     text.string = "New document\n"
     scroll.contentView.scroll(to: .zero)
     settle()
     precondition(scroll.contentView.bounds.minY == 0)
-    print("PASS: TextKit 2 retained through attach, middle/tail resize, selection, composition and replacement")
+    // Long paragraphs exercise wrapped lines within one layout fragment rather
+    // than only the short multilingual paragraphs used above.
+    for mib in [1, 5, 10] {
+      let paragraph = String(repeating: "中文 é 👩🏽‍💻 long paragraph ", count: 256) + "\r\n"
+      text.string = String(repeating: paragraph, count: mib * 1024 * 1024 / paragraph.utf8.count)
+      let length = (text.string as NSString).length
+      let range = (text.string as NSString).rangeOfComposedCharacterSequence(at: length / 2)
+      text.setSelectedRange(NSRange(location: range.location, length: 0))
+      text.scrollRangeToVisible(range)
+      settle()
+      window.setContentSize(NSSize(width: 400, height: 240)); settle()
+      window.setContentSize(NSSize(width: 700, height: 240)); settle()
+      precondition(text.layoutManager === manager)
+      precondition(text.selectedRange().location == range.location)
+    }
+    print("PASS: 1/5/10 MiB long paragraphs retain the native editor and selection through reflow")
+    print("PASS: Native editor retained through attach, middle/tail resize, selection, composition and replacement")
   }
 
   @MainActor private static func topLine(_ text: NSTextView, _ scroll: NSScrollView) -> NSRange {

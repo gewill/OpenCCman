@@ -18,6 +18,7 @@ import SwiftUI
     private var pending: Anchor?
     private var revision = 0
     private var restoring = false
+    private var restorationScheduled = false
 
     func attach(_ editor: NSTextView) {
       guard self.editor !== editor, let clip = editor.enclosingScrollView?.contentView else { return }
@@ -25,10 +26,15 @@ import SwiftUI
       observations.removeAll()
       revision += 1
       pending = nil
+      restorationScheduled = false
       anchor = nil
       self.editor = editor
       self.clip = clip
       size = clip.bounds.size
+      // The glyph-based scroll bridge uses TextKit 1. Permit distant paragraphs
+      // to lay out independently, without an idle sweep of the whole document.
+      editor.layoutManager?.allowsNonContiguousLayout = true
+      editor.layoutManager?.backgroundLayoutEnabled = false
       clip.postsBoundsChangedNotifications = true
       clip.postsFrameChangedNotifications = true
       for name in [NSView.boundsDidChangeNotification, NSView.frameDidChangeNotification] {
@@ -46,6 +52,7 @@ import SwiftUI
     private func textChanged() {
       revision += 1
       pending = nil
+      restorationScheduled = false
       anchor = nil
       let currentRevision = revision
       // NSTextStorage posts during editing. Wait for the native layout to settle.
@@ -62,11 +69,22 @@ import SwiftUI
         if pending == nil {
           pending = anchor
         }
+        guard pending != nil, !restorationScheduled else { return }
+        restorationScheduled = true
         let currentRevision = revision
         DispatchQueue.main.async { [weak self] in
           guard let self, revision == currentRevision, let pending else { return }
-          self.pending = nil
           restore(pending)
+          // Noncontiguous layout initially estimates offscreen geometry. Keep
+          // the logical anchor through the native scroll/layout adjustment,
+          // then place it once more using the settled local line geometry.
+          DispatchQueue.main.async { [weak self] in
+            guard let self, revision == currentRevision else { return }
+            restore(pending)
+            self.pending = nil
+            restorationScheduled = false
+            capture()
+          }
         }
       } else if pending == nil {
         capture()
@@ -74,12 +92,6 @@ import SwiftUI
     }
 
     private func capture() {
-      // Accessing layoutManager on a TextKit 2 view permanently enables legacy
-      // compatibility mode. Inspect the modern manager before any glyph API.
-      if #available(macOS 12.0, *), let layout = editor?.textLayoutManager {
-        captureModern(layout)
-        return
-      }
       guard let editor, let clip, let layout = editor.layoutManager,
             let container = editor.textContainer, let storage = editor.textStorage, storage.length > 0
       else {
@@ -88,67 +100,24 @@ import SwiftUI
       }
       let point = editor.convert(clip.bounds.origin, from: clip)
       let origin = editor.textContainerOrigin
-      let nearest = layout.characterIndex(for: NSPoint(x: max(0, point.x - origin.x), y: max(0, point.y - origin.y)),
-                                          in: container, fractionOfDistanceBetweenInsertionPoints: nil)
-      guard nearest != NSNotFound else { return }
-      let character = min(nearest, storage.length - 1)
-      let glyph = layout.glyphIndexForCharacter(at: character)
+      let glyph = layout.glyphIndex(for: NSPoint(x: max(0, point.x - origin.x), y: max(0, point.y - origin.y)),
+                                    in: container)
+      guard glyph != NSNotFound else { return }
+      let character = min(layout.characterIndexForGlyph(at: glyph), storage.length - 1)
       let rect = layout.lineFragmentRect(forGlyphAt: glyph, effectiveRange: nil)
       anchor = Anchor(character: character, lineOffset: point.y - origin.y - rect.minY)
     }
 
     private func restore(_ anchor: Anchor) {
-      if #available(macOS 12.0, *), let layout = editor?.textLayoutManager {
-        restoreModern(anchor, layout)
-        return
-      }
       guard let editor, let clip, let layout = editor.layoutManager,
             let storage = editor.textStorage, anchor.character < storage.length else { return }
       restoring = true
       defer { restoring = false; capture() }
+      editor.scrollRangeToVisible(NSRange(location: anchor.character, length: 0))
       layout.ensureLayout(forCharacterRange: NSRange(location: anchor.character, length: 1))
       let glyph = layout.glyphIndexForCharacter(at: anchor.character)
       let rect = layout.lineFragmentRect(forGlyphAt: glyph, effectiveRange: nil)
       let y = rect.minY + editor.textContainerOrigin.y + anchor.lineOffset
-      let maximum = max(0, editor.bounds.height - clip.bounds.height)
-      clip.scroll(to: NSPoint(x: clip.bounds.minX, y: min(maximum, max(0, y))))
-      editor.enclosingScrollView?.reflectScrolledClipView(clip)
-    }
-
-
-    @available(macOS 12.0, *)
-    private func captureModern(_ layout: NSTextLayoutManager) {
-      guard let editor, let clip, let content = layout.textContentManager else { return }
-      let point = editor.convert(clip.bounds.origin, from: clip)
-      let y = max(0, point.y - editor.textContainerOrigin.y)
-      // Read the already visible fragment only; never request layout from the
-      // beginning of the document to the current reading position.
-      guard let fragment = layout.textLayoutFragment(for: CGPoint(x: 0, y: y)),
-            let line = fragment.textLineFragments.first(where: {
-              fragment.layoutFragmentFrame.minY + $0.typographicBounds.maxY > y
-            }) ?? fragment.textLineFragments.last else { return }
-      let start = content.offset(from: content.documentRange.location, to: fragment.rangeInElement.location)
-      guard start != NSNotFound else { return }
-      anchor = Anchor(character: start + line.characterRange.location,
-                      lineOffset: y - fragment.layoutFragmentFrame.minY - line.typographicBounds.minY)
-    }
-
-    @available(macOS 12.0, *)
-    private func restoreModern(_ anchor: Anchor, _ layout: NSTextLayoutManager) {
-      guard let editor, let clip, let content = layout.textContentManager,
-            let location = content.location(content.documentRange.location, offsetBy: anchor.character)
-      else { return }
-      restoring = true
-      defer { restoring = false; capture() }
-      layout.ensureLayout(for: NSTextRange(location: location))
-      guard let fragment = layout.textLayoutFragment(for: location) else { return }
-      let start = content.offset(from: content.documentRange.location, to: fragment.rangeInElement.location)
-      guard start != NSNotFound,
-            let line = fragment.textLineFragments.first(where: {
-              NSLocationInRange(anchor.character - start, $0.characterRange)
-            }) ?? fragment.textLineFragments.last else { return }
-      let y = fragment.layoutFragmentFrame.minY + line.typographicBounds.minY
-        + editor.textContainerOrigin.y + anchor.lineOffset
       clip.scroll(to: NSPoint(x: clip.bounds.minX, y: max(0, y)))
       editor.enclosingScrollView?.reflectScrolledClipView(clip)
     }
