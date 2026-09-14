@@ -46,6 +46,7 @@ enum EditorScrollChecks {
     precondition(text.markedRange() == marked, "Scroll restoration cannot commit or discard composition")
     checkUnlaidOutDocumentEnd()
     checkLargeEditor()
+    checkMiddleReflowAnchor()
     print("PASS: on-demand document end, native text reflow, selection, rapid resize, new-document reset and marked range preservation")
   }
 
@@ -142,6 +143,27 @@ enum EditorScrollChecks {
     }
     print("PASS: 1/5/10 MiB long paragraphs retain the native editor and selection through reflow")
     print("PASS: Native editor retained through attach, middle/tail resize, selection, composition and replacement")
+  }
+
+  @MainActor private static func checkMiddleReflowAnchor() {
+    let scroll = NSTextView.scrollableTextView()
+    scroll.setFrameSize(NSSize(width: 400, height: 240))
+    let text = scroll.documentView as! NSTextView
+    text.string = (0..<1500).map { index in
+      "Paragraph \(index): " + String(repeating: "中文重排测试 é 👩🏽‍💻 keep this reading position. ", count: 10) + "\n"
+    }.joined()
+    text.layoutManager!.ensureLayout(for: text.textContainer!)
+    text.sizeToFit()
+    let keeper = WorkspaceScrollKeeper()
+    keeper.attach(text)
+    let middle = (text.string as NSString).range(of: "Paragraph 750:").location
+    text.scrollRangeToVisible(NSRange(location: middle, length: 1))
+    text.setSelectedRange(NSRange(location: middle, length: 12))
+    let before = topLine(text, scroll).location
+    scroll.setFrameSize(NSSize(width: 850, height: 180))
+    settle()
+    precondition(NSLocationInRange(before, topLine(text, scroll)),
+                 "Large middle anchor must retain its line after width reflow")
   }
 
   @MainActor private static func topLine(_ text: NSTextView, _ scroll: NSScrollView) -> NSRange {

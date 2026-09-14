@@ -104,23 +104,41 @@ final class AppPerformanceAudit {
     if let text = view as? NSTextView { return text.isFieldEditor ? [] : [text] }
     return view.subviews.flatMap { editors(in: $0) }
   }
-  private func awaitEditors(_ model: HomeViewModel, window: NSWindow) async throws {
+  // Lengths are computed before the measured interval. Never bridge/compare
+  // entire strings in this polling loop; exact validation happens after stopping.
+  private func awaitEditorLengths(_ lengths: (Int, Int), window: NSWindow) async throws {
     let deadline = now() + 30_000_000_000
     while now() < deadline {
       await yieldUI(window)
       if let content = window.contentView {
         let views = editors(in: content)
-        // AppKit subview traversal order differs between WindowGroup and hosting windows.
-        let values = views.map { $0.string }
-        if values.count == 2, values.contains(model.inputText), values.contains(model.resultText),
-           values.allSatisfy({ $0 == model.inputText || $0 == model.resultText }) {
+        if views.count == 2,
+           let source = views.first(where: { $0.isEditable }),
+           let result = views.first(where: { !$0.isEditable }),
+           source.textStorage?.length == lengths.0, result.textStorage?.length == lengths.1 {
           window.displayIfNeeded()
           return
         }
       }
       try await Task.sleep(nanoseconds: 1_000_000)
     }
-    throw NSError(domain: "PerformanceAudit", code: 5, userInfo: [NSLocalizedDescriptionKey: "Native editors did not acknowledge model text within 30 seconds; editor UTF8 sizes: \(window.contentView.map { editors(in: $0).map { $0.string.utf8.count } } ?? []); model sizes: \(model.inputText.utf8.count), \(model.resultText.utf8.count)"])
+    throw NSError(domain: "PerformanceAudit", code: 5,
+                  userInfo: [NSLocalizedDescriptionKey: "Native editor length acknowledgement timed out"])
+  }
+  private func validateEditors(_ model: HomeViewModel, window: NSWindow) throws {
+    let views = window.contentView.map { editors(in: $0) } ?? []
+    guard views.count == 2,
+          let source = views.first(where: { $0.isEditable }),
+          let result = views.first(where: { !$0.isEditable }),
+          source.string.utf8.elementsEqual(model.inputText.utf8),
+          result.string.utf8.elementsEqual(model.resultText.utf8) else {
+      throw NSError(domain: "PerformanceAudit", code: 6,
+                    userInfo: [NSLocalizedDescriptionKey: "Exact editor contents mismatch after stopping timer"])
+    }
+  }
+  private func awaitEditors(_ model: HomeViewModel, window: NSWindow) async throws {
+    try await awaitEditorLengths((model.inputText.utf16.count, model.resultText.utf16.count), window: window)
+    try validateEditors(model, window: window)
   }
   private func settle() async { try? await Task.sleep(nanoseconds: 250_000_000) }
   private func fixture(bytes: Int) -> String {
@@ -144,17 +162,19 @@ final class AppPerformanceAudit {
     guard model.error == nil, !model.resultText.isEmpty, model.exportSnapshot?.text == model.resultText else {
       throw NSError(domain: "PerformanceAudit", code: 1, userInfo: [NSLocalizedDescriptionKey: "Conversion failed or export mismatch: \(name)"])
     }
+    let lengths = (model.inputText.utf16.count, model.resultText.utf16.count)
     let layoutStart = now()
     os_signpost(.begin, log: log, name: "Result layout flush")
-    try await awaitEditors(model, window: window)
+    try await awaitEditorLengths(lengths, window: window)
     os_signpost(.end, log: log, name: "Result layout flush")
     let layoutMS = ms(layoutStart)
+    try validateEditors(model, window: window)
     let resultHash = digest(model.resultText)
     record(name, ["model_completion_ms": Double(finished - begin) / 1_000_000,
                   "result_layout_flush_ms": layoutMS, "input_bytes": model.inputText.utf8.count,
                   "input_sha256": digest(model.inputText), "output_sha256": resultHash,
                   "output_bytes": model.resultText.utf8.count, "options": model.options.rawValue,
-                  "export_matches_result": true])
+                  "export_matches_result": true, "editors_match_model": true])
     await settle()
   }
 
@@ -273,7 +293,7 @@ final class AppPerformanceAudit {
         try await convert(model, window: window, name: "hot_\(index)")
         guard digest(model.resultText) == expectedHotHash else { throw NSError(domain: "PerformanceAudit", code: 2) }
       }
-      model.replaceSource("汉语转换\r\n\r\n👨‍👩‍👧‍👦 e\u{301}\0结束")
+      model.replaceSource("软件网络鼠标里面伪说\r\n\r\n👨‍👩‍👧‍👦 e\u{301}\0结束")
       for target in ConversionConfiguration.Language.allCases {
         for variant in ConversionConfiguration.Variant.allCases {
           for region in ConversionConfiguration.Region.allCases {
@@ -281,7 +301,12 @@ final class AppPerformanceAudit {
             model.targetOptions = target; model.variantOptions = variant; model.regionOptions = region
             await yieldUI(window)
             try await convert(model, window: window, name: "configuration_\(model.options.rawValue)")
-            let expected = target == .simplified ? "汉语转换\r\n\r\n👨‍👩‍👧‍👦 e\u{301}\0结束" : "漢語轉換\r\n\r\n👨‍👩‍👧‍👦 e\u{301}\0結束"
+            // Independent fixed answers distinguish every effective converter.
+            let prefixes = [2: "软件网络鼠标里面伪说", 1: "軟件網絡鼠標裏面僞說",
+                            33: "軟件網絡鼠標裡面偽說", 65: "軟件網絡鼠標裏面偽説",
+                            1025: "軟體網路滑鼠裏面僞說", 1057: "軟體網路滑鼠裡面偽說",
+                            1089: "軟體網路滑鼠裏面偽説"]
+            let expected = prefixes[model.options.rawValue]! + "\r\n\r\n👨‍👩‍👧‍👦 e\u{301}\0" + (target == .simplified ? "结束" : "結束")
             guard model.resultText == expected else { throw NSError(domain: "PerformanceAudit", code: 3, userInfo: [NSLocalizedDescriptionKey: "Known-answer fixture mismatch"] ) }
           }
         }
@@ -294,10 +319,13 @@ final class AppPerformanceAudit {
         let readStart = now()
         let imported = try await TextFileService.read(url)
         let readMS = ms(readStart)
+        let lengths = (imported.text.utf16.count, 0)
         let sourceStart = now()
         model.replaceSource(imported.text, sourceFilename: imported.sourceFilename)
-        try await awaitEditors(model, window: window)
-        record("source_\(mib)MiB", ["read_decode_ms": readMS, "source_layout_flush_ms": ms(sourceStart)])
+        try await awaitEditorLengths(lengths, window: window)
+        let sourceMS = ms(sourceStart)
+        try validateEditors(model, window: window)
+        record("source_\(mib)MiB", ["read_decode_ms": readMS, "source_layout_flush_ms": sourceMS, "editors_match_model": true])
         try await convert(model, window: window, name: "convert_\(mib)MiB")
         try FileManager.default.removeItem(at: url)
       }
@@ -310,7 +338,9 @@ final class AppPerformanceAudit {
           windows.append(try await createLoadedWindow(name: "window_cycle_\(cycle)_\(index)"))
         }
         record("three_windows_cycle_\(cycle)")
+        record("windows_close_begin_cycle_\(cycle)")
         for extra in windows { extra.close(); extra.contentView = nil }
+        record("windows_close_returned_cycle_\(cycle)")
         windows.removeAll()
         await settle(); await settle()
         record("windows_closed_cycle_\(cycle)", ["extra_models_alive": models.dropFirst(firstIndex).filter { $0.value != nil }.count, "all_extra_models_alive": models.dropFirst().filter { $0.value != nil }.count])

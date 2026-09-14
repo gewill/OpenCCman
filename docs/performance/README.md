@@ -1,3 +1,5 @@
+> 当前基线使用协议 2，见 [review 修正报告](2026-09-14-review/README.md)。2026-09-14 旧样本仅作历史记录，不能与新工具比较；更换入口后必须在新目录重新构建、采集两组样本，禁止手改 metadata。
+
 # 应用性能基线
 
 本目录跟踪 [#18](https://github.com/gewill/OpenCCman/issues/18)。[2026-09-14 完整结果](2026-09-14/README.md) 保存同机对照和原始数据。先在固定环境测量，再决定优化；引擎微基准不能替代真实编辑器、窗口和应用进程的结果。
@@ -29,7 +31,7 @@ python3 -m unittest discover -s Tests/Benchmarks -p 'test_*.py'
 - `process_start_to_root_layout_ms`：内核进程开始时间到主页首次布局 flush；包括启动成本，但不是重启机器后的冷启动，也不是屏幕首帧时间。OS/file cache 不清除。测试入口在 `didFinishLaunching` 后主动激活应用；驱动器等待初始化 JSON（20 ms 轮询）后发送一次 `open -a` reopen 事件。该打开窗口握手包含在指标内，不能当作系统默认启动时间。测试进程持有临时 activity，避免 App Nap 干扰。
 - `app_init_to_root_layout_ms`：测试入口初始化后到相同终点；不包含该入口之前的 SwiftUI 初始化与 dyld 阶段。
 - `model_completion_ms`：调用真实 `HomeViewModel.translate()` 到其完成发布，包含引擎调度、转换、结果发布和模型收尾。
-- `result_layout_flush_ms`：随后等待两个真实 `NSTextView` 内容与模型完全一致，并执行 layout/display flush；包含 SwiftUI 更新和本机文本视图工作，不等于显示器呈现时间。两项相加才是该测量协议内的结果可用等待。
+- `result_layout_flush_ms`：随后按编辑器角色和预先计算的 UTF-16 长度等待，并执行 layout/display flush。停表后才逐字节验证内容；包含 SwiftUI 更新和本机文本视图工作，不等于显示器呈现时间。模型与布局两项之和仅为选定阶段合计，排除了长度预计算和正确性验证，不能称为端到端等待。
 - `read_decode_ms`：同进程生成的固定 UTF-8 文件经实际 `TextFileService.read` 读取与解码。是温文件缓存测试，排除用户选文件时间。
 - `source_layout_flush_ms`：替换原文到真实源编辑器收到内容并 flush。10 MiB 限额未改变。
 - `physical_footprint_bytes`、`rss_bytes` 是阶段快照；`process_peak_rss_bytes` 是**整个进程到当时为止**的 RSS 高水位，不能当成单阶段独占内存。测试语料生成、正确性哈希和 JSON 记录也在进程内，峰值包含其开销。
@@ -66,10 +68,21 @@ xcrun xctrace export --input /tmp/openccman-cpu.trace --toc
 同一份诊断入口可额外运行实际工作区的滚动与菜单命令。仅运行这套协议时使用独立目录，不能与默认转换协议的 `run-*.json` 混放：
 
 ```bash
-python3 scripts/benchmark-app.py --output /tmp/openccman-reflow --build-only --packages /path/to/SourcePackages
+python3 scripts/benchmark-app.py --output /tmp/openccman-reflow --reflow --build-only --packages /path/to/SourcePackages
 python3 scripts/benchmark-app.py --output /tmp/openccman-reflow --reuse-build --reflow --samples 3 --timeout 180
 ```
 
 `--reflow` 使用 1/5/10 MiB，分别定位段首、文中、文末，发送生产代码的上下/左右布局命令。记录阶段开始/结束、动作耗时、进程 CPU/内存和 TextKit 2 是否保留，并断言原生编辑器身份、选区和完整文本/结果哈希未改变。动作耗时包含两个主队列 layout/display flush，不包含截图或 AX 查询，也不是显示器呈现时间。它不等价于拖动/VoiceOver 手工验收。
 
 `--timeout` 到期只终止拥有的诊断进程，保留未完成 JSON；缺少结束事件表示截断，不能当成耗时为零，也不能将进程总超时当成最后动作耗时。此协议的阶段集合与默认转换基线不同，不使用七配置比较器。可比性由同一源码入口哈希、环境、pin、语料和完整阶段判断；超时样本单独报告，不能混成完整样本中位数。
+
+## 协议 2 的验证边界
+
+- 编辑器计时只轮询编辑器角色和预先计算的 UTF-16 长度，再请求布局/显示刷新；停表后逐字节验证 UTF-8 内容，不符则整次运行失败。同长度不代表内容正确，因此不能省略停表后的校验。这是长度应答与刷新耗时，不是屏幕呈现时间。
+- 模型转换计时与编辑器计时分开；长度预计算、全文正确性检查不在编辑器计时内。进程 CPU 和内存仍包含测试工具开销，不能当成纯应用开销。
+- 构建全部成功并完成 pin 校验后才写出 metadata 和 build-complete.json；复用时检查完成标记、metadata 校验和、源码、应用文件、依赖 checkout、OS 构建号、架构、Xcode 和驱动一致性。
+- metadata 自动生成且保持不变；每个运行绑定其 SHA-256。OS 条件由 sw_vers 和架构组成，避免 Python 版本格式漂移。
+- 比较器拒绝缺失/不匹配的依赖证明、metadata 改写、后台/无可见窗口样本以及不同测量入口。启动记录允许尚未激活；从 root_layout_ready 起必须保持前台。
+- 七组配置使用可区分台湾词组、台湾字形和香港字形的固定答案。官方模式的文字部分核对 OpenCC 1.4.2 CLI；U+0000 的保留由 wrapper/app 固定答案验证，不能用会截断 NUL 的 CLI 输出作为预期。
+- 手动托管窗口关闭前、close 返回后和等待后分别记录；分析 CPU 时先算各运行的阶段增量，不能把整段协议差异推广为输入收益。
+- 隔离闲时布局试验使用 `--disable-background-layout --build-only`，由脚本应用变更并记录 application_variant；复用时不重复传入覆盖选项。它仍不等同 WindowGroup 关闭行为。
