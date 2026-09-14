@@ -44,7 +44,51 @@ enum EditorScrollChecks {
     scroll.setFrameSize(NSSize(width: 700, height: 240))
     settle()
     precondition(text.markedRange() == marked, "Scroll restoration cannot commit or discard composition")
-    print("PASS: native text reflow, selection, rapid resize, new-document reset and marked range preservation")
+    checkUnlaidOutDocumentEnd()
+    checkMiddleReflowAnchor()
+    print("PASS: on-demand document end, native text reflow, selection, rapid resize, new-document reset and marked range preservation")
+  }
+
+  @MainActor private static func checkUnlaidOutDocumentEnd() {
+    let scroll = NSTextView.scrollableTextView()
+    scroll.setFrameSize(NSSize(width: 420, height: 240))
+    let text = scroll.documentView as! NSTextView
+    let keeper = WorkspaceScrollKeeper()
+    keeper.attach(text)
+    // No ensureLayout/sizeToFit prewarming: jump to text that has never been
+    // visible, then resize. Native on-demand layout must make the tail readable.
+    text.string = String(repeating: "中文 👩🏽‍💻 é paragraph for distant scrolling.\n", count: 16000)
+    let end = (text.string as NSString).length - 2
+    text.setSelectedRange(NSRange(location: end, length: 1))
+    text.scrollRangeToVisible(NSRange(location: end, length: 1))
+    settle()
+    let visible = text.layoutManager!.glyphRange(forBoundingRect: text.visibleRect, in: text.textContainer!)
+    let characters = text.layoutManager!.characterRange(forGlyphRange: visible, actualGlyphRange: nil)
+    precondition(NSLocationInRange(end, characters), "First jump must lay out the unseen document tail")
+    scroll.setFrameSize(NSSize(width: 760, height: 260))
+    settle()
+    precondition(text.selectedRange() == NSRange(location: end, length: 1), "Tail selection must survive reflow")
+  }
+
+  @MainActor private static func checkMiddleReflowAnchor() {
+    let scroll = NSTextView.scrollableTextView()
+    scroll.setFrameSize(NSSize(width: 400, height: 240))
+    let text = scroll.documentView as! NSTextView
+    text.string = (0..<1500).map { index in
+      "Paragraph \(index): " + String(repeating: "中文重排测试 é 👩🏽‍💻 keep this reading position. ", count: 10) + "\n"
+    }.joined()
+    text.layoutManager!.ensureLayout(for: text.textContainer!)
+    text.sizeToFit()
+    let keeper = WorkspaceScrollKeeper()
+    keeper.attach(text)
+    let middle = (text.string as NSString).range(of: "Paragraph 750:").location
+    text.scrollRangeToVisible(NSRange(location: middle, length: 1))
+    text.setSelectedRange(NSRange(location: middle, length: 12))
+    let before = topLine(text, scroll).location
+    scroll.setFrameSize(NSSize(width: 850, height: 180))
+    settle()
+    precondition(NSLocationInRange(before, topLine(text, scroll)),
+                 "Large middle anchor must retain its line after width reflow")
   }
 
   @MainActor private static func topLine(_ text: NSTextView, _ scroll: NSScrollView) -> NSRange {

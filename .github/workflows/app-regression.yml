@@ -29,6 +29,8 @@ jobs:
         run: bash scripts/check-project.sh
       - name: Check real conversion, presets and file workflow
         run: python3 scripts/check-core.py
+      - name: Check performance report comparability
+        run: python3 -m unittest discover -s Tests/Benchmarks -p 'test_*.py'
       - name: Check window layout resolution and recovery
         run: bash scripts/check-workspace.sh
       - name: Check complete Mac control bounds

@@ -1,0 +1,69 @@
+Building for production...
+[0/47] Write swift-version--58304C5D6DBC2206.txt
+[1/47] Compiling keyset.cc
+[2/47] Compiling UTF8Util.cpp
+[3/47] Compiling reader.cc
+[4/47] Compiling writer.cc
+[5/47] Compiling UTF8StringSlice.cpp
+[6/47] Compiling trie.cc
+[7/47] Compiling bit-vector.cc
+[8/47] Compiling Conversion.cpp
+[9/47] Compiling copencc source.cpp
+[10/47] Compiling tail.cc
+[11/47] Compiling BinaryDict.cpp
+[12/47] Compiling ConversionAmbiguities.cpp
+[13/47] Compiling Segmentation.cpp
+[14/47] Compiling SerializableDict.cpp
+[15/47] Compiling TextDict.cpp
+[16/47] Compiling SimpleConverter.cpp
+[17/47] Compiling SingleStageConverter.cpp
+[18/47] Compiling PipelineConverter.cpp
+[19/47] Compiling SerializedValues.cpp
+[20/47] Compiling louds-trie.cc
+[21/47] Compiling MaxMatchSegmentation.cpp
+[22/47] Compiling ResourceProvider.cpp
+[23/47] Compiling DictEntry.cpp
+[24/47] Compiling PrefixMatch.cpp
+[25/47] Compiling Dict.cpp
+[26/47] Write sources
+[27/47] Copying manifest.json
+[28/47] Compiling DictGroup.cpp
+[29/47] Copying Official
+[30/47] Copying Compatibility
+[31/47] Write sources
+[33/47] Compiling MarisaDict.cpp
+[34/47] Compiling PluginSegmentation.cpp
+[35/48] Compiling mapper.cc
+[36/48] Compiling Converter.cpp
+[37/48] Compiling Lexicon.cpp
+[38/48] Compiling ConversionChain.cpp
+[39/48] Compiling DictConverter.cpp
+[40/48] Compiling DartsDict.cpp
+[41/48] Compiling PhraseExtract.cpp
+[42/48] Compiling agent.cc
+[43/48] Compiling ConversionCandidates.cpp
+[44/48] Compiling Config.cpp
+[46/49] Compiling OpenCC ChineseConverter.swift
+[47/49] Compiling SwiftyUserDefaults BuiltIns.swift
+/private/tmp/openccman-perf-lazy/packages/checkouts/SwiftyUserDefaults/Sources/DefaultsObserver.swift:51:41: warning: generic parameter 'T' shadows generic parameter from outer scope with the same name; this is an error in the Swift 6 language mode
+ 31 | #if !os(Linux)
+ 32 | 
+ 33 | public final class DefaultsObserver<T: DefaultsSerializable>: NSObject, DefaultsDisposable where T == T.T {
+    |                                     `- note: 'T' previously declared here
+ 34 | 
+ 35 |     public struct Update {
+    :
+ 49 |         }
+ 50 | 
+ 51 |         private static func deserialize<T: DefaultsSerializable>(_ value: Any?, for key: DefaultsKey<T>) -> T.T? where T.T == T {
+    |                                         `- warning: generic parameter 'T' shadows generic parameter from outer scope with the same name; this is an error in the Swift 6 language mode
+ 52 |             guard let value = value else { return nil }
+ 53 | 
+[48/50] Compiling CoreChecks ChineseConversionService.swift
+[48/50] Write Objects.LinkFileList
+[49/50] Linking CoreChecks
+Build of product 'CoreChecks' complete! (10.29s)
+PASS: 7 option combinations × 8 fixtures; phrase boundaries, whitespace, Unicode and converter reuse
+PASS: model release, repeated taps, single publication, cancellation/replacement, empty input and quota guard
+PASS: presets, UTF-8/BOM/Unicode/NUL files, size limit, invalid input, cancellation and import replacement
+PASS: real NSURL/NSString providers and cancellation without a provider callback

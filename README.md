@@ -46,6 +46,8 @@ Core checks compile the actual app model/services with the dependencies pinned i
 
 Neumorphic is pinned to the stable **2.4.1** release. Unused button styles and the obsolete VisualEffects dependency/credit have been removed; the remaining 14 dependency pins are unchanged. See the [platform sizing fix and runtime before/after captures](docs/validation/control-sizing/README.md), and the [control adoption audit](docs/NEUMORPHIC_CONTROLS.md) for segmented selectors, switches, loading indicators, cards, and the controls that retain system behavior.
 
+The [application performance baseline](docs/performance/README.md) documents isolated Release measurements, raw samples, engine comparisons and the limits of each metric.
+
 See the [complete project status and follow-up report (2026-09-13)](docs/project-status-and-follow-up-2026-09-13.md) for delivered work, validation evidence, remaining release gates and concrete improvement recommendations.
 
 The [1.3 follow-up validation record](docs/v1.3-release-validation-2026-09-13.md) tracks the latest tooling checks and the Xcode Cloud resource-signing blocker.

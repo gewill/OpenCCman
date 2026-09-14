@@ -1,0 +1,7 @@
+{
+  "included_in_formal_comparisons": false,
+  "reason": "Pilot used b935ce3 driver. The background-layout experiment then failed its unique-anchor guard; all groups were rebuilt with 9603bf3 and sampled afresh without mixing driver versions.",
+  "pilot_status": "complete",
+  "formal_source_commit": "9603bf3",
+  "failed_preparation_log": "Traceback (most recent call last):\n  File \"/Users/rxwill/git/MyApps/OpenCCman-performance/scripts/benchmark-app.py\", line 218, in <module>\n    main()\n    ~~~~^^\n  File \"/Users/rxwill/git/MyApps/OpenCCman-performance/scripts/benchmark-app.py\", line 133, in main\n    replace_once(source / 'OpenCCman/View/WorkspaceScrollKeeper.swift',\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                 '      size = clip.bounds.size',\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                 '      size = clip.bounds.size\\n      editor.layoutManager?.backgroundLayoutEnabled = false')\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/rxwill/git/MyApps/OpenCCman-performance/scripts/benchmark-app.py\", line 28, in replace_once\n    raise RuntimeError(f'Injection anchor changed in {path}: {before[:80]}')\nRuntimeError: Injection anchor changed in /private/tmp/openccman-66-v2-off/source/OpenCCman/View/WorkspaceScrollKeeper.swift:       size = clip.bounds.size\n"
+}

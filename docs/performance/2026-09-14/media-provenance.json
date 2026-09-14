@@ -1,0 +1,50 @@
+{
+  "app_source": "c3009c74796e8f4ff3b39c4f1c5bb8c9ed1c04cf",
+  "harness_source": "056d56a",
+  "trial_patch": "background-layout-trial.patch",
+  "conditions": "Mac; 1200x800 pt window; en; Light; default text size; fixed 10 MiB UTF-8 corpus; current OpenCC 1.4.2; independent diagnostic app. Trial not adopted.",
+  "video_encoding": "H.264; width 1200; CRF25; no audio; source window recordings approximately20seconds.",
+  "files": [
+    {
+      "capture_name": "openccman-performance-before.png",
+      "published_name": "baseline.png",
+      "bytes": 1344154,
+      "sha256": "6d02c1892505f8f51a35fa0c7ba3081ff5ded3dfb277fd732abcb8284038fca5",
+      "attachment_url": "https://github.com/user-attachments/assets/16bd41c0-8fc3-4014-8d3b-cb26f5709ca5"
+    },
+    {
+      "capture_name": "openccman-performance-after.png",
+      "published_name": "trial.png",
+      "bytes": 1344250,
+      "sha256": "80fb98ebb8e5987d71a6195cbda64ef9da0e32d313e8a9a48dcac2504181657b",
+      "attachment_url": "https://github.com/user-attachments/assets/72575b19-45b5-4fe0-be94-e5368909ac7c"
+    },
+    {
+      "capture_name": "openccman-performance-before.mov",
+      "published_name": null,
+      "bytes": 7052212,
+      "sha256": "0107bd6b8f62962c43fa8ecda58e4f14f7d39843c030a059b09b196c5e1d9e80"
+    },
+    {
+      "capture_name": "openccman-performance-after.mov",
+      "published_name": null,
+      "bytes": 7796080,
+      "sha256": "7750240f5d33bf8843cf701f5f75dac3275c72f09ef93b9590d402f61bf65052"
+    },
+    {
+      "capture_name": "openccman-baseline.mp4",
+      "published_name": "baseline.mp4",
+      "bytes": 245795,
+      "sha256": "ec48f54cdaed581e4284e58b69a89642339fd61b8eb74b3fe55f387f918090dc",
+      "attachment_url": "https://github.com/user-attachments/assets/7e30f4a6-7142-442e-84f0-44e3ad305bb0"
+    },
+    {
+      "capture_name": "openccman-trial.mp4",
+      "published_name": "trial.mp4",
+      "bytes": 270521,
+      "sha256": "7e50c3639a220807e1fe513d1d097966cfb61a85ab6169d9a04e74c5aed65054",
+      "attachment_url": "https://github.com/user-attachments/assets/5b2f1066-d328-45b7-b7ee-5c2e2c61c32d"
+    }
+  ],
+  "delivery_note": "Original files were uploaded through gh Git Data API. Replaced in the current tree by gh pr edit --attach assets; original checksums retained. Existing commit history was not rewritten."
+}
