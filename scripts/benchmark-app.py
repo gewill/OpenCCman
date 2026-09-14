@@ -131,8 +131,8 @@ def main():
                          'revision = ' + original, 'revision = ' + args.engine_revision)
         if args.disable_background_layout:
             replace_once(source / 'OpenCCman/View/WorkspaceScrollKeeper.swift',
-                         '      size = clip.bounds.size',
-                         '      size = clip.bounds.size\n      editor.layoutManager?.backgroundLayoutEnabled = false')
+                         '      self.clip = clip\n      size = clip.bounds.size',
+                         '      self.clip = clip\n      size = clip.bounds.size\n      editor.layoutManager?.backgroundLayoutEnabled = false')
         expected_lock = (source / LOCK).read_bytes()
         commit = command(['git', 'rev-parse', 'HEAD'], cwd=ROOT)
         metadata = {'schema': PROTOCOL, 'source_commit': commit, 'measurement_harness_commit': commit,

@@ -42,6 +42,13 @@ class BuildVerification(unittest.TestCase):
         self.checkouts = patch.object(DRIVER, 'checkout_revisions', return_value={'engine': 'verified'}).start()
         patch.object(DRIVER, 'environment', return_value={}).start()
 
+    def test_variant_anchor_changes_only_attachment(self):
+        path = self.source / 'Keeper.swift'
+        path.write_bytes((ROOT / 'OpenCCman/View/WorkspaceScrollKeeper.swift').read_bytes())
+        DRIVER.replace_once(path, '      self.clip = clip\n      size = clip.bounds.size',
+                            '      self.clip = clip\n      size = clip.bounds.size\n      editor.layoutManager?.backgroundLayoutEnabled = false')
+        self.assertEqual(path.read_text().count('backgroundLayoutEnabled = false'), 1)
+
     def test_accepts_verified_unchanged_build(self):
         DRIVER.verify_build(self.output)
 

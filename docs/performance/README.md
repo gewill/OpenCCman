@@ -31,7 +31,7 @@ python3 -m unittest discover -s Tests/Benchmarks -p 'test_*.py'
 - `process_start_to_root_layout_ms`：内核进程开始时间到主页首次布局 flush；包括启动成本，但不是重启机器后的冷启动，也不是屏幕首帧时间。OS/file cache 不清除。测试入口在 `didFinishLaunching` 后主动激活应用；驱动器等待初始化 JSON（20 ms 轮询）后发送一次 `open -a` reopen 事件。该打开窗口握手包含在指标内，不能当作系统默认启动时间。测试进程持有临时 activity，避免 App Nap 干扰。
 - `app_init_to_root_layout_ms`：测试入口初始化后到相同终点；不包含该入口之前的 SwiftUI 初始化与 dyld 阶段。
 - `model_completion_ms`：调用真实 `HomeViewModel.translate()` 到其完成发布，包含引擎调度、转换、结果发布和模型收尾。
-- `result_layout_flush_ms`：随后等待两个真实 `NSTextView` 内容与模型完全一致，并执行 layout/display flush；包含 SwiftUI 更新和本机文本视图工作，不等于显示器呈现时间。两项相加才是该测量协议内的结果可用等待。
+- `result_layout_flush_ms`：随后按编辑器角色和预先计算的 UTF-16 长度等待，并执行 layout/display flush。停表后才逐字节验证内容；包含 SwiftUI 更新和本机文本视图工作，不等于显示器呈现时间。模型与布局两项之和仅为选定阶段合计，排除了长度预计算和正确性验证，不能称为端到端等待。
 - `read_decode_ms`：同进程生成的固定 UTF-8 文件经实际 `TextFileService.read` 读取与解码。是温文件缓存测试，排除用户选文件时间。
 - `source_layout_flush_ms`：替换原文到真实源编辑器收到内容并 flush。10 MiB 限额未改变。
 - `physical_footprint_bytes`、`rss_bytes` 是阶段快照；`process_peak_rss_bytes` 是**整个进程到当时为止**的 RSS 高水位，不能当成单阶段独占内存。测试语料生成、正确性哈希和 JSON 记录也在进程内，峰值包含其开销。
