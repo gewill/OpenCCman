@@ -15,7 +15,7 @@ struct CustomerCenterScene: View {
       #if os(iOS)
       if #available(iOS 15.0, *) {
         CustomerCenterView(navigationOptions: .init(onCloseHandler: {
-          navigator.navigate("/settings")
+          navigator.goBack()
         }))
         .onCustomerCenterRestoreCompleted { info in
           IAPManager.shared.applyCustomerInfo(info)
