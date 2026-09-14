@@ -1,3 +1,5 @@
+> 当前基线使用协议 2，见 [review 修正报告](2026-09-14-review/README.md)。2026-09-14 旧样本仅作历史记录，不能与新工具比较；更换入口后必须在新目录重新构建、采集两组样本，禁止手改 metadata。
+
 # 应用性能基线
 
 本目录跟踪 [#18](https://github.com/gewill/OpenCCman/issues/18)。[2026-09-14 完整结果](2026-09-14/README.md) 保存同机对照和原始数据。先在固定环境测量，再决定优化；引擎微基准不能替代真实编辑器、窗口和应用进程的结果。
@@ -60,3 +62,14 @@ xcrun xctrace export --input /tmp/openccman-cpu.trace --toc
 - [Apple：Reducing your app’s launch time](https://developer.apple.com/documentation/xcode/reducing-your-app-s-launch-time)：用户感知的完成点与系统启动指标可能不同。
 - [Apple：Improving your app’s performance](https://developer.apple.com/documentation/xcode/improving-your-app-s-performance/)：结合测量与 Instruments 定位问题。
 - [已有项目审计](../project-status-and-follow-up-2026-09-13.md)：早期转换路径和引擎微基准，适用范围与本报告不同。
+
+## 协议 2 的验证边界
+
+- 编辑器计时只轮询编辑器角色和预先计算的 UTF-16 长度，再请求布局/显示刷新；停表后逐字节验证 UTF-8 内容，不符则整次运行失败。同长度不代表内容正确，因此不能省略停表后的校验。这是长度应答与刷新耗时，不是屏幕呈现时间。
+- 模型转换计时与编辑器计时分开；长度预计算、全文正确性检查不在编辑器计时内。进程 CPU 和内存仍包含测试工具开销，不能当成纯应用开销。
+- 构建全部成功并完成 pin 校验后才写出 metadata 和 build-complete.json；复用时检查完成标记、metadata 校验和、源码、应用文件、依赖 checkout、OS 构建号、架构、Xcode 和驱动一致性。
+- metadata 自动生成且保持不变；每个运行绑定其 SHA-256。OS 条件由 sw_vers 和架构组成，避免 Python 版本格式漂移。
+- 比较器拒绝缺失/不匹配的依赖证明、metadata 改写、后台/无可见窗口样本以及不同测量入口。启动记录允许尚未激活；从 root_layout_ready 起必须保持前台。
+- 七组配置使用可区分台湾词组、台湾字形和香港字形的固定答案。官方模式的文字部分核对 OpenCC 1.4.2 CLI；U+0000 的保留由 wrapper/app 固定答案验证，不能用会截断 NUL 的 CLI 输出作为预期。
+- 手动托管窗口关闭前、close 返回后和等待后分别记录；分析 CPU 时先算各运行的阶段增量，不能把整段协议差异推广为输入收益。
+- 隔离闲时布局试验使用 `--disable-background-layout --build-only`，由脚本应用变更并记录 application_variant；复用时不重复传入覆盖选项。它仍不等同 WindowGroup 关闭行为。

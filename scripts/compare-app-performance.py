@@ -5,12 +5,16 @@ import json
 from pathlib import Path
 import statistics
 
-TIMINGS = ('process_cpu_ms', 'process_start_to_root_layout_ms', 'app_init_to_root_layout_ms', 'model_completion_ms',
-           'result_layout_flush_ms', 'read_decode_ms', 'source_layout_flush_ms')
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from app_performance import TIMINGS, PROTOCOL, sha256, validate_pins
 
 
 def load(directory):
     metadata = json.loads((directory / 'metadata.json').read_text())
+    if metadata.get('schema') != PROTOCOL:
+        raise ValueError('Legacy measurement protocol; regenerate baseline')
+    validate_pins(metadata)
     runs = [json.loads(p.read_text()) for p in sorted(directory.glob('run-*.json'))]
     if len(runs) < 3:
         raise ValueError('At least three independent processes are required')
@@ -18,12 +22,20 @@ def load(directory):
     if len(names) != len(set(names)):
         raise ValueError('Duplicate stage names')
     for run in runs:
+        if run.get('metadata_sha256') != sha256(directory / 'metadata.json'):
+            raise ValueError('Run provenance differs from metadata')
+        foreground_required = False
         if run['status'] != 'complete' or [r['name'] for r in run['rows']] != names:
             raise ValueError('Incomplete or inconsistent stage set')
         configs = [r['options'] for r in run['rows'] if r['name'].startswith('configuration_')]
         if set(configs) != {2, 1, 1025, 33, 1057, 65, 1089} or len(configs) != 7:
             raise ValueError('Missing effective configuration coverage')
         for row in run['rows']:
+            foreground_required |= row['name'] == 'root_layout_ready'
+            if foreground_required and (row.get('app_active') is not True or row.get('visible_window_count', 0) < 1):
+                raise ValueError('Foreground or visible-window condition violated')
+            if row.get('editors_match_model') is False:
+                raise ValueError('Exact editor validation failed')
             if row['memory']['task_info_status'] != 0 or row['memory']['rusage_status'] != 0:
                 raise ValueError('Memory collection failed')
             if row.get('export_matches_result') is False:
@@ -43,6 +55,9 @@ def compare(before, after):
         raise ValueError('Unrelated dependency drift')
     if bm['source_hashes']['Tests/Benchmarks/AppPerformanceAudit.swift'] != am['source_hashes']['Tests/Benchmarks/AppPerformanceAudit.swift']:
         raise ValueError('Measurement harness differs')
+    for path in ('scripts/benchmark-app.py', 'scripts/app_performance.py'):
+        if bm['source_hashes'].get(path) != am['source_hashes'].get(path):
+            raise ValueError('Measurement driver differs')
     results = []
     for index, row in enumerate(br[0]['rows']):
         name = row['name']

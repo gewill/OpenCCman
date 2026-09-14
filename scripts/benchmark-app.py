@@ -11,6 +11,8 @@ import statistics
 import subprocess
 import time
 
+from app_performance import TIMINGS, PROTOCOL, sha256, source_hashes, artifact_hashes, validate_pins
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 BUNDLE = 'org.gewill.OpenCCman.PerformanceAudit'
 LOCK = pathlib.Path('OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved')
@@ -50,6 +52,51 @@ def prepare(destination):
     return source
 
 
+def environment():
+    return {'os': {'version': command(['sw_vers', '-productVersion']),
+                   'build': command(['sw_vers', '-buildVersion']), 'arch': platform.machine()},
+            'hardware': command(['sysctl', '-n', 'hw.model', 'hw.memsize', 'machdep.cpu.brand_string']),
+            'xcode': command(['xcodebuild', '-version'])}
+
+
+def checkout_revisions(packages):
+    revisions = {}
+    for checkout in (packages / 'checkouts').iterdir():
+        if checkout.is_dir():
+            if command(['git', 'status', '--porcelain', '--untracked-files=all'], cwd=checkout):
+                raise ValueError(f'Modified dependency checkout: {checkout.name}')
+            revisions[checkout.name.lower()] = command(['git', 'rev-parse', 'HEAD'], cwd=checkout)
+    return revisions
+
+
+def verify_build(output):
+    marker_path = output / 'build-complete.json'
+    if not marker_path.exists():
+        raise ValueError('Missing successful build verification; rebuild in a new directory')
+    marker = json.loads(marker_path.read_text())
+    if marker['metadata_sha256'] != sha256(output / 'metadata.json'):
+        raise ValueError('Build metadata changed')
+    metadata = json.loads((output / 'metadata.json').read_text())
+    validate_pins(metadata)
+    if metadata['schema'] != PROTOCOL:
+        raise ValueError('Measurement protocol changed; rebuild')
+    if json.loads((output / 'source' / LOCK).read_text()) != metadata['pins']:
+        raise ValueError('Dependency lock changed')
+    if source_hashes(output / 'source') != metadata['source_hashes']:
+        raise ValueError('Built source changed')
+    if checkout_revisions(output / 'packages') != metadata['resolved_checkout_revisions']:
+        raise ValueError('Dependency checkout changed')
+    if artifact_hashes(output / 'derived/Build/Products/Release/OpenCCman.app') != marker['app_hashes']:
+        raise ValueError('Built app changed')
+    for key, value in environment().items():
+        if metadata[key] != value:
+            raise ValueError('Build environment changed: ' + key)
+    for name in ('benchmark-app.py', 'app_performance.py'):
+        if sha256(ROOT / 'scripts' / name) != metadata['source_hashes']['scripts/' + name]:
+            raise ValueError('Measurement driver changed; rebuild')
+    return metadata
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=pathlib.Path, required=True, help='New directory outside the repository')
@@ -57,6 +104,7 @@ def main():
     parser.add_argument('--start-index', type=int, default=1)
     parser.add_argument('--packages', type=pathlib.Path, help='Existing SourcePackages copied privately with APFS clones')
     parser.add_argument('--build-only', action='store_true', help='Build now, measure later without competing compiler load')
+    parser.add_argument('--disable-background-layout', action='store_true', help='Explicit isolated TextKit 1 experiment')
     parser.add_argument('--engine-revision', help='Comparison only: full wrapper SHA in the private snapshot')
     parser.add_argument('--reuse-build', action='store_true', help='Rerun the already built, recorded source snapshot')
     args = parser.parse_args()
@@ -65,6 +113,8 @@ def main():
         parser.error('Use positive samples and an output directory outside this repository')
     if args.engine_revision and not re.fullmatch(r'[0-9a-f]{40}', args.engine_revision):
         parser.error('Engine comparison revision must be a full lowercase SHA')
+    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.packages):
+        parser.error('Reuse the recorded build without source/dependency overrides')
     source = args.output / 'source'
     if not args.reuse_build:
         source = prepare(args.output)
@@ -79,25 +129,29 @@ def main():
             (source / LOCK).write_text(json.dumps(lock, indent=2) + '\n')
             replace_once(source / 'OpenCCman.xcodeproj/project.pbxproj',
                          'revision = ' + original, 'revision = ' + args.engine_revision)
+        if args.disable_background_layout:
+            replace_once(source / 'OpenCCman/View/WorkspaceScrollKeeper.swift',
+                         '      size = clip.bounds.size',
+                         '      size = clip.bounds.size\n      editor.layoutManager?.backgroundLayoutEnabled = false')
         expected_lock = (source / LOCK).read_bytes()
-        metadata = {'schema': 1, 'source_commit': command(['git', 'rev-parse', 'HEAD'], cwd=ROOT),
+        commit = command(['git', 'rev-parse', 'HEAD'], cwd=ROOT)
+        metadata = {'schema': PROTOCOL, 'source_commit': commit, 'measurement_harness_commit': commit,
                     'comparison_engine_override': args.engine_revision,
+                    'application_variant': 'background-layout-off' if args.disable_background_layout else 'unchanged',
                     'source_status': command(['git', 'status', '--short'], cwd=ROOT),
-                    'pins': json.loads((source / LOCK).read_text()), 'os': platform.platform(),
-                    'hardware': command(['sysctl', '-n', 'hw.model', 'hw.memsize', 'machdep.cpu.brand_string']),
-                    'xcode': command(['xcodebuild', '-version']), 'started_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
-                    'source_hashes': {str(p.relative_to(source)): hashlib.sha256(p.read_bytes()).hexdigest()
-                                      for p in sorted(source.rglob('*')) if p.is_file() and p.suffix in ('.swift', '.pbxproj', '.py')},
-                    'conditions': ['Release -O; isolated bundle/preferences; ad-hoc signed; sandbox disabled for harness output',
-                                   'RevenueCat configure retained; entitlement refresh/delegate/review/WhatsNew suppressed; synthetic Pro preferences',
-                                   '1200x800 content points; en locale/light theme via launch arguments',
-                                   'fresh process; one reopen event after initialization; handshake included; OS/file caches NOT purged; not cold boot or first photon',
-                                   'userInitiated activity prevents App Nap for the measured protocol; app foreground state recorded at each stage',
-                                   'two additional fixed-size NSHostingView windows use explicit /home route; not native WindowGroup lifecycle evidence',
-                                   'layout flush waits for both native editors to acknowledge exact model text, then displayIfNeeded; not presentation timestamp',
-                                   '20ms main timer gap includes harness work and scheduling; not frame rate',
-                                   'RSS high water includes earlier stages; footprint and RSS are different metrics']}
-        (args.output / 'metadata.json').write_text(json.dumps(metadata, indent=2) + '\n')
+                    'pins': json.loads((source / LOCK).read_text()), **environment(),
+                    'started_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
+                    'source_hashes': source_hashes(source),
+                    'conditions': {'protocol': PROTOCOL, 'configuration': 'Release -O',
+                        'isolation': 'ad-hoc signature; diagnostic bundle/preferences; sandbox disabled',
+                        'sdk': 'RevenueCat configure retained; synthetic Pro; refresh/delegate/review/WhatsNew suppressed',
+                        'window_content_points': [1200, 800], 'locale': 'en', 'theme': 'Light',
+                        'launch': 'fresh process; one reopen event after initialization; OS/file caches not purged',
+                        'activity': 'userInitiatedAllowingIdleSystemSleep; foreground required after root ready',
+                        'extra_windows': 'two fixed-size hosting windows at /home; not native WindowGroup lifecycle',
+                        'layout': 'role + precomputed UTF16 length acknowledgement and display flush; exact UTF8 validation after timer; not presentation',
+                        'timer': '20ms main timer gap includes harness work and scheduling; not FPS',
+                        'memory': 'RSS high water includes all previous work, fixtures and validation'}}
         build = ['xcodebuild', '-project', str(source / 'OpenCCman.xcodeproj'), '-scheme', 'OpenCCman',
                  '-configuration', 'Release', '-destination', 'platform=macOS', '-derivedDataPath', str(args.output / 'derived'),
                  '-clonedSourcePackagesDirPath', str(packages), '-disableAutomaticPackageResolution', '-onlyUsePackageVersionsFromResolvedFile',
@@ -108,17 +162,12 @@ def main():
             raise RuntimeError('Dependency drift during build')
         app = args.output / 'derived/Build/Products/Release/OpenCCman.app'
         subprocess.run(['codesign', '--force', '--deep', '--sign', '-', str(app)], check=True)
-        revisions = {}
-        for checkout in (packages / 'checkouts').iterdir():
-            if checkout.is_dir():
-                if command(['git', 'status', '--porcelain', '--untracked-files=no'], cwd=checkout):
-                    raise RuntimeError(f'Modified dependency checkout: {checkout.name}')
-                revisions[checkout.name.lower()] = command(['git', 'rev-parse', 'HEAD'], cwd=checkout)
-        for pin in metadata['pins']['pins']:
-            if revisions.get(pin['identity']) != pin['state']['revision']:
-                raise RuntimeError(f'Dependency checkout does not match pin: {pin["identity"]}')
-        metadata['resolved_checkout_revisions'] = revisions
+        metadata['resolved_checkout_revisions'] = checkout_revisions(packages)
+        validate_pins(metadata)
         (args.output / 'metadata.json').write_text(json.dumps(metadata, indent=2) + '\n')
+        marker = {'metadata_sha256': sha256(args.output / 'metadata.json'), 'app_hashes': artifact_hashes(app)}
+        (args.output / 'build-complete.json').write_text(json.dumps(marker, indent=2) + '\n')
+    metadata = verify_build(args.output)
     app = args.output / 'derived/Build/Products/Release/OpenCCman.app'
     if args.build_only:
         return
@@ -148,6 +197,7 @@ def main():
             process.terminate()
             raise
         result = json.loads(output.read_text())
+        result['metadata_sha256'] = sha256(args.output / 'metadata.json')
         result['launch_to_exit_seconds'] = time.monotonic() - launch
         output.write_text(json.dumps(result, indent=2) + '\n')
         if result['status'] != 'complete':
@@ -158,7 +208,7 @@ def main():
     summary = {}
     for name in [r['name'] for r in runs[0]['rows']]:
         rows = [next(r for r in run['rows'] if r['name'] == name) for run in runs]
-        keys = ['process_cpu_ms', 'process_start_to_root_layout_ms', 'app_init_to_root_layout_ms', 'model_completion_ms', 'result_layout_flush_ms', 'read_decode_ms', 'source_layout_flush_ms']
+        keys = TIMINGS
         summary[name] = {key: statistics.median(r[key] for r in rows) for key in keys if key in rows[0]}
         summary[name]['median_memory'] = {key: statistics.median(r['memory'][key] for r in rows) for key in rows[0]['memory']}
     (args.output / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
