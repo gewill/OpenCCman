@@ -39,6 +39,17 @@ jobs:
         run: bash scripts/check-editor-scroll.sh
       - name: Check Pro access updates
         run: bash scripts/check-pro-access.sh
+      - name: Check local StoreKit transactions
+        run: bash scripts/check-storekit.sh "${{ runner.temp }}/openccman-storekit"
+      - name: Upload StoreKit failure evidence
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: storekit-failure
+          path: |
+            ${{ runner.temp }}/openccman-storekit/xcodebuild.log
+            ${{ runner.temp }}/openccman-storekit/StoreKit.xcresult
+          if-no-files-found: ignore
       - name: Check quota reservations
         run: bash scripts/check-quota.sh
       - name: Check What’s New presentation and localizations

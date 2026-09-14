@@ -1,0 +1,417 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5EAED60B10F9E6E0F7A1D466 /* StoreKitHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2972E1147A0560EB0120061 /* StoreKitHost.swift */; };
+		74AB9DA8688B3C1605F84402 /* Products.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 26140666A21BD3EBE6C321F6 /* Products.storekit */; };
+		8C0732F10031C48368057D38 /* StoreKitRegressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7BEF3FC718CCAAE6BAE9DB /* StoreKitRegressionTests.swift */; };
+		C108CEF4F5C708377119F954 /* StoreKitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55524CACB521F74C6816DA88 /* StoreKitTest.framework */; };
+		C590FBAE77EA484097BAFA45 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A821EBF26834C7F0C5D66CDD /* StoreKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2C1508703FD1FB9BC24D473A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DBF9FB18AB9A4F1A5F48713B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 32BF67D2BF749871589100E4;
+			remoteInfo = StoreKitHost;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		26140666A21BD3EBE6C321F6 /* Products.storekit */ = {isa = PBXFileReference; path = Products.storekit; sourceTree = "<group>"; };
+		55524CACB521F74C6816DA88 /* StoreKitTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKitTest.framework; path = System/Library/Frameworks/StoreKitTest.framework; sourceTree = SDKROOT; };
+		872164DEF76C0A84F381058C /* StoreKitHost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoreKitHost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A821EBF26834C7F0C5D66CDD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		B2972E1147A0560EB0120061 /* StoreKitHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitHost.swift; sourceTree = "<group>"; };
+		CD7BEF3FC718CCAAE6BAE9DB /* StoreKitRegressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitRegressionTests.swift; sourceTree = "<group>"; };
+		CFBD6AA59A9891092C02CB72 /* StoreKitRegression.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StoreKitRegression.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6FA58D7005010A326FB228DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C590FBAE77EA484097BAFA45 /* StoreKit.framework in Frameworks */,
+				C108CEF4F5C708377119F954 /* StoreKitTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		070112A29F8CB7AE155B4739 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				872164DEF76C0A84F381058C /* StoreKitHost.app */,
+				CFBD6AA59A9891092C02CB72 /* StoreKitRegression.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4720E320B0A026134C1AD45D = {
+			isa = PBXGroup;
+			children = (
+				26140666A21BD3EBE6C321F6 /* Products.storekit */,
+				B2972E1147A0560EB0120061 /* StoreKitHost.swift */,
+				CD7BEF3FC718CCAAE6BAE9DB /* StoreKitRegressionTests.swift */,
+				880539C29C3F183038C557BC /* Frameworks */,
+				070112A29F8CB7AE155B4739 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		880539C29C3F183038C557BC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A821EBF26834C7F0C5D66CDD /* StoreKit.framework */,
+				55524CACB521F74C6816DA88 /* StoreKitTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		32BF67D2BF749871589100E4 /* StoreKitHost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 765C1E9B9320D7FFDF065E0F /* Build configuration list for PBXNativeTarget "StoreKitHost" */;
+			buildPhases = (
+				B64F29E74105515E26AAEE36 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StoreKitHost;
+			packageProductDependencies = (
+			);
+			productName = StoreKitHost;
+			productReference = 872164DEF76C0A84F381058C /* StoreKitHost.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8CF5279FABEC05E4B6402E4C /* StoreKitRegression */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AAB1E2983E3D5A6EB2F132A8 /* Build configuration list for PBXNativeTarget "StoreKitRegression" */;
+			buildPhases = (
+				73B46DFC8327DB085243A8F4 /* Sources */,
+				307075FA86A1C7BB3A8D386E /* Resources */,
+				6FA58D7005010A326FB228DA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				70C424992B99759CD064AF1F /* PBXTargetDependency */,
+			);
+			name = StoreKitRegression;
+			packageProductDependencies = (
+			);
+			productName = StoreKitRegression;
+			productReference = CFBD6AA59A9891092C02CB72 /* StoreKitRegression.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DBF9FB18AB9A4F1A5F48713B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = AC206E98701770AA564C0FDF /* Build configuration list for PBXProject "StoreKitRegression" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 4720E320B0A026134C1AD45D;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 070112A29F8CB7AE155B4739 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8CF5279FABEC05E4B6402E4C /* StoreKitRegression */,
+				32BF67D2BF749871589100E4 /* StoreKitHost */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		307075FA86A1C7BB3A8D386E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74AB9DA8688B3C1605F84402 /* Products.storekit in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		73B46DFC8327DB085243A8F4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C0732F10031C48368057D38 /* StoreKitRegressionTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B64F29E74105515E26AAEE36 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EAED60B10F9E6E0F7A1D466 /* StoreKitHost.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		70C424992B99759CD064AF1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 32BF67D2BF749871589100E4 /* StoreKitHost */;
+			targetProxy = 2C1508703FD1FB9BC24D473A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		7CEC3F9157563B4A3FE56ADB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.OpenCCman.StoreKitHost;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		7D59638E175B9336E50E4304 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.OpenCCman.StoreKitHost;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		7F9295EBFBCBAC6C262D0463 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.OpenCCman.StoreKitRegression;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StoreKitHost.app/Contents/MacOS/StoreKitHost";
+			};
+			name = Debug;
+		};
+		7FE3E4527FA9423B901EFE17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.OpenCCman.StoreKitRegression;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StoreKitHost.app/Contents/MacOS/StoreKitHost";
+			};
+			name = Release;
+		};
+		8ECD743E30F867FE18415868 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F4A2F610C3ECFE32CE380A27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		765C1E9B9320D7FFDF065E0F /* Build configuration list for PBXNativeTarget "StoreKitHost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D59638E175B9336E50E4304 /* Debug */,
+				7CEC3F9157563B4A3FE56ADB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		AAB1E2983E3D5A6EB2F132A8 /* Build configuration list for PBXNativeTarget "StoreKitRegression" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F9295EBFBCBAC6C262D0463 /* Debug */,
+				7FE3E4527FA9423B901EFE17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		AC206E98701770AA564C0FDF /* Build configuration list for PBXProject "StoreKitRegression" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8ECD743E30F867FE18415868 /* Debug */,
+				F4A2F610C3ECFE32CE380A27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DBF9FB18AB9A4F1A5F48713B /* Project object */;
+}
