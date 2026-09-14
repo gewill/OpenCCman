@@ -25,6 +25,12 @@ and [What’s New validation record](docs/WHATS_NEW.md).
 
 ### Added
 
+- Customer Center in Settings: RevenueCatUI on iOS 15+, with purchase status,
+  explicit restore and support on iOS 14 and native macOS. Purchase updates share
+  one policy that preserves cached Pro access on failure or cancellation ([#71](https://github.com/gewill/OpenCCman/issues/71)).
+- Internal: isolated StoreKit transaction tests and Pro access/quota regressions;
+  a separate local Debug scheme leaves normal archives free of test products ([#70](https://github.com/gewill/OpenCCman/issues/70)).
+
 - Adaptive conversion workspace: independent per-window layout choices, macOS
   and iPad horizontal/vertical panes, an inspector or settings sheet, pane-size
   controls and keyboard alternatives. Narrow windows temporarily stack the panes

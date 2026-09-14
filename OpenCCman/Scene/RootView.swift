@@ -189,6 +189,10 @@ private struct RootRoutes: View {
 struct SettingsRoutes: View {
   var body: some View {
     SwitchRoutes {
+      Route("/settings/customerCenter") {
+        CustomerCenterScene()
+      }
+
       Route("/settings/openSource") {
         OpenSourceScene()
       }

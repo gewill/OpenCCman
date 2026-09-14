@@ -1,0 +1,33 @@
+2026-09-14 source 14b1a63, scheme assertions aaf9574
+macOS Debug: BUILD SUCCEEDED
+iOS Simulator Debug: BUILD SUCCEEDED
+
+
+openccman-71-pro-access-final.log
+PASS: verified restore/revocation, missing/failed/cancelled snapshots and real quota integration
+PASS: Customer Center localized keys in English, Simplified and Traditional Chinese
+
+openccman-71-whats-new-final.log
+PASS: What’s New content, version persistence, presentation blockers, multi-window ownership, manual viewing and test opt-out
+PASS: en.lproj, all 8 What’s New strings
+PASS: zh-Hans.lproj, all 8 What’s New strings
+PASS: zh-Hant.lproj, all 8 What’s New strings
+
+openccman-71-quota-final.log
+PASS: quota reservations, concurrent cap, idempotent cleanup, cancellation, deinit, midnight and Pro exemption.
+
+openccman-71-project-final.log
+/Users/rxwill/git/MyApps/OpenCCman-customer-center/OpenCCman.xcodeproj/project.pbxproj: OK
+/Users/rxwill/git/MyApps/OpenCCman-customer-center/OpenCCman/Info.plist: OK
+/Users/rxwill/git/MyApps/OpenCCman-customer-center/OpenCCman/OpenCCman.entitlements: OK
+/Users/rxwill/git/MyApps/OpenCCman-customer-center/OpenCCman/PrivacyInfo.xcprivacy: OK
+/Users/rxwill/git/MyApps/OpenCCman-customer-center/OpenCCman/zh-Hant.lproj/Localizable.strings: OK
+/Users/rxwill/git/MyApps/OpenCCman-customer-center/OpenCCman/en.lproj/Localizable.strings: OK
+/Users/rxwill/git/MyApps/OpenCCman-customer-center/OpenCCman/zh-Hans.lproj/Localizable.strings: OK
+
+openccman-71-storekit-final.log
+PASS: local Debug catalog and independent standard Release archive scheme
+	 Executed 7 tests, with 0 failures (0 unexpected) in 6.896 (6.898) seconds
+	 Executed 7 tests, with 0 failures (0 unexpected) in 6.896 (6.899) seconds
+	 Executed 7 tests, with 0 failures (0 unexpected) in 6.896 (6.899) seconds
+** TEST SUCCEEDED **

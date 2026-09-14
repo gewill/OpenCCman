@@ -81,6 +81,8 @@
 		BEA9563D2B31FF8C00E04625 /* ChangeColorSchemeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9563C2B31FF8C00E04625 /* ChangeColorSchemeScene.swift */; };
 		CC0913202600000000000001 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0913202600000000000002 /* WhatsNew.swift */; };
 		CC0913202600000000000101 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0913202600000000000102 /* WhatsNewView.swift */; };
+		3C3627644470F73B7875003F /* CustomerCenterScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAFB8436EC14FFC357BCEFA /* CustomerCenterScene.swift */; };
+		43088A90EB27980ABB8606C3 /* ProAccessUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860A8029E8FF16CE13720671 /* ProAccessUpdate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -151,6 +153,8 @@
 		BEA9563C2B31FF8C00E04625 /* ChangeColorSchemeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeColorSchemeScene.swift; sourceTree = "<group>"; };
 		CC0913202600000000000002 /* WhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
 		CC0913202600000000000102 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
+		7CAFB8436EC14FFC357BCEFA /* CustomerCenterScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCman/Scene/CustomerCenterScene.swift; sourceTree = SOURCE_ROOT; };
+		860A8029E8FF16CE13720671 /* ProAccessUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCman/Model/ProAccessUpdate.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +183,8 @@
 		09DBEC542E3BC69000DD9C5B /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				860A8029E8FF16CE13720671 /* ProAccessUpdate.swift */,
+				7CAFB8436EC14FFC357BCEFA /* CustomerCenterScene.swift */,
 				CC0912202600000000000002 /* ChineseConversionService.swift */,
 				CC0912202600000000000042 /* TextFileService.swift */,
 				09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */,
@@ -432,6 +438,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43088A90EB27980ABB8606C3 /* ProAccessUpdate.swift in Sources */,
+				3C3627644470F73B7875003F /* CustomerCenterScene.swift in Sources */,
 				AB2F59FF46334E4F9E1BA403 /* WorkspaceScrollKeeper.swift in Sources */,
 				CF15D72CB95A456299ABD017 /* PhoneWorkspace.swift in Sources */,
 				FD0333357F8C4778BD8D3FC0 /* WorkspaceSurface.swift in Sources */,

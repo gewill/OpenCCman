@@ -18,7 +18,11 @@ assert scheme.find('LaunchAction').get('buildConfiguration') == 'Debug'
 reference = scheme.find('.//StoreKitConfigurationFileReference').get('identifier')
 assert (root / 'OpenCCman.xcodeproj' / reference).resolve().is_file()
 assert all(x.get('buildForArchiving') == 'NO' for x in scheme.findall('.//BuildActionEntry'))
-print('PASS: local catalog and non-archiving Debug scheme')
+normal = ET.parse(root / 'OpenCCman.xcodeproj/xcshareddata/xcschemes/OpenCCman.xcscheme')
+assert normal.find('.//StoreKitConfigurationFileReference') is None
+assert normal.find('ArchiveAction').get('buildConfiguration') == 'Release'
+assert all(x.get('buildForArchiving') == 'YES' for x in normal.findall('.//BuildActionEntry'))
+print('PASS: local Debug catalog and independent standard Release archive scheme')
 PY
 xcodebuild test \
   -project "$repo_root/Tests/StoreKit/StoreKitRegression.xcodeproj" \
