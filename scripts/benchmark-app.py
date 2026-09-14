@@ -91,7 +91,9 @@ def main():
                     'conditions': ['Release -O; isolated bundle/preferences; ad-hoc signed; sandbox disabled for harness output',
                                    'RevenueCat configure retained; entitlement refresh/delegate/review/WhatsNew suppressed; synthetic Pro preferences',
                                    '1200x800 content points; en locale/light theme via launch arguments',
-                                   'fresh process; harness activates app after didFinishLaunching; OS/file caches NOT purged; not cold boot or first photon',
+                                   'fresh process; one reopen event after initialization; handshake included; OS/file caches NOT purged; not cold boot or first photon',
+                                   'userInitiated activity prevents App Nap for the measured protocol; app foreground state recorded at each stage',
+                                   'two additional fixed-size NSHostingView windows use explicit /home route; not native WindowGroup lifecycle evidence',
                                    'layout flush waits for both native editors to acknowledge exact model text, then displayIfNeeded; not presentation timestamp',
                                    '20ms main timer gap includes harness work and scheduling; not frame rate',
                                    'RSS high water includes earlier stages; footprint and RSS are different metrics']}
@@ -156,7 +158,7 @@ def main():
     summary = {}
     for name in [r['name'] for r in runs[0]['rows']]:
         rows = [next(r for r in run['rows'] if r['name'] == name) for run in runs]
-        keys = ['process_start_to_root_layout_ms', 'app_init_to_root_layout_ms', 'model_completion_ms', 'result_layout_flush_ms', 'read_decode_ms', 'source_layout_flush_ms']
+        keys = ['process_cpu_ms', 'process_start_to_root_layout_ms', 'app_init_to_root_layout_ms', 'model_completion_ms', 'result_layout_flush_ms', 'read_decode_ms', 'source_layout_flush_ms']
         summary[name] = {key: statistics.median(r[key] for r in rows) for key in keys if key in rows[0]}
         summary[name]['median_memory'] = {key: statistics.median(r['memory'][key] for r in rows) for key in rows[0]['memory']}
     (args.output / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
