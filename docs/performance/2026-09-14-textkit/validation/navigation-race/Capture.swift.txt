@@ -1,0 +1,29 @@
+import AppKit
+@main enum Probe {
+ @MainActor static func main() {
+  setbuf(stdout, nil)
+  _ = NSApplication.shared
+  let scroll = NSTextView.scrollableTextView()
+  let text = scroll.documentView as! NSTextView
+  let window = NSWindow(contentRect: NSRect(x: 0,y: 0,width: 420,height: 240),styleMask: [.titled,.resizable],backing: .buffered,defer: false)
+  window.isReleasedWhenClosed=false; window.contentView=scroll;window.title="OpenCCman – Native editor regression"; window.makeKeyAndOrderFront(nil); NSApp.activate(ignoringOtherApps:true)
+  let keeper=WorkspaceScrollKeeper();keeper.attach(text)
+  text.string=(0..<1000).map { "Paragraph \($0): " + String(repeating:"中文 é 👩🏽‍💻 reflow ",count:30)+"\n" }.joined()
+  RunLoop.main.run(until:Date(timeIntervalSinceNow:0.1))
+  let middle=(text.string as NSString).range(of:"Paragraph 500:").location
+  text.setSelectedRange(NSRange(location:middle,length:8));text.scrollRangeToVisible(NSRange(location:middle,length:8))
+  RunLoop.main.run(until:Date(timeIntervalSinceNow:0.1))
+  try! String(window.windowNumber).write(toFile: CommandLine.arguments[1], atomically: true, encoding: .utf8)
+  RunLoop.main.run(until:Date(timeIntervalSinceNow:3))
+  window.setContentSize(NSSize(width:760,height:260))
+  let tail=(text.string as NSString).length-2
+  text.setSelectedRange(NSRange(location:tail,length:0));text.scrollRangeToVisible(NSRange(location:tail,length:1))
+  for _ in 0..<4 { RunLoop.main.run(until:Date(timeIntervalSinceNow:0.1)) }
+  let layout=text.layoutManager!
+  let visible=layout.characterRange(forGlyphRange:layout.glyphRange(forBoundingRect:text.visibleRect,in:text.textContainer!),actualGlyphRange:nil)
+  print("tail",tail,"selection",text.selectedRange(),"visible",visible)
+  withExtendedLifetime(keeper) {}
+  print("tail visible:", NSLocationInRange(tail, visible))
+  RunLoop.main.run(until:Date(timeIntervalSinceNow:6))
+ }
+}

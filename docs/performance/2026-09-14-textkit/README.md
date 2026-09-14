@@ -61,3 +61,10 @@ Apple M4 Pro / 48 GiB，macOS 26.6.2（25G83），Xcode 26.6（17F113），Relea
 修复在排队时保存选区值，两次恢复都要求当前选区仍相同；新的光标/选区导航优先，旧回调仍按原流程清理 pending 状态。不是在捕获阅读锚点时保存选区（那会错误忽略发生在改宽之前的选区改变）。不修改选区、不重新发出滚动命令，也不通过增加测试等待掩盖失败。
 
 新增回归故意把“改宽→跳文末”放在同一个主线程执行段，等待回调后同时验证选区与可见文本。原实现 exit 133，修复后 exit 0，既有阅读位置、组合文字和 1/5/10 MiB 长段落回归通过。[独立复现源码与日志](validation/navigation-race/)。此修复发生在原性能采样之后，本页旧性能数字继续只对应标注的历史源码，不作为新增选区保护的重测结果。
+
+原生诊断窗口的实际截图/录屏（非整套应用 UI，也不用于性能计时）：macOS 26.6.2，浅色、默认字号，英文窗口标题、固定中文/Emoji 语料；内容区域从 420×240pt 变为 760×260pt。前源码 `06ad7f5`，后源码 `d8bbfd1`。通过 gh 附件上传，[录制源码、文件校验与可见范围日志](validation/navigation-race/media-provenance.json)。
+
+| 修改前：选区在文末，视口被拉回 Paragraph 500 | 修改后：Paragraph 997–999 及文末保持可见 |
+|---|---|
+| ![修复前原生编辑器](https://github.com/user-attachments/assets/49f37864-a066-4c86-8121-2ad0020b3db6) | ![修复后原生编辑器](https://github.com/user-attachments/assets/9d0d772e-c16f-4772-8355-1be4a8cb461e) |
+| [交错导航录像：修复前](https://github.com/user-attachments/assets/0b1f1e4e-501b-4a15-9490-79c725bcd419) | [交错导航录像：修复后](https://github.com/user-attachments/assets/b14aa7c6-764c-4b5b-87c8-1e2aa8e7d93c) |

@@ -1,0 +1,45 @@
+{
+  "scope": "Native NSTextView diagnostic window using production WorkspaceScrollKeeper, not the full application or a performance timing run",
+  "platform": "macOS 26.6.2 (25G83), Xcode 26.6, light, default native editor font, English title and fixed Chinese/Emoji corpus",
+  "window_content_points_before_action": [
+    420,
+    240
+  ],
+  "window_content_points_after_action": [
+    760,
+    260
+  ],
+  "before_source": "06ad7f5a1cefca26950a4eb72481c8b6133f3df5",
+  "after_source": "d8bbfd16d174047db49197325b29250ead5ef246",
+  "source_sha256": {
+    "Before": "0709795271b0be7e2c6f87a13f291c400239ac7068b1f655e41acf1a69942352",
+    "After": "4b17e79b9793e16db4f2b646055df87e3a110a5c42305b52d226e835b3f83d66",
+    "Capture": "8184c45edab174c89f038f72e375924ca1c0f2f9d46f4fa5cf5a7098078d7756"
+  },
+  "assets": {
+    "Before.png": {
+      "url": "https://github.com/user-attachments/assets/49f37864-a066-4c86-8121-2ad0020b3db6",
+      "sha256": "1b8deffbdf02c9df0323cb2592ed3ec345a7c8df0b7b8257a8b49a5b14232f3d",
+      "bytes": 554061
+    },
+    "After.png": {
+      "url": "https://github.com/user-attachments/assets/9d0d772e-c16f-4772-8355-1be4a8cb461e",
+      "sha256": "c75a7fa5e0cdeb950a4fb3a79a143d32af5e3fab84d836ced2c6410ae59f34aa",
+      "bytes": 523941
+    },
+    "Before.mp4": {
+      "url": "https://github.com/user-attachments/assets/0b1f1e4e-501b-4a15-9490-79c725bcd419",
+      "sha256": "59135fd08235f8c232e43ef98a44cc583e72e78cd4c620a2568a3cbba27a395e",
+      "bytes": 241355
+    },
+    "After.mp4": {
+      "url": "https://github.com/user-attachments/assets/b14aa7c6-764c-4b5b-87c8-1e2aa8e7d93c",
+      "sha256": "5459bc12f2eabb1600d3ad2ae5e09c0517dc13b5bbee612a28dec8752e640493",
+      "bytes": 214752
+    }
+  },
+  "observed": {
+    "Before": "tail 645888 selection {645888, 0} visible {322407, 2279}\ntail visible: false\n",
+    "After": "tail 645888 selection {645888, 0} visible {643952, 1938}\ntail visible: true\n"
+  }
+}
