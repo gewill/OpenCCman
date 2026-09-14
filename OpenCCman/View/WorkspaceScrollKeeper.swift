@@ -63,7 +63,7 @@ import SwiftUI
     }
 
     private func viewportChanged() {
-      guard let clip, !restoring else { return }
+      guard let clip, let editor, !restoring else { return }
       if size != clip.bounds.size {
         size = clip.bounds.size
         if pending == nil {
@@ -72,15 +72,16 @@ import SwiftUI
         guard pending != nil, !restorationScheduled else { return }
         restorationScheduled = true
         let currentRevision = revision
+        let selection = editor.selectedRange()
         DispatchQueue.main.async { [weak self] in
           guard let self, revision == currentRevision, let pending else { return }
-          restore(pending)
+          restore(pending, ifSelectionIs: selection)
           // Noncontiguous layout initially estimates offscreen geometry. Keep
           // the logical anchor through the native scroll/layout adjustment,
           // then place it once more using the settled local line geometry.
           DispatchQueue.main.async { [weak self] in
             guard let self, revision == currentRevision else { return }
-            restore(pending)
+            restore(pending, ifSelectionIs: selection)
             self.pending = nil
             restorationScheduled = false
             capture()
@@ -108,9 +109,12 @@ import SwiftUI
       anchor = Anchor(character: character, lineOffset: point.y - origin.y - rect.minY)
     }
 
-    private func restore(_ anchor: Anchor) {
+    private func restore(_ anchor: Anchor, ifSelectionIs selection: NSRange) {
       guard let editor, let clip, let layout = editor.layoutManager,
             let storage = editor.textStorage, anchor.character < storage.length else { return }
+      // A new caret/selection navigation takes precedence over a queued width
+      // restoration. Never scroll the new selection back to an obsolete anchor.
+      guard editor.selectedRange() == selection else { return }
       restoring = true
       defer { restoring = false; capture() }
       editor.scrollRangeToVisible(NSRange(location: anchor.character, length: 0))

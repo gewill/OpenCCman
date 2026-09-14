@@ -47,6 +47,7 @@ enum EditorScrollChecks {
     checkUnlaidOutDocumentEnd()
     checkLargeEditor()
     checkMiddleReflowAnchor()
+    checkNavigationDuringReflow()
     print("PASS: on-demand document end, native text reflow, selection, rapid resize, new-document reset and marked range preservation")
   }
 
@@ -143,6 +144,38 @@ enum EditorScrollChecks {
     }
     print("PASS: 1/5/10 MiB long paragraphs retain the native editor and selection through reflow")
     print("PASS: Native editor retained through attach, middle/tail resize, selection, composition and replacement")
+  }
+
+  @MainActor private static func checkNavigationDuringReflow() {
+    let scroll = NSTextView.scrollableTextView()
+    let text = scroll.documentView as! NSTextView
+    let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 420, height: 240),
+                          styleMask: [.titled, .resizable], backing: .buffered, defer: false)
+    window.isReleasedWhenClosed = false
+    window.contentView = scroll
+    window.orderFront(nil)
+    defer { window.close() }
+    let keeper = WorkspaceScrollKeeper()
+    keeper.attach(text)
+    text.string = (0..<1000).map { "Paragraph \($0): " + String(repeating: "中文 é 👩🏽‍💻 reflow ", count: 30) + "\n" }.joined()
+    settle()
+    let middle = (text.string as NSString).range(of: "Paragraph 500:").location
+    text.setSelectedRange(NSRange(location: middle, length: 8))
+    text.scrollRangeToVisible(NSRange(location: middle, length: 8))
+    settle()
+    // Intentionally navigate before queued restoration callbacks can run.
+    window.setContentSize(NSSize(width: 760, height: 260))
+    let tail = (text.string as NSString).length - 2
+    text.setSelectedRange(NSRange(location: tail, length: 0))
+    text.scrollRangeToVisible(NSRange(location: tail, length: 1))
+    for _ in 0..<4 { settle() }
+    let manager = text.layoutManager!
+    let visible = manager.characterRange(forGlyphRange: manager.glyphRange(forBoundingRect: text.visibleRect,
+                                          in: text.textContainer!), actualGlyphRange: nil)
+    precondition(text.selectedRange().location == tail)
+    precondition(NSLocationInRange(tail, visible), "Later navigation must win over queued width restoration")
+    withExtendedLifetime(keeper) {}
+    print("PASS: navigation during pending reflow keeps the new caret visible")
   }
 
   @MainActor private static func checkMiddleReflowAnchor() {

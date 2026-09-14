@@ -2,7 +2,7 @@
 
 > 测量版本说明：本页原始数据来自旧诊断入口。PR #66 review 后的协议 2 已同步进工具，计时内的编辑器全文比较已移除，构建复用和来源验证已加固。此页 `action_ms` 在独立区间计时，全文哈希校验在停表后；但进程 CPU/峰值内存仍包含旧入口工作，不能将这些历史数字与协议 2 样本混合比较。重测必须新建目录并在构建时指定 `--reflow`，不手改旧 metadata。
 
-最终实现来自 `5e1de0b`，基于 #66 / `fc94ec0`。只修改 `WorkspaceScrollKeeper`，保留现有系统编辑器、转换模型、iOS 14/macOS 11、精确依赖和 10 MiB 限额。
+原性能测量实现来自 `5e1de0b`，基于 #66 / `fc94ec0`。只修改 `WorkspaceScrollKeeper`，保留现有系统编辑器、转换模型、iOS 14/macOS 11、精确依赖和 10 MiB 限额。
 
 ## 问题与实现
 
@@ -53,3 +53,11 @@ Apple M4 Pro / 48 GiB，macOS 26.6.2（25G83），Xcode 26.6（17F113），Relea
 - 未推送build分支、未触发Xcode Cloud，未合并未完成检查的PR。
 
 参考：[Apple TextKit最佳实践](https://developer.apple.com/videos/play/wwdc2018/221/)、[backgroundLayoutEnabled](https://developer.apple.com/documentation/appkit/nslayoutmanager/backgroundlayoutenabled)、[TextKit兼容模式](https://developer.apple.com/videos/play/wwdc2022/10090/)。
+
+## 后续回归：导航与待执行恢复回调交错
+
+同步 #66 工具修复后，macOS 15 CI 的首次文末可见性检查失败，选区位于 645888，但可见区域仍在文中。相同代码也曾通过 CI。局部复现进一步确认：在窗口改宽后、两次异步恢复尚未完成时立即改变选区并跳转文末，旧恢复会把视口拉回原锚点；等待更久不能修正已经覆盖的导航。
+
+修复在排队时保存选区值，两次恢复都要求当前选区仍相同；新的光标/选区导航优先，旧回调仍按原流程清理 pending 状态。不是在捕获阅读锚点时保存选区（那会错误忽略发生在改宽之前的选区改变）。不修改选区、不重新发出滚动命令，也不通过增加测试等待掩盖失败。
+
+新增回归故意把“改宽→跳文末”放在同一个主线程执行段，等待回调后同时验证选区与可见文本。原实现 exit 133，修复后 exit 0，既有阅读位置、组合文字和 1/5/10 MiB 长段落回归通过。[独立复现源码与日志](validation/navigation-race/)。此修复发生在原性能采样之后，本页旧性能数字继续只对应标注的历史源码，不作为新增选区保护的重测结果。
