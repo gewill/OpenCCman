@@ -4,7 +4,6 @@ import SwiftUI
 
 struct ProScene: View {
   @State var packages: [RevenueCat.Package] = []
-  @State var entitlementInfos: [String: RevenueCat.EntitlementInfo] = [:]
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @State var isLoading: Bool = false
   @State var errorMessage: String = ""
@@ -33,8 +32,8 @@ struct ProScene: View {
           self.errorMessage = ""
           Purchases.shared.restorePurchases { customerInfo, error in
             self.isLoading = false
-            self.showError(message: error?.localizedDescription)
-            self.setEntitlementInfos(customerInfo?.entitlements.all)
+            self.showError(message: IAPManager.isCancellation(error) ? nil : error?.localizedDescription)
+            IAPManager.shared.applyCustomerInfo(customerInfo, error: error)
           }
         } label: {
           Text("Restore")
@@ -148,9 +147,9 @@ struct ProScene: View {
           self.errorMessage = ""
           Purchases.shared.purchase(package: package) { _, customerInfo, error, userCancelled in
             self.isLoading = false
-            guard userCancelled == false else { return }
-            self.showError(message: error?.localizedDescription)
-            self.setEntitlementInfos(customerInfo?.entitlements.all)
+            let update = ProAccessUpdate(activeEntitlement: nil, failed: error != nil, cancelled: userCancelled)
+            self.showError(message: update.shouldShowError ? error?.localizedDescription : nil)
+            IAPManager.shared.applyCustomerInfo(customerInfo, error: error, cancelled: userCancelled)
           }
         } label: {
           Text("Buy Now")
@@ -173,14 +172,14 @@ struct ProScene: View {
     let group = DispatchGroup()
     group.enter()
     Purchases.shared.getOfferings { offerings, error in
-      self.showError(message: error?.localizedDescription)
+      self.showError(message: IAPManager.isCancellation(error) ? nil : error?.localizedDescription)
       self.setOfferings(offerings)
       group.leave()
     }
     group.enter()
     Purchases.shared.getCustomerInfo { customerInfo, error in
-      self.showError(message: error?.localizedDescription)
-      self.setEntitlementInfos(customerInfo?.entitlements.all)
+      self.showError(message: IAPManager.isCancellation(error) ? nil : error?.localizedDescription)
+      IAPManager.shared.applyCustomerInfo(customerInfo, error: error)
       group.leave()
     }
     group.notify(queue: .main) {
@@ -191,31 +190,16 @@ struct ProScene: View {
   func updateOfferings() {
     isLoading = true
     Purchases.shared.getOfferings { offerings, error in
-      self.showError(message: error?.localizedDescription)
+      self.showError(message: IAPManager.isCancellation(error) ? nil : error?.localizedDescription)
       self.isLoading = false
       self.setOfferings(offerings)
     }
   }
 
   func updatePermissions() {
-    Purchases.shared.getCustomerInfo { customerInfo, _ in
-      self.setEntitlementInfos(customerInfo?.entitlements.all)
+    Purchases.shared.getCustomerInfo { customerInfo, error in
+      IAPManager.shared.applyCustomerInfo(customerInfo, error: error)
     }
-  }
-
-  func setEntitlementInfos(_ entitlementInfos: [String: RevenueCat.EntitlementInfo]?) {
-    // A failed request is not evidence that the customer lost their entitlement.
-    guard let entitlementInfos else { return }
-
-    if let pro = entitlementInfos[IAPManager.Permission.pro_lifetime.rawValue],
-       pro.isActive
-    {
-      isPro = true
-    } else {
-      isPro = false
-    }
-
-    self.entitlementInfos = entitlementInfos
   }
 
   func setOfferings(_ offerings: RevenueCat.Offerings?) {

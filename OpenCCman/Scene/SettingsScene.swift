@@ -47,6 +47,11 @@ struct SettingsScene: View {
     ScrollView {
       VStack(spacing: Padding.verLarge) {
         VStack(spacing: Constant.padding) {
+          CellButton(title: "customer_center_title") {
+            navigator.navigate("/settings/customerCenter")
+          }
+          .accessibilityIdentifier("customer-center-settings")
+          Divider()
           HStack(alignment: .center, spacing: 6) {
             Text("App Version")
             Spacer()

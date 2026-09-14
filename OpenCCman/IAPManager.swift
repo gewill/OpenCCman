@@ -75,7 +75,30 @@ final class IAPManager: NSObject, PurchasesDelegate {
   }
 
   func purchases(_ purchases: Purchases, receivedUpdated customerInfo: CustomerInfo) {
-    let isPro = customerInfo.entitlements.active[Permission.pro_lifetime.rawValue] != nil
-    UserDefaults.standard.set(isPro, forKey: UserDefaultsKeys.isPro.rawValue)
+    applyCustomerInfo(customerInfo)
+  }
+
+  static func isCancellation(_ error: Error?) -> Bool {
+    guard let error = error as NSError? else { return false }
+    return error.domain == ErrorCode.errorDomain && error.code == ErrorCode.purchaseCancelledError.rawValue
+  }
+
+  func refreshAccess() {
+    Purchases.shared.getCustomerInfo { [weak self] info, error in
+      self?.applyCustomerInfo(info, error: error)
+    }
+  }
+
+  func applyCustomerInfo(_ info: CustomerInfo?, error: Error? = nil, cancelled: Bool = false) {
+    let update = ProAccessUpdate(
+      activeEntitlement: info.map { $0.entitlements.active[Permission.pro_lifetime.rawValue] != nil },
+      failed: error != nil, cancelled: cancelled || Self.isCancellation(error)
+    )
+    let apply = {
+      let defaults = UserDefaults.standard
+      let key = UserDefaultsKeys.isPro.rawValue
+      defaults.set(update.applying(to: defaults.bool(forKey: key)), forKey: key)
+    }
+    if Thread.isMainThread { apply() } else { DispatchQueue.main.async(execute: apply) }
   }
 }
