@@ -37,12 +37,12 @@ Apple M4 Pro / 48 GiB，macOS 26.6.2（25G83），Xcode 26.6（17F113），Relea
 
 ## 实际界面证据
 
-同为 Mac 1200×800pt、英文、浅色、默认字号、10 MiB 固定语料。修复前复用已通过gh上传的同条件基线记录（应用源码c3009c7，与fc94ec0应用源码一致）；修复后源码5e1de0b。本次截图/视频也通过gh上传，文件校验见 [media-provenance.json](media-provenance.json)。录像含实际布局切换和文末跳转，不用于性能计时。
+同为 Mac 1200×800pt、英文、浅色、默认字号、10 MiB 固定语料。修复前复用已通过gh上传的同条件基线记录（应用源码c3009c7，与fc94ec0应用源码一致）；修复后源码5e1de0b。截图/视频现通过 gh pr edit --attach 上传为附件，当前树移除媒体二进制，既有历史未重写；文件校验见 [media-provenance.json](media-provenance.json)。录像含实际布局切换和文末跳转，不用于性能计时。
 
 | 修复前 | 修复后 |
 |---|---|
-| ![修复前](https://github.com/gewill/OpenCCman/blob/fc94ec0ded996e76a67feea38f4efb59b8d50711/docs/performance/2026-09-14/media/baseline.png?raw=true) | ![修复后](media/after.png) |
-| [交互视频](https://github.com/gewill/OpenCCman/blob/fc94ec0ded996e76a67feea38f4efb59b8d50711/docs/performance/2026-09-14/media/baseline.mp4) | [交互视频](media/after.mp4) |
+| ![修复前](https://github.com/gewill/OpenCCman/blob/fc94ec0ded996e76a67feea38f4efb59b8d50711/docs/performance/2026-09-14/media/baseline.png?raw=true) | ![修复后](https://github.com/user-attachments/assets/81b91a0a-0906-4a3c-bc77-33a34f044233) |
+| [交互视频](https://github.com/gewill/OpenCCman/blob/fc94ec0ded996e76a67feea38f4efb59b8d50711/docs/performance/2026-09-14/media/baseline.mp4) | [交互视频](https://github.com/user-attachments/assets/36f7ca52-e4ca-4ebb-b169-83e639d4ea85) |
 
 ## 验证与边界
 
