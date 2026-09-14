@@ -76,7 +76,10 @@ private struct PurchaseSupportView: View {
     }
     .background(Color.Neumorphic.main)
     .onAppear { load(restoring: false) }
-    .onDisappear { requestID = UUID() }
+    .onDisappear {
+      requestID = UUID()
+      isLoading = false
+    }
   }
 
   private func load(restoring: Bool) {
