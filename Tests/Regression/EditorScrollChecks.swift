@@ -104,9 +104,12 @@ enum EditorScrollChecks {
     text.setSelectedRange(NSRange(location: tail, length: 0))
     text.scrollRangeToVisible(NSRange(location: tail, length: 1))
     settle()
-    let lastVisible = text.characterIndexForInsertion(at: text.convert(
-      NSPoint(x: scroll.contentView.bounds.maxX, y: scroll.contentView.bounds.maxY - 1), from: scroll.contentView))
-    precondition(lastVisible >= tail, "First jump must make the previously unseen tail visible")
+    // An insertion point beyond the last rendered line is not a reliable
+    // visible-text query on macOS 15. Ask for the actual visible glyph range.
+    let visibleGlyphs = manager.glyphRange(forBoundingRect: text.visibleRect, in: text.textContainer!)
+    let visibleCharacters = manager.characterRange(forGlyphRange: visibleGlyphs, actualGlyphRange: nil)
+    precondition(NSLocationInRange(tail, visibleCharacters),
+                 "First jump must make the previously unseen tail visible: tail \(tail), visible \(visibleCharacters), bounds \(text.visibleRect)")
     window.setContentSize(NSSize(width: 380, height: 260))
     settle()
     precondition(text.layoutManager === manager)
