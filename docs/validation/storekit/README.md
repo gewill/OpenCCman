@@ -38,3 +38,5 @@ StoreKit 状态异步传播，测试按预期状态轮询，最多 5 秒；超�
 RevenueCat 的本地测试需核对 SDK 模式和测试证书；其文档列出 macOS 本地配置及部分退款事件的限制。本自动套件不依赖该组合，不冒充原生 Mac RevenueCat 链路通过。真实旧系统、线上价格展示、重装／跨设备恢复仍未验收。
 
 参考：[Apple 本地测试](https://developer.apple.com/documentation/xcode/setting-up-storekit-testing-in-xcode)、[RevenueCat 测试条件](https://www.revenuecat.com/docs/test-and-launch/sandbox/apple-app-store)。
+
+CI 初次执行的 xcodebuild 已成功，但日志摘要依赖 runner 没有的 `rg`，导致退出 127；已改用现有 Python 输出摘要，不改变交易测试、断言或通过标准。

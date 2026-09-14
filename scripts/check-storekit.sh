@@ -30,4 +30,9 @@ xcodebuild test \
     tail -n 80 "$audit_dir/xcodebuild.log"
     exit 1
   }
-rg 'Test Case .*passed|Executed|TEST SUCCEEDED' "$audit_dir/xcodebuild.log"
+python3 - "$audit_dir/xcodebuild.log" <<'PYLOG'
+import pathlib, re, sys
+for line in pathlib.Path(sys.argv[1]).read_text().splitlines():
+    if re.search(r'Test Case .*passed|Executed|TEST SUCCEEDED', line):
+        print(line)
+PYLOG
