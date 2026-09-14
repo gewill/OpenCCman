@@ -1,0 +1,80 @@
+{
+  "name": "StoreKitRegression",
+  "options": {
+    "deploymentTarget": {
+      "macOS": "14.0"
+    }
+  },
+  "targets": {
+    "StoreKitRegression": {
+      "type": "bundle.unit-test",
+      "platform": "macOS",
+      "sources": [
+        "StoreKitRegressionTests.swift",
+        {
+          "path": "Products.storekit",
+          "buildPhase": "resources"
+        }
+      ],
+      "settings": {
+        "base": {
+          "PRODUCT_BUNDLE_IDENTIFIER": "org.gewill.OpenCCman.StoreKitRegression",
+          "GENERATE_INFOPLIST_FILE": "YES",
+          "SWIFT_VERSION": "5.0",
+          "ENABLE_APP_SANDBOX": "NO",
+          "CODE_SIGN_IDENTITY": "-"
+        }
+      },
+      "dependencies": [
+        {
+          "sdk": "StoreKit.framework"
+        },
+        {
+          "sdk": "StoreKitTest.framework"
+        },
+        {
+          "target": "StoreKitHost"
+        }
+      ]
+    },
+    "StoreKitHost": {
+      "type": "application",
+      "platform": "macOS",
+      "sources": [
+        "StoreKitHost.swift"
+      ],
+      "settings": {
+        "base": {
+          "PRODUCT_BUNDLE_IDENTIFIER": "org.gewill.OpenCCman.StoreKitHost",
+          "GENERATE_INFOPLIST_FILE": "YES",
+          "CODE_SIGN_IDENTITY": "-",
+          "SWIFT_VERSION": "5.0",
+          "ENABLE_APP_SANDBOX": "NO"
+        }
+      }
+    }
+  },
+  "schemes": {
+    "StoreKitRegression": {
+      "build": {
+        "targets": {
+          "StoreKitRegression": [
+            "test"
+          ],
+          "StoreKitHost": [
+            "test"
+          ]
+        }
+      },
+      "test": {
+        "targets": [
+          {
+            "name": "StoreKitRegression",
+            "parallelizable": false
+          }
+        ],
+        "gatherCoverageData": false
+      }
+    }
+  }
+}
