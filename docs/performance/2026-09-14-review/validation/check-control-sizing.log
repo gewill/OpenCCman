@@ -1,0 +1,35 @@
+/var/folders/h1/t5wxjp210_gd35wqdgrl5y3c0000gn/T/openccman-sizing.ixITX5/neumorphic/Sources/Neumorphic/NeumorphicStepper.swift:38:73: warning: '+' was deprecated in macOS 26.0: Use string interpolation on `Text` instead: `Text("Hello \(name)")` [#DeprecatedDeclaration]
+36 |             .disabled(value <= bounds.lowerBound)
+37 |             .neumorphicButtonAccessibility(
+38 |                 label: Text(LocalizedStringKey("Decrease")) + Text(" ") + Text(verbatim: label)
+   |                                                                         `- warning: '+' was deprecated in macOS 26.0: Use string interpolation on `Text` instead: `Text("Hello \(name)")` [#DeprecatedDeclaration]
+39 |             )
+40 |             Text("\(label): \(value)").frame(minWidth: 72)
+
+/var/folders/h1/t5wxjp210_gd35wqdgrl5y3c0000gn/T/openccman-sizing.ixITX5/neumorphic/Sources/Neumorphic/NeumorphicStepper.swift:38:61: warning: '+' was deprecated in macOS 26.0: Use string interpolation on `Text` instead: `Text("Hello \(name)")` [#DeprecatedDeclaration]
+36 |             .disabled(value <= bounds.lowerBound)
+37 |             .neumorphicButtonAccessibility(
+38 |                 label: Text(LocalizedStringKey("Decrease")) + Text(" ") + Text(verbatim: label)
+   |                                                             `- warning: '+' was deprecated in macOS 26.0: Use string interpolation on `Text` instead: `Text("Hello \(name)")` [#DeprecatedDeclaration]
+39 |             )
+40 |             Text("\(label): \(value)").frame(minWidth: 72)
+
+/var/folders/h1/t5wxjp210_gd35wqdgrl5y3c0000gn/T/openccman-sizing.ixITX5/neumorphic/Sources/Neumorphic/NeumorphicStepper.swift:54:73: warning: '+' was deprecated in macOS 26.0: Use string interpolation on `Text` instead: `Text("Hello \(name)")` [#DeprecatedDeclaration]
+52 |             .disabled(value >= bounds.upperBound)
+53 |             .neumorphicButtonAccessibility(
+54 |                 label: Text(LocalizedStringKey("Increase")) + Text(" ") + Text(verbatim: label)
+   |                                                                         `- warning: '+' was deprecated in macOS 26.0: Use string interpolation on `Text` instead: `Text("Hello \(name)")` [#DeprecatedDeclaration]
+55 |             )
+56 |         }
+
+/var/folders/h1/t5wxjp210_gd35wqdgrl5y3c0000gn/T/openccman-sizing.ixITX5/neumorphic/Sources/Neumorphic/NeumorphicStepper.swift:54:61: warning: '+' was deprecated in macOS 26.0: Use string interpolation on `Text` instead: `Text("Hello \(name)")` [#DeprecatedDeclaration]
+52 |             .disabled(value >= bounds.upperBound)
+53 |             .neumorphicButtonAccessibility(
+54 |                 label: Text(LocalizedStringKey("Increase")) + Text(" ") + Text(verbatim: label)
+   |                                                             `- warning: '+' was deprecated in macOS 26.0: Use string interpolation on `Text` instead: `Text("Hello \(name)")` [#DeprecatedDeclaration]
+55 |             )
+56 |         }
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+ld: warning: double slash removed from -install_name (/var/folders/h1/t5wxjp210_gd35wqdgrl5y3c0000gn/T//openccman-sizing.ixITX5/libNeumorphic.dylib)
+PASS: upstream 30→44 reproduction; Mac icon 28, text 28, primary 32, segment 28, switch 28 and multiline growth
