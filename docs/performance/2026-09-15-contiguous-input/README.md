@@ -41,3 +41,18 @@ return try ChineseConversionService.convertSynchronously(contiguous, options: op
 这个候选未展现收益，因此停止该方向的实现，不追加其内存、完整应用或设备验收。没有测量这次候选的峰值内存，不能仅凭局部副本写法声称增加或减少了具体内存。单轮、每项五对结果也不足以确定所有小差异的来源；未全程控制系统外部负载和热状态。
 
 生产服务、依赖和设置均未修改，运行结束后独立剪贴板按测试代码释放。后续若选择其他编码路径，应重新测量其自身的输出、耗时和内存；本实验不替代 #18／#22 的剩余验收。
+
+## 重现
+
+在完整仓库 checkout 的根目录执行；需 macOS 登录会话及 Swift 工具链。使用新的临时目录、历史生产服务和本页原型；远端依赖仍锁定同一 revision。原始测量使用本地、已校验的该 revision checkout，二者源码版本相同。
+
+```bash
+probe_dir="$(mktemp -d /tmp/openccman-contiguous.XXXXXX)"
+mkdir -p "$probe_dir/Sources/ContiguousInputBenchmark"
+git show f51b6fd4ea1e922ca83b67440537f554d6ba1619:OpenCCman/Services/ChineseConversionService.swift > "$probe_dir/Sources/ContiguousInputBenchmark/ChineseConversionService.swift"
+cp docs/performance/2026-09-15-contiguous-input/ContiguousInputBenchmark.swift "$probe_dir/Sources/ContiguousInputBenchmark/"
+cp docs/performance/2026-09-15-contiguous-input/Package.swift "$probe_dir/"
+swift run -c release --package-path "$probe_dir" > "$probe_dir/samples.jsonl" 2> "$probe_dir/build-and-stderr.log"
+```
+
+应返回 0，最后一行为 `run_completed`、280 个样本。保留完整新日志；不要覆盖本页的历史记录。`scripts/benchmark-byte-scan.py` 的 `summarize()` 可用于重新检查数据完整性和计算摘要。
