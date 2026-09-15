@@ -22,7 +22,7 @@ PROTOCOL = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(PROTOCOL)
 
 
-def validate(rows, cycles=False):
+def validate(rows, cycles=False, documents=False):
     normalized = []
     pids = set()
     for row in rows:
@@ -35,7 +35,7 @@ def validate(rows, cycles=False):
                 or not isinstance(row.get('elapsed_ms'), (int, float))
                 or not math.isfinite(row['elapsed_ms'])
                 or type(row.get('visible_main_capable_windows')) is not int
-                or not 0 <= created <= (7 if cycles else 2)):
+                or not 0 <= created <= (6 if documents else 7 if cycles else 2)):
             raise ValueError('Malformed real-model record')
         pids.add(row['pid'])
         normalized.append({
@@ -49,6 +49,11 @@ def validate(rows, cycles=False):
         values = [row[key] for row in normalized]
         if values != sorted(values):
             raise ValueError('Records are out of order')
+    if documents:
+        spec = importlib.util.spec_from_file_location('document_protocol', ROOT / 'scripts/window_document_protocol.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module.validate_documents(rows)
     if cycles:
         return validate_cycles(rows)
     stages = PROTOCOL.validate(normalized)
@@ -118,9 +123,11 @@ def main():
     mode.add_argument('--raw', type=Path, help='Read-only validation of an existing per-process JSONL')
     mode.add_argument('--app', type=Path, help='CI only: launch the isolated automatic app')
     parser.add_argument('--output', required=True, type=Path, help='New report directory')
-    parser.add_argument('--cycles', action='store_true', help='Validate three cycles with distinct new model identities')
+    protocol = parser.add_mutually_exclusive_group()
+    protocol.add_argument('--documents', action='store_true', help='Validate fixed document cycles and native-call close overlap')
+    protocol.add_argument('--cycles', action='store_true', help='Validate three cycles with distinct new model identities')
     args = parser.parse_args()
-    bundle = BUNDLE + ('Cycles' if args.cycles else '')
+    bundle = BUNDLE + ('Documents' if args.documents else 'Cycles' if args.cycles else '')
     if args.app and (os.environ.get('GITHUB_ACTIONS') != 'true' or os.environ.get('RUNNER_OS') != 'macOS'):
         parser.error('Local mode only reads --raw; launch the private app through the normal UI')
     if args.app:
@@ -137,7 +144,7 @@ def main():
             with (args.output / 'process.log').open('w') as log:
                 process = subprocess.Popen([str(executable)], stdout=log, stderr=subprocess.STDOUT)
                 result['pid'] = process.pid
-                result['exit_code'] = process.wait(timeout=180 if args.cycles else 100)
+                result['exit_code'] = process.wait(timeout=270 if args.documents else 180 if args.cycles else 100)
             if result['exit_code'] != 0:
                 raise ValueError('Diagnostic app exited unsuccessfully')
             candidates = list((Path.home() / 'Library/Caches' / bundle).glob(f'lifecycle-{process.pid}-*.jsonl'))
@@ -147,7 +154,7 @@ def main():
         data = raw.read_bytes()
         (args.output / 'raw.jsonl').write_bytes(data)
         result['raw_sha256'] = hashlib.sha256(data).hexdigest()
-        result['observations'] = validate([json.loads(line) for line in data.splitlines()], args.cycles)
+        result['observations'] = validate([json.loads(line) for line in data.splitlines()], args.cycles, args.documents)
         result['valid_protocol'] = True
     except (OSError, ValueError, subprocess.SubprocessError) as error:
         result['error'] = str(error)

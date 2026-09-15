@@ -26,6 +26,10 @@ on:
         description: Build an isolated Release native window lifecycle diagnostic app
         type: boolean
         default: false
+      document_window_lifecycle:
+        description: Measure fixed 1/10 MiB documents and native-call active close without CUA
+        type: boolean
+        default: false
       cycle_window_lifecycle:
         description: Build and measure three native menu window cycles without CUA
         type: boolean
@@ -45,7 +49,7 @@ concurrency:
 jobs:
   regression:
     name: App Regression
-    if: github.event_name != 'workflow_dispatch' || (!inputs.build_window_lifecycle && !inputs.automatic_window_lifecycle && !inputs.cycle_window_lifecycle && !inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
+    if: github.event_name != 'workflow_dispatch' || (!inputs.build_window_lifecycle && !inputs.automatic_window_lifecycle && !inputs.cycle_window_lifecycle && !inputs.document_window_lifecycle && !inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
     runs-on: macos-15
     timeout-minutes: 20
     steps:
@@ -168,7 +172,7 @@ jobs:
 
   window-lifecycle-validation:
     name: Build native window lifecycle diagnostic app
-    if: github.event_name == 'workflow_dispatch' && (inputs.build_window_lifecycle || inputs.automatic_window_lifecycle || inputs.cycle_window_lifecycle)
+    if: github.event_name == 'workflow_dispatch' && (inputs.build_window_lifecycle || inputs.automatic_window_lifecycle || inputs.cycle_window_lifecycle || inputs.document_window_lifecycle)
     runs-on: macos-15
     timeout-minutes: 20
     env:
@@ -181,11 +185,15 @@ jobs:
         env:
           AUTOMATIC_LIFECYCLE: ${{ inputs.automatic_window_lifecycle }}
           CYCLE_LIFECYCLE: ${{ inputs.cycle_window_lifecycle }}
+          DOCUMENT_LIFECYCLE: ${{ inputs.document_window_lifecycle }}
         run: |
           prepare_args=()
           build_args=()
           diagnostic_bundle=org.gewill.OpenCCman.NativeWindowLifecycleAudit
-          if [[ "$CYCLE_LIFECYCLE" == "true" ]]; then
+          if [[ "$DOCUMENT_LIFECYCLE" == "true" ]]; then
+            prepare_args+=(--documents)
+            diagnostic_bundle+=AutoDocuments
+          elif [[ "$CYCLE_LIFECYCLE" == "true" ]]; then
             prepare_args+=(--cycles)
             diagnostic_bundle+=AutoCycles
           elif [[ "$AUTOMATIC_LIFECYCLE" == "true" ]]; then
@@ -212,12 +220,15 @@ jobs:
           ditto -c -k --keepParent "${{ runner.temp }}/lifecycle-derived/Build/Products/Release/OpenCCman.app" \
             "${{ runner.temp }}/lifecycle-artifact/OpenCCman-lifecycle.zip"
       - name: Measure automatic native windows without CUA observation
-        if: inputs.automatic_window_lifecycle || inputs.cycle_window_lifecycle
+        if: inputs.automatic_window_lifecycle || inputs.cycle_window_lifecycle || inputs.document_window_lifecycle
         env:
           CYCLE_LIFECYCLE: ${{ inputs.cycle_window_lifecycle }}
+          DOCUMENT_LIFECYCLE: ${{ inputs.document_window_lifecycle }}
         run: |
           check_args=()
-          if [[ "$CYCLE_LIFECYCLE" == "true" ]]; then check_args+=(--cycles); fi
+          if [[ "$DOCUMENT_LIFECYCLE" == "true" ]]; then
+            check_args+=(--documents)
+          elif [[ "$CYCLE_LIFECYCLE" == "true" ]]; then check_args+=(--cycles); fi
           python3 scripts/check-native-window-lifecycle.py "${check_args[@]}" \
             --app "${{ runner.temp }}/lifecycle-derived/Build/Products/Release/OpenCCman.app" \
             --output "${{ runner.temp }}/lifecycle-artifact/automatic"
