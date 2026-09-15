@@ -24,13 +24,19 @@ struct MainWindowNativeChecks {
     window.saveFrame(usingName: name)
     let sizing = MainWindowSizing()
     sizing.attach(to: window)
-    let expected = restoring ? NSSize(width: 800, height: 600) : MainWindowGeometry.recommendedContentSize
+    let requested = restoring ? NSSize(width: 800, height: 600) : MainWindowGeometry.recommendedContentSize
+    guard let screen = window.screen ?? NSScreen.main else { fatalError("Native window tests need a WindowServer display") }
+    let availableContent = window.contentRect(forFrameRect: screen.visibleFrame).size
+    let expected = NSSize(width: min(requested.width, availableContent.width),
+                          height: min(requested.height, availableContent.height))
     let deadline = Date().addingTimeInterval(2)
     while window.contentRect(forFrameRect: window.frame).size != expected && Date() < deadline {
       RunLoop.main.run(until: Date().addingTimeInterval(0.01))
     }
-    precondition(window.contentRect(forFrameRect: window.frame).size == expected,
-                 "Initial history snapshot must distinguish restored and provisional frames")
+    let actual = window.contentRect(forFrameRect: window.frame).size
+    print("Native geometry requested=\(requested) available=\(availableContent) expected=\(expected) actual=\(actual)")
+    precondition(actual == expected,
+                 "Initial history snapshot must distinguish restored and provisional frames within screen limits")
     precondition(window.contentMinSize == MainWindowGeometry.minimumContentSize)
     window.setContentSize(NSSize(width: 760, height: 500))
     sizing.attach(to: window)
