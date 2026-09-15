@@ -1,0 +1,7 @@
+{"afterClipBounds":"{{0, 1294}, {850, 180}}","afterLine":[6640,153],"beforeClipBounds":"{{0, 1990}, {400, 240}}","beforeLine":[6705,77],"editorFrame":"{{0, 0}, {850, 2878}}","event":"reading-anchor","hasWindow":false,"os":"Version 27.0 (Build 26A428)","passed":true,"scenario":"initial-width","selection":"{7115, 12}"}
+{"afterClipBounds":"{{0, 1748}, {360, 300}}","afterLine":[6640,61],"beforeClipBounds":"{{0, 1294}, {850, 180}}","beforeLine":[6640,153],"editorFrame":"{{0, 0}, {360, 3652}}","event":"reading-anchor","hasWindow":false,"os":"Version 27.0 (Build 26A428)","passed":true,"scenario":"initial-narrow","selection":"{7115, 12}"}
+{"afterClipBounds":"{{0, 77804}, {850, 180}}","afterLine":[356414,153],"beforeClipBounds":"{{0, 104890}, {400, 240}}","beforeLine":[356479,70],"editorFrame":"{{0, 0}, {850, 156038}}","event":"reading-anchor","hasWindow":false,"os":"Version 27.0 (Build 26A428)","passed":true,"scenario":"large-middle-width","selection":"{356890, 12}"}
+PASS: 1/5/10 MiB long paragraphs retain the native editor and selection through reflow
+PASS: Native editor retained through attach, middle/tail resize, selection, composition and replacement
+PASS: navigation during pending reflow keeps the new caret visible
+PASS: on-demand document end, native text reflow, selection, rapid resize, new-document reset and marked range preservation

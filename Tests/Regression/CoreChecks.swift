@@ -14,6 +14,8 @@ import OpenCC
       String(repeating: "a", count: 3999) + "鼠标",
       "\n\n" + String(repeating: "甲\n\n", count: 1500) + "\n\n",
       "👨‍👩‍👧‍👦🇹🇼e\u{301} 简体中文\t鼠标\u{2028}台湾",
+      "\0鼠标\0\0汉字\0 😀 e\u{301}\r\n",
+      "\0\0\0", "前段\0" + String(repeating: "汉", count: 4001) + "\0后段",
       String(repeating: "鼠标里面的硅二极管坏了，导致光标分辨率降低。\n\n", count: 5000)
     ]
     let allOptions: [ChineseConverter.Options] = [
@@ -30,6 +32,21 @@ import OpenCC
         let result = try await ChineseConversionService.shared.convert(fixture, options: options)
         precondition(result == converter.convert(fixture), "Full-text conversion must preserve OpenCC semantics")
       }
+      let input = "\0鼠标\0\0汉字\0 😀 e\u{301}\r\n"
+      let expected: String
+      if options == .simplify {
+        expected = "\0鼠标\0\0汉字\0 😀 e\u{301}\r\n"
+      } else if options.contains(.twIdiom) {
+        expected = "\0滑鼠\0\0漢字\0 😀 e\u{301}\r\n"
+      } else {
+        expected = "\0鼠標\0\0漢字\0 😀 e\u{301}\r\n"
+      }
+      // Also exercise an input decoded by Foundation, rather than a Swift literal.
+      let cocoaInput = NSString(data: Data(input.utf8), encoding: String.Encoding.utf8.rawValue)! as String
+      let synchronous = try ChineseConversionService.convertSynchronously(cocoaInput, options: options)
+      let asynchronous = try await ChineseConversionService.shared.convert(input, options: options)
+      precondition(Data(synchronous.utf8) == Data(expected.utf8), "Every NUL and suffix must survive the byte-length bridge")
+      precondition(Data(asynchronous.utf8) == Data(expected.utf8), "Background conversion shares the NUL contract")
     }
     let phrase = try await ChineseConversionService.shared.convert(fixtures[4], options: [.traditionalize, .twIdiom])
     precondition(phrase == String(repeating: "a", count: 3999) + "滑鼠", "Do not split a phrase at the old 4000-character boundary")
@@ -38,10 +55,10 @@ import OpenCC
     precondition(unchanged == formatting, "No insertion, deletion or reordering of separators")
     let nullDelimited = "\0鼠标\0\0汉字\0"
     let nullConverted = try await ChineseConversionService.shared.convert(nullDelimited, options: [.traditionalize, .twIdiom])
-    precondition(nullConverted == "\0滑鼠\0\0漢字\0", "The C-string bridge must not truncate text at U+0000")
+    precondition(nullConverted == "\0滑鼠\0\0漢字\0", "The byte-length bridge must not truncate text at U+0000")
     let synchronousNullConverted = try ChineseConversionService.convertSynchronously(nullDelimited, options: [.traditionalize, .twIdiom])
     precondition(synchronousNullConverted == nullConverted)
-    print("PASS: 7 option combinations × 8 fixtures; phrase boundaries, whitespace, Unicode and converter reuse")
+    print("PASS: 7 option combinations × \(fixtures.count) fixtures; fixed NUL contracts, phrase boundaries, whitespace, Unicode and converter reuse")
 
     weak var releasedModel: HomeViewModel?
     autoreleasepool {

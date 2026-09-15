@@ -1,0 +1,25 @@
+{
+  "scope": "controlled diagnostic-path check only, not reproduction of the intermittent scroll bug",
+  "injection": "temporary copy adds && !CommandLine.arguments.contains(\"--fail-first-anchor\") to the initial invariant; original committed criterion unchanged",
+  "exitCode": -5,
+  "recordBeforeCrash": {
+    "afterClipBounds": "{{0, 1294}, {850, 180}}",
+    "afterLine": [
+      6640,
+      153
+    ],
+    "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+    "beforeLine": [
+      6705,
+      77
+    ],
+    "editorFrame": "{{0, 0}, {850, 2878}}",
+    "event": "reading-anchor",
+    "hasWindow": false,
+    "os": "Version 27.0 (Build 26A428)",
+    "passed": false,
+    "scenario": "initial-width",
+    "selection": "{7115, 12}"
+  },
+  "preconditionMessagePreserved": true
+}

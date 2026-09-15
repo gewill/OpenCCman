@@ -66,3 +66,11 @@ iPad 横屏英文侧栏存在独立的窄宽问题：`OpenCC Standard`、`HongKo
 ## 清理
 
 本轮未开启 VoiceOver，未修改系统语言、主题或辅助功能设置。Mac 隔离偏好恢复后逐键比较与备份一致；退出验收应用。两台原为关机状态的模拟器已卸载本轮新增的隔离测试安装并关机；原有应用未修改。serve-sim 仅绑定本机，镜像页与 scoped helper 已关闭。没有触发 Xcode Cloud 发布。
+
+## 2026-09-16 父分支整合
+
+整合 #74 最新父分支 `919e0e626dfbdcd9eacba4cbf6eb6596cd7079e4`（父分支产品为 `4372fa4`，随后提交仅验收证据）。自动合并无冲突；相对父分支的应用差异仍仅为 PhoneWorkspace、WorkspaceSurface 各两行 locale 获取与 sheet 传递，未扩大语言修复范围。锁文件与父分支一致。
+
+本机验证：`bash scripts/check-control-labels.sh` 通过三语言、下划线 locale、动态语言和缺失键回退；`bash scripts/check-workspace.sh` 通过布局/窗口隔离；`python3 scripts/check-project.py` 通过 60 个 Swift 源文件及 3 套语言；相对父分支空白检查通过。这些检查不等同于重新完成三端运行验收，现有截图/录像继续标注原始 `6af5ded`。完整应用 CI 以本次新 HEAD 的检查结果为准。
+
+仍以 `codex/mac-window-sizing` 为 PR 目标，#74 保持 Draft；先等待父 PR 验收和合并，再按依赖顺序处理 #76 与 #75。没有更新依赖、降低系统要求或触发发布。

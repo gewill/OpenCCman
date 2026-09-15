@@ -1,0 +1,434 @@
+{
+  "text": {
+    "pid": 3488,
+    "exit_code": 0,
+    "observations": {
+      "driver_pair_visible": {
+        "alive": 2,
+        "created": 2,
+        "elapsed": 11.409267,
+        "event": "driver_pair_visible",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          },
+          {
+            "id": 2,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          }
+        ],
+        "visible": 2
+      },
+      "driver_before_second_close": {
+        "alive": 2,
+        "created": 2,
+        "elapsed": 21.452361708333342,
+        "event": "driver_before_second_close",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          },
+          {
+            "id": 2,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          }
+        ],
+        "visible": 2
+      },
+      "driver_second_closed": {
+        "alive": 1,
+        "created": 2,
+        "elapsed": 21.594951750000007,
+        "event": "driver_second_closed",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 1
+      },
+      "driver_second_plus_5": {
+        "alive": 1,
+        "created": 2,
+        "elapsed": 26.644818750000013,
+        "event": "driver_second_plus_5",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 1
+      },
+      "driver_second_plus_20": {
+        "alive": 1,
+        "created": 2,
+        "elapsed": 41.642613041666664,
+        "event": "driver_second_plus_20",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 1
+      },
+      "driver_final_closed": {
+        "alive": 0,
+        "created": 2,
+        "elapsed": 41.774172833333324,
+        "event": "driver_final_closed",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 0
+      },
+      "driver_final_plus_5": {
+        "alive": 0,
+        "created": 2,
+        "elapsed": 46.859288625000005,
+        "event": "driver_final_plus_5",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 0
+      },
+      "driver_final_plus_20": {
+        "alive": 0,
+        "created": 2,
+        "elapsed": 61.839193583333355,
+        "event": "driver_final_plus_20",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 0
+      },
+      "driver_finished": {
+        "alive": 0,
+        "created": 2,
+        "elapsed": 61.83959433333334,
+        "event": "driver_finished",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 0
+      }
+    },
+    "raw_sha256": "cab9c44b22588dba9426ef4696af167d7e604e78ef9f57b2169e8b5263ba49b8",
+    "valid_protocol": true,
+    "process_exited": true
+  },
+  "observed": {
+    "pid": 4774,
+    "exit_code": 0,
+    "observations": {
+      "driver_pair_visible": {
+        "alive": 2,
+        "created": 2,
+        "elapsed": 10.286131875000024,
+        "event": "driver_pair_visible",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          },
+          {
+            "id": 2,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          }
+        ],
+        "visible": 2
+      },
+      "driver_before_second_close": {
+        "alive": 2,
+        "created": 2,
+        "elapsed": 20.40044154166668,
+        "event": "driver_before_second_close",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          },
+          {
+            "id": 2,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          }
+        ],
+        "visible": 2
+      },
+      "driver_second_closed": {
+        "alive": 1,
+        "created": 2,
+        "elapsed": 20.532241416666693,
+        "event": "driver_second_closed",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 1
+      },
+      "driver_second_plus_5": {
+        "alive": 1,
+        "created": 2,
+        "elapsed": 25.61209979166665,
+        "event": "driver_second_plus_5",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 1
+      },
+      "driver_second_plus_20": {
+        "alive": 1,
+        "created": 2,
+        "elapsed": 40.537218791666646,
+        "event": "driver_second_plus_20",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": true,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": true,
+            "windowVisible": true
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 1
+      },
+      "driver_final_closed": {
+        "alive": 0,
+        "created": 2,
+        "elapsed": 40.59257170833331,
+        "event": "driver_final_closed",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 0
+      },
+      "driver_final_plus_5": {
+        "alive": 0,
+        "created": 2,
+        "elapsed": 45.75895862499999,
+        "event": "driver_final_plus_5",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 0
+      },
+      "driver_final_plus_20": {
+        "alive": 0,
+        "created": 2,
+        "elapsed": 60.61017245833335,
+        "event": "driver_final_plus_20",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 0
+      },
+      "driver_finished": {
+        "alive": 0,
+        "created": 2,
+        "elapsed": 60.61029695833332,
+        "event": "driver_finished",
+        "hosts": [
+          {
+            "id": 1,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          },
+          {
+            "id": 2,
+            "initialContentAlive": false,
+            "initialContentType": "SwiftUI.NSHostingView<SwiftUI.ModifiedContent<SwiftUI.AnyView, SwiftUI.RootModifier>>",
+            "windowAlive": false,
+            "windowVisible": false
+          }
+        ],
+        "visible": 0
+      }
+    },
+    "raw_sha256": "92a5052bc7e0f85cff67462a823b193e5ae67fc5200c1dff56228b90597519c0",
+    "valid_protocol": true,
+    "process_exited": true
+  }
+}

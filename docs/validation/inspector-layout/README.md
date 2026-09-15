@@ -90,3 +90,11 @@ VoiceOver was never enabled in this run. The isolated Mac process exited before
 its preferences were restored. Only the test bundle was removed from each
 simulator, both simulators were shut down, and both scoped mirror helpers exited.
 The separate #19 closed-window baseline was not queried/reopened during this run.
+
+## 2026-09-16 parent integration
+
+Merged settings-language parent `b48e0de` (including current #74 window source and runtime records) without conflicts. Relative to that parent, the app change remains limited to SegmentView word measurement, its shared horizontal inset and the preset-heading arrangement. Dependency pins remain identical to the parent.
+
+[Commands and scoped results](2026-09-16-integration/results.json) record passing native control/Segment, localization, workspace, 60-source/three-language syntax checks and all 9 script failure-propagation tests. The native fixture includes maximum accessibility category, but does not replace maximum-size **application** runtime acceptance. Existing SDK deprecation/linker/sandbox diagnostic lines are retained alongside successful test output.
+
+The older screenshots and video retain product source `47ee521`; they are not relabeled as the integrated candidate. A fresh CI simulator artifact will support the remaining iPhone and maximum-accessibility-size checks. PR #78 stays Draft and continues to target #76's branch until its parent merges. No minimum-system, dependency, real-device or release gate changes.
