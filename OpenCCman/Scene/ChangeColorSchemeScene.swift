@@ -8,7 +8,7 @@ struct ChangeColorSchemeScene: View {
 
   var body: some View {
     ZStack(alignment: .top) {
-      Color.main
+      Color("mainColor")
         .ignoresSafeArea()
       VStack(spacing: Constant.padding) {
         navi
