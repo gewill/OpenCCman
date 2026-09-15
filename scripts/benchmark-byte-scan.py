@@ -5,11 +5,58 @@ The baseline body is preserved in ByteScanBenchmark.swift. This does not launch
 the app, invoke Services, change the general clipboard, or measure UI latency.
 """
 import argparse
+from collections import defaultdict
 import hashlib
 import json
+import math
 from pathlib import Path
 import shutil
+import statistics
 import subprocess
+
+
+def summarize(samples_file):
+    records = [json.loads(line) for line in samples_file.read_text().splitlines()]
+    if not records or records[-1] != {"event": "run_completed", "samples": 280}:
+        raise ValueError("Incomplete byte-scan run")
+    case_records = [r for r in records if r["event"] == "case"]
+    samples = [r for r in records if r["event"] == "sample"]
+    key = lambda r: (r["mode"], r["representation"], r["inputBytes"])
+    cases = {key(r): r for r in case_records}
+    expected_keys = {(mode, representation, size)
+                     for mode in ("s2t", "t2s", "s2tw", "s2twp", "s2hk", "legacy-s2t-tw-idiom", "legacy-s2hk-tw-idiom")
+                     for representation in ("native", "pasteboard")
+                     for size in (1_048_576, 10_485_760)}
+    if set(cases) != expected_keys or len(case_records) != 28 or len(samples) != 280:
+        raise ValueError("Missing or duplicate benchmark cases/samples")
+    groups = defaultdict(list)
+    for sample in samples:
+        case = cases[key(sample)]
+        elapsed = sample["elapsedMS"]
+        if (sample["outputMatchesExpected"] is not True
+                or sample["outputSHA256"] != case["expectedSHA256"]
+                or case["expectedSHA256"] == case["inputSHA256"]
+                or type(elapsed) not in (int, float) or not math.isfinite(elapsed) or elapsed <= 0):
+            raise ValueError("Invalid timing or output mismatch")
+        groups[key(sample) + (sample["algorithm"],)].append(sample)
+    if len(groups) != 56:
+        raise ValueError("Unexpected algorithm groups")
+    result = []
+    for case_key in cases:
+        row = dict(zip(("mode", "representation", "inputBytes"), case_key))
+        for algorithm in ("baseline", "current"):
+            values = groups[case_key + (algorithm,)]
+            if sorted(s["pair"] for s in values) != [1, 2, 3, 4, 5]:
+                raise ValueError("Missing or repeated pair")
+            for sample in values:
+                first = "current" if sample["pair"] % 2 == 0 else "baseline"
+                if sample["position"] != (0 if algorithm == first else 1):
+                    raise ValueError("Unexpected pair ordering")
+            times = [s["elapsedMS"] for s in values]
+            row[algorithm] = {"medianMS": statistics.median(times), "minMS": min(times), "maxMS": max(times)}
+        row["reductionPercent"] = (1 - row["current"]["medianMS"] / row["baseline"]["medianMS"]) * 100
+        result.append(row)
+    return result
 
 
 def main():
@@ -68,6 +115,7 @@ let package = Package(name: "ByteScanBenchmark", platforms: [.macOS(.v11)],
     (output / "source.json").write_text(json.dumps(metadata, indent=2) + "\n")
     with (output / "samples.jsonl").open("x") as log, (output / "stderr.log").open("x") as err:
         subprocess.run([str(Path(binary_path) / "ByteScanBenchmark")], stdout=log, stderr=err, check=True)
+    (output / "summary.json").write_text(json.dumps(summarize(output / "samples.jsonl"), indent=2) + "\n")
     print(f"Completed comparison: {output / 'samples.jsonl'}")
 
 
