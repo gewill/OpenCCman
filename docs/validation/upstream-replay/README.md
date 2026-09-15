@@ -51,6 +51,7 @@ python3 Tests/manual/real_upstream_replay.py \
 
 ## 证据归档
 
+- [独立 clone 恢复 bundle 的记录](bundle-verification.log)。
 - [完整结果摘要](summary.json)、[演练来源](sources.json)、[最终资源清单](generated-manifest.json)。
 - [日志、完整 CLI 对照、失败报告、补丁与 Git bundle](opencc-real-source-replay-2026-09-15.zip)（2.8 MB）。ZIP SHA-256：`dcb2548cb6502b9b6e7110396fde6abf4a86aa8da3b92fd0a0720c33b44b3000`。内部 `SHA256SUMS.json` 为每份归档文件提供校验和。
 
