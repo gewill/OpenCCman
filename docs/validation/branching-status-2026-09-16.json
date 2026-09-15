@@ -1,0 +1,82 @@
+{
+  "checkedAtUTC": "2026-09-15T22:45:23.449697+00:00",
+  "scope": "Read-only repository, refs, rules and ancestry; no Cloud build/ASC/signing verification",
+  "mainSHA": "fb56ea3de2427d07405d43f5400977d6167fbca6",
+  "developSHA": "b2e0e635846017f0601fca86e7859a1cdc62f152",
+  "defaultBranch": {
+    "default_branch": "main"
+  },
+  "classicProtection": {
+    "main": {
+      "endpoint": "repos/gewill/OpenCCman/branches/main/protection",
+      "exitCode": 1,
+      "response": {
+        "message": "Branch not protected",
+        "documentation_url": "https://docs.github.com/rest/branches/branch-protection#get-branch-protection",
+        "status": "404"
+      },
+      "stderr": "gh: Branch not protected (HTTP 404)"
+    },
+    "develop": {
+      "endpoint": "repos/gewill/OpenCCman/branches/develop/protection",
+      "exitCode": 1,
+      "response": {
+        "message": "Branch not protected",
+        "documentation_url": "https://docs.github.com/rest/branches/branch-protection#get-branch-protection",
+        "status": "404"
+      },
+      "stderr": "gh: Branch not protected (HTTP 404)"
+    }
+  },
+  "rulesets": {
+    "endpoint": "repos/gewill/OpenCCman/rulesets?includes_parents=true",
+    "exitCode": 0,
+    "response": [],
+    "stderr": ""
+  },
+  "effectiveRules": {
+    "main": {
+      "endpoint": "repos/gewill/OpenCCman/rules/branches/main",
+      "exitCode": 0,
+      "response": [],
+      "stderr": ""
+    },
+    "develop": {
+      "endpoint": "repos/gewill/OpenCCman/rules/branches/develop",
+      "exitCode": 0,
+      "response": [],
+      "stderr": ""
+    }
+  },
+  "legacyRefs": [
+    "9daf1539232ee668f8050dac664b78ab195e2fc9\trefs/heads/build",
+    "c3009c74796e8f4ff3b39c4f1c5bb8c9ed1c04cf\trefs/heads/build-v1.3-20260914"
+  ],
+  "openPRsTargetingBuild": [],
+  "migrations": {
+    "43": {
+      "baseRefName": "develop",
+      "mergeCommit": {
+        "oid": "fbd1ac02fd964d85949cfe33cf6474e8098c6329"
+      },
+      "mergedAt": "2026-09-13T12:01:35Z",
+      "state": "MERGED",
+      "title": "ci: migrate application history and regression to develop"
+    },
+    "44": {
+      "baseRefName": "main",
+      "mergeCommit": {
+        "oid": "fb56ea3de2427d07405d43f5400977d6167fbca6"
+      },
+      "mergedAt": "2026-09-13T12:03:20Z",
+      "state": "MERGED",
+      "title": "ci: retarget upstream app PRs to develop after migration"
+    }
+  },
+  "ancestry": {
+    "9daf1539232ee668f8050dac664b78ab195e2fc9": true,
+    "e28ae12b55602092e6bcce808c90f191060818c9": true
+  },
+  "mainAppRegressionPresent": false,
+  "mainAppBase": "develop"
+}

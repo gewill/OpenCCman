@@ -1,0 +1,9 @@
+{
+  "purpose": "Obtain same-condition before UI/video evidence and repeat the import-only baseline; previous run did not persist a screenshot",
+  "source_sha": "aec0368fac73646fb3168204c0b150881bd7e55d",
+  "fixture_input_sha256": "dc96005e53b8766191cc192595d68f8e20f5c82f739d636a4cbfe89bb8b604fe",
+  "measurement": "One fresh process and one 10 MiB source; 20 seconds before explicit large-editor AX; then one AX and 20 seconds; video only after measurements",
+  "interaction": "Convert and export full result, scroll document end, axis changes; capture 900x450 English/Light/default-font before UI",
+  "max_document_windows": 1,
+  "max_successful_conversions": 1
+}

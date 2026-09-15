@@ -1,0 +1,31 @@
+/Users/runner/work/_temp/window-lifetime/observed/Probe.swift:172:31: warning: main actor-isolated property 'contentView' can not be referenced from a nonisolated context
+170 |       self.id = id
+171 |       self.window = window
+172 |       initialContent = window.contentView
+    |                               `- warning: main actor-isolated property 'contentView' can not be referenced from a nonisolated context
+173 |       contentType = window.contentView.map { String(reflecting: type(of: $0)) } ?? "nil"
+174 |     }
+
+/Applications/Xcode_26.3.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSWindow.h:337:47: note: property declared here
+ 335 | - (void)setTitleWithRepresentedFilename:(NSString *)filename;
+ 336 | @property (getter=isExcludedFromWindowsMenu) BOOL excludedFromWindowsMenu;
+ 337 | @property (nullable, strong) __kindof NSView *contentView;
+     |                                               `- note: property declared here
+ 338 | @property (nullable, weak) id<NSWindowDelegate> delegate;
+ 339 | @property (readonly) NSInteger windowNumber;
+
+/Users/runner/work/_temp/window-lifetime/observed/Probe.swift:173:28: warning: main actor-isolated property 'contentView' can not be referenced from a nonisolated context
+171 |       self.window = window
+172 |       initialContent = window.contentView
+173 |       contentType = window.contentView.map { String(reflecting: type(of: $0)) } ?? "nil"
+    |                            `- warning: main actor-isolated property 'contentView' can not be referenced from a nonisolated context
+174 |     }
+175 |   }
+
+/Applications/Xcode_26.3.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk/System/Library/Frameworks/AppKit.framework/Headers/NSWindow.h:337:47: note: property declared here
+ 335 | - (void)setTitleWithRepresentedFilename:(NSString *)filename;
+ 336 | @property (getter=isExcludedFromWindowsMenu) BOOL excludedFromWindowsMenu;
+ 337 | @property (nullable, strong) __kindof NSView *contentView;
+     |                                               `- note: property declared here
+ 338 | @property (nullable, weak) id<NSWindowDelegate> delegate;
+ 339 | @property (readonly) NSInteger windowNumber;

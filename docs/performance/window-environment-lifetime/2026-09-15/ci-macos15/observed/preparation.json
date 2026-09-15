@@ -1,0 +1,23 @@
+{
+  "variant": "observed",
+  "automatic": true,
+  "app": "/Users/runner/work/_temp/window-lifetime/observed/MinimalObservedAuto.app",
+  "command": [
+    "xcrun",
+    "swiftc",
+    "-swift-version",
+    "5",
+    "-parse-as-library",
+    "-O",
+    "-target",
+    "arm64-apple-macosx13.0",
+    "/Users/runner/work/_temp/window-lifetime/observed/Probe.swift",
+    "-o",
+    "/Users/runner/work/_temp/window-lifetime/observed/MinimalObservedAuto.app/Contents/MacOS/MinimalObservedAuto"
+  ],
+  "source_sha256": "a38c65ca2b904366ddc67a83c6fa918a29aa34a2a2e9f1e291de455f5398c2d3",
+  "base_sha": "964c093d382a633c5199d11646716b3734155858",
+  "dirty": false,
+  "compiler": "swift-driver version: 1.127.15 Apple Swift version 6.2.4 (swiftlang-6.2.4.1.4 clang-1700.6.4.2)\nTarget: arm64-apple-macosx15.0\n",
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.9\nBuildVersion:\t\t24G830\n"
+}

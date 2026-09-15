@@ -52,13 +52,15 @@ See the [complete project status and follow-up report (2026-09-13)](docs/project
 
 The [1.3 follow-up validation record](docs/v1.3-release-validation-2026-09-13.md) tracks the latest tooling checks and the Xcode Cloud resource-signing blocker.
 
+The [release metadata and privacy audit (2026-09-15)](docs/release/metadata-2026-09-15/README.md) includes three-language candidate copy, current ASC version discrepancies and remaining privacy/release gates. These drafts have not been applied to App Store Connect.
+
 ## Xcode Cloud release builds
 
 Production builds use Xcode Cloud. Push a temporary branch whose name starts with `build` only when a cloud package is needed; it triggers the existing iOS and macOS workflow. Everyday application PRs target `develop`. The legacy `build` branch must be retired before creating `build/*` branches. See [Xcode Cloud configuration and release checks](docs/XCODE_CLOUD.md) for the verified App/workflow IDs, diagnostics and acceptance steps. Local archives and exports are diagnostic evidence; release acceptance uses the cloud build and its exact source commit.
 
 ## Upstream sync
 
-The coordinator lives on [`main`](https://github.com/gewill/OpenCCman/tree/main), while application updates target `develop` after the default-branch coordinator migration is merged. Until then, the live coordinator still uses its existing configuration; see the [CI migration order](docs/CI.md). It proposes a SwiftyOpenCC PR first, then pins the merged, validated fork revision in an app PR. Maintainers review and merge each PR; all other dependencies remain locked.
+The coordinator lives on [`main`](https://github.com/gewill/OpenCCman/tree/main), while application updates target `develop`. The default-branch coordinator migration was merged in [PR #44](https://github.com/gewill/OpenCCman/pull/44); see the [current CI and migration status](docs/CI.md). It proposes a SwiftyOpenCC PR first, then pins the merged, validated fork revision in an app PR. Maintainers review and merge each PR; all other dependencies remain locked.
 
 See the shared [upstream sync guide](https://github.com/gewill/OpenCCman/blob/main/docs/upstream-sync.md) for the Monday 09:17 (UTC+8) schedule, manual commands, CI setup and rollback. Engine-specific work is covered by the [SwiftyOpenCC maintenance guide](https://github.com/gewill/SwiftyOpenCC/blob/master/docs/upstream-sync.md).
 

@@ -1,0 +1,38 @@
+Building for production...
+[Planning deferred tasks]
+[35 / 86]
+[50 / 87] OpenCC
+[51 / 87] copencc
+[56 / 87] copencc
+[59 / 87] copencc
+[60 / 87] copencc
+[62 / 87] copencc
+[67 / 123]
+[71 / 123]
+[80 / 123] copencc
+<HOME>/git/MyApps/OpenCCman-dependency-audit/.build/dependency-audit/SourcePackages/checkouts/SwiftyOpenCC/Sources/copencc/marisa/marisa/grimoire/vector/bit-vector.cc:280:20: warning: implicit conversion loses integer precision: 'std::size_t' (aka 'unsigned long') to 'const int' [-Wshorten-64-to-32]
+  280 |   const int skip = countr_zero(x >> 7);
+      |             ~~~~   ^~~~~~~~~~~~~~~~~~~
+1 warning generated.
+[83 / 123] copencc
+[86 / 123]
+[89 / 123]
+[93 / 123]
+[95 / 123] copencc
+[98 / 123] copencc
+[100 / 123]
+[102 / 123]
+[107 / 123]
+[108 / 123]
+[109 / 123]
+[110 / 123]
+[111 / 123] OpenCC
+[119 / 124] ByteScanBenchmark-product
+[137 / 154]
+[143 / 154]
+[146 / 154]
+[149 / 154]
+[150 / 154] ByteScanBenchmark-product
+[152 / 154] ByteScanBenchmark-product
+[153 / 154] ByteScanBenchmark-product
+Build complete! (7.53 sec)

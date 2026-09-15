@@ -2,6 +2,8 @@
 
 Implementation: [PR #74](https://github.com/gewill/OpenCCman/pull/74). Base `714f6bf`; first implementation checkpoint `48ad349`; CI app-build checkpoint `eb92b7e`. Runtime acceptance is in progress; this record is not a release approval.
 
+Latest: [2026-09-16 current-candidate runtime matrix](2026-09-16-runtime/README.md), product source `4372fa4`. Historical rows below keep their original source scope.
+
 ## Contract
 
 - Recommended initial size: 1024 × 768 pt, passed to `NSWindow.setContentSize` only when no valid native history exists. `contentRect(forFrameRect:)` defines this measurement; with SwiftUI full-size content windows the titlebar can occupy part of that rectangle, so it is not a promise of 768 pt of editor space.
@@ -46,6 +48,18 @@ Xcode 27 rejects the unchanged macOS 11 deployment target. A local-only experime
 
 ## Remaining gates
 
-Before closing #57, finish the remaining inspector/both-axis matrix on the final candidate, larger-text behavior, and screen-removal/restoration coverage; resolve the language defect through #75 and link its validation. Physical monitor unplug has not been replaced by the synthetic disconnected-screen geometry check. Minimum-OS real-device verification remains #16. Window creation from external entries after all windows close belongs to #19; native WindowGroup model release belongs to #18. PR #74 remains a draft while this acceptance is incomplete.
+The current `4372fa4` runtime matrix now covers both axes with the sidebar shown/hidden, recommended-width fallback and three minimum-window language/theme combinations. Before closing #57, finish larger-text behavior, final-candidate live resize/interaction recording, and screen-removal/restoration coverage; resolve the language defect through #75 and link its validation. Physical monitor unplug has not been replaced by the synthetic disconnected-screen geometry check. Minimum-OS real-device verification remains #16. Window creation from external entries after all windows close belongs to #19; native WindowGroup model release belongs to #18. PR #74 remains a draft while this acceptance is incomplete.
 
 [Apple NSWindow frame restoration](https://developer.apple.com/documentation/appkit/nswindow/setframeusingname(_:)), [NSView.window](https://developer.apple.com/documentation/appkit/nsview/window).
+
+## 2026-09-16 develop integration
+
+Integrated develop `51bceda` into the existing #74 candidate (`d009913` before integration). The only textual conflict was RootView's window lookup: retain MainWindowReader and size constraints, while retaining develop's macOS 27 **editor** introspection and scroll configuration. The now-unused window Introspect predicate is removed; the combined editor/window regression now mounts the actual MainWindowReader in its SwiftUI hierarchy, so it does not claim to validate a window lookup no longer used by the app.
+
+Local Xcode 27/macOS 27 checks passed: geometry/native restoration/sheet dismissal, workspace resolution, 60 application source syntax checks and 3 languages, and actual source/result/window adapter callbacks. The adapter check compiled a private copy of the clean pinned Introspect checkout; no dependency cache or deployment target was edited. [Commands and results](2026-09-16-integration/results.json), [native window checks](2026-09-16-integration/window-sizing.log), [workspace checks](2026-09-16-integration/workspace.log), and [adapter result excerpt](2026-09-16-integration/introspection-result.log).
+
+These are integration regressions, not a replacement for the final app's pending inspector/two-axis/large-text matrix or physical monitor disconnect acceptance. Historical screenshots/videos above retain their original source SHA. The full app build and new validation artifact come from this updated PR's CI; #74 remains Draft until its existing acceptance gates are met.
+
+## 2026-09-16 current-candidate UI follow-up
+
+The [new runtime record](2026-09-16-runtime/README.md) adds same-toolchain real before/after captures and closes the pending ordinary-text sidebar/both-axis matrix for product `4372fa4`. It explicitly separates native history restoration from continuous edge dragging and captured pixels from native points. Full larger-text, physical display removal, final-candidate continuous-resize/video and #75 remain open; this does not remove Draft or change release gates.
