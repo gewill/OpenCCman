@@ -1,0 +1,19 @@
+{
+  "hypothesis": "A full accessibility tree query of a 10 MiB NSTextView can change app allocations; separate import-before-query from query-after-import in one fresh process",
+  "source_sha": "aec0368fac73646fb3168204c0b150881bd7e55d",
+  "predeclared_steps": [
+    "launch empty diagnostic (AX needed for UI)",
+    "import exactly the existing 10 MiB fixture through system picker",
+    "after pressing Open, observe logger for 20 seconds before requesting the editor AX tree",
+    "capture pre-query vmmap/heap summary; no recording",
+    "one full AX tree query; discard fixture text from output",
+    "observe 20 seconds, capture post-query vmmap/heap summary",
+    "UI quit and exact preference restoration"
+  ],
+  "limitations": [
+    "sequential before/after query is not randomized causality proof",
+    "UI automation may have its own implicit observations",
+    "memory tools may pause/touch the target",
+    "import-only, no conversion, one window; not the earlier cumulative workload"
+  ]
+}
