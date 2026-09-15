@@ -32,8 +32,30 @@ python3 scripts/check-native-window-lifecycle.py --raw /absolute/path/lifecycle-
 
 **校验成功只表示测量协议完整**：同一个 PID，模型编号合法，确实创建两窗、依次关闭、等待足够时长。存活数是结果，不用 `alive == 0` 替代协议验证，也不把进程 exit 0 当作业务释放通过。
 
-截至本提交，43 项 Python 校验测试通过、项目语法检查通过；真实应用的自动构建和运行待补。测试中的转换格式 fixture 不是真实应用运行证据。
+43 项 Python 校验测试、项目语法检查及候选 `60401fb` 的 App Regression 均通过。Release 构建和真实运行结果见下文；测试中的转换格式 fixture 不是真实应用运行证据。
+
+## 2026-09-16 实测结果
+
+源码 `60401fb51c00c2eba6c9b807b56f4f29e1aedfe5`，[CI 构建与自驱动运行成功](https://github.com/gewill/OpenCCman/actions/runs/34994047612)。同一份 CI 产物在本机添加 ad-hoc 签名，两个本机成对进程使用完全相同的可执行文件 SHA256 `1dea4412b4c2ec782a0edc7e13b889fa7b1e41d39834f1a159bb3d9631e3e459`。依赖锁已逐字节验证，包及驱动校验和在 [产物清单](native-window-ax-control/2026-09-16/artifact-verification.json)。
+
+| 真实应用运行 | 第二窗关闭 +5 / +20 秒 | 全部关窗 +5 / +20 秒 |
+|---|---|---|
+| macOS 15.7.9 CI，全程无 CUA | 1 / 1 | 0 / 0 |
+| macOS 27.0 本机，仅启动时 CUA 查询首窗口 | 1 / 1 | 0 / 0 |
+| macOS 27.0 本机，额外一次 CUA 查询第二窗口 | 2 / 2 | 2 / 2 |
+| macOS 27.0 本机，仅首窗口查询，之后独立录屏演示 | 2 / 2 | 2 / 2 |
+| macOS 27.0 本机，关闭录屏后重复仅首窗口查询 | 1 / 1 | 1 / 1 |
+
+表内为存活 HomeViewModel 数量，所有协议校验通过，确实经过两窗→一窗→零窗。本机运行按表中顺序，都是新进程、默认短样文；只有标明的演示轮录屏，没有 heap/memgraph、导入或转换。之后私有偏好逐项恢复，进程退出。额外查询返回 `lifetime-AppWindow-2`，调用时间已记录。未通过 CUA 查询最后的无窗口状态，避免激活应用而重新开窗。录屏轮是独立演示，不纳入最初成对比较；完整保留其模型为 2 的结果。
+
+这次对照把观察方式影响从最小程序复现到了真实应用，但后续复测限定了结论：**两个无额外查询/无录屏进程中，第二窗口的模型 2 都释放；曾查询过的首窗口模型 1 一次释放、一次保留。**不能承诺本机每轮最终为 0。额外查询轮中两模型都持续到观测末端，独立录屏轮也得到 2，尚未分别隔离录屏、运行顺序和工具连接状态的影响。
+
+不能将旧 3/5/7 记录去掉工具条件后称为无界生产泄漏，也不能凭这些短文稿试验排除全部应用持有问题。尚未拆分 CUA 的激活、AX 连接/宿主持有等机制，不能推广为所有原始 AX API、VoiceOver 或真实用户均有同样行为。默认推荐卡片内容由应用选择，未固定；此次不是逐像素确定性的 UI 比较。首窗口不一致结果保留，不用最终总数为 0 作为唯一通过标准。
+
+CI 与本机使用同一构建产物，但系统、机器、启动方式、签名及首窗口观察条件不同，不能据此单独归因系统版本或计算性能收益。原始逐秒记录及明确采样点保存在 [实测目录](native-window-ax-control/2026-09-16)。记录中的 footprint 不是本轮优化百分比依据。
 
 这一步只校准空/默认内容的双窗诊断。三轮窗口循环、1/10 MiB 文稿、转换中关闭以及最低系统验收仍保留在 #90/#93 和发布前清单；不关闭问题，不据跨机器结果计算优化百分比。
 
 API 依据：[WindowGroup](https://developer.apple.com/documentation/swiftui/windowgroup)、[OpenWindowAction](https://developer.apple.com/documentation/swiftui/openwindowaction)、[NSWindow.performClose](https://developer.apple.com/documentation/appkit/nswindow/performclose(_:))。
+
+[双窗关闭前后截图与独立交互视频](https://github.com/gewill/OpenCCman/pull/101#issuecomment-5684087163)已通过 gh 上传。录屏轮和未录屏轮严格区分；所有本轮进程已退出，私有偏好逐项恢复，应用注销并改名 inactive，VoiceOver 前后读回均为 false。
