@@ -47,6 +47,10 @@ enum WorkspaceTextEditorChecks {
     coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true)
     precondition(editor.hasMarkedText() && editor.markedRange() == marked)
     precondition(editor.selectedRange() == markedSelection && editor.string == textBeforeUpdate)
+    viewport.setFrameSize(NSSize(width: 760, height: 260))
+    settle(coordinator)
+    precondition(editor.markedRange() == marked && editor.selectedRange() == markedSelection,
+                 "Production resize must preserve marked text and its selection")
     editor.unmarkText()
 
     // Rendering the read-only output must not discard the source undo history.
@@ -94,6 +98,141 @@ enum WorkspaceTextEditorChecks {
     precondition(firstUnlaid < native.textStorage!.length,
                  "Viewport measurement forced layout to the end of the document")
     print("PASS: SwiftUI bounded sizing leaves distant text unlaid; first unlaid \(firstUnlaid), characters \(native.textStorage!.length)")
+
+    for mebibytes in [1, 10] {
+      for editable in [true, false] {
+        checkProductionViewport(mebibytes: mebibytes, editable: editable)
+      }
+    }
+    // The intervening RunLoop turns also drain the hosted editor's deferred
+    // capture. It must not expand the initial viewport measurement to all text.
+    withExtendedLifetime(host) {
+      precondition(native.layoutManager!.firstUnlaidCharacterIndex() < native.textStorage!.length)
+    }
+  }
+
+  /// Exercise the actual factory/delegate/keeper together, without opening a
+  /// window or prewarming all layout. This does not cover the outer workspace
+  /// ScrollView, first-responder behavior or actual divider gestures.
+  @MainActor private static func checkProductionViewport(mebibytes: Int, editable: Bool) {
+    let paragraph = "中文重排 👩🏽‍💻 e\u{301}\r\n" + String(repeating: "Reading position 中文 ", count: 24) + "\r\n"
+    let repetitions = mebibytes * 1_048_576 / paragraph.utf8.count
+    var document = String(repeating: paragraph, count: repetitions)
+    let binding = Binding(get: { document }, set: { document = $0 })
+    let coordinator = WorkspaceTextEditorCoordinator(text: binding)
+    let viewport = coordinator.makeViewport()
+    viewport.setFrameSize(NSSize(width: 420, height: 240))
+    coordinator.update(viewport, text: binding, isEditable: editable, isEnabled: true)
+    let editor = viewport.documentView as! NSTextView
+    let manager = editor.layoutManager!
+    let initialDelegate = editor.delegate
+    let original = document
+    let middle = (paragraph as NSString).length * (repetitions / 2)
+    let selection = NSRange(location: middle, length: 2)
+    editor.setSelectedRange(selection)
+    editor.scrollRangeToVisible(selection)
+    settle(coordinator)
+    precondition(editor.window == nil)
+    precondition(visibleCharacters(editor, viewport).intersection(selection) != nil,
+                 "Middle navigation must expose the selected text without prewarming")
+
+    let sizes: [[NSSize]] = [
+      [NSSize(width: 840, height: 180)],
+      [NSSize(width: 320, height: 300)],
+      [NSSize(width: 760, height: 260), NSSize(width: 620, height: 210), NSSize(width: 500, height: 280)]
+    ]
+    for (index, sequence) in sizes.enumerated() {
+      let before = topLine(editor, viewport)
+      for size in sequence { viewport.setFrameSize(size) }
+      // Model/task updates during reflow must not replace the native document.
+      coordinator.update(viewport, text: binding, isEditable: editable, isEnabled: true,
+                         accessibilityLabel: editable ? "Source" : "Result")
+      settle(coordinator)
+      let after = topLine(editor, viewport)
+      let retained = NSLocationInRange(before.location, after)
+      record(["scenario": "production-middle-\(index)", "MiB": mebibytes, "bytes": original.utf8.count,
+              "editable": editable, "before": [before.location, before.length],
+              "after": [after.location, after.length], "passed": retained])
+      precondition(retained, "Production viewport reflow lost the top reading line")
+      precondition(editor.selectedRange() == selection)
+      precondition(editor.layoutManager === manager && editor.delegate === initialDelegate)
+      precondition(editor.isEditable == editable && editor.isSelectable)
+      precondition(editor.string.utf8.elementsEqual(original.utf8))
+    }
+
+    // Jump to a previously unseen tail, then resize. Query the glyphs in the
+    // viewport, not a point-insertion estimate beyond the last rendered line.
+    let tail = NSRange(location: editor.textStorage!.length - 4, length: 1)
+    editor.setSelectedRange(tail)
+    editor.scrollRangeToVisible(tail)
+    settle(coordinator)
+    precondition(NSLocationInRange(tail.location, visibleCharacters(editor, viewport)))
+
+    viewport.setFrameSize(NSSize(width: 360, height: 240))
+    settle(coordinator)
+    precondition(editor.selectedRange() == tail)
+    // A resize retains the reading anchor, not necessarily the tail itself.
+    editor.scrollRangeToVisible(tail)
+    settle(coordinator)
+    precondition(NSLocationInRange(tail.location, visibleCharacters(editor, viewport)))
+
+    // Selection navigation takes priority over an already queued resize.
+    viewport.setFrameSize(NSSize(width: 640, height: 260))
+    editor.setSelectedRange(selection)
+    editor.scrollRangeToVisible(selection)
+    settle(coordinator)
+    precondition(editor.selectedRange() == selection)
+    precondition(NSLocationInRange(selection.location, visibleCharacters(editor, viewport)))
+
+    // Replacing the document while a resize is queued invalidates the old
+    // restoration. It must never write the old text or selection back.
+    viewport.setFrameSize(NSSize(width: 800, height: 200))
+    document = "新文稿\r\n\u{0} 👩🏽‍💻 e\u{301}"
+    coordinator.update(viewport, text: binding, isEditable: editable, isEnabled: true)
+    viewport.contentView.scroll(to: .zero)
+    settle(coordinator)
+    precondition(editor.string.utf8.elementsEqual(document.utf8))
+    precondition(viewport.contentView.bounds.minY == 0)
+    precondition(!editor.undoManager!.canUndo)
+    record(["scenario": "production-tail-navigation-and-replacement", "MiB": mebibytes, "bytes": original.utf8.count,
+            "editable": editable, "passed": true])
+  }
+
+  @MainActor private static func topLine(_ editor: NSTextView, _ viewport: NSScrollView) -> NSRange {
+    let point = editor.convert(viewport.contentView.bounds.origin, from: viewport.contentView)
+    let origin = editor.textContainerOrigin
+    let layout = editor.layoutManager!
+    let glyph = layout.glyphIndex(for: NSPoint(x: max(0, point.x - origin.x), y: max(0, point.y - origin.y)),
+                                  in: editor.textContainer!)
+    var range = NSRange()
+    _ = layout.lineFragmentRect(forGlyphAt: glyph, effectiveRange: &range)
+    return layout.characterRange(forGlyphRange: range, actualGlyphRange: nil)
+  }
+
+  @MainActor private static func visibleCharacters(_ editor: NSTextView, _ viewport: NSScrollView) -> NSRange {
+    let origin = editor.textContainerOrigin
+    let rect = editor.convert(viewport.contentView.bounds, from: viewport.contentView)
+      .offsetBy(dx: -origin.x, dy: -origin.y)
+    let layout = editor.layoutManager!
+    let glyphs = layout.glyphRange(forBoundingRect: rect, in: editor.textContainer!)
+    return layout.characterRange(forGlyphRange: glyphs, actualGlyphRange: nil)
+  }
+
+  @MainActor private static func settle(_ coordinator: WorkspaceTextEditorCoordinator) {
+    let deadline = Date(timeIntervalSinceNow: 2)
+    repeat {
+      RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.02))
+    } while coordinator.isScrollRestorationPending && Date() < deadline
+    precondition(!coordinator.isScrollRestorationPending, "Production scroll restoration timed out")
+  }
+
+  private static func record(_ fields: [String: Any]) {
+    var fields = fields
+    fields["hasWindow"] = false
+    fields["os"] = ProcessInfo.processInfo.operatingSystemVersionString
+    let data = try! JSONSerialization.data(withJSONObject: fields, options: [.sortedKeys])
+    FileHandle.standardError.write(data)
+    FileHandle.standardError.write(Data([10]))
   }
 
   @MainActor static func findEditor(_ view: NSView) -> NSTextView? {

@@ -35,6 +35,10 @@ struct WorkspaceTextEditor: View {
     private let scrollKeeper = WorkspaceScrollKeeper()
     private let editingUndoManager = UndoManager()
 
+    #if WORKSPACE_SCROLL_CHECKS
+      var isScrollRestorationPending: Bool { scrollKeeper.isRestorationPending }
+    #endif
+
     init(text: Binding<String>) {
       self.text = text
     }
