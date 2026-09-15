@@ -1,0 +1,24 @@
+{
+  "variant": "text",
+  "automatic": true,
+  "observe_hosts": true,
+  "app": "/Users/rxwill/git/MyApps/OpenCCman-retention-reference-analysis/.build/host-observation-candidate/MinimalTextAutoHosts.app",
+  "command": [
+    "xcrun",
+    "swiftc",
+    "-swift-version",
+    "5",
+    "-parse-as-library",
+    "-O",
+    "-target",
+    "arm64-apple-macosx13.0",
+    "/Users/rxwill/git/MyApps/OpenCCman-retention-reference-analysis/.build/host-observation-candidate/Probe.swift",
+    "-o",
+    "/Users/rxwill/git/MyApps/OpenCCman-retention-reference-analysis/.build/host-observation-candidate/MinimalTextAutoHosts.app/Contents/MacOS/MinimalTextAutoHosts"
+  ],
+  "source_sha256": "67e6610811ae2ec976530b1972677914b99702aa4a7786d383f039b7156273c9",
+  "base_sha": "1d96edf6580698ea29d4941e28a5f3fcf8f5d94a",
+  "dirty": true,
+  "compiler": "swift-driver version: 1.168.6 Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0\nBuildVersion:\t\t26A428\n"
+}

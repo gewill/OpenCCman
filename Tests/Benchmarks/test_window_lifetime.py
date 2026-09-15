@@ -41,3 +41,47 @@ class WindowLifetimeEvidenceTests(unittest.TestCase):
     def test_failed_driver_cannot_be_hidden_by_complete_samples(self):
         with self.assertRaises(ValueError):
             MODULE.validate(self.rows + [{"event": "driver_failed:timeout"}])
+
+
+class WeakHostEvidenceTests(unittest.TestCase):
+    def setUp(self):
+        WindowLifetimeEvidenceTests.setUp(self)
+        seen = 0
+        for row in self.rows:
+            seen = max(seen, row["visible"])
+            row["hosts"] = [dict(id=i, windowAlive=i <= row["visible"],
+                                 windowVisible=i <= row["visible"],
+                                 initialContentAlive=True, initialContentType="FixtureHostingView")
+                            for i in range(1, seen + 1)]
+
+    def test_closed_window_and_retained_content_are_distinct_outcomes(self):
+        result = MODULE.validate(self.rows, require_hosts=True)
+        host = result["driver_final_plus_20"]["hosts"][1]
+        self.assertFalse(host["windowAlive"])
+        self.assertTrue(host["initialContentAlive"])
+
+    def test_missing_host_data_cannot_pass_required_observation(self):
+        del self.rows[-1]["hosts"]
+        with self.assertRaises(ValueError):
+            MODULE.validate(self.rows, require_hosts=True)
+
+    def test_missing_closed_host_identity_is_rejected(self):
+        self.rows[-1]["hosts"].pop()
+        with self.assertRaises(ValueError):
+            MODULE.validate(self.rows, require_hosts=True)
+
+    def test_dead_weak_window_cannot_reappear(self):
+        self.rows[-1]["hosts"][1]["windowAlive"] = True
+        with self.assertRaises(ValueError):
+            MODULE.validate(self.rows, require_hosts=True)
+
+    def test_visible_host_must_match_actual_window_count(self):
+        row = next(r for r in self.rows if r["event"] == "driver_pair_visible")
+        row["hosts"][1]["windowVisible"] = False
+        with self.assertRaises(ValueError):
+            MODULE.validate(self.rows, require_hosts=True)
+
+    def test_numeric_booleans_are_not_valid_weak_state(self):
+        self.rows[-1]["hosts"][1]["windowAlive"] = 0
+        with self.assertRaises(ValueError):
+            MODULE.validate(self.rows, require_hosts=True)

@@ -21,6 +21,10 @@ on:
         description: Compare EnvironmentObject and ObservedObject in native WindowGroup on macOS 15
         type: boolean
         default: false
+      observe_window_hosts:
+        description: Add weak window/content-view observations to the lifetime diagnostic
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -111,7 +115,12 @@ jobs:
         with:
           persist-credentials: false
       - name: Observe both native lifetime controls
-        run: python3 scripts/diagnose-window-lifetime.py --output "${{ runner.temp }}/window-lifetime"
+        env:
+          OBSERVE_HOSTS: ${{ inputs.observe_window_hosts }}
+        run: |
+          args=()
+          if [[ "$OBSERVE_HOSTS" == "true" ]]; then args+=(--observe-hosts); fi
+          python3 scripts/diagnose-window-lifetime.py --output "${{ runner.temp }}/window-lifetime" "${args[@]}"
       - name: Preserve observations and failures
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
