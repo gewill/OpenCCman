@@ -1,0 +1,12 @@
+A reference tree is a top-down tree attempting to show the primary ownership chain
+of every malloc allocation and dynamically-allocated VM region of the process.
+This output has been filtered to only show branches containing instances
+of the specified <classes-pattern>, ending at the lowest-level such
+instance on each branch.
+
+    5 (944 bytes) <AttributeGraph Owned>
+      2 (472 bytes) <SwiftUI.(ChildEnvironment in $2313a7658)<Swift.Optional<OpenCCman.HomeViewModel>> 0x12290e940> [24]
+      + 1 (448 bytes) <HomeViewModel 0x76b8eb5500> [448]
+      2 (472 bytes) <SwiftUI.(ChildEnvironment in $2313a7658)<Swift.Optional<OpenCCman.HomeViewModel>> 0x1229fb340> [24]
+        1 (448 bytes) <HomeViewModel 0x76b69981c0> [448]
+
