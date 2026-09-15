@@ -1,0 +1,5 @@
+{"case": "system-export-1mib", "file": "input-1mib-converted.txt", "bytes": 1048573, "sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9", "byte_equal": true, "has_bom": false}
+{"case": "cancel-save-10mib", "no_output_created": true, "quota": {"2026-09-16": 2}}
+{"case": "system-export-10mib", "file": "input-10mib-converted.txt", "bytes": 10485757, "sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088", "byte_equal": true, "nul_count": 139810, "crlf_count": 419430, "has_bom": false}
+{"case": "export-after-invalid-oversize-cancel-import", "bytes": 10485757, "sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088", "byte_equal": true, "quota_fields": {}}
+{"case": "cancel-system-replace-and-save", "original_byte_equal": true, "sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088", "quota": {"2026-09-16": 2}}
