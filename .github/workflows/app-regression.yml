@@ -54,6 +54,8 @@ jobs:
         run: bash scripts/check-control-sizing.sh
       - name: Check native editor scroll anchors
         run: bash scripts/check-editor-scroll.sh
+      - name: Check native editor and window introspection
+        run: python3 scripts/check-introspection.py
       - name: Check Pro access updates
         run: bash scripts/check-pro-access.sh
       - name: Check local StoreKit transactions
