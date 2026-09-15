@@ -67,7 +67,7 @@ struct RootView: View {
       whatsNew.finish(in: presentationID)
     }
     #if os(macOS)
-    .introspect(.window, on: .macOS(.v11, .v12, .v13, .v14, .v15, .v26)) { window in
+    .introspect(.window, on: AppIntrospection.window) { window in
       windowID = ObjectIdentifier(window)
       isMainWindow = window.isMainWindow
       viewModel.window = window

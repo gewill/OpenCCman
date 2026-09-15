@@ -1,5 +1,29 @@
 import SwiftUI
-import SwiftUIIntrospect
+@_spi(Advanced) import SwiftUIIntrospect
+
+#if os(macOS)
+  /// Introspect 26 deliberately skips later major systems. Opt in to 27 only:
+  /// 27.x still exposes the NSTextView/NSWindow selectors used here, while
+  /// Introspect 27 itself would raise our macOS deployment target to 12.
+  @MainActor
+  enum AppIntrospection {
+    private static var isMacOS27: Bool {
+      if #available(macOS 28, *) { return false }
+      if #available(macOS 27, *) { return true }
+      return false
+    }
+
+    static var textEditor: PlatformViewVersionPredicate<TextEditorType, NSTextView> {
+      if isMacOS27 { return .macOS(.v26...) }
+      return .macOS(.v11, .v12, .v13, .v14, .v15, .v26)
+    }
+
+    static var window: PlatformViewVersionPredicate<WindowType, NSWindow> {
+      if isMacOS27 { return .macOS(.v26...) }
+      return .macOS(.v11, .v12, .v13, .v14, .v15, .v26)
+    }
+  }
+#endif
 
 extension View {
   func readSize(onChange: @escaping (CGSize) -> Void) -> some View {
@@ -47,7 +71,7 @@ extension View {
 
   func clearTextEdtorStyle(isEditable: Bool = true) -> some View {
     #if os(macOS)
-      introspect(.textEditor, on: .macOS(.v11, .v12, .v13, .v14, .v15, .v26)) { textEditor in
+      introspect(.textEditor, on: AppIntrospection.textEditor) { textEditor in
         textEditor.isEditable = isEditable
         textEditor.textContainerInset = NSSize(width: 0, height: 1)
         textEditor.textContainer?.lineFragmentPadding = 0
@@ -68,7 +92,7 @@ extension View {
   private struct WorkspaceScrollModifier: ViewModifier {
     @StateObject private var keeper = WorkspaceScrollKeeper()
     func body(content: Content) -> some View {
-      content.introspect(.textEditor, on: .macOS(.v11, .v12, .v13, .v14, .v15, .v26)) { keeper.attach($0) }
+      content.introspect(.textEditor, on: AppIntrospection.textEditor) { keeper.attach($0) }
     }
   }
 #endif
