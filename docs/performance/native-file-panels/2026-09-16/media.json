@@ -1,0 +1,92 @@
+[
+  {
+    "name": "import-1mib.mp4",
+    "bytes": 709289,
+    "sha256": "7c492069435339dd80b22f562eb172ff4ab1863fcf0614a7f4388f682774cf1d",
+    "probe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1496,
+          "height": 968
+        }
+      ],
+      "format": {
+        "duration": "35.475000",
+        "size": "709289"
+      }
+    }
+  },
+  {
+    "name": "export-and-10mib.mp4",
+    "bytes": 6951664,
+    "sha256": "30740d2ce562a5e75daf18335b1eabd02ad9e951acbcd93727965311fbc0a2a7",
+    "probe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1496,
+          "height": 968
+        }
+      ],
+      "format": {
+        "duration": "450.160000",
+        "size": "6951664"
+      }
+    }
+  },
+  {
+    "name": "errors-cancel-and-preserved-export.mp4",
+    "bytes": 2322210,
+    "sha256": "d0fe76ca742d3ac87984fc2b86629adcae7b379ea663853e78b1496988447d50",
+    "probe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1496,
+          "height": 968
+        }
+      ],
+      "format": {
+        "duration": "103.351667",
+        "size": "2322210"
+      }
+    }
+  },
+  {
+    "name": "10mib-imported.png",
+    "bytes": 92519,
+    "sha256": "e06fafa96339dbc1ca528e868ec71a7d3eda7a0199b1a73479b6fb154c77777a",
+    "source": {
+      "file": "export-and-10mib.mp4",
+      "seconds": 90
+    }
+  },
+  {
+    "name": "10mib-converted.png",
+    "bytes": 102900,
+    "sha256": "71a2f5df6261c32c7518ae890e57d166195e2d7d83c6b4e7f25b21b5169f2d2b",
+    "source": {
+      "file": "export-and-10mib.mp4",
+      "seconds": 150
+    }
+  },
+  {
+    "name": "system-replace.png",
+    "bytes": 142553,
+    "sha256": "b9ad735a46e3647e1c6b5118146c753f0ffd0e36bbdb4976596ec8dd1ac0e299",
+    "source": {
+      "file": "errors-cancel-and-preserved-export.mp4",
+      "seconds": 80
+    }
+  }
+]
