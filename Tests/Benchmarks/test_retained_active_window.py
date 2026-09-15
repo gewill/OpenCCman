@@ -90,3 +90,30 @@ class RetainedActiveWindowTests(unittest.TestCase):
     def test_short_observation_fails(self):
         self.event('retained_plus_5')['elapsed_ms'] -= 1
         self.rejects()
+
+
+class RetainedSavedFileTests(unittest.TestCase):
+    def setUp(self):
+        self.fixture = base.SavedDocumentTests()
+        self.fixture.setUp()
+        self.path = self.fixture.directory / 'actual-retained-active-10mib.txt'
+        self.path.write_bytes((self.fixture.directory / 'expected-10mib.txt').read_bytes())
+
+    def tearDown(self):
+        self.fixture.tearDown()
+
+    def test_fifth_export_is_independently_checked(self):
+        exports = self.fixture.module.verify_files(self.fixture.directory, active_anchor=True)
+        self.assertEqual(len(exports), 5)
+        self.assertEqual(exports[-1]['file'], self.path.name)
+
+    def test_missing_retained_export_fails(self):
+        self.path.unlink()
+        with self.assertRaises(FileNotFoundError):
+            self.fixture.module.verify_files(self.fixture.directory, active_anchor=True)
+
+    def test_same_length_retained_corruption_fails(self):
+        data = self.path.read_bytes()
+        self.path.write_bytes(data[:-1] + b'y')
+        with self.assertRaises(ValueError):
+            self.fixture.module.verify_files(self.fixture.directory, active_anchor=True)
