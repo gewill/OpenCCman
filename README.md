@@ -52,6 +52,8 @@ See the [complete project status and follow-up report (2026-09-13)](docs/project
 
 The [1.3 follow-up validation record](docs/v1.3-release-validation-2026-09-13.md) tracks the latest tooling checks and the Xcode Cloud resource-signing blocker.
 
+The [release metadata and privacy audit (2026-09-15)](docs/release/metadata-2026-09-15/README.md) includes three-language candidate copy, current ASC version discrepancies and remaining privacy/release gates. These drafts have not been applied to App Store Connect.
+
 ## Xcode Cloud release builds
 
 Production builds use Xcode Cloud. Push a temporary branch whose name starts with `build` only when a cloud package is needed; it triggers the existing iOS and macOS workflow. Everyday application PRs target `develop`. The legacy `build` branch must be retired before creating `build/*` branches. See [Xcode Cloud configuration and release checks](docs/XCODE_CLOUD.md) for the verified App/workflow IDs, diagnostics and acceptance steps. Local archives and exports are diagnostic evidence; release acceptance uses the cloud build and its exact source commit.
