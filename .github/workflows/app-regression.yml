@@ -17,6 +17,10 @@ on:
         description: Build an unsigned arm64 iOS Simulator app for local UI validation
         type: boolean
         default: false
+      diagnose_window_lifetime:
+        description: Compare EnvironmentObject and ObservedObject in native WindowGroup on macOS 15
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -28,7 +32,7 @@ concurrency:
 jobs:
   regression:
     name: App Regression
-    if: github.event_name != 'workflow_dispatch' || !inputs.diagnose_editor_anchor
+    if: github.event_name != 'workflow_dispatch' || (!inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
     runs-on: macos-15
     timeout-minutes: 20
     steps:
@@ -94,6 +98,28 @@ jobs:
           name: macos-validation-app
           path: ${{ runner.temp }}/OpenCCman-validation.zip
           retention-days: 7
+
+  window-lifetime-diagnostic:
+    name: Native WindowGroup lifetime comparison
+    if: github.event_name == 'workflow_dispatch' && inputs.diagnose_window_lifetime
+    runs-on: macos-15
+    timeout-minutes: 8
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Observe both native lifetime controls
+        run: python3 scripts/diagnose-window-lifetime.py --output "${{ runner.temp }}/window-lifetime"
+      - name: Preserve observations and failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: window-lifetime-diagnostic
+          path: ${{ runner.temp }}/window-lifetime
+          retention-days: 7
+          if-no-files-found: error
 
   ios-validation:
     name: Build iOS Simulator validation app

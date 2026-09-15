@@ -1,0 +1,20 @@
+--- text/Probe.swift
++++ observed/Probe.swift
+@@ -37,14 +37,14 @@
+ struct ProbeRoot: View {
+   @StateObject private var model = ProbeModel()
+   var body: some View {
+-    ProbeChild().environmentObject(model).frame(width: 420, height: 180)
++    ProbeChild(model: model).frame(width: 420, height: 180)
+   }
+ }
+ struct ProbeChild: View {
+-  @EnvironmentObject var model: ProbeModel
++  @ObservedObject var model: ProbeModel
+   var body: some View { Text(model.text).padding() }
+ }
+ @main struct MinimalLifetimeApp: App {
+   init() { ProbeLog.shared.start() }
+-  var body: some Scene { WindowGroup("Minimal Text Probe") { ProbeRoot() } }
++  var body: some Scene { WindowGroup("Minimal Observed Probe") { ProbeRoot() } }
+ }
