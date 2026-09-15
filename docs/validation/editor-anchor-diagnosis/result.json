@@ -29,5 +29,6 @@
   "applicationSourceExcludingTestConditionalByteIdentical": true,
   "originalAssertionThresholds": "Unchanged",
   "causeBoundary": "Controlled scheduling reproduces the exact reported mismatch. Original failing CI did not log pending state; historical causality is inferred rather than directly traced. The synchronization race itself is reproduced.",
-  "unresolved": "Full macOS 15 candidate regression/controlled probe pending; actual app UI, IME, VoiceOver, minimum OS and signed build gates remain #20/#65."
+  "unresolved": "Latest PR full App Regression remains required; actual app UI, IME, VoiceOver, minimum OS and signed build gates remain #20/#65.",
+  "macos15Candidate": "macos15-candidate-result.json"
 }
