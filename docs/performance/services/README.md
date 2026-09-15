@@ -53,3 +53,9 @@ gh workflow run app-regression.yml --repo gewill/OpenCCman \
 ```
 
 CI 的包为未签名验证产物；后续只能将独立副本改为唯一测试服务名、ad-hoc 签名后注册。二进制和 plist 的改动、注册／清理记录须保留，不将它声称为最终分发包。准备后再执行测量；本节不表示构建或注册已经成功。
+
+## 首组真实调用结果
+
+[2026-09-15 来源、40 次 s2t 调用、NUL 边界、原始 JSONL 和清理记录](2026-09-15/README.md)。Release 包与提供者身份已核实，首组真实样本完成；最初“尚未运行成功服务样本”的记录仅描述工具初验时点。其他六组配置、真实目标 App 和容量决定继续保留。
+
+生成器 `scripts/generate-services-fixtures.py` 接收 `--cli`、`--resources`、`--output`，拒绝覆盖目录，核对 CLI 与资源版本及资源 hash。默认输出 1 KiB／1／5／10 MiB 两类段落、七配置共 56 组；生成期望本身不调用 Services，不等于服务验收完成。
