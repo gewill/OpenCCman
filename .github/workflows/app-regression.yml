@@ -33,6 +33,8 @@ jobs:
         run: python3 -m unittest discover -s Tests/Benchmarks -p 'test_*.py'
       - name: Check window layout resolution and recovery
         run: bash scripts/check-workspace.sh
+      - name: Check Mac window geometry
+        run: bash scripts/check-window-sizing.sh
       - name: Check complete Mac control bounds
         run: bash scripts/check-control-sizing.sh
       - name: Check native editor scroll anchors

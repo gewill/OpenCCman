@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B57100000000000000000002 /* MainWindowSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57100000000000000000002 /* MainWindowSizing.swift */; };
+		B57100000000000000000001 /* MainWindowGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57100000000000000000001 /* MainWindowGeometry.swift */; };
 		3863CECBA90A40108CB62210 /* ControlSizingGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB640B710F84822A640F70B /* ControlSizingGallery.swift */; };
 		07316DC341E7465E99EA8E4E /* AppControlStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DD388302A841368BE809D4 /* AppControlStyle.swift */; };
 		AB2F59FF46334E4F9E1BA403 /* WorkspaceScrollKeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C494425751394D56B5BA5763 /* WorkspaceScrollKeeper.swift */; };
@@ -86,6 +88,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A57100000000000000000002 /* MainWindowSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCman/View/MainWindowSizing.swift; sourceTree = SOURCE_ROOT; };
+		A57100000000000000000001 /* MainWindowGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCman/Model/MainWindowGeometry.swift; sourceTree = SOURCE_ROOT; };
 		AFB640B710F84822A640F70B /* ControlSizingGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSizingGallery.swift; sourceTree = "<group>"; };
 		13DD388302A841368BE809D4 /* AppControlStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppControlStyle.swift; sourceTree = "<group>"; };
 		C494425751394D56B5BA5763 /* WorkspaceScrollKeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceScrollKeeper.swift; sourceTree = "<group>"; };
@@ -183,6 +187,8 @@
 		09DBEC542E3BC69000DD9C5B /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A57100000000000000000002 /* MainWindowSizing.swift */,
+				A57100000000000000000001 /* MainWindowGeometry.swift */,
 				860A8029E8FF16CE13720671 /* ProAccessUpdate.swift */,
 				7CAFB8436EC14FFC357BCEFA /* CustomerCenterScene.swift */,
 				CC0912202600000000000002 /* ChineseConversionService.swift */,
@@ -438,6 +444,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B57100000000000000000002 /* MainWindowSizing.swift in Sources */,
+				B57100000000000000000001 /* MainWindowGeometry.swift in Sources */,
 				43088A90EB27980ABB8606C3 /* ProAccessUpdate.swift in Sources */,
 				3C3627644470F73B7875003F /* CustomerCenterScene.swift in Sources */,
 				AB2F59FF46334E4F9E1BA403 /* WorkspaceScrollKeeper.swift in Sources */,
