@@ -15,6 +15,7 @@ import plistlib
 import shutil
 import subprocess
 import sys
+import time
 
 ROOT = Path(__file__).resolve().parents[1]
 BUNDLE = 'org.gewill.OpenCCman.NativeWindowLifecycleAuditAuto'
@@ -131,9 +132,12 @@ def main():
     protocol.add_argument('--documents', action='store_true', help='Validate fixed document cycles and native-call close overlap')
     protocol.add_argument('--cycles', action='store_true', help='Validate three cycles with distinct new model identities')
     parser.add_argument('--active-anchor', action='store_true', help='Require the retained-window active conversion case')
+    parser.add_argument('--profile-stages', action='store_true', help='CI only: sample the owned document process; not a latency baseline')
     args = parser.parse_args()
     if args.active_anchor and not args.documents:
         parser.error('--active-anchor requires --documents')
+    if args.profile_stages and not (args.app and args.documents and args.active_anchor):
+        parser.error('--profile-stages requires --app --documents --active-anchor')
     if args.document_files and (not args.documents or not args.raw):
         parser.error('--document-files requires --raw --documents')
     bundle = BUNDLE + ('DocumentsActiveAnchor' if args.active_anchor else 'Documents' if args.documents else 'Cycles' if args.cycles else '')
@@ -151,9 +155,23 @@ def main():
         if args.app:
             executable = args.app / 'Contents/MacOS' / info['CFBundleExecutable']
             with (args.output / 'process.log').open('w') as log:
+                deadline = time.monotonic() + (660 if args.active_anchor else 450 if args.documents else 180 if args.cycles else 100)
                 process = subprocess.Popen([str(executable)], stdout=log, stderr=subprocess.STDOUT)
                 result['pid'] = process.pid
-                result['exit_code'] = process.wait(timeout=660 if args.active_anchor else 450 if args.documents else 180 if args.cycles else 100)
+                if args.profile_stages:
+                    spec = importlib.util.spec_from_file_location('stage_profile', ROOT / 'scripts/window_stage_profile.py')
+                    profiler = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(profiler)
+                    result['valid_profile'] = False
+                    try:
+                        profiler.profile_stages(process, Path.home() / 'Library/Caches' / bundle,
+                                                args.output / 'profiles', deadline)
+                        result['valid_profile'] = True
+                    except (OSError, ValueError, subprocess.SubprocessError) as error:
+                        # Sampling is diagnostic: finish the original protocol,
+                        # preserve its files, and report capture failure separately.
+                        result['profile_error'] = str(error)
+                result['exit_code'] = process.wait(timeout=max(0, deadline - time.monotonic()))
             if result['exit_code'] != 0:
                 raise ValueError('Diagnostic app exited unsuccessfully')
             candidates = list((Path.home() / 'Library/Caches' / bundle).glob(f'lifecycle-{process.pid}-*.jsonl'))
@@ -208,7 +226,7 @@ def main():
                 (args.output / f'process-raw-{index}.jsonl').write_bytes(path.read_bytes())
         (args.output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(result, indent=2))
-    return 0 if result['valid_protocol'] else 4
+    return 0 if result['valid_protocol'] and result.get('valid_profile', True) else 4
 
 
 if __name__ == '__main__':

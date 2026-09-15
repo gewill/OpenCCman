@@ -90,3 +90,7 @@ python3 scripts/benchmark-app.py --output /tmp/openccman-reflow --reuse-build --
 - 七组配置使用可区分台湾词组、台湾字形和香港字形的固定答案。官方模式的文字部分核对 OpenCC 1.4.2 CLI；U+0000 的保留由 wrapper/app 固定答案验证，不能用会截断 NUL 的 CLI 输出作为预期。
 - 手动托管窗口关闭前、close 返回后和等待后分别记录；分析 CPU 时先算各运行的阶段增量，不能把整段协议差异推广为输入收益。
 - 隔离闲时布局试验使用 `--disable-background-layout --build-only`，由脚本应用变更并记录 application_variant；复用时不重复传入覆盖选项。它仍不等同 WindowGroup 关闭行为。
+
+## 文稿阶段调用栈
+
+[云端文稿阶段采样](document-stage-profiling.md)复用完整原生窗口文稿协议，区分调用栈诊断和无采样延迟基线。
