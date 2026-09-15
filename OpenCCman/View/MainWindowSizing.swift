@@ -47,6 +47,16 @@ final class MainWindowSizing: ObservableObject {
   }
 
   private func observe(_ window: NSWindow) {
+    observers.append(NotificationCenter.default.addObserver(forName: NSWindow.didEndSheetNotification,
+      object: nil, queue: .main) { [weak self] notification in
+      guard let self, let target = notification.object as? NSWindow, target === self.window else { return }
+      // AppKit restores the parent's pre-sheet origin after dismissing a sheet. A first-launch
+      // sheet may have captured the provisional frame before our recommended size was applied.
+      DispatchQueue.main.async { [weak self, weak target] in
+        guard let self, let target, self.window === target else { return }
+        self.constrainToScreen()
+      }
+    })
     observers.append(NotificationCenter.default.addObserver(forName: NSWindow.willCloseNotification,
       object: nil, queue: .main) { [weak self] notification in
       guard let self, let target = notification.object as? NSWindow, target === self.window,

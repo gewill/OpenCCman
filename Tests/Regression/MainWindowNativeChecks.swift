@@ -50,8 +50,17 @@ struct MainWindowNativeChecks {
     RunLoop.main.run(until: Date().addingTimeInterval(0.03))
     reader.reportWindow()
     precondition(reports == 1, "Native window attachment must report once without an OS allowlist")
+    // A dismissed launch sheet can restore a provisional origin after initial sizing.
+    let displaced = NSRect(x: screen.visibleFrame.maxX - 100, y: screen.visibleFrame.minY - 100,
+                           width: window.frame.width, height: window.frame.height)
+    window.setFrame(displaced, display: false)
+    NotificationCenter.default.post(name: NSWindow.didEndSheetNotification, object: window)
+    RunLoop.main.run(until: Date().addingTimeInterval(0.03))
+    let fitted = MainWindowGeometry.constrained(displaced,
+      visibleScreens: NSScreen.screens.map(\.visibleFrame), fallback: screen.visibleFrame)
+    precondition(window.frame == fitted, "Sheet dismissal must refit the parent without resetting its size")
     window.close()
-    print("PASS: native \(restoring ? "restoration" : "first launch"), provisional autosave, minimum size, idempotent attachment and window reader")
+    print("PASS: native \(restoring ? "restoration" : "first launch"), provisional autosave, minimum size, idempotent attachment, window reader and sheet-dismissal bounds")
   }
 }
 #endif
