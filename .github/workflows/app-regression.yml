@@ -26,6 +26,10 @@ on:
         description: Build an isolated Release native window lifecycle diagnostic app
         type: boolean
         default: false
+      automatic_window_lifecycle:
+        description: Build and measure real WindowGroup with a fixed self-driving protocol (macOS 13+ diagnostic only)
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -37,7 +41,7 @@ concurrency:
 jobs:
   regression:
     name: App Regression
-    if: github.event_name != 'workflow_dispatch' || (!inputs.build_window_lifecycle && !inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
+    if: github.event_name != 'workflow_dispatch' || (!inputs.build_window_lifecycle && !inputs.automatic_window_lifecycle && !inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
     runs-on: macos-15
     timeout-minutes: 20
     steps:
@@ -160,7 +164,7 @@ jobs:
 
   window-lifecycle-validation:
     name: Build native window lifecycle diagnostic app
-    if: github.event_name == 'workflow_dispatch' && inputs.build_window_lifecycle
+    if: github.event_name == 'workflow_dispatch' && (inputs.build_window_lifecycle || inputs.automatic_window_lifecycle)
     runs-on: macos-15
     timeout-minutes: 20
     env:
@@ -170,8 +174,18 @@ jobs:
         with:
           persist-credentials: false
       - name: Prepare isolated diagnostic source and build Release app
+        env:
+          AUTOMATIC_LIFECYCLE: ${{ inputs.automatic_window_lifecycle }}
         run: |
-          python3 scripts/prepare-window-lifecycle.py --output "${{ runner.temp }}/native-window-lifecycle"
+          prepare_args=()
+          build_args=()
+          diagnostic_bundle=org.gewill.OpenCCman.NativeWindowLifecycleAudit
+          if [[ "$AUTOMATIC_LIFECYCLE" == "true" ]]; then
+            prepare_args+=(--automatic)
+            build_args+=(MACOSX_DEPLOYMENT_TARGET=13.0)
+            diagnostic_bundle+=Auto
+          fi
+          python3 scripts/prepare-window-lifecycle.py "${prepare_args[@]}" --output "${{ runner.temp }}/native-window-lifecycle"
           mkdir -p "${{ runner.temp }}/lifecycle-artifact"
           xcodebuild -version > "${{ runner.temp }}/lifecycle-artifact/xcode-version.txt"
           git rev-parse HEAD > "${{ runner.temp }}/lifecycle-artifact/source-sha.txt"
@@ -183,12 +197,18 @@ jobs:
             -derivedDataPath "${{ runner.temp }}/lifecycle-derived" \
             -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
             CODE_SIGNING_ALLOWED=NO ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
-            PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.NativeWindowLifecycleAudit build \
+            PRODUCT_BUNDLE_IDENTIFIER="$diagnostic_bundle" "${build_args[@]}" build \
             2>&1 | tee "${{ runner.temp }}/lifecycle-artifact/build.log"
           cmp OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved \
             "${{ runner.temp }}/native-window-lifecycle/source/OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
           ditto -c -k --keepParent "${{ runner.temp }}/lifecycle-derived/Build/Products/Release/OpenCCman.app" \
             "${{ runner.temp }}/lifecycle-artifact/OpenCCman-lifecycle.zip"
+      - name: Measure automatic native windows without CUA observation
+        if: inputs.automatic_window_lifecycle
+        run: |
+          python3 scripts/check-native-window-lifecycle.py \
+            --app "${{ runner.temp }}/lifecycle-derived/Build/Products/Release/OpenCCman.app" \
+            --output "${{ runner.temp }}/lifecycle-artifact/automatic"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always()
         with:
