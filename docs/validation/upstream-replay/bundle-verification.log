@@ -1,0 +1,29 @@
+$ git clone --bare https://github.com/gewill/SwiftyOpenCC.git <TEMP>/opencc-bundle-audit-cienwaxc/fork.git
+Cloning into bare repository '<TEMP>/opencc-bundle-audit-cienwaxc/fork.git'...
+exit=0
+
+$ git -C <TEMP>/opencc-bundle-audit-cienwaxc/fork.git fetch <HOME>/git/MyApps/OpenCCman-upstream-validation/.build/real-sync/replay-baseline.bundle refs/heads/replay-baseline
+From <HOME>/git/MyApps/OpenCCman-upstream-validation/.build/real-sync/replay-baseline.bundle
+ * branch            replay-baseline -> FETCH_HEAD
+exit=0
+
+$ git -C <TEMP>/opencc-bundle-audit-cienwaxc/fork.git bundle verify <HOME>/git/MyApps/OpenCCman-upstream-validation/.build/real-sync/run-1/recovered/candidate.bundle
+The bundle contains this ref:
+c723c347ce178cceb2e4d94ba0ca96479fb79912 refs/heads/codex/sync-fork-c75671b112ae7ff8cc08
+The bundle requires this ref:
+c400ac932b960904ea1903715cb22dd572c2886b
+The bundle uses this hash algorithm: sha1
+<HOME>/git/MyApps/OpenCCman-upstream-validation/.build/real-sync/run-1/recovered/candidate.bundle is okay
+exit=0
+
+$ git -C <TEMP>/opencc-bundle-audit-cienwaxc/fork.git fetch <HOME>/git/MyApps/OpenCCman-upstream-validation/.build/real-sync/run-1/recovered/candidate.bundle refs/heads/codex/sync-fork-c75671b112ae7ff8cc08
+From <HOME>/git/MyApps/OpenCCman-upstream-validation/.build/real-sync/run-1/recovered/candidate.bundle
+ * branch            codex/sync-fork-c75671b112ae7ff8cc08 -> FETCH_HEAD
+exit=0
+
+$ git -C <TEMP>/opencc-bundle-audit-cienwaxc/fork.git rev-parse FETCH_HEAD
+c723c347ce178cceb2e4d94ba0ca96479fb79912
+exit=0
+
+$ git -C <TEMP>/opencc-bundle-audit-cienwaxc/fork.git diff --check c400ac932b960904ea1903715cb22dd572c2886b c723c347ce178cceb2e4d94ba0ca96479fb79912
+exit=0
