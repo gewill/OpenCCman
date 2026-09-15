@@ -38,3 +38,15 @@ macOS 27.0 (26A428)、Swift 6.4 / Swift 5 / -O / arm64，同一 ad-hoc 二进制
 离线零窗内存图中，两份 ProbeModel 的扫描路径都经过 AccessibilityNode 和 PropertyList；其中一份可从 SwiftUICore 静态 ObservationCenter._current 经 invalidations、ObservationRegistrar 追踪，另一份归档了 AppGraph.shared 路径。[摘录](2026-09-16/reference-trace-excerpts.txt)保留原始边注释。路径混有未标 strong 的字典/数组/PropertyList 边，所以它是下一步定位方向，尚不是已证明的完整强持有链，也不能宣称 CUA 服务直接强持有模型。原始 memgraph 和完整扫描仅留本机，公开记录它们的 SHA256。
 
 本轮进一步排除了“可见数为零只是因为 NSWindow 隐藏而一直存活”的解释：两个 NSWindow 的 weak 引用均已归零。余下需定位被保留宿主/无障碍状态的实际强所有者，并在较早系统和真实应用中验证同样的关联。这里是没有第三方依赖、业务通知或编辑器的最小 SwiftUI 程序；不能单独证明实际 OpenCCman 的全部持有根因。#93 和 #18 保持开放，没有产品生命周期修复或性能提升声明。
+
+
+## macOS 15 独立 CI 复核
+
+[35030849260](https://github.com/gewill/OpenCCman/actions/runs/35030849260) 成功，源码 `5be88362ebcf25cfc9d57fbe487887c6d69b91fc`、配置 Xcode 26.3、macOS 15 runner；text 与 observed 顺序执行，均无 CUA、录屏或 heap capture。下载后重新核对生成源码 SHA、原始日志 SHA 和完整 require_hosts 协议，而非只信 workflow 绿色状态。
+
+| 变体 | 关第二窗 +5/+20 秒：模型 / 窗口 / 宿主 | 最终关窗 +5/+20 秒 |
+|---|---|---|
+| EnvironmentObject | 1 / 1 / 1 | 0 / 0 / 0 |
+| ObservedObject | 1 / 1 / 1 | 0 / 0 / 0 |
+
+两个进程退出 0；[源码、构建/进程日志与原始样本](2026-09-16/ci-macos15/)已归档。此结果说明两个变体在该协议下可释放，也校验新增弱观测器没有必然保留宿主。不能用它与本机的一次成对结果独立归因系统版本：编译器、运行环境和首窗 AX 查询条件均不同。原始强所有者、实际产品关联及必要修复仍未证明，Issue #93 保持开放。
