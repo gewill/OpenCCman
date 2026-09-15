@@ -24,7 +24,7 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def prepare(output, automatic=False):
+def prepare(output, automatic=False, cycles=False):
     output = output.resolve()
     if output == ROOT or ROOT.is_relative_to(output):
         raise ValueError('Output must not contain the checkout')
@@ -41,7 +41,7 @@ def prepare(output, automatic=False):
     harness = pathlib.Path('Tests/Benchmarks/NativeWindowLifecycleAudit.swift')
     (source / harness).parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(ROOT / harness, source / harness)
-    bundle = BUNDLE + ('Auto' if automatic else '')
+    bundle = BUNDLE + ('AutoCycles' if cycles else 'Auto' if automatic else '')
     modified = [pathlib.Path(x) for x in [
         'OpenCCman/OpenCCmanApp.swift', 'OpenCCman/Scene/HomeViewModel.swift',
         'OpenCCman/AppDelegate.swift', 'OpenCCman/Info.plist', 'OpenCCman.xcodeproj/project.pbxproj',
@@ -50,15 +50,17 @@ def prepare(output, automatic=False):
     before = {str(p): digest(ROOT / p) for p in modified}
     replace_once(source / modified[0], '    IAPManager.shared.configure()', '    NativeWindowLifecycleAudit.prepare()')
     replace_once(source / modified[0], '            checkPro()', '            // Diagnostic isolation: no purchase status refresh.')
-    if automatic:
-        replace_once(source / modified[0], '    WindowGroup {', '    WindowGroup(id: "lifetime") {')
+    if automatic or cycles:
+        if automatic:
+            replace_once(source / modified[0], '    WindowGroup {', '    WindowGroup(id: "lifetime") {')
         replace_once(source / modified[0], '      appContent\n',
-                     '      appContent\n      .background(LifetimeDriverView())\n')
+                     '      appContent\n      .background(' + ('LifetimeCycleDriverView' if cycles else 'LifetimeDriverView') + '())\n')
         replace_once(source / modified[0],
                      'skipAutomatic: ProcessInfo.processInfo.arguments.contains("-skip-whats-new")',
                      'skipAutomatic: true')
         # Share the tested fixed-timing driver; only adapt its logging sink.
-        driver = (ROOT / 'Tests/Benchmarks/WindowLifetimeDriver.swift').read_text()
+        driver_path = pathlib.Path('Tests/Benchmarks/WindowCycleDriver.swift' if cycles else 'Tests/Benchmarks/WindowLifetimeDriver.swift')
+        driver = (ROOT / driver_path).read_text()
         driver = driver.replace('ProbeLog.shared.record', 'NativeWindowLifecycleAudit.stage')
         with (source / harness).open('a') as file:
             file.write('\nimport SwiftUI\n' + driver + '''
@@ -92,8 +94,8 @@ extension NativeWindowLifecycleAudit {
         if (ROOT / p).read_bytes() != (source / p).read_bytes():
             raise ValueError(f'Unexpected mutation: {p}')
     metadata = {
-        'protocol': 'native-window-lifecycle-automatic-1' if automatic else 'native-window-lifecycle-1',
-        'bundle_id': bundle, 'automatic': automatic,
+        'protocol': 'native-window-lifecycle-cycles-1' if cycles else 'native-window-lifecycle-automatic-1' if automatic else 'native-window-lifecycle-1',
+        'bundle_id': bundle, 'automatic': automatic, 'cycles': cycles,
         'diagnostic_minimum_macos': '13.0' if automatic else '11.0',
         'source_sha': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
         'source_status': subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True),
@@ -105,8 +107,10 @@ extension NativeWindowLifecycleAudit {
         'run': ('Not launched. Automatic diagnostic requires macOS 13+: native openWindow/performClose; first/pair hold 10 seconds, then +5/+20 observations after each close. No AX queries required.'
                 if automatic else 'Not launched. Open/close windows only through the actual app UI; collect per-process JSONL from the diagnostic bundle cache.'),
     }
-    if automatic:
-        metadata['driver_sha256'] = digest(ROOT / 'Tests/Benchmarks/WindowLifetimeDriver.swift')
+    if automatic or cycles:
+        metadata['driver_sha256'] = digest(ROOT / driver_path)
+    if cycles:
+        metadata['run'] = 'Not launched. Three native menu cycles, two new windows per cycle; clear only new sources; +5/+20 observations, then final close +5/+20. No external queries/recording required.'
     (output / 'preparation.json').write_text(json.dumps(metadata, indent=2) + '\n')
     print(source)
 
@@ -114,6 +118,8 @@ extension NativeWindowLifecycleAudit {
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=pathlib.Path, required=True, help='New directory, never overwritten')
-    parser.add_argument('--automatic', action='store_true', help='Append the fixed native WindowGroup driver; build this private copy with MACOSX_DEPLOYMENT_TARGET=13.0')
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--cycles', action='store_true', help='Drive three native-menu cycles, two new windows each; no retained OpenWindowAction')
+    mode.add_argument('--automatic', action='store_true', help='Append the fixed native WindowGroup driver; build this private copy with MACOSX_DEPLOYMENT_TARGET=13.0')
     args = parser.parse_args()
-    prepare(args.output, args.automatic)
+    prepare(args.output, args.automatic, args.cycles)
