@@ -112,7 +112,7 @@ struct ProScene: View {
     .padding(Constant.padding * 2)
     .background(
       RoundedRectangle(cornerRadius: Constant.cornerRadius, style: .continuous)
-        .stroke(Color.separator, lineWidth: 0.5)
+        .stroke(Color("separator"), lineWidth: 0.5)
     )
   }
 

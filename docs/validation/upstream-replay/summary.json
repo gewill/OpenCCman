@@ -1,0 +1,40 @@
+{
+  "candidate": "c75671b112ae7ff8cc08",
+  "compatibilitySourcesUnchanged": true,
+  "githubMutationCalls": 0,
+  "headSHA": "c723c347ce178cceb2e4d94ba0ca96479fb79912",
+  "notValidated": [
+    "production GitHub App write permissions",
+    "new future release",
+    "application promotion build"
+  ],
+  "outcomes": {
+    "check": {
+      "exitCode": 0,
+      "status": "changed"
+    },
+    "generation-failure": {
+      "exitCode": 4,
+      "status": "blocked"
+    },
+    "pending": {
+      "exitCode": 0,
+      "status": "waiting"
+    },
+    "recovered": {
+      "exitCode": 0,
+      "status": "changed"
+    },
+    "rejected": {
+      "exitCode": 0,
+      "status": "waiting"
+    },
+    "repeated": {
+      "exitCode": 0,
+      "status": "changed"
+    }
+  },
+  "sameSourceSameCommit": true,
+  "status": "passed",
+  "writeDeniedExitCode": 5
+}

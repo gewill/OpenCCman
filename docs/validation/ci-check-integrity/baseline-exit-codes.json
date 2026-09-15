@@ -1,0 +1,12 @@
+[
+  {
+    "script": "check-project.sh",
+    "exitCode": 0,
+    "stderr": "<temporary>/scripts/check-project.sh: line 12: rg: command not found\n<temporary>/scripts/check-project.sh: line 16: rg: command not found\n"
+  },
+  {
+    "script": "check-control-sizing.sh",
+    "exitCode": 0,
+    "stderr": "<temporary>/scripts/check-control-sizing.sh: line 20: rg: command not found\n<temporary>/scripts/check-control-sizing.sh: line 21: sources[@]: unbound variable\n"
+  }
+]

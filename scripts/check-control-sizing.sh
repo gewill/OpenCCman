@@ -16,8 +16,27 @@ PY
 )"
   git -C "$neumorphic_path" checkout --quiet --detach "$revision"
 fi
+# Materialize discovery in a checked command, not process substitution: failures
+# there do not propagate reliably through Bash 3.2's errexit behavior.
+python3 - "$neumorphic_path/Sources/Neumorphic" > "$audit_dir/sources.list" <<'PY'
+import os, sys
+from pathlib import Path
+root = Path(sys.argv[1])
+if not root.is_dir():
+    raise SystemExit("Missing Neumorphic source directory")
+def fail(error):
+    raise error
+sources = sorted(Path(parent) / name
+                 for parent, _, names in os.walk(root, onerror=fail)
+                 for name in names if name.endswith('.swift'))
+if not sources:
+    raise SystemExit("No Neumorphic Swift sources found")
+for source in sources:
+    sys.stdout.buffer.write(os.fsencode(source) + b'\0')
+PY
+[[ -s "$audit_dir/sources.list" ]] || { echo "Empty Neumorphic source list" >&2; exit 1; }
 sources=()
-while IFS= read -r source; do sources+=("$source"); done < <(rg --files "$neumorphic_path/Sources/Neumorphic" -g '*.swift')
+while IFS= read -r -d '' source; do sources+=("$source"); done < "$audit_dir/sources.list"
 xcrun swiftc -parse-as-library -emit-library -emit-module -module-name Neumorphic \
   -emit-module-path "$audit_dir/Neumorphic.swiftmodule" \
   -Xlinker -install_name -Xlinker "$audit_dir/libNeumorphic.dylib" \
