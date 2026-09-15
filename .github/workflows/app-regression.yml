@@ -51,6 +51,8 @@ jobs:
         run: bash scripts/check-editor-scroll.sh
       - name: Check Pro access updates
         run: bash scripts/check-pro-access.sh
+      - name: Check RevenueCat language synchronization
+        run: python3 scripts/check-iap-locale.py
       - name: Check local StoreKit transactions
         run: bash scripts/check-storekit.sh "${{ runner.temp }}/openccman-storekit"
       - name: Upload StoreKit failure evidence

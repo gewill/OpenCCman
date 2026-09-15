@@ -31,6 +31,8 @@ struct ChangeLanguageScene: View {
           options: LocaleConstants.allCases,
           initialContent: selectedLocale
         ) { item in
+          // Update SDK request headers before SwiftUI recreates localized content.
+          IAPManager.shared.updatePreferredUILocale(item)
           selectedLocale = item
         }
       }
