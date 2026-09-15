@@ -13,7 +13,7 @@ MANIFEST = ROOT / 'docs/performance/native-window-lifecycle/2026-09-15-documents
 LABELS = ('1mib-a', '1mib-b', '10mib-a', '10mib-b', 'active-10mib')
 
 
-def validate_documents(rows):
+def validate_documents(rows, active_anchor=False):
     if any(row['event'].startswith('documents_failed:') for row in rows):
         raise ValueError('Document driver failed')
     observations = {}
@@ -132,23 +132,77 @@ def validate_documents(rows):
                 raise ValueError('Close did not overlap actual native call interval')
         previous = times[-1]
 
-    final = {suffix: event(f'documents_final_{suffix}', 6, 0) for suffix in ('closed', 'plus_5', 'plus_20')}
+    if active_anchor:
+        names = ('import_started', 'imported', 'before_other_close', 'exported', 'plus_5', 'plus_20')
+        stages = {name: event(f'retained_{name}', 7,
+                  2 if name in names[:3] else 1) for name in names}
+        times = [row['elapsed_ms'] for row in stages.values()]
+        if times != sorted(times) or times[0] < previous:
+            raise ValueError('Retained-anchor cycle overlapped or reordered')
+        length = fixtures[10]['expected_bytes']
+        task(stages['import_started'], 1, importing=True)
+        task(stages['imported'], 1)
+        sizes(stages['imported'], 1, length, 0, False)
+        for name in names[:2]:
+            quota(stages[name], 5, 0)
+            if stages[name].get('result_writebacks') != expected_writes:
+                raise ValueError('Retained import wrote a result')
+        before = stages['before_other_close']
+        quota(before, 5, 1)
+        if (before.get('retained_model_number') != 1 or before.get('closed_model_number') != 7
+                or before.get('retained_converting') is not True
+                or before.get('other_converting') is not False or before.get('other_importing') is not False):
+            raise ValueError('Wrong active/closed window identity or task state')
+        begun = before.get('native_call', {})
+        if type(begun.get('begin_ns')) is not int or begun['begin_ns'] <= 0 or 'end_ns' in begun:
+            raise ValueError('Retained call was not active before close')
+        exported = stages['exported']
+        for key, value in [('actual_bytes', length), ('actual_sha256', fixtures[10]['expected_sha256']),
+                           ('byte_equal', True), ('export_filename', 'input-10mib-converted.txt')]:
+            if exported.get(key) != value:
+                raise ValueError('Retained output differs from oracle')
+        if (not re.fullmatch('[0-9a-f]{64}', exported.get('source_sha256', '')) or
+                exported['source_sha256'] != exported.get('expected_source_sha256')):
+            raise ValueError('Retained source changed')
+        fingerprint = exported.get('anchor_fingerprint')
+        if not isinstance(fingerprint, str) or not re.fullmatch('[0-9a-f]{64}', fingerprint):
+            raise ValueError('Missing retained content/configuration fingerprint')
+        expected_writes = expected_writes + ['retained-active-10mib']
+        for name in names[3:]:
+            row = stages[name]
+            quota(row, 6, 0)
+            sizes(row, 1, length, length, True)
+            task(row, 1)
+            if row.get('anchor_fingerprint') != fingerprint or row.get('result_writebacks') != expected_writes:
+                raise ValueError('Retained result/configuration changed or wrong writebacks')
+            call = row.get('native_call', {})
+            if (any(type(call.get(k)) is not int for k in ('begin_ns', 'will_close_ns', 'end_ns'))
+                    or call['begin_ns'] != begun['begin_ns']
+                    or not 0 < call['begin_ns'] < call['will_close_ns'] < call['end_ns']):
+                raise ValueError('Other close did not overlap retained native conversion')
+        for delay in (5, 20):
+            if stages[f'plus_{delay}']['elapsed_ms'] - exported['elapsed_ms'] < delay * 1000:
+                raise ValueError('Short retained success observation')
+        previous = times[-1]
+
+    final_count, final_quota = (7, 6) if active_anchor else (6, 5)
+    final = {suffix: event(f'documents_final_{suffix}', final_count, 0) for suffix in ('closed', 'plus_5', 'plus_20')}
     if final['closed']['elapsed_ms'] < previous:
         raise ValueError('Final close preceded document completion')
     for suffix, row in final.items():
-        quota(row, 5, 0)
+        quota(row, final_quota, 0)
         if row.get('result_writebacks') != expected_writes:
             raise ValueError('Late writeback after final close')
     for delay in (5, 20):
         if final[f'plus_{delay}']['elapsed_ms'] - final['closed']['elapsed_ms'] < delay * 1000:
             raise ValueError('Short final observation')
-    finished = event('documents_finished', 6, 0)
+    finished = event('documents_finished', final_count, 0)
     if finished['elapsed_ms'] < final['plus_20']['elapsed_ms']:
         raise ValueError('Premature finish')
     return observations
 
 
-def verify_files(directory):
+def verify_files(directory, active_anchor=False):
     """Independent post-exit byte comparison; never uses the tested converter."""
     import hashlib
     fixtures = json.loads(MANIFEST.read_text())['fixtures']
@@ -169,4 +223,13 @@ def verify_files(directory):
                                 has_bom=data.startswith(b'\xef\xbb\xbf')))
     if (directory / 'actual-active-10mib.txt').exists():
         raise ValueError('Cancelled window unexpectedly exported')
+    if active_anchor:
+        expected = (directory / 'expected-10mib.txt').read_bytes()
+        name = 'actual-retained-active-10mib.txt'
+        data = (directory / name).read_bytes()
+        if data != expected:
+            raise ValueError('Retained-window saved export is not byte equal')
+        exports.append(dict(file=name, bytes=len(data), sha256=hashlib.sha256(data).hexdigest(),
+                            byte_equal=True, nul_count=data.count(b'\0'), crlf_count=data.count(b'\r\n'),
+                            has_bom=data.startswith(b'\xef\xbb\xbf')))
     return exports

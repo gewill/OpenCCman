@@ -23,7 +23,9 @@ PROTOCOL = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(PROTOCOL)
 
 
-def validate(rows, cycles=False, documents=False):
+def validate(rows, cycles=False, documents=False, active_anchor=False):
+    if active_anchor and not documents:
+        raise ValueError("Active anchor requires documents")
     normalized = []
     pids = set()
     for row in rows:
@@ -36,7 +38,7 @@ def validate(rows, cycles=False, documents=False):
                 or not isinstance(row.get('elapsed_ms'), (int, float))
                 or not math.isfinite(row['elapsed_ms'])
                 or type(row.get('visible_main_capable_windows')) is not int
-                or not 0 <= created <= (6 if documents else 7 if cycles else 2)):
+                or not 0 <= created <= (7 if active_anchor else 6 if documents else 7 if cycles else 2)):
             raise ValueError('Malformed real-model record')
         pids.add(row['pid'])
         normalized.append({
@@ -54,7 +56,7 @@ def validate(rows, cycles=False, documents=False):
         spec = importlib.util.spec_from_file_location('document_protocol', ROOT / 'scripts/window_document_protocol.py')
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        return module.validate_documents(rows)
+        return module.validate_documents(rows, active_anchor=active_anchor)
     if cycles:
         return validate_cycles(rows)
     stages = PROTOCOL.validate(normalized)
@@ -128,10 +130,13 @@ def main():
     protocol = parser.add_mutually_exclusive_group()
     protocol.add_argument('--documents', action='store_true', help='Validate fixed document cycles and native-call close overlap')
     protocol.add_argument('--cycles', action='store_true', help='Validate three cycles with distinct new model identities')
+    parser.add_argument('--active-anchor', action='store_true', help='Require the retained-window active conversion case')
     args = parser.parse_args()
+    if args.active_anchor and not args.documents:
+        parser.error('--active-anchor requires --documents')
     if args.document_files and (not args.documents or not args.raw):
         parser.error('--document-files requires --raw --documents')
-    bundle = BUNDLE + ('Documents' if args.documents else 'Cycles' if args.cycles else '')
+    bundle = BUNDLE + ('DocumentsActiveAnchor' if args.active_anchor else 'Documents' if args.documents else 'Cycles' if args.cycles else '')
     if args.app and (os.environ.get('GITHUB_ACTIONS') != 'true' or os.environ.get('RUNNER_OS') != 'macOS'):
         parser.error('Local mode only reads --raw; launch the private app through the normal UI')
     if args.app:
@@ -148,7 +153,7 @@ def main():
             with (args.output / 'process.log').open('w') as log:
                 process = subprocess.Popen([str(executable)], stdout=log, stderr=subprocess.STDOUT)
                 result['pid'] = process.pid
-                result['exit_code'] = process.wait(timeout=450 if args.documents else 180 if args.cycles else 100)
+                result['exit_code'] = process.wait(timeout=660 if args.active_anchor else 450 if args.documents else 180 if args.cycles else 100)
             if result['exit_code'] != 0:
                 raise ValueError('Diagnostic app exited unsuccessfully')
             candidates = list((Path.home() / 'Library/Caches' / bundle).glob(f'lifecycle-{process.pid}-*.jsonl'))
@@ -169,18 +174,20 @@ def main():
             destination.mkdir()
             names = ['input-1mib.txt', 'expected-1mib.txt', 'input-10mib.txt', 'expected-10mib.txt']
             names += [f'actual-{label}.txt' for label in ('1mib-a', '1mib-b', '10mib-a', '10mib-b', 'active-10mib')]
+            if args.active_anchor:
+                names.append('actual-retained-active-10mib.txt')
             for name in names:
                 path = document_files / name
                 if path.exists():
                     if path.is_symlink() or not path.is_file() or path.stat().st_size > 10 * 1024 * 1024:
                         raise ValueError('Unexpected document evidence file')
                     shutil.copyfile(path, destination / name)
-        result['observations'] = validate(rows, args.cycles, args.documents)
+        result['observations'] = validate(rows, args.cycles, args.documents, args.active_anchor)
         if document_files:
             spec = importlib.util.spec_from_file_location('document_files', ROOT / 'scripts/window_document_protocol.py')
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
-            result['saved_exports'] = module.verify_files(args.output / 'documents')
+            result['saved_exports'] = module.verify_files(args.output / 'documents', active_anchor=args.active_anchor)
         result['valid_protocol'] = True
     except (OSError, ValueError, subprocess.SubprocessError) as error:
         result['error'] = str(error)
