@@ -1,0 +1,37 @@
+{
+  "pid": 16711,
+  "valid_capture": true,
+  "scope": "5-second stack samples, not pure stage timings or a latency baseline",
+  "samples": [
+    {
+      "stage": "import",
+      "start_event": "document_10mib-a_import_started",
+      "end_event": "document_10mib-a_imported",
+      "stage_start_elapsed_ms": 82189.677417,
+      "last_observed_elapsed_ms_before_sample": 82189.677417,
+      "sample_file": "import-sample.txt",
+      "duration_requested_seconds": 5,
+      "interval_requested_ms": 10,
+      "tool_wall_seconds": 25.633116874999928,
+      "exit_code": 0,
+      "sample_sha256": "1a3b6da7d68ffffc1113f0d7bac469a79ff34c4ee1cd60042f5dc9aa1d5f749c",
+      "stage_end_seen_at_capture_return": false,
+      "last_observed_elapsed_ms_after_sample": 82189.677417
+    },
+    {
+      "stage": "conversion",
+      "start_event": "document_10mib-a_conversion_started",
+      "end_event": "document_10mib-a_exported",
+      "stage_start_elapsed_ms": 109885.130834,
+      "last_observed_elapsed_ms_before_sample": 109885.130834,
+      "sample_file": "conversion-sample.txt",
+      "duration_requested_seconds": 5,
+      "interval_requested_ms": 10,
+      "tool_wall_seconds": 6.864482582999926,
+      "exit_code": 0,
+      "sample_sha256": "67b74f6cf61366ab186a1f971ffba747cee6c4077c84a28e8c376e81d89e590b",
+      "stage_end_seen_at_capture_return": false,
+      "last_observed_elapsed_ms_after_sample": 110096.488125
+    }
+  ]
+}
