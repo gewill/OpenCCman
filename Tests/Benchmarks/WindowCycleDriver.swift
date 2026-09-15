@@ -100,17 +100,22 @@ struct LifetimeCycleDriverView: View {
     guard let main = NSApp.mainMenu else { return false }
     var candidates: [(NSMenu, Int)] = []
     func visit(_ menu: NSMenu) {
-      menu.update()
       for (index, item) in menu.items.enumerated() {
         let modifiers = item.keyEquivalentModifierMask.intersection([.command, .shift, .option, .control])
         if item.keyEquivalent.lowercased() == "n", modifiers == .command,
-           item.action != nil, item.isEnabled { candidates.append((menu, index)) }
+           item.action != nil { candidates.append((menu, index)) }
         if let child = item.submenu { visit(child) }
       }
     }
     visit(main)
     guard candidates.count == 1 else { return false }
-    candidates[0].0.performActionForItem(at: candidates[0].1)
+    // Validate only the matching menu; refreshing the Window menu could itself
+    // populate window-list items and alter the lifetime being measured.
+    let (menu, index) = candidates[0]
+    let item = menu.items[index]
+    menu.update()
+    guard item.isEnabled, let currentIndex = menu.items.firstIndex(where: { $0 === item }) else { return false }
+    menu.performActionForItem(at: currentIndex)
     return true
   }
 
