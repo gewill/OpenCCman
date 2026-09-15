@@ -22,7 +22,25 @@ xcrun swiftc -parse-as-library -emit-library -emit-module -module-name Neumorphi
   -emit-module-path "$audit_dir/Neumorphic.swiftmodule" \
   -Xlinker -install_name -Xlinker "$audit_dir/libNeumorphic.dylib" \
   "${sources[@]}" -o "$audit_dir/libNeumorphic.dylib"
+app_dir="$audit_dir/ControlChecks.app/Contents"
+mkdir -p "$app_dir/MacOS" "$app_dir/Resources"
+cat > "$app_dir/Info.plist" <<'PLIST'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>CFBundleIdentifier</key><string>org.gewill.OpenCCman.ControlChecks</string>
+  <key>CFBundleExecutable</key><string>check-sizing</string>
+  <key>CFBundleDevelopmentRegion</key><string>en</string>
+  <key>LSUIElement</key><true/>
+</dict></plist>
+PLIST
+for locale in en zh-Hans zh-Hant; do
+  cp -R "$repo_root/OpenCCman/$locale.lproj" "$app_dir/Resources/"
+done
 xcrun swiftc -I "$audit_dir" -L "$audit_dir" -lNeumorphic \
   "$repo_root/OpenCCman/View/AppControlStyle.swift" \
-  "$repo_root/Tests/Regression/ControlSizingChecks.swift" -o "$audit_dir/check-sizing"
-"$audit_dir/check-sizing"
+  "$repo_root/OpenCCman/View/SegmentView.swift" \
+  "$repo_root/OpenCCman/extensions/StringExtensions.swift" \
+  "$repo_root/Tests/Regression/SegmentLayoutChecks.swift" \
+  "$repo_root/Tests/Regression/ControlSizingChecks.swift" -o "$app_dir/MacOS/check-sizing"
+"$app_dir/MacOS/check-sizing"

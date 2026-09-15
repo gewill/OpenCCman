@@ -67,6 +67,11 @@ and [What’s New validation record](docs/WHATS_NEW.md).
 
 ### Changed
 
+- Conversion segments stack when the available width cannot fit complete words
+  at the current text size, and return to rows when space allows. The inspector's
+  preset label sits above its menu to keep narrow sidebars readable
+  ([#49](https://github.com/gewill/OpenCCman/issues/49)).
+
 - Size complete custom controls by platform: Mac icon/text buttons and segments
   default to 28pt, primary actions to 32pt, and iPhone/iPad controls to 44pt.
   Shadows and padding stay inside that envelope; larger text can grow naturally.
