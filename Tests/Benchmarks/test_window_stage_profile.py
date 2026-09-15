@@ -1,7 +1,10 @@
 """Synthetic sampler/clock tests, never evidence of actual application stacks."""
 import importlib.util
+import contextlib
+import io
 import json
 from pathlib import Path
+import plistlib
 import subprocess
 import tempfile
 import unittest
@@ -107,3 +110,39 @@ class StageProfileTests(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertIn('requires --app', result.stderr)
         self.assertFalse(self.output.exists())
+
+    def test_sampling_failure_still_waits_with_original_deadline_and_keeps_raw(self):
+        spec = importlib.util.spec_from_file_location('checker', ROOT / 'scripts/check-native-window-lifecycle.py')
+        checker = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(checker)
+        bundle = checker.BUNDLE + 'DocumentsActiveAnchor'
+        cache = self.root / 'Library/Caches' / bundle
+        cache.mkdir(parents=True)
+        self.raw.rename(cache / self.raw.name)
+        app = self.root / 'OpenCCman.app'
+        (app / 'Contents').mkdir(parents=True)
+        (app / 'Contents/Info.plist').write_bytes(plistlib.dumps({
+            'CFBundleIdentifier': bundle, 'CFBundleExecutable': 'OpenCCman'}))
+        def exited(**kwargs):
+            self.process.poll.return_value = 0
+            return 0
+        self.process.wait.side_effect = exited
+        arguments = ['checker', '--app', str(app), '--documents', '--active-anchor',
+                     '--profile-stages', '--output', str(self.output)]
+        # Single process lifetime: starts at 0, sampler ends at 15, wait at 20.
+        with (patch.object(checker.sys, 'argv', arguments),
+              patch.dict(checker.os.environ, GITHUB_ACTIONS='true', RUNNER_OS='macOS'),
+              patch.object(Path, 'home', return_value=self.root),
+              patch.object(checker.time, 'monotonic', side_effect=[0, 10, 10, 15, 20]),
+              patch.object(checker.subprocess, 'Popen', return_value=self.process),
+              patch.object(checker.subprocess, 'run', return_value=Mock(returncode=1)),
+              contextlib.redirect_stdout(io.StringIO())):
+            self.assertEqual(checker.main(), 4)
+        self.process.wait.assert_called_once_with(timeout=640)
+        report = json.loads((self.output / 'result.json').read_text())
+        self.assertFalse(report['valid_profile'])
+        self.assertTrue(report['process_exited'])
+        self.assertEqual(report['exit_code'], 0)
+        self.assertTrue((self.output / 'raw.jsonl').exists())
+        self.assertTrue((self.output / 'process-raw-0.jsonl').exists())
+        self.assertTrue((self.output / 'documents').exists())
