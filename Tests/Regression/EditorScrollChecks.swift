@@ -18,16 +18,25 @@ enum EditorScrollChecks {
     text.scrollRangeToVisible(NSRange(location: target, length: 1))
     let oldSelection = NSRange(location: target, length: 12)
     text.setSelectedRange(oldSelection)
-    let before = topLine(text, scroll).location
+    let beforeLine = topLine(text, scroll)
+    let beforeBounds = scroll.contentView.bounds
     scroll.setFrameSize(NSSize(width: 850, height: 180))
     settle()
-    precondition(NSLocationInRange(before, topLine(text, scroll)), "Width reflow must retain the old top character's line")
+    let widenedLine = topLine(text, scroll)
+    let retainedLine = NSLocationInRange(beforeLine.location, widenedLine)
+    recordReflow("initial-width", before: beforeLine, after: widenedLine,
+                 beforeBounds: beforeBounds, text: text, scroll: scroll, passed: retainedLine)
+    precondition(retainedLine, "Width reflow must retain the old top character's line: before \(beforeLine), after \(widenedLine), clip before \(beforeBounds), after \(scroll.contentView.bounds)")
     precondition(text.selectedRange() == oldSelection, "Restoring scroll must not change the selection")
-    let wider = topLine(text, scroll).location
+    let widerLine = topLine(text, scroll)
+    let widerBounds = scroll.contentView.bounds
     scroll.setFrameSize(NSSize(width: 360, height: 300))
     settle()
     let narrowLine = topLine(text, scroll)
-    precondition(abs(narrowLine.location - wider) < 50, "Narrowing must remain near the same character")
+    let retainedNearCharacter = abs(narrowLine.location - widerLine.location) < 50
+    recordReflow("initial-narrow", before: widerLine, after: narrowLine,
+                 beforeBounds: widerBounds, text: text, scroll: scroll, passed: retainedNearCharacter)
+    precondition(retainedNearCharacter, "Narrowing must remain near the same character: before \(widerLine), after \(narrowLine), clip before \(widerBounds), after \(scroll.contentView.bounds)")
     precondition(text.selectedRange() == oldSelection)
     // Coalesced resizes and a new document must not replay an old anchor.
     scroll.setFrameSize(NSSize(width: 800, height: 250))
@@ -192,11 +201,37 @@ enum EditorScrollChecks {
     let middle = (text.string as NSString).range(of: "Paragraph 750:").location
     text.scrollRangeToVisible(NSRange(location: middle, length: 1))
     text.setSelectedRange(NSRange(location: middle, length: 12))
-    let before = topLine(text, scroll).location
+    let beforeLine = topLine(text, scroll)
+    let beforeBounds = scroll.contentView.bounds
     scroll.setFrameSize(NSSize(width: 850, height: 180))
     settle()
-    precondition(NSLocationInRange(before, topLine(text, scroll)),
-                 "Large middle anchor must retain its line after width reflow")
+    let afterLine = topLine(text, scroll)
+    let retainedLine = NSLocationInRange(beforeLine.location, afterLine)
+    recordReflow("large-middle-width", before: beforeLine, after: afterLine,
+                 beforeBounds: beforeBounds, text: text, scroll: scroll, passed: retainedLine)
+    precondition(retainedLine,
+                 "Large middle anchor must retain its line after width reflow: before \(beforeLine), after \(afterLine), clip before \(beforeBounds), after \(scroll.contentView.bounds)")
+  }
+
+  @MainActor private static func recordReflow(_ scenario: String, before: NSRange, after: NSRange,
+                                             beforeBounds: NSRect, text: NSTextView,
+                                             scroll: NSScrollView, passed: Bool) {
+    // Use the already-observed line ranges: another layout query could alter the
+    // state we are diagnosing. Write synchronously so a failed precondition does
+    // not discard the evidence buffered before its crash.
+    let record: [String: Any] = [
+      "event": "reading-anchor", "scenario": scenario, "passed": passed,
+      "beforeLine": [before.location, before.length], "afterLine": [after.location, after.length],
+      "beforeClipBounds": NSStringFromRect(beforeBounds),
+      "afterClipBounds": NSStringFromRect(scroll.contentView.bounds),
+      "editorFrame": NSStringFromRect(text.frame),
+      "selection": NSStringFromRange(text.selectedRange()),
+      "hasWindow": text.window != nil,
+      "os": ProcessInfo.processInfo.operatingSystemVersionString
+    ]
+    let data = try! JSONSerialization.data(withJSONObject: record, options: [.sortedKeys])
+    FileHandle.standardError.write(data)
+    FileHandle.standardError.write(Data([10]))
   }
 
   @MainActor private static func topLine(_ text: NSTextView, _ scroll: NSScrollView) -> NSRange {
