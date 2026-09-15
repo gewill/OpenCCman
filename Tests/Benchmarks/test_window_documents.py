@@ -154,3 +154,21 @@ class SavedDocumentTests(unittest.TestCase):
         path = self.directory / 'actual-1mib-a.txt'
         path.write_bytes(path.read_bytes().split(b'\0', 1)[0])
         with self.assertRaises(ValueError): self.module.verify_files(self.directory)
+
+
+class ArchivedDocumentTests(unittest.TestCase):
+    def test_complete_native_runs_revalidate(self):
+        base = ROOT / 'docs/performance/native-window-documents/2026-09-16'
+        for name in ('ci-macos15', 'no-extra-observation', 'recorded-demonstration'):
+            with self.subTest(name=name):
+                rows = [json.loads(line) for line in (base / name / 'raw.jsonl').read_text().splitlines()]
+                actual = MODULE.validate(rows, documents=True)
+                saved = json.loads((base / name / 'result.json').read_text())
+                self.assertEqual(actual, saved['observations'])
+                self.assertTrue(all(r['task_info_status'] == 0 and r['rusage_status'] == 0 for r in rows))
+
+    def test_incomplete_initial_run_stays_failed(self):
+        path = ROOT / 'docs/performance/native-window-documents/2026-09-16/initial-ci-timeout/raw.jsonl'
+        rows = [json.loads(line) for line in path.read_text().splitlines()]
+        with self.assertRaisesRegex(ValueError, 'Document driver failed'):
+            MODULE.validate(rows, documents=True)
