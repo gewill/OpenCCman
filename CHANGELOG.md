@@ -110,6 +110,10 @@ and [What’s New validation record](docs/WHATS_NEW.md).
 
 ### Fixed
 
+- External Mac entry points request a native workspace window after all windows
+  have closed, coalescing concurrent reopen requests and restoring minimized
+  windows ([#19](https://github.com/gewill/OpenCCman/issues/19)).
+
 - Conversion settings sheets follow the app's selected language on Mac, iPad
   and iPhone, including when the system uses another language
   ([#75](https://github.com/gewill/OpenCCman/issues/75)).

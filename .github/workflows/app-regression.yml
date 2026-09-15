@@ -42,6 +42,8 @@ jobs:
         run: bash scripts/check-workspace.sh
       - name: Check Mac window geometry
         run: bash scripts/check-window-sizing.sh
+      - name: Check closed-window request coalescing
+        run: bash scripts/check-window-reopen.sh
       - name: Check complete Mac control bounds
         run: bash scripts/check-control-sizing.sh
       - name: Check native editor scroll anchors
