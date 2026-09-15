@@ -66,9 +66,24 @@ Both real UI runs used Mac16,7 / M4 Pro / 48 GiB, macOS 27.0 (26A428), English /
 | Candidate UI run, after conversion/export/scroll/axis/read-only interaction | 330,074,080 bytes | 1,046,724,608 bytes |
 | Candidate UI run, first zero-window sample + 20 s | 108,644,272 bytes | 323,715,072 bytes |
 
-The restored native-window callback enables the first-run What's New presentation, which appeared late over the imported editor. Therefore the first candidate pre-AX sample (124,405,032 bytes) is **excluded from comparison**. A follow-up attempted to mark version 1.3 presented in private defaults before launch, but the sheet appeared again; that attempted setup and its raw measurements are preserved in `runtime/after-clean/`, and its pre-AX value is also excluded. The reason for that preferences behavior was not established. The follow-up's visible-editor observation was 138,855,864 bytes, but differing presentation/history means it is not a controlled paired benchmark either.
+The restored native-window callback enables the first-run What's New presentation, which appeared late over the imported editor. Therefore the first candidate pre-AX sample (124,405,032 bytes) is **excluded from comparison**. A follow-up attempted to mark version 1.3 presented in private defaults before launch, but the sheet appeared again; that attempted setup and its raw measurements are preserved in `runtime/after-clean/`, and its pre-AX value is also excluded. Subsequent inspection identified the cause: `NativeWindowLifecycleAudit.prepare()` deliberately removes its private persistent domain at launch, overriding that external setup. The follow-up's visible-editor observation was 138,855,864 bytes, but differing presentation/history means it is not a controlled paired benchmark either.
 
-The visible-editor observations support a substantial reduction on this paragraph-heavy corpus after restoring configuration. They do **not** establish a precise percentage, cold-start/throughput improvement, a corpus-independent 10 MiB cost, or a statistically controlled performance comparison. Do not present the obscured low values as optimization benefits. A future paired benchmark should explicitly dismiss the sheet before importing on both sides and record this condition, rather than rely on an external preference write.
+The visible-editor observations support a substantial reduction on this paragraph-heavy corpus after restoring configuration. They do **not** establish a precise percentage, cold-start/throughput improvement, a corpus-independent 10 MiB cost, or a statistically controlled performance comparison. Do not present the obscured low values as optimization benefits. A subsequent protocol explicitly activates the empty candidate window and dismisses the real sheet before importing, rather than relying on an external preference write; its result is recorded below.
+
+### Controlled follow-up with the sheet dismissed before import
+
+[Real import-only before/after screenshots](https://github.com/gewill/OpenCCman/pull/99#issuecomment-5682892276).
+
+The `runtime/after-controlled/` protocol was written before launch. The empty candidate window was explicitly activated, its real What's New sheet was observed and dismissed through Done, and a full editor tree without a sheet was confirmed before opening the importer. This corrects the setup mistake instead of selecting a favorable sample from the obscured runs. No conversion or recording occurred.
+
+| Same 10 MiB input, fresh process | Before explicit large-editor AX query | After one editor AX query and at least 20 s |
+|---|---:|---:|
+| Original `aec0368f`, `runtime/before-ui/` | 2,167,687,976 bytes | 2,167,819,048 bytes |
+| Candidate `1c6114ef`, `runtime/after-controlled/` | 84,444,408 bytes | 102,581,616 bytes |
+
+These are physical-footprint observations. Candidate RSS was 152,420,352 then 186,286,080 bytes; its peak RSS was 399,802,368 bytes by the latter observation. Both windows were 900×450pt, English/Light/default font on the same machine/runtime; their screen positions differed. The candidate's preliminary modal history is explicitly recorded. Native read-only window-list enumeration occurred between its AX query and final sample, but no target heap/VM capture or screenshot occurred before these samples. Full per-second samples and memory API statuses are retained.
+
+This controlled follow-up confirms a large observed reduction for this specific paragraph-heavy fixture with the editor actually exposed. It is still one process per condition, without randomized repetitions or other corpora, and does not establish cold-launch or conversion-throughput gains. Post-sample heap counts are 2 NSTextLayoutFragment, 1 NSTextLineFragment and 45 CTRun. Product differences between original and candidate are the predicate fix and a `WORKSPACE_SCROLL_CHECKS`-guarded observation accessor that is absent from application builds; the diagnostic harness and lock are unchanged. The process exited with zero conversions, exact preferences restored and bundle made inactive; VoiceOver read back false.
 
 After the candidate UI run, the heap summary contains 2 `NSTextLayoutFragment`, 1 `NSTextLineFragment`, and 73 `CTRun`, compared with the original baseline's hundreds of thousands/millions. These are allocation summaries of the whole process, not retaining chains or proof that every text view uses one engine. Heap/VM tools were run after visible-editor sampling, before recording.
 
@@ -79,7 +94,7 @@ Raw logs, deviations, export checks and cleanup records are in [runtime](runtime
 ## Remaining acceptance
 
 - Re-evaluate macOS 27 window/entry results for #19/#57 and repeated multiwindow/active-task close behavior for #93; this change does not close those issues.
-- A strictly paired no-modal benchmark remains necessary before quoting an exact performance percentage. Cold launch, hot conversion and multiple corpora remain separate performance work.
+- Repeated/cross-corpus benchmarks remain necessary before generalizing a performance percentage. Cold launch and hot conversion remain separate performance work.
 - Signed Cloud, minimum-system, physical keyboard/input method and VoiceOver gates remain explicit. No build branch or formal release is triggered.
 
 ## Sources
