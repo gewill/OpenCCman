@@ -61,3 +61,5 @@ CI 的包为未签名验证产物；后续只能将独立副本改为唯一测�
 生成器 `scripts/generate-services-fixtures.py` 接收 `--cli`、`--resources`、`--output`，拒绝覆盖目录，核对 CLI 与资源版本及资源 hash。默认输出 1 KiB／1／5／10 MiB 两类段落、七配置共 56 组；生成期望本身不调用 Services，不等于服务验收完成。
 
 [七配置补测](2026-09-15/configuration-series/README.md)已完成其余六配置，累计 280 次调用；另有一次进程退出后的系统启动成功。目标 App 交互、失败和容量决定仍待完成。
+
+[故障注入与原生错误回传对照](2026-09-15/failure-injection/README.md)：三种输入原稿完整保留，但本机 API 返回 true；已有输出校验会识别未转换结果。真实目标 App 的错误提示尚未验证。
