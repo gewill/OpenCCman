@@ -41,3 +41,15 @@ xcrun swiftc -O Tests/Benchmarks/ServicesWaitProbe.swift \
 本机 macOS 27.0（26A428）、Xcode 27 的 `swiftc -O` 编译成功。[三项负向检查](negative-checks.json)通过：缺参数退出 2；非法 UTF-8 退出 2；随机未注册服务返回失败，退出 4，只记录一次尝试，剪贴板仍为输入，没有 `run_completed`。测试输入含中文、Emoji、CRLF、U+0000；这里只验证失败记录和原稿校验，**不代表这些字符的真实 Services 转换已通过**。
 
 尚未运行成功服务样本、TextEdit 或第二目标 App，也没有据此给出容量限制或延迟指标。提供者身份、Release 产物及固定语料的正式测量仍是下一步。
+
+
+## 可追溯 Release 包
+
+已有 `App Regression` 工作流新增手动开关 `build_services_validation`，单独使用 Xcode 26.3 编译 universal Mac Release 包，上传 zip、源码 SHA、工具链和原始 Package.resolved。不上传 App Store Connect、不使用发布签名、不推送 build 分支。PR 常规检查不会运行此额外构建。
+
+```bash
+gh workflow run app-regression.yml --repo gewill/OpenCCman \
+  --ref codex/services-wait-benchmark -f build_services_validation=true
+```
+
+CI 的包为未签名验证产物；后续只能将独立副本改为唯一测试服务名、ad-hoc 签名后注册。二进制和 plist 的改动、注册／清理记录须保留，不将它声称为最终分发包。准备后再执行测量；本节不表示构建或注册已经成功。
