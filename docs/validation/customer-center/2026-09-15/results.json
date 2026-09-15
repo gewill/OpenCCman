@@ -79,7 +79,7 @@
     "First synthetic draft preserved after all language and appearance navigation",
     "Second independent draft preserved on Customer Center round trip; first unchanged after second window closed",
     "Quota preference absent after navigation; no conversion performed",
-    "Owned process exited, owned preferences restored, owned registration removed",
+    "Owned process exited, preference backup imported (introduced keys not removed then), owned registration removed",
     "iPad returned to original Shutdown state; phone acceptance device untouched",
     "VoiceOver false before and after"
   ],
@@ -126,5 +126,10 @@
       "sha256": "785b33348515bda82202efadc32bad5f9192d303d27a0ea0630eaf685d6eb758",
       "bytes": 1574805
     }
+  },
+  "cleanup_followup": {
+    "introduced_keys_removed": 11,
+    "matches_original_backup": true,
+    "report": "../2026-09-15-voiceover/README.md"
   }
 }
