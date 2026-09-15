@@ -37,7 +37,7 @@ struct HelpScene: View {
           .padding(4)
           .overlay(
             RoundedRectangle(cornerRadius: 4)
-              .stroke(Color.accent, lineWidth: 1)
+              .stroke(Color("AccentColor"), lineWidth: 1)
           )
         Text("Convert Chinese text with [OpenCC](https://github.com/BYVoid/OpenCC)")
 
