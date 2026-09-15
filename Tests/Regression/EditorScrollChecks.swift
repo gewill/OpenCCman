@@ -21,7 +21,7 @@ enum EditorScrollChecks {
     let beforeLine = topLine(text, scroll)
     let beforeBounds = scroll.contentView.bounds
     scroll.setFrameSize(NSSize(width: 850, height: 180))
-    settle()
+    settle(keeper)
     let widenedLine = topLine(text, scroll)
     let retainedLine = NSLocationInRange(beforeLine.location, widenedLine)
     recordReflow("initial-width", before: beforeLine, after: widenedLine,
@@ -31,7 +31,7 @@ enum EditorScrollChecks {
     let widerLine = topLine(text, scroll)
     let widerBounds = scroll.contentView.bounds
     scroll.setFrameSize(NSSize(width: 360, height: 300))
-    settle()
+    settle(keeper)
     let narrowLine = topLine(text, scroll)
     let retainedNearCharacter = abs(narrowLine.location - widerLine.location) < 50
     recordReflow("initial-narrow", before: widerLine, after: narrowLine,
@@ -43,7 +43,7 @@ enum EditorScrollChecks {
     scroll.setFrameSize(NSSize(width: 500, height: 200))
     text.string = "New document\n"
     scroll.contentView.scroll(to: .zero)
-    settle()
+    settle(keeper)
     precondition(scroll.contentView.bounds.minY == 0)
     precondition(text.string == "New document\n")
     text.setSelectedRange(NSRange(location: 0, length: 0))
@@ -51,7 +51,7 @@ enum EditorScrollChecks {
     let marked = text.markedRange()
     precondition(text.hasMarkedText())
     scroll.setFrameSize(NSSize(width: 700, height: 240))
-    settle()
+    settle(keeper)
     precondition(text.markedRange() == marked, "Scroll restoration cannot commit or discard composition")
     checkUnlaidOutDocumentEnd()
     checkLargeEditor()
@@ -74,12 +74,12 @@ enum EditorScrollChecks {
     let end = (text.string as NSString).length - 2
     text.setSelectedRange(NSRange(location: end, length: 1))
     text.scrollRangeToVisible(NSRange(location: end, length: 1))
-    settle()
+    settle(keeper)
     let visible = text.layoutManager!.glyphRange(forBoundingRect: text.visibleRect, in: text.textContainer!)
     let characters = text.layoutManager!.characterRange(forGlyphRange: visible, actualGlyphRange: nil)
     precondition(NSLocationInRange(end, characters), "First jump must lay out the unseen document tail")
     scroll.setFrameSize(NSSize(width: 760, height: 260))
-    settle()
+    settle(keeper)
     precondition(text.selectedRange() == NSRange(location: end, length: 1), "Tail selection must survive reflow")
   }
 
@@ -98,15 +98,15 @@ enum EditorScrollChecks {
     keeper.attach(text)
     precondition(manager.allowsNonContiguousLayout && !manager.backgroundLayoutEnabled)
     text.string = (0..<1000).map { "Paragraph \($0): " + String(repeating: "中文 é 👩🏽‍💻 reflow ", count: 30) + "\n" }.joined()
-    settle()
+    settle(keeper)
     let target = (text.string as NSString).range(of: "Paragraph 500:").location
     text.setSelectedRange(NSRange(location: target, length: 8))
     text.scrollRangeToVisible(NSRange(location: target, length: 8))
-    settle()
+    settle(keeper)
     let selected = text.selectedRange()
     let top = text.characterIndexForInsertion(at: text.convert(scroll.contentView.bounds.origin, from: scroll.contentView))
     window.setContentSize(NSSize(width: 760, height: 260))
-    settle()
+    settle(keeper)
     precondition(text.layoutManager === manager, "Keeper must retain the native layout manager")
     precondition(text.selectedRange() == selected, "Noncontiguous reflow must preserve selection")
     let currentTop = text.characterIndexForInsertion(at: text.convert(scroll.contentView.bounds.origin, from: scroll.contentView))
@@ -114,7 +114,7 @@ enum EditorScrollChecks {
     let tail = (text.string as NSString).length - 2
     text.setSelectedRange(NSRange(location: tail, length: 0))
     text.scrollRangeToVisible(NSRange(location: tail, length: 1))
-    settle()
+    settle(keeper)
     // An insertion point beyond the last rendered line is not a reliable
     // visible-text query on macOS 15. Ask for the actual visible glyph range.
     let visibleGlyphs = manager.glyphRange(forBoundingRect: text.visibleRect, in: text.textContainer!)
@@ -122,19 +122,19 @@ enum EditorScrollChecks {
     precondition(NSLocationInRange(tail, visibleCharacters),
                  "First jump must make the previously unseen tail visible: tail \(tail), visible \(visibleCharacters), bounds \(text.visibleRect)")
     window.setContentSize(NSSize(width: 380, height: 260))
-    settle()
+    settle(keeper)
     precondition(text.layoutManager === manager)
     precondition(text.selectedRange().location == tail)
     text.setMarkedText("pinyin", selectedRange: NSRange(location: 3, length: 0), replacementRange: NSRange(location: NSNotFound, length: 0))
     let marked = text.markedRange()
     window.setContentSize(NSSize(width: 600, height: 260))
-    settle()
+    settle(keeper)
     precondition(text.markedRange() == marked)
     precondition(text.layoutManager === manager)
     text.unmarkText()
     text.string = "New document\n"
     scroll.contentView.scroll(to: .zero)
-    settle()
+    settle(keeper)
     precondition(scroll.contentView.bounds.minY == 0)
     // Long paragraphs exercise wrapped lines within one layout fragment rather
     // than only the short multilingual paragraphs used above.
@@ -145,9 +145,9 @@ enum EditorScrollChecks {
       let range = (text.string as NSString).rangeOfComposedCharacterSequence(at: length / 2)
       text.setSelectedRange(NSRange(location: range.location, length: 0))
       text.scrollRangeToVisible(range)
-      settle()
-      window.setContentSize(NSSize(width: 400, height: 240)); settle()
-      window.setContentSize(NSSize(width: 700, height: 240)); settle()
+      settle(keeper)
+      window.setContentSize(NSSize(width: 400, height: 240)); settle(keeper)
+      window.setContentSize(NSSize(width: 700, height: 240)); settle(keeper)
       precondition(text.layoutManager === manager)
       precondition(text.selectedRange().location == range.location)
     }
@@ -167,17 +167,17 @@ enum EditorScrollChecks {
     let keeper = WorkspaceScrollKeeper()
     keeper.attach(text)
     text.string = (0..<1000).map { "Paragraph \($0): " + String(repeating: "中文 é 👩🏽‍💻 reflow ", count: 30) + "\n" }.joined()
-    settle()
+    settle(keeper)
     let middle = (text.string as NSString).range(of: "Paragraph 500:").location
     text.setSelectedRange(NSRange(location: middle, length: 8))
     text.scrollRangeToVisible(NSRange(location: middle, length: 8))
-    settle()
+    settle(keeper)
     // Intentionally navigate before queued restoration callbacks can run.
     window.setContentSize(NSSize(width: 760, height: 260))
     let tail = (text.string as NSString).length - 2
     text.setSelectedRange(NSRange(location: tail, length: 0))
     text.scrollRangeToVisible(NSRange(location: tail, length: 1))
-    for _ in 0..<4 { settle() }
+    for _ in 0..<4 { settle(keeper) }
     let manager = text.layoutManager!
     let visible = manager.characterRange(forGlyphRange: manager.glyphRange(forBoundingRect: text.visibleRect,
                                           in: text.textContainer!), actualGlyphRange: nil)
@@ -204,7 +204,7 @@ enum EditorScrollChecks {
     let beforeLine = topLine(text, scroll)
     let beforeBounds = scroll.contentView.bounds
     scroll.setFrameSize(NSSize(width: 850, height: 180))
-    settle()
+    settle(keeper)
     let afterLine = topLine(text, scroll)
     let retainedLine = NSLocationInRange(beforeLine.location, afterLine)
     recordReflow("large-middle-width", before: beforeLine, after: afterLine,
@@ -244,7 +244,12 @@ enum EditorScrollChecks {
     return layout.characterRange(forGlyphRange: range, actualGlyphRange: nil)
   }
 
-  private static func settle() {
-    RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.08))
+  @MainActor private static func settle(_ keeper: WorkspaceScrollKeeper) {
+    let deadline = Date(timeIntervalSinceNow: 2)
+    repeat {
+      RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.08))
+    } while keeper.isRestorationPending && Date() < deadline
+    precondition(!keeper.isRestorationPending,
+                 "Scroll restoration did not finish before the bounded deadline")
   }
 }
