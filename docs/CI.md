@@ -72,3 +72,7 @@ PR 与合并后真实 GitHub Actions 运行结果是线上验收依据。纯迁�
 两种 diagnose 入口取代该次手动运行的普通 regression job；普通 PR/push 始终执行 App Regression。可选 job 没运行时显示 skipped，不能当作该项验收通过。诊断包和回归构建都不能代替 Xcode Cloud 的分发签名产物。
 
 该清单以核对时 develop `b2e0e63` 为准；尚在 PR 中的真实 WindowGroup Release 构建等扩展，合并后再纳入当前入口说明，不把候选工作流写成已上线能力。
+
+## Xcode 27 与 RevenueCat 编译诊断
+
+[#107 的隔离复现与工具链策略](validation/toolchain-compatibility/README.md)记录 Swift 6.4 下初始化器冲突及 RevenueCat 5.78.0 的官方修复。当前 App Regression 继续使用 Xcode 26.3；本诊断不更改应用依赖、最低系统或 Xcode Cloud。独立源文件类型检查不能替代完整升级验收。
