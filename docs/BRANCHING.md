@@ -2,7 +2,7 @@
 
 OpenCCman 采用与 Pingman 相同的精简版 Git Flow：常驻分支为 `main` 与 `develop`，开发、发布、热修复和打包使用临时分支。日常 PR 合入 `develop`；只有需要 Xcode Cloud 产物时才推送 `build` 前缀的分支。
 
-**2026-09-16 已核实：日常开发和 CI 已迁移到 `develop`，默认分支协调器也已使用 `develop` 作为应用 PR 目标。** [#43](https://github.com/gewill/OpenCCman/pull/43) 与 [#44](https://github.com/gewill/OpenCCman/pull/44) 均于 2026-09-13 合并。默认分支仍为 `main`；分支保护、旧 `build` 归档和正式发布主线整合尚未全部完成，见文末账本、[CI 说明](CI.md)与 [#110](https://github.com/gewill/OpenCCman/issues/110)。
+**2026-09-16 已核实：日常开发和 CI 已迁移到 `develop`，默认分支协调器也已使用 `develop` 作为应用 PR 目标。** [#43](https://github.com/gewill/OpenCCman/pull/43) 与 [#44](https://github.com/gewill/OpenCCman/pull/44) 均于 2026-09-13 合并。默认分支仍为 `main`；main/develop 的 PR 保护与 develop 的 App Regression 门禁已启用；旧 `build` 归档和正式发布主线整合仍未完成，见文末账本、[CI 说明](CI.md)与 [#110](https://github.com/gewill/OpenCCman/issues/110)。
 
 ## 分支职责
 
@@ -62,7 +62,8 @@ git worktree add -b codex/<issue>-<topic> ../openccman-<topic> origin/develop
 - UI 变更附修改前后截图，保持平台、窗口尺寸、语言、主题和输入内容一致；说明未覆盖的设备或辅助功能场景。
 - 纯文档变更在本地检查内容、链接和 `git diff --check`，无需额外运行 Xcode 构建或模拟器测试；PR 仍会触发统一 App Regression。
 - 创建 PR 的任务在提交、推送并返回链接后完成；CI 排队时报告状态。只有明确要求等待检查、合并或发布时才继续等待，不反复查询相同状态。
-- 目标规则是 `main`、`develop` 均通过 PR 更新，不强制推送。仓库保护规则是否已配置以迁移清单为准。
+- `main`、`develop` 已要求通过 PR 更新，保护同样约束管理员，禁止强制推送和删除受保护分支。`develop` 要求 GitHub Actions 提供 `App Regression` 成功；`main` 暂不要求尚不存在的应用回归。
+- 单人维护不要求额外审批者，不配置机器人绕过；保留 merge commit。`strict=false` 不强制每次更新至最新基线，依赖合并后仍需核对目标、冲突和候选 SHA；发生代码整合时重新验证候选。
 
 普通任务可使用 squash merge。发布、热修复及历史迁移采用 merge commit，保留分支祖先关系。SwiftyOpenCC 上游同步 PR 也必须保留 merge commit；不要将应用任务的 squash 策略套到 wrapper 同步上。
 
@@ -118,13 +119,13 @@ ddddxxx/SwiftyOpenCC + BYVoid/OpenCC 正式 Release
 |---|---|---|
 | 应用与历史 | #43 merge commit `fbd1ac0` 已进入 develop；旧 build `9daf153` 与原 main `e28ae12` 都是当前 develop 的祖先 | 日常继续通过 PR 集成 |
 | 默认协调器 | #44 merge commit `fb56ea3` 已进入 main；main 的 `scripts/upstream-sync.json` 明确为 `app.base=develop` | 保持周检与两层人工合并 |
-| 应用 CI | develop 有每个 PR 都执行的 App Regression，包含堆叠 `codex/**` 目标与 macOS 验证构建 | GitHub 强制保护尚未启用，见 #110 |
-| 保护规则 | main/develop 的经典保护接口均返回 Branch not protected；仓库/父级 rulesets 与两分支生效规则均为空 | 配置 PR/必要检查门禁；main 尚无 App Regression workflow，不能提前要求这个检查 |
+| 应用 CI | develop 有每个 PR 都执行的 App Regression，包含堆叠 `codex/**` 目标与 macOS 验证构建 | 已要求 GitHub Actions 的 App Regression（app ID 15368）通过 |
+| 保护规则 | main/develop 已配置经典 PR 保护，管理员同样受约束，禁止强推和删除；develop 要求 App Regression | main 应用工作流随发布整合后再增加检查；单人维护审批数为 0，strict=false |
 | 说明 | 本文、README 与 CI 说明区分已迁移内容和历史快照 | 发布或保护变化后更新对应证据 |
 | 正式发布主线 | main 仍是默认协调器分支，不能据此认定它已含验收后的 1.3 应用 | 完成 #11 发布门禁后，通过发布 PR 整合 main、Tag 与云端产物 |
 | 旧 build | 仍存在，SHA `9daf153`；当前没有以它为目标的开放 PR | 先核对云端运行与外部引用，再保留归档、退出旧引用，释放 build/* 命名空间；见 #110 |
 | 打包分支 | 另有 `build-v1.3-20260914`，SHA `c3009c7` | 与对应 Xcode Cloud 产物逐一核对，不批量删除；下一次明确授权打包时再验证 build/* |
 
-这是一次仓库状态核对，不包含新的 Xcode Cloud/签名/TestFlight 验收，也没有更改保护规则或删除分支。只读 API、来源 SHA 与祖先检查记录见 [核对证据](validation/branching-status-2026-09-16.json)。[维护 Issue #110](https://github.com/gewill/OpenCCman/issues/110) 跟踪保护与旧引用，其关闭不替代 #11 的完整发布验收。
+首次只读核对的 API、来源 SHA 与祖先检查记录见 [历史快照](validation/branching-status-2026-09-16.json)；随后启用保护的请求及 API 回读见 [保护配置证据](validation/branch-protection-2026-09-16.json)。回读确认配置已生效，未通过破坏性推送测试拒绝行为。未删除分支或执行新的 Xcode Cloud/签名/TestFlight 验收。[维护 Issue #110](https://github.com/gewill/OpenCCman/issues/110) 跟踪保护与旧引用，其关闭不替代 #11 的完整发布验收。
 
 本文参考 Pingman 的 `docs/BRANCHING.md`，并补充 OpenCCman 现有分支分叉、上游协调器及 Xcode Cloud 的迁移约束。

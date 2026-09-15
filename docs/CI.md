@@ -44,9 +44,13 @@ PR/推送不会自动准备或发布依赖候选；在其他分支手动运行�
 
 PR 与合并后真实 GitHub Actions 运行结果是线上验收依据。纯迁移无需重跑签名归档或模拟器测试；现有回归由新 PR 的 CI 执行。
 
-截至 2026-09-16，以下事项仍未完成，由 [#110](https://github.com/gewill/OpenCCman/issues/110) 跟踪；仓库当前没有 main/develop 经典保护或生效 ruleset，CI 绿色尚不是 GitHub 强制门禁：
+2026-09-16 已启用经典分支保护：`main`、`develop` 均要求 PR，包含管理员，禁止强推和删除；`develop` 必须通过由 GitHub Actions（app ID 15368）提供的 `App Regression`。不强制额外审批者，不允许机器人绕过；`strict=false` 保留按依赖推进的流程，不要求每次基线更新都重跑无关候选。源码整合或候选变化后仍按既定规则重新验证。
 
-- 给 `develop` 配置 PR 和 `App Regression` 保护；`main` 的应用回归文件要随验收后的发布 PR 进入，不能提前要求一个尚不存在的检查。
+[请求与回读证据](validation/branch-protection-2026-09-16.json)记录实际配置；采用 GitHub 官方 [分支保护 API](https://docs.github.com/en/rest/branches/branch-protection#update-branch-protection) 的 `checks` 字段绑定检查来源。文档 PR #111 和堆叠 PR #108 已产生 App Regression，条件诊断 job 和路径过滤的协调器 job 不列为必需检查。
+
+以下事项仍由 [#110](https://github.com/gewill/OpenCCman/issues/110) 跟踪：
+
+- `main` 的应用回归文件随验收后的发布 PR 进入后再增加对应必需检查；当前只要求 PR，避免永久等待。
 - 归档并退出旧 `build` 引用，释放 `build/*` 命名空间；先核对关联 PR、保护规则和云端构建。
 - 在明确需要发布验收包时验证临时 `build/*` 的 Xcode Cloud 触发与 TestFlight 产物。
 
