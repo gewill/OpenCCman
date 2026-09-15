@@ -10,7 +10,7 @@ SwiftUI Binding 仍是正文来源，Coordinator 只桥接原生编辑事件并�
 
 视口和编辑器不保存在全局对象中；系统编辑器继续承担键盘、选择、撤销与查找。没有调用采样中出现的 SwiftUI 私有 API，也没有改动依赖或最低部署目标。
 
-真实界面预检发现初稿采用 `NSFont.preferredFont(.body)` 后，Mac 原有 Helvetica 12pt 编辑字体变为 13pt 系统字体，导致换行改变。已改为 `NSFont.userFont(ofSize: 0)`，保留系统可配置的编辑字体，不写死字号。另将随应用语言解析的标签直接设置到 NSTextView；仅对 SwiftUI representable 加 accessibilityLabel 会标记滚动容器，不能保证直接导航到文本区域时仍有“原文／结果”名称。这两项已补原生回归，修改后的实际 UI 仍待复验。
+真实界面预检发现初稿采用 `NSFont.preferredFont(.body)` 后，Mac 原有 Helvetica 12pt 编辑字体变为 13pt 系统字体，导致换行改变。已改为 `NSFont.userFont(ofSize: 0)`，保留系统可配置的编辑字体，不写死字号。另将随应用语言解析的标签直接设置到 NSTextView；仅对 SwiftUI representable 加 accessibilityLabel 会标记滚动容器，不能保证直接导航到文本区域时仍有“原文／结果”名称。这两项已补原生回归，并在下方实际 UI 中复验。
 
 ## 已检查与待验收
 
@@ -54,3 +54,19 @@ artifact `workspace-editor-comparison` 包含两份 app、构建日志、来源�
 | 内核峰值 RSS | 766,623,744 bytes | 414,859,264 bytes |
 
 这组结果支持全容器编辑器布局是主要等待来源，但初稿存在上文已查出的字体/标签差异。修正后的 `b0addf7` 必须重新构建、同机比较和进行 UI 复验，不能把这组数值直接记作最终版本收益。单次 baseline → candidate 顺序还含系统缓存与顺序影响；a/b 是同一进程内的两次文稿操作，不是独立冷启动样本。
+
+## 修正后的真实 UI 检查
+
+2026-09-16，本机 macOS 27.0 (26A428)，English / Light / 默认编辑字号。旧包源码 `1c6114efc94d769bceb63a4d637b7c828dff1874`，其 `OpenCCman` 与 `OpenCCman.xcodeproj` 相对性能基线 `cb73fc5` 无差异；新包源码 `b0addf7f7e4472fe788558b71a5637450e70b861`，由 [Xcode 26.3 云端构建](https://github.com/gewill/OpenCCman/actions/runs/35020081358)生成。两包使用相同诊断隔离与产品 entitlement，重新 ad-hoc 签名，不代替分发签名。没有更改依赖或部署目标；本机 Xcode 27 编译限制另由 [#107](https://github.com/gewill/OpenCCman/issues/107) 跟踪。
+
+使用同一 9,599 字节、60 段合成文稿，包含中文、Emoji、组合字符。前后截图均为实际窗口捕获，900×450px；放大后的候选截图为 1302×768px，未将图像像素直接当作独立的逻辑 pt 测量。新包实际文本区域均显示 Source / Result 无障碍名称；保留原有默认编辑字号及换行。
+
+实际键盘输入 `x`、撤销、重做、再次撤销均按完整原文核对；可跳到第 60 段文末。转换后聚焦结果再按 `x`，结果全文未变，结果仍可选择。此过程累计四次成功转换，诊断额度为 4。程序化 marked text 测试另已通过，不能代替真实输入法会话。
+
+900×450 小窗口的上下切换存在外层滚动裁切，初始前后图片的可见段落不一致，不能据此宣称全部滚动回归通过。将候选窗口放大、外层滚动归零后，左右/上下的相同段顶行与“段落 30”选区保留；这只证明该条件。窄窗口、连续拖动分隔条和任务过程中布局切换仍保留验收，与 #57 / #65 的工作区边界一起核对。
+
+[完整 UI 证据](native-editor-sizing/2026-09-16-ui/)保存两进程原始日志、固定文稿、键盘检查、来源、媒体校验和及恢复记录。旧版录像 54.473333 秒；候选最终完整短视频 62.435 秒，包含两轴切换、输入/撤销/重做、跳文末、转换与只读检查。另保留 340.688333 秒的中断录像：ScreenCaptureKit 报 -3822/-3808，不当作完整覆盖；一次新编译的录制器启动即 CGS 初始化失败，没有可用录像。这些是录制器结果，不是应用崩溃。完整视频使用已验证录制器补录，退出状态为 0。
+
+两个验收应用均已退出并移为 `.app.inactive`；标准/沙盒测试偏好已恢复，VoiceOver 未启用且仍未运行。保护中的其他应用与模拟器没有操作。带 CUA/录屏的本机日志不作为性能或生产泄漏结论。
+
+[完整 App Regression 和 iOS Simulator 构建](https://github.com/gewill/OpenCCman/actions/runs/35020997241)已通过，源码 `7958839` 与上述应用代码一致。模拟器构建成功不是 iPhone/iPad 实际交互验收；三语、深色、真实输入法、VoiceOver 全流程、签名文件访问及最低系统仍按原门槛保留。修正后的同机性能对照另在 [运行 35020888552](https://github.com/gewill/OpenCCman/actions/runs/35020888552) 中执行，完成后再归档结果。
