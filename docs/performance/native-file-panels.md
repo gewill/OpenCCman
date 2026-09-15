@@ -47,7 +47,13 @@ English / Light / 默认字号；主窗口图像约 900×450px，录制画布 14
 - `errors-cancel-and-preserved-export.mp4`：103.352 秒，从错误提示已关闭后的保留结果开始，包含取消 Open、另名导出保留结果、同名提示及取消。
 - `10mib-imported.png` / `10mib-converted.png` 分别取第二段 90s / 150s，展示新稿清空旧结果及转换后系统保存面板；`system-replace.png` 取第三段 80s。
 
-媒体通过 PR 的 `gh --attach` 上传并引用；[校验和与媒体参数](native-file-panels/2026-09-16/media.json)用于核对原文件。首次导航预检录像不发布，公开视频从自有合成文件目录开始。
+媒体已通过 `gh --attach` 上传至 [PR #104](https://github.com/gewill/OpenCCman/pull/104#issuecomment-5685972056)；[校验和与媒体参数](native-file-panels/2026-09-16/media.json)用于核对原文件。首次导航预检录像不发布，公开视频从自有合成文件目录开始。
+
+| 导入后，旧结果清空 | 转换后，系统保存面板 |
+|---|---|
+| ![导入后](https://github.com/user-attachments/assets/f709ae51-b6bb-40ad-9dca-6fc221e70654) | ![转换后](https://github.com/user-attachments/assets/b0d4bf70-fdbf-4d2b-b0c5-5ac5f8486da5) |
+
+[系统同名提示截图](https://github.com/user-attachments/assets/dda1b707-2e42-4d2f-b777-5944699bc0ee) · [1 MiB 导入视频](https://github.com/user-attachments/assets/5aa856f9-2f36-48fc-9bb8-81c16c8bfd16) · [保存及 10 MiB 视频](https://github.com/user-attachments/assets/0a0ba02e-8e72-441d-ae36-8f8ed91bdc4a) · [取消和保留结果视频](https://github.com/user-attachments/assets/208d5d6a-6ab8-4f48-9f3c-48343c047131)
 
 ### 恢复与剩余验收
 
