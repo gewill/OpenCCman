@@ -2,7 +2,7 @@
 
 OpenCCman 采用与 Pingman 相同的精简版 Git Flow：常驻分支为 `main` 与 `develop`，开发、发布、热修复和打包使用临时分支。日常 PR 合入 `develop`；只有需要 Xcode Cloud 产物时才推送 `build` 前缀的分支。
 
-**本文件定义目标规范。当前仓库尚未完成迁移**：应用代码主要在旧 `build` 分支，自动化仍有以 `build` 为目标的配置。见文末的历史快照、迁移清单与 [CI 迁移记录](CI.md)；候选分支已接回两条历史并调整工作流，须按 PR 顺序合并后才生效。
+**2026-09-16 已核实：日常开发和 CI 已迁移到 `develop`，默认分支协调器也已使用 `develop` 作为应用 PR 目标。** [#43](https://github.com/gewill/OpenCCman/pull/43) 与 [#44](https://github.com/gewill/OpenCCman/pull/44) 均于 2026-09-13 合并。默认分支仍为 `main`；分支保护、旧 `build` 归档和正式发布主线整合尚未全部完成，见文末账本、[CI 说明](CI.md)与 [#110](https://github.com/gewill/OpenCCman/issues/110)。
 
 ## 分支职责
 
@@ -32,7 +32,7 @@ Xcode Cloud 构建、TestFlight 分发和 App Store 发布是不同步骤。推�
 
 ## 日常开发
 
-迁移完成后，功能、普通修复和文档修改都从最新 `develop` 新建任务分支，通过 PR 合回 `develop`：
+功能、普通修复和文档修改都从最新 `develop` 新建任务分支，通过 PR 合回 `develop`：
 
 ```bash
 git fetch origin
@@ -53,14 +53,14 @@ git fetch origin
 git worktree add -b codex/<issue>-<topic> ../openccman-<topic> origin/develop
 ```
 
-**迁移期间**：先完成旧应用历史合入 `develop`，再从它开展应用功能开发。纯文档 PR 可以提前以 `develop` 为基线；不要从旧 `build` 创建普通功能分支后直接向 `develop` 提交 PR，否则会把尚未迁移的历史夹带进来。迁移 PR 本身应单独审查。
+**历史迁移已由 #43 完成**：普通功能从 `develop` 开始，不再从旧 `build` 派生。原迁移的祖先关系保留，不通过重置分支改写历史。
 
 ### 验证和 PR
 
 - PR 写清问题、实现思路和实际验证结果；有对应 Issue 时引用它。
 - 应用变更通过对应回归检查，并完成与风险相称的构建或运行验收。
 - UI 变更附修改前后截图，保持平台、窗口尺寸、语言、主题和输入内容一致；说明未覆盖的设备或辅助功能场景。
-- 纯文档变更检查内容、链接和 `git diff --check`，无需运行 Xcode 构建或模拟器测试。
+- 纯文档变更在本地检查内容、链接和 `git diff --check`，无需额外运行 Xcode 构建或模拟器测试；PR 仍会触发统一 App Regression。
 - 创建 PR 的任务在提交、推送并返回链接后完成；CI 排队时报告状态。只有明确要求等待检查、合并或发布时才继续等待，不反复查询相同状态。
 - 目标规则是 `main`、`develop` 均通过 PR 更新，不强制推送。仓库保护规则是否已配置以迁移清单为准。
 
@@ -97,7 +97,7 @@ ddddxxx/SwiftyOpenCC + BYVoid/OpenCC 正式 Release
 - 打包分支额外核对云端产物，历史分支逐一确认，不批量删除状态不明的分支。
 - 分支名使用小写英文、数字、连字符及职责前缀；不用个人名称或含义不明的临时编号。
 
-## 当前状态与迁移清单
+## 迁移前历史快照
 
 以下为 **2026-09-13 文档 PR #42 合并前**的历史快照，并非迁移完成声明；后续准备情况见 [CI 迁移记录](CI.md)：
 
@@ -112,15 +112,19 @@ ddddxxx/SwiftyOpenCC + BYVoid/OpenCC 正式 Release
 | 自动依赖 PR | 默认分支配置中的 `app.base` 仍是 `build` |
 | Xcode Cloud | `build` 前缀触发；旧 `build` 上的发布文档仍描述向它合并应用 PR |
 
-迁移按依赖顺序单独实施，远端合并和实际验证后再勾选；候选代码完成不等于线上迁移完成：
+## 当前迁移账本（2026-09-16）
 
-- [ ] **保留应用历史**：创建旧 `build` → `develop` 的独立迁移 PR，核对所有已合并功能与依赖；用 merge commit 保留祖先关系，不逐项 squash 或强制覆盖。
-- [ ] **接回默认分支自动化**：核对 `main` 独有提交，通过 PR 将需要的协调器历史接入 `develop`，解决冲突并验证。不把当前 `main` 的旧应用快照直接当成最新已发布版本。
-- [ ] **配置 CI 与保护**：将应用回归触发范围覆盖 `develop`、`main` 及 `release/*` 的相关 PR/推送；确认实际检查名称与触发条件，再设置必要的 PR 和状态检查保护，避免必需检查永远不运行。
-- [ ] **切换同步目标**：在默认分支通过独立 PR 修改 `app.base`、相关测试与说明；确认新基线确有 `App Regression` 后再生成应用依赖 PR。检查已有待审候选，避免重复或继续指向旧 `build`。
-- [ ] **统一说明**：在接回应用历史后，修正 README、`docs/XCODE_CLOUD.md`、上游同步介绍及仍将 `build` 当作应用 PR 基线的操作示例；引用本规范，历史验收记录保留当时事实并标注旧流程。
-- [ ] **恢复版本主线**：通过发布 PR 将验收通过的版本合入 `main`，保留协调器历史，并补齐对应版本 Tag 与产物记录；不要用重置分支来实现对齐。
-- [ ] **退出旧 `build`**：确认无待审 PR、无依赖它的脚本或进行中的云端构建，保存旧 SHA 和必要归档后再调整其保护并删除旧引用，释放 `build/*` 命名空间。归档分支不得使用 `build` 前缀。
-- [ ] **验证新的打包入口**：在明确需要打包时，从指定发布候选创建临时 `build/*`，核对 iOS/macOS Xcode Cloud 构建、签名文件访问及 TestFlight；记录结果后清理临时分支。
+| 项目 | 已核实状态 | 尚需完成 |
+|---|---|---|
+| 应用与历史 | #43 merge commit `fbd1ac0` 已进入 develop；旧 build `9daf153` 与原 main `e28ae12` 都是当前 develop 的祖先 | 日常继续通过 PR 集成 |
+| 默认协调器 | #44 merge commit `fb56ea3` 已进入 main；main 的 `scripts/upstream-sync.json` 明确为 `app.base=develop` | 保持周检与两层人工合并 |
+| 应用 CI | develop 有每个 PR 都执行的 App Regression，包含堆叠 `codex/**` 目标与 macOS 验证构建 | GitHub 强制保护尚未启用，见 #110 |
+| 保护规则 | main/develop 的经典保护接口均返回 Branch not protected；仓库/父级 rulesets 与两分支生效规则均为空 | 配置 PR/必要检查门禁；main 尚无 App Regression workflow，不能提前要求这个检查 |
+| 说明 | 本文、README 与 CI 说明区分已迁移内容和历史快照 | 发布或保护变化后更新对应证据 |
+| 正式发布主线 | main 仍是默认协调器分支，不能据此认定它已含验收后的 1.3 应用 | 完成 #11 发布门禁后，通过发布 PR 整合 main、Tag 与云端产物 |
+| 旧 build | 仍存在，SHA `9daf153`；当前没有以它为目标的开放 PR | 先核对云端运行与外部引用，再保留归档、退出旧引用，释放 build/* 命名空间；见 #110 |
+| 打包分支 | 另有 `build-v1.3-20260914`，SHA `c3009c7` | 与对应 Xcode Cloud 产物逐一核对，不批量删除；下一次明确授权打包时再验证 build/* |
+
+这是一次仓库状态核对，不包含新的 Xcode Cloud/签名/TestFlight 验收，也没有更改保护规则或删除分支。只读 API、来源 SHA 与祖先检查记录见 [核对证据](validation/branching-status-2026-09-16.json)。[维护 Issue #110](https://github.com/gewill/OpenCCman/issues/110) 跟踪保护与旧引用，其关闭不替代 #11 的完整发布验收。
 
 本文参考 Pingman 的 `docs/BRANCHING.md`，并补充 OpenCCman 现有分支分叉、上游协调器及 Xcode Cloud 的迁移约束。
