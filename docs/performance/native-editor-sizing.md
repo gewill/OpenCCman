@@ -10,6 +10,8 @@ SwiftUI Binding 仍是正文来源，Coordinator 只桥接原生编辑事件并�
 
 视口和编辑器不保存在全局对象中；系统编辑器继续承担键盘、选择、撤销与查找。没有调用采样中出现的 SwiftUI 私有 API，也没有改动依赖或最低部署目标。
 
+真实界面预检发现初稿采用 `NSFont.preferredFont(.body)` 后，Mac 原有 Helvetica 12pt 编辑字体变为 13pt 系统字体，导致换行改变。已改为 `NSFont.userFont(ofSize: 0)`，保留系统可配置的编辑字体，不写死字号。另将随应用语言解析的标签直接设置到 NSTextView；仅对 SwiftUI representable 加 accessibilityLabel 会标记滚动容器，不能保证直接导航到文本区域时仍有“原文／结果”名称。这两项已补原生回归，修改后的实际 UI 仍待复验。
+
 ## 已检查与待验收
 
 - 本地使用 macOS 11 部署目标编译独立原生回归，通过全文含 U+0000/CRLF/组合字符、键入和 Binding 回写、撤销/重做、组合文字在无关更新后的保留、选区、只读/禁用、独立撤销历史与程序换稿。

@@ -4,10 +4,11 @@ import SwiftUI
 struct WorkspaceTextEditor: View {
   @Binding var text: String
   var isEditable = true
+  var label = ""
 
   var body: some View {
     #if os(macOS)
-      NativeWorkspaceTextEditor(text: $text, isEditable: isEditable)
+      NativeWorkspaceTextEditor(text: $text, isEditable: isEditable, label: label)
     #else
       TextEditor(text: $text)
         .clearTextEdtorStyle(isEditable: isEditable)
@@ -58,7 +59,9 @@ struct WorkspaceTextEditor: View {
       editor.textContainerInset = NSSize(width: 0, height: 1)
       editor.drawsBackground = false
       editor.backgroundColor = .clear
-      editor.font = NSFont.preferredFont(forTextStyle: .body)
+      // Match TextEditor's native editable-text default, including the user's
+      // font preference. A preferred body font changes wrapping and appearance.
+      editor.font = NSFont.userFont(ofSize: 0)
       editor.textColor = .labelColor
       editor.allowsUndo = true
       editor.usesFindBar = true
@@ -74,11 +77,15 @@ struct WorkspaceTextEditor: View {
       return viewport
     }
 
-    func update(_ viewport: WorkspaceEditorViewport, text: Binding<String>, isEditable: Bool, isEnabled: Bool) {
+    func update(_ viewport: WorkspaceEditorViewport, text: Binding<String>, isEditable: Bool, isEnabled: Bool,
+                accessibilityLabel: String = "") {
       self.text = text
       guard let editor = viewport.documentView as? NSTextView else { return }
       editor.isEditable = isEditable && isEnabled
       editor.isSelectable = isEnabled
+      // SwiftUI's modifier labels the representable's scroll view. Label the
+      // actual text area as well, so direct VoiceOver navigation keeps its role.
+      editor.setAccessibilityLabel(accessibilityLabel.isEmpty ? nil : accessibilityLabel)
       let value = text.wrappedValue
       // A layout, language, theme or task update must not write back into the
       // native editor: doing so would disturb marked text, selection and undo.
@@ -124,6 +131,7 @@ struct WorkspaceTextEditor: View {
   private struct NativeWorkspaceTextEditor: NSViewRepresentable {
     @Binding var text: String
     var isEditable: Bool
+    var label: String
 
     func makeCoordinator() -> WorkspaceTextEditorCoordinator {
       WorkspaceTextEditorCoordinator(text: $text)
@@ -135,7 +143,8 @@ struct WorkspaceTextEditor: View {
 
     func updateNSView(_ viewport: WorkspaceEditorViewport, context: Context) {
       context.coordinator.update(viewport, text: $text, isEditable: isEditable,
-                                 isEnabled: context.environment.isEnabled)
+                                 isEnabled: context.environment.isEnabled,
+                                 accessibilityLabel: label.localized(in: context.environment.locale))
     }
 
     static func dismantleNSView(_ viewport: WorkspaceEditorViewport, coordinator: WorkspaceTextEditorCoordinator) {

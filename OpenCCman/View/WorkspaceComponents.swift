@@ -132,7 +132,7 @@ struct SourcePane: View {
           }
       }
       .readSize { headerHeight = $0.height }
-      WorkspaceTextEditor(text: $viewModel.inputText)
+      WorkspaceTextEditor(text: $viewModel.inputText, label: "Source")
         .accessibilityLabel(Text("Source"))
         .disabled(viewModel.isImporting)
         .frame(maxWidth: .infinity)
@@ -189,7 +189,7 @@ struct ResultPane: View {
         }
       }
       .readSize { headerHeight = $0.height }
-      WorkspaceTextEditor(text: .constant(viewModel.resultText), isEditable: false)
+      WorkspaceTextEditor(text: .constant(viewModel.resultText), isEditable: false, label: "Result")
         .accessibilityLabel(Text("Result"))
         .frame(maxWidth: .infinity, alignment: .topLeading)
         .frame(height: paneHeight.map { max(180, $0 - headerHeight - 60) } ?? editorHeight)

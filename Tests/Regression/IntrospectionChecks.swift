@@ -19,8 +19,8 @@ private struct Editors: View {
 
   var body: some View {
     HStack {
-      WorkspaceTextEditor(text: $source)
-      WorkspaceTextEditor(text: .constant("結果"), isEditable: false)
+      WorkspaceTextEditor(text: $source, label: "Source")
+      WorkspaceTextEditor(text: .constant("結果"), isEditable: false, label: "Result")
     }
     .introspect(.window, on: AppIntrospection.window) { observations.window = $0 }
     .introspect(.window, on: .macOS(.v11, .v12, .v13, .v14, .v15, .v26)) { _ in
@@ -55,6 +55,7 @@ enum IntrospectionChecks {
     }
     precondition(observations.window === window, "Window predicate must resolve this actual hosting window")
     precondition(source !== result)
+    precondition(source.accessibilityLabel() == "Source" && result.accessibilityLabel() == "Result")
     precondition(source.isEditable && !result.isEditable, "Result read-only configuration must execute")
     precondition(source.string == "原文 é 👩🏽‍💻" && result.string == "結果")
     for editor in [source, result] {

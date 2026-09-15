@@ -10,9 +10,14 @@ enum WorkspaceTextEditorChecks {
     let coordinator = WorkspaceTextEditorCoordinator(text: binding)
     let viewport = coordinator.makeViewport()
     viewport.setFrameSize(NSSize(width: 400, height: 240))
-    coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true)
     let editor = viewport.documentView as! NSTextView
+    precondition(editor.font == NSFont.userFont(ofSize: 0),
+                 "Start with the native editable-text font")
+    coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true, accessibilityLabel: "原文")
     precondition(editor.string == source && editor.isEditable)
+    // The first Chinese run uses the system's fallback family, at the same size.
+    precondition(editor.font?.pointSize == NSFont.userFont(ofSize: 0)?.pointSize)
+    precondition(editor.accessibilityLabel() == "原文", "The text area itself needs a localized label")
     precondition(editor.layoutManager!.allowsNonContiguousLayout)
     precondition(!editor.layoutManager!.backgroundLayoutEnabled)
     precondition(viewport.intrinsicContentSize == NSSize(width: NSView.noIntrinsicMetric, height: NSView.noIntrinsicMetric))
@@ -27,6 +32,8 @@ enum WorkspaceTextEditorChecks {
     coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true)
     precondition(editor.selectedRange() == selection)
     precondition(editor.undoManager!.canUndo)
+    coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true, accessibilityLabel: "Source")
+    precondition(editor.accessibilityLabel() == "Source" && editor.selectedRange() == selection)
     editor.undoManager!.undo()
     precondition(source == original)
     editor.undoManager!.redo()
