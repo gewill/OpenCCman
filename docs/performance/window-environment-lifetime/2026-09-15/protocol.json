@@ -1,0 +1,9 @@
+{
+  "issue": 93,
+  "hypothesis": "ChildEnvironment is necessary to retain the second closed-window model",
+  "control": "text-only Root StateObject + child EnvironmentObject",
+  "candidate": "same except child ObservedObject passed explicitly",
+  "procedure": "fresh processes sequentially; create second native WindowGroup via File/New Window, close second, observe first one-window sample +5/20 s without UI reactivation; close final, observe zero-window +20 then quit",
+  "limits": "macOS 27 only, single pair per condition; native model weak count rather than production leak claim; no app source changes",
+  "source_diff_checked": true
+}

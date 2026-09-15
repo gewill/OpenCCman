@@ -1,0 +1,187 @@
+{
+  "date": "2026-09-15",
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0\nBuildVersion:\t\t26A428\n",
+  "compiler": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+  "base_sha": "8f4ff5dd9dfbf485a4863250adee10bcbd9f029c",
+  "native_app_sha": "aec0368fac73646fb3168204c0b150881bd7e55d",
+  "standalone": {
+    "created": 30,
+    "alive_after_each_batch": [
+      0,
+      0,
+      0
+    ],
+    "quota_consumed": 0
+  },
+  "minimal": {
+    "minimal-on-receive": {
+      "source_sha256": "4b735ba854ca824757fa38b0b3685176a8c2e3ac3016488654661b35f724ee2d",
+      "first_close_sample": {
+        "alive": 2,
+        "created": 2,
+        "elapsed": 13.019931166665629,
+        "event": "sample",
+        "visible": 1
+      },
+      "after_5s": {
+        "alive": 2,
+        "created": 2,
+        "elapsed": 19.0060527083333,
+        "event": "sample",
+        "visible": 1
+      },
+      "after_20s": {
+        "alive": 2,
+        "created": 2,
+        "elapsed": 34.00586804166596,
+        "event": "sample",
+        "visible": 1
+      }
+    },
+    "minimal-no-receive": {
+      "source_sha256": "56380cb338219534d7cf3920e9497e45511612704069b41b061bd7f1674dbb0f",
+      "first_close_sample": {
+        "alive": 2,
+        "created": 2,
+        "elapsed": 14.004474041666981,
+        "event": "sample",
+        "visible": 1
+      },
+      "after_5s": {
+        "alive": 2,
+        "created": 2,
+        "elapsed": 19.004641916664696,
+        "event": "sample",
+        "visible": 1
+      },
+      "after_20s": {
+        "alive": 2,
+        "created": 2,
+        "elapsed": 34.0044826250014,
+        "event": "sample",
+        "visible": 1
+      }
+    },
+    "minimal-text": {
+      "source_sha256": "2be9ab4e95052b3e1bffcc3fd7b2e4ac20184ef82c08b016b4661b33c94a2f6b",
+      "first_close_sample": {
+        "alive": 2,
+        "created": 2,
+        "elapsed": 23.00523562500166,
+        "event": "sample",
+        "visible": 1
+      },
+      "after_5s": {
+        "alive": 2,
+        "created": 2,
+        "elapsed": 29.004895041667623,
+        "event": "sample",
+        "visible": 1
+      },
+      "after_20s": {
+        "alive": 2,
+        "created": 2,
+        "elapsed": 43.005392916667915,
+        "event": "sample",
+        "visible": 1
+      }
+    }
+  },
+  "native_zero_windows": {
+    "first_sample": {
+      "created_total": 2,
+      "elapsed_ms": 92002.632834,
+      "event": "sample",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 61195368,
+      "pid": 5781,
+      "process_peak_rss_bytes": 150700032,
+      "rss_bytes": 139919360,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "after_20s": {
+      "created_total": 2,
+      "elapsed_ms": 113002.649875,
+      "event": "sample",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 59982928,
+      "pid": 5781,
+      "process_peak_rss_bytes": 150700032,
+      "rss_bytes": 134348800,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "last_sample_before_reactivation": {
+      "created_total": 2,
+      "elapsed_ms": 133001.945709,
+      "event": "sample",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 61113424,
+      "pid": 5781,
+      "process_peak_rss_bytes": 150700032,
+      "rss_bytes": 127287296,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "sample_count": 40
+  },
+  "limits": [
+    "One native two-window cycle and one cycle for each minimal variant; not an unbounded-leak proof",
+    "Local OS is macOS 27 beta; no older runtime comparison in this experiment",
+    "Native app built Xcode 26.3; minimal probes built local compiler",
+    "Reference trees show observed environment ownership, not a proven application root cause",
+    "No product change, no raw memgraph upload, no performance improvement claim"
+  ]
+}
