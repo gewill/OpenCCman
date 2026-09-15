@@ -136,11 +136,15 @@ jobs:
           persist-credentials: false
       - name: Run fixed original and traced samples
         run: python3 scripts/diagnose-editor-anchor.py --output "${{ runner.temp }}/editor-anchor-diagnostic" --repetitions 20
+      - name: Check controlled slow first restoration
+        run: python3 scripts/diagnose-editor-anchor.py --output "${{ runner.temp }}/editor-anchor-slow-pass" --repetitions 3 --first-pass-delay-ms 120
       - name: Preserve all samples including failures
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: editor-anchor-diagnostic
-          path: ${{ runner.temp }}/editor-anchor-diagnostic
+          path: |
+            ${{ runner.temp }}/editor-anchor-diagnostic
+            ${{ runner.temp }}/editor-anchor-slow-pass
           retention-days: 7
           if-no-files-found: error

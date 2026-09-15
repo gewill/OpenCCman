@@ -20,6 +20,12 @@ import SwiftUI
     private var restoring = false
     private var restorationScheduled = false
 
+    #if WORKSPACE_SCROLL_CHECKS
+      // Test synchronization only; absent from application builds. A timed
+      // RunLoop spin does not establish completion of both queued passes.
+      var isRestorationPending: Bool { restorationScheduled || restoring }
+    #endif
+
     func attach(_ editor: NSTextView) {
       guard self.editor !== editor, let clip = editor.enclosingScrollView?.contentView else { return }
       observations.forEach(NotificationCenter.default.removeObserver)

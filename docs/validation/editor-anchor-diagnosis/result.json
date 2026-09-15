@@ -1,0 +1,33 @@
+{
+  "baselineSHA": "b7a27c3fb213cd86558276b28faf35d886b623a5",
+  "macos15DiagnosticRun": "https://github.com/gewill/OpenCCman/actions/runs/34967279321",
+  "macos15OriginalProcesses": 40,
+  "macos15OriginalFailures": 0,
+  "localOriginalProcesses": 10,
+  "localOriginalFailures": 0,
+  "localForcedTimingFailures": [
+    {
+      "iteration": 1,
+      "exit": -5
+    },
+    {
+      "iteration": 2,
+      "exit": -5
+    },
+    {
+      "iteration": 3,
+      "exit": -5
+    }
+  ],
+  "localSynchronizedForcedTimingProcesses": 6,
+  "localSynchronizedForcedTimingFailures": 0,
+  "negativeTimeout": {
+    "exit": -5,
+    "elapsedSeconds": 2.693781583002419,
+    "expectedFailure": "bounded restoration deadline"
+  },
+  "applicationSourceExcludingTestConditionalByteIdentical": true,
+  "originalAssertionThresholds": "Unchanged",
+  "causeBoundary": "Controlled scheduling reproduces the exact reported mismatch. Original failing CI did not log pending state; historical causality is inferred rather than directly traced. The synchronization race itself is reproduced.",
+  "unresolved": "Full macOS 15 candidate regression/controlled probe pending; actual app UI, IME, VoiceOver, minimum OS and signed build gates remain #20/#65."
+}

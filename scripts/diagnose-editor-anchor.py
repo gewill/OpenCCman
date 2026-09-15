@@ -21,15 +21,24 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--repetitions', type=int, default=20)
+    parser.add_argument('--first-pass-delay-ms', type=int, default=0, help='Controlled scheduling fault in private copies only (0...500 ms)')
     args = parser.parse_args()
     if not 1 <= args.repetitions <= 30:
         parser.error('repetitions must be 1...30')
+    if not 0 <= args.first_pass_delay_ms <= 500:
+        parser.error('first-pass-delay-ms must be 0...500')
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     keeper = ROOT / 'OpenCCman/View/WorkspaceScrollKeeper.swift'
     checks = ROOT / 'Tests/Regression/EditorScrollChecks.swift'
     sources = {str(p.relative_to(ROOT)): sha(p) for p in (keeper, checks)}
     source = keeper.read_text()
+    if args.first_pass_delay_ms:
+        anchor = '          // Noncontiguous layout initially estimates offscreen geometry.'
+        source = replace_once(source, anchor,
+            f'          if clip.bounds.width == 850 {{ Thread.sleep(forTimeInterval: {args.first_pass_delay_ms / 1000}) }}\n' + anchor)
+    baseline = output / 'BaselineKeeper.swift'
+    baseline.write_text(source)
     trace = '''    private func diagnostic(_ event: String) {
       let row: [String: Any] = ["event": event, "time": ProcessInfo.processInfo.systemUptime,
         "anchorCharacter": anchor?.character as Any? ?? NSNull(), "anchorOffset": anchor?.lineOffset as Any? ?? NSNull(),
@@ -63,20 +72,20 @@ def main():
     report = {
         'protocol': 1, 'sourceSHA': command(['git', 'rev-parse', 'HEAD']),
         'sourceStatus': command(['git', 'status', '--porcelain']),
-        'sourceHashes': sources, 'generatedHashes': {p.name: sha(p) for p in (traced, prefix)},
+        'sourceHashes': sources, 'generatedHashes': {p.name: sha(p) for p in (baseline, traced, prefix)},
         'os': command(['sw_vers']), 'xcode': command(['xcodebuild', '-version']),
         'compiler': command(['xcrun', 'swiftc', '--version']),
-        'repetitionsPerVariant': args.repetitions, 'samples': [],
-        'scope': 'Original first width/narrow assertions only; default TextKit font and 80ms settle unchanged; not full app UI acceptance',
+        'repetitionsPerVariant': args.repetitions, 'firstPassDelayMilliseconds': args.first_pass_delay_ms, 'samples': [],
+        'scope': 'Current first width/narrow assertions and synchronization; default TextKit font unchanged; not full app UI acceptance',
         'limitation': 'Synchronous tracing can affect timing. Failed samples remain failures; no retry-until-pass.',
     }
     report_path = output / 'report.json'
     def save():
         report_path.write_text(json.dumps(report, indent=2) + '\n')
     save()
-    for variant, file in [('baseline', keeper), ('traced', traced)]:
+    for variant, file in [('baseline', baseline), ('traced', traced)]:
         with (output / f'{variant}-compile.log').open('wb') as log:
-            result = subprocess.run(['xcrun', 'swiftc', '-warnings-as-errors', str(file), str(prefix), '-o', str(output / variant)], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
+            result = subprocess.run(['xcrun', 'swiftc', '-warnings-as-errors', '-D', 'WORKSPACE_SCROLL_CHECKS', str(file), str(prefix), '-o', str(output / variant)], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
         report[variant + 'CompileExit'] = result.returncode
         save()
         if result.returncode:

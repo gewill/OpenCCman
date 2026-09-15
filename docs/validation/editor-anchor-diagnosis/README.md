@@ -1,15 +1,34 @@
-# Editor anchor timing diagnosis
+# Editor scroll test synchronization
 
-Refs #20 / #65. [PR #91 failure](https://github.com/gewill/OpenCCman/actions/runs/34966485807) produced a 61-character change on narrowing: before `[6640,153]`, after `[6701,63]`. Selection stayed `{7115,12}`; the after line still contained the first, pre-widen anchor `6705`. This is evidence of the observed mismatch, not yet a diagnosis of a product bug or a bad assertion.
+Refs #20 / #65. [PR #91 failure](https://github.com/gewill/OpenCCman/actions/runs/34966485807) narrowed from `[6640,153]` to `[6701,63]`; selection stayed `{7115,12}`. A fixed 80ms RunLoop spin did not establish completion of the keeper's two queued restoration passes. The test could measure the widened top line and start narrowing while the original pre-widen anchor `6705` was still pending.
 
-## Probe
+## Evidence and scope
 
-`python3 scripts/diagnose-editor-anchor.py --output <new-directory> --repetitions 20` copies the original first widen/narrow assertions, with their exact thresholds and 80ms settle, into an isolated output. It compiles both the original keeper and a private traced copy, alternating independent processes a fixed number of times. Trace events record already-stored character/lineOffset/pending values and clip bounds; they do not issue extra layout queries. The production keeper and test files are hash-checked unchanged. No retry is used; all failed processes remain in the report and make the diagnostic exit nonzero. Generated sources, source SHA, OS/compiler and all logs are preserved.
+| Experiment | Result | Meaning |
+|---|---|---|
+| Local original / traced prefix, 5 each | 10 passed | Negative reproduction result, not proof of correctness |
+| macOS 15.7.9 / Xcode 16.4 original / traced prefix, 20 each | [40 passed](macos15-original-report.json) | Same OS as failing CI; no natural failure reproduced in this bounded run |
+| Private keeper: delay first widen restoration 120ms before queuing the second | 3/3 failed with **the exact reported ranges and clip bounds** | [Trace](local-delayed-failure.jsonl) shows pending `6705` survives the first test measurement and is reused during narrowing |
+| Same controlled delay with state-based test synchronization, 3 original / 3 traced | [6 passed](local-synchronized-delayed-report.json) | No assertion tolerance or product restoration strategy changed |
+| Private negative fixture reports restoration pending forever | Failed at the bounded deadline | The helper does not silently accept incomplete work or wait indefinitely |
+| Local complete editor regression | [Passed](local-full-regression.log) | Includes 1/5/10 MiB reflow, tail navigation, selection, composition and document replacement |
 
-The workflow is manual-only on macOS 15. It does not replace, skip or weaken required App Regression, and does not touch build branches or dependencies. Tracing is synchronous and may affect timing; uninstrumented samples are necessary. This is the initial standalone NSTextView test, without a host window, not a substitute for real application scroll/IME acceptance.
+The first failing CI did not log pending state; its historical cause is inferred from an exact controlled reproduction, not directly traced there. [result.json](result.json) preserves this distinction. Success of 40 original runs does not erase the original CI failure.
 
-## Current evidence and hypotheses
+## Fix
 
-Local macOS 27: five original and five traced prefix processes passed. The first restoration's subsequent capture saw changed native layout estimates; the second restoration returned the intended character. Full logs remain in the diagnostic worktree's `.build/anchor-diagnosis/`. This does not prove macOS 15 behavior.
+The test helper retains the existing 80ms native layout RunLoop slice but checks whether restoration is still pending before asserting or starting the next sequential resize. It pumps the run loop until both queued passes finish, with a two-second deadline that fails explicitly. Line/character thresholds, selection, marked-text and content assertions are unchanged. Coalesced resizes and navigation before queued restoration remain intentionally exercised.
 
-The macOS 15 trace should distinguish: (1) stale pending character from the earlier resize, (2) correct character with changed line offset/geometry, or (3) native geometry changes after restoration finishes. Do not change the 50-character threshold, add repeated restore attempts, or extend sleeps without evidence. No production fix or CI-failure resolution is claimed yet.
+The read-only pending property exists only under `WORKSPACE_SCROLL_CHECKS`, defined by the test compilation scripts. Application builds do not define it. After stripping that conditional, the keeper is byte-identical to `b7a27c3`; there is no change to user-facing scroll behavior, performance strategy or UI. Actual app/VoiceOver/IME/minimum-OS and signed-release gates stay open in #20/#65.
+
+## Reproducible diagnostic
+
+```sh
+python3 scripts/diagnose-editor-anchor.py --output /tmp/openccman-anchor-normal --repetitions 20
+python3 scripts/diagnose-editor-anchor.py --output /tmp/openccman-anchor-slow --repetitions 3 --first-pass-delay-ms 120
+bash scripts/check-editor-scroll.sh
+```
+
+Each output must be new; overwrite is refused. The tool privately copies the current first widen/narrow assertions and keeper. Original and traced variants alternate independent processes a fixed number of times; the optional delay applies only to those copies. Trace events read already-stored character/lineOffset/pending values and clip bounds without extra layout queries. Synchronous tracing may affect timing, so the original variant is retained. All failed processes remain failures and return a nonzero diagnostic status; no retry is used. The tool records source SHA/dirty status, source and generated hashes, OS/compiler and every raw log, and verifies production sources did not change.
+
+The manual `diagnose_editor_anchor=true` input uses the existing App Regression workflow on macOS 15. Normal PR App Regression always runs. The optional job runs both ordinary and controlled-delay experiments and preserves artifacts even on failure. It does not touch build branches, Xcode Cloud or dependency versions. The initial standalone prefix has no host window and is not real application UI acceptance. Candidate macOS 15 results are appended after its actual run finishes.
