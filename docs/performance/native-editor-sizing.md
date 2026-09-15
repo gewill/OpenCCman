@@ -1,6 +1,6 @@
 # Mac 工作区编辑器尺寸修复候选
 
-关联 #18、#65、#68；前置诊断 [#106](https://github.com/gewill/OpenCCman/pull/106) 的两份真实主线程栈已定位到 SwiftUI TextEditor 尺寸查询调用全容器布局。候选完整文稿协议已通过，同机前后性能和真实 UI 媒体验收尚未完成。
+关联 #18、#65、#68；前置诊断 [#106](https://github.com/gewill/OpenCCman/pull/106) 的两份真实主线程栈已定位到 SwiftUI TextEditor 尺寸查询调用全容器布局。候选完整文稿和同机对照已通过；真实 UI 完成首轮检查与媒体归档，完整交互验收仍未完成。
 
 ## 实现边界
 
@@ -18,8 +18,8 @@ SwiftUI Binding 仍是正文来源，Coordinator 只桥接原生编辑事件并�
 - SwiftUI NSHostingView 内的固定 420×240pt 尺寸查询保留 272 万字符的远端文字未排版。这只是无窗口的布局测试，不能代替真实应用延迟或可见内容验收。
 - 工程检查通过 59 个 Swift 源文件及三语资源。
 - [x] macOS 15 的上述回归、完整应用构建和原生文稿/关窗协议，见下方精确来源和验证边界。
-- [ ] 同一机器、相同 Release 配置与语料的旧/新两版对照；原始样本和正确性检查保留。不同云端 runner 的结果不直接作为收益比例。
-- [ ] Mac 真实界面前后截图/交互视频，记录尺寸、语言、主题和源提交；未附这些证据前不作为完成的 UI PR。
+- [x] 同一机器、相同 Release 配置与语料的旧/新两版对照；初稿及修正后样本均保留并独立复核。不同云端 runner 的结果不直接作为收益比例；此项不覆盖冷启动和全部七配置。
+- [x] Mac 真实界面前后截图/交互视频，记录尺寸、语言、主题和源提交，已通过 gh 上传至 [PR #108](https://github.com/gewill/OpenCCman/pull/108)。媒体齐全不代表下列完整交互清单全部通过。
 - [ ] 真实键盘、输入法、焦点、两轴切换、分隔条与滚动位置，转换/取消/导入导出时切换，以及浅深色/三语/大字号/VoiceOver。
 - [ ] iPhone/iPad 回归；iOS 14/macOS 11 按用户要求保留为发布前验收，不能把编译目标当成系统运行验证。
 
@@ -53,7 +53,7 @@ artifact `workspace-editor-comparison` 包含两份 app、构建日志、来源�
 | 协议内采样点峰值 footprint | 429,150,144 bytes | 155,700,800 bytes |
 | 内核峰值 RSS | 766,623,744 bytes | 414,859,264 bytes |
 
-这组结果支持全容器编辑器布局是主要等待来源，但初稿存在上文已查出的字体/标签差异。修正后的 `b0addf7` 必须重新构建、同机比较和进行 UI 复验，不能把这组数值直接记作最终版本收益。单次 baseline → candidate 顺序还含系统缓存与顺序影响；a/b 是同一进程内的两次文稿操作，不是独立冷启动样本。
+这组结果支持全容器编辑器布局是主要等待来源，但初稿存在上文已查出的字体/标签差异，不能把这组数值直接记作修正后版本收益。`b0addf7` 的独立复测见末节。单次 baseline → candidate 顺序还含系统缓存与顺序影响；a/b 是同一进程内的两次文稿操作，不是独立冷启动样本。
 
 ## 修正后的真实 UI 检查
 
@@ -69,4 +69,30 @@ artifact `workspace-editor-comparison` 包含两份 app、构建日志、来源�
 
 两个验收应用均已退出并移为 `.app.inactive`；标准/沙盒测试偏好已恢复，VoiceOver 未启用且仍未运行。保护中的其他应用与模拟器没有操作。带 CUA/录屏的本机日志不作为性能或生产泄漏结论。
 
-[完整 App Regression 和 iOS Simulator 构建](https://github.com/gewill/OpenCCman/actions/runs/35020997241)已通过，源码 `7958839` 与上述应用代码一致。模拟器构建成功不是 iPhone/iPad 实际交互验收；三语、深色、真实输入法、VoiceOver 全流程、签名文件访问及最低系统仍按原门槛保留。修正后的同机性能对照另在 [运行 35020888552](https://github.com/gewill/OpenCCman/actions/runs/35020888552) 中执行，完成后再归档结果。
+[完整 App Regression 和 iOS Simulator 构建](https://github.com/gewill/OpenCCman/actions/runs/35020997241)已通过，源码 `7958839` 与上述应用代码一致。模拟器构建成功不是 iPhone/iPad 实际交互验收；三语、深色、真实输入法、VoiceOver 全流程、签名文件访问及最低系统仍按原门槛保留。
+
+真实媒体已上传并读回验证，完整列表及各自哈希见 [媒体记录](native-editor-sizing/2026-09-16-ui/media.json) 和 [PR #108](https://github.com/gewill/OpenCCman/pull/108)。
+
+| 修改前：900×450 左右 | 修改后：900×450 左右 |
+|---|---|
+| ![旧版左右](https://github.com/user-attachments/assets/452d77b0-6e64-445b-8731-8b6862f33db5) | ![修正版左右](https://github.com/user-attachments/assets/88fb4804-1626-4385-adca-e3143a37a6aa) |
+
+[旧版交互视频](https://github.com/user-attachments/assets/f76d8353-f36d-4387-be06-1f06e48e62b0) · [候选完整短视频](https://github.com/user-attachments/assets/8787b6e9-3e6e-4cc8-93bc-652f8df86197)
+
+## 修正后候选同机对照
+
+[运行 35020888552](https://github.com/gewill/OpenCCman/actions/runs/35020888552)成功，旧版 `cb73fc528b3c9d53dfc840b8ae48e1cae7426fcb`、候选 `b0addf7f7e4472fe788558b71a5637450e70b861`。同一 macOS 15.7.9 ARM64 runner、配置的 Xcode 26.3、相同 Release 双架构参数及逐字相同的依赖锁。两包先全部构建，随后各启动一个进程顺序运行，无采样/录屏/CUA。[完整数据、实际构建命令与固定文件](native-editor-sizing/2026-09-16-corrected-comparison/)已归档。
+
+| 阶段 | 旧版 a / b | 修正后候选 a / b |
+|---|---:|---:|
+| 1 MiB 导入到驱动就绪 | 1,622 / 1,488 ms | 57 / 67 ms |
+| 1 MiB 转换到导出验证 | 1,848 / 1,763 ms | 116 / 118 ms |
+| 10 MiB 导入到驱动就绪 | 17,531 / 17,259 ms | 113 / 108 ms |
+| 10 MiB 转换到导出验证 | 19,615 / 19,407 ms | 387 / 394 ms |
+| 其中 10 MiB 原生转换调用 | 190 / 185 ms | 176 / 176 ms |
+| 协议内采样点峰值 footprint | 430,821,376 bytes | 143,003,264 bytes |
+| 内核峰值 RSS | 788,086,784 bytes | 430,620,672 bytes |
+
+下载后分别用 checker 独立复核原始 JSONL 和实际文件：两边各五份导出完整一致，NUL/CRLF/组合文字保留、无 BOM；活动调用中关闭、保留窗口转换时关闭另一窗均通过，最终 +5/+20 秒零模型、零预约，进程正常退出。内存 API 状态全部有效。差异主要在文稿显示/排版相关等待，原生 OpenCC 调用依然约 0.18 秒；没有升级引擎或宣称其算法加速。
+
+此结论限定于固定语料、默认转换配置、单次同机顺序对照及这些事件边界；a/b 是进程内重复操作。缓存/顺序影响保留，不等于首次屏幕呈现、冷启动、多机统计或发布版收益。#18 的冷启动/七配置/真实业务全覆盖以及 #93 持有链问题不因此关闭。UI 剩余门槛仍按上文保留，PR #108 继续 Draft。
