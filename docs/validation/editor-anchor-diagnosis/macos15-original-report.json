@@ -1,0 +1,1865 @@
+{
+  "protocol": 1,
+  "sourceSHA": "0b68743ac3b98206611870b09e486de5f97d9e42",
+  "sourceStatus": "",
+  "sourceHashes": {
+    "OpenCCman/View/WorkspaceScrollKeeper.swift": "4b17e79b9793e16db4f2b646055df87e3a110a5c42305b52d226e835b3f83d66",
+    "Tests/Regression/EditorScrollChecks.swift": "17f95b8baa6597933ab964b9fbb75274d054f1d486e54e8a459feb55d58b7d9e"
+  },
+  "generatedHashes": {
+    "TracedKeeper.swift": "9af60c89fb85ef6295f09873e39d2d9398d8ee6fa33093eb3d43fb1047b30497",
+    "PrefixChecks.swift": "06018ab31ead3bb7f35e21af3da86c77fb93ef8037d2c44f0eb702d74186b674"
+  },
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.9\nBuildVersion:\t\t24G830",
+  "xcode": "Xcode 16.4\nBuild version 16F6",
+  "compiler": "Apple Swift version 6.1.2 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)\nTarget: arm64-apple-macosx15.0",
+  "repetitionsPerVariant": 20,
+  "samples": [
+    {
+      "variant": "baseline",
+      "iteration": 1,
+      "exit": 0,
+      "log": "baseline-01.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 1,
+      "exit": 0,
+      "log": "traced-01.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 2,
+      "exit": 0,
+      "log": "baseline-02.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 2,
+      "exit": 0,
+      "log": "traced-02.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 3,
+      "exit": 0,
+      "log": "baseline-03.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 3,
+      "exit": 0,
+      "log": "traced-03.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 4,
+      "exit": 0,
+      "log": "baseline-04.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 4,
+      "exit": 0,
+      "log": "traced-04.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 5,
+      "exit": 0,
+      "log": "baseline-05.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 5,
+      "exit": 0,
+      "log": "traced-05.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 6,
+      "exit": 0,
+      "log": "baseline-06.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 6,
+      "exit": 0,
+      "log": "traced-06.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 7,
+      "exit": 0,
+      "log": "baseline-07.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 7,
+      "exit": 0,
+      "log": "traced-07.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 8,
+      "exit": 0,
+      "log": "baseline-08.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 8,
+      "exit": 0,
+      "log": "traced-08.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 9,
+      "exit": 0,
+      "log": "baseline-09.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 9,
+      "exit": 0,
+      "log": "traced-09.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 10,
+      "exit": 0,
+      "log": "baseline-10.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 10,
+      "exit": 0,
+      "log": "traced-10.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 11,
+      "exit": 0,
+      "log": "baseline-11.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 11,
+      "exit": 0,
+      "log": "traced-11.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 12,
+      "exit": 0,
+      "log": "baseline-12.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 12,
+      "exit": 0,
+      "log": "traced-12.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 13,
+      "exit": 0,
+      "log": "baseline-13.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 13,
+      "exit": 0,
+      "log": "traced-13.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 14,
+      "exit": 0,
+      "log": "baseline-14.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 14,
+      "exit": 0,
+      "log": "traced-14.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 15,
+      "exit": 0,
+      "log": "baseline-15.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 15,
+      "exit": 0,
+      "log": "traced-15.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 16,
+      "exit": 0,
+      "log": "baseline-16.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 16,
+      "exit": 0,
+      "log": "traced-16.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 17,
+      "exit": 0,
+      "log": "baseline-17.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 17,
+      "exit": 0,
+      "log": "traced-17.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 18,
+      "exit": 0,
+      "log": "baseline-18.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 18,
+      "exit": 0,
+      "log": "traced-18.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 19,
+      "exit": 0,
+      "log": "baseline-19.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 19,
+      "exit": 0,
+      "log": "traced-19.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 20,
+      "exit": 0,
+      "log": "baseline-20.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 20,
+      "exit": 0,
+      "log": "traced-20.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1818}, {345, 300}}",
+          "afterLine": [
+            6640,
+            60
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {345, 3778}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 15.7.9 (Build 24G830)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    }
+  ],
+  "scope": "Original first width/narrow assertions only; default TextKit font and 80ms settle unchanged; not full app UI acceptance",
+  "limitation": "Synchronous tracing can affect timing. Failed samples remain failures; no retry-until-pass.",
+  "baselineCompileExit": 0,
+  "tracedCompileExit": 0,
+  "productionSourcesUnchanged": true,
+  "failedProcesses": 0
+}

@@ -1,0 +1,7 @@
+{
+  "description": "使用 OpenCC，在 iPhone、iPad 和 Mac 上本地转换中文简体、繁体及地区用词。\n\n提供四个常用预设：简体中文、OpenCC 繁体、台湾正体与台湾词组、香港繁体。保留异体字和地区用词等高级选项。简体输出不等同于完整的台湾词汇反向转换。\n\n导入或拖入单个不超过 10 MiB 的 UTF-8 TXT 文件，支持带 BOM 的文件；将最近一次成功结果导出为无 BOM 的 UTF-8。文件处理保留换行、空行及 Unicode 字符。Big5、GBK 文件需先另存为 UTF-8。本版暂不支持批量文件或超过 10 MiB 的文件，Pro 也遵循此限制。\n\nMac 和 iPad 可选择原文与结果左右或上下排列，窄窗口自动上下排列；iPhone 使用上下工作区。转换和导入均可取消，取消后的旧结果不会覆盖当前文本。\n\n免费版每天可成功执行 12 次主页转换，额度在窗口间共享。导入、导出及切换预设不计次。终身 Pro 为一次性购买，解除主页每日转换次数限制并隐藏应用推荐。可在设置中恢复购买或打开购买支持。\n\n本应用转换中文字符和用词，不提供普通话与粤语互译、拼音生成或日本新字体转换入口。\n\n基于 MIT 协议开源：https://github.com/gewill/OpenCCman",
+  "keywords": "中文转换,简繁转换,简体,繁体,台湾词组,香港繁体,TXT,文本转换,OpenCC",
+  "marketingUrl": "https://gewill.org/2023/12/17/introducing-OpenCCman-zh-Hans/",
+  "supportUrl": "https://gewill.org/2023/12/17/introducing-OpenCCman-zh-Hans/",
+  "whatsNew": "新增四个转换预设，以及不超过 10 MiB 的单个 UTF-8 TXT 导入、导出。\nMac 和 iPad 支持原文与结果左右或上下排列，iPhone 使用上下工作区。\n转换、导入均可取消，旧结果不会覆盖当前文本。\n设置中增加购买支持，主页每日额度在窗口间共享。"
+}

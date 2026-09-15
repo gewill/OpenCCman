@@ -1,0 +1,8 @@
+# Keep externally generated diagnostic output byte-for-byte for its SHA256 manifest.
+docs/performance/macos27-introspection/baseline/heap-*.txt -whitespace
+docs/performance/macos27-introspection/baseline/vmmap-*.txt -whitespace
+docs/performance/macos27-introspection/validation/native-check.log -whitespace
+docs/performance/macos27-introspection/runtime/after-ui/heap-*.txt -whitespace
+docs/performance/macos27-introspection/runtime/after-ui/vmmap-*.txt -whitespace
+docs/performance/macos27-introspection/runtime/after-controlled/heap.txt -whitespace
+docs/performance/macos27-introspection/runtime/after-controlled/vmmap.txt -whitespace

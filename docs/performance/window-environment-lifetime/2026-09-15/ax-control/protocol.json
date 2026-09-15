@@ -1,0 +1,12 @@
+{
+  "purpose": "Same binary with and without explicit AX query of second window",
+  "runs": [
+    "no_second_window_ax",
+    "one_second_window_ax"
+  ],
+  "timing": "first window 10 s, second window 10 s before automatic close, one-window and zero-window observations +5/+20 s",
+  "baseline": "CUA getApp initial query sees first window; after that no UI calls until automatic exit",
+  "ax_case": "same startup; once driver_pair_visible recorded, exactly one CUA getAXState of second window within fixed 10 s; no other UI calls",
+  "difference_from_manual": "Both use same WindowGroup id and public openWindow/performClose driver; not direct comparison to previous default WindowGroup menu runs",
+  "not_a_product_change": true
+}

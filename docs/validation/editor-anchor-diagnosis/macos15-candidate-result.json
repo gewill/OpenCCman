@@ -1,0 +1,43 @@
+{
+  "runURL": "https://github.com/gewill/OpenCCman/actions/runs/34967832406",
+  "experiments": [
+    {
+      "sourceSHA": "ce6280ff4a618b95e451eac5abbfd2fec3cedc97",
+      "os": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.9\nBuildVersion:\t\t24G830",
+      "compiler": "Apple Swift version 6.1.2 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)\nTarget: arm64-apple-macosx15.0",
+      "delayMilliseconds": 0,
+      "processes": 40,
+      "failures": 0,
+      "sourceHashes": {
+        "OpenCCman/View/WorkspaceScrollKeeper.swift": "69759ea83718477a46c2231fa25f276b92cc9178f9a0530af2043805206a47df",
+        "Tests/Regression/EditorScrollChecks.swift": "f030506b45be4781751337d73f0e48dbbbf6a180eaa39b8dbd7e397a552b2d8e"
+      },
+      "generatedHashes": {
+        "BaselineKeeper.swift": "69759ea83718477a46c2231fa25f276b92cc9178f9a0530af2043805206a47df",
+        "TracedKeeper.swift": "ee4702c35721d3b3b2be0648f187a18cdc6f34452729e18445a730daab0a5251",
+        "PrefixChecks.swift": "d3b895bf8a3628b6f77c7910124e0a042c37609d06de803bdb5e3658b78ffd15"
+      },
+      "productionSourcesUnchanged": true
+    },
+    {
+      "sourceSHA": "ce6280ff4a618b95e451eac5abbfd2fec3cedc97",
+      "os": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.9\nBuildVersion:\t\t24G830",
+      "compiler": "Apple Swift version 6.1.2 (swiftlang-6.1.2.1.2 clang-1700.0.13.5)\nTarget: arm64-apple-macosx15.0",
+      "delayMilliseconds": 120,
+      "processes": 6,
+      "failures": 0,
+      "sourceHashes": {
+        "OpenCCman/View/WorkspaceScrollKeeper.swift": "69759ea83718477a46c2231fa25f276b92cc9178f9a0530af2043805206a47df",
+        "Tests/Regression/EditorScrollChecks.swift": "f030506b45be4781751337d73f0e48dbbbf6a180eaa39b8dbd7e397a552b2d8e"
+      },
+      "generatedHashes": {
+        "BaselineKeeper.swift": "566e9e2413a6c5ecc3cba73e6959bb65d809c12d3108e3faf4d4d5ea3e6d0ad7",
+        "TracedKeeper.swift": "93db6fff26b6475a7cfad8bfb32dfca2e07762c5b6290aea9a839e2b81644030",
+        "PrefixChecks.swift": "d3b895bf8a3628b6f77c7910124e0a042c37609d06de803bdb5e3658b78ffd15"
+      },
+      "productionSourcesUnchanged": true
+    }
+  ],
+  "fullLogs": "editor-anchor-diagnostic artifact on the linked run",
+  "scope": "Independent prefix processes, not full app UI; normal App Regression remains required"
+}

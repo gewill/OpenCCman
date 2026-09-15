@@ -1,0 +1,7 @@
+{
+  "purpose": "Controlled follow-up after identifying harness prepare clears private defaults each launch; preserve both earlier setup deviations",
+  "setup": "Wait for and dismiss actual first-run sheet before opening importer. Do not depend on externally written preference. Do not import until editor and sheet absence verified.",
+  "measurement": "Same 10 MiB input, one 900x450 window English Light default. No conversion or recording. No explicit editor AX after Open until at least 20 s observation, then one query and at least 20 s observation. No heap probes before samples.",
+  "product_sha": "9c8ab60205483f6d80c60108e6ab9c252de992f4",
+  "diagnostic_sha": "1c6114efc94d769bceb63a4d637b7c828dff1874"
+}

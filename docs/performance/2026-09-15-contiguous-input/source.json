@@ -1,0 +1,16 @@
+{
+  "sourceSHA": "f51b6fd4ea1e922ca83b67440537f554d6ba1619",
+  "productionServiceSHA256": "2f9b951421406dab71bee5e8da9125ba8cac154284e01138b8e062cd64083a0a",
+  "prototypeSHA256": "07dd3f2e01debe6ecc111ca6066b6bb9cf66e103196423777450c541be56274b",
+  "dependency": {
+    "identity": "swiftyopencc",
+    "kind": "remoteSourceControl",
+    "location": "https://github.com/gewill/SwiftyOpenCC",
+    "state": {
+      "revision": "6eded293f5c84c064f332cbc2832391165c82dda"
+    }
+  },
+  "scope": "experiment only; production unchanged; baseline is PR84, candidate includes makeContiguousUTF8 inside timing",
+  "swiftVersion": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "binarySHA256": "15650685686dc9c66055070bc4330f1f74acccd702e46a0493a5c09ef409f15f"
+}

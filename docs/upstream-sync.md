@@ -102,6 +102,8 @@ stdout 只输出一条 JSON；详细日志在 stderr／产物内。`status` 为 
 
 ## 回滚与维护
 
+应用已使用锁定 wrapper 的按字节长度传递与 NUL 保留能力，移除了应用层重复扫描。若恢复到尚无该能力的旧 revision，需在同一回滚 PR 中恢复 `ChineseConversionService` 的旧 NUL 兼容处理，并通过七组配置的固定 NUL 字节回归；不能只改 pin 后忽略截断失败。详见[扫描优化与验证](performance/2026-09-15-byte-scan/README.md)。
+
 合并前直接关闭不接受的 PR。合并后先开 App PR 恢复原 revision；需要时再通过 Revert PR 撤销整个 fork 同步 merge（子模块、配置、字典及 manifest 一起恢复），不重写历史。把报告中的候选 id 加入 main 配置的 `ignoredCandidates.fork`／`ignoredCandidates.app`，防止被撤回的候选再次提出。新来源 SHA 会生成新 id，不受旧候选忽略影响。[GitHub 回滚 PR](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/reverting-a-pull-request)
 
 协调器源码／配置变更走 main PR，`Upstream Coordinator Tests` 在 Ubuntu 自动跑本地 Git 与假 GitHub 集成回归。手动复现：
