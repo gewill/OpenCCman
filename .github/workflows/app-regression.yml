@@ -60,3 +60,23 @@ jobs:
         run: bash scripts/check-control-labels.sh
       - name: Check isolated pasteboard preservation
         run: bash scripts/check-pasteboard.sh
+
+      - name: Build macOS validation app
+        run: |
+          xcodebuild -version
+          xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
+            -configuration Debug -destination 'platform=macOS' \
+            -derivedDataPath "${{ runner.temp }}/openccman-app" \
+            -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
+            CODE_SIGNING_ALLOWED=NO \
+            PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.PRValidation build
+          ditto -c -k --keepParent \
+            "${{ runner.temp }}/openccman-app/Build/Products/Debug/OpenCCman.app" \
+            "${{ runner.temp }}/OpenCCman-validation.zip"
+      - name: Upload unsigned macOS validation app
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: macos-validation-app
+          path: ${{ runner.temp }}/OpenCCman-validation.zip
+          retention-days: 7
