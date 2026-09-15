@@ -14,12 +14,9 @@ actor ChineseConversionService {
 
   nonisolated static func convertSynchronously(_ text: String, options: ChineseConverter.Options) throws -> String {
     let converter = try converter(options: options)
-    // The dependency bridges through a null-terminated C string. Convert each
-    // null-delimited span so pasted U+0000 cannot silently discard the suffix.
-    guard text.utf8.contains(0) else { return converter.convert(text) }
-    return text.split(separator: "\0", omittingEmptySubsequences: false)
-      .map { converter.convert(String($0)) }
-      .joined(separator: "\0")
+    // The pinned wrapper passes byte lengths and preserves NUL in its bridge.
+    // Avoid a second full UTF-8 scan, especially for NSString-backed input.
+    return converter.convert(text)
   }
 
   func convert(_ text: String, options: ChineseConverter.Options) throws -> String {
