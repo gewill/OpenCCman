@@ -14,6 +14,8 @@
 
 没有点击恢复或购买按钮，没有发送反馈。原生 Mac 是应用兼容页，不是 RevenueCatUI 官方组件；不能据此宣称 iOS 官方页、真实交易、网络错误／重试、最大字号、VoiceOver、转换中切换或最低系统验收通过。
 
-本轮诊断应用已退出、隔离偏好恢复、临时注册撤销，VoiceOver 读回关闭。iOS 新验收包（source `12375b815b62ff127e1ce21d8947c4b4aed6e35d`，run 34972276754）已构建并下载，但 Simulator 不可打开／Device Hub UI 超时，未将这一步计为移动端运行通过；为本轮启动的 iPad 已恢复 Shutdown，未动已有手机验收状态。#71 继续开放。
+本轮诊断应用已退出、当时仅导入隔离偏好备份、临时注册撤销，VoiceOver 读回关闭。iOS 新验收包（source `12375b815b62ff127e1ce21d8947c4b4aed6e35d`，run 34972276754）已构建并下载，但 Simulator 不可打开／Device Hub UI 超时，未将这一步计为移动端运行通过；为本轮启动的 iPad 已恢复 Shutdown，未动已有手机验收状态。#71 继续开放。
 
 https://github.com/user-attachments/assets/fa40b6f2-c935-449d-9886-ad90297a0cd1
+
+偏好完整恢复的后续核验与更正见 [清理说明](../2026-09-15-voiceover/README.md#cleanup-and-correction-to-the-earlier-visual-report)。

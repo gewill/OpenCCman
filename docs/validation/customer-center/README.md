@@ -48,3 +48,5 @@ CustomerInfo updates from the existing Pro scene, SDK delegate and Customer Cent
 - ASC read-only catalog confirmed approved non-consumable `ios_openccman_pro_lifetime_3`. Local fixture display price 0.99 is synthetic and is not a verified current store price.
 
 See [sanitized validation log](results.log) and [StoreKit setup/limitations](../storekit/README.md). No credentials, receipts or customer payloads are saved in this report.
+
+Mac VoiceOver attempted on the #96 candidate: [observations, unresolved keyboard acceptance and verified cleanup](2026-09-15-voiceover/README.md).

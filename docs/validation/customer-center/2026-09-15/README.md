@@ -44,4 +44,6 @@
 
 ## 恢复
 
-本轮 Mac PID 28362 已退出，隔离偏好由启动前导出的 plist 恢复，临时 app 注销并改为 inactive。录制已正常结束（287.992 秒，H.264 1920×1080，无音轨）；VoiceOver 开始和结束均为关闭，测试中未启用。没有推送 build 分支或触发 Xcode Cloud。
+本轮 Mac PID 28362 已退出，隔离偏好当时仅执行启动前 plist 的导入，临时 app 注销并改为 inactive。录制已正常结束（287.992 秒，H.264 1920×1080，无音轨）；VoiceOver 开始和结束均为关闭，测试中未启用。没有推送 build 分支或触发 Xcode Cloud。
+
+清理更正：后续核对发现 `defaults import` 保留了 11 个测试新增键；已在该实例退出的情况下清除，并验证与空备份一致。见 [VoiceOver 记录的清理说明](../2026-09-15-voiceover/README.md#cleanup-and-correction-to-the-earlier-visual-report)。
