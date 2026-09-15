@@ -117,3 +117,44 @@ class RetainedSavedFileTests(unittest.TestCase):
         self.path.write_bytes(data[:-1] + b'y')
         with self.assertRaises(ValueError):
             self.fixture.module.verify_files(self.fixture.directory, active_anchor=True)
+
+
+class ArchivedRetainedWindowTests(unittest.TestCase):
+    conditions = ('ci-macos15', 'no-extra-observation', 'partial-recording', 'recorded-final-case')
+
+    def test_actual_protocols_revalidate(self):
+        for condition in self.conditions:
+            with self.subTest(condition=condition):
+                path = base.ROOT / 'docs/performance/retained-active-window/2026-09-16' / condition
+                rows = [base.json.loads(line) for line in (path / 'raw.jsonl').read_text().splitlines()]
+                result = MODULE.validate(rows, documents=True, active_anchor=True)
+                recorded = base.json.loads((path / 'result.json').read_text())
+                self.assertEqual(result, recorded['observations'])
+                self.assertTrue(all(r['task_info_status'] == 0 and r['rusage_status'] == 0 for r in rows))
+
+    def test_actual_archives_contain_five_valid_outputs_each(self):
+        import tempfile
+        import zipfile
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('retained_saved', base.ROOT / 'scripts/window_document_protocol.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        names = ['input-1mib.txt', 'expected-1mib.txt', 'input-10mib.txt', 'expected-10mib.txt']
+        names += [f'actual-{name}.txt' for name in ('1mib-a','1mib-b','10mib-a','10mib-b','retained-active-10mib')]
+        for condition in self.conditions:
+            with self.subTest(condition=condition):
+                path = base.ROOT / 'docs/performance/retained-active-window/2026-09-16' / condition
+                with tempfile.TemporaryDirectory() as temporary, zipfile.ZipFile(path / 'generated-files.zip') as archive:
+                    self.assertCountEqual(archive.namelist(), names)
+                    for name in names:
+                        (base.Path(temporary) / name).write_bytes(archive.read(name))
+                    exports = module.verify_files(base.Path(temporary), active_anchor=True)
+                self.assertEqual(exports, base.json.loads((path / 'result.json').read_text())['saved_exports'])
+
+    def test_failed_capture_is_not_a_successful_demo(self):
+        path = base.ROOT / 'docs/performance/retained-active-window/2026-09-16/partial-recording/capture-status.json'
+        status = base.json.loads(path.read_text())
+        self.assertTrue(status['functional_protocol_passed'])
+        self.assertFalse(status['recording_completed_successfully'])
+        self.assertFalse(status['covers_retained_active_case'])
+        self.assertNotEqual(status['recorder_exit_code'], 0)
