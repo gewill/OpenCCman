@@ -4,10 +4,15 @@ name: App Regression
 # build* branches are reserved for Xcode Cloud, not integration CI.
 on:
   pull_request:
-    branches: [main, develop, 'release/**', 'hotfix/**']
+    branches: [main, develop, 'codex/**', 'release/**', 'hotfix/**']
   push:
     branches: [main, develop, 'release/**', 'hotfix/**']
   workflow_dispatch:
+    inputs:
+      build_ios_validation:
+        description: Build an unsigned arm64 iOS Simulator app for local UI validation
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -81,4 +86,36 @@ jobs:
         with:
           name: macos-validation-app
           path: ${{ runner.temp }}/OpenCCman-validation.zip
+          retention-days: 7
+
+  ios-validation:
+    name: Build iOS Simulator validation app
+    if: github.event_name == 'workflow_dispatch' && inputs.build_ios_validation
+    runs-on: macos-15
+    timeout-minutes: 20
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Build and package simulator app
+        run: |
+          xcodebuild -version
+          git rev-parse HEAD > "${{ runner.temp }}/source-sha.txt"
+          xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
+            -configuration Debug -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "${{ runner.temp }}/openccman-ios" \
+            -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=NO \
+            PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.UIValidation build
+          ditto -c -k --keepParent \
+            "${{ runner.temp }}/openccman-ios/Build/Products/Debug-iphonesimulator/OpenCCman.app" \
+            "${{ runner.temp }}/OpenCCman-ios-validation.zip"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ios-simulator-validation-app
+          path: |
+            ${{ runner.temp }}/OpenCCman-ios-validation.zip
+            ${{ runner.temp }}/source-sha.txt
           retention-days: 7
