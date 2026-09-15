@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		108B1CA1C79449CEB404F060 /* WorkspaceTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4205A262DA48E58C8D9555 /* WorkspaceTextEditor.swift */; };
 		3863CECBA90A40108CB62210 /* ControlSizingGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB640B710F84822A640F70B /* ControlSizingGallery.swift */; };
 		07316DC341E7465E99EA8E4E /* AppControlStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13DD388302A841368BE809D4 /* AppControlStyle.swift */; };
 		AB2F59FF46334E4F9E1BA403 /* WorkspaceScrollKeeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C494425751394D56B5BA5763 /* WorkspaceScrollKeeper.swift */; };
@@ -85,6 +86,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A4205A262DA48E58C8D9555 /* WorkspaceTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTextEditor.swift; sourceTree = "<group>"; };
 		AFB640B710F84822A640F70B /* ControlSizingGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSizingGallery.swift; sourceTree = "<group>"; };
 		13DD388302A841368BE809D4 /* AppControlStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppControlStyle.swift; sourceTree = "<group>"; };
 		C494425751394D56B5BA5763 /* WorkspaceScrollKeeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceScrollKeeper.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 		BE727E2F2B2DF60E00C63DB2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2A4205A262DA48E58C8D9555 /* WorkspaceTextEditor.swift */,
 				C494425751394D56B5BA5763 /* WorkspaceScrollKeeper.swift */,
 				86E1C019E1BA49108005622A /* PhoneWorkspace.swift */,
 				83F3D574C245439A9F95C6B1 /* WorkspaceSurface.swift */,
@@ -436,6 +439,7 @@
 			files = (
 				43088A90EB27980ABB8606C3 /* ProAccessUpdate.swift in Sources */,
 				3C3627644470F73B7875003F /* CustomerCenterScene.swift in Sources */,
+				108B1CA1C79449CEB404F060 /* WorkspaceTextEditor.swift in Sources */,
 				AB2F59FF46334E4F9E1BA403 /* WorkspaceScrollKeeper.swift in Sources */,
 				CF15D72CB95A456299ABD017 /* PhoneWorkspace.swift in Sources */,
 				FD0333357F8C4778BD8D3FC0 /* WorkspaceSurface.swift in Sources */,
