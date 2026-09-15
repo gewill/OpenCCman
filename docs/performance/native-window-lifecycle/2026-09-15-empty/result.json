@@ -1,0 +1,140 @@
+{
+  "sourceSHA": "aec0368fac73646fb3168204c0b150881bd7e55d",
+  "harnessSHA256": "2cdb02ce7eb4b5ec61ff3d648b8d31af52c817ef0a849e2162779283d0be82b8",
+  "pid": 85474,
+  "os": "macOS 27.0 (26A428)",
+  "build": "Release, Xcode 26.3, locally ad-hoc signed diagnostic",
+  "locale": "English",
+  "appearance": "Light (visually verified)",
+  "windowFramePoints": {
+    "width": 900,
+    "height": 450
+  },
+  "sourceText": "Built-in sample cleared through UI in each window; no imports or conversions",
+  "cycles": [
+    {
+      "cycle": 1,
+      "firstSampleWithThreeWindowsMs": 56016.976083,
+      "firstSampleAfterClosingSecondariesMs": 69192.268667,
+      "samples": [
+        {
+          "targetDelaySeconds": 5,
+          "actualDelaySeconds": 5.809400458000003,
+          "liveModelNumbers": [
+            1,
+            2,
+            3
+          ],
+          "rssBytes": 138854400,
+          "physicalFootprintBytes": 75039848
+        },
+        {
+          "targetDelaySeconds": 20,
+          "actualDelaySeconds": 20.809487332999996,
+          "liveModelNumbers": [
+            1,
+            2,
+            3
+          ],
+          "rssBytes": 138706944,
+          "physicalFootprintBytes": 74957904
+        }
+      ]
+    },
+    {
+      "cycle": 2,
+      "firstSampleWithThreeWindowsMs": 120094.632125,
+      "firstSampleAfterClosingSecondariesMs": 132001.957833,
+      "samples": [
+        {
+          "targetDelaySeconds": 5,
+          "actualDelaySeconds": 5.999373167000012,
+          "liveModelNumbers": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "rssBytes": 146178048,
+          "physicalFootprintBytes": 83838080
+        },
+        {
+          "targetDelaySeconds": 20,
+          "actualDelaySeconds": 20.999856667000014,
+          "liveModelNumbers": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "rssBytes": 151994368,
+          "physicalFootprintBytes": 87590016
+        }
+      ]
+    },
+    {
+      "cycle": 3,
+      "firstSampleWithThreeWindowsMs": 186012.998,
+      "firstSampleAfterClosingSecondariesMs": 201001.325333,
+      "samples": [
+        {
+          "targetDelaySeconds": 5,
+          "actualDelaySeconds": 5.0003274590000215,
+          "liveModelNumbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "rssBytes": 156745728,
+          "physicalFootprintBytes": 94192792
+        },
+        {
+          "targetDelaySeconds": 20,
+          "actualDelaySeconds": 20.000337459,
+          "liveModelNumbers": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "rssBytes": 162775040,
+          "physicalFootprintBytes": 100729984
+        }
+      ]
+    }
+  ],
+  "deinitializationEvents": 0,
+  "lastWindowCloseObservation": "After Cmd-W closed the anchor, subsequent CUA UI observation found a reopened window/model 8. No independent 20-second zero-window observation; not passed. CUA activation vs application reopen logic needs separation.",
+  "processExitedAfterUIQuit": true,
+  "voiceOverBefore": false,
+  "voiceOverAfter": false,
+  "preferencesRestored": true,
+  "recording": {
+    "dimensions": [
+      1920,
+      1080
+    ],
+    "fps": 15,
+    "durationSeconds": 265.641667,
+    "audio": false,
+    "microphone": false,
+    "otherApplicationsExcluded": true,
+    "sha256": "4bcc6199ebc55113f3149c0ccfb7b22c2e009985c9b6b7b50305811defe28ac0"
+  },
+  "limitations": [
+    "A measured model-count growth pattern across three native cycles, not a retaining-chain diagnosis or a production leak declaration",
+    "Recording and 1 Hz synchronous logging active; no throughput or memory improvement claim",
+    "Private purchases/Services/shortcut setup exclusions from preparation.json",
+    "1 MiB / 10 MiB import-convert-export and close-during-task still pending",
+    "No physical minimum-OS or signed Cloud acceptance"
+  ]
+}
