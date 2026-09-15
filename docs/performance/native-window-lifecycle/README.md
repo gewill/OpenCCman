@@ -36,4 +36,6 @@ Attach real interaction video via `gh` and record platform, window dimensions, a
 ## Current status
 
 - Preparation, overwrite refusal, production-file invariants, Swift syntax and project/plist checks are locally verified.
-- Full CI typecheck/link and all native-window runtime cycles are pending. No model-release or memory-improvement claim is made yet; #18 remains open.
+- Full Xcode 26.3 Release typecheck/link passed in [run 34964935263](https://github.com/gewill/OpenCCman/actions/runs/34964935263), source `aec0368fac73646fb3168204c0b150881bd7e55d`. Downloaded artifact source/pins, diagnostic identity, Services exclusion and macOS 11 minimum verified; see [ci-build-check.json](ci-build-check.json).
+- Narrow local typecheck also passed when the real Bundle extension was included; the first fixture had omitted it. No production fix was required for that fixture error.
+- All native-window runtime cycles remain pending. No model-release or memory-improvement claim is made yet; #18 remains open.
