@@ -1,0 +1,84 @@
+Building for production...
+[Pre-planning 1 / 155]
+[Planning deferred tasks]
+[41 / 99]
+[56 / 101] SwiftyUserDefaults
+[62 / 101] copencc
+[65 / 101] copencc
+[66 / 101] copencc
+[72 / 101] copencc
+[76 / 101] copencc
+[79 / 138]
+[80 / 138]
+<HOME>/git/MyApps/OpenCCman-dependency-audit/.build/dependency-audit/SourcePackages/checkouts/SwiftyOpenCC/Sources/copencc/marisa/marisa/grimoire/vector/bit-vector.cc:280:20: warning: implicit conversion loses integer precision: 'std::size_t' (aka 'unsigned long') to 'const int' [-Wshorten-64-to-32]
+  280 |   const int skip = countr_zero(x >> 7);
+      |             ~~~~   ^~~~~~~~~~~~~~~~~~~
+1 warning generated.
+[83 / 138]
+[88 / 138] copencc
+[96 / 138] copencc
+[99 / 138] copencc
+[102 / 138] copencc
+[103 / 138] copencc
+[106 / 138] copencc
+[108 / 138]
+[110 / 138]
+[115 / 138]
+[117 / 138]
+[118 / 138]
+[120 / 138] copencc
+[121 / 138] OpenCC
+<HOME>/git/MyApps/OpenCCman-dependency-audit/.build/dependency-audit/SourcePackages/checkouts/SwiftyUserDefaults/Sources/DefaultsBridges.swift:218:38: warning: 'unarchiveObject(with:)' was deprecated in macOS 10.14: Use +unarchivedObjectOfClass:fromData:error: instead [#DeprecatedDeclaration]
+216 | 
+217 |         if let object = object as? Data {
+218 |             return NSKeyedUnarchiver.unarchiveObject(with: object) as? URL
+    |                                      `- warning: 'unarchiveObject(with:)' was deprecated in macOS 10.14: Use +unarchivedObjectOfClass:fromData:error: instead [#DeprecatedDeclaration]
+219 |         }
+220 | 
+
+<HOME>/git/MyApps/OpenCCman-dependency-audit/.build/dependency-audit/SourcePackages/checkouts/SwiftyUserDefaults/Sources/DefaultsBridges.swift:267:46: warning: 'archivedData(withRootObject:)' was deprecated in macOS 10.14: Use +archivedDataWithRootObject:requiringSecureCoding:error: instead [#DeprecatedDeclaration]
+265 |         // Needed because Quick/Nimble have min target 10.10...
+266 |         if #available(OSX 10.11, *) {
+267 |             userDefaults.set(NSKeyedArchiver.archivedData(withRootObject: value), forKey: key)
+    |                                              `- warning: 'archivedData(withRootObject:)' was deprecated in macOS 10.14: Use +archivedDataWithRootObject:requiringSecureCoding:error: instead [#DeprecatedDeclaration]
+268 |         } else {
+269 |             fatalError("Shouldn't really happen. We do not support macOS 10.10, if it happened to you please report your use-case on GitHub issues.")
+
+<HOME>/git/MyApps/OpenCCman-dependency-audit/.build/dependency-audit/SourcePackages/checkouts/SwiftyUserDefaults/Sources/DefaultsBridges.swift:282:34: warning: 'unarchiveObject(with:)' was deprecated in macOS 10.14: Use +unarchivedObjectOfClass:fromData:error: instead [#DeprecatedDeclaration]
+280 |     public func deserialize(_ object: Any) -> T? {
+281 |         guard let data = object as? Data else { return nil }
+282 |         return NSKeyedUnarchiver.unarchiveObject(with: data) as? T
+    |                                  `- warning: 'unarchiveObject(with:)' was deprecated in macOS 10.14: Use +unarchivedObjectOfClass:fromData:error: instead [#DeprecatedDeclaration]
+283 |     }
+284 | }
+
+<HOME>/git/MyApps/OpenCCman-dependency-audit/.build/dependency-audit/SourcePackages/checkouts/SwiftyUserDefaults/Sources/DefaultsObserver.swift:51:41: warning: generic parameter 'T' shadows generic parameter from outer scope with the same name; this is an error in the Swift 6 language mode
+ 31 | #if !os(Linux)
+ 32 | 
+ 33 | public final class DefaultsObserver<T: DefaultsSerializable>: NSObject, DefaultsDisposable where T == T.T {
+    |                                     `- note: 'T' previously declared here
+ 34 | 
+ 35 |     public struct Update {
+    :
+ 49 |         }
+ 50 | 
+ 51 |         private static func deserialize<T: DefaultsSerializable>(_ value: Any?, for key: DefaultsKey<T>) -> T.T? where T.T == T {
+    |                                         `- warning: generic parameter 'T' shadows generic parameter from outer scope with the same name; this is an error in the Swift 6 language mode
+ 52 |             guard let value = value else { return nil }
+ 53 | 
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+[127 / 138] SwiftyUserDefaults
+[134 / 139] CoreChecks-product
+[153 / 172]
+[159 / 172]
+[163 / 172]
+[166 / 172]
+[168 / 172] CoreChecks-product
+[170 / 172] CoreChecks-product
+[171 / 172] CoreChecks-product
+Build complete! (10.84 sec)
+PASS: 7 option combinations × 11 fixtures; fixed NUL contracts, phrase boundaries, whitespace, Unicode and converter reuse
+PASS: model release, repeated taps, single publication, cancellation/replacement, empty input and quota guard
+PASS: presets, UTF-8/BOM/Unicode/NUL files, size limit, invalid input, cancellation and import replacement
+PASS: real NSURL/NSString providers and cancellation without a provider callback
