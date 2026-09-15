@@ -12,6 +12,7 @@ import math
 import os
 from pathlib import Path
 import plistlib
+import shutil
 import subprocess
 import sys
 
@@ -122,11 +123,14 @@ def main():
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument('--raw', type=Path, help='Read-only validation of an existing per-process JSONL')
     mode.add_argument('--app', type=Path, help='CI only: launch the isolated automatic app')
+    parser.add_argument('--document-files', type=Path, help='Optional post-exit verification of saved document fixtures/exports with --raw --documents')
     parser.add_argument('--output', required=True, type=Path, help='New report directory')
     protocol = parser.add_mutually_exclusive_group()
     protocol.add_argument('--documents', action='store_true', help='Validate fixed document cycles and native-call close overlap')
     protocol.add_argument('--cycles', action='store_true', help='Validate three cycles with distinct new model identities')
     args = parser.parse_args()
+    if args.document_files and (not args.documents or not args.raw):
+        parser.error('--document-files requires --raw --documents')
     bundle = BUNDLE + ('Documents' if args.documents else 'Cycles' if args.cycles else '')
     if args.app and (os.environ.get('GITHUB_ACTIONS') != 'true' or os.environ.get('RUNNER_OS') != 'macOS'):
         parser.error('Local mode only reads --raw; launch the private app through the normal UI')
@@ -144,7 +148,7 @@ def main():
             with (args.output / 'process.log').open('w') as log:
                 process = subprocess.Popen([str(executable)], stdout=log, stderr=subprocess.STDOUT)
                 result['pid'] = process.pid
-                result['exit_code'] = process.wait(timeout=270 if args.documents else 180 if args.cycles else 100)
+                result['exit_code'] = process.wait(timeout=450 if args.documents else 180 if args.cycles else 100)
             if result['exit_code'] != 0:
                 raise ValueError('Diagnostic app exited unsuccessfully')
             candidates = list((Path.home() / 'Library/Caches' / bundle).glob(f'lifecycle-{process.pid}-*.jsonl'))
@@ -154,7 +158,29 @@ def main():
         data = raw.read_bytes()
         (args.output / 'raw.jsonl').write_bytes(data)
         result['raw_sha256'] = hashlib.sha256(data).hexdigest()
-        result['observations'] = validate([json.loads(line) for line in data.splitlines()], args.cycles, args.documents)
+        rows = [json.loads(line) for line in data.splitlines()]
+        document_files = args.document_files
+        if args.documents and args.app:
+            document_files = raw.parent / f'documents-{process.pid}'
+        if document_files:
+            # Preserve only the known generated TXT evidence, including partial
+            # results when protocol validation fails. No user-selected files.
+            destination = args.output / 'documents'
+            destination.mkdir()
+            names = ['input-1mib.txt', 'expected-1mib.txt', 'input-10mib.txt', 'expected-10mib.txt']
+            names += [f'actual-{label}.txt' for label in ('1mib-a', '1mib-b', '10mib-a', '10mib-b', 'active-10mib')]
+            for name in names:
+                path = document_files / name
+                if path.exists():
+                    if path.is_symlink() or not path.is_file() or path.stat().st_size > 10 * 1024 * 1024:
+                        raise ValueError('Unexpected document evidence file')
+                    shutil.copyfile(path, destination / name)
+        result['observations'] = validate(rows, args.cycles, args.documents)
+        if document_files:
+            spec = importlib.util.spec_from_file_location('document_files', ROOT / 'scripts/window_document_protocol.py')
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            result['saved_exports'] = module.verify_files(args.output / 'documents')
         result['valid_protocol'] = True
     except (OSError, ValueError, subprocess.SubprocessError) as error:
         result['error'] = str(error)

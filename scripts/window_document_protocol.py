@@ -146,3 +146,27 @@ def validate_documents(rows):
     if finished['elapsed_ms'] < final['plus_20']['elapsed_ms']:
         raise ValueError('Premature finish')
     return observations
+
+
+def verify_files(directory):
+    """Independent post-exit byte comparison; never uses the tested converter."""
+    import hashlib
+    fixtures = json.loads(MANIFEST.read_text())['fixtures']
+    exports = []
+    for fixture in fixtures:
+        source = (directory / fixture['input']).read_bytes()
+        expected = (directory / fixture['expected']).read_bytes()
+        for kind, data in [('input', source), ('expected', expected)]:
+            if len(data) != fixture[f'{kind}_bytes'] or hashlib.sha256(data).hexdigest() != fixture[f'{kind}_sha256']:
+                raise ValueError('Saved fixture differs from pinned oracle')
+        for repeat in ('a', 'b'):
+            name = f"actual-{fixture['mib']}mib-{repeat}.txt"
+            data = (directory / name).read_bytes()
+            if data != expected:
+                raise ValueError(f'Saved export is not byte equal: {name}')
+            exports.append(dict(file=name, bytes=len(data), sha256=hashlib.sha256(data).hexdigest(),
+                                byte_equal=True, nul_count=data.count(b'\0'), crlf_count=data.count(b'\r\n'),
+                                has_bom=data.startswith(b'\xef\xbb\xbf')))
+    if (directory / 'actual-active-10mib.txt').exists():
+        raise ValueError('Cancelled window unexpectedly exported')
+    return exports

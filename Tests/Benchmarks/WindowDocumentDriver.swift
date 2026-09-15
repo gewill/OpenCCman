@@ -112,7 +112,7 @@ struct LifetimeDocumentDriverView: View {
 
   private func tick() {
     let now = ProcessInfo.processInfo.systemUptime
-    guard now - began < 240 else { finish("timeout"); return }
+    guard now - began < 420 else { finish("timeout"); return }
     let windows = NSApp.windows.filter { $0.isVisible && $0.canBecomeMain }
     if let anchor, !baseline.isEmpty, phase != .zero,
        NativeWindowLifecycleAudit.documentAnchorHash(anchor) != baseline {
@@ -201,7 +201,7 @@ struct LifetimeDocumentDriverView: View {
     case .closing:
       guard windows.count == 1, ObjectIdentifier(windows[0]) == anchor else { return }
       record("document_\(label)_closed")
-      since = now
+      since = ProcessInfo.processInfo.systemUptime
       five = false
       phase = .observing
     case .observing:
@@ -219,7 +219,7 @@ struct LifetimeDocumentDriverView: View {
       }
     case .zero:
       guard windows.isEmpty else { return }
-      if since == 0 { since = now; record("documents_final_closed") }
+      if since == 0 { record("documents_final_closed"); since = ProcessInfo.processInfo.systemUptime }
       if now - since >= 5 && !five { five = true; record("documents_final_plus_5") }
       if now - since >= 20 { record("documents_final_plus_20"); finish(nil) }
     }

@@ -119,3 +119,38 @@ class WindowDocumentTests(unittest.TestCase):
     def test_early_observation_is_rejected(self):
         self.event('document_1mib-a_plus_20')['elapsed_ms'] -= 1
         self.rejects()
+
+
+class SavedDocumentTests(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        self.temp = tempfile.TemporaryDirectory()
+        self.directory = Path(self.temp.name)
+        spec = importlib.util.spec_from_file_location('saved_documents', ROOT / 'scripts/window_document_protocol.py')
+        self.module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.module)
+        for fixture in MANIFEST['fixtures']:
+            pad = 'x' * fixture['ascii_padding_bytes']
+            source = b'\xef\xbb\xbf' + (MANIFEST['fixture_source'] * fixture['unit_repeats'] + pad).encode()
+            expected = (MANIFEST['fixture_expected'] * fixture['unit_repeats'] + pad).encode()
+            (self.directory / fixture['input']).write_bytes(source)
+            (self.directory / fixture['expected']).write_bytes(expected)
+            for repeat in ('a', 'b'):
+                (self.directory / f"actual-{fixture['mib']}mib-{repeat}.txt").write_bytes(expected)
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def test_fixed_oracle_exports_pass(self):
+        self.assertEqual(len(self.module.verify_files(self.directory)), 4)
+
+    def test_same_length_corruption_fails(self):
+        path = self.directory / 'actual-10mib-b.txt'
+        data = path.read_bytes()
+        path.write_bytes(data[:-1] + b'y')
+        with self.assertRaises(ValueError): self.module.verify_files(self.directory)
+
+    def test_nul_truncation_fails(self):
+        path = self.directory / 'actual-1mib-a.txt'
+        path.write_bytes(path.read_bytes().split(b'\0', 1)[0])
+        with self.assertRaises(ValueError): self.module.verify_files(self.directory)
