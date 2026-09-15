@@ -62,13 +62,15 @@ jobs:
         run: bash scripts/check-pasteboard.sh
 
       - name: Build macOS validation app
+        env:
+          DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
         run: |
           xcodebuild -version
           xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
             -configuration Debug -destination 'platform=macOS' \
             -derivedDataPath "${{ runner.temp }}/openccman-app" \
             -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
-            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_ALLOWED=NO ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
             PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.PRValidation build
           ditto -c -k --keepParent \
             "${{ runner.temp }}/openccman-app/Build/Products/Debug/OpenCCman.app" \
