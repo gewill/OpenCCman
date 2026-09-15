@@ -1,0 +1,4314 @@
+{
+  "valid_protocol": true,
+  "mode": "existing-log",
+  "raw_sha256": "8dc4385e342ea12fe775f0bc35ce07c2cc5b2f3d309c805d19ac72e255768f31",
+  "observations": {
+    "documents_started": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "has_export": false,
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 1,
+      "elapsed_ms": 217.552541,
+      "event": "documents_started",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 56853464,
+      "pid": 45768,
+      "process_peak_rss_bytes": 102957056,
+      "quota": {},
+      "result_writebacks": [],
+      "rss_bytes": 102957056,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "documents_fixture_1": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "has_export": false,
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 1,
+      "elapsed_ms": 177.733833,
+      "event": "documents_fixture_1",
+      "expected_bytes": 1048573,
+      "expected_sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9",
+      "input_bytes": 1048576,
+      "input_sha256": "bf4f70c8ba22089a8c91ca19457683733010546e0b7f61b3d8ff527a7305e36c",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 25297856,
+      "pid": 45768,
+      "process_peak_rss_bytes": 71401472,
+      "quota": {},
+      "result_writebacks": [],
+      "rss_bytes": 71401472,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "documents_fixture_10": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "has_export": false,
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 1,
+      "elapsed_ms": 217.356791,
+      "event": "documents_fixture_10",
+      "expected_bytes": 10485757,
+      "expected_sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "input_bytes": 10485760,
+      "input_sha256": "dc96005e53b8766191cc192595d68f8e20f5c82f739d636a4cbfe89bb8b604fe",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 56853464,
+      "pid": 45768,
+      "process_peak_rss_bytes": 102957056,
+      "quota": {},
+      "result_writebacks": [],
+      "rss_bytes": 102957056,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "documents_anchor_ready": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 1,
+      "elapsed_ms": 10329.716916,
+      "event": "documents_anchor_ready",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 243549432,
+      "pid": 45768,
+      "process_peak_rss_bytes": 178913280,
+      "quota": {
+        "2026-09-16": 1
+      },
+      "result_writebacks": [
+        "anchor"
+      ],
+      "rss_bytes": 178814976,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_1mib-a_import_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 10401.670791,
+      "event": "document_1mib-a_import_started",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": true,
+          "number": 2
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 253527288,
+      "pid": 45768,
+      "process_peak_rss_bytes": 190283776,
+      "quota": {
+        "2026-09-16": 1
+      },
+      "result_writebacks": [
+        "anchor"
+      ],
+      "rss_bytes": 190283776,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-a_imported": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 10436.026875,
+      "event": "document_1mib-a_imported",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 261440760,
+      "pid": 45768,
+      "process_peak_rss_bytes": 196444160,
+      "quota": {
+        "2026-09-16": 1
+      },
+      "result_writebacks": [
+        "anchor"
+      ],
+      "rss_bytes": 196444160,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-a_conversion_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 10436.273375,
+      "event": "document_1mib-a_conversion_started",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": true,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 261440760,
+      "pid": 45768,
+      "process_peak_rss_bytes": 196444160,
+      "quota": {
+        "2026-09-16": 1
+      },
+      "result_writebacks": [
+        "anchor"
+      ],
+      "rss_bytes": 196444160,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-a_exported": {
+      "actual_bytes": 1048573,
+      "actual_sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9",
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "byte_equal": true,
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 10501.610125,
+      "event": "document_1mib-a_exported",
+      "export_filename": "input-1mib-converted.txt",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53131595459708,
+        "end_ns": 53131606986541
+      },
+      "nul_count": 13980,
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 270468344,
+      "pid": 45768,
+      "process_peak_rss_bytes": 202506240,
+      "quota": {
+        "2026-09-16": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 202506240,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-a_before_close": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 20519.032958,
+      "event": "document_1mib-a_before_close",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53131595459708,
+        "end_ns": 53131606986541
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 121554192,
+      "pid": 45768,
+      "process_peak_rss_bytes": 206323712,
+      "quota": {
+        "2026-09-16": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 163414016,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-a_closed": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 20547.943625,
+      "event": "document_1mib-a_closed",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53131595459708,
+        "end_ns": 53131606986541
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 121816336,
+      "pid": 45768,
+      "process_peak_rss_bytes": 206323712,
+      "quota": {
+        "2026-09-16": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 164413440,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_1mib-a_plus_5": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 25559.453416,
+      "event": "document_1mib-a_plus_5",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53131595459708,
+        "end_ns": 53131606986541
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 114984208,
+      "pid": 45768,
+      "process_peak_rss_bytes": 206323712,
+      "quota": {
+        "2026-09-16": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 164495360,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_1mib-a_plus_20": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 40559.480416,
+      "event": "document_1mib-a_plus_20",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53131595459708,
+        "end_ns": 53131606986541
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 114820368,
+      "pid": 45768,
+      "process_peak_rss_bytes": 206323712,
+      "quota": {
+        "2026-09-16": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 170999808,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_1mib-b_import_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": false,
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 40685.478791,
+      "event": "document_1mib-b_import_started",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": true,
+          "number": 3
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 120734992,
+      "pid": 45768,
+      "process_peak_rss_bytes": 206323712,
+      "quota": {
+        "2026-09-16": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 177946624,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-b_imported": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": false,
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 40756.492083,
+      "event": "document_1mib-b_imported",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 252085520,
+      "pid": 45768,
+      "process_peak_rss_bytes": 206323712,
+      "quota": {
+        "2026-09-16": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 186073088,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-b_conversion_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": false,
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 40756.832666,
+      "event": "document_1mib-b_conversion_started",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": true,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 252085520,
+      "pid": 45768,
+      "process_peak_rss_bytes": 206323712,
+      "quota": {
+        "2026-09-16": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 186073088,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-b_exported": {
+      "actual_bytes": 1048573,
+      "actual_sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9",
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "byte_equal": true,
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 40838.785416,
+      "event": "document_1mib-b_exported",
+      "export_filename": "input-1mib-converted.txt",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53161915421375,
+        "end_ns": 53161927600541
+      },
+      "nul_count": 13980,
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 256230720,
+      "pid": 45768,
+      "process_peak_rss_bytes": 206323712,
+      "quota": {
+        "2026-09-16": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 187318272,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-b_before_close": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 50858.965541,
+      "event": "document_1mib-b_before_close",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53161915421375,
+        "end_ns": 53161927600541
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 119342400,
+      "pid": 45768,
+      "process_peak_rss_bytes": 206323712,
+      "quota": {
+        "2026-09-16": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 178225152,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-b_closed": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 50889.130333,
+      "event": "document_1mib-b_closed",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53161915421375,
+        "end_ns": 53161927600541
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 119555392,
+      "pid": 45768,
+      "process_peak_rss_bytes": 206323712,
+      "quota": {
+        "2026-09-16": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 178421760,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_1mib-b_plus_5": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 55898.957,
+      "event": "document_1mib-b_plus_5",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53161915421375,
+        "end_ns": 53161927600541
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 102237504,
+      "pid": 45768,
+      "process_peak_rss_bytes": 206323712,
+      "quota": {
+        "2026-09-16": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 178077696,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_1mib-b_plus_20": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 70899.0535,
+      "event": "document_1mib-b_plus_20",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53161915421375,
+        "end_ns": 53161927600541
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 108627264,
+      "pid": 45768,
+      "process_peak_rss_bytes": 206323712,
+      "quota": {
+        "2026-09-16": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 147996672,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_10mib-a_import_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": false,
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 71027.604666,
+      "event": "document_10mib-a_import_started",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": true,
+          "number": 4
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 114509120,
+      "pid": 45768,
+      "process_peak_rss_bytes": 206323712,
+      "quota": {
+        "2026-09-16": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 151748608,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-a_imported": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": false,
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 71126.730166,
+      "event": "document_10mib-a_imported",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 174425432,
+      "pid": 45768,
+      "process_peak_rss_bytes": 211599360,
+      "quota": {
+        "2026-09-16": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 211599360,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-a_conversion_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": false,
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 71127.159333,
+      "event": "document_10mib-a_conversion_started",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": true,
+          "importing": false,
+          "number": 4
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 174425432,
+      "pid": 45768,
+      "process_peak_rss_bytes": 211599360,
+      "quota": {
+        "2026-09-16": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 211599360,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-a_exported": {
+      "actual_bytes": 10485757,
+      "actual_sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "byte_equal": true,
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 71418.649583,
+      "event": "document_10mib-a_exported",
+      "export_filename": "input-10mib-converted.txt",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53192309861625,
+        "end_ns": 53192434288666
+      },
+      "nul_count": 139810,
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 334841200,
+      "pid": 45768,
+      "process_peak_rss_bytes": 248692736,
+      "quota": {
+        "2026-09-16": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 248627200,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-a_before_close": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 81439.060833,
+      "event": "document_10mib-a_before_close",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53192309861625,
+        "end_ns": 53192434288666
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 217433456,
+      "pid": 45768,
+      "process_peak_rss_bytes": 249233408,
+      "quota": {
+        "2026-09-16": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 242565120,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-a_closed": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 81459.520708,
+      "event": "document_10mib-a_closed",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53192309861625,
+        "end_ns": 53192434288666
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 217597296,
+      "pid": 45768,
+      "process_peak_rss_bytes": 249233408,
+      "quota": {
+        "2026-09-16": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 242712576,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_10mib-a_plus_5": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 86479.065541,
+      "event": "document_10mib-a_plus_5",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53192309861625,
+        "end_ns": 53192434288666
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 167626072,
+      "pid": 45768,
+      "process_peak_rss_bytes": 249233408,
+      "quota": {
+        "2026-09-16": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 214204416,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_10mib-a_plus_20": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 101479.124208,
+      "event": "document_10mib-a_plus_20",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53192309861625,
+        "end_ns": 53192434288666
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 167626072,
+      "pid": 45768,
+      "process_peak_rss_bytes": 249233408,
+      "quota": {
+        "2026-09-16": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 167673856,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_10mib-b_import_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": false,
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 101606.915625,
+      "event": "document_10mib-b_import_started",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": true,
+          "number": 5
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 173409624,
+      "pid": 45768,
+      "process_peak_rss_bytes": 249233408,
+      "quota": {
+        "2026-09-16": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 173719552,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-b_imported": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": false,
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 101781.083416,
+      "event": "document_10mib-b_imported",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 349291912,
+      "pid": 45768,
+      "process_peak_rss_bytes": 249233408,
+      "quota": {
+        "2026-09-16": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 223592448,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-b_conversion_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": false,
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 101781.4275,
+      "event": "document_10mib-b_conversion_started",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": true,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 349291912,
+      "pid": 45768,
+      "process_peak_rss_bytes": 249233408,
+      "quota": {
+        "2026-09-16": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 223592448,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-b_exported": {
+      "actual_bytes": 10485757,
+      "actual_sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "byte_equal": true,
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 102027.435916,
+      "event": "document_10mib-b_exported",
+      "export_filename": "input-10mib-converted.txt",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53222941002000,
+        "end_ns": 53223067526458
+      },
+      "nul_count": 139810,
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 389318048,
+      "pid": 45768,
+      "process_peak_rss_bytes": 263733248,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 263716864,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-b_before_close": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 112038.988958,
+      "event": "document_10mib-b_before_close",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53222941002000,
+        "end_ns": 53223067526458
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 245466528,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 188989440,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-b_closed": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 112070.301875,
+      "event": "document_10mib-b_closed",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53222941002000,
+        "end_ns": 53223067526458
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 245663136,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 189300736,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_10mib-b_plus_5": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 117079.301291,
+      "event": "document_10mib-b_plus_5",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53222941002000,
+        "end_ns": 53223067526458
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 239175072,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 166313984,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_10mib-b_plus_20": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 132078.616791,
+      "event": "document_10mib-b_plus_20",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53222941002000,
+        "end_ns": 53223067526458
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 239044000,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 162250752,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_active-10mib_import_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": false,
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 132183.1595,
+      "event": "document_active-10mib_import_started",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": true,
+          "number": 6
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 249071032,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 175947776,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_active-10mib_imported": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": false,
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 132254.504708,
+      "event": "document_active-10mib_imported",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 6
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 418563536,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 238403584,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_active-10mib_conversion_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": false,
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 132254.831083,
+      "event": "document_active-10mib_conversion_started",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": true,
+          "importing": false,
+          "number": 6
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 418563536,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 238419968,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_active-10mib_before_close": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": false,
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 132278.92825,
+      "event": "document_active-10mib_before_close",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": true,
+          "importing": false,
+          "number": 6
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53253416745958
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 416089528,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 237076480,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_active-10mib_closed": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 132304.165125,
+      "event": "document_active-10mib_closed",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53253416745958,
+        "will_close_ns": 53253428177000
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 415253944,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 237060096,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_active-10mib_plus_5": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 137318.578083,
+      "event": "document_active-10mib_plus_5",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53253416745958,
+        "end_ns": 53253541978791,
+        "will_close_ns": 53253428177000
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 268256696,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 224641024,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_active-10mib_plus_20": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 152319.103,
+      "event": "document_active-10mib_plus_20",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53253416745958,
+        "end_ns": 53253541978791,
+        "will_close_ns": 53253428177000
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 218006944,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 192610304,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "retained_import_started": {
+      "anchor_fingerprint": "a7a7d6f33a2f435276450634379340762c34846d78506b74dd5ba2c487995143",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": false,
+          "number": 7,
+          "result_bytes": 0,
+          "source_bytes": 17
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 152428.038166,
+      "event": "retained_import_started",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": true,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 220087712,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 193773568,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "retained_imported": {
+      "anchor_fingerprint": "f13b7bc3b3331d57089f5e9799a3ab74740f3ba8f9ee8848c2b042fc811da8fa",
+      "content_sizes": [
+        {
+          "has_export": false,
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": false,
+          "number": 7,
+          "result_bytes": 0,
+          "source_bytes": 17
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 152550.554791,
+      "event": "retained_imported",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "native_call": {},
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 398378448,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 243253248,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "retained_before_other_close": {
+      "closed_model_number": 7,
+      "created_total": 7,
+      "elapsed_ms": 152578.330875,
+      "event": "retained_before_other_close",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": true,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53273715459125
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "other_converting": false,
+      "other_importing": false,
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 398443984,
+      "pid": 45768,
+      "process_peak_rss_bytes": 264667136,
+      "quota": {
+        "2026-09-16": 5
+      },
+      "retained_converting": true,
+      "retained_model_number": 1,
+      "rss_bytes": 243367936,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "retained_exported": {
+      "actual_bytes": 10485757,
+      "actual_sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "anchor_fingerprint": "2752c556a98a248aa09c662986ea80c09ab0cae2ae0d876f8f35c67cb555fdbb",
+      "byte_equal": true,
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 153008.910916,
+      "event": "retained_exported",
+      "expected_source_sha256": "b29567602f07db159e4d7644f511dee4f5bbf26b9ccc2246512d6fc8fe5cca10",
+      "export_filename": "input-10mib-converted.txt",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53273715459125,
+        "end_ns": 53273832480000,
+        "will_close_ns": 53273727549000
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "other_close_uptime": 53273.72991604167,
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 528926280,
+      "pid": 45768,
+      "process_peak_rss_bytes": 376619008,
+      "quota": {
+        "2026-09-16": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 376619008,
+      "rusage_status": 0,
+      "source_sha256": "b29567602f07db159e4d7644f511dee4f5bbf26b9ccc2246512d6fc8fe5cca10",
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "retained_plus_5": {
+      "anchor_fingerprint": "2752c556a98a248aa09c662986ea80c09ab0cae2ae0d876f8f35c67cb555fdbb",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 158160.269833,
+      "event": "retained_plus_5",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53273715459125,
+        "end_ns": 53273832480000,
+        "will_close_ns": 53273727549000
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 341116440,
+      "pid": 45768,
+      "process_peak_rss_bytes": 377667584,
+      "quota": {
+        "2026-09-16": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 309657600,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "retained_plus_20": {
+      "anchor_fingerprint": "2752c556a98a248aa09c662986ea80c09ab0cae2ae0d876f8f35c67cb555fdbb",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 173674.898125,
+      "event": "retained_plus_20",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53273715459125,
+        "end_ns": 53273832480000,
+        "will_close_ns": 53273727549000
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 328582680,
+      "pid": 45768,
+      "process_peak_rss_bytes": 377667584,
+      "quota": {
+        "2026-09-16": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 273547264,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "documents_final_closed": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 173769.601083,
+      "event": "documents_final_closed",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53273715459125,
+        "end_ns": 53273832480000,
+        "will_close_ns": 53273727549000
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 328992280,
+      "pid": 45768,
+      "process_peak_rss_bytes": 377667584,
+      "quota": {
+        "2026-09-16": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 274202624,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "documents_final_plus_5": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 178779.192708,
+      "event": "documents_final_plus_5",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53273715459125,
+        "end_ns": 53273832480000,
+        "will_close_ns": 53273727549000
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 271959528,
+      "pid": 45768,
+      "process_peak_rss_bytes": 377667584,
+      "quota": {
+        "2026-09-16": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 227557376,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "documents_final_plus_20": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 193778.623,
+      "event": "documents_final_plus_20",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53273715459125,
+        "end_ns": 53273832480000,
+        "will_close_ns": 53273727549000
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 260343200,
+      "pid": 45768,
+      "process_peak_rss_bytes": 377667584,
+      "quota": {
+        "2026-09-16": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 196198400,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "documents_finished": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 193779.61225,
+      "event": "documents_finished",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 53273715459125,
+        "end_ns": 53273832480000,
+        "will_close_ns": 53273727549000
+      },
+      "os": "Version 27.0 (Build 26A428)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 260343200,
+      "pid": 45768,
+      "process_peak_rss_bytes": 377667584,
+      "quota": {
+        "2026-09-16": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 196198400,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    }
+  },
+  "saved_exports": [
+    {
+      "file": "actual-1mib-a.txt",
+      "bytes": 1048573,
+      "sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9",
+      "byte_equal": true,
+      "nul_count": 13980,
+      "crlf_count": 41940,
+      "has_bom": false
+    },
+    {
+      "file": "actual-1mib-b.txt",
+      "bytes": 1048573,
+      "sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9",
+      "byte_equal": true,
+      "nul_count": 13980,
+      "crlf_count": 41940,
+      "has_bom": false
+    },
+    {
+      "file": "actual-10mib-a.txt",
+      "bytes": 10485757,
+      "sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "byte_equal": true,
+      "nul_count": 139810,
+      "crlf_count": 419430,
+      "has_bom": false
+    },
+    {
+      "file": "actual-10mib-b.txt",
+      "bytes": 10485757,
+      "sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "byte_equal": true,
+      "nul_count": 139810,
+      "crlf_count": 419430,
+      "has_bom": false
+    },
+    {
+      "file": "actual-retained-active-10mib.txt",
+      "bytes": 10485757,
+      "sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "byte_equal": true,
+      "nul_count": 139810,
+      "crlf_count": 419430,
+      "has_bom": false
+    }
+  ]
+}
