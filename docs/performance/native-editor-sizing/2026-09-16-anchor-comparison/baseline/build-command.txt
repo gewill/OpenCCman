@@ -1,0 +1,8 @@
+Command line invocation:
+    /Applications/Xcode_26.3.app/Contents/Developer/usr/bin/xcodebuild -project /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/openccman-editor-comparison-qbkl9h98/baseline-prepared/source/OpenCCman.xcodeproj -scheme OpenCCman -configuration Release -destination platform=macOS -derivedDataPath /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/openccman-editor-comparison-qbkl9h98/baseline-derived -clonedSourcePackagesDirPath /var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/openccman-editor-comparison-qbkl9h98/packages -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile CODE_SIGNING_ALLOWED=NO "ARCHS=arm64 x86_64" ONLY_ACTIVE_ARCH=NO PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.NativeWindowLifecycleAuditAutoDocumentsActiveAnchor build
+
+Build settings from command line:
+    ARCHS = arm64 x86_64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = NO
+    PRODUCT_BUNDLE_IDENTIFIER = org.gewill.OpenCCman.NativeWindowLifecycleAuditAutoDocumentsActiveAnchor

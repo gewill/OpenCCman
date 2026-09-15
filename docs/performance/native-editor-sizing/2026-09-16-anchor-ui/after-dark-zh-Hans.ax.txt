@@ -1,0 +1,77 @@
+Window: "OpenCCman", App: OpenCCman.
+0 standard window OpenCCman, Secondary Actions: Raise, ID: SwiftUI.WindowGroup<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUIRouter.Router<SwiftUI.ModifiedContent<OpenCCman.RootView, SwiftUI._AppearanceActionModifier>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<OpenCCman.WhatsNewCoordinator>>>, SwiftUI._EnvironmentKeyWritingModifier<Foundation.Locale>>, SwiftUI._PreferenceWritingModifier<SwiftUI.PreferredColorSchemeKey>>>-1-AppWindow-1
+	1 container
+		2 button Description: 转换设置, ID: sidebar.left
+		3 container 编辑区布局
+			4 button Description: 左右, ID: workspace-horizontal
+			5 button (selected) Description: 上下, ID: workspace-vertical
+		6 button 转换
+		7 menu button 调整编辑区大小
+		8 scroll area
+			9 text 转换预设
+			10 menu button 转换预设, Value: 繁体 · OpenCC
+			11 text 目标语言
+			12 container Description: 目标语言, ID: conversion-segment-Target Language
+				13 button 简体中文
+				14 button (selected) 繁體中文
+			15 text 异体字转换
+			16 container Description: 异体字转换, ID: conversion-segment-Variant
+				17 button (selected) OpenCC标准
+				18 button 台湾标准
+				19 button 香港标准
+			20 text 地域用词转换
+			21 container Description: 地域用词转换, ID: conversion-segment-Region Idiom
+				22 button (selected) 不转换
+				23 button 台湾模式
+		24 scroll area Secondary Actions: Scroll Up, Scroll Down
+			25 container
+				26 text 原文
+				27 button Description: 粘贴文本, ID: doc.on.clipboard
+				28 button 导入 TXT
+				29 text 导入或拖至此处：单个 UTF-8 TXT 文件或纯文本，最大 10 MiB。
+				30 scroll area Description: 原文, Secondary Actions: Scroll Up, Scroll Down
+					31 text entry area Description: 原文, Value: 第 00000 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 
+第 00001 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 
+第 00002 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 
+					32 scroll bar (settable, float) 0
+						33 value indicator (settable, float) 0
+						34 increment arrow button
+						35 decrement arrow button
+						36 increment page button
+						37 decrement page button
+			38 unknown Description: 调整编辑区大小, Details: 50%, Secondary Actions: Increment, Decrement
+			39 container
+				40 text 结果
+				41 button (disabled) Description: 复制结果, ID: doc.on.doc
+				42 button (disabled) Description: 导出 TXT, ID: square.and.arrow.up
+				43 text 转换原文后，结果会显示在这里。
+				44 scroll area 结果
+					45 text entry area 结果
+			46 text iPerfman 一个 iPerf3 工具
+			47 button 获取
+			48 button 移除推荐
+			49 scroll bar (settable, float) 0
+				50 value indicator (settable, float) 0
+				51 increment arrow button
+				52 decrement arrow button
+				53 increment page button
+				54 decrement page button
+	55 toolbar
+		56 menu button chevron.pulldown, ID: ellipsis.circle
+		57 button Description: 转换预设, Secondary Actions: Increment, Decrement, Delete, Cancel, Move previous, Remove from toolbar
+	58 close button
+	59 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	60 minimize button
+	61 text OpenCCman
+62 menu bar
+	63 OpenCCman
+	64 File
+	65 Edit
+	66 View
+	67 Window
+	68 Help
+
+The focused UI element is 0 standard window OpenCCman, Secondary Actions: Raise, ID: SwiftUI.WindowGroup<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUIRouter.Router<SwiftUI.ModifiedContent<OpenCCman.RootView, SwiftUI._AppearanceActionModifier>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<OpenCCman.WhatsNewCoordinator>>>, SwiftUI._EnvironmentKeyWritingModifier<Foundation.Locale>>, SwiftUI._PreferenceWritingModifier<SwiftUI.PreferredColorSchemeKey>>>-1-AppWindow-1

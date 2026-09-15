@@ -1,0 +1,86 @@
+Window: "OpenCCman", App: OpenCCman.
+0 standard window OpenCCman, Secondary Actions: Raise, ID: SwiftUI.WindowGroup<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUIRouter.Router<SwiftUI.ModifiedContent<OpenCCman.RootView, SwiftUI._AppearanceActionModifier>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<OpenCCman.WhatsNewCoordinator>>>, SwiftUI._EnvironmentKeyWritingModifier<Foundation.Locale>>, SwiftUI._PreferenceWritingModifier<SwiftUI.PreferredColorSchemeKey>>>-1-AppWindow-1
+	1 container
+		2 button Description: Conversion settings, ID: sidebar.left
+		3 container Editor layout
+			4 button (selected) Description: Side by side, ID: workspace-horizontal
+			5 button Description: Stacked, ID: workspace-vertical
+		6 button Convert
+		7 menu button Pane sizes
+		8 scroll area
+			9 text Conversion Preset
+			10 menu button Conversion Preset, Value: Traditional · OpenCC
+			11 text Target Language
+			12 container Description: Target Language, ID: conversion-segment-Target Language
+				13 button Simplified Chinese
+				14 button (selected) Traditional Chinese
+			15 text Variant
+			16 container Description: Variant, ID: conversion-segment-Variant
+				17 button (selected) OpenCC Standard
+				18 button Taiwan Standard
+				19 button HongKong Standard
+			20 text Region Idiom
+			21 container Description: Region Idiom, ID: conversion-segment-Region Idiom
+				22 button (selected) Not convert
+				23 button Taiwan Idiom
+		24 scroll area Secondary Actions: Scroll Up, Scroll Down
+			25 container
+				26 text Source
+				27 button Description: Paste Text, ID: doc.on.clipboard
+				28 button Import TXT
+				29 text Import, or drop here, one UTF-8 TXT file or plain text, up to 10 MiB.
+				30 scroll area Description: Source, Secondary Actions: Scroll Up, Scroll Down
+					31 text entry area Description: Source, Value: 中文 Reading position 中文 Reading position 中文 
+第 00802 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 
+第 00803 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 
+第 00804 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 
+第 00805 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 
+第 00806 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 
+					32 scroll bar (settable, float) 0.48
+						33 value indicator (settable, float) 0.48
+						34 increment arrow button
+						35 decrement arrow button
+						36 increment page button
+						37 decrement page button
+			38 unknown Description: Pane sizes, Details: 50%, Secondary Actions: Increment, Decrement
+			39 container
+				40 text Result
+				41 button (disabled) Description: Copy Result, ID: doc.on.doc
+				42 button (disabled) Description: Export TXT, ID: square.and.arrow.up
+				43 text Convert the source text to see a result here.
+				44 scroll area Result
+					45 text entry area Result
+			46 text iPerfman An iPerf3 tool
+			47 button Get
+			48 button Remove recommendations
+			49 scroll bar (settable, float) 0
+				50 value indicator (settable, float) 0
+				51 increment arrow button
+				52 decrement arrow button
+				53 increment page button
+				54 decrement page button
+	55 toolbar
+		56 menu button chevron.pulldown, ID: ellipsis.circle
+		57 button Description: Conversion Preset, Secondary Actions: Increment, Decrement, Delete, Cancel, Move previous, Remove from toolbar
+	58 close button
+	59 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	60 minimize button
+	61 text OpenCCman
+62 menu bar
+	63 OpenCCman
+	64 File
+	65 Edit
+	66 View
+	67 Window
+	68 Help
+
+Selected text: ```
+第 00804 段
+```
+
+Note: Pay special attention to the content selected by the user. If the user asks a question or refers to the content they are looking at on-screen, they might be referring to the selected content (but they might be referring to something else that's visible, too).
