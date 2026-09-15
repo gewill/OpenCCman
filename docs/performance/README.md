@@ -94,3 +94,5 @@ python3 scripts/benchmark-app.py --output /tmp/openccman-reflow --reuse-build --
 ## 文稿阶段调用栈
 
 [云端文稿阶段采样](document-stage-profiling.md)复用完整原生窗口文稿协议，区分调用栈诊断和无采样延迟基线。
+
+[Mac 编辑器尺寸修复候选](native-editor-sizing.md)记录原生视口实现、同机对照、实际前后界面及尚未完成的验收。

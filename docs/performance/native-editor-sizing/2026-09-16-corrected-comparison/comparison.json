@@ -1,0 +1,76 @@
+{
+  "valid_comparison": true,
+  "order": [
+    "baseline",
+    "candidate"
+  ],
+  "baseline_sha": "cb73fc528b3c9d53dfc840b8ae48e1cae7426fcb",
+  "candidate_sha": "b0addf7f7e4472fe788558b71a5637450e70b861",
+  "platform": "macOS-15.7.9-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "scope": "One sequential pair on the same runner. Stage times include UI/validation; not cold-start or pixel-presentation timings.",
+  "cases": {
+    "baseline": {
+      "stages": {
+        "1mib-a": {
+          "import_to_driver_ready_ms": 1621.7955419999998,
+          "conversion_to_verified_export_ms": 1847.8658329999998,
+          "native_conversion_ms": 39.937584
+        },
+        "1mib-b": {
+          "import_to_driver_ready_ms": 1487.732333,
+          "conversion_to_verified_export_ms": 1763.3081660000025,
+          "native_conversion_ms": 18.065167
+        },
+        "10mib-a": {
+          "import_to_driver_ready_ms": 17531.220583000002,
+          "conversion_to_verified_export_ms": 19614.774875000003,
+          "native_conversion_ms": 189.987625
+        },
+        "10mib-b": {
+          "import_to_driver_ready_ms": 17259.456124999997,
+          "conversion_to_verified_export_ms": 19406.857416999992,
+          "native_conversion_ms": 185.384417
+        }
+      },
+      "pid": 27154,
+      "sampled_peak_footprint_bytes": 430821376,
+      "kernel_peak_rss_bytes": 788086784,
+      "final_live_models": [],
+      "successful_exports": 5,
+      "raw_sha256": "8af58ea448d28a800fb841745b24cd97ab9484a548d608d9ec8bcba58e45b778"
+    },
+    "candidate": {
+      "stages": {
+        "1mib-a": {
+          "import_to_driver_ready_ms": 56.521999999999025,
+          "conversion_to_verified_export_ms": 115.5972499999989,
+          "native_conversion_ms": 19.286625
+        },
+        "1mib-b": {
+          "import_to_driver_ready_ms": 66.56999999999971,
+          "conversion_to_verified_export_ms": 117.72012499999983,
+          "native_conversion_ms": 19.171542
+        },
+        "10mib-a": {
+          "import_to_driver_ready_ms": 113.06620799998927,
+          "conversion_to_verified_export_ms": 387.0552080000052,
+          "native_conversion_ms": 175.675375
+        },
+        "10mib-b": {
+          "import_to_driver_ready_ms": 108.49525000000722,
+          "conversion_to_verified_export_ms": 394.1163339999912,
+          "native_conversion_ms": 176.100875
+        }
+      },
+      "pid": 39787,
+      "sampled_peak_footprint_bytes": 143003264,
+      "kernel_peak_rss_bytes": 430620672,
+      "final_live_models": [],
+      "successful_exports": 5,
+      "raw_sha256": "e641dd740a14b0fe12b21babad708bc71c80a93a4731cc7a6259b336c858d85f"
+    }
+  },
+  "temporary_checkouts_removed": true,
+  "total_wall_seconds": 1135.849569667
+}

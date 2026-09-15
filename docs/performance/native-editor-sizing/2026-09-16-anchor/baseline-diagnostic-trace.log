@@ -1,0 +1,16 @@
+capture char=426730 point=(0.0, 93376.0) rect=(0.0, 93375.0, 420.0, 17.0) pending=false restoring=false frame=(0.0, 0.0, 420.0, 187116.0) clip=(0.0, 93376.0, 420.0, 240.0)
+capture char=426730 point=(0.0, 93566.0) rect=(0.0, 93565.0, 420.0, 17.0) pending=false restoring=false frame=(0.0, 0.0, 420.0, 187350.0) clip=(0.0, 93566.0, 420.0, 240.0)
+capture char=426730 point=(0.0, 93575.0) rect=(0.0, 93565.0, 420.0, 17.0) pending=false restoring=false frame=(0.0, 0.0, 420.0, 187350.0) clip=(0.0, 93575.0, 420.0, 240.0)
+capture char=426132 point=(0.0, 93365.0) rect=(0.0, 93355.0, 420.0, 17.0) pending=false restoring=false frame=(0.0, 0.0, 420.0, 187350.0) clip=(0.0, 93575.0, 420.0, 240.0)
+capture char=0 point=(0.0, 0.0) rect=(0.0, 0.0, 10000000.0, 14.0) pending=false restoring=false frame=(0.0, 0.0, 0.0, 16.0) clip=(0.0, 0.0, 0.0, 0.0)
+capture char=0 point=(0.0, 0.0) rect=(0.0, 0.0, 400.0, 12.0) pending=false restoring=false frame=(0.0, 0.0, 400.0, 240.0) clip=(0.0, 0.0, 400.0, 240.0)
+capture char=0 point=(0.0, 0.0) rect=(0.0, 0.0, 420.0, 20.0) pending=false restoring=false frame=(0.0, 0.0, 420.0, 595056.0) clip=(0.0, 0.0, 420.0, 240.0)
+capture char=426132 point=(0.0, 93575.0) rect=(0.0, 93355.0, 420.0, 17.0) pending=false restoring=false frame=(0.0, 0.0, 420.0, 187350.0) clip=(0.0, 93575.0, 420.0, 240.0)
+test before {426132, 14} frame=(0.0, 0.0, 420.0, 187350.0) clip=(0.0, 93575.0, 420.0, 240.0)
+restore char=426132 offset=219.0
+capture char=427144 point=(0.0, 93303.0) rect=(0.0, 93296.0, 840.0, 20.0) pending=true restoring=false frame=(0.0, 0.0, 840.0, 186802.0) clip=(0.0, 93323.0, 840.0, 180.0)
+restore char=426132 offset=219.0
+capture char=427161 point=(0.0, 93323.0) rect=(0.0, 93316.0, 840.0, 17.0) pending=true restoring=false frame=(0.0, 0.0, 840.0, 186802.0) clip=(0.0, 93323.0, 840.0, 180.0)
+capture char=427161 point=(0.0, 93323.0) rect=(0.0, 93316.0, 840.0, 17.0) pending=false restoring=false frame=(0.0, 0.0, 840.0, 186802.0) clip=(0.0, 93323.0, 840.0, 180.0)
+{"after":[427161,140],"before":[426132,14],"editable":true,"hasWindow":false,"MiB":1,"os":"Version 27.0 (Build 26A428)","passed":false,"scenario":"production-middle-0"}
+main/TracedChecks.swift:148: Precondition failed: Production viewport reflow lost the top reading line

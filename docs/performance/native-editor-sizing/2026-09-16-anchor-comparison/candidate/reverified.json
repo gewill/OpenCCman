@@ -1,0 +1,52 @@
+{
+  "valid_protocol": true,
+  "mode": "existing-log",
+  "raw_sha256": "e1270455295b288912f753e21b3935ffaef368424bea6d051a33a353435dec14",
+  "saved_exports": [
+    {
+      "file": "actual-1mib-a.txt",
+      "bytes": 1048573,
+      "sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9",
+      "byte_equal": true,
+      "nul_count": 13980,
+      "crlf_count": 41940,
+      "has_bom": false
+    },
+    {
+      "file": "actual-1mib-b.txt",
+      "bytes": 1048573,
+      "sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9",
+      "byte_equal": true,
+      "nul_count": 13980,
+      "crlf_count": 41940,
+      "has_bom": false
+    },
+    {
+      "file": "actual-10mib-a.txt",
+      "bytes": 10485757,
+      "sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "byte_equal": true,
+      "nul_count": 139810,
+      "crlf_count": 419430,
+      "has_bom": false
+    },
+    {
+      "file": "actual-10mib-b.txt",
+      "bytes": 10485757,
+      "sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "byte_equal": true,
+      "nul_count": 139810,
+      "crlf_count": 419430,
+      "has_bom": false
+    },
+    {
+      "file": "actual-retained-active-10mib.txt",
+      "bytes": 10485757,
+      "sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "byte_equal": true,
+      "nul_count": 139810,
+      "crlf_count": 419430,
+      "has_bom": false
+    }
+  ]
+}
