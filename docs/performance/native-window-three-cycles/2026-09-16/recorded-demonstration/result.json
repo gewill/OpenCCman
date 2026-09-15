@@ -1,0 +1,1591 @@
+{
+  "valid_protocol": true,
+  "mode": "existing-log",
+  "raw_sha256": "fee4cf516014b052241a4addb7762e6ea464b03f282f137908ba4cd0cbfb8781",
+  "observations": {
+    "cycles_anchor_ready": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 1,
+      "cycle": 1,
+      "elapsed_ms": 10201.153292,
+      "event": "cycles_anchor_ready",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 48759864,
+      "pid": 41309,
+      "process_peak_rss_bytes": 107888640,
+      "quota": {},
+      "rss_bytes": 105742336,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "cycle_1_ready": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 3,
+      "cycle": 1,
+      "elapsed_ms": 10538.990542,
+      "event": "cycle_1_ready",
+      "live_model_numbers": [
+        1,
+        2,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 69190712,
+      "pid": 41309,
+      "process_peak_rss_bytes": 128630784,
+      "quota": {},
+      "rss_bytes": 128630784,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 3
+    },
+    "cycle_1_before_close": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 3,
+      "cycle": 1,
+      "elapsed_ms": 20601.494625,
+      "event": "cycle_1_before_close",
+      "live_model_numbers": [
+        1,
+        2,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 73761896,
+      "pid": 41309,
+      "process_peak_rss_bytes": 136232960,
+      "quota": {},
+      "rss_bytes": 127483904,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 3
+    },
+    "cycle_1_closed": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 3,
+      "cycle": 1,
+      "elapsed_ms": 20901.46425,
+      "event": "cycle_1_closed",
+      "live_model_numbers": [
+        1,
+        2,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 74548328,
+      "pid": 41309,
+      "process_peak_rss_bytes": 136232960,
+      "quota": {},
+      "rss_bytes": 128286720,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "cycle_1_plus_5": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 3,
+      "cycle": 1,
+      "elapsed_ms": 26001.690792,
+      "event": "cycle_1_plus_5",
+      "live_model_numbers": [
+        1,
+        2,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 63800424,
+      "pid": 41309,
+      "process_peak_rss_bytes": 136232960,
+      "quota": {},
+      "rss_bytes": 128630784,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "cycle_1_plus_20": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 3,
+      "cycle": 1,
+      "elapsed_ms": 40901.988792,
+      "event": "cycle_1_plus_20",
+      "live_model_numbers": [
+        1,
+        2,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 70354024,
+      "pid": 41309,
+      "process_peak_rss_bytes": 141934592,
+      "quota": {},
+      "rss_bytes": 135168000,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "cycle_2_ready": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 5,
+      "cycle": 2,
+      "elapsed_ms": 41223.938292,
+      "event": "cycle_2_ready",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 91636840,
+      "pid": 41309,
+      "process_peak_rss_bytes": 156483584,
+      "quota": {},
+      "rss_bytes": 156483584,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 3
+    },
+    "cycle_2_before_close": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 5,
+      "cycle": 2,
+      "elapsed_ms": 51301.806458,
+      "event": "cycle_2_before_close",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 93357160,
+      "pid": 41309,
+      "process_peak_rss_bytes": 156876800,
+      "quota": {},
+      "rss_bytes": 152780800,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 3
+    },
+    "cycle_2_closed": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 5,
+      "cycle": 2,
+      "elapsed_ms": 51600.561708,
+      "event": "cycle_2_closed",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 91882600,
+      "pid": 41309,
+      "process_peak_rss_bytes": 156876800,
+      "quota": {},
+      "rss_bytes": 153239552,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "cycle_2_plus_5": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 5,
+      "cycle": 2,
+      "elapsed_ms": 56601.70425,
+      "event": "cycle_2_plus_5",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 82723944,
+      "pid": 41309,
+      "process_peak_rss_bytes": 156876800,
+      "quota": {},
+      "rss_bytes": 153190400,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "cycle_2_plus_20": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 5,
+      "cycle": 2,
+      "elapsed_ms": 71601.871042,
+      "event": "cycle_2_plus_20",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 82609256,
+      "pid": 41309,
+      "process_peak_rss_bytes": 160661504,
+      "quota": {},
+      "rss_bytes": 153026560,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "cycle_3_ready": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 7,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 7,
+      "cycle": 3,
+      "elapsed_ms": 71924.671333,
+      "event": "cycle_3_ready",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 6
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 102581352,
+      "pid": 41309,
+      "process_peak_rss_bytes": 173113344,
+      "quota": {},
+      "rss_bytes": 173096960,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 3
+    },
+    "cycle_3_before_close": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 7,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 7,
+      "cycle": 3,
+      "elapsed_ms": 82001.854375,
+      "event": "cycle_3_before_close",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 6
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 103711848,
+      "pid": 41309,
+      "process_peak_rss_bytes": 173113344,
+      "quota": {},
+      "rss_bytes": 168706048,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 3
+    },
+    "cycle_3_closed": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 7,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 7,
+      "cycle": 3,
+      "elapsed_ms": 82301.435917,
+      "event": "cycle_3_closed",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 6
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 104137832,
+      "pid": 41309,
+      "process_peak_rss_bytes": 173113344,
+      "quota": {},
+      "rss_bytes": 169099264,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "cycle_3_plus_5": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 7,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 7,
+      "cycle": 3,
+      "elapsed_ms": 87401.195958,
+      "event": "cycle_3_plus_5",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 6
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 92914792,
+      "pid": 41309,
+      "process_peak_rss_bytes": 173113344,
+      "quota": {},
+      "rss_bytes": 169000960,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "cycle_3_plus_20": {
+      "anchor_fingerprint": "e5559a611892463da535ff1e78ce012d0e06a9671aef0622d3ec83847cd1620e",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 7,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 7,
+      "cycle": 3,
+      "elapsed_ms": 102401.108917,
+      "event": "cycle_3_plus_20",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 6
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 92865640,
+      "pid": 41309,
+      "process_peak_rss_bytes": 173113344,
+      "quota": {},
+      "rss_bytes": 168869888,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "cycles_final_closed": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 7,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 7,
+      "cycle": 3,
+      "elapsed_ms": 102501.26025,
+      "event": "cycles_final_closed",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 6
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 93308008,
+      "pid": 41309,
+      "process_peak_rss_bytes": 173113344,
+      "quota": {},
+      "rss_bytes": 169295872,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "cycles_final_plus_5": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 7,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 7,
+      "cycle": 3,
+      "elapsed_ms": 107601.376667,
+      "event": "cycles_final_plus_5",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 6
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 88638568,
+      "pid": 41309,
+      "process_peak_rss_bytes": 173113344,
+      "quota": {},
+      "rss_bytes": 169246720,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "cycles_final_plus_20": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 7,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 7,
+      "cycle": 3,
+      "elapsed_ms": 122601.329875,
+      "event": "cycles_final_plus_20",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 6
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 88638568,
+      "pid": 41309,
+      "process_peak_rss_bytes": 173113344,
+      "quota": {},
+      "rss_bytes": 169230336,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "cycles_finished": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        },
+        {
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 0
+        },
+        {
+          "number": 7,
+          "result_bytes": 0,
+          "source_bytes": 0
+        }
+      ],
+      "created_total": 7,
+      "cycle": 3,
+      "elapsed_ms": 122602.459833,
+      "event": "cycles_finished",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 6
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 88638568,
+      "pid": 41309,
+      "process_peak_rss_bytes": 173113344,
+      "quota": {},
+      "rss_bytes": 169230336,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    }
+  }
+}
