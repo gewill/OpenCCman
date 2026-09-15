@@ -2,6 +2,8 @@
 
 应用包 `eab5003`，Xcode 26.3 Release universal，macOS 27.0（26A428），900×450 pt 的独立已开窗副本。显示语言 English、默认字号、浅色；转换配置为默认 Traditional / OpenCC / Not convert（s2t）。同一个提供者进程先完成 1 KiB 冒烟，然后按表格顺序逐例新建 CLI 调用方，每例连续 5 次调用；样本之间未人为插入等待，属于连续请求场景，不自动称为用户正常操作节奏。
 
+[硬件与系统快照](environment.json)：Apple M4 Pro、14 个逻辑 CPU、48 GiB 内存；快照在测量后读取，未采集测量期间热状态或外部并行负载。
+
 ## 来源与正确性
 
 - [提供者来源](provider-manifest.json)：artifact、签名前后实际二进制 hash、唯一服务菜单／端口变更及最低系统 11.0；不冒充正式分发签名。
