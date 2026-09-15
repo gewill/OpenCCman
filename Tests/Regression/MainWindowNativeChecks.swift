@@ -51,9 +51,11 @@ struct MainWindowNativeChecks {
     reader.reportWindow()
     precondition(reports == 1, "Native window attachment must report once without an OS allowlist")
     // A dismissed launch sheet can restore a provisional origin after initial sizing.
-    let displaced = NSRect(x: screen.visibleFrame.maxX - 100, y: screen.visibleFrame.minY - 100,
+    let displaced = NSRect(x: screen.visibleFrame.midX - window.frame.width / 2,
+                           y: screen.visibleFrame.minY - 100,
                            width: window.frame.width, height: window.frame.height)
     window.setFrame(displaced, display: false)
+    precondition(window.frame == displaced, "Sheet regression must start with an actually displaced frame")
     NotificationCenter.default.post(name: NSWindow.didEndSheetNotification, object: window)
     RunLoop.main.run(until: Date().addingTimeInterval(0.03))
     let fitted = MainWindowGeometry.constrained(displaced,
