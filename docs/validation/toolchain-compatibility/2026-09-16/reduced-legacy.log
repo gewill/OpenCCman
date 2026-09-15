@@ -1,0 +1,29 @@
+reduced-legacy.swift:8:12: error: invalid redeclaration of synthesized memberwise 'init(stringRepresentation:)'
+ 6 | 
+ 7 | extension ProbeColor {
+ 8 |     public init(stringRepresentation: String) throws {
+   |            `- error: invalid redeclaration of synthesized memberwise 'init(stringRepresentation:)'
+ 9 |         self.init(stringRepresentation: stringRepresentation, underlyingStorage: nil)
+10 |     }
+
+reduced-legacy.swift:21:9: error: ambiguous use of 'init'
+ 1 | // Reduced reproducer of RevenueCat #6949; no RevenueCat or Apple framework dependency.
+ 2 | public struct ProbeColor {
+   |               |- note: found this candidate 
+   |               `- note: found this candidate 
+ 3 |     public var stringRepresentation: String
+ 4 |     fileprivate var storage: (any Sendable)?
+   :
+ 6 | 
+ 7 | extension ProbeColor {
+ 8 |     public init(stringRepresentation: String) throws {
+   |            `- note: found this candidate 
+ 9 |         self.init(stringRepresentation: stringRepresentation, underlyingStorage: nil)
+10 |     }
+   :
+19 | 
+20 | func constructProbe() throws -> ProbeColor {
+21 |     try ProbeColor(stringRepresentation: "#ffffff")
+   |         `- error: ambiguous use of 'init'
+22 | }
+23 | 
