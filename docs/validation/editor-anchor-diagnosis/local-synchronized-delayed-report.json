@@ -1,0 +1,303 @@
+{
+  "protocol": 1,
+  "sourceSHA": "0b68743ac3b98206611870b09e486de5f97d9e42",
+  "sourceStatus": "M OpenCCman/View/WorkspaceScrollKeeper.swift\n M Tests/Regression/EditorScrollChecks.swift\n M scripts/check-editor-scroll.sh\n M scripts/diagnose-editor-anchor.py",
+  "sourceHashes": {
+    "OpenCCman/View/WorkspaceScrollKeeper.swift": "69759ea83718477a46c2231fa25f276b92cc9178f9a0530af2043805206a47df",
+    "Tests/Regression/EditorScrollChecks.swift": "f030506b45be4781751337d73f0e48dbbbf6a180eaa39b8dbd7e397a552b2d8e"
+  },
+  "generatedHashes": {
+    "BaselineKeeper.swift": "566e9e2413a6c5ecc3cba73e6959bb65d809c12d3108e3faf4d4d5ea3e6d0ad7",
+    "TracedKeeper.swift": "93db6fff26b6475a7cfad8bfb32dfca2e07762c5b6290aea9a839e2b81644030",
+    "PrefixChecks.swift": "d3b895bf8a3628b6f77c7910124e0a042c37609d06de803bdb5e3658b78ffd15"
+  },
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0\nBuildVersion:\t\t26A428",
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "compiler": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "repetitionsPerVariant": 3,
+  "firstPassDelayMilliseconds": 120,
+  "samples": [
+    {
+      "variant": "baseline",
+      "iteration": 1,
+      "exit": 0,
+      "log": "baseline-01.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 27.0 (Build 26A428)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1748}, {360, 300}}",
+          "afterLine": [
+            6640,
+            61
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {360, 3652}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 27.0 (Build 26A428)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 1,
+      "exit": 0,
+      "log": "traced-01.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 27.0 (Build 26A428)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1748}, {360, 300}}",
+          "afterLine": [
+            6640,
+            61
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {360, 3652}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 27.0 (Build 26A428)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 2,
+      "exit": 0,
+      "log": "baseline-02.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 27.0 (Build 26A428)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1748}, {360, 300}}",
+          "afterLine": [
+            6640,
+            61
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {360, 3652}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 27.0 (Build 26A428)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 2,
+      "exit": 0,
+      "log": "traced-02.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 27.0 (Build 26A428)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1748}, {360, 300}}",
+          "afterLine": [
+            6640,
+            61
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {360, 3652}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 27.0 (Build 26A428)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "baseline",
+      "iteration": 3,
+      "exit": 0,
+      "log": "baseline-03.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 27.0 (Build 26A428)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1748}, {360, 300}}",
+          "afterLine": [
+            6640,
+            61
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {360, 3652}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 27.0 (Build 26A428)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    },
+    {
+      "variant": "traced",
+      "iteration": 3,
+      "exit": 0,
+      "log": "traced-03.log",
+      "readingAnchors": [
+        {
+          "afterClipBounds": "{{0, 1294}, {850, 180}}",
+          "afterLine": [
+            6640,
+            153
+          ],
+          "beforeClipBounds": "{{0, 1990}, {400, 240}}",
+          "beforeLine": [
+            6705,
+            77
+          ],
+          "editorFrame": "{{0, 0}, {850, 2878}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 27.0 (Build 26A428)",
+          "passed": true,
+          "scenario": "initial-width",
+          "selection": "{7115, 12}"
+        },
+        {
+          "afterClipBounds": "{{0, 1748}, {360, 300}}",
+          "afterLine": [
+            6640,
+            61
+          ],
+          "beforeClipBounds": "{{0, 1294}, {850, 180}}",
+          "beforeLine": [
+            6640,
+            153
+          ],
+          "editorFrame": "{{0, 0}, {360, 3652}}",
+          "event": "reading-anchor",
+          "hasWindow": false,
+          "os": "Version 27.0 (Build 26A428)",
+          "passed": true,
+          "scenario": "initial-narrow",
+          "selection": "{7115, 12}"
+        }
+      ]
+    }
+  ],
+  "scope": "Current first width/narrow assertions and synchronization; default TextKit font unchanged; not full app UI acceptance",
+  "limitation": "Synchronous tracing can affect timing. Failed samples remain failures; no retry-until-pass.",
+  "baselineCompileExit": 0,
+  "tracedCompileExit": 0,
+  "productionSourcesUnchanged": true,
+  "failedProcesses": 0
+}

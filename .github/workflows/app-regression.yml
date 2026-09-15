@@ -9,6 +9,10 @@ on:
     branches: [main, develop, 'release/**', 'hotfix/**']
   workflow_dispatch:
     inputs:
+      diagnose_editor_anchor:
+        description: Run a fixed macOS 15 editor anchor timing probe
+        type: boolean
+        default: false
       build_ios_validation:
         description: Build an unsigned arm64 iOS Simulator app for local UI validation
         type: boolean
@@ -29,7 +33,7 @@ concurrency:
 jobs:
   regression:
     name: App Regression
-    if: github.event_name != 'workflow_dispatch' || !inputs.build_window_lifecycle
+    if: github.event_name != 'workflow_dispatch' || (!inputs.build_window_lifecycle && !inputs.diagnose_editor_anchor)
     runs-on: macos-15
     timeout-minutes: 20
     steps:
@@ -163,3 +167,27 @@ jobs:
           name: native-window-lifecycle-app
           path: ${{ runner.temp }}/lifecycle-artifact/
           retention-days: 7
+
+  editor-anchor-diagnostic:
+    name: Bounded macOS 15 anchor trace
+    if: github.event_name == 'workflow_dispatch' && inputs.diagnose_editor_anchor
+    runs-on: macos-15
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Run fixed original and traced samples
+        run: python3 scripts/diagnose-editor-anchor.py --output "${{ runner.temp }}/editor-anchor-diagnostic" --repetitions 20
+      - name: Check controlled slow first restoration
+        run: python3 scripts/diagnose-editor-anchor.py --output "${{ runner.temp }}/editor-anchor-slow-pass" --repetitions 3 --first-pass-delay-ms 120
+      - name: Preserve all samples including failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: editor-anchor-diagnostic
+          path: |
+            ${{ runner.temp }}/editor-anchor-diagnostic
+            ${{ runner.temp }}/editor-anchor-slow-pass
+          retention-days: 7
+          if-no-files-found: error
