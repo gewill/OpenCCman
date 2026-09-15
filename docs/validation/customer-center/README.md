@@ -1,5 +1,7 @@
 # Customer Center / Pro access validation — 2026-09-14
 
+Update: [2026-09-15 Mac three-language/light-dark and independent-window validation](2026-09-15/README.md) adds six real screenshots and navigation video. The original results and remaining mobile/transaction gates below retain their historical scope.
+
 Tracking: [#71](https://github.com/gewill/OpenCCman/issues/71), local StoreKit [#70](https://github.com/gewill/OpenCCman/issues/70), server-side purchase acceptance [#14](https://github.com/gewill/OpenCCman/issues/14).
 
 ## Implementation and compatibility

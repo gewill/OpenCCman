@@ -1,0 +1,130 @@
+{
+  "github_run": 34971934515,
+  "pr_head": "406d887974644260a9f40b59e83edad1128b56f4",
+  "bundle": "org.gewill.OpenCCman.CustomerCenterVisualAudit",
+  "archive_sha256": "a37406d68363332bbd4b1958ef6a891549dafab7a9973e6be1e9954a06b09a89",
+  "original_info": {
+    "CFBundleIdentifier": "org.gewill.OpenCCman.PRValidation",
+    "CFBundleShortVersionString": "1.3",
+    "DTXcode": "2630",
+    "DTSDKName": "macosx26.2"
+  },
+  "isolation": [
+    "Changed bundle ID",
+    "Removed NSServices declaration",
+    "Ad-hoc signing",
+    "Disabled both global shortcuts in isolated defaults using locked KeyboardShortcuts 2.4.0 false sentinel",
+    "Hidden menu bar icon",
+    "English/light/no Pro fixture",
+    "No purchase or restore action planned"
+  ],
+  "original_preferences_export_succeeded": true,
+  "screenshots": [
+    {
+      "language": "en",
+      "theme": "light",
+      "file": "mac-en-light.png"
+    },
+    {
+      "language": "en",
+      "theme": "dark",
+      "file": "mac-en-dark.png"
+    },
+    {
+      "language": "zh_Hans",
+      "theme": "light",
+      "file": "mac-zh-hans-light.png"
+    },
+    {
+      "language": "zh_Hans",
+      "theme": "dark",
+      "file": "mac-zh-hans-dark.png"
+    },
+    {
+      "language": "zh_Hant",
+      "theme": "light",
+      "file": "mac-zh-hant-light.png"
+    },
+    {
+      "language": "zh_Hant",
+      "theme": "dark",
+      "file": "mac-zh-hant-dark.png"
+    }
+  ],
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0\nBuildVersion:\t\t26A428\n",
+  "window_pt": {
+    "width": 900,
+    "height": 450
+  },
+  "video": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "codec_type": "video",
+        "width": 1920,
+        "height": 1080
+      }
+    ],
+    "format": {
+      "duration": "287.991667",
+      "size": "1574805"
+    }
+  },
+  "verified": [
+    "Six language/appearance screenshots inspected",
+    "Help and back route reachable; no external message sent",
+    "Refresh and leave; no purchase or restore button activation",
+    "First synthetic draft preserved after all language and appearance navigation",
+    "Second independent draft preserved on Customer Center round trip; first unchanged after second window closed",
+    "Quota preference absent after navigation; no conversion performed",
+    "Owned process exited, owned preferences restored, owned registration removed",
+    "iPad returned to original Shutdown state; phone acceptance device untouched",
+    "VoiceOver false before and after"
+  ],
+  "unverified": [
+    "Real lifetime purchase or restore",
+    "iOS official Customer Center Chinese/dark/accessibility UI",
+    "macOS minimum version",
+    "Actual conversion in flight and popup interaction",
+    "Network error and retry",
+    "Maximum accessibility sizes or VoiceOver reading order"
+  ],
+  "local_app_relative": "customer-center-visual/mac-runtime/OpenCCman.app",
+  "media_comment": "https://github.com/gewill/OpenCCman/issues/71#issuecomment-5680783747",
+  "media_files": {
+    "mac-zh-hant-dark.png": {
+      "sha256": "45f3fb3bf93c5c332594ed1470fc0de0480980684c32874a2ed15a35c74c218e",
+      "bytes": 228272
+    },
+    "mac-en-light.png": {
+      "sha256": "d2afd69656f757933f202d7688a85be3b3950f6b1aeb4b4ab17f08564ad83daf",
+      "bytes": 205138
+    },
+    "mac-zh-hans-dark.png": {
+      "sha256": "fa68c305e23bf0b9afdbe1cc8ff1b0ee9fd7aa42c9f2549c244a1dcc1e646580",
+      "bytes": 224335
+    },
+    "mac-draft-preserved.png": {
+      "sha256": "6a225c14777b09450fbfb81f5019cb92ad45499b017da436b949437877950bf7",
+      "bytes": 330759
+    },
+    "mac-en-dark.png": {
+      "sha256": "a7c19c56e7da091e5f68d1f64943b20c874af4c5c89f2a150f90913ea6409abb",
+      "bytes": 224255
+    },
+    "mac-zh-hant-light.png": {
+      "sha256": "bab744b5ab4147660df629e0515f39319cf3318910ede2990ed4839af34955c4",
+      "bytes": 210869
+    },
+    "mac-zh-hans-light.png": {
+      "sha256": "719b516baaf5305654e23e20f25e1568fffec7f31be55ac9c47194338b94a7fc",
+      "bytes": 205381
+    },
+    "mac-customer-center-locales.mp4": {
+      "sha256": "785b33348515bda82202efadc32bad5f9192d303d27a0ea0630eaf685d6eb758",
+      "bytes": 1574805
+    }
+  }
+}
