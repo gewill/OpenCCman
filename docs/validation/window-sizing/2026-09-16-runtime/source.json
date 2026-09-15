@@ -1,0 +1,45 @@
+{
+  "recordedDate": "2026-09-16",
+  "runtimeOS": {
+    "version": "27.0",
+    "build": "26A428",
+    "architecture": "arm64"
+  },
+  "compiler": "CI Xcode 26.3",
+  "configuration": "Debug",
+  "font": "default; no global font preference changed",
+  "baseline": {
+    "sourceSHA": "ec214df4da50bcbdc9c3b741c2ee0bb7b9bb5db1",
+    "productEquivalentTo": "51bcedaec5a64ae840fcf36f39bb217b65b91304",
+    "equivalencePaths": [
+      "OpenCCman",
+      "OpenCCman.xcodeproj"
+    ],
+    "equivalenceCheck": "git diff --exit-code <sourceSHA> <productEquivalentTo> -- OpenCCman OpenCCman.xcodeproj",
+    "equivalenceExitCode": 0,
+    "runID": 35034862240,
+    "archiveSHA256": "c296ed979634efbcce2a66afd3ef0ca9ce2adf6439492c593890a2d6f7f14a60",
+    "isolatedBundleID": "org.gewill.OpenCCman.WindowMatrixBefore20260916",
+    "runtimeExecutableSHA256": "892e7b4c2421ceff4d8353e109e42f6e4ccd662989f83686c95a7f08699efca9"
+  },
+  "candidate": {
+    "sourceSHA": "4372fa4237777c704ea6529e68c1b34af1d187ec",
+    "runID": 35035270954,
+    "archiveSHA256": "67dea8800aff4fdb778447b5ef2f5af5575106664e211e642c92a55181384159",
+    "isolatedBundleID": "org.gewill.OpenCCman.WindowMatrixAfter20260916",
+    "runtimeExecutableSHA256": "20a5d6cd05d02c6bcaba9b1efdd4ec5bf4e2e3a6926c9369a1ae9d8853609e2d"
+  },
+  "artifactModifications": [
+    "Isolated bundle identifier and display name",
+    "Removed NSServices to avoid replacing production system services",
+    "Ad-hoc signed and verified; signature bytes differ. Mach-O payload equivalence, including the Debug dylib, verified separately."
+  ],
+  "captureMethod": "CUA native application screenshots. JPEG bytes preserved exactly; upload extensions corrected from .png to .jpg. Some captures are downsampled, so capture pixels are not treated as native window points.",
+  "privateEvidenceExcluded": [
+    "Raw preference plists",
+    "System save-panel directory listings",
+    "Full process sample"
+  ],
+  "notReleaseAcceptance": true,
+  "payloadComparison": "payload-comparison.json"
+}
