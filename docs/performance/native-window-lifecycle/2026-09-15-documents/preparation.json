@@ -1,0 +1,33 @@
+{
+  "source_sha": "aec0368fac73646fb3168204c0b150881bd7e55d",
+  "bundle": "org.gewill.OpenCCman.NativeWindowLifecycleAudit",
+  "prior_cleanup_introduced_keys_removed": 6,
+  "voiceover_before": false,
+  "fixture_source": "汉语 汉字 简体 转换 测试。\r\nEmoji 👩🏽‍💻 é \u0000 KEEP\r\n\r\n",
+  "fixture_expected": "漢語 漢字 簡體 轉換 測試。\r\nEmoji 👩🏽‍💻 é \u0000 KEEP\r\n\r\n",
+  "oracle": "Fixed explicit Simplified-to-OpenCC-Traditional character mapping; preserves ASCII, emoji, combining mark, NUL and CRLF; removes input BOM on export",
+  "fixtures": [
+    {
+      "mib": 1,
+      "input": "input-1mib.txt",
+      "expected": "expected-1mib.txt",
+      "input_bytes": 1048576,
+      "expected_bytes": 1048573,
+      "input_sha256": "bf4f70c8ba22089a8c91ca19457683733010546e0b7f61b3d8ff527a7305e36c",
+      "expected_sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9",
+      "unit_repeats": 13980,
+      "ascii_padding_bytes": 73
+    },
+    {
+      "mib": 10,
+      "input": "input-10mib.txt",
+      "expected": "expected-10mib.txt",
+      "input_bytes": 10485760,
+      "expected_bytes": 10485757,
+      "input_sha256": "dc96005e53b8766191cc192595d68f8e20f5c82f739d636a4cbfe89bb8b604fe",
+      "expected_sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "unit_repeats": 139810,
+      "ascii_padding_bytes": 7
+    }
+  ]
+}

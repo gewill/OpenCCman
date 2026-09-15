@@ -1,0 +1,23 @@
+{
+  "sourceSHA": "aec0368fac73646fb3168204c0b150881bd7e55d",
+  "runURL": "https://github.com/gewill/OpenCCman/actions/runs/34964935263",
+  "configuration": "Release",
+  "xcode": "Xcode 26.3\nBuild version 17C529",
+  "bundleIdentifier": "org.gewill.OpenCCman.NativeWindowLifecycleAudit",
+  "minimumMacOS": "11.0",
+  "servicesAbsent": true,
+  "lockedDependenciesByteIdentical": true,
+  "archiveSHA256": "c9e90f27988501fe52809a220a407764303086f6b05f7b96b5921bda425b2855",
+  "harnessSHA256": "2cdb02ce7eb4b5ec61ff3d648b8d31af52c817ef0a849e2162779283d0be82b8",
+  "localTypecheck": {
+    "result": "passed",
+    "includes": [
+      "Tests/Benchmarks/NativeWindowLifecycleAudit.swift",
+      "ModelInterface.swift (minimal HomeViewModel property interface)",
+      "OpenCCman/Extensions/BundleExtensions.swift"
+    ],
+    "initialProbeFailure": "The initial narrow fixture omitted the real Bundle.appVersion extension; retained locally as harness-typecheck.log. No application source change was needed."
+  },
+  "runtime": "Not launched; native window lifecycle and memory results remain pending",
+  "releaseBoundary": "Unsigned isolated diagnostic, not signed Xcode Cloud acceptance"
+}

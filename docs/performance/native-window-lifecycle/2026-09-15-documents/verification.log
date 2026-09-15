@@ -1,0 +1,2 @@
+Initial archive check assumed a common JSON key for the two independently recorded export schemas and raised KeyError; no data changed. Recheck accepts the recorded keys explicitly and re-reads all four actual exports.
+PASS: regenerated fixture hashes, four actual full-byte exports, raw checksum/1248 rows, all memory API statuses, fixed sample selection, no deinit event, quota and cleanup metadata.

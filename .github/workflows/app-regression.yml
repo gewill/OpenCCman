@@ -18,6 +18,11 @@ on:
         type: boolean
         default: false
 
+      build_window_lifecycle:
+        description: Build an isolated Release native window lifecycle diagnostic app
+        type: boolean
+        default: false
+
 permissions:
   contents: read
 
@@ -28,7 +33,7 @@ concurrency:
 jobs:
   regression:
     name: App Regression
-    if: github.event_name != 'workflow_dispatch' || !inputs.diagnose_editor_anchor
+    if: github.event_name != 'workflow_dispatch' || (!inputs.build_window_lifecycle && !inputs.diagnose_editor_anchor)
     runs-on: macos-15
     timeout-minutes: 20
     steps:
@@ -125,6 +130,44 @@ jobs:
           path: |
             ${{ runner.temp }}/OpenCCman-ios-validation.zip
             ${{ runner.temp }}/source-sha.txt
+          retention-days: 7
+
+  window-lifecycle-validation:
+    name: Build native window lifecycle diagnostic app
+    if: github.event_name == 'workflow_dispatch' && inputs.build_window_lifecycle
+    runs-on: macos-15
+    timeout-minutes: 20
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Prepare isolated diagnostic source and build Release app
+        run: |
+          python3 scripts/prepare-window-lifecycle.py --output "${{ runner.temp }}/native-window-lifecycle"
+          mkdir -p "${{ runner.temp }}/lifecycle-artifact"
+          xcodebuild -version > "${{ runner.temp }}/lifecycle-artifact/xcode-version.txt"
+          git rev-parse HEAD > "${{ runner.temp }}/lifecycle-artifact/source-sha.txt"
+          cp "${{ runner.temp }}/native-window-lifecycle/preparation.json" "${{ runner.temp }}/lifecycle-artifact/"
+          cp OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved "${{ runner.temp }}/lifecycle-artifact/"
+          set -o pipefail
+          xcodebuild -project "${{ runner.temp }}/native-window-lifecycle/source/OpenCCman.xcodeproj" \
+            -scheme OpenCCman -configuration Release -destination 'platform=macOS' \
+            -derivedDataPath "${{ runner.temp }}/lifecycle-derived" \
+            -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
+            CODE_SIGNING_ALLOWED=NO ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
+            PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.NativeWindowLifecycleAudit build \
+            2>&1 | tee "${{ runner.temp }}/lifecycle-artifact/build.log"
+          cmp OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved \
+            "${{ runner.temp }}/native-window-lifecycle/source/OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
+          ditto -c -k --keepParent "${{ runner.temp }}/lifecycle-derived/Build/Products/Release/OpenCCman.app" \
+            "${{ runner.temp }}/lifecycle-artifact/OpenCCman-lifecycle.zip"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: native-window-lifecycle-app
+          path: ${{ runner.temp }}/lifecycle-artifact/
           retention-days: 7
 
   editor-anchor-diagnostic:
