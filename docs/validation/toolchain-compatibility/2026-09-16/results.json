@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "createdAtUTC": "2026-09-15T23:09:38.368960+00:00",
+  "createdAtUTC": "2026-09-15T23:14:20.869237+00:00",
   "scope": "isolated macOS source typechecking, not whole-SDK or application validation",
   "developerDir": null,
   "cases": [
@@ -10,6 +10,7 @@
       "exitCode": 1,
       "timedOut": false,
       "initializerCollision": true,
+      "unexpectedErrors": [],
       "expectationMatched": true,
       "command": [
         "xcrun",
@@ -34,6 +35,7 @@
       "exitCode": 0,
       "timedOut": false,
       "initializerCollision": false,
+      "unexpectedErrors": [],
       "expectationMatched": true,
       "command": [
         "xcrun",
@@ -58,6 +60,7 @@
       "exitCode": 1,
       "timedOut": false,
       "initializerCollision": true,
+      "unexpectedErrors": [],
       "expectationMatched": true,
       "command": [
         "xcrun",
@@ -82,6 +85,7 @@
       "exitCode": 0,
       "timedOut": false,
       "initializerCollision": false,
+      "unexpectedErrors": [],
       "expectationMatched": true,
       "command": [
         "xcrun",

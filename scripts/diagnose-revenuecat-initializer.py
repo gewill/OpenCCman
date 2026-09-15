@@ -9,6 +9,7 @@ import datetime
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import tempfile
@@ -76,9 +77,18 @@ def main():
                         log += part.decode(errors='replace') if isinstance(part, bytes) else part
             (output / f'{label}.log').write_text(log)
             signature = "invalid redeclaration of synthesized memberwise 'init(stringRepresentation:)'" in log
-            matched = not timed_out and (code == 0 if expected == 'pass' else code != 0 and signature)
+            errors = re.findall(r': error: (.+)', log)
+            known_errors = {
+                "invalid redeclaration of synthesized memberwise 'init(stringRepresentation:)'",
+                "ambiguous use of 'init'",
+                "ambiguous use of 'init(stringRepresentation:)'",
+            }
+            unexpected_errors = [message for message in errors if message not in known_errors]
+            matched = not timed_out and (code == 0 if expected == 'pass' else
+                                         code is not None and code > 0 and signature and not unexpected_errors)
             report['cases'].append({'name': label, 'expected': expected, 'exitCode': code,
                                     'timedOut': timed_out, 'initializerCollision': signature,
+                                    'unexpectedErrors': unexpected_errors,
                                     'expectationMatched': matched,
                                     'command': ['<temporary-module-cache>' if arg == str(Path(temp) / 'module-cache') else arg for arg in command]})
     report['expectationsMatched'] = all(case['expectationMatched'] for case in report['cases'])
