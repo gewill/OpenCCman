@@ -1,0 +1,6 @@
+Run 34952079607; head 6153c7b; App Regression SUCCESS. Optional iOS and Release Services jobs skipped.
+App Regression	Check validation scripts propagate failures	2026-09-15T09:21:46.6218720Z Ran 9 tests in 5.167s
+App Regression	Check project and source syntax	2026-09-15T09:21:50.9182880Z PASS: parsed 58 Swift sources and 3 localization files
+App Regression	Check complete Mac control bounds	2026-09-15T09:22:52.6071500Z PASS: upstream 30→44 reproduction; Mac icon 28, text 28, primary 32, segment 28, switch 28 and multiline growth
+App Regression	Check native editor scroll anchors	2026-09-15T09:23:03.5300740Z PASS: on-demand document end, native text reflow, selection, rapid resize, new-document reset and marked range preservation
+App Regression	Build macOS validation app	2026-09-15T09:28:29.3965930Z ** BUILD SUCCEEDED **

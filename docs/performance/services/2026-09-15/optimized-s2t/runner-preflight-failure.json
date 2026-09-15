@@ -1,0 +1,6 @@
+{
+  "stage": "before output directory and service calls",
+  "reason": "historical PID check required an argument after the exact executable path; the new app was launched without arguments",
+  "resolution": "accept exact executable path or the same path followed by arguments",
+  "measurementAttempted": false
+}

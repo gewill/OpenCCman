@@ -1,0 +1,27 @@
+{
+  "implementation": "Objective-C NSString ** error; explicit NSRegisterServicesProvider",
+  "binarySHA256": "b8fdfb89b84dfaa733039f391f88af0412c8e08e0584736c1bb58954d949af73",
+  "plist": {
+    "CFBundleIdentifier": "org.gewill.OpenCCman.ServicesErrorControl",
+    "CFBundleName": "OpenCCman Failure Control",
+    "CFBundleExecutable": "FailureControl",
+    "CFBundlePackageType": "APPL",
+    "CFBundleVersion": "1",
+    "LSBackgroundOnly": true,
+    "NSServices": [
+      {
+        "NSMenuItem": {
+          "default": "OpenCCman Diagnostic Explicit Error"
+        },
+        "NSMessage": "fail",
+        "NSPortName": "OpenCCmanFailureControlEAB5003",
+        "NSSendTypes": [
+          "NSStringPboardType"
+        ],
+        "NSReturnTypes": [
+          "NSStringPboardType"
+        ]
+      }
+    ]
+  }
+}
