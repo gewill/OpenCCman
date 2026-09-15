@@ -22,3 +22,11 @@ SwiftUI Binding 仍是正文来源，Coordinator 只桥接原生编辑事件并�
 - [ ] iPhone/iPad 回归；iOS 14/macOS 11 按用户要求保留为发布前验收，不能把编译目标当成系统运行验证。
 
 参考：[Apple NSViewRepresentable](https://developer.apple.com/documentation/swiftui/nsviewrepresentable)、[尺寸测量接口](https://developer.apple.com/documentation/swiftui/nsviewrepresentable/sizethatfits(_:nsview:context:))。桥接只管理内部文稿视图，SwiftUI 管理顶层视口的 frame/bounds。
+
+## 同机对照入口
+
+App Regression 手动运行 `compare_workspace_editor=true`，固定旧版为 `cb73fc528b3c9d53dfc840b8ae48e1cae7426fcb`，候选为该次工作流完整 SHA。仅在 macOS CI runner 执行，两份隔离 checkout 先各自构建相同 Release / 双架构参数，再按 baseline → candidate 顺序运行同一完整 `--documents --active-anchor` 协议。依赖锁必须逐字相同；不采样、不录屏、不调用 CUA。使用临时 checkout，不切换开发工作区。
+
+artifact `workspace-editor-comparison` 包含两份 app、构建日志、来源清单、原始 JSONL、固定导出文件及 `comparison.json`。分别列出 1/10 MiB 导入到驱动确认、转换到导出验证、原生引擎耗时、采样点峰值 footprint 和内核峰值 RSS。命令超时清理自有进程组，失败保留已有报告。
+
+这是一组同 runner 的顺序对照，不是多机统计，也不是冷启动测量；顺序和系统缓存影响仍需保留说明。最终视觉呈现时间不由这些事件表示。成功运行后才补结果，不把入口创建或测试通过当作收益证明。

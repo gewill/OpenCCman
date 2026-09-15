@@ -9,6 +9,10 @@ on:
     branches: [main, develop, 'release/**', 'hotfix/**']
   workflow_dispatch:
     inputs:
+      compare_workspace_editor:
+        description: Compare baseline and candidate Release document workflows sequentially on one runner
+        type: boolean
+        default: false
       diagnose_editor_anchor:
         description: Run a fixed macOS 15 editor anchor timing probe
         type: boolean
@@ -57,7 +61,7 @@ concurrency:
 jobs:
   regression:
     name: App Regression
-    if: github.event_name != 'workflow_dispatch' || (!inputs.build_window_lifecycle && !inputs.automatic_window_lifecycle && !inputs.cycle_window_lifecycle && !inputs.document_window_lifecycle && !inputs.profile_document_stages && !inputs.active_anchor_window_lifecycle && !inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
+    if: github.event_name != 'workflow_dispatch' || (!inputs.compare_workspace_editor && !inputs.build_window_lifecycle && !inputs.automatic_window_lifecycle && !inputs.cycle_window_lifecycle && !inputs.document_window_lifecycle && !inputs.profile_document_stages && !inputs.active_anchor_window_lifecycle && !inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
     runs-on: macos-15
     timeout-minutes: 20
     steps:
@@ -284,3 +288,28 @@ jobs:
             ${{ runner.temp }}/editor-anchor-slow-pass
           retention-days: 7
           if-no-files-found: error
+
+  workspace-editor-comparison:
+    name: Same-runner Release editor comparison
+    if: github.event_name == 'workflow_dispatch' && inputs.compare_workspace_editor
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Compare exact baseline and candidate commits
+        run: |
+          python3 scripts/compare-workspace-editor.py \
+            --baseline cb73fc528b3c9d53dfc840b8ae48e1cae7426fcb \
+            --candidate "$(git rev-parse HEAD)" \
+            --output "${{ runner.temp }}/workspace-editor-comparison"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: workspace-editor-comparison
+          path: ${{ runner.temp }}/workspace-editor-comparison/
+          retention-days: 7
