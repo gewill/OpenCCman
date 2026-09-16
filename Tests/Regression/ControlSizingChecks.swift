@@ -28,6 +28,7 @@ enum ControlSizingChecks {
     let toggle = size(Toggle("Test", isOn: .constant(false)).toggleStyle(AppNeumorphicSwitchStyle()))
     precondition(toggle.height == 28)
     print("PASS: upstream 30→44 reproduction; Mac icon 28, text 28, primary 32, segment 28, switch 28 and multiline growth")
+    SegmentLayoutChecks.run()
   }
 
   @MainActor private static func size<V: View>(_ view: V) -> CGSize {
