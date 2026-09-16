@@ -1,0 +1,63 @@
+{
+  "observedAt": "2026-09-15T12:01:03.269659+00:00",
+  "source": "Authenticated RevenueCat browser UI; manual transcription of configuration only, not an API export or a customer audit",
+  "project": "OpenCCman",
+  "pages": [
+    "integrations",
+    "integrations/slack",
+    "auth/methods",
+    "settings",
+    "settings/ai-features"
+  ],
+  "integrations": {
+    "active": [
+      "Slack"
+    ],
+    "otherActiveIntegrationsShown": false,
+    "scope": "All categories, loaded Active section",
+    "slack": {
+      "sandboxEventsEnabled": false,
+      "salesReporting": "Gross revenue",
+      "productionDeliveryHistory": "Sent events visible",
+      "payloadScope": "Official documentation describes purchase events, app user identifier, product and revenue; individual event payloads were not opened"
+    }
+  },
+  "auth": {
+    "observed": "Beta request-access landing page; no configured provider shown",
+    "limitation": "Does not establish absence of historical/custom IDs or external identity joins"
+  },
+  "general": {
+    "restoreBehavior": "Transfer to new App User ID",
+    "differentSandboxRestoreBehavior": false,
+    "sandboxTestingAccess": "Anybody"
+  },
+  "aiFeatures": {
+    "ricoAccess": "Read & write with permission",
+    "limitation": "Access setting only; no AI request sent, no usage history or downstream retention reviewed"
+  },
+  "mutations": [],
+  "privacyConclusion": {
+    "purchaseHistory": "Include App Functionality and Analytics per RevenueCat guidance",
+    "thirdPartyNotifications": "Include Slack purchase notifications in the policy",
+    "linkedToIdentity": "Pending maintainer confirmation of external joins and historical practices",
+    "tracking": "No active attribution/advertising integration shown; final answer must also cover use outside this dashboard"
+  },
+  "excludedFromEvidence": [
+    "Webhook URL",
+    "API keys",
+    "Account identifiers",
+    "Customer identifiers and records",
+    "Transaction amounts and event IDs",
+    "Slack workspace/channel identifiers"
+  ],
+  "remaining": [
+    "Maintainer confirmation of identity joins and advertising use outside the reviewed app/project",
+    "Slack access/retention and actual RevenueCat AI usage before final policy publication",
+    "Final signed build privacy report",
+    "Policy and ASC publication/readback"
+  ],
+  "officialSources": [
+    "https://www.revenuecat.com/docs/integrations/third-party-integrations/slack",
+    "https://www.revenuecat.com/docs/platform-resources/apple-platform-resources/apple-app-privacy"
+  ]
+}

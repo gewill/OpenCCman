@@ -15,7 +15,9 @@ root = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--opencc-path", type=Path)
 parser.add_argument("--defaults-path", type=Path)
-parser.add_argument("--benchmark", action="store_true", help="Compare conversion processing with the cc8c7e8 baseline")
+modes = parser.add_mutually_exclusive_group()
+modes.add_argument("--benchmark", action="store_true", help="Compare conversion processing with the cc8c7e8 baseline")
+modes.add_argument("--model-lifetime", action="store_true", help="Check real model release without any UI host")
 args = parser.parse_args()
 pins = json.loads((root / "OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved").read_text())["pins"]
 pins = {pin["identity"]: pin for pin in pins}
@@ -42,12 +44,15 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
         root / "OpenCCman/Model/TestNumbersPerDayManager.swift",
         root / "OpenCCman/Scene/HomeViewModel.swift",
         root / "Tests/Regression/CoreSupport.swift",
-        root / ("Tests/Benchmarks/ConversionBenchmark.swift" if args.benchmark else "Tests/Regression/CoreChecks.swift"),
+        root / ("Tests/Benchmarks/ConversionBenchmark.swift" if args.benchmark else
+                "Tests/Regression/ModelLifetimeChecks.swift" if args.model_lifetime else
+                "Tests/Regression/CoreChecks.swift"),
     ]:
         shutil.copy2(path, sources / path.name)
-    if not args.benchmark:
+    if not args.benchmark and not args.model_lifetime:
         shutil.copy2(root / "Tests/Regression/FileChecks.swift", sources / "FileChecks.swift")
         shutil.copy2(root / "Tests/Regression/ProviderChecks.swift", sources / "ProviderChecks.swift")
+        shutil.copy2(root / "Tests/Regression/WindowNotificationChecks.swift", sources / "WindowNotificationChecks.swift")
     (package / "Package.swift").write_text('''// swift-tools-version: 5.9
 import PackageDescription
 let package = Package(

@@ -1,0 +1,9 @@
+{
+  "issue": 93,
+  "product_sha": "9c8ab60205483f6d80c60108e6ab9c252de992f4",
+  "diagnostic_sha": "1c6114efc94d769bceb63a4d637b7c828dff1874",
+  "setup": "Fresh isolated process, activate empty default window and dismiss first-run sheet before cycles. Preserve anchor default source and no result.",
+  "cycles": 3,
+  "actions": "Each cycle: native File/New Window twice, clear each new window source, close newest then prior new window; anchor remains. Fixed first one-window sample after each pair closes plus 5/20 s. No conversion. Record owned app only, no audio.",
+  "final": "Close anchor, no explicit AX/reactivation for 20 s, then quit; restore exact private defaults; do not touch other protected handoffs."
+}

@@ -1,0 +1,61 @@
+[
+  {
+    "file": "one-mib-cycle-safe.mp4",
+    "bytes": 5711206,
+    "sha256": "27da213e9ad34907357ccdcaa413f536758114d8465489036c59bea4e743dfc9",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "format": {
+        "duration": "300.070000",
+        "size": "5711206"
+      }
+    },
+    "review": "Representative frames inspected; diagnostic app and synthetic fixture folder only; no audio or microphone"
+  },
+  {
+    "file": "ten-mib-cycle.mp4",
+    "bytes": 4413737,
+    "sha256": "ede8c3df8f9e154ac89c071cad7236415be54ec3c2dd2a8f405a66cc002039ef",
+    "ffprobe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080
+        }
+      ],
+      "format": {
+        "duration": "193.811667",
+        "size": "4413737"
+      }
+    },
+    "review": "Representative frames inspected; diagnostic app and synthetic fixture folder only; no audio or microphone"
+  },
+  {
+    "file": "one-mib-after.png",
+    "bytes": 458821,
+    "sha256": "7973a15d1c082256c970bc71f3fc685720ec63b8daf23b5bac3bb99865a3c26c"
+  },
+  {
+    "file": "one-mib-after-scroll-top.png",
+    "bytes": 492156,
+    "sha256": "61a1dabdc42f661f662377d41bac2ab4b299f7c2d1a95c80aba5fc052464e6b9"
+  },
+  {
+    "file": "ten-mib-after.png",
+    "bytes": 492151,
+    "sha256": "ec4f88d6c68c0036c7de7342a41ced566d09cb9b71976d8e82dc814e1acc1169"
+  }
+]

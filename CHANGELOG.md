@@ -25,6 +25,10 @@ and [What’s New validation record](docs/WHATS_NEW.md).
 
 ### Added
 
+- Mac windows start at a recommended 1024 × 768 pt when no valid saved frame
+  exists, retain native frame history, and fit the available display. The root
+  content minimum remains narrow at 300 × 360 pt, plus the system titlebar
+  ([#57](https://github.com/gewill/OpenCCman/issues/57)).
 - Customer Center in Settings: RevenueCatUI on iOS 15+, with purchase status,
   explicit restore and support on iOS 14 and native macOS. Purchase updates share
   one policy that preserves cached Pro access on failure or cancellation ([#71](https://github.com/gewill/OpenCCman/issues/71)).
@@ -62,6 +66,11 @@ and [What’s New validation record](docs/WHATS_NEW.md).
   candidates; see the [upstream sync guide].
 
 ### Changed
+
+- Conversion segments stack when the available width cannot fit complete words
+  at the current text size, and return to rows when space allows. The inspector's
+  preset label sits above its menu to keep narrow sidebars readable
+  ([#49](https://github.com/gewill/OpenCCman/issues/49)).
 
 - Size complete custom controls by platform: Mac icon/text buttons and segments
   default to 28pt, primary actions to 32pt, and iPhone/iPad controls to 44pt.
@@ -105,6 +114,14 @@ and [What’s New validation record](docs/WHATS_NEW.md).
   ([#9]).
 
 ### Fixed
+
+- External Mac entry points request a native workspace window after all windows
+  have closed, coalescing concurrent reopen requests and restoring minimized
+  windows ([#19](https://github.com/gewill/OpenCCman/issues/19)).
+
+- Conversion settings sheets follow the app's selected language on Mac, iPad
+  and iPhone, including when the system uses another language
+  ([#75](https://github.com/gewill/OpenCCman/issues/75)).
 
 - Preserve phrase boundaries, leading/trailing blank lines and earlier text
   when converting large inputs. Reuse converters and publish a completed result

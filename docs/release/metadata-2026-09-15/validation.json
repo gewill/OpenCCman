@@ -1,0 +1,160 @@
+{
+  "date": "2026-09-15",
+  "commands": [
+    {
+      "command": "asc metadata validate --dir docs/release/metadata-2026-09-15/proposed/ios --output json",
+      "result": {
+        "dir": "docs/release/metadata-2026-09-15/proposed/ios",
+        "filesScanned": 6,
+        "issues": [],
+        "errorCount": 0,
+        "warningCount": 0,
+        "valid": true
+      }
+    },
+    {
+      "command": "asc metadata validate --dir docs/release/metadata-2026-09-15/proposed/mac --output json",
+      "result": {
+        "dir": "docs/release/metadata-2026-09-15/proposed/mac",
+        "filesScanned": 6,
+        "issues": [],
+        "errorCount": 0,
+        "warningCount": 0,
+        "valid": true
+      }
+    },
+    {
+      "command": "asc metadata validate --dir docs/release/metadata-2026-09-15/proposed/ios --check-urls --output json",
+      "result": {
+        "dir": "docs/release/metadata-2026-09-15/proposed/ios",
+        "filesScanned": 6,
+        "issues": [
+          {
+            "scope": "app-info",
+            "file": "docs/release/metadata-2026-09-15/proposed/ios/app-info/en-US.json",
+            "locale": "en-US",
+            "field": "privacyPolicyUrl",
+            "severity": "warning",
+            "message": "privacy policy URL could not be checked: target is not a public internet address"
+          },
+          {
+            "scope": "app-info",
+            "file": "docs/release/metadata-2026-09-15/proposed/ios/app-info/zh-Hans.json",
+            "locale": "zh-Hans",
+            "field": "privacyPolicyUrl",
+            "severity": "warning",
+            "message": "privacy policy URL could not be checked: target is not a public internet address"
+          },
+          {
+            "scope": "app-info",
+            "file": "docs/release/metadata-2026-09-15/proposed/ios/app-info/zh-Hant.json",
+            "locale": "zh-Hant",
+            "field": "privacyPolicyUrl",
+            "severity": "warning",
+            "message": "privacy policy URL could not be checked: target is not a public internet address"
+          },
+          {
+            "scope": "version",
+            "file": "docs/release/metadata-2026-09-15/proposed/ios/version/1.3/en-US.json",
+            "locale": "en-US",
+            "version": "1.3",
+            "field": "supportUrl",
+            "severity": "warning",
+            "message": "support URL could not be checked: target is not a public internet address"
+          },
+          {
+            "scope": "version",
+            "file": "docs/release/metadata-2026-09-15/proposed/ios/version/1.3/zh-Hans.json",
+            "locale": "zh-Hans",
+            "version": "1.3",
+            "field": "supportUrl",
+            "severity": "warning",
+            "message": "support URL could not be checked: target is not a public internet address"
+          },
+          {
+            "scope": "version",
+            "file": "docs/release/metadata-2026-09-15/proposed/ios/version/1.3/zh-Hant.json",
+            "locale": "zh-Hant",
+            "version": "1.3",
+            "field": "supportUrl",
+            "severity": "warning",
+            "message": "support URL could not be checked: target is not a public internet address"
+          }
+        ],
+        "errorCount": 0,
+        "warningCount": 6,
+        "valid": true
+      },
+      "status": "URL checking unavailable; warnings retained"
+    }
+  ],
+  "preservedFields": [
+    {
+      "platform": "ios",
+      "locale": "zh-Hans",
+      "appInfoUnchanged": true,
+      "supportAndMarketingURLsUnchanged": true,
+      "changedVersionFields": [
+        "description",
+        "keywords",
+        "whatsNew"
+      ]
+    },
+    {
+      "platform": "ios",
+      "locale": "en-US",
+      "appInfoUnchanged": true,
+      "supportAndMarketingURLsUnchanged": true,
+      "changedVersionFields": [
+        "description",
+        "keywords",
+        "whatsNew"
+      ]
+    },
+    {
+      "platform": "ios",
+      "locale": "zh-Hant",
+      "appInfoUnchanged": true,
+      "supportAndMarketingURLsUnchanged": true,
+      "changedVersionFields": [
+        "description",
+        "keywords",
+        "whatsNew"
+      ]
+    },
+    {
+      "platform": "mac",
+      "locale": "zh-Hans",
+      "appInfoUnchanged": true,
+      "supportAndMarketingURLsUnchanged": true,
+      "changedVersionFields": [
+        "description",
+        "keywords",
+        "whatsNew"
+      ]
+    },
+    {
+      "platform": "mac",
+      "locale": "en-US",
+      "appInfoUnchanged": true,
+      "supportAndMarketingURLsUnchanged": true,
+      "changedVersionFields": [
+        "description",
+        "keywords",
+        "whatsNew"
+      ]
+    },
+    {
+      "platform": "mac",
+      "locale": "zh-Hant",
+      "appInfoUnchanged": true,
+      "supportAndMarketingURLsUnchanged": true,
+      "changedVersionFields": [
+        "description",
+        "keywords",
+        "whatsNew"
+      ]
+    }
+  ],
+  "remoteWritePerformed": false
+}

@@ -1,0 +1,42 @@
+{
+  "event": "one_mib_before_close",
+  "pid": 88299,
+  "log": "runtime.jsonl",
+  "wall_time": 1789481620.93122,
+  "latest_sample": {
+    "created_total": 3,
+    "elapsed_ms": 510003.660959,
+    "event": "sample",
+    "live_model_numbers": [
+      1,
+      2,
+      3
+    ],
+    "model_states": [
+      {
+        "converting": false,
+        "importing": false,
+        "number": 1
+      },
+      {
+        "converting": false,
+        "importing": false,
+        "number": 2
+      },
+      {
+        "converting": false,
+        "importing": false,
+        "number": 3
+      }
+    ],
+    "os": "Version 27.0 (Build 26A428)",
+    "physical_footprint_bytes": 746981176,
+    "pid": 88299,
+    "process_peak_rss_bytes": 515833856,
+    "rss_bytes": 449085440,
+    "rusage_status": 0,
+    "task_info_status": 0,
+    "visible_main_capable_windows": 3
+  },
+  "setup_deviation": "Window 3 initially opened the local media-scope note via row double-click; detected by displayed filename, corrected via exact path before conversion. No extra conversion was performed."
+}

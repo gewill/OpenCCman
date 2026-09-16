@@ -96,6 +96,12 @@ class CheckScriptChecks(unittest.TestCase):
         self.assertEqual(result.returncode, 17)
 
     def test_control_test_exit_is_propagated(self):
+        # Control checks now bundle the app localizations before running tests.
+        # Supply those resources so this fixture reaches the injected executable.
+        for locale in ("en", "zh-Hans", "zh-Hant"):
+            resources = self.root / "OpenCCman" / f"{locale}.lproj"
+            resources.mkdir(parents=True)
+            (resources / "Localizable.strings").write_text('"key" = "value";\n')
         source = self.root / "dependency/Sources/Neumorphic"
         source.mkdir(parents=True)
         (source / "fixture.swift").write_text("// synthetic compiler input\n")
@@ -118,7 +124,7 @@ exit 20
         compiler.chmod(0o755)
         self.env["PATH"] = str(tools) + ":" + self.env["PATH"]
         result = self.run_check("check-control-sizing.sh", self.root / "dependency")
-        self.assertEqual(result.returncode, 19)
+        self.assertEqual(result.returncode, 19, result.stderr)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,15 @@
+{
+  "applicationSource": "c28e2a09abacb294b09e3284252b8cf4bcf24447",
+  "command": "python3 scripts/check-core.py",
+  "exitCode": 0,
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0\nBuildVersion:\t\t26A428\n",
+  "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+  "sha256": {
+    "Tests/Regression/WindowNotificationChecks.swift": "f933f4f4f8ac37afeec501daa0e1e4aa2e87382f877c3efba112b6315acd3454",
+    "Tests/Regression/CoreChecks.swift": "07904130bc176edc058d623fbc2bb7ffc304678b27cca35663d7a5399532401b",
+    "scripts/check-core.py": "a3469441e97ea67700eaf9a51ecb0064773ded8feef4b55e579dcf610f775765",
+    "OpenCCman/Scene/HomeViewModel.swift": "f8830e4d876b2c4f4d11b7b5899d6fdee67021166e178d7fa4bffeb37cefbe2a",
+    "OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "f0df8bb107a449d6143911ecd9a8a25b9bb7d03718e9d449658598d4d3e833e5"
+  },
+  "scope": "Real HomeViewModel notification subscribers with two unshown NSWindows and one unbound model; defaults isolated by CoreSupport. Does not exercise AppDelegate dispatch, MainWindowReader, NSPerformService, system menu, UI rendering or signed application."
+}

@@ -1,9 +1,6 @@
 import Neumorphic
 import SwiftUI
 import SwiftUIRouter
-#if os(macOS)
-  import SwiftUIIntrospect
-#endif
 
 struct RootView: View {
   @EnvironmentObject private var navigator: Navigator
@@ -17,6 +14,7 @@ struct RootView: View {
   @State private var isVisible = false
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   #if os(macOS)
+    @StateObject private var windowSizing = MainWindowSizing()
     @State private var isMainWindow = false
     @State private var windowID: ObjectIdentifier?
   #endif
@@ -67,12 +65,15 @@ struct RootView: View {
       whatsNew.finish(in: presentationID)
     }
     #if os(macOS)
-    .introspect(.window, on: .macOS(.v11, .v12, .v13, .v14, .v15, .v26)) { window in
+    .frame(minWidth: MainWindowGeometry.minimumContentSize.width,
+           minHeight: MainWindowGeometry.minimumContentSize.height)
+    .background(MainWindowReader { window in
+      windowSizing.attach(to: window)
       windowID = ObjectIdentifier(window)
       isMainWindow = window.isMainWindow
       viewModel.window = window
       AppDelegate.registerReadyWindow(window)
-    }
+    }.allowsHitTesting(false).accessibilityHidden(true))
     .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeMainNotification)) { notification in
       if isTargetWindow(for: notification) {
         isMainWindow = true

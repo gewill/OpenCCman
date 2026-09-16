@@ -1,5 +1,7 @@
 # Customer Center / Pro access validation — 2026-09-14
 
+Update: [2026-09-15 Mac three-language/light-dark and independent-window validation](2026-09-15/README.md) adds six real screenshots and navigation video. The original results and remaining mobile/transaction gates below retain their historical scope.
+
 Tracking: [#71](https://github.com/gewill/OpenCCman/issues/71), local StoreKit [#70](https://github.com/gewill/OpenCCman/issues/70), server-side purchase acceptance [#14](https://github.com/gewill/OpenCCman/issues/14).
 
 ## Implementation and compatibility
@@ -46,3 +48,7 @@ CustomerInfo updates from the existing Pro scene, SDK delegate and Customer Cent
 - ASC read-only catalog confirmed approved non-consumable `ios_openccman_pro_lifetime_3`. Local fixture display price 0.99 is synthetic and is not a verified current store price.
 
 See [sanitized validation log](results.log) and [StoreKit setup/limitations](../storekit/README.md). No credentials, receipts or customer payloads are saved in this report.
+
+Language synchronization candidate: [source evidence, checks and pending iOS merge gate](locale-sync/README.md).
+
+Mac VoiceOver attempted on the #96 candidate: [observations, unresolved keyboard acceptance and verified cleanup](2026-09-15-voiceover/README.md).
