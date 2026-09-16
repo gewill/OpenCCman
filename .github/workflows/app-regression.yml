@@ -9,6 +9,13 @@ on:
     branches: [main, develop, 'release/**', 'hotfix/**']
   workflow_dispatch:
     inputs:
+      regression_system:
+        description: System for a one-off regression run (ordinary PRs remain macOS 15)
+        type: choice
+        options:
+          - macos-15
+          - macos-26
+        default: macos-15
       measure_app_baseline:
         description: Measure five fresh-process Release application baseline samples
         type: boolean
@@ -74,12 +81,20 @@ jobs:
   regression:
     name: App Regression
     if: github.event_name != 'workflow_dispatch' || (!inputs.measure_app_baseline && !inputs.compare_workspace_editor && !inputs.build_window_lifecycle && !inputs.automatic_window_lifecycle && !inputs.cycle_window_lifecycle && !inputs.document_window_lifecycle && !inputs.profile_document_stages && !inputs.active_anchor_window_lifecycle && !inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
-    runs-on: macos-15
+    runs-on: ${{ inputs.regression_system == 'macos-26' && 'macos-26' || 'macos-15' }}
     timeout-minutes: 20
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
+      - name: Record regression environment and source
+        run: |
+          sw_vers
+          xcodebuild -version
+          git rev-parse HEAD
+          shasum -a 256 OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
       - name: Check validation scripts propagate failures
         run: python3 Tests/Regression/CheckScriptChecks.py
       - name: Check project and source syntax
@@ -138,6 +153,8 @@ jobs:
           ditto -c -k --keepParent \
             "${{ runner.temp }}/openccman-app/Build/Products/Debug/OpenCCman.app" \
             "${{ runner.temp }}/OpenCCman-validation.zip"
+      - name: Verify dependency lock is unchanged
+        run: git diff --exit-code -- OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
       - name: Upload unsigned macOS validation app
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -176,7 +193,7 @@ jobs:
   ios-validation:
     name: Build iOS Simulator validation app
     if: github.event_name == 'workflow_dispatch' && inputs.build_ios_validation
-    runs-on: macos-15
+    runs-on: ${{ inputs.regression_system == 'macos-26' && 'macos-26' || 'macos-15' }}
     timeout-minutes: 20
     env:
       DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
@@ -186,6 +203,7 @@ jobs:
           persist-credentials: false
       - name: Build and package simulator app
         run: |
+          sw_vers
           xcodebuild -version
           git rev-parse HEAD > "${{ runner.temp }}/source-sha.txt"
           xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
@@ -194,6 +212,7 @@ jobs:
             -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
             CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=NO \
             PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.UIValidation build
+          git diff --exit-code -- OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
           ditto -c -k --keepParent \
             "${{ runner.temp }}/openccman-ios/Build/Products/Debug-iphonesimulator/OpenCCman.app" \
             "${{ runner.temp }}/OpenCCman-ios-validation.zip"
