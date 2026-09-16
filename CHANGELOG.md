@@ -110,6 +110,10 @@ and [What’s New validation record](docs/WHATS_NEW.md).
 
 ### Fixed
 
+- Conversion settings sheets follow the app's selected language on Mac, iPad
+  and iPhone, including when the system uses another language
+  ([#75](https://github.com/gewill/OpenCCman/issues/75)).
+
 - Preserve phrase boundaries, leading/trailing blank lines and earlier text
   when converting large inputs. Reuse converters and publish a completed result
   once instead of repeatedly rebuilding the visible result ([#1]).
