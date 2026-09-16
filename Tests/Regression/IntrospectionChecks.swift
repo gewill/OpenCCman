@@ -3,7 +3,7 @@ import SwiftUI
 import SwiftUIIntrospect
 
 // The unrelated convenience modifier is copied from Styles.swift by the runner;
-// the editor style, keeper and version policy are the actual application source.
+// the editor style, keeper, version policy and window reader are actual app source.
 @MainActor
 private final class Observations {
   weak var source: NSTextView?
@@ -31,7 +31,8 @@ private struct Editors: View {
         .preserveWorkspaceScroll()
         .introspect(.textEditor, on: AppIntrospection.textEditor) { observations.result = $0 }
     }
-    .introspect(.window, on: AppIntrospection.window) { observations.window = $0 }
+    .background(MainWindowReader { observations.window = $0 }
+      .allowsHitTesting(false).accessibilityHidden(true))
   }
 }
 
@@ -56,7 +57,7 @@ enum IntrospectionChecks {
     guard let source = observations.source, let result = observations.result else {
       preconditionFailure("App editor predicates must resolve native NSTextViews on this tested runtime")
     }
-    precondition(observations.window === window, "Window predicate must resolve this actual hosting window")
+    precondition(observations.window === window, "MainWindowReader must resolve this actual hosting window")
     precondition(source !== result)
     precondition(source.isEditable && !result.isEditable, "Result read-only configuration must execute")
     precondition(source.string == "原文 é 👩🏽‍💻" && result.string == "結果")

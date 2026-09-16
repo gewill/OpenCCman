@@ -19,6 +19,8 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--automatic", action="store_true",
                         help="Build a macOS 13+ self-driving diagnostic for an isolated runner")
+    parser.add_argument("--observe-hosts", action="store_true",
+                        help="Also record weak window and initial content-view lifetimes (changes observation)")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     output = args.output.resolve()
@@ -66,6 +68,17 @@ def main():
         name += "Auto"
         title += " Automatic"
         minimum = "13.0"
+    if args.observe_hosts:
+        old = 'let value: [String: Any] = ["event": event'
+        if source.count(old) != 1 or source.count('    file.write(try! JSONSerialization.data') != 1:
+            raise RuntimeError("Host observation injection no longer matches fixture")
+        source = source.replace(old, 'var value: [String: Any] = ["event": event')
+        source = source.replace('    file.write(try! JSONSerialization.data',
+                                '    value["hosts"] = WeakWindowHosts.shared.snapshot()\n'
+                                '    file.write(try! JSONSerialization.data')
+        source += "\n" + (root / "Tests/Benchmarks/WeakWindowHosts.swift").read_text()
+        name += "Hosts"
+        title += " Host Observation"
     swift = output / "Probe.swift"
     swift.write_text(source)
     app = output / f"{name}.app"
@@ -87,7 +100,7 @@ def main():
         subprocess.run(["codesign", "--sign", "-", str(app)], stdout=log,
                        stderr=subprocess.STDOUT, check=True, timeout=30)
     result = {
-        "variant": args.variant, "automatic": args.automatic, "app": str(app), "command": command,
+        "variant": args.variant, "automatic": args.automatic, "observe_hosts": args.observe_hosts, "app": str(app), "command": command,
         "source_sha256": hashlib.sha256(swift.read_bytes()).hexdigest(),
         "base_sha": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip(),
         "dirty": bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=root, text=True)),

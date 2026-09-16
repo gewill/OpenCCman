@@ -1,0 +1,24 @@
+{
+  "variant": "text",
+  "automatic": true,
+  "observe_hosts": true,
+  "app": "/Users/runner/work/_temp/window-lifetime/text/MinimalTextAutoHosts.app",
+  "command": [
+    "xcrun",
+    "swiftc",
+    "-swift-version",
+    "5",
+    "-parse-as-library",
+    "-O",
+    "-target",
+    "arm64-apple-macosx13.0",
+    "/Users/runner/work/_temp/window-lifetime/text/Probe.swift",
+    "-o",
+    "/Users/runner/work/_temp/window-lifetime/text/MinimalTextAutoHosts.app/Contents/MacOS/MinimalTextAutoHosts"
+  ],
+  "source_sha256": "67e6610811ae2ec976530b1972677914b99702aa4a7786d383f039b7156273c9",
+  "base_sha": "5be88362ebcf25cfc9d57fbe487887c6d69b91fc",
+  "dirty": false,
+  "compiler": "swift-driver version: 1.127.15 Apple Swift version 6.2.4 (swiftlang-6.2.4.1.4 clang-1700.6.4.2)\nTarget: arm64-apple-macosx15.0\n",
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.9\nBuildVersion:\t\t24G830\n"
+}

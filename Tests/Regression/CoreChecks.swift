@@ -8,6 +8,7 @@ import OpenCC
       appDefaults.defaults.removePersistentDomain(forName: coreSuite)
       UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastVersionPromptedForReview.rawValue)
     }
+    await checkWindowNotifications()
     let fixtures = [
       "", "\n\n前段\n\n后段\n\n", "\r\n鼠标\r\n\r\n台湾\r\n",
       "前段\n\n" + String(repeating: "汉", count: 4001),
