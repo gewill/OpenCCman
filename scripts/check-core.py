@@ -52,6 +52,7 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
     if not args.benchmark and not args.model_lifetime:
         shutil.copy2(root / "Tests/Regression/FileChecks.swift", sources / "FileChecks.swift")
         shutil.copy2(root / "Tests/Regression/ProviderChecks.swift", sources / "ProviderChecks.swift")
+        shutil.copy2(root / "Tests/Regression/WindowNotificationChecks.swift", sources / "WindowNotificationChecks.swift")
     (package / "Package.swift").write_text('''// swift-tools-version: 5.9
 import PackageDescription
 let package = Package(
