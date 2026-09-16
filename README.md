@@ -44,6 +44,8 @@ Core checks compile the actual app model/services with the dependencies pinned i
 
 ## Project status
 
+The [work handoff (2026-09-16)](docs/handoff/2026-09-16/README.md) records exact PR heads and CI results, performance evidence, dependency order, pending human decisions, and preserved local validation environments. It is a dated snapshot; re-check GitHub before continuing.
+
 Neumorphic is pinned to the stable **2.4.1** release. Unused button styles and the obsolete VisualEffects dependency/credit have been removed; the remaining 14 dependency pins are unchanged. See the [platform sizing fix and runtime before/after captures](docs/validation/control-sizing/README.md), and the [control adoption audit](docs/NEUMORPHIC_CONTROLS.md) for segmented selectors, switches, loading indicators, cards, and the controls that retain system behavior.
 
 The [application performance baseline](docs/performance/README.md) documents isolated Release measurements, raw samples, engine comparisons and the limits of each metric.
