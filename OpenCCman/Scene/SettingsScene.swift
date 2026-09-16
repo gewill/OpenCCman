@@ -112,8 +112,14 @@ struct SettingsScene: View {
 
             Divider()
             if #available(macOS 13.0, *) {
-              LaunchAtLogin.Toggle { Text("Launch at login".localizedStringKey) }
-                .toggleStyle(.switch)
+              HStack(alignment: .center, spacing: 6) {
+                Text("Launch at login".localizedStringKey)
+                Spacer()
+                LaunchAtLogin.Toggle { Text("Launch at login".localizedStringKey) }
+                  .labelsHidden()
+                  .toggleStyle(AppNeumorphicSwitchStyle())
+                  .accessibilityLabel(Text("Launch at login".localizedStringKey))
+              }
               Divider()
             }
             CellButton(title: "Global Shortcut") {
