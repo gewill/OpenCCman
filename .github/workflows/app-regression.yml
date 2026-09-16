@@ -384,6 +384,24 @@ jobs:
           python3 scripts/benchmark-app.py \
             --output "${{ runner.temp }}/app-performance-baseline" \
             --samples 5 --timeout 180
+      - name: Validate sample provenance, foreground state and configuration coverage
+        env:
+          BASELINE_DIR: ${{ runner.temp }}/app-performance-baseline
+        run: |
+          python3 - <<'PYTHON'
+          import os
+          from pathlib import Path
+          import runpy
+          import subprocess
+          validator = runpy.run_path('scripts/compare-app-performance.py')
+          metadata, samples = validator['load'](Path(os.environ['BASELINE_DIR']))
+          if len(samples) != 5:
+              raise ValueError('Expected exactly five complete independent samples')
+          head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          if metadata['source_commit'] != head:
+              raise ValueError('Measured source differs from the checked-out candidate')
+          print('Validated five complete samples, source SHA, foreground, seven configurations and memory collection')
+          PYTHON
       - name: Preserve provenance and all samples, including failures
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
