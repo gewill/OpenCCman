@@ -3,7 +3,7 @@ import SwiftUI
 
 #if os(macOS)
   /// Introspect 26 deliberately skips later major systems. Opt in to 27 only:
-  /// 27.x still exposes the NSTextView/NSWindow selectors used here, while
+  /// 27.x still exposes the NSTextView selectors used here, while
   /// Introspect 27 itself would raise our macOS deployment target to 12.
   @MainActor
   enum AppIntrospection {
@@ -14,11 +14,6 @@ import SwiftUI
     }
 
     static var textEditor: PlatformViewVersionPredicate<TextEditorType, NSTextView> {
-      if isMacOS27 { return .macOS(.v26...) }
-      return .macOS(.v11, .v12, .v13, .v14, .v15, .v26)
-    }
-
-    static var window: PlatformViewVersionPredicate<WindowType, NSWindow> {
       if isMacOS27 { return .macOS(.v26...) }
       return .macOS(.v11, .v12, .v13, .v14, .v15, .v26)
     }
