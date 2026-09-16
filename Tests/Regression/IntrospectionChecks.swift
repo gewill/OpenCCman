@@ -3,7 +3,7 @@ import SwiftUI
 import SwiftUIIntrospect
 
 // The unrelated convenience modifier is copied from Styles.swift by the runner;
-// the editor style, keeper, version policy and window reader are actual app source.
+// the native editor, keeper, version policy and window reader are actual app source.
 @MainActor
 private final class Observations {
   weak var source: NSTextView?
@@ -19,20 +19,14 @@ private struct Editors: View {
 
   var body: some View {
     HStack {
-      TextEditor(text: $source)
-        .clearTextEdtorStyle()
-        .preserveWorkspaceScroll()
-        .introspect(.textEditor, on: AppIntrospection.textEditor) { observations.source = $0 }
-        .introspect(.textEditor, on: .macOS(.v11, .v12, .v13, .v14, .v15, .v26)) { _ in
-          observations.legacyCalls += 1
-        }
-      TextEditor(text: .constant("結果"))
-        .clearTextEdtorStyle(isEditable: false)
-        .preserveWorkspaceScroll()
-        .introspect(.textEditor, on: AppIntrospection.textEditor) { observations.result = $0 }
+      WorkspaceTextEditor(text: $source, label: "Source")
+      WorkspaceTextEditor(text: .constant("結果"), isEditable: false, label: "Result")
     }
     .background(MainWindowReader { observations.window = $0 }
       .allowsHitTesting(false).accessibilityHidden(true))
+    .introspect(.window, on: .macOS(.v11, .v12, .v13, .v14, .v15, .v26)) { _ in
+      observations.legacyCalls += 1
+    }
   }
 }
 
@@ -53,12 +47,16 @@ enum IntrospectionChecks {
     let deadline = Date().addingTimeInterval(5)
     while Date() < deadline && (observations.source == nil || observations.result == nil || observations.window == nil) {
       RunLoop.main.run(until: Date().addingTimeInterval(0.01))
+      let editors = window.contentView.map(textViews) ?? []
+      observations.source = editors.first { $0.string == "原文 é 👩🏽‍💻" }
+      observations.result = editors.first { $0.string == "結果" }
     }
     guard let source = observations.source, let result = observations.result else {
-      preconditionFailure("App editor predicates must resolve native NSTextViews on this tested runtime")
+      preconditionFailure("Workspace editors must expose native NSTextViews on this tested runtime")
     }
     precondition(observations.window === window, "MainWindowReader must resolve this actual hosting window")
     precondition(source !== result)
+    precondition(source.accessibilityLabel() == "Source" && result.accessibilityLabel() == "Result")
     precondition(source.isEditable && !result.isEditable, "Result read-only configuration must execute")
     precondition(source.string == "原文 é 👩🏽‍💻" && result.string == "結果")
     for editor in [source, result] {
@@ -80,6 +78,11 @@ enum IntrospectionChecks {
     } else {
       precondition(observations.legacyCalls > 0, "Existing supported runtime keeps the original path")
     }
-    print("PASS: native source/result/window callbacks; result read-only; TextKit 1 configured before inspection; content and style preserved; legacy predicate control. \(ProcessInfo.processInfo.operatingSystemVersionString)")
+    print("PASS: native workspace source/result and window callback; result read-only; TextKit 1 configured before inspection; content and style preserved; legacy window predicate control. \(ProcessInfo.processInfo.operatingSystemVersionString)")
+  }
+
+  @MainActor private static func textViews(_ view: NSView) -> [NSTextView] {
+    if let editor = view as? NSTextView { return [editor] }
+    return view.subviews.flatMap(textViews)
   }
 }

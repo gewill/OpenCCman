@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		108B1CA1C79449CEB404F060 /* WorkspaceTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4205A262DA48E58C8D9555 /* WorkspaceTextEditor.swift */; };
 		B57100000000000000000002 /* MainWindowSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57100000000000000000002 /* MainWindowSizing.swift */; };
 		B57100000000000000000001 /* MainWindowGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57100000000000000000001 /* MainWindowGeometry.swift */; };
 		B19100000000000000000001 /* MainWindowReopenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19100000000000000000001 /* MainWindowReopenController.swift */; };
@@ -88,6 +89,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2A4205A262DA48E58C8D9555 /* WorkspaceTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceTextEditor.swift; sourceTree = "<group>"; };
 		A57100000000000000000002 /* MainWindowSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCman/View/MainWindowSizing.swift; sourceTree = SOURCE_ROOT; };
 		A57100000000000000000001 /* MainWindowGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCman/Model/MainWindowGeometry.swift; sourceTree = SOURCE_ROOT; };
 		A19100000000000000000001 /* MainWindowReopenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCman/Model/MainWindowReopenController.swift; sourceTree = SOURCE_ROOT; };
@@ -254,6 +256,7 @@
 		BE727E2F2B2DF60E00C63DB2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2A4205A262DA48E58C8D9555 /* WorkspaceTextEditor.swift */,
 				C494425751394D56B5BA5763 /* WorkspaceScrollKeeper.swift */,
 				86E1C019E1BA49108005622A /* PhoneWorkspace.swift */,
 				83F3D574C245439A9F95C6B1 /* WorkspaceSurface.swift */,
@@ -448,6 +451,7 @@
 				B19100000000000000000001 /* MainWindowReopenController.swift in Sources */,
 				43088A90EB27980ABB8606C3 /* ProAccessUpdate.swift in Sources */,
 				3C3627644470F73B7875003F /* CustomerCenterScene.swift in Sources */,
+				108B1CA1C79449CEB404F060 /* WorkspaceTextEditor.swift in Sources */,
 				AB2F59FF46334E4F9E1BA403 /* WorkspaceScrollKeeper.swift in Sources */,
 				CF15D72CB95A456299ABD017 /* PhoneWorkspace.swift in Sources */,
 				FD0333357F8C4778BD8D3FC0 /* WorkspaceSurface.swift in Sources */,

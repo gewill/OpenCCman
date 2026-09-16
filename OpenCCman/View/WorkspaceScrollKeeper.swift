@@ -19,6 +19,7 @@ import SwiftUI
     private var revision = 0
     private var restoring = false
     private var restorationScheduled = false
+    private var capturing = false
 
     #if WORKSPACE_SCROLL_CHECKS
       // Test synchronization only; absent from application builds. A timed
@@ -99,20 +100,37 @@ import SwiftUI
     }
 
     private func capture() {
+      guard !capturing else { return }
       guard let editor, let clip, let layout = editor.layoutManager,
             let container = editor.textContainer, let storage = editor.textStorage, storage.length > 0
       else {
         anchor = nil
         return
       }
-      let point = editor.convert(clip.bounds.origin, from: clip)
-      let origin = editor.textContainerOrigin
-      let glyph = layout.glyphIndex(for: NSPoint(x: max(0, point.x - origin.x), y: max(0, point.y - origin.y)),
-                                    in: container)
-      guard glyph != NSNotFound else { return }
-      let character = min(layout.characterIndexForGlyph(at: glyph), storage.length - 1)
-      let rect = layout.lineFragmentRect(forGlyphAt: glyph, effectiveRange: nil)
-      anchor = Anchor(character: character, lineOffset: point.y - origin.y - rect.minY)
+      capturing = true
+      defer { capturing = false }
+      // On-demand layout can adjust the clip origin while a glyph query is in
+      // progress. Resolve only the visible area, then re-read its coordinates;
+      // nested bounds notifications must not overwrite this capture halfway.
+      for _ in 0..<3 {
+        let origin = editor.textContainerOrigin
+        let visible = editor.convert(clip.bounds, from: clip).offsetBy(dx: -origin.x, dy: -origin.y)
+        layout.ensureLayout(forBoundingRect: visible, in: container)
+        let bounds = clip.bounds
+        let point = editor.convert(bounds.origin, from: clip)
+        let glyph = layout.glyphIndex(for: NSPoint(x: max(0, point.x - origin.x), y: max(0, point.y - origin.y)),
+                                      in: container)
+        guard glyph != NSNotFound else { return }
+        let character = min(layout.characterIndexForGlyph(at: glyph), storage.length - 1)
+        let rect = layout.lineFragmentRect(forGlyphAt: glyph, effectiveRange: nil)
+        let offset = point.y - origin.y - rect.minY
+        guard clip.bounds == bounds, offset >= -origin.y, offset < rect.height else { continue }
+        anchor = Anchor(character: character, lineOffset: offset)
+        return
+      }
+      // An unresolved estimate is not a reading position. Do not restore it as
+      // though its offset belonged to the observed line.
+      anchor = nil
     }
 
     private func restore(_ anchor: Anchor, ifSelectionIs selection: NSRange) {

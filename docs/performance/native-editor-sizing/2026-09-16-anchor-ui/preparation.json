@@ -1,0 +1,46 @@
+{
+  "protocol": "native-window-lifecycle-1",
+  "bundle_id": "org.gewill.OpenCCman.NativeWindowLifecycleAudit",
+  "automatic": false,
+  "cycles": false,
+  "documents": false,
+  "active_anchor": false,
+  "diagnostic_minimum_macos": "11.0",
+  "source_sha": "d8bcb5c7c08e86347f739aa9f8a4791caf965164",
+  "source_status": "",
+  "harness_sha256": "49de032310c85c4df59c6e749162f64667cd6c98a5fa8702e68e45fad1a0591e",
+  "preparer_sha256": "cc9f040c32a01c6b1958802f61fe695da32fb659a78061b9ca795a0235b5c3da",
+  "prepared_harness_sha256": "49de032310c85c4df59c6e749162f64667cd6c98a5fa8702e68e45fad1a0591e",
+  "modified_source_sha256": {
+    "OpenCCman/OpenCCmanApp.swift": {
+      "before": "8aae01c4e4a24d3f9fdb845737b80e171965d46a96b271a25a02eb46c26dad85",
+      "after": "09fbb48da4740dbfd80d61bead82e77f3fbf801c3c8b630c4b97b62061a1e8fe"
+    },
+    "OpenCCman/Scene/HomeViewModel.swift": {
+      "before": "f8830e4d876b2c4f4d11b7b5899d6fdee67021166e178d7fa4bffeb37cefbe2a",
+      "after": "e74c9d0207ab7014cf7b4fa6bcc55bfb3394cfff4b4273f86bf16f8452cbd6f8"
+    },
+    "OpenCCman/AppDelegate.swift": {
+      "before": "47b8cef30eab57a403b87b2680742446ad4371497164436b4c7551f0752279f4",
+      "after": "079b01556bb6899e8ebf471c090d71e9739ec16f1f36147047adc95638336d24"
+    },
+    "OpenCCman/Info.plist": {
+      "before": "8068892aaac197d35865cf11bb4404d05b194805671736d91d1510e56b04c13e",
+      "after": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c"
+    },
+    "OpenCCman.xcodeproj/project.pbxproj": {
+      "before": "b03ec2ea87e202d280bca732b797cd3deed1264ae4c854025b3233fe44b3437f",
+      "after": "b0239b58a93662176930d685565a7ce8aa99771f57b157791b551a6eae2030a1"
+    },
+    "OpenCCman/Services/GlobalShortcutService.swift": {
+      "before": "48ca6cc84ef2bd77e2594639104c74bd02125d2c0731308d29ecb68a23ccb1b4",
+      "after": "d79bd6a2435d44fd76469a0b682fa03d6650e07dd7267fa0d843facb56a2ab63"
+    }
+  },
+  "unchanged_source_sha256": {
+    "OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "f0df8bb107a449d6143911ecd9a8a25b9bb7d03718e9d449658598d4d3e833e5",
+    "OpenCCman/Scene/RootView.swift": "60b10e8d7f531bdedda42c16fedba56c5735747c5a22bf2524f1eb41d6e4700b"
+  },
+  "variant": "Real WindowGroup/Router/RootView; weak model logging; isolated free preferences; no purchase setup or Services/global shortcut registration",
+  "run": "Not launched. Open/close windows only through the actual app UI; collect per-process JSONL from the diagnostic bundle cache."
+}

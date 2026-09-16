@@ -1,0 +1,42 @@
+{
+  "date": "2026-09-16",
+  "platform": "macOS 27.0 (26A428), arm64",
+  "deploymentTarget": "macOS 11",
+  "baselineCommit": "6fd947bf68fc729766803fa7033a681b7f6a2586",
+  "candidateFilesSHA256": {
+    "OpenCCman/View/WorkspaceScrollKeeper.swift": "6dce795d81bec08e90c9fa05abe5cf969746029600c3982892aaf02e8866eafc",
+    "OpenCCman/View/WorkspaceTextEditor.swift": "37352746a6838b695c6ed496924db6636c27fc74ea17380386d3b05ac9fb02ed",
+    "Tests/Regression/WorkspaceTextEditorChecks.swift": "14a6e093030611965b7723ec9eca95f8b0cdda45b9394ba8b427295602d2b073",
+    "scripts/check-workspace-editor.sh": "89a99a06361f042cccd9a57f3769bf459e2f4513026322761e23e361cd8a31be"
+  },
+  "commands": [
+    "bash scripts/check-workspace-editor.sh",
+    "bash scripts/check-project.sh"
+  ],
+  "fixtureBytes": [
+    1048356,
+    10485396
+  ],
+  "baselineExit": 133,
+  "candidateExit": 0,
+  "baselineSubstitution": "Same production coordinator and assertions with baseline WorkspaceScrollKeeper; failure at the first middle reflow. Final candidate adds an assertion after all cases that deferred hosted layout remains bounded.",
+  "trace": "Private instrumented baseline keeper; records existing capture/restore geometry, not timing evidence.",
+  "hasWindow": false,
+  "coverage": [
+    "editable/read-only production coordinator",
+    "middle reflow 420→840→320→coalesced 760/620/500",
+    "tail navigation and resize",
+    "selection navigation during queued reflow",
+    "document replacement during queued reflow",
+    "marked text during resize",
+    "UTF-8 identity, selection, undo isolation, native manager/delegate retention",
+    "bounded hosted layout after deferred capture"
+  ],
+  "notCovered": [
+    "real window outer scrolling or divider gestures",
+    "real input method, focus or VoiceOver",
+    "minimum-system execution",
+    "candidate performance comparison or release acceptance"
+  ],
+  "documentation": "https://developer.apple.com/documentation/appkit/nslayoutmanager/ensurelayout(forboundingrect:in:)"
+}
