@@ -1,0 +1,1172 @@
+{
+  "capturedAtUTC": "2026-09-16T03:03:45.195257+00:00",
+  "repository": "gewill/OpenCCman",
+  "scope": "Before creating this handoff documentation PR; current HEAD checks only, optional skipped jobs are not passes. Re-query before merging.",
+  "branches": [
+    {
+      "name": "main",
+      "sha": "fb56ea3de2427d07405d43f5400977d6167fbca6",
+      "protected": true
+    },
+    {
+      "name": "develop",
+      "sha": "10a29785ccaafe38cc2451cbbb1693b264c60a4a",
+      "protected": true
+    }
+  ],
+  "openPullRequests": [
+    {
+      "baseRefName": "codex/profile-document-stages",
+      "headRefName": "codex/native-editor-sizing",
+      "headRefOid": "c8cd2f312f3c411ed61aea4cac01107a5604fcdf",
+      "isDraft": true,
+      "number": 108,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T22:20:36Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35029843807/job/104585510384",
+          "name": "App Regression",
+          "startedAt": "2026-09-15T22:13:27Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T22:13:21Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35029843807/job/104585511850",
+          "name": "Native WindowGroup lifetime comparison",
+          "startedAt": "2026-09-15T22:13:21Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T22:13:21Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35029843807/job/104585511573",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-15T22:13:21Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T22:13:21Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35029843807/job/104585511820",
+          "name": "Build native window lifecycle diagnostic app",
+          "startedAt": "2026-09-15T22:13:21Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T22:13:21Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35029843807/job/104585511323",
+          "name": "Bounded macOS 15 anchor trace",
+          "startedAt": "2026-09-15T22:13:21Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T22:13:21Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35029843807/job/104585511978",
+          "name": "Same-runner Release editor comparison",
+          "startedAt": "2026-09-15T22:13:21Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "fix: 避免 Mac 编辑器尺寸测量触发全文排版",
+      "url": "https://github.com/gewill/OpenCCman/pull/108"
+    },
+    {
+      "baseRefName": "codex/retained-active-window",
+      "headRefName": "codex/profile-document-stages",
+      "headRefOid": "cb73fc528b3c9d53dfc840b8ae48e1cae7426fcb",
+      "isDraft": false,
+      "number": 106,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T19:55:54Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35015868592/job/104539007621",
+          "name": "App Regression",
+          "startedAt": "2026-09-15T19:49:02Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T19:48:55Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35015868592/job/104539009848",
+          "name": "Native WindowGroup lifetime comparison",
+          "startedAt": "2026-09-15T19:48:56Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T19:48:55Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35015868592/job/104539009673",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-15T19:48:56Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T19:48:55Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35015868592/job/104539058446",
+          "name": "Build native window lifecycle diagnostic app",
+          "startedAt": "2026-09-15T19:49:05Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T19:48:55Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35015868592/job/104539009322",
+          "name": "Bounded macOS 15 anchor trace",
+          "startedAt": "2026-09-15T19:48:56Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "perf: capture document-stage stacks in the full native window protocol",
+      "url": "https://github.com/gewill/OpenCCman/pull/106"
+    },
+    {
+      "baseRefName": "codex/native-file-panel-validation",
+      "headRefName": "codex/retained-active-window",
+      "headRefOid": "77b20831e21cfcb98de9dde3ce35656f3f6327a3",
+      "isDraft": false,
+      "number": 105,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T19:21:15Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35012456266/job/104527522861",
+          "name": "App Regression",
+          "startedAt": "2026-09-15T19:14:51Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T19:14:43Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35012456266/job/104527524253",
+          "name": "Native WindowGroup lifetime comparison",
+          "startedAt": "2026-09-15T19:14:44Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T19:14:43Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35012456266/job/104527524990",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-15T19:14:44Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T19:14:43Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35012456266/job/104527524370",
+          "name": "Build native window lifecycle diagnostic app",
+          "startedAt": "2026-09-15T19:14:44Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T19:14:43Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35012456266/job/104527524520",
+          "name": "Bounded macOS 15 anchor trace",
+          "startedAt": "2026-09-15T19:14:44Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "test: keep retained-window conversion running when another window closes",
+      "url": "https://github.com/gewill/OpenCCman/pull/105"
+    },
+    {
+      "baseRefName": "codex/native-document-lifecycle",
+      "headRefName": "codex/native-file-panel-validation",
+      "headRefOid": "66f0dd8f7df6528fc652351fe71c4ab3422fc38a",
+      "isDraft": false,
+      "number": 104,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T18:48:02Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35008756321/job/104515825046",
+          "name": "App Regression",
+          "startedAt": "2026-09-15T18:40:59Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T18:40:52Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35008756321/job/104515827031",
+          "name": "Native WindowGroup lifetime comparison",
+          "startedAt": "2026-09-15T18:40:52Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T18:40:52Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35008756321/job/104515827117",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-15T18:40:52Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T18:40:52Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35008756321/job/104515861245",
+          "name": "Build native window lifecycle diagnostic app",
+          "startedAt": "2026-09-15T18:40:58Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T18:40:52Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35008756321/job/104515861362",
+          "name": "Bounded macOS 15 anchor trace",
+          "startedAt": "2026-09-15T18:40:58Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "docs: validate sandboxed macOS Open and Export panels",
+      "url": "https://github.com/gewill/OpenCCman/pull/104"
+    },
+    {
+      "baseRefName": "codex/native-window-three-cycles",
+      "headRefName": "codex/native-document-lifecycle",
+      "headRefOid": "09e61b2dcbd0b836f5221651f7cba8e516cdabee",
+      "isDraft": false,
+      "number": 103,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T18:14:16Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35005389513/job/104503728225",
+          "name": "App Regression",
+          "startedAt": "2026-09-15T18:06:28Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T18:06:21Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35005389513/job/104503729826",
+          "name": "Native WindowGroup lifetime comparison",
+          "startedAt": "2026-09-15T18:06:21Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T18:06:21Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35005389513/job/104503729954",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-15T18:06:21Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T18:06:21Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35005389513/job/104503729424",
+          "name": "Build native window lifecycle diagnostic app",
+          "startedAt": "2026-09-15T18:06:21Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T18:06:21Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35005389513/job/104503730012",
+          "name": "Bounded macOS 15 anchor trace",
+          "startedAt": "2026-09-15T18:06:21Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "test: validate native document cycles and close during conversion",
+      "url": "https://github.com/gewill/OpenCCman/pull/103"
+    },
+    {
+      "baseRefName": "codex/native-window-ax-control",
+      "headRefName": "codex/native-window-three-cycles",
+      "headRefOid": "da6b30b73c86c6d6834dad913148f16f88a6437f",
+      "isDraft": false,
+      "number": 102,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T17:15:57Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/34999487090/job/104484039505",
+          "name": "App Regression",
+          "startedAt": "2026-09-15T17:09:38Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T17:09:30Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/34999487090/job/104484041452",
+          "name": "Native WindowGroup lifetime comparison",
+          "startedAt": "2026-09-15T17:09:30Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T17:09:30Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/34999487090/job/104484098929",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-15T17:09:40Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T17:09:30Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/34999487090/job/104484041683",
+          "name": "Build native window lifecycle diagnostic app",
+          "startedAt": "2026-09-15T17:09:30Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T17:09:30Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/34999487090/job/104484040635",
+          "name": "Bounded macOS 15 anchor trace",
+          "startedAt": "2026-09-15T17:09:30Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "test: 按模型身份验收三轮原生窗口生命周期",
+      "url": "https://github.com/gewill/OpenCCman/pull/102"
+    },
+    {
+      "baseRefName": "codex/native-window-lifecycle",
+      "headRefName": "codex/native-window-ax-control",
+      "headRefOid": "cd18ad73a9c969928c51f6f48ab7227ec7f5d9a7",
+      "isDraft": false,
+      "number": 101,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T16:43:01Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/34995909429/job/104472399347",
+          "name": "App Regression",
+          "startedAt": "2026-09-15T16:36:22Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T16:36:15Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/34995909429/job/104472401202",
+          "name": "Native WindowGroup lifetime comparison",
+          "startedAt": "2026-09-15T16:36:15Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T16:36:15Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/34995909429/job/104472400998",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-15T16:36:15Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T16:36:15Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/34995909429/job/104472400827",
+          "name": "Build native window lifecycle diagnostic app",
+          "startedAt": "2026-09-15T16:36:15Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T16:36:15Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/34995909429/job/104472400917",
+          "name": "Bounded macOS 15 anchor trace",
+          "startedAt": "2026-09-15T16:36:15Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "test: 在真实应用中隔离窗口观察对生命周期的影响",
+      "url": "https://github.com/gewill/OpenCCman/pull/101"
+    },
+    {
+      "baseRefName": "develop",
+      "headRefName": "codex/customer-center-locale",
+      "headRefOid": "7eae4db8c3071a77e0a9d3027e58fc3795038016",
+      "isDraft": true,
+      "number": 96,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-16T00:21:26Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35039166994/job/104614932234",
+          "name": "App Regression",
+          "startedAt": "2026-09-16T00:14:41Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-16T00:14:34Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35039166994/job/104614933147",
+          "name": "Native WindowGroup lifetime comparison",
+          "startedAt": "2026-09-16T00:14:35Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-16T00:14:34Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35039166994/job/104614932874",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-16T00:14:35Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-16T00:14:34Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35039166994/job/104614932913",
+          "name": "Bounded macOS 15 anchor trace",
+          "startedAt": "2026-09-16T00:14:35Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "fix: synchronize RevenueCat Customer Center language (#71)",
+      "url": "https://github.com/gewill/OpenCCman/pull/96"
+    },
+    {
+      "baseRefName": "develop",
+      "headRefName": "codex/native-window-lifecycle",
+      "headRefOid": "397eaf84ed923762087fc6897061f715800da819",
+      "isDraft": true,
+      "number": 90,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T22:47:10Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35032158249/job/104592893464",
+          "name": "App Regression",
+          "startedAt": "2026-09-15T22:40:56Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T22:40:49Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35032158249/job/104592914910",
+          "name": "Native WindowGroup lifetime comparison",
+          "startedAt": "2026-09-15T22:40:55Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T22:40:49Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35032158249/job/104592894483",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-15T22:40:50Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T22:40:49Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35032158249/job/104592894313",
+          "name": "Build native window lifecycle diagnostic app",
+          "startedAt": "2026-09-15T22:40:50Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T22:40:49Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35032158249/job/104592894728",
+          "name": "Bounded macOS 15 anchor trace",
+          "startedAt": "2026-09-15T22:40:50Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "test: observe model lifetimes in native WindowGroup windows",
+      "url": "https://github.com/gewill/OpenCCman/pull/90"
+    },
+    {
+      "baseRefName": "develop",
+      "headRefName": "codex/services-wait-benchmark",
+      "headRefOid": "9d9b6296160f678e9dc9ba9d6947338ddddeb55c",
+      "isDraft": true,
+      "number": 81,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T10:56:13Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/34960015426/job/104351105674",
+          "name": "App Regression",
+          "startedAt": "2026-09-15T10:49:44Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T10:49:36Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/34960015426/job/104351106588",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-15T10:49:36Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T10:49:36Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/34960015426/job/104351135155",
+          "name": "Build Release Services validation app",
+          "startedAt": "2026-09-15T10:49:42Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "test: measure synchronous Services calls with isolated fixtures",
+      "url": "https://github.com/gewill/OpenCCman/pull/81"
+    },
+    {
+      "baseRefName": "codex/settings-sheet-locale",
+      "headRefName": "codex/inspector-label-layout",
+      "headRefOid": "8ec94df78da2e251de2c708cfea291c900a25b8b",
+      "isDraft": true,
+      "number": 78,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-16T00:07:59Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35038043011/job/104611465475",
+          "name": "App Regression",
+          "startedAt": "2026-09-15T23:59:28Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T23:59:19Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35038043011/job/104611466612",
+          "name": "Native WindowGroup lifetime comparison",
+          "startedAt": "2026-09-15T23:59:20Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T23:59:19Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35038043011/job/104611466551",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-15T23:59:20Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T23:59:19Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35038043011/job/104611466592",
+          "name": "Bounded macOS 15 anchor trace",
+          "startedAt": "2026-09-15T23:59:20Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "fix(ui): keep narrow inspector segment labels readable",
+      "url": "https://github.com/gewill/OpenCCman/pull/78"
+    },
+    {
+      "baseRefName": "codex/settings-sheet-locale",
+      "headRefName": "codex/closed-window-entries",
+      "headRefOid": "609bdade4a416af369875c5361723587513f18fe",
+      "isDraft": true,
+      "number": 77,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-16T01:17:08Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35042881145/job/104626331971",
+          "name": "App Regression",
+          "startedAt": "2026-09-16T01:08:26Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-16T01:08:18Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35042881145/job/104626332966",
+          "name": "Native WindowGroup lifetime comparison",
+          "startedAt": "2026-09-16T01:08:19Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-16T01:08:18Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35042881145/job/104626354234",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-16T01:08:25Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-16T01:08:18Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35042881145/job/104626333027",
+          "name": "Bounded macOS 15 anchor trace",
+          "startedAt": "2026-09-16T01:08:19Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "fix(mac): restore workspace for closed-window entry requests",
+      "url": "https://github.com/gewill/OpenCCman/pull/77"
+    },
+    {
+      "baseRefName": "codex/mac-window-sizing",
+      "headRefName": "codex/settings-sheet-locale",
+      "headRefOid": "b48e0de825a369ad855d1eddf0aef7b055d67acf",
+      "isDraft": false,
+      "number": 76,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-16T00:05:06Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35037859477/job/104610901402",
+          "name": "App Regression",
+          "startedAt": "2026-09-15T23:56:45Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T23:56:37Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35037859477/job/104610902706",
+          "name": "Native WindowGroup lifetime comparison",
+          "startedAt": "2026-09-15T23:56:38Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T23:56:37Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35037859477/job/104610902655",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-15T23:56:38Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T23:56:37Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35037859477/job/104610902212",
+          "name": "Bounded macOS 15 anchor trace",
+          "startedAt": "2026-09-15T23:56:38Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "fix(ui): 设置弹窗跟随应用内语言",
+      "url": "https://github.com/gewill/OpenCCman/pull/76"
+    },
+    {
+      "baseRefName": "develop",
+      "headRefName": "codex/mac-window-sizing",
+      "headRefOid": "919e0e626dfbdcd9eacba4cbf6eb6596cd7079e4",
+      "isDraft": true,
+      "number": 74,
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-16T00:02:33Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35037722257/job/104610476783",
+          "name": "App Regression",
+          "startedAt": "2026-09-15T23:54:44Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T23:54:36Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35037722257/job/104610477778",
+          "name": "Native WindowGroup lifetime comparison",
+          "startedAt": "2026-09-15T23:54:37Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T23:54:36Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35037722257/job/104610477827",
+          "name": "Build iOS Simulator validation app",
+          "startedAt": "2026-09-15T23:54:37Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-09-15T23:54:36Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/gewill/OpenCCman/actions/runs/35037722257/job/104610477878",
+          "name": "Bounded macOS 15 anchor trace",
+          "startedAt": "2026-09-15T23:54:37Z",
+          "status": "COMPLETED",
+          "workflowName": "App Regression"
+        }
+      ],
+      "title": "feat(mac): preserve window sizing and constrain restored frames",
+      "url": "https://github.com/gewill/OpenCCman/pull/74"
+    }
+  ],
+  "recentlyMergedPullRequests": [
+    {
+      "mergeCommit": {
+        "oid": "10a29785ccaafe38cc2451cbbb1693b264c60a4a"
+      },
+      "mergedAt": "2026-09-16T00:51:57Z",
+      "number": 114,
+      "title": "docs: 定位 #93 最小程序与真实应用的宿主闭包来源",
+      "url": "https://github.com/gewill/OpenCCman/pull/114"
+    },
+    {
+      "mergeCommit": {
+        "oid": "c08bb0295ecf63f46e09b20e7c5911767a2528b1"
+      },
+      "mergedAt": "2026-09-15T23:22:51Z",
+      "number": 113,
+      "title": "test: isolate RevenueCat compatibility with Xcode 27 (#107)",
+      "url": "https://github.com/gewill/OpenCCman/pull/113"
+    },
+    {
+      "mergeCommit": {
+        "oid": "51bcedaec5a64ae840fcf36f39bb217b65b91304"
+      },
+      "mergedAt": "2026-09-15T23:05:31Z",
+      "number": 112,
+      "title": "docs: record enforced branch protection for main and develop",
+      "url": "https://github.com/gewill/OpenCCman/pull/112"
+    },
+    {
+      "mergeCommit": {
+        "oid": "4fa8cd1c7c5a89cf1fdef4d746d98b44b91f8404"
+      },
+      "mergedAt": "2026-09-15T22:55:07Z",
+      "number": 111,
+      "title": "docs: clarify completed branch migration and remaining release gates",
+      "url": "https://github.com/gewill/OpenCCman/pull/111"
+    },
+    {
+      "mergeCommit": {
+        "oid": "b2e0e635846017f0601fca86e7859a1cdc62f152"
+      },
+      "mergedAt": "2026-09-15T22:37:49Z",
+      "number": 109,
+      "title": "test: distinguish released windows from retained SwiftUI hosts",
+      "url": "https://github.com/gewill/OpenCCman/pull/109"
+    },
+    {
+      "mergeCommit": {
+        "oid": "1d96edf6580698ea29d4941e28a5f3fcf8f5d94a"
+      },
+      "mergedAt": "2026-09-15T16:16:10Z",
+      "number": 100,
+      "title": "test: 校准窗口生命周期诊断并隔离观察工具影响",
+      "url": "https://github.com/gewill/OpenCCman/pull/100"
+    },
+    {
+      "mergeCommit": {
+        "oid": "6a65b047bd14b17e83c7b412aeca46d68f37dbae"
+      },
+      "mergedAt": "2026-09-15T15:31:46Z",
+      "number": 99,
+      "title": "fix: restore macOS 27 editor and window introspection",
+      "url": "https://github.com/gewill/OpenCCman/pull/99"
+    },
+    {
+      "mergeCommit": {
+        "oid": "fbacfba7d5e9671d1cb5d3aeb0eb22df13d5010d"
+      },
+      "mergedAt": "2026-09-15T14:08:20Z",
+      "number": 97,
+      "title": "docs: record VoiceOver attempt and correct test cleanup (#71)",
+      "url": "https://github.com/gewill/OpenCCman/pull/97"
+    },
+    {
+      "mergeCommit": {
+        "oid": "f4777140c85cbbd34f98f830f03446d4c29dd10b"
+      },
+      "mergedAt": "2026-09-15T13:30:35Z",
+      "number": 95,
+      "title": "docs: verify Mac Customer Center locales and window isolation (#71)",
+      "url": "https://github.com/gewill/OpenCCman/pull/95"
+    },
+    {
+      "mergeCommit": {
+        "oid": "68350cb487f6006b42d0c329354cbfbe553b4b53"
+      },
+      "mergedAt": "2026-09-15T13:05:27Z",
+      "number": 94,
+      "title": "test: isolate model retention from WindowGroup lifecycle (#93)",
+      "url": "https://github.com/gewill/OpenCCman/pull/94"
+    },
+    {
+      "mergeCommit": {
+        "oid": "787a2dc430c3c5ad8cc477ed66478cd5567711c3"
+      },
+      "mergedAt": "2026-09-15T12:26:53Z",
+      "number": 92,
+      "title": "test: wait for completed editor reflow before scroll assertions",
+      "url": "https://github.com/gewill/OpenCCman/pull/92"
+    },
+    {
+      "mergeCommit": {
+        "oid": "8f4ff5dd9dfbf485a4863250adee10bcbd9f029c"
+      },
+      "mergedAt": "2026-09-15T12:38:23Z",
+      "number": 91,
+      "title": "docs: verify ASC privacy and RevenueCat disclosure evidence",
+      "url": "https://github.com/gewill/OpenCCman/pull/91"
+    },
+    {
+      "mergeCommit": {
+        "oid": "b7a27c3fb213cd86558276b28faf35d886b623a5"
+      },
+      "mergedAt": "2026-09-15T11:33:56Z",
+      "number": 89,
+      "title": "fix: remove obsolete Apple Events purpose string",
+      "url": "https://github.com/gewill/OpenCCman/pull/89"
+    },
+    {
+      "mergeCommit": {
+        "oid": "afb9463efc6e13c9dc063df48e402b5aca588a83"
+      },
+      "mergedAt": "2026-09-15T11:29:01Z",
+      "number": 87,
+      "title": "docs: audit release metadata and prepare localized 1.3 copy",
+      "url": "https://github.com/gewill/OpenCCman/pull/87"
+    },
+    {
+      "mergeCommit": {
+        "oid": "dfac3649f23eb9d483ebefe9510a8da535ab372b"
+      },
+      "mergedAt": "2026-09-15T11:14:13Z",
+      "number": 86,
+      "title": "test: record exact reading anchors before reflow assertions",
+      "url": "https://github.com/gewill/OpenCCman/pull/86"
+    },
+    {
+      "mergeCommit": {
+        "oid": "8dffd48326d01e8d77b151e5bda627d24b14ebcf"
+      },
+      "mergedAt": "2026-09-15T11:05:12Z",
+      "number": 85,
+      "title": "docs: archive contiguous UTF-8 experiment without production change",
+      "url": "https://github.com/gewill/OpenCCman/pull/85"
+    },
+    {
+      "mergeCommit": {
+        "oid": "f51b6fd4ea1e922ca83b67440537f554d6ba1619"
+      },
+      "mergedAt": "2026-09-15T10:30:03Z",
+      "number": 84,
+      "title": "perf: remove duplicate UTF-8 scan before OpenCC conversion",
+      "url": "https://github.com/gewill/OpenCCman/pull/84"
+    },
+    {
+      "mergeCommit": {
+        "oid": "f8f40f2b6f85d1c5fd1c3224a745aa9e7abe1df8"
+      },
+      "mergedAt": "2026-09-15T09:12:08Z",
+      "number": 83,
+      "title": "fix(ci): prevent false success when rg is unavailable",
+      "url": "https://github.com/gewill/OpenCCman/pull/83"
+    },
+    {
+      "mergeCommit": {
+        "oid": "461b5bbdc781554bc68693b703e1df9c41367641"
+      },
+      "mergedAt": "2026-09-15T08:55:22Z",
+      "number": 80,
+      "title": "build: 清理未使用依赖与资产符号冲突",
+      "url": "https://github.com/gewill/OpenCCman/pull/80"
+    },
+    {
+      "mergeCommit": {
+        "oid": "9f7106bb00dd406bcf644e13f1a5332012180bc9"
+      },
+      "mergedAt": "2026-09-15T08:16:39Z",
+      "number": 79,
+      "title": "test: 完成真实 OpenCC 同步与失败恢复演练",
+      "url": "https://github.com/gewill/OpenCCman/pull/79"
+    }
+  ],
+  "openIssues": [
+    {
+      "number": 110,
+      "title": "[维护] 完成分支保护与历史 build 引用归档",
+      "url": "https://github.com/gewill/OpenCCman/issues/110"
+    },
+    {
+      "number": 107,
+      "title": "[构建] 跟踪 Xcode 27 部署下限及 RevenueCat 5.64.0 编译兼容性",
+      "url": "https://github.com/gewill/OpenCCman/issues/107"
+    },
+    {
+      "number": 98,
+      "title": "[macOS 27] 恢复被 Introspect 版本限制跳过的编辑器与窗口适配",
+      "url": "https://github.com/gewill/OpenCCman/issues/98"
+    },
+    {
+      "number": 93,
+      "title": "[性能] 定位原生关窗后 HomeViewModel 累积的持有链",
+      "url": "https://github.com/gewill/OpenCCman/issues/93"
+    },
+    {
+      "number": 75,
+      "title": "[UI][Mac] 转换设置弹窗未跟随应用内语言",
+      "url": "https://github.com/gewill/OpenCCman/issues/75"
+    },
+    {
+      "number": 71,
+      "title": "[功能] 接入 RevenueCatUI 用户中心及旧系统兼容入口",
+      "url": "https://github.com/gewill/OpenCCman/issues/71"
+    },
+    {
+      "number": 68,
+      "title": "[性能] 评估 TextKit 2 迁移并定位大文稿内存开销",
+      "url": "https://github.com/gewill/OpenCCman/issues/68"
+    },
+    {
+      "number": 65,
+      "title": "[性能][Mac] 修复大文稿滚动与布局切换的 TextKit 重排长等待",
+      "url": "https://github.com/gewill/OpenCCman/issues/65"
+    },
+    {
+      "number": 57,
+      "title": "[UI][Mac] 明确并设置推荐窗口尺寸与最小尺寸",
+      "url": "https://github.com/gewill/OpenCCman/issues/57"
+    },
+    {
+      "number": 52,
+      "title": "[后续][Pro] UI优化后支持大文件转换与有限预览（超过10 MiB）",
+      "url": "https://github.com/gewill/OpenCCman/issues/52"
+    },
+    {
+      "number": 50,
+      "title": "[UI][E] 实现iPhone上下阅读、转换设置面板与键盘避让",
+      "url": "https://github.com/gewill/OpenCCman/issues/50"
+    },
+    {
+      "number": 49,
+      "title": "[UI][D] 实现iPad双布局、窄窗口与软硬键盘适配",
+      "url": "https://github.com/gewill/OpenCCman/issues/49"
+    },
+    {
+      "number": 48,
+      "title": "[UI][C] 实现Mac设置侧栏、左右/上下分栏与键盘操作",
+      "url": "https://github.com/gewill/OpenCCman/issues/48"
+    },
+    {
+      "number": 47,
+      "title": "[UI][B] 提取共用设置、编辑器与结果状态组件",
+      "url": "https://github.com/gewill/OpenCCman/issues/47"
+    },
+    {
+      "number": 46,
+      "title": "[UI][A] 建立窗口独立的布局偏好、两轴解析与恢复",
+      "url": "https://github.com/gewill/OpenCCman/issues/46"
+    },
+    {
+      "number": 45,
+      "title": "[UI][跟踪] 第2稿：iPhone／iPad／Mac 自适应转换工作区",
+      "url": "https://github.com/gewill/OpenCCman/issues/45"
+    },
+    {
+      "number": 40,
+      "title": "[1.3][P1] 修复大字号推荐卡片遮挡正文及页头重叠",
+      "url": "https://github.com/gewill/OpenCCman/issues/40"
+    },
+    {
+      "number": 37,
+      "title": "[1.3] Neumorphic 正式版控件 UI 验收",
+      "url": "https://github.com/gewill/OpenCCman/issues/37"
+    },
+    {
+      "number": 34,
+      "title": "[1.3] What’s New：完成设备与弹窗延后 UI 验收",
+      "url": "https://github.com/gewill/OpenCCman/issues/34"
+    },
+    {
+      "number": 31,
+      "title": "[后续功能] 评估自定义词典与术语保护接口",
+      "url": "https://github.com/gewill/OpenCCman/issues/31"
+    },
+    {
+      "number": 30,
+      "title": "[后续功能] 图片 OCR 提取文字后转换",
+      "url": "https://github.com/gewill/OpenCCman/issues/30"
+    },
+    {
+      "number": 29,
+      "title": "[后续功能] 系统分享菜单中的文字转换扩展",
+      "url": "https://github.com/gewill/OpenCCman/issues/29"
+    },
+    {
+      "number": 28,
+      "title": "[后续功能] 默认关闭的本地转换历史",
+      "url": "https://github.com/gewill/OpenCCman/issues/28"
+    },
+    {
+      "number": 27,
+      "title": "[后续功能] 转换前后差异查看",
+      "url": "https://github.com/gewill/OpenCCman/issues/27"
+    },
+    {
+      "number": 26,
+      "title": "[1.4 候选] Shortcuts 文本转换动作",
+      "url": "https://github.com/gewill/OpenCCman/issues/26"
+    },
+    {
+      "number": 25,
+      "title": "[1.4 候选] 批量 TXT 文件转换",
+      "url": "https://github.com/gewill/OpenCCman/issues/25"
+    },
+    {
+      "number": 22,
+      "title": "[后续][P2][R10] 测量 NSServices 大文本等待与容量边界",
+      "url": "https://github.com/gewill/OpenCCman/issues/22"
+    },
+    {
+      "number": 20,
+      "title": "[1.3][P1][R9] 完成 VoiceOver、键盘和编辑器运行时验收",
+      "url": "https://github.com/gewill/OpenCCman/issues/20"
+    },
+    {
+      "number": 19,
+      "title": "[1.3][P1][R8] 验证并修复全部关窗后的系统入口",
+      "url": "https://github.com/gewill/OpenCCman/issues/19"
+    },
+    {
+      "number": 18,
+      "title": "[1.3][P1][R7] 建立最终应用冷启动、热转换与内存基线",
+      "url": "https://github.com/gewill/OpenCCman/issues/18"
+    },
+    {
+      "number": 17,
+      "title": "[1.3][P0][R3] 核对隐私问卷、商品说明与 1.3 发布资料",
+      "url": "https://github.com/gewill/OpenCCman/issues/17"
+    },
+    {
+      "number": 16,
+      "title": "[1.3][P0][R3] 验证 iOS 14／macOS 11 及最终产物核心路径",
+      "url": "https://github.com/gewill/OpenCCman/issues/16"
+    },
+    {
+      "number": 15,
+      "title": "[1.3][P0][R2] 验收云端分发包的 TXT、权限和跨 App 转换",
+      "url": "https://github.com/gewill/OpenCCman/issues/15"
+    },
+    {
+      "number": 14,
+      "title": "[1.3][P0][R1] 完成 Sandbox/TestFlight 购买、恢复与 Pro 资格验收",
+      "url": "https://github.com/gewill/OpenCCman/issues/14"
+    },
+    {
+      "number": 11,
+      "title": "[跟踪] v1.3 剩余验收、同步交付与后续功能清单",
+      "url": "https://github.com/gewill/OpenCCman/issues/11"
+    }
+  ]
+}

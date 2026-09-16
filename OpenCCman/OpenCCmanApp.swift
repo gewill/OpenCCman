@@ -28,6 +28,9 @@ struct OpenCCmanApp: App {
   @AppStorage(UserDefaultsKeys.lastCheckProDate.rawValue) var lastCheckProDate: TimeInterval = Date().yesterday.unixTimestamp
 
   init() {
+    #if os(macOS)
+      MainWindowSizing.captureInitialFrames()
+    #endif
     IAPManager.shared.configure()
   }
 

@@ -1,0 +1,45 @@
+malloc_history Report Version:  2.0
+ALLOC 0x7b67e656e0-0x7b67e6570f [size=48]:  0x18c473e80 (dyld) start
+  → 0x104269dc4 (HostStackOrigin20260916) main
+  → 0x1c55b28b8 (com.apple.SwiftUI) static App.main()
+  → 0x1c52d7c68 (com.apple.SwiftUI) runApp<A>(_:)
+  → 0x1c4ec4c84 (com.apple.SwiftUI) specialized runApp(_:)
+  → 0x190e8bc4c (com.apple.AppKit) NSApplicationMain
+  → 0x190eb390c (com.apple.AppKit) -[NSApplication run]
+  → 0x19173826c (com.apple.AppKit) -[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]
+  → 0x191738748 (com.apple.AppKit) -[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]
+  → 0x190ec07c0 (com.apple.AppKit) _DPSNextEvent
+  → 0x199c97454 (com.apple.HIToolbox) AEProcessAppleEvent
+  → 0x195099a0c (com.apple.AE) aeProcessAppleEvent
+  → 0x19509ff9c (com.apple.AE) ???
+  → 0x1950a053c (com.apple.AE) ???
+  → 0x18dfe5004 (com.apple.Foundation) _NSAppleEventManagerGenericHandler
+  → 0x18dfe520c (com.apple.Foundation) -[NSAppleEventManager dispatchRawAppleEvent:withRawReply:handlerRefCon:]
+  → 0x190ec6a94 (com.apple.AppKit) -[NSApplication(NSAppleEventHandling) _handleCoreEvent:withReplyEvent:]
+  → 0x190ec6e78 (com.apple.AppKit) -[NSApplication(NSAppleEventHandling) _handleAEOpenEvent:]
+  → 0x191262028 (com.apple.AppKit) -[NSApplication _reopenWindowsAsNecessaryIncludingRestorableState:withFullFidelity:completionHandler:]
+  → 0x190fdf890 (com.apple.AppKit) -[NSDocumentController(NSInternal) _autoreopenDocumentsIgnoringExpendable:withCompletionHandler:]
+  → 0x190fdffb8 (com.apple.AppKit) __97-[NSDocumentController(NSInternal) _autoreopenDocumentsIgnoringExpendable:withCompletionHandler:]_block_invoke_3
+  → 0x1912620c0 (com.apple.AppKit) __102-[NSApplication _reopenWindowsAsNecessaryIncludingRestorableState:withFullFidelity:completionHandler:]_block_invoke
+  → 0x190fe0558 (com.apple.AppKit) __58-[NSApplication(NSAppleEventHandling) _handleAEOpenEvent:]_block_invoke
+  → 0x191031c8c (com.apple.AppKit) -[NSApplication _doOpenUntitled]
+  → 0x1c5fb92e8 (com.apple.SwiftUI) @objc AppDelegate.applicationOpenUntitledFile(_:)
+  → 0x1c57e4e3c (com.apple.SwiftUI) AppWindowsController.showInitialWindows()
+  → 0x1c57e6c74 (com.apple.SwiftUI) AppWindowsController.makeMainWindow(namespace:info:presentingSceneValue:)
+  → 0x1c57edf64 (com.apple.SwiftUI) AppWindowsController.makeWindowController(_:restorationID:environment:presentingSceneValue:)
+  → 0x1c57efb20 (com.apple.SwiftUI) makeWindowController #1 <A>(_:baseEnvironment:) in AppWindowsController.makeWindowController(_:restorationID:environment:presentingSceneValue:)
+  → 0x1c58116d4 (com.apple.SwiftUI) specialized AppWindowsController.makeHost<A>(_:environment:defaultSize:sizingOptions:windowLayoutEnabled:)
+  → 0x1c4f2cdb4 (com.apple.SwiftUI) specialized NSHostingController.init(rootView:)
+  → 0x1c4fa20d0 (com.apple.SwiftUI) <deduplicated_symbol>
+  → 0x1c56bdf34 (com.apple.SwiftUI) specialized NSHostingView.init(rootView:)
+  → 0x190ed3f50 (com.apple.AppKit) -[NSView initWithFrame:]
+  → 0x190ecf010 (com.apple.AppKit) -[NSView _commonAwake]
+  → 0x18dfcc6b0 (com.apple.Foundation) -[NSNotificationCenter addObserverForName:object:queue:usingBlock:]
+  → 0x18c8c6a20 (com.apple.CoreFoundation) _CFXNotificationRegisterObserver
+  → 0x18ca4f344 (com.apple.CoreFoundation) CFXNotificationRegistrarAdd
+  → 0x18ca4f764 (com.apple.CoreFoundation) _CFXNotificationRegistrarAddObserver
+  → 0x18ca4d930 (com.apple.CoreFoundation) CFXNotificationHandlerCopy
+  → 0x18c502d94 (libsystem_blocks.dylib) _Block_copy
+  → 0x18c64fdd0 (libsystem_malloc.dylib) _malloc
+  → 0x18c670630 (libsystem_malloc.dylib) _malloc_zone_malloc_instrumented_or_legacy 
+

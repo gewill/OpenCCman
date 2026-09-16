@@ -1,0 +1,41 @@
+malloc_history Report Version:  2.0
+ALLOC 0x76fd834c90-0x76fd834cbf [size=48]:  0x18c473e80 (dyld) start
+  → 0x102a7c5d4 (OpenCCmanHostStack20260916) main
+  → 0x1c55b28b8 (com.apple.SwiftUI) static App.main()
+  → 0x1c52d7c68 (com.apple.SwiftUI) runApp<A>(_:)
+  → 0x1c4ec4c84 (com.apple.SwiftUI) specialized runApp(_:)
+  → 0x190e8bc4c (com.apple.AppKit) NSApplicationMain
+  → 0x190eb395c (com.apple.AppKit) -[NSApplication run]
+  → 0x19125cd48 (com.apple.AppKit) -[NSApplication _handleEvent:]
+  → 0x191736fdc (com.apple.AppKit) -[NSApplication(NSEventRouting) sendEvent:]
+  → 0x191739604 (com.apple.AppKit) routeKeyEquivalent
+  → 0x191126658 (com.apple.AppKit) -[NSMenu performKeyEquivalent:]
+  → 0x1914ba52c (com.apple.AppKit) -[NSMenu _performKeyEquivalentForItemAtIndex:]
+  → 0x1917652b8 (com.apple.AppKit) _NSMenuPerformActionWithHighlighting
+  → 0x1914d0200 (com.apple.AppKit) -[NSMenuItem _corePerformAction:]
+  → 0x19105d610 (com.apple.AppKit) -[NSApplication(NSResponder) sendAction:to:from:]
+  → 0x1c53027ec (com.apple.SwiftUI) @objc MenuItemCallback.menuAction(_:)
+  → 0x1c4f39578 (com.apple.SwiftUI) <deduplicated_symbol>
+  → 0x1c61eb8b4 (com.apple.SwiftUI) ButtonAction.callAsFunction()
+  → 0x1c623477c (com.apple.SwiftUI) specialized static MainActor.assumeIsolated<A>(_:file:line:)
+  → 0x1c5d9f980 (com.apple.SwiftUI) <deduplicated_symbol>
+  → 0x1c52571bc (com.apple.SwiftUI) implicit closure #2 in implicit closure #1 in ContentSceneCommands.WindowGroupMenuItem.body.getter
+  → 0x1c57e6264 (com.apple.SwiftUI) AppWindowsController.showNewMainWindow(namespace:item:)
+  → 0x1c57e6c74 (com.apple.SwiftUI) AppWindowsController.makeMainWindow(namespace:info:presentingSceneValue:)
+  → 0x1c57edf64 (com.apple.SwiftUI) AppWindowsController.makeWindowController(_:restorationID:environment:presentingSceneValue:)
+  → 0x1c57efb20 (com.apple.SwiftUI) makeWindowController #1 <A>(_:baseEnvironment:) in AppWindowsController.makeWindowController(_:restorationID:environment:presentingSceneValue:)
+  → 0x1c58116d4 (com.apple.SwiftUI) specialized AppWindowsController.makeHost<A>(_:environment:defaultSize:sizingOptions:windowLayoutEnabled:)
+  → 0x1c4f2cdb4 (com.apple.SwiftUI) specialized NSHostingController.init(rootView:)
+  → 0x1c4fa20d0 (com.apple.SwiftUI) <deduplicated_symbol>
+  → 0x1c56bdf34 (com.apple.SwiftUI) specialized NSHostingView.init(rootView:)
+  → 0x190ed3f50 (com.apple.AppKit) -[NSView initWithFrame:]
+  → 0x190ecf010 (com.apple.AppKit) -[NSView _commonAwake]
+  → 0x18dfcc6b0 (com.apple.Foundation) -[NSNotificationCenter addObserverForName:object:queue:usingBlock:]
+  → 0x18c8c6a20 (com.apple.CoreFoundation) _CFXNotificationRegisterObserver
+  → 0x18ca4f344 (com.apple.CoreFoundation) CFXNotificationRegistrarAdd
+  → 0x18ca4f764 (com.apple.CoreFoundation) _CFXNotificationRegistrarAddObserver
+  → 0x18ca4d930 (com.apple.CoreFoundation) CFXNotificationHandlerCopy
+  → 0x18c502d94 (libsystem_blocks.dylib) _Block_copy
+  → 0x18c64fdd0 (libsystem_malloc.dylib) _malloc
+  → 0x18c670630 (libsystem_malloc.dylib) _malloc_zone_malloc_instrumented_or_legacy 
+
