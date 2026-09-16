@@ -56,7 +56,7 @@ HTTP, server translations, SDK caching or official UI behavior.
 | Preferences | PASS: bridge preserves all preferences, including Pro and the quota fixture; no explicit access refresh from the bridge |
 | Project/source checks | PASS: 58 Swift sources and three localization files |
 | Existing Pro/real quota integration checks | PASS: restore/revocation, missing/failed/cancelled snapshots |
-| Real SDK macOS/iOS builds | Pending CI; the double is not API compatibility evidence |
+| Real SDK macOS/iOS builds | PASS for `4da64c9`: [Mac/full regression](https://github.com/gewill/OpenCCman/actions/runs/34975740015), [iOS build](https://github.com/gewill/OpenCCman/actions/runs/34975749208/job/104402915808). The double itself is not API compatibility evidence; new integration requires fresh CI |
 
 [Sanitized local output](checks.log) contains the baseline observation and complete
 PASS observations. The expected baseline assertion's crash dump is excluded.
@@ -81,3 +81,11 @@ remains pending; no device was restarted or user-owned app state changed for thi
 fix. Minimum-system execution stays a pre-release gate under #16 as agreed.
 No RevenueCat dashboard, ASC metadata, products, prices or production build branch
 is changed by this candidate.
+
+## 2026-09-16 develop integration
+
+Integrated develop `c08bb02` into this candidate. The only conflict was the Customer Center evidence index; both the locale-sync link and the prior Mac VoiceOver/cleanup link are preserved. Relative product changes remain confined to the same IAPManager, ChangeLanguageScene and CustomerCenterScene language bridge. Exact dependencies match develop; no backend or app-product configuration changed.
+
+[Integration commands/logs](2026-09-16-integration/results.json) pass all six initialization language cases, runtime SDK language calls, proxy ordering and configure idempotence, unchanged preferences/entitlements/quota, existing Pro/real-quota model integration, quota concurrency/cancellation/midnight/Pro exemption, and 58-source/three-language project checks. Old language/script accessor deprecation warnings remain explicit. Fresh full-app CI uses this integration's new HEAD.
+
+The old `4da64c9` Mac and iOS build successes are now correctly recorded above as historical build evidence. They do not accept the new integration automatically or satisfy the official UI screenshot/video gate. PR #96 stays Draft: iOS three-language/light-dark presentation, same-process and iPad second-window language changes, loading/restore/support forms, maximum type and VoiceOver remain pending. The protected simulator handoff is untouched.

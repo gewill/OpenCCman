@@ -1,0 +1,30 @@
+upstream-legacy.swift:57:12: error: invalid redeclaration of synthesized memberwise 'init(stringRepresentation:)'
+ 55 | 
+ 56 |     /// Creates a color from a Hex string: `#RRGGBB` or `#RRGGBBAA`.
+ 57 |     public init(stringRepresentation: String) throws {
+    |            `- error: invalid redeclaration of synthesized memberwise 'init(stringRepresentation:)'
+ 58 |         self.init(stringRepresentation: stringRepresentation, color: try Self.parseColor(stringRepresentation))
+ 59 |     }
+
+upstream-legacy.swift:260:18: error: ambiguous use of 'init'
+ 19 | 
+ 20 | /// Represents a color to be used by `RevenueCatUI`
+ 21 | public struct PaywallColor {
+    |               |- note: found this candidate 
+    |               `- note: found this candidate 
+ 22 | 
+ 23 |     /// The possible color schemes, corresponding to the light and dark appearances.
+    :
+ 55 | 
+ 56 |     /// Creates a color from a Hex string: `#RRGGBB` or `#RRGGBBAA`.
+ 57 |     public init(stringRepresentation: String) throws {
+    |            `- note: found this candidate 
+ 58 |         self.init(stringRepresentation: stringRepresentation, color: try Self.parseColor(stringRepresentation))
+ 59 |     }
+    :
+258 | 
+259 |     public init(from decoder: Decoder) throws {
+260 |         try self.init(stringRepresentation: decoder.singleValueContainer().decode(String.self))
+    |                  `- error: ambiguous use of 'init'
+261 |     }
+262 | 
