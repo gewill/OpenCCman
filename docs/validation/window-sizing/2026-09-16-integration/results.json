@@ -1,0 +1,28 @@
+{
+  "base": "51bcedaec5a64ae840fcf36f39bb217b65b91304",
+  "previousCandidate": "d009913b4b0291955471873a030e908549a98cda",
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "checks": [
+    {
+      "command": "bash scripts/check-window-sizing.sh",
+      "exitCode": 0,
+      "scope": "geometry, native first launch/restoration, window reader, sheet dismissal"
+    },
+    {
+      "command": "bash scripts/check-workspace.sh",
+      "exitCode": 0,
+      "scope": "layout resolution, hysteresis, inspector width, independent window state"
+    },
+    {
+      "command": "python3 scripts/check-project.py",
+      "exitCode": 0,
+      "scope": "60 Swift application sources and 3 localization sets"
+    },
+    {
+      "command": "python3 scripts/check-introspection.py --introspect-path <clean checkout matching Package.resolved>",
+      "exitCode": 0,
+      "scope": "real editor adapters plus MainWindowReader in NSHostingView on macOS 27; private dependency copy"
+    }
+  ],
+  "runtimeAcceptance": "No new final-candidate application UI matrix or screenshot in this integration step."
+}

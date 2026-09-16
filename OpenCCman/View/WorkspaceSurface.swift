@@ -9,6 +9,7 @@ struct WorkspaceSurface: View {
   @EnvironmentObject private var navigator: Navigator
   @EnvironmentObject private var windowState: WhatsNewWindowState
   @Environment(\.sizeCategory) private var sizeCategory
+  @Environment(\.locale) private var locale
   @AppStorage(UserDefaultsKeys.isPro.rawValue) private var isPro = false
   private var preferences = WorkspacePreferences()
   @State private var previousAxis: WorkspaceLayoutResolution.Axis?
@@ -56,6 +57,7 @@ struct WorkspaceSurface: View {
       windowState.conversionSettingsIsActive = false
     }) {
       ConversionSettingsSheet()
+        .environment(\.locale, locale)
         .environmentObject(viewModel)
         .environmentObject(windowState)
     }

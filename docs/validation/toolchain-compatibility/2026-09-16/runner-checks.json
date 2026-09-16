@@ -1,0 +1,18 @@
+[
+  {
+    "case": "wrong expectation fails",
+    "exitCode": 1
+  },
+  {
+    "case": "wrong upstream checksum rejected",
+    "exitCode": 2
+  },
+  {
+    "case": "additional unrelated compiler error rejected",
+    "exitCode": 1,
+    "injectedLine": "func unrelatedFailure() { missingIdentifier() }",
+    "unexpectedErrors": [
+      "cannot find 'missingIdentifier' in scope"
+    ]
+  }
+]

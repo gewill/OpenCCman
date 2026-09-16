@@ -1,0 +1,11 @@
+
+SCANNING <__NSMallocBlock__ 0x75ffccc390> [48]
+REFERENCES TO THIS: 1
+   <malloc in _CFXNotificationRegistrarAddObserver 0x75ff6a4000> [8192]  +4328:  0x75ff6a50e8
+LAYOUT OF NSObject (ObjC)
+    0: Class isa  
+LAYOUT OF __NSMallocBlock__ (ObjC)
+   32: __strong [capture]  --> <AppKitWindowHostingView<ModifiedContent<LazyView<ModifiedContent<ProbeRoot, _BackgroundModifier<LifetimeDriverView>>>, RootModifier>> 0x75ff146800> [2560]
+   40: <extra space>[8]
+CONTENTS:
+   +32: __strong [capture]  0x75ffccc3b0 --> <AppKitWindowHostingView<ModifiedContent<LazyView<ModifiedContent<ProbeRoot, _BackgroundModifier<LifetimeDriverView>>>, RootModifier>> 0x75ff146800> [2560]

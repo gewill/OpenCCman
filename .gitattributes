@@ -6,3 +6,6 @@ docs/performance/macos27-introspection/runtime/after-ui/heap-*.txt -whitespace
 docs/performance/macos27-introspection/runtime/after-ui/vmmap-*.txt -whitespace
 docs/performance/macos27-introspection/runtime/after-controlled/heap.txt -whitespace
 docs/performance/macos27-introspection/runtime/after-controlled/vmmap.txt -whitespace
+# Preserve compiler-emitted whitespace in the two raw initializer diagnostics.
+docs/validation/toolchain-compatibility/2026-09-16/reduced-legacy.log -whitespace
+docs/validation/toolchain-compatibility/2026-09-16/upstream-legacy.log -whitespace

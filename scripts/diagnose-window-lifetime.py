@@ -15,7 +15,7 @@ import sys
 import tempfile
 
 
-def validate(rows):
+def validate(rows, *, require_hosts=False):
     for row in rows:
         if (not isinstance(row.get("event"), str)
                 or not isinstance(row.get("elapsed"), (int, float))
@@ -56,12 +56,41 @@ def validate(rows):
                        - observations[f"driver_{prefix}_closed"]["elapsed"])
             if elapsed < delay:
                 raise ValueError("Observation interval shorter than declared")
+    if require_hosts:
+        previous = {}
+        for row in rows:
+            hosts = row.get("hosts")
+            if not isinstance(hosts, list) or len(hosts) > 2:
+                raise ValueError("Missing/invalid weak host observations")
+            ids = [host.get("id") for host in hosts if isinstance(host, dict)]
+            if (len(ids) != len(hosts) or any(type(i) is not int for i in ids)
+                    or ids != list(range(1, len(hosts) + 1))
+                    or len(hosts) < len(previous)):
+                raise ValueError("Weak host identities missing or reordered")
+            for host in hosts:
+                if (any(type(host.get(k)) is not bool for k in
+                        ("windowAlive", "windowVisible", "initialContentAlive"))
+                        or not isinstance(host.get("initialContentType"), str)
+                        or not host["initialContentType"]
+                        or (host["windowVisible"] and not host["windowAlive"])):
+                    raise ValueError("Malformed weak host state")
+                old = previous.get(host["id"])
+                if old and (old["initialContentType"] != host["initialContentType"]
+                            or any(not old[k] and host[k] for k in
+                                   ("windowAlive", "initialContentAlive"))):
+                    raise ValueError("Released weak host resurrected or changed identity")
+            previous = {host["id"]: host for host in hosts}
+        for row in observations.values():
+            if (len(row["hosts"]) != 2
+                    or sum(host["windowVisible"] for host in row["hosts"]) != row["visible"]):
+                raise ValueError("Host observations do not match window transitions")
     return observations
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--observe-hosts", action="store_true")
     args = parser.parse_args()
     if os.environ.get("GITHUB_ACTIONS") != "true" or os.environ.get("RUNNER_OS") != "macOS":
         parser.error("This launcher is CI-only; prepare the app and launch it through the normal UI locally")
@@ -77,7 +106,8 @@ def main():
         try:
             preparation = subprocess.run(
                 [sys.executable, str(root / "scripts/prepare-minimal-window-lifetime.py"),
-                 "--variant", variant, "--automatic", "--output", str(folder)],
+                 "--variant", variant, "--automatic", "--output", str(folder)]
+                + (["--observe-hosts"] if args.observe_hosts else []),
                 cwd=root, text=True, capture_output=True, timeout=180, check=True)
             metadata = json.loads(preparation.stdout)
             app = Path(metadata["app"])
@@ -91,7 +121,8 @@ def main():
             raw = Path(tempfile.gettempdir()) / f"OpenCCman-MinimalLifetime-{process.pid}.jsonl"
             data = raw.read_bytes()
             (folder / "raw.jsonl").write_bytes(data)
-            result["observations"] = validate([json.loads(line) for line in data.splitlines()])
+            result["observations"] = validate([json.loads(line) for line in data.splitlines()],
+                                              require_hosts=args.observe_hosts)
             result["raw_sha256"] = hashlib.sha256(data).hexdigest()
             result["valid_protocol"] = True
         except (OSError, ValueError, subprocess.SubprocessError) as error:

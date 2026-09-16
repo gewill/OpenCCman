@@ -1,0 +1,25 @@
+Allocation 1; a scanned reference path, NOT an asserted all-strong chain:
+VM: __DATA_DIRTY  0x1f2c2efc0-0x1f2c9e0e1 [V=444K] rw-/rw-  /System/Library/Frameworks/SwiftUI.framework/Versions/A/SwiftUI
+__DATA_DIRTY __common: 'static AppGraph.shared' 0x1f2c9d1c8 --> <AppGraph 0x7a0101ec00> [256]
+   +24: data                     0x7a0101ec18 --> <AGGraphStorage 0x1052bb910> [96]
+   +16:                           0x1052bb920 --> 0x1052dead0 [448]
+  +296:                           0x1052debf8 --> 0x7a02042800 [1280]
+  +960:                          0x7a02042bc0 --> 0x7a0087b480 [112]
+    +0:                          0x7a0087b480 --> 0x7a020d9780 [128]
+   +48:                          0x7a020d97b0 --> <SwiftUI.(PropertiesTransform in $1c647c52c) 0x7a00be0200> [256]
+  +232: [capture]                0x7a00be02e8 --> <AccessibilityNode 0x7a01521e00> [192]
+   +72: __strong environment._plist.elements 0x7a01521e48 --> <PropertyList.Element 0x7a0098b700> [160]
+  +120:                          0x7a0098b778 --> <ProbeModel 0x7a015e0660> [48]
+
+Allocation 2; a scanned reference path, NOT an asserted all-strong chain:
+VM: __DATA_DIRTY  0x283f0b870-0x283f6b138 [V=382K] rw-/rw-  /System/Library/Frameworks/SwiftUICore.framework/Versions/A/SwiftUICore
+__DATA_DIRTY __data: 'static ObservationCenter._current' 0x283f2e2e8 --> <SwiftUI.ThreadSpecific<SwiftUI.ObservationCenter> 0x7a01401460> [32]
+   +24: __strong defaultValue    0x7a01401478 --> <ObservationCenter 0x7a00c21d70> [48]
+   +32: __strong invalidations._variant 0x7a00c21d90 --> <Swift._DictionaryStorage<__C.AGWeakAttribute, (mutation: SwiftUI.ObservationGraphMutation, accessList: Observation.ObservationTracking._AccessList)> 0x7a01539600> [512]
+  +448:                          0x7a015397c0 --> <Swift._DictionaryStorage<Swift.ObjectIdentifier, SwiftUI.(ObservationEntry in $2313c61cc)> 0x7a0100fc80> [128]
+   +80:                          0x7a0100fcd0 --> <Observation._ManagedCriticalState<Observation.ObservationRegistrar.(State in $2b93959b0)>.(LockedBuffer in $2b939584c)<> 0x7a009dfdc0> [64]
+   +32: __strong header.observations._variant 0x7a009dfde0 --> <Swift._DictionaryStorage<Swift.Int, Observation.ObservationRegistrar.(State in $2b93959b0).Observation> 0x7a009fc380> [448]
+  +176:                          0x7a009fc430 --> <Swift._ContiguousArrayStorage<Swift.AnyObject> 0x7a00bbed30> [48]
+   +32: countAndCapacity + 16    0x7a00bbed50 --> <AccessibilityNode 0x7a01522040> [192]
+   +72: __strong environment._plist.elements 0x7a01522088 --> <PropertyList.Element 0x7a0046c640> [160]
+  +120:                          0x7a0046c6b8 --> <ProbeModel 0x7a0175c5d0> [48]
