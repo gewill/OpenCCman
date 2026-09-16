@@ -27,6 +27,16 @@ Apple 文档：[openApplication](https://developer.apple.com/documentation/appki
 
 ## 未完成
 
+### 2026-09-16：已有窗口通知接收回归
+
+基于应用源码 `c28e2a0`，新增 [WindowNotificationChecks.swift](../../../Tests/Regression/WindowNotificationChecks.swift)，已接入原有 `python3 scripts/check-core.py` 和 App Regression。macOS 27.0 (26A428) / arm64 本地完整核心回归通过：[完整日志](2026-09-16-notifications/core.log)、[环境、来源与校验和](2026-09-16-notifications/results.json)。
+
+测试创建两个不显示的 NSWindow，把两个真实 HomeViewModel 分别绑定，并保留一个未绑定模型作为负对照。通过真实 NotificationCenter/Combine 订阅检查 Services 和快捷键结果仅写入明确目标、未绑定模型忽略通知、NUL/CRLF/组合字符保持、导出快照替换、仅导入原文时清空旧结果、缺字段不破坏文稿、主页额度不变。主队列 FIFO 屏障等待通知处理，未使用固定睡眠猜测完成。
+
+旧 Services 观察来自 `eab5003`；该版本 RootView 的窗口回调仅列 macOS 11–26，在本机 macOS 27 不执行（见 [#98 的独立原生负对照](../../performance/macos27-introspection/README.md)）。当前 #77 继承的 MainWindowReader 不依赖该版本列表。这是重新验收已有窗口的具体理由，不能据此把旧观察直接算成当前版本失败或通过。
+
+本测试直接绑定窗口并投递通知，不覆盖 AppDelegate 选窗/等待队列、MainWindowReader 实际绑定、NSPerformService 注册调用、系统菜单或渲染。未启动/修改待人工验收的 Services Probe，也未改系统设置；不替代下列真实应用前后截图与交互视频门槛。
+
 - [ ] 最终应用完整编译和 App Regression。
 - [ ] 实际状态栏 Settings/Help/Convert 的全部关窗前后对照和交互视频。
 - [ ] Services、全局快捷键、冷启动、Dock、最小化、多窗口及连续请求，确认结果可见、最新请求仅投递一次。
