@@ -2,6 +2,8 @@
 
 关联 #17；2026-09-16 整理，**供维护者审核，未修改或发布 ASC**。源码基线 `c1efdb55aa8ab00907b7480b4e0e695b713400c5`。此前后台只读记录为 Data Not Collected；本轮未重新登录读回，不能将历史状态当作新的后台验证。
 
+> 更新：锁定 SDK 的 Customer Center 支持邮件默认附带 RC User ID，以下身份关联及标识符答案仍是草案，不能直接发布。尚未验证生产后台是否启用相应入口。
+
 ## 建议勾选
 
 | 问卷项 | 候选答案 | 依据与条件 |
@@ -9,9 +11,9 @@
 | 是否由应用或第三方收集数据 | 是 | RevenueCat 处理并保留购买记录 |
 | 数据类型 | Purchases → Purchase History（购买记录） | RevenueCat 明确要求披露 |
 | 购买记录用途 | App Functionality（App 功能）、Analytics（分析） | 权益验证/恢复、购买分析及销售通知 |
-| 第三方广告、开发者广告或营销、产品个性化、其他用途 | 不勾选 | 已核实用途不包含这些目的；外部广告用途/数据经纪商共享仍须最后确认 |
+| 第三方广告、开发者广告或营销、产品个性化、其他用途 | 不勾选 | 已核实用途不包含这些目的；维护者已确认无外部广告用途或数据经纪商共享 |
 | 购买记录是否与身份关联 | 候选：否 | SDK 默认匿名标识；维护者确认不与邮箱、真实身份或广告数据关联。依 RevenueCat 指引，前提是无法通过其他数据识别个人；匿名标识不等于数据完全不可关联 |
-| 购买记录是否用于追踪 | 候选：否 | 未见广告标识或归因集成；需确认后台之外也没有广告衡量、跨应用定向广告或数据经纪商共享 |
+| 购买记录是否用于追踪 | 候选：否 | 未见广告标识或归因集成；维护者已确认后台之外也没有广告投放、广告衡量或数据经纪商共享 |
 
 预期标签：Data Not Linked to You → Purchases，用于 App Functionality 和 Analytics。它是上述条件成立后的预期，不是 ASC 预览截图或已发布结果。
 
@@ -47,3 +49,16 @@ Slack 是购买数据的下游接收方，不是 ASC 单独的数据类型。仅
 
 - [Apple App Privacy Details](https://developer.apple.com/app-store/app-privacy-details/)：第三方收集、数据类型、用途、身份关联、追踪及可选披露标准；标签可独立于应用版本更新。
 - [RevenueCat Apple App Privacy](https://www.revenuecat.com/docs/platform-resources/apple-platform-resources/apple-app-privacy)：购买记录必选，功能及分析用途，匿名 ID / 自定义 ID 的条件判断。
+
+## Customer Center 源码核对与维护者补充确认
+
+锁定 checkout HEAD 已验证为 `155ea739f45f54189ca83ee9088b373c1415d98b`，未修改依赖缓存。
+
+- `RevenueCatUI/CustomerCenter/ContactSupportUtilities.swift` 的 defaultData 包含 RC User ID、App Version、Device、OS Version、StoreFront Country Code。
+- `Extensions/CustomerCenterConfigDataSupport+URL.swift` 的 supportURL 调用 calculateBody，生成预填邮件；SubscriptionDetailView 与 RestorePurchasesAlert 引用此路径。它是邮件草稿，不是自动发送。用户发送后，发件邮箱与 RC ID 会共同出现在邮件中，具备关联能力。是否对当前终身商品显示取决于后台配置及运行路径，源码存在不等于已发生收集。
+- 应用自有 FeedbackScene 的 mailto 只预填应用名称和版本；不能将这个入口的结论推广至 RevenueCatUI。
+- CustomerCenterViewModel.trackImpression 与 FeedbackSurveyViewModel.trackSurveyAnswerSubmitted 经 CustomerCenterPurchases 调用 Purchases.shared.track；必须继续跟踪事件上报开关、字段及生产启用条件，再决定是否增加 Product Interaction，不能只照通用购买 SDK 清单。
+
+维护者已确认：支持邮件仅用于回复和解决问题，不用于营销或用户分析；Gmail 未设自定义删除期限，仅本人访问；其实际支持邮件无法与 RevenueCat 购买记录对应。该历史实践与新 Customer Center 的预填字段是两项不同证据，不互相否定。普通邮件无固定自动删除期，垃圾箱 30 天删除规则不等于所有支持邮件保存 30 天。
+
+下一步需要选择是否保留带 RC ID 的支持路径；保留时核对实际可达入口，并调整身份关联/数据类型与公开政策。若要求支持邮件始终不包含 RC ID，先确认官方可配置方式，必要时使用自有支持入口；不修改缓存，也不为了标签较少而忽略真实行为。当前未发送邮件，未改后台或公开政策。
