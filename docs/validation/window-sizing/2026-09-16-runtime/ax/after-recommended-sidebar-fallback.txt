@@ -1,0 +1,68 @@
+Window: "OpenCCman Window After", App: OpenCCman Window After.
+0 standard window OpenCCman Window After, Secondary Actions: Raise, ID: SwiftUI.WindowGroup<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI._ConditionalContent<OpenCCman.ControlSizingGallery, SwiftUIRouter.Router<SwiftUI.ModifiedContent<OpenCCman.RootView, SwiftUI._AppearanceActionModifier>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<OpenCCman.WhatsNewCoordinator>>>, SwiftUI._EnvironmentKeyWritingModifier<Foundation.Locale>>, SwiftUI._PreferenceWritingModifier<SwiftUI.PreferredColorSchemeKey>>>-1-AppWindow-1
+	1 container
+		2 button Description: Conversion settings, ID: sidebar.left
+		3 container Editor layout
+			4 button (selected) Description: Side by side, ID: workspace-horizontal
+			5 button Description: Stacked, ID: workspace-vertical
+		6 button Convert
+		7 text Using stacked layout in this window. Side by side will return when space permits.
+		8 menu button Pane sizes
+		9 scroll area
+			10 text Conversion Preset
+			11 menu button Conversion Preset, Value: Traditional · OpenCC
+			12 text Target Language
+			13 container Description: Target Language, ID: conversion-segment-Target Language
+				14 button Simplified Chinese
+				15 button (selected) Traditional Chinese
+			16 text Variant
+			17 container Description: Variant, ID: conversion-segment-Variant
+				18 button (selected) OpenCC Standard
+				19 button Taiwan Standard
+				20 button HongKong Standard
+			21 text Region Idiom
+			22 container Description: Region Idiom, ID: conversion-segment-Region Idiom
+				23 button (selected) Not convert
+				24 button Taiwan Idiom
+		25 scroll area Secondary Actions: Scroll Up, Scroll Down
+			26 container
+				27 text Source
+				28 button Description: Paste Text, ID: doc.on.clipboard
+				29 button Import TXT
+				30 text Import, or drop here, one UTF-8 TXT file or plain text, up to 10 MiB.
+				31 scroll area Secondary Actions: Scroll Up, Scroll Down
+					32 text entry area (settable) Description: Source, Value: 鼠标里面的硅二极管坏了，导致光标分辨率降低。
+					33 scroll bar (disabled, settable, float) 0
+			34 unknown Description: Pane sizes, Details: 50%, Secondary Actions: Increment, Decrement
+			35 container
+				36 text Result
+				37 button Description: Copy Result, ID: doc.on.doc
+				38 button Description: Export TXT, ID: square.and.arrow.up
+				39 scroll area Secondary Actions: Scroll Up, Scroll Down
+					40 text entry area Description: Result, Value: 鼠標裏面的硅二極管壞了，導致光標分辨率降低。
+					41 scroll bar (disabled, settable, float) 0
+			42 text Clickman Auto clicker for Mac
+			43 button Get
+			44 button Remove recommendations
+			45 scroll bar (settable, float) 0
+				46 value indicator (settable, float) 0
+				47 increment arrow button
+				48 decrement arrow button
+				49 increment page button
+				50 decrement page button
+	51 toolbar
+		52 menu button chevron.pulldown, ID: ellipsis.circle
+		53 button Description: Conversion Preset, Secondary Actions: Increment, Decrement, Delete, Cancel, Move previous, Remove from toolbar
+	54 close button
+	55 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	56 minimize button
+	57 text OpenCCman Window After
+58 menu bar
+	59 OpenCCman Window After
+	60 File
+	61 Edit
+	62 View
+	63 Window
+	64 Help
+
+The focused UI element is 0 standard window OpenCCman Window After, Secondary Actions: Raise, ID: SwiftUI.WindowGroup<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI._ConditionalContent<OpenCCman.ControlSizingGallery, SwiftUIRouter.Router<SwiftUI.ModifiedContent<OpenCCman.RootView, SwiftUI._AppearanceActionModifier>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<OpenCCman.WhatsNewCoordinator>>>, SwiftUI._EnvironmentKeyWritingModifier<Foundation.Locale>>, SwiftUI._PreferenceWritingModifier<SwiftUI.PreferredColorSchemeKey>>>-1-AppWindow-1

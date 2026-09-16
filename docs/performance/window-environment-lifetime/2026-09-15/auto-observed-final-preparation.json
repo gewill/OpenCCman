@@ -1,0 +1,23 @@
+{
+  "variant": "observed",
+  "automatic": true,
+  "app": "/Users/rxwill/git/MyApps/OpenCCman-window-environment-lifetime/.build/environment-control/auto-observed-final/MinimalObservedAuto.app",
+  "command": [
+    "xcrun",
+    "swiftc",
+    "-swift-version",
+    "5",
+    "-parse-as-library",
+    "-O",
+    "-target",
+    "arm64-apple-macosx13.0",
+    "/Users/rxwill/git/MyApps/OpenCCman-window-environment-lifetime/.build/environment-control/auto-observed-final/Probe.swift",
+    "-o",
+    "/Users/rxwill/git/MyApps/OpenCCman-window-environment-lifetime/.build/environment-control/auto-observed-final/MinimalObservedAuto.app/Contents/MacOS/MinimalObservedAuto"
+  ],
+  "source_sha256": "a38c65ca2b904366ddc67a83c6fa918a29aa34a2a2e9f1e291de455f5398c2d3",
+  "base_sha": "6a65b047bd14b17e83c7b412aeca46d68f37dbae",
+  "dirty": true,
+  "compiler": "swift-driver version: 1.168.6 Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0\nBuildVersion:\t\t26A428\n"
+}

@@ -1,0 +1,79 @@
+{
+  "pid": 46476,
+  "log": "/Users/rxwill/Library/Caches/org.gewill.OpenCCman.NativeWindowLifecycleAudit/lifecycle-46476-A5F1FC10-6948-4CE6-AE6E-CC882ADB0942.jsonl",
+  "before_import": {
+    "created_total": 1,
+    "elapsed_ms": 50001.638834,
+    "event": "sample",
+    "live_model_numbers": [
+      1
+    ],
+    "model_states": [
+      {
+        "converting": false,
+        "importing": false,
+        "number": 1
+      }
+    ],
+    "os": "Version 27.0 (Build 26A428)",
+    "physical_footprint_bytes": 56607848,
+    "pid": 46476,
+    "process_peak_rss_bytes": 134987776,
+    "rss_bytes": 106741760,
+    "rusage_status": 0,
+    "task_info_status": 0,
+    "visible_main_capable_windows": 1
+  },
+  "setup_verified": "CUA first activated empty window, observed whats-new-sheet, clicked Done; full AX tree showed Source and Import TXT without a sheet before importer opened",
+  "after_open": {
+    "created_total": 1,
+    "elapsed_ms": 67002.364709,
+    "event": "sample",
+    "live_model_numbers": [
+      1
+    ],
+    "model_states": [
+      {
+        "converting": false,
+        "importing": false,
+        "number": 1
+      }
+    ],
+    "os": "Version 27.0 (Build 26A428)",
+    "physical_footprint_bytes": 98927864,
+    "pid": 46476,
+    "process_peak_rss_bytes": 164511744,
+    "rss_bytes": 152551424,
+    "rusage_status": 0,
+    "task_info_status": 0,
+    "visible_main_capable_windows": 1
+  },
+  "after_ax_query": {
+    "created_total": 1,
+    "elapsed_ms": 118001.700417,
+    "event": "sample",
+    "live_model_numbers": [
+      1
+    ],
+    "model_states": [
+      {
+        "converting": false,
+        "importing": false,
+        "number": 1
+      }
+    ],
+    "os": "Version 27.0 (Build 26A428)",
+    "physical_footprint_bytes": 212796784,
+    "pid": 46476,
+    "process_peak_rss_bytes": 399802368,
+    "rss_bytes": 399622144,
+    "rusage_status": 0,
+    "task_info_status": 0,
+    "visible_main_capable_windows": 1
+  },
+  "editor_ax_confirmed": {
+    "file": "input-10mib.txt",
+    "source_prefix_present": true,
+    "sheet_absent": true
+  }
+}

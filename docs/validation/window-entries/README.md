@@ -37,3 +37,11 @@ Apple 文档：[openApplication](https://developer.apple.com/documentation/appki
 用 `xcrun swiftc -parse-as-library Tests/Diagnostics/WindowReopenProbe.swift -o <独立 app>/Contents/MacOS/WindowReopenProbe` 构建仅包含实验的 app，Info.plist 指定 CFBundleExecutable、独立 CFBundleIdentifier、APPL 及 NSApplication。实验在自己的进程中关闭自己的窗口，写出 JSON 后退出；不操作其他应用窗口。
 
 分别以 `-mode baseline -report <新的绝对 JSON 路径>` 与 `-mode workspace -report <另一 JSON 路径>` 启动，两次应独立运行。必须检查报告 PID 相同、关窗阶段为 0、workspace 最终为 1，不把仅启动成功视为验收通过。本轮使用当前 Xcode 27 构建这个独立实验；没有用它改变应用的 macOS 11 下限。
+
+## 2026-09-16 依赖整合
+
+无冲突整合 #76 最新父分支 `b48e0de`，同时继承当前 MainWindowReader、窗口尺寸与 macOS 27 编辑器适配。相对父分支保持原有重开控制器及 AppDelegate 调用改动，未重写系统入口或文稿业务。精确依赖与父分支相同。
+
+[本次命令与结果](2026-09-16-integration/results.json)：请求合并、进程/窗口就绪区分、失败重试与过期回调；原生首次/历史尺寸恢复、MainWindowReader 和 sheet 关闭校正；窗口布局解析；61 个 Swift 源文件与 3 套语言均通过。完整应用构建以新 HEAD CI 为准。
+
+这些是整合回归，不等同于实际应用的全部关窗后 Settings/Services/快捷键/状态栏验收。原系统入口基线继续保留人工接力；没有重新激活该基线应用来掩盖零窗状态。PR 继续 Draft，仍依赖 #76/#74；#19、#15/#16 的原验收门槛保持不变。历史截图/独立 WindowGroup 实验保留原始来源。

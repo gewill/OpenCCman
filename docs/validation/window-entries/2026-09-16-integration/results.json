@@ -1,0 +1,28 @@
+{
+  "date": "2026-09-16",
+  "previousHead": "4a283b2b8579aa77713df064ef2ad93f3354ca24",
+  "parent": "b48e0de825a369ad855d1eddf0aef7b055d67acf",
+  "conflicts": [],
+  "commands": [
+    {
+      "command": "bash scripts/check-window-reopen.sh",
+      "exitCode": 0
+    },
+    {
+      "command": "bash scripts/check-window-sizing.sh",
+      "exitCode": 0
+    },
+    {
+      "command": "bash scripts/check-workspace.sh",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 scripts/check-project.py",
+      "exitCode": 0
+    }
+  ],
+  "sourceCount": 61,
+  "localizationCount": 3,
+  "scope": "Request controller and native window geometry fixtures plus source checks. Actual closed-window application system entries remain unverified.",
+  "redactions": "Worktree path replaced with <worktree>; result content retained."
+}

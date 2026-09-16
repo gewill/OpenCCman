@@ -1,0 +1,450 @@
+[
+  {
+    "mode": "s2t",
+    "representation": "native",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 8.929125,
+      "minMS": 8.673291,
+      "maxMS": 9.093459
+    },
+    "current": {
+      "medianMS": 8.846625,
+      "minMS": 8.518209,
+      "maxMS": 9.132458
+    },
+    "reductionPercent": 0.9239427155516511
+  },
+  {
+    "mode": "s2t",
+    "representation": "pasteboard",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 22.277625,
+      "minMS": 22.075583,
+      "maxMS": 22.578708
+    },
+    "current": {
+      "medianMS": 23.342,
+      "minMS": 23.173708,
+      "maxMS": 23.49925
+    },
+    "reductionPercent": -4.777775907440751
+  },
+  {
+    "mode": "t2s",
+    "representation": "native",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 6.128167,
+      "minMS": 5.776042,
+      "maxMS": 6.489042
+    },
+    "current": {
+      "medianMS": 6.444583,
+      "minMS": 6.155334,
+      "maxMS": 6.463916
+    },
+    "reductionPercent": -5.1633057650028125
+  },
+  {
+    "mode": "t2s",
+    "representation": "pasteboard",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 19.629625,
+      "minMS": 19.117667,
+      "maxMS": 20.213917
+    },
+    "current": {
+      "medianMS": 20.443542,
+      "minMS": 20.302083,
+      "maxMS": 21.654292
+    },
+    "reductionPercent": -4.146370600559113
+  },
+  {
+    "mode": "s2tw",
+    "representation": "native",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 16.316333,
+      "minMS": 15.987917,
+      "maxMS": 16.737667
+    },
+    "current": {
+      "medianMS": 16.927792,
+      "minMS": 16.366583,
+      "maxMS": 17.048125
+    },
+    "reductionPercent": -3.7475270944764327
+  },
+  {
+    "mode": "s2tw",
+    "representation": "pasteboard",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 29.683,
+      "minMS": 29.192042,
+      "maxMS": 30.162
+    },
+    "current": {
+      "medianMS": 30.787625,
+      "minMS": 30.631834,
+      "maxMS": 31.127083
+    },
+    "reductionPercent": -3.721406192096488
+  },
+  {
+    "mode": "s2twp",
+    "representation": "native",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 20.871042,
+      "minMS": 20.521042,
+      "maxMS": 21.683958
+    },
+    "current": {
+      "medianMS": 21.106583,
+      "minMS": 20.642208,
+      "maxMS": 21.214542
+    },
+    "reductionPercent": -1.128554099023904
+  },
+  {
+    "mode": "s2twp",
+    "representation": "pasteboard",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 34.27275,
+      "minMS": 33.947625,
+      "maxMS": 35.847125
+    },
+    "current": {
+      "medianMS": 35.304375,
+      "minMS": 34.732042,
+      "maxMS": 35.627084
+    },
+    "reductionPercent": -3.0100444230474643
+  },
+  {
+    "mode": "s2hk",
+    "representation": "native",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 16.378125,
+      "minMS": 16.146208,
+      "maxMS": 16.839917
+    },
+    "current": {
+      "medianMS": 16.433959,
+      "minMS": 16.38825,
+      "maxMS": 17.604458
+    },
+    "reductionPercent": -0.3409059339820608
+  },
+  {
+    "mode": "s2hk",
+    "representation": "pasteboard",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 30.288584,
+      "minMS": 28.729208,
+      "maxMS": 31.161042
+    },
+    "current": {
+      "medianMS": 31.127542,
+      "minMS": 30.550958,
+      "maxMS": 31.808625
+    },
+    "reductionPercent": -2.7698818802490033
+  },
+  {
+    "mode": "legacy-s2t-tw-idiom",
+    "representation": "native",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 35.085666,
+      "minMS": 34.379375,
+      "maxMS": 35.443417
+    },
+    "current": {
+      "medianMS": 34.895209,
+      "minMS": 34.046667,
+      "maxMS": 35.814375
+    },
+    "reductionPercent": 0.5428342161154953
+  },
+  {
+    "mode": "legacy-s2t-tw-idiom",
+    "representation": "pasteboard",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 47.573917,
+      "minMS": 47.161833,
+      "maxMS": 48.109667
+    },
+    "current": {
+      "medianMS": 48.797125,
+      "minMS": 48.485958,
+      "maxMS": 49.115791
+    },
+    "reductionPercent": -2.5711736117923545
+  },
+  {
+    "mode": "legacy-s2hk-tw-idiom",
+    "representation": "native",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 40.33575,
+      "minMS": 39.717375,
+      "maxMS": 40.716
+    },
+    "current": {
+      "medianMS": 40.134584,
+      "minMS": 39.359542,
+      "maxMS": 40.666834
+    },
+    "reductionPercent": 0.49872879517549595
+  },
+  {
+    "mode": "legacy-s2hk-tw-idiom",
+    "representation": "pasteboard",
+    "inputBytes": 1048576,
+    "baseline": {
+      "medianMS": 53.828542,
+      "minMS": 53.06075,
+      "maxMS": 55.818208
+    },
+    "current": {
+      "medianMS": 54.91025,
+      "minMS": 54.5555,
+      "maxMS": 57.311416
+    },
+    "reductionPercent": -2.00954356148082
+  },
+  {
+    "mode": "s2t",
+    "representation": "native",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 88.207542,
+      "minMS": 88.108042,
+      "maxMS": 90.347292
+    },
+    "current": {
+      "medianMS": 88.795125,
+      "minMS": 87.631792,
+      "maxMS": 89.780709
+    },
+    "reductionPercent": -0.6661369160473773
+  },
+  {
+    "mode": "s2t",
+    "representation": "pasteboard",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 218.804708,
+      "minMS": 211.091916,
+      "maxMS": 221.197042
+    },
+    "current": {
+      "medianMS": 228.7115,
+      "minMS": 225.48875,
+      "maxMS": 231.569125
+    },
+    "reductionPercent": -4.527686853977575
+  },
+  {
+    "mode": "t2s",
+    "representation": "native",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 60.519375,
+      "minMS": 59.430125,
+      "maxMS": 62.252042
+    },
+    "current": {
+      "medianMS": 60.461042,
+      "minMS": 59.381959,
+      "maxMS": 60.82225
+    },
+    "reductionPercent": 0.09638731398001754
+  },
+  {
+    "mode": "t2s",
+    "representation": "pasteboard",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 194.638333,
+      "minMS": 191.0365,
+      "maxMS": 195.643292
+    },
+    "current": {
+      "medianMS": 201.392416,
+      "minMS": 199.467667,
+      "maxMS": 202.917458
+    },
+    "reductionPercent": -3.4700682521772386
+  },
+  {
+    "mode": "s2tw",
+    "representation": "native",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 163.60675,
+      "minMS": 162.704917,
+      "maxMS": 165.699125
+    },
+    "current": {
+      "medianMS": 162.9655,
+      "minMS": 161.556333,
+      "maxMS": 165.11575
+    },
+    "reductionPercent": 0.3919459313261875
+  },
+  {
+    "mode": "s2tw",
+    "representation": "pasteboard",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 298.301083,
+      "minMS": 296.576834,
+      "maxMS": 299.94475
+    },
+    "current": {
+      "medianMS": 307.929083,
+      "minMS": 305.056708,
+      "maxMS": 311.849791
+    },
+    "reductionPercent": -3.2276114800428024
+  },
+  {
+    "mode": "s2twp",
+    "representation": "native",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 211.957959,
+      "minMS": 209.00225,
+      "maxMS": 214.412166
+    },
+    "current": {
+      "medianMS": 213.442,
+      "minMS": 212.049875,
+      "maxMS": 217.611875
+    },
+    "reductionPercent": -0.7001581856145522
+  },
+  {
+    "mode": "s2twp",
+    "representation": "pasteboard",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 346.956625,
+      "minMS": 344.948416,
+      "maxMS": 354.975333
+    },
+    "current": {
+      "medianMS": 351.981875,
+      "minMS": 348.847292,
+      "maxMS": 354.306125
+    },
+    "reductionPercent": -1.4483798947491078
+  },
+  {
+    "mode": "s2hk",
+    "representation": "native",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 167.311167,
+      "minMS": 166.176834,
+      "maxMS": 170.147833
+    },
+    "current": {
+      "medianMS": 167.41825,
+      "minMS": 165.261542,
+      "maxMS": 167.741041
+    },
+    "reductionPercent": -0.06400230296641496
+  },
+  {
+    "mode": "s2hk",
+    "representation": "pasteboard",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 301.706959,
+      "minMS": 301.045583,
+      "maxMS": 304.139958
+    },
+    "current": {
+      "medianMS": 310.481166,
+      "minMS": 302.57475,
+      "maxMS": 311.716541
+    },
+    "reductionPercent": -2.908188471715034
+  },
+  {
+    "mode": "legacy-s2t-tw-idiom",
+    "representation": "native",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 349.9795,
+      "minMS": 346.228375,
+      "maxMS": 351.497667
+    },
+    "current": {
+      "medianMS": 346.885042,
+      "minMS": 345.564792,
+      "maxMS": 348.723875
+    },
+    "reductionPercent": 0.8841826449834889
+  },
+  {
+    "mode": "legacy-s2t-tw-idiom",
+    "representation": "pasteboard",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 482.989375,
+      "minMS": 479.531542,
+      "maxMS": 487.107667
+    },
+    "current": {
+      "medianMS": 493.095875,
+      "minMS": 484.745,
+      "maxMS": 500.749584
+    },
+    "reductionPercent": -2.092489094609995
+  },
+  {
+    "mode": "legacy-s2hk-tw-idiom",
+    "representation": "native",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 401.318458,
+      "minMS": 396.142875,
+      "maxMS": 403.488834
+    },
+    "current": {
+      "medianMS": 402.819125,
+      "minMS": 399.85125,
+      "maxMS": 404.105125
+    },
+    "reductionPercent": -0.37393420862790183
+  },
+  {
+    "mode": "legacy-s2hk-tw-idiom",
+    "representation": "pasteboard",
+    "inputBytes": 10485760,
+    "baseline": {
+      "medianMS": 530.973708,
+      "minMS": 528.430375,
+      "maxMS": 536.101
+    },
+    "current": {
+      "medianMS": 543.567125,
+      "minMS": 542.552417,
+      "maxMS": 549.077583
+    },
+    "reductionPercent": -2.37175905515834
+  }
+]

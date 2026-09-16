@@ -9,8 +9,20 @@ on:
     branches: [main, develop, 'release/**', 'hotfix/**']
   workflow_dispatch:
     inputs:
+      diagnose_editor_anchor:
+        description: Run a fixed macOS 15 editor anchor timing probe
+        type: boolean
+        default: false
       build_ios_validation:
         description: Build an unsigned arm64 iOS Simulator app for local UI validation
+        type: boolean
+        default: false
+      diagnose_window_lifetime:
+        description: Compare EnvironmentObject and ObservedObject in native WindowGroup on macOS 15
+        type: boolean
+        default: false
+      observe_window_hosts:
+        description: Add weak window/content-view observations to the lifetime diagnostic
         type: boolean
         default: false
 
@@ -24,6 +36,7 @@ concurrency:
 jobs:
   regression:
     name: App Regression
+    if: github.event_name != 'workflow_dispatch' || (!inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
     runs-on: macos-15
     timeout-minutes: 20
     steps:
@@ -48,6 +61,8 @@ jobs:
         run: bash scripts/check-control-sizing.sh
       - name: Check native editor scroll anchors
         run: bash scripts/check-editor-scroll.sh
+      - name: Check native editor and window introspection
+        run: python3 scripts/check-introspection.py
       - name: Check Pro access updates
         run: bash scripts/check-pro-access.sh
       - name: Check local StoreKit transactions
@@ -92,6 +107,33 @@ jobs:
           path: ${{ runner.temp }}/OpenCCman-validation.zip
           retention-days: 7
 
+  window-lifetime-diagnostic:
+    name: Native WindowGroup lifetime comparison
+    if: github.event_name == 'workflow_dispatch' && inputs.diagnose_window_lifetime
+    runs-on: macos-15
+    timeout-minutes: 8
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Observe both native lifetime controls
+        env:
+          OBSERVE_HOSTS: ${{ inputs.observe_window_hosts }}
+        run: |
+          args=()
+          if [[ "$OBSERVE_HOSTS" == "true" ]]; then args+=(--observe-hosts); fi
+          python3 scripts/diagnose-window-lifetime.py --output "${{ runner.temp }}/window-lifetime" "${args[@]}"
+      - name: Preserve observations and failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: window-lifetime-diagnostic
+          path: ${{ runner.temp }}/window-lifetime
+          retention-days: 7
+          if-no-files-found: error
+
   ios-validation:
     name: Build iOS Simulator validation app
     if: github.event_name == 'workflow_dispatch' && inputs.build_ios_validation
@@ -123,3 +165,27 @@ jobs:
             ${{ runner.temp }}/OpenCCman-ios-validation.zip
             ${{ runner.temp }}/source-sha.txt
           retention-days: 7
+
+  editor-anchor-diagnostic:
+    name: Bounded macOS 15 anchor trace
+    if: github.event_name == 'workflow_dispatch' && inputs.diagnose_editor_anchor
+    runs-on: macos-15
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Run fixed original and traced samples
+        run: python3 scripts/diagnose-editor-anchor.py --output "${{ runner.temp }}/editor-anchor-diagnostic" --repetitions 20
+      - name: Check controlled slow first restoration
+        run: python3 scripts/diagnose-editor-anchor.py --output "${{ runner.temp }}/editor-anchor-slow-pass" --repetitions 3 --first-pass-delay-ms 120
+      - name: Preserve all samples including failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: editor-anchor-diagnostic
+          path: |
+            ${{ runner.temp }}/editor-anchor-diagnostic
+            ${{ runner.temp }}/editor-anchor-slow-pass
+          retention-days: 7
+          if-no-files-found: error
