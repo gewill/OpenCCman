@@ -1,0 +1,336 @@
+{
+  "conclusion": "success",
+  "headSha": "a12d94f3fcab33eb410cfb37f03032f51208b044",
+  "jobs": [
+    {
+      "completedAt": "2026-09-16T07:13:47Z",
+      "conclusion": "success",
+      "databaseId": 104698351215,
+      "name": "App Regression",
+      "startedAt": "2026-09-16T07:04:06Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-16T07:04:08Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-16T07:04:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:04:12Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "number": 2,
+          "startedAt": "2026-09-16T07:04:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:04:15Z",
+          "conclusion": "success",
+          "name": "Record regression environment and source",
+          "number": 3,
+          "startedAt": "2026-09-16T07:04:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:04:22Z",
+          "conclusion": "success",
+          "name": "Check validation scripts propagate failures",
+          "number": 4,
+          "startedAt": "2026-09-16T07:04:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:04:26Z",
+          "conclusion": "success",
+          "name": "Check project and source syntax",
+          "number": 5,
+          "startedAt": "2026-09-16T07:04:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:05:11Z",
+          "conclusion": "success",
+          "name": "Check real conversion, presets and file workflow",
+          "number": 6,
+          "startedAt": "2026-09-16T07:04:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:05:13Z",
+          "conclusion": "success",
+          "name": "Check performance report comparability",
+          "number": 7,
+          "startedAt": "2026-09-16T07:05:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:05:17Z",
+          "conclusion": "success",
+          "name": "Check window layout resolution and recovery",
+          "number": 8,
+          "startedAt": "2026-09-16T07:05:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:05:22Z",
+          "conclusion": "success",
+          "name": "Check Mac window geometry",
+          "number": 9,
+          "startedAt": "2026-09-16T07:05:17Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:05:23Z",
+          "conclusion": "success",
+          "name": "Check closed-window request coalescing",
+          "number": 10,
+          "startedAt": "2026-09-16T07:05:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:05:45Z",
+          "conclusion": "success",
+          "name": "Check complete Mac control bounds",
+          "number": 11,
+          "startedAt": "2026-09-16T07:05:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:05:56Z",
+          "conclusion": "success",
+          "name": "Check native editor scroll anchors",
+          "number": 12,
+          "startedAt": "2026-09-16T07:05:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:06:19Z",
+          "conclusion": "success",
+          "name": "Check workspace editor bindings and bounded measurement",
+          "number": 13,
+          "startedAt": "2026-09-16T07:05:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:06:46Z",
+          "conclusion": "success",
+          "name": "Check native editor and window introspection",
+          "number": 14,
+          "startedAt": "2026-09-16T07:06:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:06:53Z",
+          "conclusion": "success",
+          "name": "Check Pro access updates",
+          "number": 15,
+          "startedAt": "2026-09-16T07:06:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:08:24Z",
+          "conclusion": "success",
+          "name": "Check local StoreKit transactions",
+          "number": 16,
+          "startedAt": "2026-09-16T07:06:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:08:24Z",
+          "conclusion": "skipped",
+          "name": "Upload StoreKit failure evidence",
+          "number": 17,
+          "startedAt": "2026-09-16T07:08:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:08:34Z",
+          "conclusion": "success",
+          "name": "Check quota reservations",
+          "number": 18,
+          "startedAt": "2026-09-16T07:08:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:08:36Z",
+          "conclusion": "success",
+          "name": "Check What\u2019s New presentation and localizations",
+          "number": 19,
+          "startedAt": "2026-09-16T07:08:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:08:40Z",
+          "conclusion": "success",
+          "name": "Check control labels in the selected app language",
+          "number": 20,
+          "startedAt": "2026-09-16T07:08:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:08:47Z",
+          "conclusion": "success",
+          "name": "Check isolated pasteboard preservation",
+          "number": 21,
+          "startedAt": "2026-09-16T07:08:40Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:13:37Z",
+          "conclusion": "success",
+          "name": "Build macOS validation app",
+          "number": 22,
+          "startedAt": "2026-09-16T07:08:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:13:37Z",
+          "conclusion": "success",
+          "name": "Verify dependency lock is unchanged",
+          "number": 23,
+          "startedAt": "2026-09-16T07:13:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:13:37Z",
+          "conclusion": "skipped",
+          "name": "Upload unsigned macOS validation app",
+          "number": 24,
+          "startedAt": "2026-09-16T07:13:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:13:38Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "number": 48,
+          "startedAt": "2026-09-16T07:13:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:13:41Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 49,
+          "startedAt": "2026-09-16T07:13:38Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/gewill/OpenCCman/actions/runs/35066656999/job/104698351215"
+    },
+    {
+      "completedAt": "2026-09-16T07:07:21Z",
+      "conclusion": "success",
+      "databaseId": 104698351331,
+      "name": "Build iOS Simulator validation app",
+      "startedAt": "2026-09-16T07:04:07Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-16T07:04:09Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-16T07:04:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:04:13Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "number": 2,
+          "startedAt": "2026-09-16T07:04:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:07:13Z",
+          "conclusion": "success",
+          "name": "Build and package simulator app",
+          "number": 3,
+          "startedAt": "2026-09-16T07:04:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:07:16Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+          "number": 4,
+          "startedAt": "2026-09-16T07:07:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:07:16Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "number": 8,
+          "startedAt": "2026-09-16T07:07:16Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-16T07:07:18Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 9,
+          "startedAt": "2026-09-16T07:07:16Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/gewill/OpenCCman/actions/runs/35066656999/job/104698351331"
+    },
+    {
+      "completedAt": "2026-09-16T07:03:57Z",
+      "conclusion": "skipped",
+      "databaseId": 104698352251,
+      "name": "Build Release Services validation app",
+      "startedAt": "2026-09-16T07:03:58Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/gewill/OpenCCman/actions/runs/35066656999/job/104698352251"
+    },
+    {
+      "completedAt": "2026-09-16T07:03:57Z",
+      "conclusion": "skipped",
+      "databaseId": 104698352280,
+      "name": "Bounded macOS 15 anchor trace",
+      "startedAt": "2026-09-16T07:03:58Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/gewill/OpenCCman/actions/runs/35066656999/job/104698352280"
+    },
+    {
+      "completedAt": "2026-09-16T07:03:57Z",
+      "conclusion": "skipped",
+      "databaseId": 104698352407,
+      "name": "Same-runner Release editor comparison",
+      "startedAt": "2026-09-16T07:03:58Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/gewill/OpenCCman/actions/runs/35066656999/job/104698352407"
+    },
+    {
+      "completedAt": "2026-09-16T07:03:57Z",
+      "conclusion": "skipped",
+      "databaseId": 104698352422,
+      "name": "Build native window lifecycle diagnostic app",
+      "startedAt": "2026-09-16T07:03:58Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/gewill/OpenCCman/actions/runs/35066656999/job/104698352422"
+    },
+    {
+      "completedAt": "2026-09-16T07:03:57Z",
+      "conclusion": "skipped",
+      "databaseId": 104698352714,
+      "name": "Native WindowGroup lifetime comparison",
+      "startedAt": "2026-09-16T07:03:58Z",
+      "status": "completed",
+      "steps": [],
+      "url": "https://github.com/gewill/OpenCCman/actions/runs/35066656999/job/104698352714"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/gewill/OpenCCman/actions/runs/35066656999"
+}
