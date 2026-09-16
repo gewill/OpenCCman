@@ -67,3 +67,9 @@ asc xcode-cloud doctor --run-id <RUN_ID> --save-logs /tmp/openccman-cloud-logs
 #42 不能作为发布通过证据；修复后的 #44 构建结果已补齐，但最终购买、跨 App 和旧系统等验收仍需完成。完整范围见 [1.3 收尾记录](v1.3-release-validation-2026-09-13.md) 和 [项目完整报告](project-status-and-follow-up-2026-09-13.md)。
 
 配置结构参考维护者提供的 iPerfman `docs/XCODE_CLOUD.md`；本项目数值与规则均独立核对。workflow 配置位于 App Store Connect，任何后续调整都应同步更新本文。
+
+## 2026-09-16 工具链兼容修复
+
+2.0 Build 51（源码 `450c74af97532cc8e3eb62f362edc392d938722a`）在 iOS 与 macOS 归档开始时失败：云端 SDK 27 分别要求最低 iOS 15、macOS 12，与当前 iOS 14 / macOS 11 支持范围不符。
+
+已向 Default workflow 提交固定 Xcode 26.3 (`17C529`) / macOS Tahoe 26.3 (`25D125`) 的配置更新，不提高应用部署下限、不更改依赖。Xcode 版本 ID `5061ab6a-e61b-4d8b-893d-d3b13acabeea`，macOS 版本 ID `44c68446-99a7-4ef8-adce-d90be94f22b2`，两者来自当前 Cloud API 可用组合。随后从同一打包分支手动启动 Build 52 (`aa665f62-c781-4cf9-ad60-f137424622f2`)；最终归档工具链与 TestFlight 状态必须以本次产物和日志核实，不能以更新 API 成功响应代替。
