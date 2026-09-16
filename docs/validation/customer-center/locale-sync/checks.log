@@ -1,0 +1,16 @@
+Baseline negative control: expected assertion failure (SIGTRAP); not a UI result.
+{"expected":"en","saved":"<unset>","sdk_initial_locale":"<none>"}
+
+Candidate recording-SDK boundary:
+{"expected":"en","saved":"<unset>","sdk_initial_locale":"en"}
+{"expected":"en","saved":"system","sdk_initial_locale":"en"}
+{"expected":"en","saved":"en","sdk_initial_locale":"en"}
+{"expected":"zh_Hans","saved":"zh_Hans","sdk_initial_locale":"zh_Hans"}
+{"expected":"zh_Hant","saved":"zh_Hant","sdk_initial_locale":"zh_Hant"}
+{"expected":"en","saved":"invalid-locale","sdk_initial_locale":"en"}
+PASS: real IAPManager; 6 saved-language cases, proxy ordering, configure idempotence, locale updates and unchanged preferences
+
+Existing checks:
+PASS: parsed 58 Swift sources and 3 localization files
+PASS: verified restore/revocation, missing/failed/cancelled snapshots and real quota integration
+PASS: Customer Center localized keys in English, Simplified and Traditional Chinese

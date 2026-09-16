@@ -1,0 +1,35 @@
+[
+  {
+    "case": "short-1KiB-expected-conversion",
+    "inputBytes": 1024,
+    "exitCode": 4,
+    "attemptsRequested": 5,
+    "attemptsCompleted": 1,
+    "serviceSucceeded": true,
+    "originalBytesPreserved": true,
+    "expectedConversionAbsent": true,
+    "probeStoppedOnOutputMismatch": true
+  },
+  {
+    "case": "long-10MiB",
+    "inputBytes": 10485760,
+    "exitCode": 4,
+    "attemptsRequested": 5,
+    "attemptsCompleted": 1,
+    "serviceSucceeded": true,
+    "originalBytesPreserved": true,
+    "expectedConversionAbsent": true,
+    "probeStoppedOnOutputMismatch": true
+  },
+  {
+    "case": "NUL",
+    "inputBytes": 27,
+    "exitCode": 4,
+    "attemptsRequested": 5,
+    "attemptsCompleted": 1,
+    "serviceSucceeded": true,
+    "originalBytesPreserved": true,
+    "expectedConversionAbsent": true,
+    "probeStoppedOnOutputMismatch": true
+  }
+]

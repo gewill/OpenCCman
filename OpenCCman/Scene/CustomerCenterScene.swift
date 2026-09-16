@@ -9,6 +9,7 @@ import RevenueCatUI
 /// A route keeps presentation local to its window and defers What's New until return.
 struct CustomerCenterScene: View {
   @EnvironmentObject private var navigator: Navigator
+  @Environment(\.locale) private var locale
 
   var body: some View {
     Group {
@@ -21,6 +22,9 @@ struct CustomerCenterScene: View {
           IAPManager.shared.applyCustomerInfo(info)
         }
         .onDisappear { IAPManager.shared.refreshAccess() }
+        // RevenueCat loads localized server configuration once per view model.
+        // Refresh only this component; keep the window's HomeViewModel intact.
+        .id(locale.identifier)
       } else {
         PurchaseSupportView()
       }

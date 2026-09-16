@@ -1,0 +1,44 @@
+{
+  "sourceSHA": "eab5003bfdd938f08b936826225d7ab482d6f703",
+  "run": 34949741507,
+  "configuration": "Release",
+  "toolchain": "Xcode 26.3\nBuild version 17C529",
+  "artifactSHA256": "b4ab85c04c2da0ae3723c73fad3c05ff5cdea871c6da481c337b449404b6e401",
+  "providerApp": "<HOME>/Applications/OpenCCman Services Probe eab5003.app",
+  "providerBundleID": "org.gewill.OpenCCman.ServicesValidation",
+  "providerBinarySHA256BeforeSigning": "06affc2de99c9fd59901687aebb0750ea97a24a3edf13513560fb7f1285757d7",
+  "providerBinarySHA256AfterSigning": "11b54d162172123fbf742441f7188d74176df9360b8e53ad7bcfffd61b526e21",
+  "plistChanges": {
+    "CFBundleName": "OpenCCman Services Probe eab5003",
+    "CFBundleDisplayName": "OpenCCman Services Probe eab5003",
+    "NSServices": [
+      {
+        "NSMenuItem": {
+          "default": "OpenCCman Probe eab5003 Convert"
+        },
+        "NSMessage": "convertSelectedText",
+        "NSPortName": "OpenCCmanServicesProbeEAB5003",
+        "NSReturnTypes": [
+          "NSStringPboardType"
+        ],
+        "NSSendTypes": [
+          "NSStringPboardType"
+        ]
+      },
+      {
+        "NSMenuItem": {
+          "default": "OpenCCman Probe eab5003 Open"
+        },
+        "NSMessage": "openSelectedTextInApp",
+        "NSPortName": "OpenCCmanServicesProbeEAB5003",
+        "NSSendTypes": [
+          "NSStringPboardType"
+        ]
+      }
+    ]
+  },
+  "preferencesOriginallyExisted": false,
+  "minimumOS": "11.0",
+  "observedPID": 57915,
+  "identityEvidence": "Unique pbs registration plus directed sample captured TextConversionService on this PID; existing PRValidation PID 65226 CPU time unchanged during the diagnostic."
+}
