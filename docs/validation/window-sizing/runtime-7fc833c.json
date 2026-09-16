@@ -1,0 +1,91 @@
+{
+  "date": "2026-09-15",
+  "source": "7fc833c367c589b0046dd2c0148c20698d64588b",
+  "ciRun": 34933596160,
+  "platform": "macOS 27.0 (26A428), arm64",
+  "configuration": "Debug, CI universal app, local ad-hoc signature, isolated bundle",
+  "language": "English",
+  "theme": "light",
+  "textSize": "default",
+  "coordinateSystem": "Window bounds are Quartz global logical points (top-left origin); screens are AppKit points (bottom-left origin).",
+  "screens": [
+    {
+      "frame": "{{0, 0}, {1920, 1080}}",
+      "visibleFrame": "{{0, 60}, {1920, 990}}"
+    },
+    {
+      "frame": "{{1920, 150}, {1496, 967}}",
+      "visibleFrame": "{{1920, 150}, {1496, 939.5}}"
+    }
+  ],
+  "cases": {
+    "firstLaunchWithSheet": [
+      {
+        "Height": 768,
+        "Width": 1024,
+        "X": 510,
+        "Y": 300
+      }
+    ],
+    "undersizedHistory": [
+      {
+        "Height": 412,
+        "Width": 300,
+        "X": 200,
+        "Y": 480
+      }
+    ],
+    "additionalWindow": [
+      {
+        "Height": 768,
+        "Width": 1024,
+        "X": 29,
+        "Y": 59
+      },
+      {
+        "Height": 412,
+        "Width": 838,
+        "X": 0,
+        "Y": 30
+      }
+    ],
+    "restart": [
+      {
+        "Height": 768,
+        "Width": 1024,
+        "X": 29,
+        "Y": 59
+      }
+    ],
+    "freshWithoutSheet": [
+      {
+        "Height": 768,
+        "Width": 1024,
+        "X": 448,
+        "Y": 86
+      }
+    ],
+    "freshWithSheetRepeated": [
+      {
+        "Height": 768,
+        "Width": 1024,
+        "X": 510,
+        "Y": 300
+      }
+    ],
+    "builtInDisplay": [
+      {
+        "Height": 768,
+        "Width": 1024,
+        "X": 2189,
+        "Y": 155
+      }
+    ]
+  },
+  "limitations": [
+    "First-launch sheet dismissal displaces the frame outside the available area; fixed in 7be4b3d, runtime recheck pending.",
+    "Restart restores native last-window geometry; all-window session restoration was not proven.",
+    "Minimum historical frame is a test preference fixture, not a live vertical drag. Separately, actual bottom-edge dragging reached 838x412.",
+    "No physical monitor unplug or minimum-OS execution."
+  ]
+}

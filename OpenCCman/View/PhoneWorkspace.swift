@@ -8,6 +8,7 @@
     @EnvironmentObject private var viewModel: HomeViewModel
     @EnvironmentObject private var windowState: WhatsNewWindowState
     @Environment(\.sizeCategory) private var sizeCategory
+    @Environment(\.locale) private var locale
     @AppStorage(UserDefaultsKeys.isPro.rawValue) private var isPro = false
     @State private var keyboardVisible = false
     var export: () -> Void
@@ -58,6 +59,7 @@
         windowState.conversionSettingsIsActive = false
       }) {
         ConversionSettingsSheet()
+          .environment(\.locale, locale)
           .environmentObject(viewModel)
           .environmentObject(windowState)
       }

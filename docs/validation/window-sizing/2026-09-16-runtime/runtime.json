@@ -1,0 +1,77 @@
+{
+  "sampleSource": "鼠标里面的硅二极管坏了，导致光标分辨率降低。",
+  "sampleResult": "鼠標裏面的硅二極管壞了，導致光標分辨率降低。",
+  "baselineNativeFrame": "298 273 900 450 0 0 1496 939 ",
+  "candidatePhases": [
+    {
+      "frame": "236 142 1024 768 0 0 1496 939 ",
+      "locale": "en",
+      "theme": "light",
+      "quota": {
+        "2026-09-16": 1
+      },
+      "isPro": false
+    },
+    {
+      "frame": "236 498 300 412 0 0 1496 939 ",
+      "locale": "en",
+      "theme": "light",
+      "quota": {
+        "2026-09-16": 2
+      },
+      "isPro": false
+    },
+    {
+      "frame": "236 498 300 412 0 0 1496 939 ",
+      "locale": "zh_Hans",
+      "theme": "light",
+      "quota": {
+        "2026-09-16": 3
+      },
+      "isPro": false
+    },
+    {
+      "frame": "236 498 300 412 0 0 1496 939 ",
+      "locale": "zh_Hant",
+      "theme": "dark",
+      "quota": {
+        "2026-09-16": 4
+      },
+      "isPro": false
+    }
+  ],
+  "minimumRestorationFixture": {
+    "method": "native frame autosave fixture while app is stopped; no UI automation shortcut",
+    "frameBefore": "236 142 1024 768 0 0 1496 939 ",
+    "frameFixture": "236 498 300 412 0 0 1496 939 ",
+    "quotaBeforeRestart": {
+      "2026-09-16": 1
+    }
+  },
+  "minimumExport": {
+    "suggestedFilenameStem": "OpenCCman-converted",
+    "cancelled": true,
+    "savedFile": false,
+    "sourceAndResultStillPresentAfterCancel": true
+  },
+  "sameProcessObservation": {
+    "wideSidebarAndBothAxes": "source and result preserved",
+    "conversionSettingsSheetOpenClose": "source and result preserved",
+    "recommendedWidthWithSidebar": "Side by side intent retained, actual stacked fallback with explanation",
+    "additionalQuotaForLayoutActions": 0
+  },
+  "limitations": {
+    "continuousEdgeResize": "Attempted native CUA edge drags did not change frame; not passed",
+    "zoomedNativeFrame": "Not independently measured; screenshots record sampling pixels only",
+    "languageThemeCombinations": [
+      "en/light",
+      "zh_Hans/light",
+      "zh_Hant/dark"
+    ],
+    "largerText": "Not tested",
+    "physicalMonitorDisconnect": "Not tested",
+    "newContinuousVideo": "Not captured",
+    "minimumOS": "Retained in issue 16",
+    "foreignLanguageSettingsSheet": "Known issue 75; not accepted by this matrix"
+  }
+}

@@ -8,6 +8,8 @@ protocol Segmentable: Identifiable, Hashable {
 struct SegmentView<T: Segmentable>: View {
   @Environment(\.locale) private var locale
   @Environment(\.sizeCategory) private var sizeCategory
+  @State private var availableWidth: CGFloat = 0
+  @State private var widestWord: CGFloat = 0
   let title: String
   let options: [T]
   @Binding var selected: T
@@ -17,17 +19,57 @@ struct SegmentView<T: Segmentable>: View {
       Text(title.localizedStringKey)
         .font(.headline)
       picker
+        .frame(maxWidth: .infinity)
         .appSegmentTrack()
+        .background(
+          GeometryReader { geometry in
+            Color.clear.preference(key: SegmentAvailableWidthKey.self, value: geometry.size.width)
+          }
+        )
+        .background(labelMeasurements)
+        .onPreferenceChange(SegmentAvailableWidthKey.self) { availableWidth = $0 }
+        .onPreferenceChange(SegmentWordWidthKey.self) { widestWord = $0 }
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Text(title.localizedStringKey))
         .accessibilityIdentifier("conversion-segment-\(title)")
     }
   }
 
-  // Keep the selected value in the binding when Dynamic Type changes layout.
+  private var usesVerticalLayout: Bool {
+    sizeCategory.isAccessibilityCategory ||
+      (availableWidth > 0 && widestWord > 0 &&
+       availableWidth < CGFloat(options.count) * max(AppControlMetrics.height,
+         widestWord + 2 * AppSegmentButtonStyle.horizontalInset))
+  }
+
+  // Measure unbroken words in the same semantic font as a selected segment.
+  // This permits normal two-line labels, but avoids splitting English words into
+  // fragments. Measuring the heavier weight keeps selection from changing axes.
+  private var labelMeasurements: some View {
+    ZStack {
+      ForEach(options) { option in
+        let words = option.title.localized(in: locale).split(whereSeparator: { $0.isWhitespace })
+        ForEach(Array(words.enumerated()), id: \.offset) { _, word in
+          Text(String(word))
+            .font(.body.weight(.semibold))
+            .fixedSize()
+            .background(
+              GeometryReader { geometry in
+                Color.clear.preference(key: SegmentWordWidthKey.self, value: geometry.size.width)
+              }
+            )
+        }
+      }
+    }
+    .hidden()
+    .accessibilityHidden(true)
+    .allowsHitTesting(false)
+  }
+
+  // Keep the selected value in the binding when width, language or type size changes.
   @ViewBuilder
   private var picker: some View {
-    if sizeCategory.isAccessibilityCategory {
+    if usesVerticalLayout {
       VStack(spacing: 0) { segments }
     } else {
       HStack(spacing: 0) { segments }
@@ -43,12 +85,26 @@ struct SegmentView<T: Segmentable>: View {
       }
       .buttonStyle(AppSegmentButtonStyle(selected: option == selected))
       .overlay(
-        SegmentGrooveDivider(isHorizontal: sizeCategory.isAccessibilityCategory)
+        SegmentGrooveDivider(isHorizontal: usesVerticalLayout)
           .opacity(option.id == options.first?.id ? 0 : 1),
-        alignment: sizeCategory.isAccessibilityCategory ? .top : .leading
+        alignment: usesVerticalLayout ? .top : .leading
       )
       .accessibilityAddTraits(option == selected ? .isSelected : [])
     }
+  }
+}
+
+private struct SegmentAvailableWidthKey: PreferenceKey {
+  static var defaultValue: CGFloat = 0
+  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    value = max(value, nextValue())
+  }
+}
+
+private struct SegmentWordWidthKey: PreferenceKey {
+  static var defaultValue: CGFloat = 0
+  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    value = max(value, nextValue())
   }
 }
 

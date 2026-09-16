@@ -1,0 +1,36 @@
+{
+  "date": "2026-09-16",
+  "previousHead": "12375b815b62ff127e1ce21d8947c4b4aed6e35d",
+  "mergedParent": "b48e0de825a369ad855d1eddf0aef7b055d67acf",
+  "mergeConflictPaths": [],
+  "commands": [
+    {
+      "command": "bash scripts/check-control-sizing.sh",
+      "exitCode": 0
+    },
+    {
+      "command": "bash scripts/check-control-labels.sh",
+      "exitCode": 0
+    },
+    {
+      "command": "bash scripts/check-workspace.sh",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 scripts/check-project.py",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 Tests/Regression/CheckScriptChecks.py",
+      "exitCode": 0
+    }
+  ],
+  "checkScriptTestCount": 9,
+  "warnings": [
+    "Pinned Neumorphic Text concatenation is deprecated under local SDK",
+    "Temporary dylib install-name double slash normalized by linker",
+    "sandbox_extension_issue_file_to_process diagnostic; native fixture completed both PASS assertions with exit 0"
+  ],
+  "logRedactions": "Worktree and temporary sizing paths replaced with labeled placeholders; warnings and PASS/FAIL content preserved.",
+  "scope": "Native Mac fixtures, syntax/localization and script error propagation; does not complete iPhone or maximum accessibility-size app acceptance."
+}
