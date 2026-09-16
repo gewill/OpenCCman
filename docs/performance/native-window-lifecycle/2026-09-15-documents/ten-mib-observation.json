@@ -1,0 +1,153 @@
+{
+  "origin": "First 1 Hz sample observing one window after the pre-close marker, not an exact UI close timestamp",
+  "first_closed_sample": {
+    "created_total": 5,
+    "elapsed_ms": 1140003.699667,
+    "event": "sample",
+    "live_model_numbers": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "model_states": [
+      {
+        "converting": false,
+        "importing": false,
+        "number": 1
+      },
+      {
+        "converting": false,
+        "importing": false,
+        "number": 2
+      },
+      {
+        "converting": false,
+        "importing": false,
+        "number": 3
+      },
+      {
+        "converting": false,
+        "importing": false,
+        "number": 4
+      },
+      {
+        "converting": false,
+        "importing": false,
+        "number": 5
+      }
+    ],
+    "os": "Version 27.0 (Build 26A428)",
+    "physical_footprint_bytes": 9174966312,
+    "pid": 88299,
+    "process_peak_rss_bytes": 3676487680,
+    "rss_bytes": 2430451712,
+    "rusage_status": 0,
+    "task_info_status": 0,
+    "visible_main_capable_windows": 1
+  },
+  "samples_seconds_after_first_closed_sample": {
+    "5": {
+      "created_total": 5,
+      "elapsed_ms": 1146003.760167,
+      "event": "sample",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 9172672552,
+      "pid": 88299,
+      "process_peak_rss_bytes": 3676487680,
+      "rss_bytes": 2430910464,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "20": {
+      "created_total": 5,
+      "elapsed_ms": 1161003.668,
+      "event": "sample",
+      "live_model_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 9172656168,
+      "pid": 88299,
+      "process_peak_rss_bytes": 3676487680,
+      "rss_bytes": 2428977152,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    }
+  },
+  "anchor_source_AX_unchanged": true,
+  "anchor_result_AX_unchanged": true,
+  "full_byte_exports_passed": [
+    "10mib-a.txt",
+    "10mib-b.txt"
+  ],
+  "all_memory_api_statuses_valid": true
+}
