@@ -9,6 +9,10 @@ on:
     branches: [main, develop, 'release/**', 'hotfix/**']
   workflow_dispatch:
     inputs:
+      measure_app_baseline:
+        description: Measure five fresh-process Release application baseline samples
+        type: boolean
+        default: false
       build_services_validation:
         description: Build an unsigned Release Mac app for manual Services measurements
         type: boolean
@@ -69,7 +73,7 @@ concurrency:
 jobs:
   regression:
     name: App Regression
-    if: github.event_name != 'workflow_dispatch' || (!inputs.compare_workspace_editor && !inputs.build_window_lifecycle && !inputs.automatic_window_lifecycle && !inputs.cycle_window_lifecycle && !inputs.document_window_lifecycle && !inputs.profile_document_stages && !inputs.active_anchor_window_lifecycle && !inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
+    if: github.event_name != 'workflow_dispatch' || (!inputs.measure_app_baseline && !inputs.compare_workspace_editor && !inputs.build_window_lifecycle && !inputs.automatic_window_lifecycle && !inputs.cycle_window_lifecycle && !inputs.document_window_lifecycle && !inputs.profile_document_stages && !inputs.active_anchor_window_lifecycle && !inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
     runs-on: macos-15
     timeout-minutes: 20
     steps:
@@ -363,3 +367,30 @@ jobs:
           name: services-release-validation-app
           path: ${{ runner.temp }}/services-artifact
           retention-days: 7
+
+  application-performance-baseline:
+    name: Release application performance baseline
+    if: github.event_name == 'workflow_dispatch' && inputs.measure_app_baseline
+    runs-on: macos-15
+    timeout-minutes: 35
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Measure five fresh processes with the locked dependencies
+        run: |
+          python3 scripts/benchmark-app.py \
+            --output "${{ runner.temp }}/app-performance-baseline" \
+            --samples 5 --timeout 180
+      - name: Preserve provenance and all samples, including failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: app-performance-baseline
+          path: |
+            ${{ runner.temp }}/app-performance-baseline/*.json
+            ${{ runner.temp }}/app-performance-baseline/build.log
+          retention-days: 14
+          if-no-files-found: error
