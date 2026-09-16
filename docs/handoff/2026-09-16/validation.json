@@ -1,0 +1,21 @@
+{
+  "validatedAtUTC": "2026-09-16T03:08:25.352865+00:00",
+  "baseDevelop": "10a29785ccaafe38cc2451cbbb1693b264c60a4a",
+  "scope": "Documentation only; no app runtime, purchase, release or external feedback acceptance. Local runtime inventory read only.",
+  "checks": {
+    "github_snapshot_json": "PASS",
+    "14_pr_heads_match_document": "PASS",
+    "all_14_current_App_Regression_success": "PASS; optional skipped jobs excluded",
+    "relative_markdown_links": "PASS",
+    "private_Apple_feedback_zip": "PASS: SHA256, 20587 bytes, 17 files; package not uploaded",
+    "root_checkout": "Existing pbxproj, Package.resolved and untracked xcshareddata left untouched",
+    "inspector_device": "Read back Booted, accessibility-extra-extra-extra-large, light",
+    "serve_sim": "Read-only listener check: 127.0.0.1:3200 PID 5935; revalidate ownership before cleanup",
+    "diff_whitespace": "PASS"
+  },
+  "sha256": {
+    "README.md": "6b6fef0387b5b4d73b3b986203b1d58884a7a7490a2550be005db0afd3d71970",
+    "docs/handoff/2026-09-16/README.md": "a4358c5a5a98d156d7d5a63693bdba69018aa2c70cdf4ff1223809d4f97f2693",
+    "docs/handoff/2026-09-16/github-state.json": "f6a69935d68d961a7dfbd607c8a8f94ab0f4dab28af6a3d4b0e0b9b2e75199b8"
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "method": "Temporary copies only: identical explicit-identifier ad-hoc signing, then zero each Mach-O LC_CODE_SIGNATURE data range; compare remaining bytes including load commands and slice layout. Full original/runtime hashes retained separately.",
+  "binaries": {
+    "baseline": [
+      {
+        "file": "OpenCCman.debug.dylib",
+        "ciSHA256": "404b1f654e892a89860dd9b6ccd6ad814640b61d7ca7f36ee7d62c5bcd3a769b",
+        "runtimeSHA256": "93a01465ff2f20ee7168ca2666861a487af5e419eae21df9f8a32c371e761b0b",
+        "canonicalPayloadSHA256": "d2e345ba9e3f9e25ba6b5bc7d34f8bef394f5f80c9a013623740512dc17ef35d",
+        "excludedSignatureRanges": [
+          [
+            54904928,
+            429088
+          ],
+          [
+            107007488,
+            101184
+          ]
+        ],
+        "payloadMatches": true
+      },
+      {
+        "file": "__preview.dylib",
+        "ciSHA256": "2719b44a19401b818187013966292882dd5fba94c1be3eff4baf74098339fa46",
+        "runtimeSHA256": "43de07209988ad26fd456b8780d18f061347a22f827adbf48114b759aa6dd829",
+        "canonicalPayloadSHA256": "8d6a2bdefcaaab8dc4956620f461bc668d3d3c83e5cc7e1a1a309ee512e1d24f",
+        "excludedSignatureRanges": [
+          [
+            20544,
+            320
+          ],
+          [
+            49216,
+            320
+          ]
+        ],
+        "payloadMatches": true
+      },
+      {
+        "file": "OpenCCman",
+        "ciSHA256": "c4290e507c40d1bbe939da38a9469cbbf0fbd43764be054bd0c586f1a4055ee3",
+        "runtimeSHA256": "892e7b4c2421ceff4d8353e109e42f6e4ccd662989f83686c95a7f08699efca9",
+        "canonicalPayloadSHA256": "1d6d53d44019def8f399e9bf080dbdb5be79c9fa20d3c526159120d11e5abb2d",
+        "excludedSignatureRanges": [
+          [
+            50208,
+            544
+          ],
+          [
+            121248,
+            384
+          ]
+        ],
+        "payloadMatches": true
+      }
+    ],
+    "candidate": [
+      {
+        "file": "OpenCCman.debug.dylib",
+        "ciSHA256": "1e24af9e2e81aa94035eeee02f3d12620d24071be29bd5237fb525625748563c",
+        "runtimeSHA256": "7b9616a941e60d2efde3ce76bf922f2698514838932706392a8180a131b53570",
+        "canonicalPayloadSHA256": "8004e603e3d6a37920ee3b6175591dfb0e1de167f6a7095f8c8b2747afc25e55",
+        "excludedSignatureRanges": [
+          [
+            55036000,
+            430112
+          ],
+          [
+            107257584,
+            101408
+          ]
+        ],
+        "payloadMatches": true
+      },
+      {
+        "file": "__preview.dylib",
+        "ciSHA256": "2719b44a19401b818187013966292882dd5fba94c1be3eff4baf74098339fa46",
+        "runtimeSHA256": "43de07209988ad26fd456b8780d18f061347a22f827adbf48114b759aa6dd829",
+        "canonicalPayloadSHA256": "8d6a2bdefcaaab8dc4956620f461bc668d3d3c83e5cc7e1a1a309ee512e1d24f",
+        "excludedSignatureRanges": [
+          [
+            20544,
+            320
+          ],
+          [
+            49216,
+            320
+          ]
+        ],
+        "payloadMatches": true
+      },
+      {
+        "file": "OpenCCman",
+        "ciSHA256": "c4290e507c40d1bbe939da38a9469cbbf0fbd43764be054bd0c586f1a4055ee3",
+        "runtimeSHA256": "20a5d6cd05d02c6bcaba9b1efdd4ec5bf4e2e3a6926c9369a1ae9d8853609e2d",
+        "canonicalPayloadSHA256": "1d6d53d44019def8f399e9bf080dbdb5be79c9fa20d3c526159120d11e5abb2d",
+        "excludedSignatureRanges": [
+          [
+            50208,
+            544
+          ],
+          [
+            121248,
+            384
+          ]
+        ],
+        "payloadMatches": true
+      }
+    ]
+  }
+}

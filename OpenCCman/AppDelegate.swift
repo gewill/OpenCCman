@@ -33,6 +33,7 @@
   class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, ObservableObject {
     private var statusItem: NSStatusItem?
     private static let readyWindows = NSHashTable<NSWindow>.weakObjects()
+    private static let windowReopener = MainWindowReopenController()
     private static var pendingWindowNotification: PendingWindowNotification?
 
     private struct PendingWindowNotification {
@@ -113,8 +114,25 @@
 
     @discardableResult
     static func activateMainWindow() -> NSWindow? {
+      if let window = activateExistingMainWindow() { return window }
+      windowReopener.request(open: { completion in
+        let configuration = NSWorkspace.OpenConfiguration()
+        configuration.createsNewApplicationInstance = false
+        NSWorkspace.shared.openApplication(at: Bundle.main.bundleURL, configuration: configuration) { _, error in
+          DispatchQueue.main.async { completion(error) }
+        }
+      }, onFailure: { error in
+        pendingWindowNotification = nil
+        NSAlert(error: error).runModal()
+      })
+      return nil
+    }
+
+    @discardableResult
+    private static func activateExistingMainWindow() -> NSWindow? {
       let keyWindow = NSApp.keyWindow.flatMap { $0.canBecomeMain ? $0 : nil }
       let window = keyWindow ?? NSApp.mainWindow ?? NSApp.windows.first(where: { $0.canBecomeMain })
+      if window?.isMiniaturized == true { window?.deminiaturize(nil) }
       window?.makeKeyAndOrderFront(nil)
       NSApp.activate(ignoringOtherApps: true)
       return window
@@ -134,8 +152,9 @@
     static func registerReadyWindow(_ window: NSWindow) {
       // Let Root's window state and notification subscriptions settle before delivery.
       DispatchQueue.main.async { [weak window] in
-        guard let window else { return }
+        guard let window, NSApp.windows.contains(where: { $0 === window }) else { return }
         readyWindows.add(window)
+        windowReopener.windowBecameReady()
         guard let pending = pendingWindowNotification,
               pending.window == nil || pending.window === window else { return }
         pendingWindowNotification = nil
@@ -146,7 +165,9 @@
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
       // Bring the app to front when clicked in dock
       if !flag {
-        Self.activateMainWindow()
+        // Returning true lets SwiftUI recreate its WindowGroup. Asking Launch
+        // Services to reopen here would recurse and could create two windows.
+        Self.activateExistingMainWindow()
       }
       return true
     }
