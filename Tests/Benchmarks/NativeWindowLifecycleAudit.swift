@@ -67,7 +67,7 @@ final class NativeWindowLifecycleAudit {
     }
   }
 
-  private func record(_ event: String, number: Int? = nil) {
+  private func record(_ event: String, number: Int? = nil, details: [String: Any] = [:]) {
     var info = task_vm_info_data_t()
     var count = mach_msg_type_number_t(MemoryLayout.size(ofValue: info) / MemoryLayout<integer_t>.size)
     let result = withUnsafeMutablePointer(to: &info) { pointer in
@@ -91,6 +91,7 @@ final class NativeWindowLifecycleAudit {
       "os": ProcessInfo.processInfo.operatingSystemVersionString,
     ]
     if let number { row["model_number"] = number }
+    row.merge(details) { _, new in new }
     if result == KERN_SUCCESS {
       row["rss_bytes"] = info.resident_size
       row["physical_footprint_bytes"] = info.phys_footprint
