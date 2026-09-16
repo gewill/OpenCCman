@@ -1,0 +1,26 @@
+{
+  "sourceCommit": "24f879800a5d8407b5adc4b54d7d12fceeec3e3e",
+  "sourceWasDirty": false,
+  "sourceSHA256": "67e6610811ae2ec976530b1972677914b99702aa4a7786d383f039b7156273c9",
+  "sameSourceAs": "../Probe.swift",
+  "compiler": "swift-driver version: 1.168.6 Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0\nBuildVersion:\t\t26A428\n",
+  "binarySHA256": "169eb9ee508e3faf76eadc593f0f9a761a98afa4a1a022a595a4781a45a6fa77",
+  "bundle": "org.gewill.OpenCCman.HostStackOrigin20260916",
+  "processID": 34235,
+  "environment": {
+    "MallocStackLogging": "1"
+  },
+  "launch": "CUA getApp, first window queried implicitly; second getAXState returned lifetime-AppWindow-2",
+  "recording": false,
+  "globalSettingsChanged": false,
+  "stackLogsConfirmed": "malloc_history resolved both observer-block allocation stacks",
+  "privateArtifacts": {
+    "zero-window.memgraph": "1b4784c54794348a0de6370cfe26b189a0dda81083d5094bc746734558f7d1b8",
+    "first-host-layout.log": "c7c1a5202a434c7decf92e13381be4bdec310283dcae39fe67c833a55eb076d2",
+    "second-host-layout.log": "d8712f694137a41729cb086dce9fbbccddb9050c1654f74d65d49afd036e267a",
+    "allocations-private.log": "eae76cba810e43a9de371ff3799519f472494c4bf385717b9edfbd90bc64121a",
+    "model-b-trace.log": "5cf01af49d4bf996f4550ce49137cf2ec079732cddf2fcd32d61d5daf6cc0c0d"
+  },
+  "validation": "Existing diagnose-window-lifetime.py validate(rows, require_hosts=True) passed; not a leak/fix assertion"
+}
