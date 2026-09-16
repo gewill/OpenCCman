@@ -1,0 +1,14 @@
+{
+  "repository": "https://github.com/sindresorhus/LaunchAtLogin-Modern",
+  "revision": "a04ec1c363be3627734f6dad757d82f5d4fa8fcc",
+  "source": "Sources/LaunchAtLogin/LaunchAtLogin.swift",
+  "sourceSHA256": "c8d50d3fed574e5de13f9156207e14100ca0f059ec6e91eb4403c3889a5bde08",
+  "license": "MIT",
+  "licenseSHA256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+  "integratedIn": "OpenCCman/Scene/SettingsScene.swift",
+  "localChanges": [
+    "macOS-only compilation",
+    "macOS 13 availability on enum and extensions"
+  ],
+  "verification": "Xcode 27 arm64 macOS 12 target typecheck passed; full app build blocked by existing RevenueCat PaywallColor initializer error"
+}
