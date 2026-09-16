@@ -1,0 +1,168 @@
+{
+  "baselineSourceSHA": "eab5003bfdd938f08b936826225d7ab482d6f703",
+  "currentSourceSHA": "6de377c3f8f1973ba06b04fc489b7125caa613ea",
+  "appFilesChanged": [
+    "OpenCCman/Services/ChineseConversionService.swift"
+  ],
+  "baselineSamples": 40,
+  "currentSamples": 40,
+  "identitySamplesExcluded": 20,
+  "nulContractSamplesExcluded": 1,
+  "cases": [
+    {
+      "shape": "short-paragraphs",
+      "inputBytes": 1024,
+      "inputSHA256": "ac3ab2f473c50578fe4300cc0e5e5efdd737326a523d5db635219efadac12a8c",
+      "expectedSHA256": "79063c4fb646e9d1f78c2f32a71d493949f8f0ef6e7f40666552c477e912704c",
+      "baseline": {
+        "samples": 5,
+        "medianMS": 106.174542,
+        "minMS": 105.085958,
+        "maxMS": 152.954792
+      },
+      "current": {
+        "samples": 5,
+        "medianMS": 106.30125,
+        "minMS": 105.963458,
+        "maxMS": 128.020083
+      },
+      "medianReductionPercent": -0.119339342193725
+    },
+    {
+      "shape": "short-paragraphs",
+      "inputBytes": 1048576,
+      "inputSHA256": "c5baf78dc6f3e0910e842a28cb900a863fb22808f36c93431b22ef9f7fb9cbe7",
+      "expectedSHA256": "b21bd7e4b8728ddb3915b37c76dd84dd8ab2b52783510e7dd428bbfd46732441",
+      "baseline": {
+        "samples": 5,
+        "medianMS": 105.48975,
+        "minMS": 101.563125,
+        "maxMS": 150.663292
+      },
+      "current": {
+        "samples": 5,
+        "medianMS": 105.499083,
+        "minMS": 105.236541,
+        "maxMS": 133.217875
+      },
+      "medianReductionPercent": -0.00884730506991449
+    },
+    {
+      "shape": "short-paragraphs",
+      "inputBytes": 5242880,
+      "inputSHA256": "b620087cf88dd80e5df1d515153a720ff13f657541076be377ed4ec469a9778f",
+      "expectedSHA256": "9d30b4eb969c68d60c1e06d0e011779ba8c45d0a34a610e9fcb2b52725a62b0d",
+      "baseline": {
+        "samples": 5,
+        "medianMS": 211.002083,
+        "minMS": 208.438375,
+        "maxMS": 259.014583
+      },
+      "current": {
+        "samples": 5,
+        "medianMS": 210.558791,
+        "minMS": 209.391958,
+        "maxMS": 230.300083
+      },
+      "medianReductionPercent": 0.21008892125485845
+    },
+    {
+      "shape": "short-paragraphs",
+      "inputBytes": 10485760,
+      "inputSHA256": "8a020df3f5bf1f4e69a4b080da6616d69448a39a30e01a35b3683a8518edb816",
+      "expectedSHA256": "b00171e98ff0187530a7b44caeed0ec4532b991a5604fd6bbe2ce6d82c7f91bc",
+      "baseline": {
+        "samples": 5,
+        "medianMS": 419.348541,
+        "minMS": 418.23375,
+        "maxMS": 444.881417
+      },
+      "current": {
+        "samples": 5,
+        "medianMS": 314.320792,
+        "minMS": 309.63575,
+        "maxMS": 336.841209
+      },
+      "medianReductionPercent": 25.04545473069859
+    },
+    {
+      "shape": "long-paragraphs",
+      "inputBytes": 1024,
+      "inputSHA256": "eb5fbad6c7fabbc2c553ca637953047189a311a9eb739e6ee677876271b95429",
+      "expectedSHA256": "6a33eea0844cfe4e62a51f4308ecb0231856f5e1e6f77367018260cde27a0765",
+      "baseline": {
+        "samples": 5,
+        "medianMS": 106.236666,
+        "minMS": 101.340125,
+        "maxMS": 153.283917
+      },
+      "current": {
+        "samples": 5,
+        "medianMS": 105.974542,
+        "minMS": 104.980166,
+        "maxMS": 131.747292
+      },
+      "medianReductionPercent": 0.24673590566179904
+    },
+    {
+      "shape": "long-paragraphs",
+      "inputBytes": 1048576,
+      "inputSHA256": "f30107d654515224001d9549baa8d7d536eac38bd1bfa7a29e5d30cc3ba33b28",
+      "expectedSHA256": "409a812c9c93bbd34bf58320d848c064e1ddde446064c703ecfee0da1e8b0e99",
+      "baseline": {
+        "samples": 5,
+        "medianMS": 106.545625,
+        "minMS": 101.403541,
+        "maxMS": 142.95275
+      },
+      "current": {
+        "samples": 5,
+        "medianMS": 105.725166,
+        "minMS": 105.345208,
+        "maxMS": 136.627167
+      },
+      "medianReductionPercent": 0.7700541434713992
+    },
+    {
+      "shape": "long-paragraphs",
+      "inputBytes": 5242880,
+      "inputSHA256": "5e54c53a9ddeba661183335a538016edf7688413dcfbda009ae2f37211cfc56f",
+      "expectedSHA256": "1be1a2f46fa12ace820971b350070acfa02a8b6662fb3e30603c205e70bd0ad3",
+      "baseline": {
+        "samples": 5,
+        "medianMS": 210.299334,
+        "minMS": 206.028541,
+        "maxMS": 254.637416
+      },
+      "current": {
+        "samples": 5,
+        "medianMS": 210.473625,
+        "minMS": 209.247042,
+        "maxMS": 231.233375
+      },
+      "medianReductionPercent": -0.08287758058236339
+    },
+    {
+      "shape": "long-paragraphs",
+      "inputBytes": 10485760,
+      "inputSHA256": "d9ce1492a3dc762c344824bc7f5dde1de8d35d8b0194cdf4e9f206099bb24f87",
+      "expectedSHA256": "e6d8cd4083d74159e9335223626c5ea4a72cc6d363640790bcc79cbb8128e903",
+      "baseline": {
+        "samples": 5,
+        "medianMS": 419.393834,
+        "minMS": 417.430875,
+        "maxMS": 2189.534
+      },
+      "current": {
+        "samples": 5,
+        "medianMS": 314.0885,
+        "minMS": 311.220458,
+        "maxMS": 342.305083
+      },
+      "medianReductionPercent": 25.1089371046881
+    }
+  ],
+  "currentCallerOptimization": "-O",
+  "currentRun": "run-2",
+  "warmupSamplesExcluded": 1
+}

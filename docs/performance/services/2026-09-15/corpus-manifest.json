@@ -1,0 +1,573 @@
+{
+  "schemaVersion": 1,
+  "generatorSHA256": "7d15eb0be929fa49e6a4260ba750eeedc40412e46dc86ce0e82da667bd462417",
+  "cliVersion": "Open Chinese Convert (OpenCC) Command Line Tool\nVersion: 1.4.2",
+  "cliSHA256": "ed47a65a958f65466011092ac7883c74d68ab9dec0e7238b234193f830ef417d",
+  "resourceManifestSHA256": "ae10b2fbf67844395aa5b5600a93b98c755336dfa9b2190f3bf1ba46bb13292d",
+  "opencc": {
+    "revision": "025f371dc76b598d77384fbdab90c937471844d8",
+    "tag": "ver.1.4.2"
+  },
+  "cases": [
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2t",
+      "input": "short-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "ac3ab2f473c50578fe4300cc0e5e5efdd737326a523d5db635219efadac12a8c",
+      "expected": "short-paragraphs-1024-s2t.txt",
+      "expectedBytes": 1024,
+      "expectedSHA256": "79063c4fb646e9d1f78c2f32a71d493949f8f0ef6e7f40666552c477e912704c"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2tw",
+      "input": "short-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "ac3ab2f473c50578fe4300cc0e5e5efdd737326a523d5db635219efadac12a8c",
+      "expected": "short-paragraphs-1024-s2tw.txt",
+      "expectedBytes": 1024,
+      "expectedSHA256": "f522f171e9fbb3b92053f07eadc9df26ee967fcdba22e1b2ef2f6b32d126bff0"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2twp",
+      "input": "short-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "ac3ab2f473c50578fe4300cc0e5e5efdd737326a523d5db635219efadac12a8c",
+      "expected": "short-paragraphs-1024-s2twp.txt",
+      "expectedBytes": 1051,
+      "expectedSHA256": "07899c51e59469cd73172892eda35c8386d37c0587cdfce8af95a2fdde55c62d"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2hk",
+      "input": "short-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "ac3ab2f473c50578fe4300cc0e5e5efdd737326a523d5db635219efadac12a8c",
+      "expected": "short-paragraphs-1024-s2hk.txt",
+      "expectedBytes": 1024,
+      "expectedSHA256": "6fb9c2313872274070e0561a44f96edf4eb28698fb1edbf50d5c140e20bd8078"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "t2s",
+      "input": "short-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "ac3ab2f473c50578fe4300cc0e5e5efdd737326a523d5db635219efadac12a8c",
+      "expected": "short-paragraphs-1024-t2s.txt",
+      "expectedBytes": 1024,
+      "expectedSHA256": "c9a8df366bd18175d6ebdf34d4ed76f721cc78b2adad3cbc4284efb6479ffaa8"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "legacy-s2t-tw-idiom",
+      "input": "short-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "ac3ab2f473c50578fe4300cc0e5e5efdd737326a523d5db635219efadac12a8c",
+      "expected": "short-paragraphs-1024-legacy-s2t-tw-idiom.txt",
+      "expectedBytes": 1051,
+      "expectedSHA256": "4d31eb6795c44195a8ca70dcaecbf1b9bba2309de102fabaa036ab2d2ef95665"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "legacy-s2hk-tw-idiom",
+      "input": "short-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "ac3ab2f473c50578fe4300cc0e5e5efdd737326a523d5db635219efadac12a8c",
+      "expected": "short-paragraphs-1024-legacy-s2hk-tw-idiom.txt",
+      "expectedBytes": 1051,
+      "expectedSHA256": "149c80257e67b05a48dbf4e90ffa690cf1d4a68edbb89fa6fe91789010381f59"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2t",
+      "input": "short-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "c5baf78dc6f3e0910e842a28cb900a863fb22808f36c93431b22ef9f7fb9cbe7",
+      "expected": "short-paragraphs-1048576-s2t.txt",
+      "expectedBytes": 1048576,
+      "expectedSHA256": "b21bd7e4b8728ddb3915b37c76dd84dd8ab2b52783510e7dd428bbfd46732441"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2tw",
+      "input": "short-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "c5baf78dc6f3e0910e842a28cb900a863fb22808f36c93431b22ef9f7fb9cbe7",
+      "expected": "short-paragraphs-1048576-s2tw.txt",
+      "expectedBytes": 1048576,
+      "expectedSHA256": "cdcc66ea006d65e90f128cd16bff27706529f7fe20db297e7f21a788dda4fbbe"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2twp",
+      "input": "short-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "c5baf78dc6f3e0910e842a28cb900a863fb22808f36c93431b22ef9f7fb9cbe7",
+      "expected": "short-paragraphs-1048576-s2twp.txt",
+      "expectedBytes": 1078252,
+      "expectedSHA256": "d17b95a553cd91b616f6e79ee3a78d6087844092ba34c9d11c3d01f02980a1f8"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2hk",
+      "input": "short-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "c5baf78dc6f3e0910e842a28cb900a863fb22808f36c93431b22ef9f7fb9cbe7",
+      "expected": "short-paragraphs-1048576-s2hk.txt",
+      "expectedBytes": 1048576,
+      "expectedSHA256": "8647ea06af40b272579c173731d58286d81135f267b77cfb16e43f069e4654a1"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "t2s",
+      "input": "short-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "c5baf78dc6f3e0910e842a28cb900a863fb22808f36c93431b22ef9f7fb9cbe7",
+      "expected": "short-paragraphs-1048576-t2s.txt",
+      "expectedBytes": 1048576,
+      "expectedSHA256": "8133fb1670701bb08bd31ef91a492a5b89fb88fa232ed391d9667313c16140c7"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "legacy-s2t-tw-idiom",
+      "input": "short-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "c5baf78dc6f3e0910e842a28cb900a863fb22808f36c93431b22ef9f7fb9cbe7",
+      "expected": "short-paragraphs-1048576-legacy-s2t-tw-idiom.txt",
+      "expectedBytes": 1078252,
+      "expectedSHA256": "f5e6a07f24ebacdd535ad5e2ab9f25d267d9f09b87fa383db0c1f6d435186659"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "legacy-s2hk-tw-idiom",
+      "input": "short-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "c5baf78dc6f3e0910e842a28cb900a863fb22808f36c93431b22ef9f7fb9cbe7",
+      "expected": "short-paragraphs-1048576-legacy-s2hk-tw-idiom.txt",
+      "expectedBytes": 1078252,
+      "expectedSHA256": "e4c007c24841df787b3c3aba18a1e21494977097978b9e7054716f6d482331c8"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2t",
+      "input": "short-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "b620087cf88dd80e5df1d515153a720ff13f657541076be377ed4ec469a9778f",
+      "expected": "short-paragraphs-5242880-s2t.txt",
+      "expectedBytes": 5242880,
+      "expectedSHA256": "9d30b4eb969c68d60c1e06d0e011779ba8c45d0a34a610e9fcb2b52725a62b0d"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2tw",
+      "input": "short-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "b620087cf88dd80e5df1d515153a720ff13f657541076be377ed4ec469a9778f",
+      "expected": "short-paragraphs-5242880-s2tw.txt",
+      "expectedBytes": 5242880,
+      "expectedSHA256": "d1c2f578089024d90aeaa78779130d2e69b0d4956b692b6f60d621ebd22ad5f2"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2twp",
+      "input": "short-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "b620087cf88dd80e5df1d515153a720ff13f657541076be377ed4ec469a9778f",
+      "expected": "short-paragraphs-5242880-s2twp.txt",
+      "expectedBytes": 5391263,
+      "expectedSHA256": "130fb0e5c0487182742bbb1d7ec87894cd62b22114bf3a1e3162d3074b44046c"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2hk",
+      "input": "short-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "b620087cf88dd80e5df1d515153a720ff13f657541076be377ed4ec469a9778f",
+      "expected": "short-paragraphs-5242880-s2hk.txt",
+      "expectedBytes": 5242880,
+      "expectedSHA256": "75d0787e9cfa803d7e8d970699bc3095a56937b989fc4ceb75f13d3769a4e29e"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "t2s",
+      "input": "short-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "b620087cf88dd80e5df1d515153a720ff13f657541076be377ed4ec469a9778f",
+      "expected": "short-paragraphs-5242880-t2s.txt",
+      "expectedBytes": 5242880,
+      "expectedSHA256": "b648ecc2860fd057d089ad8e49fda6c30f26eecef464938d06ce4f6c911ffc0f"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "legacy-s2t-tw-idiom",
+      "input": "short-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "b620087cf88dd80e5df1d515153a720ff13f657541076be377ed4ec469a9778f",
+      "expected": "short-paragraphs-5242880-legacy-s2t-tw-idiom.txt",
+      "expectedBytes": 5391263,
+      "expectedSHA256": "315afd3bd3629ee397a37b07b4dd680edafd72e468f915f5d4a9e82ae96a8baa"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "legacy-s2hk-tw-idiom",
+      "input": "short-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "b620087cf88dd80e5df1d515153a720ff13f657541076be377ed4ec469a9778f",
+      "expected": "short-paragraphs-5242880-legacy-s2hk-tw-idiom.txt",
+      "expectedBytes": 5391263,
+      "expectedSHA256": "252bfbc0f7635add5ec8a62405dbccca379077befc0567a3056825928a8c0965"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2t",
+      "input": "short-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "8a020df3f5bf1f4e69a4b080da6616d69448a39a30e01a35b3683a8518edb816",
+      "expected": "short-paragraphs-10485760-s2t.txt",
+      "expectedBytes": 10485760,
+      "expectedSHA256": "b00171e98ff0187530a7b44caeed0ec4532b991a5604fd6bbe2ce6d82c7f91bc"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2tw",
+      "input": "short-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "8a020df3f5bf1f4e69a4b080da6616d69448a39a30e01a35b3683a8518edb816",
+      "expected": "short-paragraphs-10485760-s2tw.txt",
+      "expectedBytes": 10485760,
+      "expectedSHA256": "b1cb5445a1e58f235cd6f128a904fc37b0c740c4c39418f685d19c1090ea791e"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2twp",
+      "input": "short-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "8a020df3f5bf1f4e69a4b080da6616d69448a39a30e01a35b3683a8518edb816",
+      "expected": "short-paragraphs-10485760-s2twp.txt",
+      "expectedBytes": 10782526,
+      "expectedSHA256": "1bc3f4c6a730ffe6b7ef1724118fb9be4185360fb7fba2561df78b4822f8dae0"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "s2hk",
+      "input": "short-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "8a020df3f5bf1f4e69a4b080da6616d69448a39a30e01a35b3683a8518edb816",
+      "expected": "short-paragraphs-10485760-s2hk.txt",
+      "expectedBytes": 10485760,
+      "expectedSHA256": "dacd7539988069eaa7a5fcbc48cc66cfe603fa54ba7359c26e12b1be940e58df"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "t2s",
+      "input": "short-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "8a020df3f5bf1f4e69a4b080da6616d69448a39a30e01a35b3683a8518edb816",
+      "expected": "short-paragraphs-10485760-t2s.txt",
+      "expectedBytes": 10485760,
+      "expectedSHA256": "2f6f66ff573f751bb157cd447f0163e42bfbbe24ad92312ceadfaa60b165b2af"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "legacy-s2t-tw-idiom",
+      "input": "short-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "8a020df3f5bf1f4e69a4b080da6616d69448a39a30e01a35b3683a8518edb816",
+      "expected": "short-paragraphs-10485760-legacy-s2t-tw-idiom.txt",
+      "expectedBytes": 10782526,
+      "expectedSHA256": "fa04e0721c8265ce8a77106145ac2495ae958211d11d125509c818b8267ce87e"
+    },
+    {
+      "shape": "short-paragraphs",
+      "mode": "legacy-s2hk-tw-idiom",
+      "input": "short-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "8a020df3f5bf1f4e69a4b080da6616d69448a39a30e01a35b3683a8518edb816",
+      "expected": "short-paragraphs-10485760-legacy-s2hk-tw-idiom.txt",
+      "expectedBytes": 10782526,
+      "expectedSHA256": "b6b235ad00515483524c17b76fe9172e4a4fb4dbd4bb2a4209f86490ee808103"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2t",
+      "input": "long-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "eb5fbad6c7fabbc2c553ca637953047189a311a9eb739e6ee677876271b95429",
+      "expected": "long-paragraphs-1024-s2t.txt",
+      "expectedBytes": 1024,
+      "expectedSHA256": "6a33eea0844cfe4e62a51f4308ecb0231856f5e1e6f77367018260cde27a0765"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2tw",
+      "input": "long-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "eb5fbad6c7fabbc2c553ca637953047189a311a9eb739e6ee677876271b95429",
+      "expected": "long-paragraphs-1024-s2tw.txt",
+      "expectedBytes": 1024,
+      "expectedSHA256": "155d8ccc1a23e05bd39d73bf3ff861355f36ab0ef33dfca1a85a06beab186552"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2twp",
+      "input": "long-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "eb5fbad6c7fabbc2c553ca637953047189a311a9eb739e6ee677876271b95429",
+      "expected": "long-paragraphs-1024-s2twp.txt",
+      "expectedBytes": 1054,
+      "expectedSHA256": "1067540f176f0247dc9ae629441d4c1c5d101f7e3365ce9ff1b7354dbc50b4bf"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2hk",
+      "input": "long-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "eb5fbad6c7fabbc2c553ca637953047189a311a9eb739e6ee677876271b95429",
+      "expected": "long-paragraphs-1024-s2hk.txt",
+      "expectedBytes": 1024,
+      "expectedSHA256": "1e0b67173f460ce6487cb35abf33c1754347a6f102aaa25d504396602a419367"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "t2s",
+      "input": "long-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "eb5fbad6c7fabbc2c553ca637953047189a311a9eb739e6ee677876271b95429",
+      "expected": "long-paragraphs-1024-t2s.txt",
+      "expectedBytes": 1024,
+      "expectedSHA256": "e17810c8c8ba0a86b626e2ead500b7cafde4fb26a06cab83b8963c357024f5c6"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "legacy-s2t-tw-idiom",
+      "input": "long-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "eb5fbad6c7fabbc2c553ca637953047189a311a9eb739e6ee677876271b95429",
+      "expected": "long-paragraphs-1024-legacy-s2t-tw-idiom.txt",
+      "expectedBytes": 1054,
+      "expectedSHA256": "ebc466e65e6c32b661d971865b2a44dac1156e6eacc803b37de5b5839987e803"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "legacy-s2hk-tw-idiom",
+      "input": "long-paragraphs-1024.txt",
+      "inputBytes": 1024,
+      "inputSHA256": "eb5fbad6c7fabbc2c553ca637953047189a311a9eb739e6ee677876271b95429",
+      "expected": "long-paragraphs-1024-legacy-s2hk-tw-idiom.txt",
+      "expectedBytes": 1054,
+      "expectedSHA256": "7a3b58f53519a044b33a228477c78778b7172b958010e8656d6026e70bd837a6"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2t",
+      "input": "long-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "f30107d654515224001d9549baa8d7d536eac38bd1bfa7a29e5d30cc3ba33b28",
+      "expected": "long-paragraphs-1048576-s2t.txt",
+      "expectedBytes": 1048576,
+      "expectedSHA256": "409a812c9c93bbd34bf58320d848c064e1ddde446064c703ecfee0da1e8b0e99"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2tw",
+      "input": "long-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "f30107d654515224001d9549baa8d7d536eac38bd1bfa7a29e5d30cc3ba33b28",
+      "expected": "long-paragraphs-1048576-s2tw.txt",
+      "expectedBytes": 1048576,
+      "expectedSHA256": "be32e840fee0f1518e06ac32050c67886aee863e9d33b259b4a0638660dfd163"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2twp",
+      "input": "long-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "f30107d654515224001d9549baa8d7d536eac38bd1bfa7a29e5d30cc3ba33b28",
+      "expected": "long-paragraphs-1048576-s2twp.txt",
+      "expectedBytes": 1079410,
+      "expectedSHA256": "c2a6392ac9724bdd8cf0bbe7582c3b44feeaf2e1ce1a0cdc779b2681b2ae5700"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2hk",
+      "input": "long-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "f30107d654515224001d9549baa8d7d536eac38bd1bfa7a29e5d30cc3ba33b28",
+      "expected": "long-paragraphs-1048576-s2hk.txt",
+      "expectedBytes": 1048576,
+      "expectedSHA256": "192c1274d65a60e430f19719922e26671b1baf472427cae94898f1c1ec57453f"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "t2s",
+      "input": "long-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "f30107d654515224001d9549baa8d7d536eac38bd1bfa7a29e5d30cc3ba33b28",
+      "expected": "long-paragraphs-1048576-t2s.txt",
+      "expectedBytes": 1048576,
+      "expectedSHA256": "085496bba6db65485c532e910205f013245ef6e3658499a0333b33d86e722e07"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "legacy-s2t-tw-idiom",
+      "input": "long-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "f30107d654515224001d9549baa8d7d536eac38bd1bfa7a29e5d30cc3ba33b28",
+      "expected": "long-paragraphs-1048576-legacy-s2t-tw-idiom.txt",
+      "expectedBytes": 1079410,
+      "expectedSHA256": "29c103b3de0b9cc3eb4650f9de5383bac550f2f4dbde85d56caafdeef5b67f57"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "legacy-s2hk-tw-idiom",
+      "input": "long-paragraphs-1048576.txt",
+      "inputBytes": 1048576,
+      "inputSHA256": "f30107d654515224001d9549baa8d7d536eac38bd1bfa7a29e5d30cc3ba33b28",
+      "expected": "long-paragraphs-1048576-legacy-s2hk-tw-idiom.txt",
+      "expectedBytes": 1079410,
+      "expectedSHA256": "44b6f89cae2486e4e1599b80561b51febca9a3f191f5028a60e1496cb8b6dc44"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2t",
+      "input": "long-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "5e54c53a9ddeba661183335a538016edf7688413dcfbda009ae2f37211cfc56f",
+      "expected": "long-paragraphs-5242880-s2t.txt",
+      "expectedBytes": 5242880,
+      "expectedSHA256": "1be1a2f46fa12ace820971b350070acfa02a8b6662fb3e30603c205e70bd0ad3"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2tw",
+      "input": "long-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "5e54c53a9ddeba661183335a538016edf7688413dcfbda009ae2f37211cfc56f",
+      "expected": "long-paragraphs-5242880-s2tw.txt",
+      "expectedBytes": 5242880,
+      "expectedSHA256": "8afd9570f95547d8b9a012d566c01292a64f82f5dd6ca267a18ee4251e2e5fa2"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2twp",
+      "input": "long-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "5e54c53a9ddeba661183335a538016edf7688413dcfbda009ae2f37211cfc56f",
+      "expected": "long-paragraphs-5242880-s2twp.txt",
+      "expectedBytes": 5397050,
+      "expectedSHA256": "81828702830d6d4d5bd04865eaebecc09059729bd5cc6a284289e4ab6187739b"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2hk",
+      "input": "long-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "5e54c53a9ddeba661183335a538016edf7688413dcfbda009ae2f37211cfc56f",
+      "expected": "long-paragraphs-5242880-s2hk.txt",
+      "expectedBytes": 5242880,
+      "expectedSHA256": "ea0c9c3f93d605e9c5bb3ccda8169e99e639f5bbf8089a2939aebf9eabddd1f1"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "t2s",
+      "input": "long-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "5e54c53a9ddeba661183335a538016edf7688413dcfbda009ae2f37211cfc56f",
+      "expected": "long-paragraphs-5242880-t2s.txt",
+      "expectedBytes": 5242880,
+      "expectedSHA256": "dd85bf1930f95bcb7b39a54aa57ad029b5205303a4bb6a354dc63f272f3d2bdd"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "legacy-s2t-tw-idiom",
+      "input": "long-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "5e54c53a9ddeba661183335a538016edf7688413dcfbda009ae2f37211cfc56f",
+      "expected": "long-paragraphs-5242880-legacy-s2t-tw-idiom.txt",
+      "expectedBytes": 5397050,
+      "expectedSHA256": "e9e9e66eebaa1048658dcaada557ac142cc90e1e78fdd4e16f1b4afd9f77aa2b"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "legacy-s2hk-tw-idiom",
+      "input": "long-paragraphs-5242880.txt",
+      "inputBytes": 5242880,
+      "inputSHA256": "5e54c53a9ddeba661183335a538016edf7688413dcfbda009ae2f37211cfc56f",
+      "expected": "long-paragraphs-5242880-legacy-s2hk-tw-idiom.txt",
+      "expectedBytes": 5397050,
+      "expectedSHA256": "75fbcfed49534318206c89e60060fb849cda856966bd3f3a5c69c2f206d9ed6a"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2t",
+      "input": "long-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "d9ce1492a3dc762c344824bc7f5dde1de8d35d8b0194cdf4e9f206099bb24f87",
+      "expected": "long-paragraphs-10485760-s2t.txt",
+      "expectedBytes": 10485760,
+      "expectedSHA256": "e6d8cd4083d74159e9335223626c5ea4a72cc6d363640790bcc79cbb8128e903"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2tw",
+      "input": "long-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "d9ce1492a3dc762c344824bc7f5dde1de8d35d8b0194cdf4e9f206099bb24f87",
+      "expected": "long-paragraphs-10485760-s2tw.txt",
+      "expectedBytes": 10485760,
+      "expectedSHA256": "33f3e71c47046cb59056ceec7de9ccbbbed774a4a6d1afc0fe174a7763debb99"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2twp",
+      "input": "long-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "d9ce1492a3dc762c344824bc7f5dde1de8d35d8b0194cdf4e9f206099bb24f87",
+      "expected": "long-paragraphs-10485760-s2twp.txt",
+      "expectedBytes": 10794103,
+      "expectedSHA256": "eaa464be7d32b7132f9beb328145cb204706ef57f860f0283b045303bfb46d3a"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "s2hk",
+      "input": "long-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "d9ce1492a3dc762c344824bc7f5dde1de8d35d8b0194cdf4e9f206099bb24f87",
+      "expected": "long-paragraphs-10485760-s2hk.txt",
+      "expectedBytes": 10485760,
+      "expectedSHA256": "50a8a4a75b9d8347ad8db69546d3a2c97ccadf0683f69425475b76e3026e8621"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "t2s",
+      "input": "long-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "d9ce1492a3dc762c344824bc7f5dde1de8d35d8b0194cdf4e9f206099bb24f87",
+      "expected": "long-paragraphs-10485760-t2s.txt",
+      "expectedBytes": 10485760,
+      "expectedSHA256": "d3226a8974d1c2fee50118fbe9b4c62156d38f043734d66d42d5f05ef8c431fe"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "legacy-s2t-tw-idiom",
+      "input": "long-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "d9ce1492a3dc762c344824bc7f5dde1de8d35d8b0194cdf4e9f206099bb24f87",
+      "expected": "long-paragraphs-10485760-legacy-s2t-tw-idiom.txt",
+      "expectedBytes": 10794103,
+      "expectedSHA256": "68c34a69b5a1c5ad079ce0820c5408b0d2c67a94af32a485aac92de7354f8baa"
+    },
+    {
+      "shape": "long-paragraphs",
+      "mode": "legacy-s2hk-tw-idiom",
+      "input": "long-paragraphs-10485760.txt",
+      "inputBytes": 10485760,
+      "inputSHA256": "d9ce1492a3dc762c344824bc7f5dde1de8d35d8b0194cdf4e9f206099bb24f87",
+      "expected": "long-paragraphs-10485760-legacy-s2hk-tw-idiom.txt",
+      "expectedBytes": 10794103,
+      "expectedSHA256": "50babd52e86cae16b66bec4c74e96596d5e39c446d39a7d27ca961f8b0b85ef5"
+    }
+  ]
+}

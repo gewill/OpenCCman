@@ -1,0 +1,21 @@
+{
+  "verifiedDatasets": 48,
+  "verifiedSamples": 240,
+  "modes": [
+    "s2tw",
+    "s2twp",
+    "s2hk",
+    "legacy-s2hk-tw-idiom",
+    "t2s",
+    "legacy-s2t-tw-idiom"
+  ],
+  "checks": [
+    "input and expected metadata match locked corpus manifest",
+    "exact ordered five completed samples and five started events per dataset",
+    "each sample reports true success, complete matching byte count and SHA256",
+    "raw latency samples reproduce per-case median/min/max without omissions",
+    "all run_completed markers present; all stderr empty",
+    "six priming logs kept separate; one process-exited startup sample kept separate"
+  ],
+  "seriesRunnerSHA256": "addc2b99dd5b3e569379a667c72fcead6f4f663503515d7e433b38f3c89561b4"
+}

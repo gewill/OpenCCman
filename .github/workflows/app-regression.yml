@@ -9,6 +9,10 @@ on:
     branches: [main, develop, 'release/**', 'hotfix/**']
   workflow_dispatch:
     inputs:
+      build_services_validation:
+        description: Build an unsigned Release Mac app for manual Services measurements
+        type: boolean
+        default: false
       diagnose_editor_anchor:
         description: Run a fixed macOS 15 editor anchor timing probe
         type: boolean
@@ -254,3 +258,36 @@ jobs:
             ${{ runner.temp }}/editor-anchor-slow-pass
           retention-days: 7
           if-no-files-found: error
+
+  services-validation:
+    name: Build Release Services validation app
+    if: github.event_name == 'workflow_dispatch' && inputs.build_services_validation
+    runs-on: macos-15
+    timeout-minutes: 20
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Build and archive the validation artifact
+        run: |
+          mkdir -p "${{ runner.temp }}/services-artifact"
+          git rev-parse HEAD > "${{ runner.temp }}/services-artifact/source-sha.txt"
+          xcodebuild -version > "${{ runner.temp }}/services-artifact/xcode-version.txt"
+          cp OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved \
+            "${{ runner.temp }}/services-artifact/Package.resolved"
+          xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
+            -configuration Release -destination 'platform=macOS' \
+            -derivedDataPath "${{ runner.temp }}/services-app" \
+            -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
+            CODE_SIGNING_ALLOWED=NO ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
+            PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.ServicesValidation build
+          ditto -c -k --keepParent \
+            "${{ runner.temp }}/services-app/Build/Products/Release/OpenCCman.app" \
+            "${{ runner.temp }}/services-artifact/OpenCCman-services-validation.zip"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: services-release-validation-app
+          path: ${{ runner.temp }}/services-artifact
+          retention-days: 7
