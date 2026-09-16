@@ -28,9 +28,8 @@ struct ConversionInspector: View {
           .accessibilityAddTraits(viewModel.selectedPreset == preset ? .isSelected : [])
         }
       } else {
-        HStack {
+        VStack(alignment: .leading, spacing: 8) {
           Text("Conversion Preset").font(.headline)
-          Spacer()
           Menu {
             ForEach(ConversionConfiguration.Preset.allCases) { preset in
               Button {

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exercise actual editor/window predicates against the pinned Introspect library."""
+"""Exercise app editor predicates and the native window reader with pinned Introspect."""
 import argparse
 import json
 from pathlib import Path
@@ -31,7 +31,7 @@ with tempfile.TemporaryDirectory(prefix="openccman-introspection-") as directory
         declaration = f'.package(url: {json.dumps(pin["location"])}, revision: {json.dumps(pin["state"]["revision"])})'
     sources = package / "Sources/Checks"
     sources.mkdir(parents=True)
-    for relative in ["OpenCCman/extensions/ViewExtensions.swift", "OpenCCman/extensions/StringExtensions.swift", "OpenCCman/View/WorkspaceScrollKeeper.swift", "OpenCCman/View/WorkspaceTextEditor.swift", "Tests/Regression/IntrospectionChecks.swift"]:
+    for relative in ["OpenCCman/extensions/ViewExtensions.swift", "OpenCCman/extensions/StringExtensions.swift", "OpenCCman/View/WorkspaceScrollKeeper.swift", "OpenCCman/View/WorkspaceTextEditor.swift", "Tests/Regression/IntrospectionChecks.swift", "OpenCCman/View/MainWindowSizing.swift", "OpenCCman/Model/MainWindowGeometry.swift"]:
         shutil.copy2(root / relative, sources / Path(relative).name)
     styles = (root / "OpenCCman/Styles/Styles.swift").read_text()
     anchor = "extension View {\n  @ViewBuilder\n  func modify"
