@@ -1,0 +1,11 @@
+
+SCANNING <__NSMallocBlock__ 0x76febaeb80> [48]
+REFERENCES TO THIS: 1
+   <malloc in _CFXNotificationRegistrarAddObserver 0x7700a1a000> [20480]    +16:  0x7700a1a010
+LAYOUT OF NSObject (ObjC)
+    0: Class isa  
+LAYOUT OF __NSMallocBlock__ (ObjC)
+   32: __strong [capture]  --> <AppKitWindowHostingView<ModifiedContent<LazyView<ModifiedContent<ModifiedContent<ModifiedContent<Router<ModifiedContent<RootView, _AppearanceActionModifier>>, _EnvironmentKeyWritingModifier<WhatsNewCoordinator?>>, _EnvironmentKeyWritingModifier<Locale>>, _PreferenceWritingModifier<PreferredColorSchemeKey>>>, RootModifier>> 0x76fe901400> [2560]
+   40: <extra space>[8]
+CONTENTS:
+   +32: __strong [capture]  0x76febaeba0 --> <AppKitWindowHostingView<ModifiedContent<LazyView<ModifiedContent<ModifiedContent<ModifiedContent<Router<ModifiedContent<RootView, _AppearanceActionModifier>>, _EnvironmentKeyWritingModifier<WhatsNewCoordinator?>>, _EnvironmentKeyWritingModifier<Locale>>, _PreferenceWritingModifier<PreferredColorSchemeKey>>>, RootModifier>> 0x76fe901400> [2560]

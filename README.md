@@ -44,6 +44,8 @@ Core checks compile the actual app model/services with the dependencies pinned i
 
 ## Project status
 
+The [work handoff (2026-09-16)](docs/handoff/2026-09-16/README.md) records exact PR heads and CI results, performance evidence, dependency order, pending human decisions, and preserved local validation environments. It is a dated snapshot; re-check GitHub before continuing.
+
 Neumorphic is pinned to the stable **2.4.1** release. Unused button styles and the obsolete VisualEffects dependency/credit have been removed; the remaining 14 dependency pins are unchanged. See the [platform sizing fix and runtime before/after captures](docs/validation/control-sizing/README.md), and the [control adoption audit](docs/NEUMORPHIC_CONTROLS.md) for segmented selectors, switches, loading indicators, cards, and the controls that retain system behavior.
 
 The [application performance baseline](docs/performance/README.md) documents isolated Release measurements, raw samples, engine comparisons and the limits of each metric.
@@ -60,7 +62,7 @@ Production builds use Xcode Cloud. Push a temporary branch whose name starts wit
 
 ## Upstream sync
 
-The coordinator lives on [`main`](https://github.com/gewill/OpenCCman/tree/main), while application updates target `develop` after the default-branch coordinator migration is merged. Until then, the live coordinator still uses its existing configuration; see the [CI migration order](docs/CI.md). It proposes a SwiftyOpenCC PR first, then pins the merged, validated fork revision in an app PR. Maintainers review and merge each PR; all other dependencies remain locked.
+The coordinator lives on [`main`](https://github.com/gewill/OpenCCman/tree/main), while application updates target `develop`. The default-branch coordinator migration was merged in [PR #44](https://github.com/gewill/OpenCCman/pull/44); see the [current CI and migration status](docs/CI.md). It proposes a SwiftyOpenCC PR first, then pins the merged, validated fork revision in an app PR. Maintainers review and merge each PR; all other dependencies remain locked.
 
 See the shared [upstream sync guide](https://github.com/gewill/OpenCCman/blob/main/docs/upstream-sync.md) for the Monday 09:17 (UTC+8) schedule, manual commands, CI setup and rollback. Engine-specific work is covered by the [SwiftyOpenCC maintenance guide](https://github.com/gewill/SwiftyOpenCC/blob/master/docs/upstream-sync.md).
 

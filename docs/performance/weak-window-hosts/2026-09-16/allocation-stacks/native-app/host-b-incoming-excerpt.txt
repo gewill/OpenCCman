@@ -1,0 +1,6 @@
+# Selected lines only: header and all explicit strong incoming references.
+SCANNING <AppKitWindowHostingView<ModifiedContent<LazyView<ModifiedContent<ModifiedContent<ModifiedContent<Router<ModifiedContent<RootView, _AppearanceActionModifier>>, _EnvironmentKeyWritingModifier<WhatsNewCoordinator?>>, _EnvironmentKeyWritingModifier<Locale>>, _PreferenceWritingModifier<PreferredColorSchemeKey>>>, RootModifier>> 0x76fe901400> [2560]
+REFERENCES TO THIS: 330   STRONG: 3  CONSERVATIVE: 69  WEAK UU etc: 258
+   <NSMutableSet (Storage) 0x76fe89aca0> [32]     +0: __strong  0x76fe89aca0
+   <__NSMallocBlock__ 0x76febaeb80> [48]    +32: __strong [capture] 0x76febaeba0
+   <NSMutableArray (Storage) 0x7700ba1f80> [64]    +16: __strong  0x7700ba1f90

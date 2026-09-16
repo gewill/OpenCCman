@@ -1,0 +1,7 @@
+# Selected lines: explicit strong incoming edges and diagnostic weak entry only.
+SCANNING <AppKitWindowHostingView<ModifiedContent<LazyView<ModifiedContent<ProbeRoot, _BackgroundModifier<LifetimeDriverView>>>, RootModifier>> 0x7b67144000> [2560]
+REFERENCES TO THIS: 71   STRONG: 3  CONSERVATIVE: 29  WEAK UU etc: 39
+   <NSMutableSet (Storage) 0x7b66992500> [32]     +8: __strong  0x7b66992508
+   <NSMutableArray (Storage) 0x7b66df5890> [48]     +8: __strong  0x7b66df5898
+   <WeakWindowHosts.Entry 0x7b67cce640> [64]    +32: __weak initialContent 0x7b67cce660
+   <__NSMallocBlock__ 0x7b67e656e0> [48]    +32: __strong [capture] 0x7b67e65700

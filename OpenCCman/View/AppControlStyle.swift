@@ -86,6 +86,7 @@ private struct AppControlSurface<S: InsettableShape>: View {
 
 /// Shared segment geometry: the groove is drawn inside the item hit regions.
 struct AppSegmentButtonStyle: ButtonStyle {
+  static var horizontalInset: CGFloat { 8 }
   let selected: Bool
   @Environment(\.neumorphicTheme) private var theme
   @Environment(\.isEnabled) private var isEnabled
@@ -97,7 +98,7 @@ struct AppSegmentButtonStyle: ButtonStyle {
       .font(.body.weight(selected ? .semibold : .regular))
       .multilineTextAlignment(.center)
       .fixedSize(horizontal: false, vertical: true)
-      .padding(.horizontal, 8)
+      .padding(.horizontal, Self.horizontalInset)
       .padding(.vertical, 4)
       .frame(minWidth: AppControlMetrics.height, maxWidth: .infinity, minHeight: AppControlMetrics.height)
       .foregroundColor(selected ? colors.foreground : theme.secondaryColor)

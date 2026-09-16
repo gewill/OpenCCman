@@ -1,0 +1,90 @@
+{
+  "date": "2026-09-15",
+  "source": "7be4b3dbba76a7245632c0049938088b62ad0b96",
+  "ciRun": 34934533312,
+  "platform": "macOS 27.0 (26A428), arm64",
+  "configuration": "Debug, Xcode 26.3 CI build, local ad-hoc signature",
+  "bundle": "org.gewill.OpenCCman.PRValidation",
+  "language": "English",
+  "theme": "light",
+  "textSize": "default",
+  "cases": {
+    "afterLaunchSheet": {
+      "windowServerFrames": [
+        {
+          "Height": 768,
+          "Width": 1024,
+          "X": 510,
+          "Y": 252
+        }
+      ],
+      "native": {
+        "contentLayoutRect": "{{0, 0}, {1024, 716}}",
+        "contentMinSize": "{300, 412}",
+        "contentRect": "{{510, 60}, {1024, 768}}",
+        "frame": "{{510, 60}, {1024, 768}}",
+        "minSize": "{300, 412}"
+      }
+    },
+    "minimum": {
+      "windowServerFrames": [
+        {
+          "Height": 412,
+          "Width": 300,
+          "X": 200,
+          "Y": 68
+        }
+      ],
+      "native": {
+        "contentLayoutRect": "{{0, 0}, {300, 360}}",
+        "contentMinSize": "{300, 412}",
+        "contentRect": "{{200, 600}, {300, 412}}",
+        "frame": "{{200, 600}, {300, 412}}",
+        "minSize": "{300, 412}"
+      }
+    },
+    "closeAndReactivate": {
+      "windowServerFrames": [
+        {
+          "Height": 412,
+          "Width": 300,
+          "X": 200,
+          "Y": 68
+        }
+      ]
+    },
+    "restart": {
+      "windowServerFrames": [
+        {
+          "Height": 412,
+          "Width": 300,
+          "X": 200,
+          "Y": 68
+        }
+      ],
+      "native": {
+        "contentLayoutRect": "{{0, 0}, {300, 360}}",
+        "contentMinSize": "{300, 360}",
+        "contentRect": "{{200, 600}, {300, 412}}",
+        "frame": "{{200, 600}, {300, 412}}",
+        "minSize": "{300, 360}"
+      }
+    }
+  },
+  "screens": [
+    {
+      "frame": "{{0, 0}, {1920, 1080}}",
+      "visibleFrame": "{{0, 60}, {1920, 990}}"
+    },
+    {
+      "frame": "{{1920, 150}, {1496, 967}}",
+      "visibleFrame": "{{1920, 150}, {1496, 939.5}}"
+    }
+  ],
+  "notes": [
+    "Window-server bounds use Quartz global logical points (top-left origin). Native reports use AppKit points (bottom-left origin).",
+    "Native reports sample at constraint notifications; SwiftUI may subsequently recompute contentMinSize. Root layout minimum is 300x360 and observed full window minimum is 300x412 on this system.",
+    "Close/reactivation kept the same process and created a new native window with the saved size. CUA can reactivate the app while observing; this is not a Services/shortcut test for issue 19.",
+    "The isolated test preference domain was restored exactly after quitting. No production preferences, system language/theme or VoiceOver setting was changed."
+  ]
+}

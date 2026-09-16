@@ -21,6 +21,10 @@ on:
         description: Compare EnvironmentObject and ObservedObject in native WindowGroup on macOS 15
         type: boolean
         default: false
+      observe_window_hosts:
+        description: Add weak window/content-view observations to the lifetime diagnostic
+        type: boolean
+        default: false
 
       build_window_lifecycle:
         description: Build an isolated Release native window lifecycle diagnostic app
@@ -62,6 +66,10 @@ jobs:
         run: python3 -m unittest discover -s Tests/Benchmarks -p 'test_*.py'
       - name: Check window layout resolution and recovery
         run: bash scripts/check-workspace.sh
+      - name: Check Mac window geometry
+        run: bash scripts/check-window-sizing.sh
+      - name: Check closed-window request coalescing
+        run: bash scripts/check-window-reopen.sh
       - name: Check complete Mac control bounds
         run: bash scripts/check-control-sizing.sh
       - name: Check native editor scroll anchors
@@ -124,7 +132,12 @@ jobs:
         with:
           persist-credentials: false
       - name: Observe both native lifetime controls
-        run: python3 scripts/diagnose-window-lifetime.py --output "${{ runner.temp }}/window-lifetime"
+        env:
+          OBSERVE_HOSTS: ${{ inputs.observe_window_hosts }}
+        run: |
+          args=()
+          if [[ "$OBSERVE_HOSTS" == "true" ]]; then args+=(--observe-hosts); fi
+          python3 scripts/diagnose-window-lifetime.py --output "${{ runner.temp }}/window-lifetime" "${args[@]}"
       - name: Preserve observations and failures
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
