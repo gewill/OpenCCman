@@ -33,4 +33,3 @@ gh workflow run app-regression.yml --repo gewill/OpenCCman \
 本次没有同机运行旧版，不从历史不同机器的数字计算加速比例。256 KiB 热转换只在表中展示第 5 次，全部五次均保留在原始数据；10 MiB 值是模型完成时长，不是完整导入/显示/导出时长。
 
 原始数据位于 [2026-09-16 目录](integrated-baseline/2026-09-16/)，包含 metadata、5 份 run、汇总及文件校验和；完整构建日志保留在该 run 的 artifact 中（14 天）。metadata 固定了全部依赖 revision、构建环境、诊断改动及源码哈希。
-
