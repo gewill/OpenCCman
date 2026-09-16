@@ -57,7 +57,8 @@ struct LifetimeDocumentDriverView: View {
 
 @MainActor final class WindowDocumentDriver {
   static let shared = WindowDocumentDriver()
-  private enum Phase { case idle, first, anchorConversion, opening, importing, conversion, hold, active, closing, observing, zero }
+  private enum Phase { case idle, first, anchorConversion, opening, importing, conversion, hold, active, closing, observing, retainedImport, retainedActive, retainedCompletion, retainedObserve, zero }
+  private let exerciseActiveAnchor = false // Enabled only by the private preparer.
   private var phase = Phase.idle
   private var timer: Timer?
   private var observer: NSObjectProtocol?
@@ -69,7 +70,7 @@ struct LifetimeDocumentDriverView: View {
   private var cycle = 1
   private var five = false
   private var directory: URL!
-  private let labels = ["1mib-a", "1mib-b", "10mib-a", "10mib-b", "active-10mib"]
+  private let labels = ["1mib-a", "1mib-b", "10mib-a", "10mib-b", "active-10mib", "retained-active-10mib"]
   private var label: String { labels[cycle - 1] }
   private var mib: Int { cycle <= 2 ? 1 : 10 }
   private let anchorSource = "汉语 汉字 简体 转换 测试。\r\nEmoji 👩🏽‍💻 é \0 KEEP\r\n\r\n"
@@ -112,9 +113,9 @@ struct LifetimeDocumentDriverView: View {
 
   private func tick() {
     let now = ProcessInfo.processInfo.systemUptime
-    guard now - began < 420 else { finish("timeout"); return }
+    guard now - began < (exerciseActiveAnchor ? 600 : 420) else { finish("timeout"); return }
     let windows = NSApp.windows.filter { $0.isVisible && $0.canBecomeMain }
-    if let anchor, !baseline.isEmpty, phase != .zero,
+    if let anchor, !baseline.isEmpty, phase != .zero, cycle < 6,
        NativeWindowLifecycleAudit.documentAnchorHash(anchor) != baseline {
       finish("anchor_changed"); return
     }
@@ -141,6 +142,19 @@ struct LifetimeDocumentDriverView: View {
             let window = windows.first(where: { ObjectIdentifier($0) != anchor }),
             let model = NativeWindowLifecycleAudit.documentModel(ObjectIdentifier(window)) else { return }
       target = ObjectIdentifier(window)
+      if cycle == 6 {
+        // Do not retain the other window/model across ticks. The anchor itself
+        // now changes intentionally; re-establish its fingerprint on success.
+        model.replaceSource("Idle other window")
+        baseline = ""
+        guard let retained = anchor.flatMap(NativeWindowLifecycleAudit.documentModel) else {
+          finish("missing_retained_anchor"); return
+        }
+        retained.importFile(directory.appendingPathComponent("input-10mib.txt"))
+        record("retained_import_started")
+        phase = .retainedImport
+        return
+      }
       model.applyPreset(.traditional)
       model.importFile(directory.appendingPathComponent("input-\(mib)mib.txt"))
       record("document_\(label)_import_started")
@@ -209,13 +223,77 @@ struct LifetimeDocumentDriverView: View {
       if now - since >= 5 && !five { five = true; record("document_\(label)_plus_5") }
       if now - since >= 20 {
         record("document_\(label)_plus_20")
-        if cycle < 5 { cycle += 1; openNext() }
+        if cycle < 5 || (cycle == 5 && exerciseActiveAnchor) { cycle += 1; openNext() }
         else {
           windows[0].performClose(nil)
           phase = .zero
           since = 0
           five = false
         }
+      }
+    case .retainedImport:
+      guard let model = anchor.flatMap(NativeWindowLifecycleAudit.documentModel), !model.isImporting else { return }
+      do {
+        let source = try Data(contentsOf: directory.appendingPathComponent("input-10mib.txt"))
+        guard model.error == nil, Data(model.inputText.utf8) == source.dropFirst(3),
+              model.resultText.isEmpty, model.exportSnapshot == nil else { finish("retained_import_content"); return }
+      } catch { finish("retained_import_check:\(error)"); return }
+      record("retained_imported")
+      NativeDocumentCallTrace.shared.prepare(label)
+      model.translate()
+      // Avoid serializing/hash-scanning 10 MiB in the active-call interval.
+      phase = .retainedActive
+    case .retainedActive:
+      let call = NativeDocumentCallTrace.shared.snapshot(label)
+      guard let begin = call["begin_ns"] else { return }
+      guard call["end_ns"] == nil else { finish("missed_retained_active_call"); return }
+      guard DispatchTime.now().uptimeNanoseconds - begin >= 5_000_000,
+            let model = anchor.flatMap(NativeWindowLifecycleAudit.documentModel), model.isLoading,
+            let other = target.flatMap(NativeWindowLifecycleAudit.documentModel), !other.isLoading, !other.isImporting,
+            let window = windows.first(where: { ObjectIdentifier($0) == target }) else { return }
+      // Scalar-only evidence before the synchronous native close notification.
+      NativeWindowLifecycleAudit.stageRetainedClose(anchor: model, other: other)
+      NativeDocumentCallTrace.shared.arm(ObjectIdentifier(window))
+      window.performClose(nil)
+      since = ProcessInfo.processInfo.systemUptime
+      five = false
+      phase = .retainedCompletion
+    case .retainedCompletion:
+      guard windows.count == 1, ObjectIdentifier(windows[0]) == anchor,
+            let model = anchor.flatMap(NativeWindowLifecycleAudit.documentModel), !model.isLoading else { return }
+      do {
+        let expected = try Data(contentsOf: directory.appendingPathComponent("expected-10mib.txt"))
+        let source = try Data(contentsOf: directory.appendingPathComponent("input-10mib.txt"))
+        guard model.error == nil, let snapshot = model.exportSnapshot,
+              model.sourceFilename == "input-10mib.txt", snapshot.filename == "input-10mib-converted.txt",
+              Data(model.inputText.utf8) == source.dropFirst(3),
+              Data(model.resultText.utf8) == expected, Data(snapshot.text.utf8) == expected else {
+          finish("retained_conversion_cancelled_or_corrupt"); return
+        }
+        let wrapper = try ConvertedTextDocument(text: snapshot.text).diagnosticFileWrapper()
+        let output = directory.appendingPathComponent("actual-retained-active-10mib.txt")
+        try wrapper.write(to: output, options: .atomic, originalContentsURL: nil)
+        let actual = try Data(contentsOf: output)
+        guard actual == expected else { finish("retained_export_content"); return }
+        baseline = NativeWindowLifecycleAudit.documentAnchorHash(anchor!)!
+        record("retained_exported", details: ["actual_bytes": actual.count,
+          "actual_sha256": documentDigest(actual), "byte_equal": true,
+          "export_filename": snapshot.filename, "other_close_uptime": since,
+          "source_sha256": documentDigest(Data(model.inputText.utf8)),
+          "expected_source_sha256": documentDigest(Data(source.dropFirst(3)))])
+      } catch { finish("retained_export:\(error)"); return }
+      // Observe a full +5/+20 interval after success, also necessarily after close.
+      since = ProcessInfo.processInfo.systemUptime
+      phase = .retainedObserve
+    case .retainedObserve:
+      guard windows.count == 1, ObjectIdentifier(windows[0]) == anchor else { finish("retained_window_changed"); return }
+      if now - since >= 5 && !five { five = true; record("retained_plus_5") }
+      if now - since >= 20 {
+        record("retained_plus_20")
+        windows[0].performClose(nil)
+        phase = .zero
+        since = 0
+        five = false
       }
     case .zero:
       guard windows.isEmpty else { return }
@@ -265,6 +343,21 @@ struct LifetimeDocumentDriverView: View {
 }
 
 extension NativeWindowLifecycleAudit {
+  static func stageRetainedClose(anchor: HomeViewModel, other: HomeViewModel) {
+    let number: (HomeViewModel) -> Int? = { model in
+      shared.models.values.first { $0.model === model }?.number
+    }
+    shared.record("retained_before_other_close", details: [
+      "retained_model_number": number(anchor) ?? -1,
+      "closed_model_number": number(other) ?? -1,
+      "retained_converting": anchor.isLoading,
+      "other_converting": other.isLoading,
+      "other_importing": other.isImporting,
+      "pending_reservations": TestNumbersPerDayManager.diagnosticPendingCount,
+      "quota": appDefaults[\.testNumbersPerDay],
+      "native_call": NativeDocumentCallTrace.shared.snapshot("retained-active-10mib")
+    ])
+  }
   static func documentModel(_ window: ObjectIdentifier) -> HomeViewModel? {
     shared.models.values.compactMap(\.model).first { $0.window.map(ObjectIdentifier.init) == window }
   }
