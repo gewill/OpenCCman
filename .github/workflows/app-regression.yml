@@ -34,6 +34,10 @@ on:
         description: Build an isolated Release native window lifecycle diagnostic app
         type: boolean
         default: false
+      profile_document_stages:
+        description: Sample import and conversion stacks in the full retained-window document protocol
+        type: boolean
+        default: false
       active_anchor_window_lifecycle:
         description: Also close another native window while the retained window converts
         type: boolean
@@ -61,7 +65,7 @@ concurrency:
 jobs:
   regression:
     name: App Regression
-    if: github.event_name != 'workflow_dispatch' || (!inputs.build_window_lifecycle && !inputs.automatic_window_lifecycle && !inputs.cycle_window_lifecycle && !inputs.document_window_lifecycle && !inputs.active_anchor_window_lifecycle && !inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
+    if: github.event_name != 'workflow_dispatch' || (!inputs.build_window_lifecycle && !inputs.automatic_window_lifecycle && !inputs.cycle_window_lifecycle && !inputs.document_window_lifecycle && !inputs.profile_document_stages && !inputs.active_anchor_window_lifecycle && !inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
     runs-on: macos-15
     timeout-minutes: 20
     steps:
@@ -195,7 +199,7 @@ jobs:
 
   window-lifecycle-validation:
     name: Build native window lifecycle diagnostic app
-    if: github.event_name == 'workflow_dispatch' && (inputs.build_window_lifecycle || inputs.automatic_window_lifecycle || inputs.cycle_window_lifecycle || inputs.document_window_lifecycle || inputs.active_anchor_window_lifecycle)
+    if: github.event_name == 'workflow_dispatch' && (inputs.build_window_lifecycle || inputs.automatic_window_lifecycle || inputs.cycle_window_lifecycle || inputs.document_window_lifecycle || inputs.profile_document_stages || inputs.active_anchor_window_lifecycle)
     runs-on: macos-15
     timeout-minutes: 20
     env:
@@ -210,11 +214,12 @@ jobs:
           CYCLE_LIFECYCLE: ${{ inputs.cycle_window_lifecycle }}
           DOCUMENT_LIFECYCLE: ${{ inputs.document_window_lifecycle }}
           ACTIVE_ANCHOR_LIFECYCLE: ${{ inputs.active_anchor_window_lifecycle }}
+          PROFILE_DOCUMENT_STAGES: ${{ inputs.profile_document_stages }}
         run: |
           prepare_args=()
           build_args=()
           diagnostic_bundle=org.gewill.OpenCCman.NativeWindowLifecycleAudit
-          if [[ "$ACTIVE_ANCHOR_LIFECYCLE" == "true" ]]; then
+          if [[ "$ACTIVE_ANCHOR_LIFECYCLE" == "true" || "$PROFILE_DOCUMENT_STAGES" == "true" ]]; then
             prepare_args+=(--documents --active-anchor)
             diagnostic_bundle+=AutoDocumentsActiveAnchor
           elif [[ "$DOCUMENT_LIFECYCLE" == "true" ]]; then
@@ -247,14 +252,16 @@ jobs:
           ditto -c -k --keepParent "${{ runner.temp }}/lifecycle-derived/Build/Products/Release/OpenCCman.app" \
             "${{ runner.temp }}/lifecycle-artifact/OpenCCman-lifecycle.zip"
       - name: Measure automatic native windows without CUA observation
-        if: inputs.automatic_window_lifecycle || inputs.cycle_window_lifecycle || inputs.document_window_lifecycle || inputs.active_anchor_window_lifecycle
+        if: inputs.automatic_window_lifecycle || inputs.cycle_window_lifecycle || inputs.document_window_lifecycle || inputs.profile_document_stages || inputs.active_anchor_window_lifecycle
         env:
           CYCLE_LIFECYCLE: ${{ inputs.cycle_window_lifecycle }}
           DOCUMENT_LIFECYCLE: ${{ inputs.document_window_lifecycle }}
           ACTIVE_ANCHOR_LIFECYCLE: ${{ inputs.active_anchor_window_lifecycle }}
+          PROFILE_DOCUMENT_STAGES: ${{ inputs.profile_document_stages }}
         run: |
           check_args=()
-          if [[ "$ACTIVE_ANCHOR_LIFECYCLE" == "true" ]]; then
+          if [[ "$PROFILE_DOCUMENT_STAGES" == "true" ]]; then check_args+=(--profile-stages); fi
+          if [[ "$ACTIVE_ANCHOR_LIFECYCLE" == "true" || "$PROFILE_DOCUMENT_STAGES" == "true" ]]; then
             check_args+=(--documents --active-anchor)
           elif [[ "$DOCUMENT_LIFECYCLE" == "true" ]]; then
             check_args+=(--documents)

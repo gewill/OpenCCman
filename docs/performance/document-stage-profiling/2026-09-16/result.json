@@ -1,0 +1,2746 @@
+{
+  "valid_protocol": true,
+  "mode": "ci-automatic",
+  "pid": 16711,
+  "valid_profile": true,
+  "exit_code": 0,
+  "raw_sha256": "70d0f0ee364c2fc2c4b28b8579835a35dad26548c3c330d034a132a91647eecd",
+  "observations": {
+    "documents_started": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "has_export": false,
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 1,
+      "elapsed_ms": 1129.2835,
+      "event": "documents_started",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 18205056,
+      "pid": 16711,
+      "process_peak_rss_bytes": 94060544,
+      "quota": {},
+      "result_writebacks": [],
+      "rss_bytes": 94060544,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "documents_fixture_1": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "has_export": false,
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 1,
+      "elapsed_ms": 1071.21275,
+      "event": "documents_fixture_1",
+      "expected_bytes": 1048573,
+      "expected_sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9",
+      "input_bytes": 1048576,
+      "input_sha256": "bf4f70c8ba22089a8c91ca19457683733010546e0b7f61b3d8ff527a7305e36c",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 18172224,
+      "pid": 16711,
+      "process_peak_rss_bytes": 62554112,
+      "quota": {},
+      "result_writebacks": [],
+      "rss_bytes": 62554112,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "documents_fixture_10": {
+      "anchor_fingerprint": "",
+      "content_sizes": [
+        {
+          "has_export": false,
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 1,
+      "elapsed_ms": 1127.225709,
+      "event": "documents_fixture_10",
+      "expected_bytes": 10485757,
+      "expected_sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "input_bytes": 10485760,
+      "input_sha256": "dc96005e53b8766191cc192595d68f8e20f5c82f739d636a4cbfe89bb8b604fe",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 28690816,
+      "pid": 16711,
+      "process_peak_rss_bytes": 94060544,
+      "quota": {},
+      "result_writebacks": [],
+      "rss_bytes": 94060544,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "documents_anchor_ready": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 1,
+      "elapsed_ms": 11514.083584,
+      "event": "documents_anchor_ready",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 55233856,
+      "pid": 16711,
+      "process_peak_rss_bytes": 156696576,
+      "quota": {
+        "2026-09-15": 1
+      },
+      "result_writebacks": [
+        "anchor"
+      ],
+      "rss_bytes": 156581888,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_1mib-a_import_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 11752.642792,
+      "event": "document_1mib-a_import_started",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": true,
+          "number": 2
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 60362048,
+      "pid": 16711,
+      "process_peak_rss_bytes": 161497088,
+      "quota": {
+        "2026-09-15": 1
+      },
+      "result_writebacks": [
+        "anchor"
+      ],
+      "rss_bytes": 161382400,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-a_imported": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 14205.132625,
+      "event": "document_1mib-a_imported",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 82267456,
+      "pid": 16711,
+      "process_peak_rss_bytes": 188661760,
+      "quota": {
+        "2026-09-15": 1
+      },
+      "result_writebacks": [
+        "anchor"
+      ],
+      "rss_bytes": 188661760,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-a_conversion_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 2,
+          "result_bytes": 0,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 14206.277667,
+      "event": "document_1mib-a_conversion_started",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": true,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 82152768,
+      "pid": 16711,
+      "process_peak_rss_bytes": 188661760,
+      "quota": {
+        "2026-09-15": 1
+      },
+      "result_writebacks": [
+        "anchor"
+      ],
+      "rss_bytes": 188661760,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-a_exported": {
+      "actual_bytes": 1048573,
+      "actual_sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9",
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "byte_equal": true,
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 16793.735834,
+      "event": "document_1mib-a_exported",
+      "export_filename": "input-1mib-converted.txt",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "native_call": {
+        "begin_ns": 616807536458,
+        "end_ns": 616832782416
+      },
+      "nul_count": 13980,
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 100371776,
+      "pid": 16711,
+      "process_peak_rss_bytes": 214974464,
+      "quota": {
+        "2026-09-15": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 214974464,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-a_before_close": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 2,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 26838.223959,
+      "event": "document_1mib-a_before_close",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "native_call": {
+        "begin_ns": 616807536458,
+        "end_ns": 616832782416
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 100896064,
+      "pid": 16711,
+      "process_peak_rss_bytes": 216629248,
+      "quota": {
+        "2026-09-15": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 215220224,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-a_closed": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 26934.723875,
+      "event": "document_1mib-a_closed",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 616807536458,
+        "end_ns": 616832782416
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 99634496,
+      "pid": 16711,
+      "process_peak_rss_bytes": 216629248,
+      "quota": {
+        "2026-09-15": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 215072768,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_1mib-a_plus_5": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 32055.793334,
+      "event": "document_1mib-a_plus_5",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 616807536458,
+        "end_ns": 616832782416
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 74812736,
+      "pid": 16711,
+      "process_peak_rss_bytes": 216629248,
+      "quota": {
+        "2026-09-15": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 214532096,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_1mib-a_plus_20": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 2,
+      "elapsed_ms": 46951.718792,
+      "event": "document_1mib-a_plus_20",
+      "label": "1mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 616807536458,
+        "end_ns": 616832782416
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 74796352,
+      "pid": 16711,
+      "process_peak_rss_bytes": 216629248,
+      "quota": {
+        "2026-09-15": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 214482944,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_1mib-b_import_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 47113.636209,
+      "event": "document_1mib-b_import_started",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": true,
+          "number": 3
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 76385600,
+      "pid": 16711,
+      "process_peak_rss_bytes": 216629248,
+      "quota": {
+        "2026-09-15": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 215416832,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-b_imported": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 49379.4515,
+      "event": "document_1mib-b_imported",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 78466368,
+      "pid": 16711,
+      "process_peak_rss_bytes": 219987968,
+      "quota": {
+        "2026-09-15": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 217432064,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-b_conversion_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 3,
+          "result_bytes": 0,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 49380.740709,
+      "event": "document_1mib-b_conversion_started",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": true,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 78466368,
+      "pid": 16711,
+      "process_peak_rss_bytes": 219987968,
+      "quota": {
+        "2026-09-15": 2
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a"
+      ],
+      "rss_bytes": 217432064,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-b_exported": {
+      "actual_bytes": 1048573,
+      "actual_sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9",
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "byte_equal": true,
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 51862.147167,
+      "event": "document_1mib-b_exported",
+      "export_filename": "input-1mib-converted.txt",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "native_call": {
+        "begin_ns": 651969490958,
+        "end_ns": 651993394000
+      },
+      "nul_count": 13980,
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 84102464,
+      "pid": 16711,
+      "process_peak_rss_bytes": 224231424,
+      "quota": {
+        "2026-09-15": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 224231424,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-b_before_close": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 3,
+          "result_bytes": 1048573,
+          "source_bytes": 1048573
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 61865.520042,
+      "event": "document_1mib-b_before_close",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1,
+        3
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 3
+        }
+      ],
+      "native_call": {
+        "begin_ns": 651969490958,
+        "end_ns": 651993394000
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 81988928,
+      "pid": 16711,
+      "process_peak_rss_bytes": 225198080,
+      "quota": {
+        "2026-09-15": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 223723520,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_1mib-b_closed": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 61981.775667,
+      "event": "document_1mib-b_closed",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 651969490958,
+        "end_ns": 651993394000
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 80825664,
+      "pid": 16711,
+      "process_peak_rss_bytes": 225198080,
+      "quota": {
+        "2026-09-15": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 223412224,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_1mib-b_plus_5": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 66994.71,
+      "event": "document_1mib-b_plus_5",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 651969490958,
+        "end_ns": 651993394000
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 74173760,
+      "pid": 16711,
+      "process_peak_rss_bytes": 225198080,
+      "quota": {
+        "2026-09-15": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 222871552,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_1mib-b_plus_20": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 3,
+      "elapsed_ms": 81990.289709,
+      "event": "document_1mib-b_plus_20",
+      "label": "1mib-b",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 651969490958,
+        "end_ns": 651993394000
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 73502016,
+      "pid": 16711,
+      "process_peak_rss_bytes": 225198080,
+      "quota": {
+        "2026-09-15": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 222871552,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_10mib-a_import_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 82189.677417,
+      "event": "document_10mib-a_import_started",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1,
+        4
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": true,
+          "number": 4
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 75107648,
+      "pid": 16711,
+      "process_peak_rss_bytes": 225198080,
+      "quota": {
+        "2026-09-15": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 223690752,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-a_imported": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 109883.629334,
+      "event": "document_10mib-a_imported",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1,
+        4
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 255069760,
+      "pid": 16711,
+      "process_peak_rss_bytes": 269697024,
+      "quota": {
+        "2026-09-15": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 259211264,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-a_conversion_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 4,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 109885.130834,
+      "event": "document_10mib-a_conversion_started",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1,
+        4
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": true,
+          "importing": false,
+          "number": 4
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 255069760,
+      "pid": 16711,
+      "process_peak_rss_bytes": 269697024,
+      "quota": {
+        "2026-09-15": 3
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b"
+      ],
+      "rss_bytes": 259260416,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-a_exported": {
+      "actual_bytes": 10485757,
+      "actual_sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "byte_equal": true,
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 138818.669709,
+      "event": "document_10mib-a_exported",
+      "export_filename": "input-10mib-converted.txt",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1,
+        4
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        }
+      ],
+      "native_call": {
+        "begin_ns": 712528866541,
+        "end_ns": 712977760291
+      },
+      "nul_count": 139810,
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 464867392,
+      "pid": 16711,
+      "process_peak_rss_bytes": 498024448,
+      "quota": {
+        "2026-09-15": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 498024448,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-a_before_close": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 4,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 148841.368875,
+      "event": "document_10mib-a_before_close",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1,
+        4
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 4
+        }
+      ],
+      "native_call": {
+        "begin_ns": 712528866541,
+        "end_ns": 712977760291
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 444043328,
+      "pid": 16711,
+      "process_peak_rss_bytes": 499220480,
+      "quota": {
+        "2026-09-15": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 490078208,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-a_closed": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 148877.883875,
+      "event": "document_10mib-a_closed",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 712528866541,
+        "end_ns": 712977760291
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 432312384,
+      "pid": 16711,
+      "process_peak_rss_bytes": 499220480,
+      "quota": {
+        "2026-09-15": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 490323968,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_10mib-a_plus_5": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 153893.028792,
+      "event": "document_10mib-a_plus_5",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 712528866541,
+        "end_ns": 712977760291
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 265556032,
+      "pid": 16711,
+      "process_peak_rss_bytes": 499220480,
+      "quota": {
+        "2026-09-15": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 462913536,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_10mib-a_plus_20": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 4,
+      "elapsed_ms": 168945.058584,
+      "event": "document_10mib-a_plus_20",
+      "label": "10mib-a",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 712528866541,
+        "end_ns": 712977760291
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 265556032,
+      "pid": 16711,
+      "process_peak_rss_bytes": 499220480,
+      "quota": {
+        "2026-09-15": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 458948608,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_10mib-b_import_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 169154.275375,
+      "event": "document_10mib-b_import_started",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": true,
+          "number": 5
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 267079744,
+      "pid": 16711,
+      "process_peak_rss_bytes": 499220480,
+      "quota": {
+        "2026-09-15": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 460996608,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-b_imported": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 194670.853959,
+      "event": "document_10mib-b_imported",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 210653312,
+      "pid": 16711,
+      "process_peak_rss_bytes": 530579456,
+      "quota": {
+        "2026-09-15": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 522272768,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-b_conversion_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 5,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 194674.987167,
+      "event": "document_10mib-b_conversion_started",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": true,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 210653312,
+      "pid": 16711,
+      "process_peak_rss_bytes": 530579456,
+      "quota": {
+        "2026-09-15": 4
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a"
+      ],
+      "rss_bytes": 522272768,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-b_exported": {
+      "actual_bytes": 10485757,
+      "actual_sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "byte_equal": true,
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 223821.26325,
+      "event": "document_10mib-b_exported",
+      "export_filename": "input-10mib-converted.txt",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 797298327625,
+        "end_ns": 797599753833
+      },
+      "nul_count": 139810,
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 365154432,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 565575680,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-b_before_close": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": true,
+          "number": 5,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 233855.204084,
+      "event": "document_10mib-b_before_close",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1,
+        5
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 5
+        }
+      ],
+      "native_call": {
+        "begin_ns": 797298327625,
+        "end_ns": 797599753833
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 343969920,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 566345728,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_10mib-b_closed": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 233980.047459,
+      "event": "document_10mib-b_closed",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 797298327625,
+        "end_ns": 797599753833
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 341414016,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 566165504,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_10mib-b_plus_5": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 238984.147584,
+      "event": "document_10mib-b_plus_5",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 797298327625,
+        "end_ns": 797599753833
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 217763968,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 538787840,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_10mib-b_plus_20": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 5,
+      "elapsed_ms": 254034.334,
+      "event": "document_10mib-b_plus_20",
+      "label": "10mib-b",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 797298327625,
+        "end_ns": 797599753833
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 217714816,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 517947392,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_active-10mib_import_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 66
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 254251.854875,
+      "event": "document_active-10mib_import_started",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1,
+        6
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": true,
+          "number": 6
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 219385984,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 512131072,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_active-10mib_imported": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 280906.008667,
+      "event": "document_active-10mib_imported",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1,
+        6
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 6
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 179196032,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 542818304,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_active-10mib_conversion_started": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 280907.407084,
+      "event": "document_active-10mib_conversion_started",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1,
+        6
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": true,
+          "importing": false,
+          "number": 6
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 179196032,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 542818304,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_active-10mib_before_close": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 6,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 280990.64625,
+      "event": "document_active-10mib_before_close",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1,
+        6
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": true,
+          "importing": false,
+          "number": 6
+        }
+      ],
+      "native_call": {
+        "begin_ns": 883526394416
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 178737280,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 542523392,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "document_active-10mib_closed": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 281046.989584,
+      "event": "document_active-10mib_closed",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 883526394416,
+        "will_close_ns": 883547329416
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 177557632,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 542228480,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_active-10mib_plus_5": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 286119.212084,
+      "event": "document_active-10mib_plus_5",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 883526394416,
+        "end_ns": 883804023583,
+        "will_close_ns": 883547329416
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 82464896,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 503332864,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "document_active-10mib_plus_20": {
+      "anchor_fingerprint": "faf28dca9e1dad19e9e373586f2c7fd9a41bb2a282948d3ced70c968eae81d10",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        }
+      ],
+      "created_total": 6,
+      "elapsed_ms": 301069.870959,
+      "event": "document_active-10mib_plus_20",
+      "label": "active-10mib",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 883526394416,
+        "end_ns": 883804023583,
+        "will_close_ns": 883547329416
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 83447936,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 484818944,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "retained_import_started": {
+      "anchor_fingerprint": "a7a7d6f33a2f435276450634379340762c34846d78506b74dd5ba2c487995143",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 75,
+          "source_bytes": 75
+        },
+        {
+          "has_export": false,
+          "number": 7,
+          "result_bytes": 0,
+          "source_bytes": 17
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 301288.532125,
+      "event": "retained_import_started",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": true,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 84906112,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 485687296,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "retained_imported": {
+      "anchor_fingerprint": "f13b7bc3b3331d57089f5e9799a3ab74740f3ba8f9ee8848c2b042fc811da8fa",
+      "content_sizes": [
+        {
+          "has_export": false,
+          "number": 1,
+          "result_bytes": 0,
+          "source_bytes": 10485757
+        },
+        {
+          "has_export": false,
+          "number": 7,
+          "result_bytes": 0,
+          "source_bytes": 17
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 326703.194459,
+      "event": "retained_imported",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "native_call": {},
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 167170240,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b"
+      ],
+      "rss_bytes": 527187968,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "retained_before_other_close": {
+      "closed_model_number": 7,
+      "created_total": 7,
+      "elapsed_ms": 326830.583292,
+      "event": "retained_before_other_close",
+      "live_model_numbers": [
+        1,
+        7
+      ],
+      "model_states": [
+        {
+          "converting": true,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 7
+        }
+      ],
+      "native_call": {
+        "begin_ns": 929305461541
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "other_converting": false,
+      "other_importing": false,
+      "pending_reservations": 1,
+      "physical_footprint_bytes": 154603712,
+      "pid": 16711,
+      "process_peak_rss_bytes": 571113472,
+      "quota": {
+        "2026-09-15": 5
+      },
+      "retained_converting": true,
+      "retained_model_number": 1,
+      "rss_bytes": 527777792,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "retained_exported": {
+      "actual_bytes": 10485757,
+      "actual_sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "anchor_fingerprint": "2752c556a98a248aa09c662986ea80c09ab0cae2ae0d876f8f35c67cb555fdbb",
+      "byte_equal": true,
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 354230.060042,
+      "event": "retained_exported",
+      "expected_source_sha256": "b29567602f07db159e4d7644f511dee4f5bbf26b9ccc2246512d6fc8fe5cca10",
+      "export_filename": "input-10mib-converted.txt",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 929305461541,
+        "end_ns": 929575033666,
+        "will_close_ns": 929385807833
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "other_close_uptime": 929.39584175,
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 462066240,
+      "pid": 16711,
+      "process_peak_rss_bytes": 709836800,
+      "quota": {
+        "2026-09-15": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 709836800,
+      "rusage_status": 0,
+      "source_sha256": "b29567602f07db159e4d7644f511dee4f5bbf26b9ccc2246512d6fc8fe5cca10",
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "retained_plus_5": {
+      "anchor_fingerprint": "2752c556a98a248aa09c662986ea80c09ab0cae2ae0d876f8f35c67cb555fdbb",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 359489.716084,
+      "event": "retained_plus_5",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 929305461541,
+        "end_ns": 929575033666,
+        "will_close_ns": 929385807833
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 408277696,
+      "pid": 16711,
+      "process_peak_rss_bytes": 718962688,
+      "quota": {
+        "2026-09-15": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 718962688,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "retained_plus_20": {
+      "anchor_fingerprint": "2752c556a98a248aa09c662986ea80c09ab0cae2ae0d876f8f35c67cb555fdbb",
+      "content_sizes": [
+        {
+          "has_export": true,
+          "number": 1,
+          "result_bytes": 10485757,
+          "source_bytes": 10485757
+        }
+      ],
+      "created_total": 7,
+      "elapsed_ms": 374476.6855,
+      "event": "retained_plus_20",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "native_call": {
+        "begin_ns": 929305461541,
+        "end_ns": 929575033666,
+        "will_close_ns": 929385807833
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 410735360,
+      "pid": 16711,
+      "process_peak_rss_bytes": 732332032,
+      "quota": {
+        "2026-09-15": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 732332032,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "documents_final_closed": {
+      "anchor_fingerprint": "",
+      "content_sizes": [],
+      "created_total": 7,
+      "elapsed_ms": 374547.247667,
+      "event": "documents_final_closed",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [],
+      "model_states": [],
+      "native_call": {
+        "begin_ns": 929305461541,
+        "end_ns": 929575033666,
+        "will_close_ns": 929385807833
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 362484480,
+      "pid": 16711,
+      "process_peak_rss_bytes": 732692480,
+      "quota": {
+        "2026-09-15": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 731594752,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "documents_final_plus_5": {
+      "anchor_fingerprint": "",
+      "content_sizes": [],
+      "created_total": 7,
+      "elapsed_ms": 379575.832667,
+      "event": "documents_final_plus_5",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [],
+      "model_states": [],
+      "native_call": {
+        "begin_ns": 929305461541,
+        "end_ns": 929575033666,
+        "will_close_ns": 929385807833
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 245437184,
+      "pid": 16711,
+      "process_peak_rss_bytes": 732692480,
+      "quota": {
+        "2026-09-15": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 679477248,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "documents_final_plus_20": {
+      "anchor_fingerprint": "",
+      "content_sizes": [],
+      "created_total": 7,
+      "elapsed_ms": 394555.433542,
+      "event": "documents_final_plus_20",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [],
+      "model_states": [],
+      "native_call": {
+        "begin_ns": 929305461541,
+        "end_ns": 929575033666,
+        "will_close_ns": 929385807833
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 245388032,
+      "pid": 16711,
+      "process_peak_rss_bytes": 732692480,
+      "quota": {
+        "2026-09-15": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 679428096,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "documents_finished": {
+      "anchor_fingerprint": "",
+      "content_sizes": [],
+      "created_total": 7,
+      "elapsed_ms": 394556.163375,
+      "event": "documents_finished",
+      "label": "retained-active-10mib",
+      "live_model_numbers": [],
+      "model_states": [],
+      "native_call": {
+        "begin_ns": 929305461541,
+        "end_ns": 929575033666,
+        "will_close_ns": 929385807833
+      },
+      "os": "Version 15.7.9 (Build 24G830)",
+      "pending_reservations": 0,
+      "physical_footprint_bytes": 245388032,
+      "pid": 16711,
+      "process_peak_rss_bytes": 732692480,
+      "quota": {
+        "2026-09-15": 6
+      },
+      "result_writebacks": [
+        "anchor",
+        "1mib-a",
+        "1mib-b",
+        "10mib-a",
+        "10mib-b",
+        "retained-active-10mib"
+      ],
+      "rss_bytes": 679428096,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    }
+  },
+  "saved_exports": [
+    {
+      "file": "actual-1mib-a.txt",
+      "bytes": 1048573,
+      "sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9",
+      "byte_equal": true,
+      "nul_count": 13980,
+      "crlf_count": 41940,
+      "has_bom": false
+    },
+    {
+      "file": "actual-1mib-b.txt",
+      "bytes": 1048573,
+      "sha256": "7188516f828852090c7d2fe2444a507dbf4e332ae1811eb9f68ce16d2253b3d9",
+      "byte_equal": true,
+      "nul_count": 13980,
+      "crlf_count": 41940,
+      "has_bom": false
+    },
+    {
+      "file": "actual-10mib-a.txt",
+      "bytes": 10485757,
+      "sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "byte_equal": true,
+      "nul_count": 139810,
+      "crlf_count": 419430,
+      "has_bom": false
+    },
+    {
+      "file": "actual-10mib-b.txt",
+      "bytes": 10485757,
+      "sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "byte_equal": true,
+      "nul_count": 139810,
+      "crlf_count": 419430,
+      "has_bom": false
+    },
+    {
+      "file": "actual-retained-active-10mib.txt",
+      "bytes": 10485757,
+      "sha256": "742827f74fc3c7ab8201f7206d04dbf689865b185034e2a8fd92dcf41d769088",
+      "byte_equal": true,
+      "nul_count": 139810,
+      "crlf_count": 419430,
+      "has_bom": false
+    }
+  ],
+  "process_exited": true
+}
