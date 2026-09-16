@@ -49,4 +49,6 @@ CustomerInfo updates from the existing Pro scene, SDK delegate and Customer Cent
 
 See [sanitized validation log](results.log) and [StoreKit setup/limitations](../storekit/README.md). No credentials, receipts or customer payloads are saved in this report.
 
+Language synchronization candidate: [source evidence, checks and pending iOS merge gate](locale-sync/README.md).
+
 Mac VoiceOver attempted on the #96 candidate: [observations, unresolved keyboard acceptance and verified cleanup](2026-09-15-voiceover/README.md).

@@ -1,0 +1,26 @@
+<temporary-iap-locale-directory>/Constants.swift:27:42: warning: 'languageCode' was deprecated in macOS 13: renamed to 'language.languageCode.identifier' [#DeprecatedDeclaration]
+ 25 | 
+ 26 |   static var systemIdentifier: String {
+ 27 |     if let languageCode = Locale.current.languageCode {
+    |                                          |- warning: 'languageCode' was deprecated in macOS 13: renamed to 'language.languageCode.identifier' [#DeprecatedDeclaration]
+    |                                          `- note: use 'language.languageCode.identifier' instead
+ 28 |       switch languageCode {
+ 29 |       case ChineseLanguageConstant.languageCode.rawValue:
+
+<temporary-iap-locale-directory>/Constants.swift:30:27: warning: 'scriptCode' was deprecated in macOS 13: renamed to 'language.script.identifier' [#DeprecatedDeclaration]
+ 28 |       switch languageCode {
+ 29 |       case ChineseLanguageConstant.languageCode.rawValue:
+ 30 |         if Locale.current.scriptCode == ChineseLanguageConstant.simpleScriptCode.rawValue {
+    |                           |- warning: 'scriptCode' was deprecated in macOS 13: renamed to 'language.script.identifier' [#DeprecatedDeclaration]
+    |                           `- note: use 'language.script.identifier' instead
+ 31 |           return Self.zh_Hans.rawValue
+ 32 |         } else {
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+{"expected":"en","saved":"<unset>","sdk_initial_locale":"en"}
+{"expected":"en","saved":"system","sdk_initial_locale":"en"}
+{"expected":"en","saved":"en","sdk_initial_locale":"en"}
+{"expected":"zh_Hans","saved":"zh_Hans","sdk_initial_locale":"zh_Hans"}
+{"expected":"zh_Hant","saved":"zh_Hant","sdk_initial_locale":"zh_Hant"}
+{"expected":"en","saved":"invalid-locale","sdk_initial_locale":"en"}
+PASS: real IAPManager; 6 saved-language cases, proxy ordering, configure idempotence, locale updates and unchanged preferences

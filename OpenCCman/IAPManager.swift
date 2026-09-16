@@ -63,9 +63,20 @@ final class IAPManager: NSObject, PurchasesDelegate {
   func configure() {
     guard Purchases.isConfigured == false else { return }
 
+    let locale = LocaleConstants(
+      rawValue: UserDefaults.standard.string(forKey: UserDefaultsKeys.selectedLocale.rawValue) ?? ""
+    ) ?? .system
     Purchases.proxyURL = URL(string: "https://api.rc-backup.com/")!
-    Purchases.configure(withAPIKey: "appl_EJkSanbpeFhoNJsZaUbpIZPduCi")
+    Purchases.configure(with: Configuration.Builder(withAPIKey: "appl_EJkSanbpeFhoNJsZaUbpIZPduCi")
+      .with(preferredUILocaleOverride: locale.identifier)
+      .build())
     Purchases.shared.delegate = self
+  }
+
+  func updatePreferredUILocale(_ locale: LocaleConstants) {
+    guard Purchases.isConfigured else { return }
+    // Use the same effective language as the app, including its system fallback.
+    Purchases.shared.overridePreferredUILocale(locale.identifier)
   }
 
   func checkProLifetime(completion: @escaping (Bool?) -> Void) {
