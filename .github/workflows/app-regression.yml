@@ -295,6 +295,9 @@ jobs:
           elif [[ "$DOCUMENT_LIFECYCLE" == "true" ]]; then
             check_args+=(--documents)
           elif [[ "$CYCLE_LIFECYCLE" == "true" ]]; then check_args+=(--cycles); fi
+          # Main diagnostic runs have no CUA/recording. Gate object release as
+          # well as protocol integrity; stack-sampling runs remain observational.
+          if [[ "$PROFILE_DOCUMENT_STAGES" != "true" ]]; then check_args+=(--require-model-release); fi
           python3 scripts/check-native-window-lifecycle.py "${check_args[@]}" \
             --app "${{ runner.temp }}/lifecycle-derived/Build/Products/Release/OpenCCman.app" \
             --output "${{ runner.temp }}/lifecycle-artifact/automatic"

@@ -84,7 +84,16 @@ struct OpenCCmanApp: App {
     #endif
   }
 
+  @ViewBuilder
   private var routedApp: some View {
+    #if os(macOS)
+      WindowContentLifetime { routes }
+    #else
+      routes
+    #endif
+  }
+
+  private var routes: some View {
       Router {
         RootView()
           .onAppear {
