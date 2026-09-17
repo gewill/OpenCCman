@@ -27,7 +27,7 @@ PR/推送不会自动准备或发布依赖候选；在其他分支手动运行�
 
 ## 已完成的迁移与历史合并顺序
 
-2026-09-16 核对：[应用迁移 #43](https://github.com/gewill/OpenCCman/pull/43) 和 [默认协调器迁移 #44](https://github.com/gewill/OpenCCman/pull/44) 都已合并，main 上 `app.base` 已是 develop。下面保留原来的依赖顺序作为历史说明，不表示这些 PR 仍待合并。实时保护与旧引用状态见 [分支账本](BRANCHING.md#当前迁移账本2026-09-16)。
+2026-09-16 核对：[应用迁移 #43](https://github.com/gewill/OpenCCman/pull/43) 和 [默认协调器迁移 #44](https://github.com/gewill/OpenCCman/pull/44) 都已合并，main 上 `app.base` 已是 develop。下面保留原来的依赖顺序作为历史说明，不表示这些 PR 仍待合并。实时保护与旧引用状态见 [分支账本](BRANCHING.md#当前归档账本2026-09-17)。
 
 1. **应用 CI 迁移 → `develop`**：通过 merge commit 接回旧 `build` 的 1.3 应用历史与 `main` 的协调器历史，保留已合入的分支规范。仅解决 README 的文档冲突，应用源码、工程与依赖锁文件保持旧 `build` 的内容。更新 CI 触发分支和应用侧同步配置。
 2. 等待 `develop` 合并提交的 `App Regression` 成功。配置 required check 时使用实际 job 名 `App Regression`，不绕过失败或尚未运行的检查。
@@ -48,10 +48,10 @@ PR 与合并后真实 GitHub Actions 运行结果是线上验收依据。纯迁�
 
 [请求与回读证据](validation/branch-protection-2026-09-16.json)记录实际配置；采用 GitHub 官方 [分支保护 API](https://docs.github.com/en/rest/branches/branch-protection#update-branch-protection) 的 `checks` 字段绑定检查来源。文档 PR #111 和堆叠 PR #108 已产生 App Regression，条件诊断 job 和路径过滤的协调器 job 不列为必需检查。
 
-以下事项仍由 [#110](https://github.com/gewill/OpenCCman/issues/110) 跟踪：
+以下发布事项改由 [#122](https://github.com/gewill/OpenCCman/issues/122) 跟踪：
 
 - `main` 的应用回归文件随验收后的发布 PR 进入后再增加对应必需检查；当前只要求 PR，避免永久等待。
-- 归档并退出旧 `build` 引用，释放 `build/*` 命名空间；先核对关联 PR、保护规则和云端构建。
+- 旧 `build` 与 1.3 打包分支已归档，命名空间已释放，Build 49/50 两端 VALID；见[归档证据](validation/branch-archive-2026-09-17.json)。
 - 在明确需要发布验收包时验证临时 `build/*` 的 Xcode Cloud 触发与 TestFlight 产物。
 
 历史验收报告继续保留当时的 `build` 分支事实；新的操作按本指南执行。
@@ -76,3 +76,10 @@ PR 与合并后真实 GitHub Actions 运行结果是线上验收依据。纯迁�
 ## Xcode 27 与 RevenueCat 编译诊断
 
 [#107 的隔离复现与工具链策略](validation/toolchain-compatibility/README.md)记录 Swift 6.4 下初始化器冲突及 RevenueCat 5.78.0 的官方修复。当前 App Regression 继续使用 Xcode 26.3；本诊断不更改应用依赖、最低系统或 Xcode Cloud。独立源文件类型检查不能替代完整升级验收。
+
+
+## 2026-09-17 更新
+
+#120/#118 已将应用升级为 RevenueCat 5.78.0、iOS 15/macOS 12；Xcode 27 Cloud Build 53 两端成功且 VALID，见 [Build 53](validation/build-53/README.md)。上文独立编译诊断保留为历史证据，不表示升级尚未发生。
+
+本次仅归档旧分支并更新文档，没有调整 CI 工作流。main/develop 保护读回未变，旧 build 的管理员、PR、禁止强推/删除及来源绑定检查在归档分支保留。main 尚无应用回归，继续仅要求 PR；#122 在发布 PR 带入工作流并取得真实成功检查后、合并前增加必需检查。带斜线打包验证仍需下一次明确授权；归档没有启动新的 Cloud 构建。
