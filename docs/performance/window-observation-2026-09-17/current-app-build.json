@@ -1,0 +1,66 @@
+{
+  "source_sha": "f4b71e5bd1e809af9c4d8d6e0f7fb1d9792dea5e",
+  "xcode": "27.0 (27A266a)",
+  "macOS": "27.0 (26A428)",
+  "configuration": "Release arm64 ad-hoc diagnostic",
+  "build_log_sha256": "ac4b3b3d33dfc3c15b6f3bd22ae077ecb949588ee3295cec83940ffc2615cc22",
+  "preparation": {
+    "protocol": "native-window-documents-active-anchor-1",
+    "bundle_id": "org.gewill.OpenCCman.NativeWindowLifecycleAuditAutoDocumentsActiveAnchor",
+    "automatic": false,
+    "cycles": false,
+    "documents": true,
+    "active_anchor": true,
+    "diagnostic_minimum_macos": "11.0",
+    "source_sha": "f4b71e5bd1e809af9c4d8d6e0f7fb1d9792dea5e",
+    "source_status": "",
+    "harness_sha256": "49de032310c85c4df59c6e749162f64667cd6c98a5fa8702e68e45fad1a0591e",
+    "preparer_sha256": "cc9f040c32a01c6b1958802f61fe695da32fb659a78061b9ca795a0235b5c3da",
+    "prepared_harness_sha256": "020d2cec6a3f275afcf6db8990e5ea4da2336923eb8b39ac06884b32fdf7e980",
+    "modified_source_sha256": {
+      "OpenCCman/OpenCCmanApp.swift": {
+        "before": "ff31cf13aa8b545fb0e44b53a30c0680f7de86ba2438d2b9974deb2c1e62d0e8",
+        "after": "1e3dec08bf1b8e08983a403f167796d47f8c6bbc1e084cf9f9cc63ac16222b8a"
+      },
+      "OpenCCman/Scene/HomeViewModel.swift": {
+        "before": "f8830e4d876b2c4f4d11b7b5899d6fdee67021166e178d7fa4bffeb37cefbe2a",
+        "after": "36428b4638e96c5d374cb32e344cae22d13a5bcf15c01fc1b937d8eef0cd3a14"
+      },
+      "OpenCCman/AppDelegate.swift": {
+        "before": "74bf011b81a5b3a50088c0afe9b710200ea502e333bfeaf16c8eb9516d27126b",
+        "after": "3e777181ba9295bed7959c7e88d60cf46fda2954a69e69258211fa766973dd84"
+      },
+      "OpenCCman/Info.plist": {
+        "before": "8068892aaac197d35865cf11bb4404d05b194805671736d91d1510e56b04c13e",
+        "after": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c"
+      },
+      "OpenCCman.xcodeproj/project.pbxproj": {
+        "before": "55b81b8b71da30ce7b118948964fce050447a66a8a2b39eafa253ca6d6ae4093",
+        "after": "4bedeff48bf51e21a831d547cc6810c213edb830f2ab09ecd653f87a9a462704"
+      },
+      "OpenCCman/Services/GlobalShortcutService.swift": {
+        "before": "48ca6cc84ef2bd77e2594639104c74bd02125d2c0731308d29ecb68a23ccb1b4",
+        "after": "d79bd6a2435d44fd76469a0b682fa03d6650e07dd7267fa0d843facb56a2ab63"
+      },
+      "OpenCCman/Services/ChineseConversionService.swift": {
+        "before": "2f9b951421406dab71bee5e8da9125ba8cac154284e01138b8e062cd64083a0a",
+        "after": "45811f9e85c56f41d6dbc6e8473ce38b5dde56959c258213df576a32be303b4f"
+      },
+      "OpenCCman/Model/TestNumbersPerDayManager.swift": {
+        "before": "602ef6c77ce4c22710914906fe4736842da9cf5150f6a62a67ebcd8ed11ffb9f",
+        "after": "4f0d1eaa25b9ac5c1cb67cb56a308dde89d7eb2aa60a4f8b8d68520efc952238"
+      },
+      "OpenCCman/Model/ConvertedTextDocument.swift": {
+        "before": "d1ed6c797941ea1bb296ccab4e1e06b3eca502d960a465dd602d061de7e517d6",
+        "after": "ee90154db1cf94a9d9dcd8f792810167c54353ff14f544ffe8f898b2bbaa3e50"
+      }
+    },
+    "unchanged_source_sha256": {
+      "OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "0f7de10fe83850d1a4e823a0369f02ee2071c7041d89036618c3ae420f6f91d6",
+      "OpenCCman/Scene/RootView.swift": "599fff0fc3d5648dd1e4ddb01232c2d2bc2640e82536f21944e26f4e434eb194"
+    },
+    "variant": "Real WindowGroup/Router/RootView; weak model logging; isolated free preferences; no purchase setup or Services/global shortcut registration",
+    "run": "Not launched. Fixed 1/10 MiB import/conversion/export encoding, four completed windows and one native-call active close; nonempty anchor; +5/+20 observations. Save panel/security scope excluded. Then convert 10 MiB in the retained first window while closing an idle seventh window; validate success and observe +5/+20.",
+    "driver_sha256": "21a3ffe3afe1ec97477d478c975aa2a1f61026294557fd4c3e1b705b49fbe81c"
+  }
+}

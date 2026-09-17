@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Validate native model lifecycle evidence; optionally run the private app on CI.
 
-Retained models are reported, not treated as a protocol failure or a proven leak.
+Retained models are always reported separately from protocol integrity.
+--require-model-release gates unobserved runs; failure is not proof of a leak.
 Local mode reads an existing log only. It never launches or controls an app.
 """
 import argparse
@@ -121,6 +122,27 @@ def validate_cycles(rows):
     return observations
 
 
+def verify_model_release(rows):
+    """After protocol validation, require only the anchor (or no model) at +20s.
+
+    Use for runs without UI observation/recording. Preserve observed diagnostics
+    as outcomes rather than equating their retained objects with app leaks.
+    Compare identity, not count: replacing the anchor with a stale model fails.
+    """
+    checkpoints = [row for row in rows if row['event'].endswith('_plus_20')]
+    if not checkpoints or not any(row['visible_main_capable_windows'] == 0 for row in checkpoints):
+        raise ValueError('Model-release check requires final +20s evidence')
+    for row in checkpoints:
+        visible = row['visible_main_capable_windows']
+        expected = [1] if visible == 1 else []
+        if visible not in (0, 1) or row['live_model_numbers'] != expected:
+            raise ValueError(
+                f"Model release failed at {row['event']}: "
+                f"expected {expected}, found {row['live_model_numbers']}"
+            )
+    return {row['event']: row['live_model_numbers'] for row in checkpoints}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     mode = parser.add_mutually_exclusive_group(required=True)
@@ -132,6 +154,8 @@ def main():
     protocol.add_argument('--documents', action='store_true', help='Validate fixed document cycles and native-call close overlap')
     protocol.add_argument('--cycles', action='store_true', help='Validate three cycles with distinct new model identities')
     parser.add_argument('--active-anchor', action='store_true', help='Require the retained-window active conversion case')
+    parser.add_argument('--require-model-release', action='store_true',
+                        help='Require anchor-only / zero-model +20s samples in an unobserved run')
     parser.add_argument('--profile-stages', action='store_true', help='CI only: sample the owned document process; not a latency baseline')
     args = parser.parse_args()
     if args.active_anchor and not args.documents:
@@ -150,7 +174,8 @@ def main():
     args.output.mkdir(parents=True, exist_ok=False)
     process = None
     raw = args.raw
-    result = {'valid_protocol': False, 'mode': 'ci-automatic' if args.app else 'existing-log'}
+    result = {'valid_protocol': False, 'mode': 'ci-automatic' if args.app else 'existing-log',
+              'model_release_required': args.require_model_release, 'model_release_passed': None}
     try:
         if args.app:
             executable = args.app / 'Contents/MacOS' / info['CFBundleExecutable']
@@ -207,6 +232,10 @@ def main():
             spec.loader.exec_module(module)
             result['saved_exports'] = module.verify_files(args.output / 'documents', active_anchor=args.active_anchor)
         result['valid_protocol'] = True
+        if args.require_model_release:
+            result['model_release_passed'] = False
+            result['model_release_checkpoints'] = verify_model_release(rows)
+            result['model_release_passed'] = True
     except (OSError, ValueError, subprocess.SubprocessError) as error:
         result['error'] = str(error)
     finally:
@@ -226,7 +255,8 @@ def main():
                 (args.output / f'process-raw-{index}.jsonl').write_bytes(path.read_bytes())
         (args.output / 'result.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(result, indent=2))
-    return 0 if result['valid_protocol'] and result.get('valid_profile', True) else 4
+    return 0 if (result['valid_protocol'] and result.get('valid_profile', True)
+                 and (not args.require_model_release or result['model_release_passed'] is True)) else 4
 
 
 if __name__ == '__main__':

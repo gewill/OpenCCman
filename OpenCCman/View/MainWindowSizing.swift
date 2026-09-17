@@ -111,6 +111,11 @@ struct MainWindowReader: NSViewRepresentable {
     view.reportWindow()
   }
 
+  static func dismantleNSView(_ view: ReaderView, coordinator: ()) {
+    // A retained native reader must not keep its removed SwiftUI owner alive.
+    view.onAttach = nil
+  }
+
   final class ReaderView: NSView {
     var onAttach: ((NSWindow) -> Void)?
     private weak var reportedWindow: NSWindow?
@@ -126,6 +131,32 @@ struct MainWindowReader: NSViewRepresentable {
       DispatchQueue.main.async { [weak self, weak window] in
         guard let self, let window, self.window === window else { return }
         self.onAttach?(window)
+      }
+    }
+  }
+}
+/// Releases closed-window content even when an accessibility client retains its hosting view.
+/// Keep this boundary outside the Router and its window-owned StateObjects.
+struct WindowContentLifetime<Content: View>: View {
+  @State private var closed = false
+  @State private var windowID: ObjectIdentifier?
+  @ViewBuilder var content: () -> Content
+
+  var body: some View {
+    Group {
+      if !closed { content() }
+    }
+    .background(MainWindowReader { windowID = ObjectIdentifier($0) }
+      .allowsHitTesting(false).accessibilityHidden(true))
+    .onReceive(NotificationCenter.default.publisher(for: NSWindow.willCloseNotification)) { notification in
+      guard !closed, let window = notification.object as? NSWindow,
+            ObjectIdentifier(window) == windowID else { return }
+      closed = true
+      // Hidden hosting views may never perform another layout pass. Apply the pending
+      // removal after the close notification; never retain the window or its host.
+      DispatchQueue.main.async { [weak host = window.contentView] in
+        host?.needsLayout = true
+        host?.layoutSubtreeIfNeeded()
       }
     }
   }

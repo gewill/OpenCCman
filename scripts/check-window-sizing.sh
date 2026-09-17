@@ -11,3 +11,7 @@ xcrun swiftc "$repo_root/OpenCCman/Model/MainWindowGeometry.swift" \
   "$repo_root/Tests/Regression/MainWindowNativeChecks.swift" -o "$audit_dir/check-native-window"
 "$audit_dir/check-native-window"
 "$audit_dir/check-native-window" restore
+xcrun swiftc "$repo_root/OpenCCman/Model/MainWindowGeometry.swift" \
+  "$repo_root/OpenCCman/View/MainWindowSizing.swift" \
+  "$repo_root/Tests/Regression/MainWindowLifetimeChecks.swift" -o "$audit_dir/check-window-lifetime"
+"$audit_dir/check-window-lifetime"

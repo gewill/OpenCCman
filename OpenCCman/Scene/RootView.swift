@@ -74,6 +74,11 @@ struct RootView: View {
       viewModel.window = window
       AppDelegate.registerReadyWindow(window)
     }.allowsHitTesting(false).accessibilityHidden(true))
+    .onReceive(NotificationCenter.default.publisher(for: NSWindow.willCloseNotification)) { notification in
+      guard isTargetWindow(for: notification) else { return }
+      viewModel.cancelConversion()
+      viewModel.cancelImport()
+    }
     .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeMainNotification)) { notification in
       if isTargetWindow(for: notification) {
         isMainWindow = true

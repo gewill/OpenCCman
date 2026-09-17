@@ -1,0 +1,476 @@
+[
+  {
+    "case": "cua-first-and-late-query",
+    "pid": 28340,
+    "condition": "CUA startup and a late first-window query after second window closed",
+    "source_sha256": "67e6610811ae2ec976530b1972677914b99702aa4a7786d383f039b7156273c9",
+    "log_sha256": "ee755efc063cfdc12cf7a49bcc8d2248f8d909aeebb8c35633b756690078d0f0",
+    "observations": [
+      {
+        "event": "driver_second_plus_20",
+        "elapsed": 40.562356666666574,
+        "alive": 1,
+        "visible": 1
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 60.662445041666615,
+        "alive": 1,
+        "visible": 0
+      }
+    ]
+  },
+  {
+    "case": "cua-both",
+    "pid": 29490,
+    "condition": "CUA startup and second window query",
+    "source_sha256": "67e6610811ae2ec976530b1972677914b99702aa4a7786d383f039b7156273c9",
+    "log_sha256": "436b986cbf0add636bfbc6a5c3abb1ade404d293b7a9e704975a8f03deb361cc",
+    "observations": [
+      {
+        "event": "driver_second_plus_20",
+        "elapsed": 40.39087158333314,
+        "alive": 2,
+        "visible": 1
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 60.490942541666755,
+        "alive": 2,
+        "visible": 0
+      }
+    ]
+  },
+  {
+    "case": "conditional-subtree",
+    "pid": 28869,
+    "condition": "CUA both windows; conditional child removal on close",
+    "source_sha256": "6abd3568bff16ffed96b3e76a235420a2a86007d364d781fb038cf1f73bde33f",
+    "log_sha256": "dcb5b4451a187e5e9cf68e10dc8ac68cd93c86c18b3b3575579150e0341ae720",
+    "observations": [
+      {
+        "event": "driver_second_plus_20",
+        "elapsed": 40.616190291666726,
+        "alive": 2,
+        "visible": 1
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 60.81576649999988,
+        "alive": 2,
+        "visible": 0
+      }
+    ]
+  },
+  {
+    "case": "async-detach",
+    "pid": 29801,
+    "condition": "CUA both windows; weak-window deferred content removal",
+    "source_sha256": "936510dfef497706122f62e35679ccea8a62eadacafbac44242aae1e8c3a3b83",
+    "log_sha256": "899cff735b4255649ab347880b7213ba9a2f7ae5e6ff9d3c944e50f6f7d763ae",
+    "observations": [
+      {
+        "event": "driver_second_plus_20",
+        "elapsed": 40.50989929166644,
+        "alive": 2,
+        "visible": 1
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 60.61017770833314,
+        "alive": 2,
+        "visible": 0
+      }
+    ]
+  },
+  {
+    "case": "sync-detach",
+    "pid": 30523,
+    "condition": "CUA startup and late first-window query; synchronous content removal",
+    "source_sha256": "b1e3765b1a34ff7fbdd515102912cdc2a3555c712bbc0f9a14724667f6202452",
+    "log_sha256": "e8a9e48a10867f33594eeef8843b9bdadc1c5da22b14be8577d57630a940739e",
+    "observations": [
+      {
+        "event": "driver_second_plus_20",
+        "elapsed": 40.57658383333319,
+        "alive": 2,
+        "visible": 1
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 60.676961541666515,
+        "alive": 2,
+        "visible": 0
+      }
+    ]
+  },
+  {
+    "case": "prepare-for-reuse",
+    "pid": 31278,
+    "condition": "CUA startup and late queries; prepareForReuse not a supported close remedy",
+    "source_sha256": "c3938a9c5fab171989d7d88552774226c04cabf7b1617db64c1860ec519c299a",
+    "log_sha256": "ff909a1ff92425e932c685de50da9ad22cabe9c4ecb6939017b1f2408fefbaf1",
+    "observations": [
+      {
+        "event": "driver_second_plus_20",
+        "elapsed": 40.5374819583335,
+        "alive": 1,
+        "visible": 1
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 60.63747474999991,
+        "alive": 1,
+        "visible": 0
+      }
+    ]
+  },
+  {
+    "case": "no-close-animation",
+    "pid": 37216,
+    "condition": "CUA both windows; .none animation at willClose",
+    "source_sha256": "51ba7bc555c54aba8831a31a57c664beb6525b84e3d3fd5129c4db56303aa0b5",
+    "log_sha256": "a02b6ea5e0ac55e027d8eeb8b829b6a0cca7247451a21ca8d94117f798048001",
+    "observations": [
+      {
+        "event": "driver_second_plus_20",
+        "elapsed": 60.64079225000023,
+        "alive": 2,
+        "visible": 1
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 80.74077383333315,
+        "alive": 2,
+        "visible": 0
+      }
+    ]
+  },
+  {
+    "case": "observer-removal",
+    "pid": 33699,
+    "condition": "Exploratory instrumented fixture only; remove commonAwake observers after final +20s; duplicate +20 records excluded from protocol acceptance",
+    "source_sha256": "1853fe74eec093de021fb7edba2299d33777f9f09f51325548b11586d58721e0",
+    "log_sha256": "cb19f199cb6893299d4cbcb2da9c13fafe97edccb2421f0ca5ab6636f677a118",
+    "observations": [
+      {
+        "event": "driver_second_plus_20",
+        "elapsed": 60.76999329166665,
+        "alive": 2,
+        "visible": 1
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 80.86995033333369,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 80.96988845833357,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 81.06991079166664,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 81.16991941666674,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 81.26989512499995,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 81.36987720833349,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 81.47041262500034,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 81.56988433333345,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 81.66991125000004,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 81.76989370833371,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 81.86990754166663,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 81.96997087499994,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 82.06990241666699,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 82.16990654166693,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 82.27000712500012,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 82.36996995833351,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 82.46993925000015,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 82.56995133333339,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 82.6699629583336,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 82.76998983333351,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 82.8699566666669,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 82.96994375000031,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 83.0701467083336,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 83.16993695833344,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 83.26992970833362,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 83.36994679166673,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 83.46997425000018,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 83.57000958333356,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 83.66994741666667,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 83.76995149999993,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 83.86995454166663,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 83.96996362500022,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 84.069977666667,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 84.16996425000025,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 84.27002054166678,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 84.37001762499995,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 84.47000258333355,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 84.56997649999994,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 84.67005779166675,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 84.76997654166689,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 84.86998270833328,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 84.97004058333368,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 85.07002512500003,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 85.1699861666666,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 85.26999237500013,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 85.36998941666661,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 85.47003091666693,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 85.57000516666676,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 85.67004674999998,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 85.77001779166676,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "driver_final_plus_20",
+        "elapsed": 85.87006995833372,
+        "alive": 2,
+        "visible": 0
+      },
+      {
+        "event": "diagnostic_after_removal",
+        "elapsed": 85.87032404166666,
+        "alive": 2,
+        "visible": 0
+      }
+    ]
+  }
+]
