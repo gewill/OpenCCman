@@ -1,0 +1,460 @@
+{
+  "verifiedAt": "2026-09-17T06:15:48.292845+00:00",
+  "workflow": {
+    "type": "ciWorkflows",
+    "id": "00F5435C-1C48-4750-88FA-4563D018E4B3",
+    "attributes": {
+      "name": "Default",
+      "branchStartCondition": {
+        "source": {
+          "patterns": [
+            {
+              "pattern": "build",
+              "isPrefix": true
+            }
+          ]
+        },
+        "autoCancel": true
+      },
+      "actions": [
+        {
+          "name": "Archive - iOS",
+          "actionType": "ARCHIVE",
+          "buildDistributionAudience": "APP_STORE_ELIGIBLE",
+          "testConfiguration": null,
+          "scheme": "OpenCCman",
+          "platform": "IOS",
+          "isRequiredToPass": true
+        },
+        {
+          "name": "Archive - macOS",
+          "actionType": "ARCHIVE",
+          "destination": "ANY_MAC",
+          "buildDistributionAudience": "APP_STORE_ELIGIBLE",
+          "testConfiguration": null,
+          "scheme": "OpenCCman",
+          "platform": "MACOS",
+          "isRequiredToPass": true
+        }
+      ],
+      "isEnabled": true,
+      "clean": true,
+      "containerFilePath": "OpenCCman.xcodeproj",
+      "lastModifiedDate": "2026-09-16T13:21:01.491Z"
+    },
+    "relationships": {
+      "repository": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/ciWorkflows/00F5435C-1C48-4750-88FA-4563D018E4B3/relationships/repository",
+          "related": "https://api.appstoreconnect.apple.com/v1/ciWorkflows/00F5435C-1C48-4750-88FA-4563D018E4B3/repository"
+        }
+      },
+      "buildRuns": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/ciWorkflows/00F5435C-1C48-4750-88FA-4563D018E4B3/relationships/buildRuns",
+          "related": "https://api.appstoreconnect.apple.com/v1/ciWorkflows/00F5435C-1C48-4750-88FA-4563D018E4B3/buildRuns"
+        }
+      }
+    }
+  },
+  "openPRs": [],
+  "runs": [
+    {
+      "id": "06ba60e6-de05-4ae9-bb39-a8aa6e0632e0",
+      "number": 38,
+      "sourceSha": "59fcad781045182bc7f032910a23be656dbe514b",
+      "progress": "COMPLETE",
+      "result": "FAILED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "0fbcc699-ca68-483c-ac09-70f7c0fffcaf",
+      "number": 39,
+      "sourceSha": "63ef16febd0b79ebd663fd6364a925ca8692da3c",
+      "progress": "COMPLETE",
+      "result": "SUCCEEDED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "18568572-baae-4185-a0c5-8296e4726a6d",
+      "number": 40,
+      "sourceSha": "318a1485b12f4851e0f67d66d4dd7a4a4ce919ae",
+      "progress": "COMPLETE",
+      "result": "FAILED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "78cbcdfc-305e-4846-bcb2-cfff8dfc9464",
+      "number": 41,
+      "sourceSha": "81d534c2efdb8f28d47709f18e39e1006577d650",
+      "progress": "COMPLETE",
+      "result": "FAILED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "2f6ea0dc-1f97-419a-a95c-c81b487712a3",
+      "number": 42,
+      "sourceSha": "c2c8581b8f1b781f5c05321f58fe484634341374",
+      "progress": "COMPLETE",
+      "result": "FAILED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "3ca309e1-0400-4c07-94cf-676491f36805",
+      "number": 43,
+      "sourceSha": "f222dbb990e37ed6d45899733e8d1c704a6e832a",
+      "progress": "COMPLETE",
+      "result": "FAILED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "8e1d8cff-3c58-4a11-bf30-5334894b7aca",
+      "number": 44,
+      "sourceSha": "eb43b7ccd9e5788daa8af810e59d006d28dcb7d6",
+      "progress": "COMPLETE",
+      "result": "SUCCEEDED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "1c0d86ad-50fc-4b3a-af9f-31f8a055547f",
+      "number": 45,
+      "sourceSha": "d2ec354b382da5e736e1c910f1b9acf139b1cc01",
+      "progress": "COMPLETE",
+      "result": "CANCELED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "8829884c-7b50-4b80-ac26-d0afdf46188b",
+      "number": 46,
+      "sourceSha": "3f609a6a162fa930842495e99c016ed8432cc126",
+      "progress": "COMPLETE",
+      "result": "SUCCEEDED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "8ad85675-2468-4b8d-a55c-72ef58c77add",
+      "number": 47,
+      "sourceSha": "9cfee8f3682e6b1ac7aa0d9848bb8e1fd05ccd2c",
+      "progress": "COMPLETE",
+      "result": "SUCCEEDED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "5c4fb644-510a-444d-8e6d-2eefbe246837",
+      "number": 48,
+      "sourceSha": "7e77bb31af0b0e83a8014285d57bb73a49c7c5dc",
+      "progress": "COMPLETE",
+      "result": "SUCCEEDED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "6da6dcac-261a-45e1-8a57-73e0d5f5c4f0",
+      "number": 49,
+      "sourceSha": "9daf1539232ee668f8050dac664b78ab195e2fc9",
+      "progress": "COMPLETE",
+      "result": "SUCCEEDED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "9a3b158a-07ac-43a9-ac44-b950484b2f8f",
+      "number": 50,
+      "sourceSha": "c3009c74796e8f4ff3b39c4f1c5bb8c9ed1c04cf",
+      "progress": "COMPLETE",
+      "result": "SUCCEEDED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "f6da57bf-1940-4845-aa74-c87b188bc8da",
+      "number": 51,
+      "sourceSha": "450c74af97532cc8e3eb62f362edc392d938722a",
+      "progress": "COMPLETE",
+      "result": "FAILED",
+      "startReason": "GIT_REF_CHANGE"
+    },
+    {
+      "id": "aa665f62-c781-4cf9-ad60-f137424622f2",
+      "number": 52,
+      "sourceSha": "450c74af97532cc8e3eb62f362edc392d938722a",
+      "progress": "COMPLETE",
+      "result": "SUCCEEDED",
+      "startReason": "MANUAL"
+    },
+    {
+      "id": "953ebf29-f2b7-40ff-9e6c-62142781b2c6",
+      "number": 53,
+      "sourceSha": "82b84780283927bff8d1782231524a3dc3282229",
+      "progress": "COMPLETE",
+      "result": "SUCCEEDED",
+      "startReason": "GIT_REF_CHANGE"
+    }
+  ],
+  "builds": {
+    "49": [
+      {
+        "id": "e74ac8ca-bdf7-4162-9a94-f3fd1d6ac973",
+        "version": "49",
+        "processingState": "VALID",
+        "minOsVersion": "14.0",
+        "expired": false
+      },
+      {
+        "id": "72568a9c-53c5-406a-b17a-6ae340be8c8d",
+        "version": "49",
+        "processingState": "VALID",
+        "minOsVersion": "11.0",
+        "lsMinimumSystemVersion": "11.0",
+        "expired": false
+      }
+    ],
+    "50": [
+      {
+        "id": "11c25651-1eb2-4dbf-bbb4-d1ca7b5ac21b",
+        "version": "50",
+        "processingState": "VALID",
+        "minOsVersion": "14.0",
+        "expired": false
+      },
+      {
+        "id": "0b8d94c2-2caa-483a-8a64-3a188d3bf64b",
+        "version": "50",
+        "processingState": "VALID",
+        "minOsVersion": "11.0",
+        "lsMinimumSystemVersion": "11.0",
+        "expired": false
+      }
+    ],
+    "53": [
+      {
+        "id": "49490843-5c63-4eb4-8695-e11642daa812",
+        "version": "53",
+        "processingState": "VALID",
+        "minOsVersion": "12.0",
+        "lsMinimumSystemVersion": "12.0",
+        "expired": false
+      },
+      {
+        "id": "aa410bd0-9559-452f-baf3-f30a13a04b19",
+        "version": "53",
+        "processingState": "VALID",
+        "minOsVersion": "15.0",
+        "expired": false
+      }
+    ]
+  },
+  "protectionBefore": {
+    "main": {
+      "url": "https://api.github.com/repos/gewill/OpenCCman/branches/main/protection",
+      "required_pull_request_reviews": {
+        "url": "https://api.github.com/repos/gewill/OpenCCman/branches/main/protection/required_pull_request_reviews",
+        "dismiss_stale_reviews": false,
+        "require_code_owner_reviews": false,
+        "require_last_push_approval": false,
+        "required_approving_review_count": 0
+      },
+      "required_signatures": {
+        "url": "https://api.github.com/repos/gewill/OpenCCman/branches/main/protection/required_signatures",
+        "enabled": false
+      },
+      "enforce_admins": {
+        "url": "https://api.github.com/repos/gewill/OpenCCman/branches/main/protection/enforce_admins",
+        "enabled": true
+      },
+      "required_linear_history": {
+        "enabled": false
+      },
+      "allow_force_pushes": {
+        "enabled": false
+      },
+      "allow_deletions": {
+        "enabled": false
+      },
+      "block_creations": {
+        "enabled": false
+      },
+      "required_conversation_resolution": {
+        "enabled": false
+      },
+      "lock_branch": {
+        "enabled": false
+      },
+      "allow_fork_syncing": {
+        "enabled": false
+      }
+    },
+    "develop": {
+      "url": "https://api.github.com/repos/gewill/OpenCCman/branches/develop/protection",
+      "required_status_checks": {
+        "url": "https://api.github.com/repos/gewill/OpenCCman/branches/develop/protection/required_status_checks",
+        "strict": false,
+        "contexts": [
+          "App Regression"
+        ],
+        "contexts_url": "https://api.github.com/repos/gewill/OpenCCman/branches/develop/protection/required_status_checks/contexts",
+        "checks": [
+          {
+            "context": "App Regression",
+            "app_id": 15368
+          }
+        ]
+      },
+      "required_pull_request_reviews": {
+        "url": "https://api.github.com/repos/gewill/OpenCCman/branches/develop/protection/required_pull_request_reviews",
+        "dismiss_stale_reviews": false,
+        "require_code_owner_reviews": false,
+        "require_last_push_approval": false,
+        "required_approving_review_count": 0
+      },
+      "required_signatures": {
+        "url": "https://api.github.com/repos/gewill/OpenCCman/branches/develop/protection/required_signatures",
+        "enabled": false
+      },
+      "enforce_admins": {
+        "url": "https://api.github.com/repos/gewill/OpenCCman/branches/develop/protection/enforce_admins",
+        "enabled": true
+      },
+      "required_linear_history": {
+        "enabled": false
+      },
+      "allow_force_pushes": {
+        "enabled": false
+      },
+      "allow_deletions": {
+        "enabled": false
+      },
+      "block_creations": {
+        "enabled": false
+      },
+      "required_conversation_resolution": {
+        "enabled": false
+      },
+      "lock_branch": {
+        "enabled": false
+      },
+      "allow_fork_syncing": {
+        "enabled": false
+      }
+    },
+    "build": {
+      "url": "https://api.github.com/repos/gewill/OpenCCman/branches/build/protection",
+      "required_status_checks": {
+        "url": "https://api.github.com/repos/gewill/OpenCCman/branches/build/protection/required_status_checks",
+        "strict": true,
+        "contexts": [
+          "App Regression"
+        ],
+        "contexts_url": "https://api.github.com/repos/gewill/OpenCCman/branches/build/protection/required_status_checks/contexts",
+        "checks": [
+          {
+            "context": "App Regression",
+            "app_id": 15368
+          }
+        ]
+      },
+      "required_pull_request_reviews": {
+        "url": "https://api.github.com/repos/gewill/OpenCCman/branches/build/protection/required_pull_request_reviews",
+        "dismiss_stale_reviews": true,
+        "require_code_owner_reviews": false,
+        "require_last_push_approval": false,
+        "required_approving_review_count": 0
+      },
+      "required_signatures": {
+        "url": "https://api.github.com/repos/gewill/OpenCCman/branches/build/protection/required_signatures",
+        "enabled": false
+      },
+      "enforce_admins": {
+        "url": "https://api.github.com/repos/gewill/OpenCCman/branches/build/protection/enforce_admins",
+        "enabled": true
+      },
+      "required_linear_history": {
+        "enabled": false
+      },
+      "allow_force_pushes": {
+        "enabled": false
+      },
+      "allow_deletions": {
+        "enabled": false
+      },
+      "block_creations": {
+        "enabled": false
+      },
+      "required_conversation_resolution": {
+        "enabled": false
+      },
+      "lock_branch": {
+        "enabled": false
+      },
+      "allow_fork_syncing": {
+        "enabled": false
+      }
+    }
+  },
+  "archiveProtectionAfter": {
+    "url": "https://api.github.com/repos/gewill/OpenCCman/branches/archive/legacy-build-20260917/protection",
+    "required_status_checks": {
+      "url": "https://api.github.com/repos/gewill/OpenCCman/branches/archive/legacy-build-20260917/protection/required_status_checks",
+      "strict": true,
+      "contexts": [
+        "App Regression"
+      ],
+      "contexts_url": "https://api.github.com/repos/gewill/OpenCCman/branches/archive/legacy-build-20260917/protection/required_status_checks/contexts",
+      "checks": [
+        {
+          "context": "App Regression",
+          "app_id": 15368
+        }
+      ]
+    },
+    "required_pull_request_reviews": {
+      "url": "https://api.github.com/repos/gewill/OpenCCman/branches/archive/legacy-build-20260917/protection/required_pull_request_reviews",
+      "dismiss_stale_reviews": true,
+      "require_code_owner_reviews": false,
+      "require_last_push_approval": false,
+      "required_approving_review_count": 0
+    },
+    "required_signatures": {
+      "url": "https://api.github.com/repos/gewill/OpenCCman/branches/archive/legacy-build-20260917/protection/required_signatures",
+      "enabled": false
+    },
+    "enforce_admins": {
+      "url": "https://api.github.com/repos/gewill/OpenCCman/branches/archive/legacy-build-20260917/protection/enforce_admins",
+      "enabled": true
+    },
+    "required_linear_history": {
+      "enabled": false
+    },
+    "allow_force_pushes": {
+      "enabled": false
+    },
+    "allow_deletions": {
+      "enabled": false
+    },
+    "block_creations": {
+      "enabled": false
+    },
+    "required_conversation_resolution": {
+      "enabled": false
+    },
+    "lock_branch": {
+      "enabled": false
+    },
+    "allow_fork_syncing": {
+      "enabled": false
+    }
+  },
+  "archiveRefs": [
+    {
+      "name": "archive/legacy-build-20260917",
+      "sha": "9daf1539232ee668f8050dac664b78ab195e2fc9"
+    },
+    {
+      "name": "archive/build-50-v1.3-20260914",
+      "sha": "c3009c74796e8f4ff3b39c4f1c5bb8c9ed1c04cf"
+    }
+  ],
+  "notes": [
+    "No active runs; main/develop protection unchanged on readback.",
+    "Rename lost check app_id; restored to 15368 via required_status_checks PATCH and verified.",
+    "Unknown external clones not inventoried. No old ref matches in main/develop .github and scripts.",
+    "No build prefix refs created. Slash build runtime validation and main release integration deferred to #122."
+  ]
+}

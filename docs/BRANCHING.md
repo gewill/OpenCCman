@@ -2,7 +2,7 @@
 
 OpenCCman 采用与 Pingman 相同的精简版 Git Flow：常驻分支为 `main` 与 `develop`，开发、发布、热修复和打包使用临时分支。日常 PR 合入 `develop`；只有需要 Xcode Cloud 产物时才推送 `build` 前缀的分支。
 
-**2026-09-16 已核实：日常开发和 CI 已迁移到 `develop`，默认分支协调器也已使用 `develop` 作为应用 PR 目标。** [#43](https://github.com/gewill/OpenCCman/pull/43) 与 [#44](https://github.com/gewill/OpenCCman/pull/44) 均于 2026-09-13 合并。默认分支仍为 `main`；main/develop 的 PR 保护与 develop 的 App Regression 门禁已启用；旧 `build` 归档和正式发布主线整合仍未完成，见文末账本、[CI 说明](CI.md)与 [#110](https://github.com/gewill/OpenCCman/issues/110)。
+**2026-09-16 已核实：日常开发和 CI 已迁移到 `develop`，默认分支协调器也已使用 `develop` 作为应用 PR 目标。** [#43](https://github.com/gewill/OpenCCman/pull/43) 与 [#44](https://github.com/gewill/OpenCCman/pull/44) 均于 2026-09-13 合并。默认分支仍为 `main`；main/develop 的 PR 保护与 develop 的 App Regression 门禁已启用；旧 `build` 已于 2026-09-17 归档；正式发布主线整合由 #122 跟踪，见文末账本、[CI 说明](CI.md)与 [#110](https://github.com/gewill/OpenCCman/issues/110)。
 
 ## 分支职责
 
@@ -24,7 +24,7 @@ OpenCCman 采用与 Pingman 相同的精简版 Git Flow：常驻分支为 `main`
 - 日常开发、文档修改和代码审查均不使用 `build` 前缀。
 - 只有明确需要生成安装包时，才从指定提交创建并推送打包分支。
 - 打包分支不作为 PR 基线，不追加开发提交；需要修改时回到发布或热修复分支，再选定新的候选提交打包。
-- 同一天多次打包可添加序号，例如 `build/v1.3-20260913-02`。
+- 同一天多次打包可添加序号，例如 `build/v2.0-YYYYMMDD-02`。
 - 确认构建产物及对应提交后再删除打包分支；发布版本由 Tag 长期追踪。
 - 不保留名为 `build` 的常驻分支。Git 的 `build` 引用与 `build/*` 存在命名冲突，旧分支退出前不要直接创建子路径分支。
 
@@ -113,7 +113,7 @@ ddddxxx/SwiftyOpenCC + BYVoid/OpenCC 正式 Release
 | 自动依赖 PR | 默认分支配置中的 `app.base` 仍是 `build` |
 | Xcode Cloud | `build` 前缀触发；旧 `build` 上的发布文档仍描述向它合并应用 PR |
 
-## 当前迁移账本（2026-09-16）
+## 2026-09-16 迁移账本（历史快照）
 
 | 项目 | 已核实状态 | 尚需完成 |
 |---|---|---|
@@ -129,3 +129,20 @@ ddddxxx/SwiftyOpenCC + BYVoid/OpenCC 正式 Release
 首次只读核对的 API、来源 SHA 与祖先检查记录见 [历史快照](validation/branching-status-2026-09-16.json)；随后启用保护的请求及 API 回读见 [保护配置证据](validation/branch-protection-2026-09-16.json)。回读确认配置已生效，未通过破坏性推送测试拒绝行为。未删除分支或执行新的 Xcode Cloud/签名/TestFlight 验收。[维护 Issue #110](https://github.com/gewill/OpenCCman/issues/110) 跟踪保护与旧引用，其关闭不替代 #11 的完整发布验收。
 
 本文参考 Pingman 的 `docs/BRANCHING.md`，并补充 OpenCCman 现有分支分叉、上游协调器及 Xcode Cloud 的迁移约束。
+
+## 当前归档账本（2026-09-17）
+
+#110 通过 GitHub 分支 rename API 完成归档，旧引用已退出远端、SHA 未改变，没有解除保护或强推。参见[GitHub 分支重命名说明](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/renaming-a-branch)。
+
+| 原分支 | 归档分支 | SHA | 云端核对 |
+| --- | --- | --- | --- |
+| `build` | `archive/legacy-build-20260917` | `9daf1539232ee668f8050dac664b78ab195e2fc9` | Build 49，run `6da6dcac-261a-45e1-8a57-73e0d5f5c4f0`，成功，两端 VALID |
+| `build-v1.3-20260914` | `archive/build-50-v1.3-20260914` | `c3009c74796e8f4ff3b39c4f1c5bb8c9ed1c04cf` | Build 50，run `9a3b158a-07ac-43a9-ac44-b950484b2f8f`，成功，两端 VALID |
+
+Default 的全部可见运行 38–53 均 COMPLETE，无活跃运行或开放 PR 引用旧分支。main/develop 的 `.github`、`scripts` 未发现旧引用硬编码；未知外部克隆/脚本没有被全面盘点。旧保护随 rename 迁移，但回读发现检查来源 app_id 变为空值，已恢复为 15368 并验证；main/develop 保护未变。
+
+归档只供历史查询，不继续开发，不重新推送本地旧 build。使用旧 Git/raw URL 的外部工具需要更新引用；克隆可运行 `git fetch origin --prune` 更新远端引用。本轮保留本地分支、未提交改动和所有工作区。
+
+远端 `build/*` 命名冲突已解除。本轮没有新建 build 前缀分支；保留两个 2.0 打包分支、release 分支和全部 Cloud/TestFlight 产物。Build 53 已证明 `build-v2.0-20260916-02` 的 GIT_REF_CHANGE 自动触发及两端 VALID，不能代替带斜线分支的实际打包验证。
+
+[精简 API 证据](validation/branch-archive-2026-09-17.json)记录运行、产物 ID、SHA 和保护配置。下一次授权打包的 `build/*` 实验与正式发布 main 整合由 [#122](https://github.com/gewill/OpenCCman/issues/122) 承接。main 应用工作流实际进入发布 PR、检查成功后，在合并前增加来源绑定的必需检查；不提前要求不存在的检查。本归档收尾不代表 #11 发布验收完成。
