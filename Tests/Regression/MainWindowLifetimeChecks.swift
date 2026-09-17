@@ -16,7 +16,7 @@ private final class LifetimeModel: ObservableObject {
 
 private struct LifetimeContent: View {
   @StateObject private var model = LifetimeModel()
-  var body: some View { Text("Synthetic window \(model.id)") }
+  var body: some View { Text("Synthetic window \(model.id)").background(MainWindowReader { _ in _ = model.id }) }
 }
 
 @main
@@ -44,6 +44,9 @@ struct MainWindowLifetimeChecks {
     // Deliberately keep both hosting views alive after closing their windows.
     // The boundary must release only the window-owned business subtree.
     let hosts = [first.contentView!, second.contentView!]
+    func descendants(_ view: NSView) -> [NSView] { [view] + view.subviews.flatMap(descendants) }
+    let retainedReaders = hosts.flatMap(descendants).filter { $0 is MainWindowReader.ReaderView }
+    defer { withExtendedLifetime(retainedReaders) {} }
     first.orderOut(nil)
     settle()
     precondition(LifetimeModel.live == [1, 2], "Hiding must preserve window state")

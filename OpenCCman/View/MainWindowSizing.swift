@@ -111,6 +111,11 @@ struct MainWindowReader: NSViewRepresentable {
     view.reportWindow()
   }
 
+  static func dismantleNSView(_ view: ReaderView, coordinator: ()) {
+    // A retained native reader must not keep its removed SwiftUI owner alive.
+    view.onAttach = nil
+  }
+
   final class ReaderView: NSView {
     var onAttach: ((NSWindow) -> Void)?
     private weak var reportedWindow: NSWindow?
