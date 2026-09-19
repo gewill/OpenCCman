@@ -1,6 +1,6 @@
 # App Store 隐私标签审核
 
-关联 [#17](https://github.com/gewill/OpenCCman/issues/17)。2026-09-16 起草，**2026-09-19 按 RevenueCat 5.78.0 源码重新核对，并只读核对 RevenueCat 后台**。本文记录标签答案与证据，**尚未修改 ASC、RevenueCat 后台、网站或博客**。机器可读证据见 [evidence.json](privacy-review-2026-09-19/evidence.json)。
+关联 [#17](https://github.com/gewill/OpenCCman/issues/17)。2026-09-16 起草，**2026-09-19 按 RevenueCat 5.78.0 源码重新核对，并只读核对 RevenueCat 后台**。本文记录标签答案与证据。网站与旧博客的三语政策已于 2026-09-19 发布（见“政策发布”）；**ASC 与 RevenueCat 后台尚未修改**。机器可读证据见 [evidence.json](privacy-review-2026-09-19/evidence.json)。
 
 ## 结论
 
@@ -105,6 +105,17 @@
 - 删去“是否保留 RC ID”“需再次取得发布许可”“独立域名待配置”等过时内容。
 - 现行网站政策（2026-09-16 版）没有提到 Customer Center 事件、IDFV 和按 IP 估计国家，同步政策时须补上。
 
+## 政策发布（2026-09-19）
+
+网站与旧博客的三语隐私政策已按方案 A 同步修订并部署，两处文字逐字一致：
+
+| 位置 | 合并 | 部署 | 回读 |
+|---|---|---|---|
+| 网站 `openccman.gewill.org/<语言>/privacy.html` | [gewill/OpenCCman-website#2](https://github.com/gewill/OpenCCman-website/pull/2)，merge commit `baa0948` | Cloudflare Pages `openccman-website` Production，部署 `30852880`，来源 `baa0948` | 13:57:31Z：三页均为 200，新段落齐全，无外部脚本 |
+| 旧博客 `gewill.org/2023/12/17/introducing-OpenCCman-<语言>/` | gewill/blog#4（私有仓库），merge commit `c349514` | Cloudflare Pages `blog`，部署 `eed7a926`，由 `npm run cf:deploy` 从最新 main 全量构建 | 14:02:03Z：三页均为 200，新段落与锚点齐全 |
+
+修订内容：写入 IDFV、按 IP 估计国家、iOS 打开「用户中心」时的使用事件、支持邮件的处理方式，更新日期改为 2026-09-19。部署博客前核对过 iPerf3 服务器列表：全量构建产物与线上逐字节相同，部署后线上哈希不变；博客原有的统计脚本（Google Analytics、datapulse）来自仓库的 `source/_data/head.njk`，部署前后一致。
+
 ## 5.64.0 历史发现
 
 2026-09-16 基于 5.64.0 得出的 Customer Center 结论依然成立：支持邮件正文包含 RC User ID 等五项；生成草稿不等于发送；事件经 `CustomerCenterPurchases` 进入 `Purchases.track`。相关文件在两个版本之间逐字节相同。与隐私有关的改动只有两处：`$attConsentStatus` 在属性同步时也会刷新；“有效订阅”的判断不再计入已过期的订阅，但终身买断在两个版本中都不算有效订阅。
@@ -112,7 +123,7 @@
 ## 后续步骤
 
 1. ~~维护者确认采用方案 A 还是 B，以及边界 1、2、4 是否采用推荐做法。~~ 已确认：方案 A，边界项均按推荐。
-2. 同步网站与旧博客的三语政策：写入 IDFV、Customer Center 事件、按 IP 估计国家、支持邮件的处理方式；检查三种语言是否一致、链接是否有效。
+2. ~~同步网站与旧博客的三语政策：写入 IDFV、Customer Center 事件、按 IP 估计国家、支持邮件的处理方式；检查三种语言是否一致、链接是否有效。~~ 已完成，见“政策发布”。
 3. 登录 ASC，按最终答案修改、预览、发布并读回，保存发布后的证据。
 4. 更新 #17，列出精确版本、实际核验内容、未覆盖项和发布证据。
 5. 最终签名包的隐私报告仍是独立的发布验收项。

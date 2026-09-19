@@ -1,6 +1,6 @@
 {
   "observedOn": "2026-09-19",
-  "scope": "Source trace and official documentation review for the App Store privacy label (#17). No ASC, RevenueCat, Slack, website or blog state was changed.",
+  "scope": "Source trace, official documentation and RevenueCat dashboard review for the App Store privacy label (#17), plus the resulting policy publication. ASC, RevenueCat and Slack state was not changed.",
   "appSource": {
     "branch": "develop",
     "commit": "65e609d29c767402b71e3d184c8711e3486710fa",
@@ -130,5 +130,37 @@
       "A direct fetch of the dashboard's internal customer_center endpoint returned 403 and was not retried with other credentials"
     ]
   },
-  "mutations": []
+  "policyPublication": {
+    "decision": "Option A (Purchase History and Product Interaction, not linked, no tracking); IDFV, IP-based country and the app feedback email explained in the policy",
+    "website": {
+      "repository": "gewill/OpenCCman-website",
+      "pullRequest": "https://github.com/gewill/OpenCCman-website/pull/2",
+      "mergeCommit": "baa0948",
+      "deployment": { "project": "openccman-website", "environment": "Production", "id": "30852880-3916-4413-8089-1bbbd61c40e1", "source": "baa0948", "tool": "deploy.sh (wrangler 4.80.0)" },
+      "readback": { "checkedAt": "2026-09-19T13:57:31Z", "pages": [ "/en/privacy.html", "/zh-Hans/privacy.html", "/zh-Hant/privacy.html" ], "status": 200, "newTextPresent": true, "externalScriptHosts": [] }
+    },
+    "blog": {
+      "repository": "gewill/blog (private)",
+      "pullRequest": 4,
+      "mergeCommit": "c349514",
+      "deployment": { "project": "blog", "preview": "https://eed7a926.blog-0ns.pages.dev", "tool": "npm run cf:deploy (hexo clean, full build, wrangler 4.84.1)" },
+      "preDeployChecks": [
+        "source/v3/iperf/serverlist.json: repo and live hold the same 193 entries; full-build output sha256 prefix dc4bae35e313b785 equals live",
+        "Analytics scripts come from tracked source/_data/head.njk"
+      ],
+      "readback": {
+        "checkedAt": "2026-09-19T14:02:03Z",
+        "pages": [ "/2023/12/17/introducing-OpenCCman-en/", "/2023/12/17/introducing-OpenCCman-zh-Hans/", "/2023/12/17/introducing-OpenCCman-zh-Hant/" ],
+        "status": 200,
+        "newTextPresent": true,
+        "privacyAnchorsPresent": true,
+        "externalScriptHosts": [ "cdnjs.cloudflare.com", "datapulse.app", "www.googletagmanager.com" ],
+        "serverlistSha256Prefix": "dc4bae35e313b785"
+      }
+    }
+  },
+  "mutations": [
+    "2026-09-19: website privacy pages merged and deployed (see policyPublication.website)",
+    "2026-09-19: blog OpenCCman privacy sections merged and deployed (see policyPublication.blog)"
+  ]
 }
