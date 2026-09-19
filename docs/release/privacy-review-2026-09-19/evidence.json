@@ -97,14 +97,38 @@
     ]
   },
   "dashboard": {
-    "status": "pending",
-    "reason": "RevenueCat was not signed in to any browser available to this session on 2026-09-19; no credentials were entered",
-    "toReadOnly": [
-      "Customer Center > Lifecycle > Support: support email, Contact support visibility, Contact support metadata (in-app tickets) and embedded metadata",
-      "Customer Center screens: management and no-active options, attached feedback surveys",
-      "Integrations: active list and Slack sandbox setting (last observed 2026-09-15: Slack only)"
-    ],
-    "excluded": [ "Customer lists and records", "Transactions", "API keys and webhooks" ]
+    "status": "read",
+    "observedOn": "2026-09-19",
+    "source": "Authenticated RevenueCat dashboard (maintainer signed in); project OpenCCman 6c7064ba; UI and form state only",
+    "customerCenter": {
+      "page": "/projects/6c7064ba/lifecycle/customer-center",
+      "shouldWarnCustomerToUpdate": true,
+      "displayPurchaseHistoryLink": false,
+      "displayUserDetailsSection": true,
+      "screens": {
+        "customersWithActiveSubscriptions": [
+          { "option": "Missing Purchase", "children": [] },
+          { "option": "Change Plans" },
+          { "option": "Manage", "pathMeaning": "manage or cancel subscription", "children": [ { "feedbackSurvey": [ "Too expensive", "Don't use the app", "Bought by mistake" ] } ] },
+          { "option": "Refund Request", "refundWindow": "Forever", "children": [ "Promotional Offer" ] }
+        ],
+        "customersWithoutActiveSubscriptions": [
+          { "option": "Missing Purchase", "children": [] }
+        ]
+      }
+    },
+    "support": {
+      "page": "/projects/6c7064ba/lifecycle/support?tab=customer-center",
+      "supportEmail": "empty (input support.email value length 0)",
+      "contactSupportVisibility": "Customers without an active subscription (support.support_tickets.customer_type)",
+      "contactSupportMetadata": "Off"
+    },
+    "integrations": { "page": "/projects/6c7064ba/integrations", "active": [ "Slack" ] },
+    "notRead": [ "Slack integration detail and event history", "Customer lists and records", "Transactions", "API keys and webhooks" ],
+    "notes": [
+      "Save changes stayed disabled throughout; no option was edited",
+      "A direct fetch of the dashboard's internal customer_center endpoint returned 403 and was not retried with other credentials"
+    ]
   },
   "mutations": []
 }
