@@ -1,6 +1,6 @@
 {
   "observedOn": "2026-09-19",
-  "scope": "Source trace, official documentation and RevenueCat dashboard review for the App Store privacy label (#17), plus the resulting policy publication. ASC, RevenueCat and Slack state was not changed.",
+  "scope": "Source trace, official documentation and RevenueCat dashboard review for the App Store privacy label (#17), plus the resulting policy and ASC publication. RevenueCat and Slack state was not changed.",
   "appSource": {
     "branch": "develop",
     "commit": "65e609d29c767402b71e3d184c8711e3486710fa",
@@ -159,8 +159,45 @@
       }
     }
   },
+  "ascPublication": {
+    "appId": "6474449401",
+    "page": "https://appstoreconnect.apple.com/apps/6474449401/distribution/privacy",
+    "source": "Maintainer-authenticated browser session; UI text transcribed, not an API export",
+    "liveVersionAtPublish": { "version": "1.2", "released": "2026-03-15T17:34:42Z", "minimumOS": "iOS 14.0", "revenueCat": "5.64.0 (develop cc8c7e8, 2026-03-15)", "customerCenter": false },
+    "before": {
+      "label": "Data Not Collected",
+      "publishedText": "Published 3 years ago",
+      "privacyPolicyURLs": {
+        "en-US": "https://gewill.org/2023/12/17/introducing-OpenCCman-en/",
+        "zh-Hans": "https://gewill.org/2023/12/17/introducing-OpenCCman-zh-Hans/",
+        "zh-Hant": "https://gewill.org/2023/12/17/introducing-OpenCCman-zh-Hant/"
+      },
+      "privacyChoicesURL": null
+    },
+    "after": {
+      "readbackAt": "2026-09-19T14:34:30Z",
+      "publishedText": "Published a few seconds ago",
+      "productPage": { "dataUsedToTrackYou": [], "dataLinkedToYou": [], "dataNotLinkedToYou": [ "Purchases", "Usage Data: Product Interaction" ] },
+      "dataTypes": [
+        { "type": "Purchase History", "purposes": [ "Analytics", "App Functionality" ], "linked": false, "tracking": false },
+        { "type": "Product Interaction", "purposes": [ "Analytics" ], "linked": false, "tracking": false }
+      ],
+      "privacyPolicyURLs": {
+        "state": "Edited; ASC states the change is released with the next app version",
+        "en-US": "https://openccman.gewill.org/en/privacy.html",
+        "zh-Hans": "https://openccman.gewill.org/zh-Hans/privacy.html",
+        "zh-Hant": "https://openccman.gewill.org/zh-Hant/privacy.html"
+      },
+      "privacyChoicesURL": null
+    },
+    "notes": [
+      "Each data type was published from its setup dialog, whose final button is Publish",
+      "Product Interaction is declared ahead of 2.0 by the maintainer's choice; the live 1.2 has no Customer Center events"
+    ]
+  },
   "mutations": [
     "2026-09-19: website privacy pages merged and deployed (see policyPublication.website)",
-    "2026-09-19: blog OpenCCman privacy sections merged and deployed (see policyPublication.blog)"
+    "2026-09-19: blog OpenCCman privacy sections merged and deployed (see policyPublication.blog)",
+    "2026-09-19: ASC privacy policy URLs edited for the next version and privacy label published (see ascPublication)"
   ]
 }

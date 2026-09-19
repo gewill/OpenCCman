@@ -1,6 +1,6 @@
 # App Store 隐私标签审核
 
-关联 [#17](https://github.com/gewill/OpenCCman/issues/17)。2026-09-16 起草，**2026-09-19 按 RevenueCat 5.78.0 源码重新核对，并只读核对 RevenueCat 后台**。本文记录标签答案与证据。网站与旧博客的三语政策已于 2026-09-19 发布（见“政策发布”）；**ASC 与 RevenueCat 后台尚未修改**。机器可读证据见 [evidence.json](privacy-review-2026-09-19/evidence.json)。
+关联 [#17](https://github.com/gewill/OpenCCman/issues/17)。2026-09-16 起草，**2026-09-19 按 RevenueCat 5.78.0 源码重新核对，并只读核对 RevenueCat 后台**。本文记录标签答案与证据。2026-09-19 已发布网站与旧博客的三语政策（见“政策发布”），并在 ASC 发布方案 A 的隐私标签（见“ASC 发布”）；RevenueCat 后台未作修改。机器可读证据见 [evidence.json](privacy-review-2026-09-19/evidence.json)。
 
 ## 结论
 
@@ -116,6 +116,20 @@
 
 修订内容：写入 IDFV、按 IP 估计国家、iOS 打开「用户中心」时的使用事件、支持邮件的处理方式，更新日期改为 2026-09-19。部署博客前核对过 iPerf3 服务器列表：全量构建产物与线上逐字节相同，部署后线上哈希不变；博客原有的统计脚本（Google Analytics、datapulse）来自仓库的 `source/_data/head.njk`，部署前后一致。
 
+## ASC 发布（2026-09-19）
+
+由维护者登录后在 App Store Connect 的 App Privacy 页面操作，每项数据类型在对话框里点 Publish 后立即生效：
+
+| 项目 | 发布前 | 发布后（14:34:30Z 回读） |
+|---|---|---|
+| 产品页标签 | Data Not Collected（3 年前发布） | Data Not Linked to You：Purchases、Usage Data（Product Interaction）；没有 Data Used to Track You 或 Data Linked to You |
+| Purchase History | — | Analytics、App Functionality；不关联；不追踪 |
+| Product Interaction | — | Analytics；不关联；不追踪 |
+| 隐私政策 URL | 三种语言各指向 gewill.org 对应的博客文章 | `https://openccman.gewill.org/{en,zh-Hans,zh-Hant}/privacy.html`，状态为 Edited。ASC 提示这项改动随下一个 App 版本发布 |
+| User Privacy Choices URL | 空 | 空 |
+
+商店在售版本为 1.2（2026-03-15 发布，最低 iOS 14）。1.2 已使用 RevenueCat（5.64.0，匿名 ID），但还没有 Customer Center，所以 Product Interaction 在 2.0 上架之前是提前声明。维护者知情后选择两项同时发布，以免 2.0 上架时漏改标签。
+
 ## 5.64.0 历史发现
 
 2026-09-16 基于 5.64.0 得出的 Customer Center 结论依然成立：支持邮件正文包含 RC User ID 等五项；生成草稿不等于发送；事件经 `CustomerCenterPurchases` 进入 `Purchases.track`。相关文件在两个版本之间逐字节相同。与隐私有关的改动只有两处：`$attConsentStatus` 在属性同步时也会刷新；“有效订阅”的判断不再计入已过期的订阅，但终身买断在两个版本中都不算有效订阅。
@@ -124,6 +138,6 @@
 
 1. ~~维护者确认采用方案 A 还是 B，以及边界 1、2、4 是否采用推荐做法。~~ 已确认：方案 A，边界项均按推荐。
 2. ~~同步网站与旧博客的三语政策：写入 IDFV、Customer Center 事件、按 IP 估计国家、支持邮件的处理方式；检查三种语言是否一致、链接是否有效。~~ 已完成，见“政策发布”。
-3. 登录 ASC，按最终答案修改、预览、发布并读回，保存发布后的证据。
+3. ~~登录 ASC，按最终答案修改、预览、发布并读回，保存发布后的证据。~~ 已完成，见“ASC 发布”。2.0 发布时确认新的隐私政策 URL 已随版本生效。
 4. 更新 #17，列出精确版本、实际核验内容、未覆盖项和发布证据。
 5. 最终签名包的隐私报告仍是独立的发布验收项。
