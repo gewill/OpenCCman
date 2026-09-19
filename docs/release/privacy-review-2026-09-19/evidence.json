@@ -1,0 +1,110 @@
+{
+  "observedOn": "2026-09-19",
+  "scope": "Source trace and official documentation review for the App Store privacy label (#17). No ASC, RevenueCat, Slack, website or blog state was changed.",
+  "appSource": {
+    "branch": "develop",
+    "commit": "65e609d29c767402b71e3d184c8711e3486710fa",
+    "minimumOS": "iOS 15 / macOS 12",
+    "refs": [
+      { "claim": "RevenueCat requests use the rc-backup proxy", "ref": "OpenCCman/IAPManager.swift:69" },
+      { "claim": "Configure with API key and UI locale only: no custom App User ID, logIn, attributes, attribution, ATT or diagnostics", "ref": "OpenCCman/IAPManager.swift:70" },
+      { "claim": "iOS 15+ presents RevenueCatUI CustomerCenterView", "ref": "OpenCCman/Scene/CustomerCenterScene.swift:18" },
+      { "claim": "macOS uses the app-owned PurchaseSupportView (restore, refresh, feedback)", "ref": "OpenCCman/Scene/CustomerCenterScene.swift:40" },
+      { "claim": "App feedback mailto pre-fills only app name and version", "ref": "OpenCCman/Scene/FeedbackScene.swift:7" },
+      { "claim": "iOS opens the privacy URL in SFSafariViewController", "ref": "OpenCCman/Scene/SettingsScene.swift:84" },
+      { "claim": "macOS opens the privacy URL in the default browser", "ref": "OpenCCman/Scene/SettingsScene.swift:78" },
+      { "claim": "In-app help and privacy URLs point to the gewill.org blog posts", "ref": "OpenCCman/Constants.swift:63" }
+    ]
+  },
+  "revenueCat": {
+    "package": "https://github.com/RevenueCat/purchases-ios-spm.git",
+    "current": { "version": "5.78.0", "commit": "629a56ecef190469914b8f0914bf0446363eb09f", "peeledTagMatches": true },
+    "historical": { "version": "5.64.0", "commit": "155ea739f45f54189ca83ee9088b373c1415d98b", "peeledTagMatches": true },
+    "checkoutMethod": "Temporary shallow fetch of both commit SHAs outside the repository; the Xcode dependency cache was not read or modified",
+    "privacyManifest": {
+      "path": "Sources/PrivacyInfo.xcprivacy",
+      "sha256": "76c876c73bf37d63b2944d0491e4d9a43d420de78b66512fcca27a484ae92e79",
+      "identicalAcrossVersions": true,
+      "collectedDataTypes": [ { "type": "PurchaseHistory", "linked": false, "tracking": false, "purposes": [ "AppFunctionality" ] } ]
+    },
+    "unchangedBetweenVersions": [
+      "RevenueCatUI/CustomerCenter/ContactSupportUtilities.swift",
+      "RevenueCatUI/CustomerCenter/Extensions/CustomerCenterConfigDataSupport+URL.swift",
+      "RevenueCatUI/CustomerCenter/Views/CreateTicketView.swift",
+      "RevenueCatUI/CustomerCenter/Views/SubscriptionDetailView.swift",
+      "Sources/Networking/CustomerCenterConfigAPI.swift",
+      "Sources/CustomerCenter/Events/CustomerCenterEvent.swift",
+      "Sources/CustomerCenter/Events/Networking/EventsRequest+CustomerCenter.swift"
+    ],
+    "privacyRelevantChanges": [
+      "SubscriberAttributesManager: $attConsentStatus is also refreshed during attribute sync (foreground, background, login, logout), not only with receipt posts",
+      "SubscriptionDetailViewModel.hasActiveSubscription now ignores expired subscriptions; a lifetime non-consumable is still not an active subscription in either version",
+      "New workflows endpoint is gated by the -EnableWorkflowsEndpoint launch argument; new RemoteConfigAPI has no caller outside Backend"
+    ],
+    "refs": [
+      { "claim": "Default support email body: RC User ID, App Version, Device (UIDevice.model), OS Version, StoreFront Country Code", "ref": "RevenueCatUI/CustomerCenter/ContactSupportUtilities.swift:47" },
+      { "claim": "mailto draft is built from the configured support email", "ref": "RevenueCatUI/CustomerCenter/Extensions/CustomerCenterConfigDataSupport+URL.swift:25" },
+      { "claim": "Purchase detail shows the ticket button when tickets are allowed, otherwise a mailto button", "ref": "RevenueCatUI/CustomerCenter/Views/SubscriptionDetailView.swift:258" },
+      { "claim": "mailto button in purchase detail only when the purchase is not from the App Store, or there is no purchase", "ref": "RevenueCatUI/CustomerCenter/ViewModels/SubscriptionDetailViewModel.swift:36" },
+      { "claim": "Ticket visibility follows supportTickets.allowCreation and customerType", "ref": "RevenueCatUI/CustomerCenter/ViewModels/SubscriptionDetailViewModel.swift:44" },
+      { "claim": "Active subscription excludes non-subscription purchases", "ref": "RevenueCatUI/CustomerCenter/ViewModels/SubscriptionDetailViewModel.swift:40" },
+      { "claim": "Restore with no purchases found offers the mailto draft whenever a support email exists and mail can open", "ref": "RevenueCatUI/CustomerCenter/Views/RestorePurchasesAlert.swift:116" },
+      { "claim": "Ticket form submits the typed email and description (max 250 characters)", "ref": "RevenueCatUI/CustomerCenter/Views/CreateTicketView.swift:162" },
+      { "claim": "Ticket request body: app_user_id, customer_email, issue_description", "ref": "Sources/Networking/CustomerCenterConfigAPI.swift:136" },
+      { "claim": "Ticket endpoint", "ref": "Sources/Networking/HTTPClient/HTTPRequestPath.swift:371" },
+      { "claim": "Server-side embedded ticket metadata options", "ref": "Sources/CustomerCenter/CustomerCenterConfigData.swift:770" },
+      { "claim": "Impression tracked when Customer Center appears", "ref": "RevenueCatUI/CustomerCenter/Views/CustomerCenterView.swift:129" },
+      { "claim": "No purchases: configured noActive screen, otherwise fallback restore view", "ref": "RevenueCatUI/CustomerCenter/Views/CustomerCenterView.swift:210" },
+      { "claim": "Impression event once per view model: locale, dark mode, sandbox flag, display mode", "ref": "RevenueCatUI/CustomerCenter/ViewModels/CustomerCenterViewModel.swift:231" },
+      { "claim": "Survey answer event sends the chosen option ID; additionalContext is always nil", "ref": "RevenueCatUI/CustomerCenter/ViewModels/FeedbackSurveyViewModel.swift:131" },
+      { "claim": "Cancel path only for App Store renewable subscriptions", "ref": "RevenueCatUI/CustomerCenter/Actions/CustomerCenterConfigData.HelpPath+PurchaseInformation.swift:44" },
+      { "claim": "EventsManager is created on iOS 15+ / macOS 12+ when the event store can be created", "ref": "Sources/Purchasing/Purchases/Purchases.swift:505" },
+      { "claim": "Customer Center events are queued through EventsManager", "ref": "Sources/Purchasing/Purchases/Purchases.swift:1598" },
+      { "claim": "Events stored with app user ID and app session ID", "ref": "Sources/Events/EventsManager.swift:94" },
+      { "claim": "Flush on foreground (delayed)", "ref": "Sources/Purchasing/Purchases/Purchases.swift:2495" },
+      { "claim": "Flush on resign active", "ref": "Sources/Purchasing/Purchases/Purchases.swift:2504" },
+      { "claim": "Event request fields: id, version, type, app_user_id, app_session_id, timestamp, dark_mode, locale, is_sandbox, display_mode, revision_id", "ref": "Sources/CustomerCenter/Events/Networking/EventsRequest+CustomerCenter.swift:31" },
+      { "claim": "Feature events default host api-paywalls.revenuecat.com", "ref": "Sources/Events/FeatureEvents/Networking/FeatureEventHTTPRequestPath.swift:19" },
+      { "claim": "A configured proxy URL replaces the host for every path", "ref": "Sources/Networking/HTTPClient/HTTPRequestPath.swift:66" },
+      { "claim": "Default headers: platform, OS version, device model, app version/build, bundle ID, preferred locales, storefront, sandbox and debug flags, installation method", "ref": "Sources/Networking/HTTPClient/HTTPClient.swift:103" },
+      { "claim": "X-Apple-Device-Identifier header carries identifierForVendor", "ref": "Sources/Networking/HTTPClient/HTTPClient.swift:137" },
+      { "claim": "identifierForVendor: UIDevice IDFV on iOS; on macOS only in sandbox (MAC-derived UUID)", "ref": "Sources/Misc/SystemInfo.swift:163" },
+      { "claim": "$idfa/$idfv/$ip attributes only via collectDeviceIdentifiers", "ref": "Sources/SubscriberAttributes/SubscriberAttributesManager.swift:216" },
+      { "claim": "$attConsentStatus is set from the current ATT status", "ref": "Sources/SubscriberAttributes/SubscriberAttributesManager.swift:230" },
+      { "claim": "Automatic identifier collection runs only when an attribution network ID is set", "ref": "Sources/SubscriberAttributes/SubscriberAttributesManager.swift:402" },
+      { "claim": "Diagnostics disabled by default", "ref": "Sources/Purchasing/Configuration.swift:151" },
+      { "claim": "Workflows endpoint gated by launch argument", "ref": "Sources/Misc/SystemInfo.swift:98" }
+    ]
+  },
+  "officialDocs": [
+    { "url": "https://developer.apple.com/app-store/app-privacy-details/", "readOn": "2026-09-19", "usedFor": "Collect definition, optional disclosure criteria, data types, purposes, linked data, tracking, IP address and web view guidance" },
+    { "url": "https://www.revenuecat.com/docs/platform-resources/apple-platform-resources/apple-app-privacy", "readOn": "2026-09-19", "usedFor": "Purchase History required with App Functionality and Analytics; linked when the App User ID can be tied to contact info; Device ID only for advertising-identifier integrations; no location collection claimed" },
+    { "url": "https://www.revenuecat.com/docs/tools/customer-center/customer-center-configuration", "readOn": "2026-09-19", "usedFor": "Support email optional; Contact Support visibility defaults to customers without an active subscription; in-app tickets replace the email handoff when Contact support metadata is enabled; embedded metadata options; survey responses chart" },
+    { "url": "https://www.revenuecat.com/docs/customers/customer-attributes", "readOn": "2026-09-19", "via": "https://www.revenuecat.com/docs/llms-full.txt", "usedFor": "$attConsentStatus populated without an ATT prompt; device identifiers are reserved attributes" },
+    { "url": "https://www.revenuecat.com/docs/llms-full.txt", "readOn": "2026-09-19", "usedFor": "Dashboard country uses transaction country, else last-seen IP country; IP address is not persisted after the country is determined" },
+    { "url": "https://www.revenuecat.com/docs/integrations/third-party-integrations/slack", "readOn": "2026-09-19", "usedFor": "Slack notifications downstream of purchase events" }
+  ],
+  "publicPages": {
+    "checkedAt": "2026-09-19T11:12:28Z",
+    "method": "Anonymous HTTP GET; external <script src> hosts only",
+    "pages": [
+      { "url": "https://gewill.org/2023/12/17/introducing-OpenCCman-en/", "status": 200, "externalScriptHosts": [ "cdnjs.cloudflare.com", "datapulse.app", "www.googletagmanager.com" ] },
+      { "url": "https://gewill.org/2023/12/17/introducing-OpenCCman-zh-Hans/", "status": 200, "externalScriptHosts": [ "cdnjs.cloudflare.com", "datapulse.app", "www.googletagmanager.com" ] },
+      { "url": "https://gewill.org/2023/12/17/introducing-OpenCCman-zh-Hant/", "status": 200, "externalScriptHosts": [ "cdnjs.cloudflare.com", "datapulse.app", "www.googletagmanager.com" ] },
+      { "url": "https://openccman.gewill.org/en/privacy.html", "status": 200, "externalScriptHosts": [], "updatedText": "Updated September 16, 2026" },
+      { "url": "https://openccman.gewill.org/zh-Hans/privacy.html", "status": 200, "externalScriptHosts": [] },
+      { "url": "https://openccman.gewill.org/zh-Hant/privacy.html", "status": 200, "externalScriptHosts": [] }
+    ]
+  },
+  "dashboard": {
+    "status": "pending",
+    "reason": "RevenueCat was not signed in to any browser available to this session on 2026-09-19; no credentials were entered",
+    "toReadOnly": [
+      "Customer Center > Lifecycle > Support: support email, Contact support visibility, Contact support metadata (in-app tickets) and embedded metadata",
+      "Customer Center screens: management and no-active options, attached feedback surveys",
+      "Integrations: active list and Slack sandbox setting (last observed 2026-09-15: Slack only)"
+    ],
+    "excluded": [ "Customer lists and records", "Transactions", "API keys and webhooks" ]
+  },
+  "mutations": []
+}
