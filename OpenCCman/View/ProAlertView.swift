@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ProAlertView: View {
+  @Environment(\.locale) private var locale
   @Binding var showingProAlert: Bool
   @Binding var showingProScene: Bool
   var onProDismiss: () -> Void = {}
@@ -29,6 +30,7 @@ struct ProAlertView: View {
       }
       .sheet(isPresented: $showingProScene, onDismiss: onProDismiss) {
         ProScene(isPresented: true)
+          .environment(\.locale, locale)
       }
       .font(.body)
   }

@@ -136,6 +136,8 @@ jobs:
         run: bash scripts/check-whats-new.sh
       - name: Check control labels in the selected app language
         run: bash scripts/check-control-labels.sh
+      - name: Check stored app language representation
+        run: python3 scripts/check-app-language.py
       - name: Check isolated pasteboard preservation
         run: bash scripts/check-pasteboard.sh
 
