@@ -1,5 +1,7 @@
 # OpenCCman 工作交接 — 2026-09-19
 
+> **2026-09-20 更新：本文的隐私主线已完成。** 隐私审核（RevenueCat 5.78.0 源码、官方文档、后台只读核对）、三语政策发布与 ASC 隐私标签发布读回见 [PR #125](https://github.com/gewill/OpenCCman/pull/125) 与 [#17 评论](https://github.com/gewill/OpenCCman/issues/17#issuecomment-5742739504)；结论与证据见 [审核文档](../../release/app-privacy-review-2026-09-16.md)。RevenueCat 后台未配置支持邮箱，带 RC User ID 的支持邮件不可达，最终采用“不关联身份”的标签；启用该邮箱前须先改标签。下文其余未完成项（最终签名包隐私报告、应用内链接改指新网站、#119、#122、#14/#16/#20）仍然有效。
+
 ## 接手目标
 
 优先完成 #17 的隐私审核、三语政策及 App Store Connect（ASC）隐私标签发布与读回。用户已经明确授权这些发布，不需要重复确认。尚未完成，不得把草稿或源码分析记为线上验收通过。
