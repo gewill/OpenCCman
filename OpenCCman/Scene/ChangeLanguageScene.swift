@@ -1,5 +1,9 @@
 import SwiftUI
 
+#if os(macOS)
+  import AppKit
+#endif
+
 struct ChangeLanguageScene: View {
   @Environment(\.selectedLocale) private var selectedLocale: Binding<LocaleConstants>
   @State private var showRestartAlert = false
@@ -65,7 +69,25 @@ struct ChangeLanguageScene: View {
   }
 
   private func restartApp() {
-    exit(0)
+    #if os(macOS)
+      // Reopening the app's own bundle is the same public call the app already
+      // uses to restore a closed main window, so it stays inside the sandbox.
+      let configuration = NSWorkspace.OpenConfiguration()
+      configuration.createsNewApplicationInstance = true
+      NSWorkspace.shared.openApplication(at: Bundle.main.bundleURL, configuration: configuration) { _, error in
+        DispatchQueue.main.async {
+          // Leave only once the replacement is running; otherwise stay open and
+          // let the stored choice apply on the next launch the user makes.
+          if let error {
+            NSAlert(error: error).runModal()
+            return
+          }
+          NSApp.terminate(nil)
+        }
+      }
+    #else
+      exit(0)
+    #endif
   }
 }
 

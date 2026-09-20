@@ -27,10 +27,13 @@ SecretDiary, including its restart prompt and its legacy-key migration.
 
 `Bundle.main` caches its localization at launch, so a new choice applies in full
 only on the next one. Choosing a language therefore offers a restart (Later /
-Restart) instead of forcing it; `Restart` calls `exit(0)`, which on macOS quits
-without relaunching. The existing root `.environment(\.locale,)` injection is
-kept so SwiftUI text still updates in place before that restart, and the missing
-injection on `ProAlertView`'s sheet was added.
+Restart) instead of forcing it. On macOS `Restart` reopens the app's own bundle
+through `NSWorkspace.openApplication` — the same public call
+`AppDelegate.activateMainWindow` already uses inside the sandbox — and leaves
+only once the replacement is running; iOS keeps SecretDiary's `exit(0)`. The
+existing root `.environment(\.locale,)` injection is kept so SwiftUI text still
+updates in place before that restart, and the missing injection on
+`ProAlertView`'s sheet was added.
 
 This is a deliberate change of the behavior accepted in #75/#76, where language
 switching completed within one process. It was chosen by the maintainer after
@@ -56,20 +59,40 @@ this, in the app code and then in the check's own assertion.
 | macOS build | `xcodebuild … -destination 'platform=macOS'` | BUILD SUCCEEDED, Xcode 27.0 (27A266a) |
 | iOS Simulator build | `xcodebuild … -destination 'generic/platform=iOS Simulator'` | BUILD SUCCEEDED, Xcode 27.0 (27A266a) |
 
+## Runtime observations
+
+An ad-hoc signed, sandboxed macOS build of this branch, bundle
+`org.gewill.OpenCCman.LanguageValidation` on its own preferences domain,
+macOS 27.0, 1024×768 window. Its domain was removed afterwards; the installed
+app's own preferences were not read or written.
+
+| Observation | Result |
+| --- | --- |
+| Settings in English, Simplified and Traditional, including the `Launch at login` row | Each switch applied in place, without a relaunch |
+| Settings in dark appearance | Rows and the restart alert stay legible |
+| Restart prompt in all three languages | Title, message and both buttons localized |
+| `Restart` on macOS | Process replaced, pid 95202 → 97481; the new instance opened in the chosen language |
+| Legacy install migration | Seeded `selectedLocale = zh_Hant` with no `AppleLanguages`; after one launch the domain held `AppleLanguages = ("zh-Hant")`, the legacy key was gone and the app opened in Traditional Chinese |
+| AppKit menu bar after migration | The app's standard menus render in Traditional Chinese while the system stays English — resolution the environment-only mechanism could not reach |
+
+
 `scripts/check-app-language.py` compiles the actual `LocaleConstants` and
 preference keys against an isolated temporary defaults suite. It covers the
 stored representation only.
 
 ## Not covered
 
-- Any running app. Whether each surface redraws in the selected language, in
-  place or after a relaunch, is unverified — including the `ProScene` sheet this
-  change fixes, which was never reproduced as a failure.
-- Three-language and dark-appearance captures of the settings rows, including
-  the `Launch at login` row that prompted this work.
-- The restart prompt in a signed build, and what `exit(0)` does to unsaved
-  editor text on macOS.
-- The migration on a real install that already stores the legacy key.
+- The `ProScene` sheet this change also fixes. Its missing injection is a source
+  reading; the wrong language was never reproduced as a running failure.
+- iOS. Both builds pass, but no iOS device or simulator was driven, and the
+  `exit(0)` path there is untried. Apple's interface guidelines advise against an
+  app quitting itself, so whether iOS keeps that path is still open.
+- A distribution-signed build. The observations above come from an ad-hoc signed
+  local build, not from TestFlight.
+- The migration on an actual user install. The legacy state above was seeded in
+  an isolated domain; it is a real launch, not a real install.
+- What a restart does to unsaved editor text, and the restart prompt while a
+  conversion is running.
 - `macOS 12`, minimum-system and RevenueCatUI behavior, which stay with
   [#16](https://github.com/gewill/OpenCCman/issues/16) and
   [#71](https://github.com/gewill/OpenCCman/issues/71).
