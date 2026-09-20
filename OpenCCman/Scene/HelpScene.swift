@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HelpScene: View {
-  @AppStorage(UserDefaultsKeys.selectedLocale.rawValue) var selectedLocale: LocaleConstants = .system
+  @Environment(\.selectedLocale) private var selectedLocale: Binding<LocaleConstants>
 
   // MARK: - life cycle
 
@@ -33,7 +33,7 @@ struct HelpScene: View {
       Color.Neumorphic.main
         .ignoresSafeArea()
       VStack(alignment: .center, spacing: 10.0) {
-        Link("Online help", destination: URL(string: selectedLocale.helpUrl)!)
+        Link("Online help", destination: URL(string: selectedLocale.wrappedValue.helpUrl)!)
           .padding(4)
           .overlay(
             RoundedRectangle(cornerRadius: 4)

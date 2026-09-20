@@ -8,6 +8,40 @@
 import SwiftUI
 import SwiftUIRouter
 
+// MARK: - Environment
+
+private struct SelectedLocaleKey: EnvironmentKey {
+  static let defaultValue: Binding<LocaleConstants> = .constant(.system)
+
+  /// Read the stored language and migrate the legacy `selectedLocale` key into
+  /// `AppleLanguages`, so `Bundle.main` resolves localized resources itself.
+  static func computeSelectedLocale() -> LocaleConstants {
+    let defaults = UserDefaults.standard
+
+    if LocaleConstants.appDomainAppleLanguages?.first != nil {
+      return LocaleConstants.savedSelection
+    }
+
+    let legacyKey = UserDefaultsKeys.selectedLocale.rawValue
+    if let rawValue = defaults.string(forKey: legacyKey),
+       let legacy = LocaleConstants(rawValue: rawValue),
+       legacy != .system {
+      LocaleConstants.syncToUserDefaults(legacy)
+      defaults.removeObject(forKey: legacyKey)
+      return legacy
+    }
+
+    return .system
+  }
+}
+
+extension EnvironmentValues {
+  var selectedLocale: Binding<LocaleConstants> {
+    get { self[SelectedLocaleKey.self] }
+    set { self[SelectedLocaleKey.self] = newValue }
+  }
+}
+
 @main
 struct OpenCCmanApp: App {
   #if os(iOS)
@@ -22,7 +56,7 @@ struct OpenCCmanApp: App {
     @State private var showingSizingGallery = false
   #endif
 
-  @AppStorage(UserDefaultsKeys.selectedLocale.rawValue) var selectedLocale: LocaleConstants = .system
+  @State private var selectedLocale: LocaleConstants
   @AppStorage(UserDefaultsKeys.selectedTheme.rawValue) var selectedTheme: Theme = .system
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @AppStorage(UserDefaultsKeys.lastCheckProDate.rawValue) var lastCheckProDate: TimeInterval = Date().yesterday.unixTimestamp
@@ -31,6 +65,8 @@ struct OpenCCmanApp: App {
     #if os(macOS)
       MainWindowSizing.captureInitialFrames()
     #endif
+    // Migrate before configuring: the SDK reads the stored language at launch.
+    _selectedLocale = State(initialValue: SelectedLocaleKey.computeSelectedLocale())
     IAPManager.shared.configure()
   }
 
@@ -43,7 +79,8 @@ struct OpenCCmanApp: App {
     WindowGroup {
       appContent
       .environmentObject(whatsNew)
-      .environment(\.locale, Locale(identifier: selectedLocale.identifier))
+      .environment(\.locale, selectedLocale.locale)
+      .environment(\.selectedLocale, $selectedLocale)
       .preferredColorScheme(selectedTheme.colorScheme)
     }
     #if os(macOS)

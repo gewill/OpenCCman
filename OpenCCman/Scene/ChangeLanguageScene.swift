@@ -1,12 +1,25 @@
 import SwiftUI
 
+#if os(macOS)
+  import AppKit
+#endif
+
 struct ChangeLanguageScene: View {
-  @AppStorage(UserDefaultsKeys.selectedLocale.rawValue) var selectedLocale: LocaleConstants = .system
+  @Environment(\.selectedLocale) private var selectedLocale: Binding<LocaleConstants>
+  @State private var showRestartAlert = false
 
   var body: some View {
     VStack {
       navi
       list
+    }
+    .alert("restart_app_title", isPresented: $showRestartAlert) {
+      Button("Later", role: .cancel) {}
+      Button("Restart", role: .destructive) {
+        restartApp()
+      }
+    } message: {
+      Text("restart_app_message")
     }
   }
 
@@ -29,15 +42,52 @@ struct ChangeLanguageScene: View {
       VStack {
         PickableView(
           options: LocaleConstants.allCases,
-          initialContent: selectedLocale
+          initialContent: selectedLocale.wrappedValue
         ) { item in
-          // Update SDK request headers before SwiftUI recreates localized content.
-          IAPManager.shared.updatePreferredUILocale(item)
-          selectedLocale = item
+          selectLocale(item)
         }
       }
       .padding()
     }
+  }
+
+  // MARK: - private methods
+
+  private func selectLocale(_ locale: LocaleConstants) {
+    guard locale != selectedLocale.wrappedValue else { return }
+
+    // Update SDK request headers before SwiftUI recreates localized content.
+    IAPManager.shared.updatePreferredUILocale(locale)
+    selectedLocale.wrappedValue = locale
+    // `Bundle.main` caches its localization at launch, so the stored choice only
+    // applies in full on the next one; offer the restart instead of forcing it.
+    LocaleConstants.syncToUserDefaults(locale)
+
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+      showRestartAlert = true
+    }
+  }
+
+  private func restartApp() {
+    #if os(macOS)
+      // Reopening the app's own bundle is the same public call the app already
+      // uses to restore a closed main window, so it stays inside the sandbox.
+      let configuration = NSWorkspace.OpenConfiguration()
+      configuration.createsNewApplicationInstance = true
+      NSWorkspace.shared.openApplication(at: Bundle.main.bundleURL, configuration: configuration) { _, error in
+        DispatchQueue.main.async {
+          // Leave only once the replacement is running; otherwise stay open and
+          // let the stored choice apply on the next launch the user makes.
+          if let error {
+            NSAlert(error: error).runModal()
+            return
+          }
+          NSApp.terminate(nil)
+        }
+      }
+    #else
+      exit(0)
+    #endif
   }
 }
 

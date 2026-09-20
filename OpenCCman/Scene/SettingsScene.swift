@@ -11,7 +11,7 @@ struct SettingsScene: View {
   @EnvironmentObject private var whatsNewWindow: WhatsNewWindowState
   @Environment(\.openURL) var openURL
 
-  @AppStorage(UserDefaultsKeys.selectedLocale.rawValue) var selectedLocale: LocaleConstants = .system
+  @Environment(\.selectedLocale) private var selectedLocale: Binding<LocaleConstants>
   @AppStorage(UserDefaultsKeys.hasHapticFeedback.rawValue) var hasHapticFeedback: Bool = true
   #if os(iOS)
     @State private var presentingSafariView: Bool = false
@@ -75,7 +75,7 @@ struct SettingsScene: View {
           Divider()
           #if os(macOS)
             CellButton(title: "Privacy Policy") {
-              openURL(URL(string: selectedLocale.privacyUrl)!)
+              openURL(URL(string: selectedLocale.wrappedValue.privacyUrl)!)
             }
           #elseif os(iOS)
             CellButton(title: "Privacy Policy") {
@@ -83,7 +83,7 @@ struct SettingsScene: View {
             }
             .safariView(isPresented: $presentingSafariView) {
               SafariView(
-                url: URL(string: selectedLocale.privacyUrl)!,
+                url: URL(string: selectedLocale.wrappedValue.privacyUrl)!,
                 configuration: SafariView.Configuration(
                   entersReaderIfAvailable: false,
                   barCollapsingEnabled: true

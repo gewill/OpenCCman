@@ -24,21 +24,99 @@ enum LocaleConstants: String, CaseIterable, Identifiable, Pickable {
     }
   }
 
+  /// BCP-47 tag for `AppleLanguages` and bundle lookup; `identifier` keeps the
+  /// underscore form the SDK bridge and its regression check already expect.
+  var languageTag: String {
+    identifier.replacingOccurrences(of: "_", with: "-")
+  }
+
+  var locale: Locale {
+    switch self {
+    case .system: return .current
+    default: return Locale(identifier: languageTag)
+    }
+  }
+
+  /// `.system` removes the app's `AppleLanguages` override, so the preferred
+  /// list is the system's own. Do not read `Locale.current` here: the override
+  /// pollutes it while another language is active.
   static var systemIdentifier: String {
-    if let languageCode = Locale.current.languageCode {
-      switch languageCode {
-      case ChineseLanguageConstant.languageCode.rawValue:
-        if Locale.current.scriptCode == ChineseLanguageConstant.simpleScriptCode.rawValue {
-          return Self.zh_Hans.rawValue
-        } else {
-          return Self.zh_Hant.rawValue
-        }
-      case _ where notChineseLanguages.map { $0.rawValue }.contains(languageCode):
-        return languageCode
-      default: break
-      }
+    resolveIdentifier(from: Locale.preferredLanguages.first)
+  }
+
+  /// The real system language even while the app overrides `AppleLanguages`,
+  /// read from the global domain instead of the app's own defaults.
+  static var systemPreferredLocale: LocaleConstants {
+    let global = Foundation.UserDefaults(suiteName: ".GlobalPreferences")?
+      .array(forKey: appleLanguagesKey) as? [String]
+    let preferred = global?.first ?? Locale.preferredLanguages.first
+    return LocaleConstants(rawValue: resolveIdentifier(from: preferred)) ?? .zh_Hant
+  }
+
+  private static func resolveIdentifier(from preferred: String?) -> String {
+    guard let preferred else { return Self.zh_Hant.rawValue }
+    let tag = preferred.replacingOccurrences(of: "_", with: "-")
+    if tag.hasPrefix(ChineseLanguageConstant.languageCode.rawValue) {
+      return tag.contains(ChineseLanguageConstant.simpleScriptCode.rawValue)
+        ? Self.zh_Hans.rawValue
+        : Self.zh_Hant.rawValue
+    }
+    let languageCode = tag.split(separator: "-").first.map(String.init) ?? tag
+    if notChineseLanguages.map({ $0.rawValue }).contains(languageCode) {
+      return languageCode
     }
     return Self.zh_Hant.rawValue
+  }
+
+  // MARK: - AppleLanguages
+
+  static let appleLanguagesKey = "AppleLanguages"
+
+  /// Persist the choice into `AppleLanguages` so `Bundle.main` itself resolves
+  /// every localized resource. Sheets, AppKit and system-provided UI then follow
+  /// the in-app language without per-presentation environment plumbing.
+  static func syncToUserDefaults(_ locale: LocaleConstants) {
+    switch locale {
+    case .system:
+      UserDefaults.standard.removeObject(forKey: appleLanguagesKey)
+    default:
+      UserDefaults.standard.set([locale.languageTag], forKey: appleLanguagesKey)
+    }
+    UserDefaults.standard.synchronize()
+  }
+
+  /// The app's own `AppleLanguages` override. Read the app domain explicitly:
+  /// `UserDefaults.standard` also searches `NSGlobalDomain`, so a plain lookup
+  /// returns the system languages and makes every launch look already migrated.
+  static var appDomainAppleLanguages: [String]? {
+    guard let bundleID = Bundle.main.bundleIdentifier else { return nil }
+    return UserDefaults.standard.persistentDomain(forName: bundleID)?[appleLanguagesKey] as? [String]
+  }
+
+  /// The stored choice, without migrating or writing anything, so callers on the
+  /// launch path can read it before the migration runs.
+  static var savedSelection: LocaleConstants {
+    if let tag = appDomainAppleLanguages?.first,
+       let matched = match(tag: tag) {
+      return matched
+    }
+    if let rawValue = UserDefaults.standard.string(forKey: UserDefaultsKeys.selectedLocale.rawValue),
+       let legacy = LocaleConstants(rawValue: rawValue) {
+      return legacy
+    }
+    return .system
+  }
+
+  static func match(tag: String) -> LocaleConstants? {
+    let normalized = tag.replacingOccurrences(of: "_", with: "-")
+    let selectable = allCases.filter { $0 != .system }
+    if let exact = selectable.first(where: { $0.languageTag == normalized }) {
+      return exact
+    }
+    if let prefixed = selectable.first(where: { normalized.hasPrefix($0.languageTag) }) {
+      return prefixed
+    }
+    return LocaleConstants(rawValue: resolveIdentifier(from: normalized))
   }
 
   static var chineseLanguages: [LocaleConstants] {

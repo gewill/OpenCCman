@@ -63,9 +63,9 @@ final class IAPManager: NSObject, PurchasesDelegate {
   func configure() {
     guard Purchases.isConfigured == false else { return }
 
-    let locale = LocaleConstants(
-      rawValue: UserDefaults.standard.string(forKey: UserDefaultsKeys.selectedLocale.rawValue) ?? ""
-    ) ?? .system
+    // Reads AppleLanguages first, then the legacy key; never writes, so the
+    // launch path stays free of preference mutations.
+    let locale = LocaleConstants.savedSelection
     Purchases.proxyURL = URL(string: "https://api.rc-backup.com/")!
     Purchases.configure(with: Configuration.Builder(withAPIKey: "appl_EJkSanbpeFhoNJsZaUbpIZPduCi")
       .with(preferredUILocaleOverride: locale.identifier)
