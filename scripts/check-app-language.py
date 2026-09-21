@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Check the actual app language constants against an isolated preferences domain.
 
-Covers the stored representation only. Whether a running app redraws in the
-selected language, and what a relaunch changes, still needs runtime QA.
+Covers the stored representation, including a language injected by launch
+argument. Whether a running app redraws in the selected language, and what a
+relaunch changes, still needs runtime QA.
 """
 from pathlib import Path
 import subprocess
@@ -25,6 +26,9 @@ def main():
             str(root / "Tests/Regression/AppLanguageChecks.swift"), "-o", str(output / "check"),
         ], check=True, timeout=120)
         subprocess.run([str(output / "check")], check=True, timeout=30)
+        # A second process launched with the argument, so the argument domain is
+        # real rather than simulated.
+        subprocess.run([str(output / "check"), "-AppleLanguages", "(zh-Hans)"], check=True, timeout=30)
 
 
 if __name__ == "__main__":

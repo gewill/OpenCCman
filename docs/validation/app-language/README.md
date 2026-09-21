@@ -44,15 +44,26 @@ the trade-off was raised, including the risk that `exit(0)` discards editor text
 `UserDefaults.standard` also serves `NSGlobalDomain`, so
 `array(forKey: "AppleLanguages")` returns the **system** languages even when the
 app has stored nothing. Reading it that way makes every launch look already
-migrated, and an existing install's saved choice is silently discarded. The app
-reads its own persistent domain instead. Both regression checks below caught
-this, in the app code and then in the check's own assertion.
+migrated, and an existing install's saved choice is silently discarded. Both
+regression checks below caught this, in the app code and then in the check's own
+assertion.
+
+The first fix read only the app's persistent domain, which was too narrow.
+`-AppleLanguages` is Apple's way to set the language for one run, and UI tests
+inject it there, in the argument domain. A persistent-domain read cannot see it,
+so the app treated such a run as following the system and removed the stored key
+at launch. OpenCCman has no UI suite to show this; iPerfman's did, where the full
+freemium UI suite went from 40 passed to 25 passed and 10 failed. The app now
+reads the argument domain first, then its persistent domain, never
+`NSGlobalDomain`. `scripts/check-app-language.py` runs its check a second time
+with `-AppleLanguages "(zh-Hans)"`, so the argument domain is real in that
+process; with the argument-domain read removed, that run fails.
 
 ## Reproducible local checks
 
 | Check | Command | Result on 2026-09-20 |
 | --- | --- | --- |
-| Stored language representation | `python3 scripts/check-app-language.py` | PASS: BCP-47 tags, `AppleLanguages` writes and removal, legacy selection fallback, tag matching |
+| Stored language representation | `python3 scripts/check-app-language.py` | PASS: BCP-47 tags, `AppleLanguages` writes and removal, legacy selection fallback, tag matching, and a launch-argument language outranking stored choices |
 | SDK language bridge | `python3 scripts/check-iap-locale.py` | PASS: six saved-language cases, proxy ordering, configure idempotence, unchanged preferences |
 | Control labels in the selected language | `bash scripts/check-control-labels.sh` | PASS: English, Simplified/Traditional, underscore locales, live changes, missing-key fallback |
 | Project and source syntax | `bash scripts/check-project.sh` | PASS: 62 Swift sources and three localization files |
