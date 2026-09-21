@@ -8,16 +8,28 @@ struct ChangeLanguageScene: View {
   @Environment(\.selectedLocale) private var selectedLocale: Binding<LocaleConstants>
   @State private var showRestartAlert = false
 
+  #if os(macOS)
+    private let restartAlertTitle: LocalizedStringKey = "restart_app_title"
+  #else
+    // iOS has no way to relaunch an app, and quitting with `exit` reads as a
+    // crash (Apple Technical Q&A QA1561), so the alert only says what follows.
+    private let restartAlertTitle: LocalizedStringKey = "language_changed_title"
+  #endif
+
   var body: some View {
     VStack {
       navi
       list
     }
-    .alert("restart_app_title", isPresented: $showRestartAlert) {
-      Button("Later", role: .cancel) {}
-      Button("Restart", role: .destructive) {
-        restartApp()
-      }
+    .alert(restartAlertTitle, isPresented: $showRestartAlert) {
+      #if os(macOS)
+        Button("Later", role: .cancel) {}
+        Button("Restart", role: .destructive) {
+          restartApp()
+        }
+      #else
+        Button("OK", role: .cancel) {}
+      #endif
     } message: {
       Text("restart_app_message")
     }
@@ -60,7 +72,7 @@ struct ChangeLanguageScene: View {
     IAPManager.shared.updatePreferredUILocale(locale)
     selectedLocale.wrappedValue = locale
     // `Bundle.main` caches its localization at launch, so the stored choice only
-    // applies in full on the next one; offer the restart instead of forcing it.
+    // applies in full on the next one. Say so; on macOS also offer the relaunch.
     LocaleConstants.syncToUserDefaults(locale)
 
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -68,8 +80,8 @@ struct ChangeLanguageScene: View {
     }
   }
 
-  private func restartApp() {
-    #if os(macOS)
+  #if os(macOS)
+    private func restartApp() {
       // Reopening the app's own bundle is the same public call the app already
       // uses to restore a closed main window, so it stays inside the sandbox.
       let configuration = NSWorkspace.OpenConfiguration()
@@ -85,10 +97,8 @@ struct ChangeLanguageScene: View {
           NSApp.terminate(nil)
         }
       }
-    #else
-      exit(0)
-    #endif
-  }
+    }
+  #endif
 }
 
 struct ChangeLanguageScene_Previews: PreviewProvider {
