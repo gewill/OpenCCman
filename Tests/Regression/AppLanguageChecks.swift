@@ -13,6 +13,14 @@ enum AppLanguageChecks {
   static func main() {
     defer { UserDefaults.standard.removePersistentDomain(forName: suite) }
 
+    // Launched with `-AppleLanguages`, the argument domain is real for this
+    // process, so the injected path is checked in a run of its own.
+    if ProcessInfo.processInfo.arguments.contains("-AppleLanguages") {
+      checkInjectedLanguageWins()
+      print("PASS: a language injected by launch argument is read as an explicit choice and outranks stored ones")
+      return
+    }
+
     checkLanguageTags()
     checkAppleLanguagesSync()
     checkLegacySelectionSurvives()
@@ -64,6 +72,19 @@ enum AppLanguageChecks {
     UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.selectedLocale.rawValue)
     precondition(LocaleConstants.savedSelection == .system,
                  "No stored choice must read as following the system")
+  }
+
+  /// `-AppleLanguages` is how Apple sets the language for one run, and how UI
+  /// tests inject it. It lives in the argument domain, which a persistent-domain
+  /// read cannot see: the app then treats the run as following the system.
+  private static func checkInjectedLanguageWins() {
+    precondition(LocaleConstants.appDomainAppleLanguages == ["zh-Hans"],
+                 "The argument domain must be read as an explicit choice")
+
+    // A stored legacy choice must not outrank the language chosen for this run.
+    UserDefaults.standard.set(LocaleConstants.en.rawValue, forKey: UserDefaultsKeys.selectedLocale.rawValue)
+    precondition(LocaleConstants.savedSelection == .zh_Hans,
+                 "A language injected for this run must outrank a stored choice")
   }
 
   private static func checkTagMatching() {

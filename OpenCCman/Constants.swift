@@ -85,10 +85,21 @@ enum LocaleConstants: String, CaseIterable, Identifiable, Pickable {
     UserDefaults.standard.synchronize()
   }
 
-  /// The app's own `AppleLanguages` override. Read the app domain explicitly:
-  /// `UserDefaults.standard` also searches `NSGlobalDomain`, so a plain lookup
+  /// An explicit language for this app: the argument domain, then the app's
+  /// persistent domain, never `NSGlobalDomain`. Read domain by domain because
+  /// `UserDefaults.standard` also searches the global one, so a plain lookup
   /// returns the system languages and makes every launch look already migrated.
+  ///
+  /// The argument domain comes first: `-AppleLanguages` is Apple's way to set
+  /// the language for one run, and UI tests inject it there. Reading only the
+  /// persistent domain treats such a run as following the system and removes
+  /// the stored key at launch. `Foundation.` is spelled out because the storage
+  /// checks shadow `UserDefaults` to isolate their preferences.
   static var appDomainAppleLanguages: [String]? {
+    let arguments = UserDefaults.standard.volatileDomain(forName: Foundation.UserDefaults.argumentDomain)
+    if let injected = arguments[appleLanguagesKey] as? [String], injected.isEmpty == false {
+      return injected
+    }
     guard let bundleID = Bundle.main.bundleIdentifier else { return nil }
     return UserDefaults.standard.persistentDomain(forName: bundleID)?[appleLanguagesKey] as? [String]
   }
