@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "source_commit": "76fa2496c97a16c395827809489770467c6e54e9",
+  "source_status": "?? Tests/Benchmarks/NativeTextKitMemory.swift\n?? scripts/measure-native-textkit.py",
+  "source_sha256": "c539c68ea436bc470ed875a4540cfe0b8a98edc86a97ea209b8096f08d65ced5",
+  "driver_sha256": "4cfbe0968034d87d224c4cc056c396de02cef97d9e32eddedb09234123c94dea",
+  "binary_sha256": "1fb5acedeebb6a41e104cf3e35eeeac64c6b24489ace52d640f8abb3b3594478",
+  "build_command": [
+    "xcrun",
+    "swiftc",
+    "-O",
+    "-g",
+    "-target",
+    "arm64-apple-macos12.0",
+    "-framework",
+    "AppKit",
+    "Tests/Benchmarks/NativeTextKitMemory.swift",
+    "-o",
+    "<output>/native-textkit-memory"
+  ],
+  "pattern": "single",
+  "samples": 3,
+  "sizes_mib": [
+    1,
+    5,
+    10
+  ],
+  "window_content_points": [
+    1200,
+    800
+  ],
+  "target": "arm64-apple-macos12.0",
+  "arch": "arm64",
+  "macos": "27.0",
+  "macos_build": "26A428",
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "fixture_sha256": {
+    "1": "fbc339054208c10913f545170a6887a9d814051c61298398911998cfd8400a97",
+    "5": "9bc255abc3df98f0ec74aafca7dd491e4a9b04fa67edcd75e31203a004bf0073",
+    "10": "d90bcb38d0737b65bc4e7f51cd866ca1fd06b573353f74239388a316f0f462f3"
+  },
+  "run_order": "size, sample, tk1, tk2",
+  "limit_seconds_per_process": 180
+}

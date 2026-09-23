@@ -1,0 +1,10 @@
+{
+  "run": "tk1-single-10MiB-01.json",
+  "reason": "timeout",
+  "limit_seconds": 180,
+  "partial_status": "running",
+  "completed_stages": [
+    "empty_ready"
+  ],
+  "provenance": "Original driver raised subprocess.TimeoutExpired after 180 seconds before structured timeout handling was added; partial output retained. This is a censored run, not an action time."
+}
