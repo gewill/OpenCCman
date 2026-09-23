@@ -209,6 +209,7 @@ struct WorkspacePanes: View {
     ZStack(alignment: .topLeading) {
       SourcePane(editorHeight: sourceEditorHeight, paneHeight: horizontal ? availableHeight : nil, showsConversionAction: false)
         .frame(width: sourceWidth)
+        .workspaceFocusSection()
         .accessibilityElement(children: .contain)
         .accessibilitySortPriority(3)
         .readSize {
@@ -218,6 +219,7 @@ struct WorkspacePanes: View {
         }
       ResultPane(editorHeight: resultEditorHeight, paneHeight: horizontal ? availableHeight : nil, export: export)
         .frame(width: resultWidth)
+        .workspaceFocusSection()
         .accessibilityElement(children: .contain)
         .accessibilitySortPriority(1)
         .readSize {
@@ -265,6 +267,20 @@ struct WorkspacePanes: View {
     } else {
       preference.verticalRatio = min(0.7, max(0.3, value))
     }
+  }
+}
+
+private extension View {
+  @ViewBuilder func workspaceFocusSection() -> some View {
+    #if os(macOS)
+    if #available(macOS 13.0, *) {
+      focusSection()
+    } else {
+      self
+    }
+    #else
+    self
+    #endif
   }
 }
 
