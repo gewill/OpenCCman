@@ -81,6 +81,7 @@ struct ProScene: View {
           HStack {
             feature.image
               .resizable()
+              .renderingMode(.template)
               .foregroundColor(feature.color)
               .frame(width: 30, height: 30)
             Text(feature.rawValue.localizedStringKey)
