@@ -32,3 +32,5 @@ macOS 打开「使用键盘导航在控件间移动焦点」后，在左右工�
 - `bash scripts/check-project.sh` 通过；macOS Debug（部署目标 macOS 12）和通用 iOS Simulator Debug `xcodebuild` 均成功；`git diff --check` 通过。PR 的 App Regression 是合并门禁。
 - macOS 12、最终签名分发包、完整 Tab/工具栏/系统面板流程尚未运行。Xcode 编译通过不等于 macOS 12 运行通过。
 - 自动化按键输入只得到 ASCII `nihao`，未出现中文输入法候选窗或 marked text；未执行 VoiceOver 真实朗读、完整多语言/大字号矩阵。#20 继续开放，最低系统由 #16 跟踪。
+
+2026-09-24 基于当前 `develop` `f09f6ce` 的[后续运行子集](../issue-20-keyboard-runtime/README.md)补验收了工具栏预设按钮的键盘打开、四项预设与高级选项的 Tab 顺序，以及简体选中时高级项的禁用状态；附同源码两种状态的真实截图和键盘操作录像。VoiceOver 朗读、真实中文 IME 和最终签名包仍未因此完成。
