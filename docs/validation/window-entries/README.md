@@ -1,5 +1,11 @@
 # 全部关窗后的外部入口（#19）
 
+## 2026-09-24：真实 Services 的零窗回写
+
+基于当前 `develop` `458fcd2` 的隔离、ad-hoc 签名 Debug 应用，在进程存活但无可见窗口时分别调用两次 Convert、一次 Open 服务。三次均在同一 PID 重开一扇主窗口；Convert 的 pasteboard 结果逐字节匹配同版本 OpenCC CLI，应用中可见当次原文与结果；Open 保留原文且结果为空。测试细节、合成语料、原始 JSONL、截图和交互录屏见 [2026-09-24 Services 验证](2026-09-24-services/README.md)。
+
+调用方使用 `NSPerformService` CLI；TextEdit 菜单项虽然可见，本次自动化未能点击执行，不能把它算作目标 App 菜单通过。状态栏、全局快捷键、连续请求、多窗口与最终签名包尚未验收，#19 继续开放。下文历史“Services 尚未运行”的表述是当时状态，以本段及专项报告为准。
+
 2026-09-15，进行中。独立分支 `codex/closed-window-entries` 从 #76 的 `59cad17` 继续；依赖链为 #74 → #76 → 本修复。没有触发 Xcode Cloud，也没有修改依赖或最低系统。
 
 ## 2026-09-23：同进程重开子项
