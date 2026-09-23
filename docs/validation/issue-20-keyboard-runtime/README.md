@@ -34,3 +34,7 @@ The system had a selected Pinyin input source, but individual computer-use `pres
 The QA app was quit. Keyboard Navigation and VoiceOver were read back **off**, `AppleKeyboardUIMode=0`, the input source was not changed, and System Settings returned to its original AirDrop & Continuity page. The installed production app and its preferences were not operated.
 
 #20 remains open for full keyboard routing through conversion/cancel, import/export, error dialogs and read-only copy; reliable VoiceOver speech/order and activation; genuine Chinese IME composition across layout changes; iPhone/iPad accessibility flows; and the final signed build. Minimum iOS 15 / macOS 12 execution remains a separate release gate in #16.
+
+## Current-source file flow follow-up
+
+A later `develop` build verified the Mac keyboard import → convert → export → invalid-encoding error path, with exact output bytes and preserved prior result. See [2026-09-24 file-flow subset](../issue-20-keyboard-file-flow/README.md); it does not resolve the VoiceOver or real IME gaps above.
