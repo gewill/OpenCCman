@@ -228,7 +228,25 @@ final class AppPerformanceAudit {
         source.setSelectedRange(NSRange(location: range.location, length: 0))
         source.scrollRangeToVisible(range)
         await yieldUI(window); await yieldUI(window)
-        record("scroll_end_\(mib)_\(position)", ["action_ms": ms(scrollStart)])
+        var scrollAttempts = 1
+        if let scroll = source.enclosingScrollView {
+          let target = source.firstRect(forCharacterRange: NSRange(location: range.location, length: 1), actualRange: nil)
+          let viewport = window.convertToScreen(scroll.convert(scroll.bounds, to: nil))
+          if target.isEmpty || !target.intersects(viewport) {
+            source.scrollRangeToVisible(range)
+            await yieldUI(window); await yieldUI(window)
+            scrollAttempts = 2
+          }
+        }
+        var scrollDetails: [String: Any] = ["action_ms": ms(scrollStart), "scroll_attempts": scrollAttempts]
+        if let scroll = source.enclosingScrollView {
+          let target = source.firstRect(forCharacterRange: NSRange(location: range.location, length: 1), actualRange: nil)
+          let viewport = window.convertToScreen(scroll.convert(scroll.bounds, to: nil))
+          scrollDetails["selection_visible"] = !target.isEmpty && target.intersects(viewport)
+          scrollDetails["selection_relative_y"] = target.minY - viewport.minY
+          scrollDetails["source_viewport_y"] = scroll.contentView.bounds.minY
+        }
+        record("scroll_end_\(mib)_\(position)", scrollDetails)
         for axis in ["vertical", "horizontal"] {
           if mib == 10, position == max(0, count - 2), axis == "vertical",
              ProcessInfo.processInfo.arguments.contains("-performance-reflow-profile-pause") {
@@ -249,6 +267,13 @@ final class AppPerformanceAudit {
           var details: [String: Any] = ["action_ms": actionMS, "selection": range.location,
             "input_sha256": inputHash, "output_sha256": resultHash,
             "source_viewport_y": source.enclosingScrollView?.contentView.bounds.minY ?? -1]
+          if let scroll = source.enclosingScrollView {
+            let target = source.firstRect(forCharacterRange: NSRange(location: range.location, length: 1), actualRange: nil)
+            let viewport = window.convertToScreen(scroll.convert(scroll.bounds, to: nil))
+            details["selection_visible"] = !target.isEmpty && target.intersects(viewport)
+            details["selection_relative_y"] = target.minY - viewport.minY
+            details["source_viewport_width"] = scroll.contentView.bounds.width
+          }
           if #available(macOS 12.0, *) {
             details["textkit2"] = source.textLayoutManager != nil
             details["result_textkit2"] = editors(in: root).first(where: { !$0.isEditable })?.textLayoutManager != nil
