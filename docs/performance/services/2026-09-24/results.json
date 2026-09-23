@@ -1,0 +1,43 @@
+{
+  "sourceSHA": "3cc4e76fc48b33c5ed3d323d15e167e9ec3e387a",
+  "platform": "macOS 27.0 (26A428)",
+  "xcode": "27.0 (27A266a)",
+  "appBuild": "Debug, ad-hoc signed isolated QA copy",
+  "appExecutableSHA256": "33e2c65abf0923d2293ce1f4bb54dbfdce304714afe11b6fbcf318344dbc5d4e",
+  "generatorSHA256": "99a4e254fc1a6e71b6fd947537a9a36e14bd5ac182cf7c40b09234c58d83dd7b",
+  "cliVersion": "OpenCC 1.4.2",
+  "cliSHA256": "f91870fcfab117e42fa1ed65c44fc59043ae8340a358ab62f248e427ab5b1a7e",
+  "resourceManifestSHA256": "ae10b2fbf67844395aa5b5600a93b98c755336dfa9b2190f3bf1ba46bb13292d",
+  "mode": "s2t",
+  "timingDefinition": "Date.now wall clock around CUA click and subsequent AX state; includes UI automation overhead; one observation per size",
+  "observations": [
+    {
+      "target": "TextEdit",
+      "inputBytes": 1024,
+      "actualBytes": 1024,
+      "actualSHA256": "79063c4fb646e9d1f78c2f32a71d493949f8f0ef6e7f40666552c477e912704c",
+      "matchesCLI": true,
+      "clickMilliseconds": 243,
+      "readyMilliseconds": 823
+    },
+    {
+      "target": "TextEdit",
+      "inputBytes": 1048576,
+      "actualBytes": 1048576,
+      "actualSHA256": "b21bd7e4b8728ddb3915b37c76dd84dd8ab2b52783510e7dd428bbfd46732441",
+      "matchesCLI": true,
+      "clickMilliseconds": 228,
+      "readyMilliseconds": 670
+    },
+    {
+      "target": "TextEdit",
+      "inputBytes": 5242880,
+      "actualBytes": 5242880,
+      "actualSHA256": "9d30b4eb969c68d60c1e06d0e011779ba8c45d0a34a610e9fcb2b52725a62b0d",
+      "matchesCLI": true,
+      "clickMilliseconds": 2116,
+      "readyMilliseconds": 2894
+    }
+  ],
+  "tenMiBTargetAppResult": "inconclusive: CUA could open and select source, but service item click returned elementHasNoFrame and full AX text exceeded bridge frame limit"
+}

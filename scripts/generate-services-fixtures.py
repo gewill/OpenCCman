@@ -21,9 +21,13 @@ def main():
     parser.add_argument('--resources', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--sizes', type=int, nargs='+', default=[1024, 1048576, 5242880, 10485760])
+    parser.add_argument('--modes', nargs='+', choices=MODES, default=MODES,
+                        help='Generate a focused subset; the default remains all seven modes.')
     args = parser.parse_args()
     if any(size < 1024 or size > 104857600 for size in args.sizes):
         parser.error('Use byte sizes between 1 KiB and 100 MiB; larger cases need a separate protocol.')
+    if len(set(args.modes)) != len(args.modes):
+        parser.error('Modes must be unique.')
     cli, resources, output = args.cli.resolve(), args.resources.resolve(), args.output.resolve()
     # Never replace an existing corpus or silently rewrite expected output.
     if output.exists():
@@ -57,7 +61,7 @@ def main():
             name = f'{shape}-{size}'
             source = output / (name + '.txt')
             source.write_bytes(data)
-            for mode in MODES:
+            for mode in args.modes:
                 folder = 'Compatibility' if mode.startswith('legacy-') else 'Official'
                 expected_path = output / f'{name}-{mode}.txt'
                 subprocess.run([str(cli), '-c', str(resources / folder / (mode + '.json')),
