@@ -1,8 +1,8 @@
 # Mac window sizing — issue #57
 
-Implementation: [PR #74](https://github.com/gewill/OpenCCman/pull/74). Base `714f6bf`; first implementation checkpoint `48ad349`; CI app-build checkpoint `eb92b7e`. Runtime acceptance is in progress; this record is not a release approval.
+Implementation: [PR #74](https://github.com/gewill/OpenCCman/pull/74), merged into `develop` at `e6994c8`. Base `714f6bf`; first implementation checkpoint `48ad349`; CI app-build checkpoint `eb92b7e`. Runtime acceptance is in progress; this record is not a release approval.
 
-Latest: [2026-09-16 current-candidate runtime matrix](2026-09-16-runtime/README.md), product source `4372fa4`. Historical rows below keep their original source scope.
+Latest: [2026-09-23 macOS reading-size follow-up](#2026-09-23-macos-reading-size-follow-up). The [2026-09-16 runtime matrix](2026-09-16-runtime/README.md) uses product source `4372fa4`; historical rows below keep their original source scope.
 
 ## Contract
 
@@ -32,7 +32,7 @@ Latest: [2026-09-16 current-candidate runtime matrix](2026-09-16-runtime/README.
 | Final minimum / reopening | `7be4b3d`: 300×412 frame and 300×360 root; conversion and source/result scrolling PASS. Closing then tool reactivation creates a new native window in the same process at 300×412; quit/relaunch also restores 300×412. This is not the external-entry acceptance in #19 |
 | Display movement | `7fc833c`: system Window menu moves between 1920×1080 external and 1496×967 built-in screens, preserving 1024×768 within their visible areas. Physical hot unplug remains untested |
 | Language and theme | `7fc833c`: English/light, Simplified/light and Traditional/dark minimum window controls and conversion/result reachability observed. The conversion settings sheet incorrectly uses English with Traditional app language: [#75](https://github.com/gewill/OpenCCman/issues/75) tracks the real defect |
-| Large text | Complete larger-text scenarios are still unverified |
+| Large text | See the 2026-09-23 follow-up below: the macOS system preferred reading-size control does not scale this SwiftUI app. A real large-text product path and its window matrix remain unresolved |
 
 [Real before/after screenshots and minimum-window video, uploaded with gh](https://github.com/gewill/OpenCCman/pull/74#issuecomment-5675535351). The baseline is `714f6bf` (local Xcode 26.6 build), the final pictured candidate is `7be4b3d` (CI Xcode 26.3 build); both ran on macOS 27, English/light/default text. The compiler difference follows the local toolchain transition and is recorded rather than hidden.
 
@@ -48,7 +48,7 @@ Xcode 27 rejects the unchanged macOS 11 deployment target. A local-only experime
 
 ## Remaining gates
 
-The current `4372fa4` runtime matrix now covers both axes with the sidebar shown/hidden, recommended-width fallback and three minimum-window language/theme combinations. Before closing #57, finish larger-text behavior, final-candidate live resize/interaction recording, and screen-removal/restoration coverage; resolve the language defect through #75 and link its validation. Physical monitor unplug has not been replaced by the synthetic disconnected-screen geometry check. Minimum-OS real-device verification remains #16. Window creation from external entries after all windows close belongs to #19; native WindowGroup model release belongs to #18. PR #74 remains a draft while this acceptance is incomplete.
+The `4372fa4` runtime matrix covers both axes with the sidebar shown/hidden, recommended-width fallback and three minimum-window language/theme combinations. Before closing #57, define and verify a Mac large-text path, finish final-candidate live resize/interaction recording and screen-removal/restoration coverage, and link the #75 language fix validation. Physical monitor unplug has not been replaced by the synthetic disconnected-screen geometry check. Minimum-OS real-device verification remains #16. Window creation from external entries after all windows close belongs to #19; native WindowGroup model release belongs to #18. PR #74 has since merged; the issue remains open for these acceptance items.
 
 [Apple NSWindow frame restoration](https://developer.apple.com/documentation/appkit/nswindow/setframeusingname(_:)), [NSView.window](https://developer.apple.com/documentation/appkit/nsview/window).
 
@@ -58,8 +58,16 @@ Integrated develop `51bceda` into the existing #74 candidate (`d009913` before i
 
 Local Xcode 27/macOS 27 checks passed: geometry/native restoration/sheet dismissal, workspace resolution, 60 application source syntax checks and 3 languages, and actual source/result/window adapter callbacks. The adapter check compiled a private copy of the clean pinned Introspect checkout; no dependency cache or deployment target was edited. [Commands and results](2026-09-16-integration/results.json), [native window checks](2026-09-16-integration/window-sizing.log), [workspace checks](2026-09-16-integration/workspace.log), and [adapter result excerpt](2026-09-16-integration/introspection-result.log).
 
-These are integration regressions, not a replacement for the final app's pending inspector/two-axis/large-text matrix or physical monitor disconnect acceptance. Historical screenshots/videos above retain their original source SHA. The full app build and new validation artifact come from this updated PR's CI; #74 remains Draft until its existing acceptance gates are met.
+These are integration regressions, not a replacement for the final app's pending inspector/two-axis/large-text matrix or physical monitor disconnect acceptance. Historical screenshots/videos above retain their original source SHA. The full app build and new validation artifact came from this PR's CI. At the time of this integration it remained Draft; its later merge does not complete the issue's runtime acceptance.
 
 ## 2026-09-16 current-candidate UI follow-up
 
-The [new runtime record](2026-09-16-runtime/README.md) adds same-toolchain real before/after captures and closes the pending ordinary-text sidebar/both-axis matrix for product `4372fa4`. It explicitly separates native history restoration from continuous edge dragging and captured pixels from native points. Full larger-text, physical display removal, final-candidate continuous-resize/video and #75 remain open; this does not remove Draft or change release gates.
+The [runtime record](2026-09-16-runtime/README.md) adds same-toolchain real before/after captures and closes the pending ordinary-text sidebar/both-axis matrix for product `4372fa4`. It explicitly separates native history restoration from continuous edge dragging and captured pixels from native points. Full larger-text, physical display removal, final-candidate continuous-resize/video and #75 remain open; the subsequent PR merge did not change release gates.
+
+## 2026-09-23 macOS reading-size follow-up
+
+On macOS 27.0 / Xcode 27.0, the ad-hoc-signed isolated app `org.gewill.OpenCCman.WindowEntryValidation` built from application source `8619bec` was captured in the same 1024×768 pt window, English/light, once with Accessibility → Display → Text size at its original `Default` (slider value 4) and again at maximum `42 pt` (value 14). The 2048×1536 PNG captures were byte-identical (SHA-256 `937b7062558ddc165fef9b6ff4af65033bdc38a9865d8277f1447a36f60f9301`). [Both real screenshots and exact test conditions were uploaded to #57 with `gh`](https://github.com/gewill/OpenCCman/issues/57#issuecomment-5792430054). Only the isolated app window was captured; no production app or customer text was used. The system setting was restored to `Default` and read back afterward; VoiceOver remained off.
+
+This is expected for the current SwiftUI macOS text behavior: [Apple documents that `dynamicTypeSize` cannot be changed by users on macOS and does not affect text size](https://developer.apple.com/documentation/swiftui/environmentvalues/dynamictypesize). Thus changing the system preferred reading size is **not** a valid substitute for testing a Mac large-text layout. The app has no in-app Mac text-scale setting in this source. A separate product decision and implementation would be needed for user-adjustable Mac text enlargement; iPhone/iPad Dynamic Type acceptance remains in #20. No enlargement or regression is inferred from the unchanged screenshots.
+
+CUA successfully clicked the layout control in this app, but dragging its right or bottom edge did not resize the window; a point outside the right edge returned `windowNotFoundAtPosition`. This tool limitation does not establish a window resizing defect or satisfy continuous-resize acceptance. Physical display removal/restoration also remains untested.

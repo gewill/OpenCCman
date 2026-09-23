@@ -2,6 +2,8 @@
 
 Product source `4372fa4237777c704ea6529e68c1b34af1d187ec`, PR #74 / issue #57. This supplements the historical `7fc833c` and `7be4b3d` captures; it does not relabel them as current evidence.
 
+Status note: references below to #74 being Draft describe this 2026-09-16 test checkpoint. The PR later merged at `e6994c8`; #57 remains open for the outstanding runtime gates recorded in the [current overview](../README.md).
+
 ## Provenance and scope
 
 Both baseline and candidate are CI Xcode 26.3 Debug artifacts, run on the same macOS 27.0 (26A428) arm64 host. The baseline comes from `ec214df`, whose application and Xcode project match develop `51bceda` exactly. The candidate's [App Regression](https://github.com/gewill/OpenCCman/actions/runs/35035270954) passed. [Source/archive/executable hashes and isolation changes](source.json) identify the binaries, including the separate bundle IDs, display names, removed Services registration and ad-hoc signatures. These are not release signatures or Xcode Cloud builds. The final ad-hoc signing changes full executable hashes; [payload comparison](payload-comparison.json) checks the actual runtime main executable, Debug dylib and preview dylib against their archived CI counterparts using temporary copies with canonical signing and only the LC_CODE_SIGNATURE data ranges excluded. The application code payloads match. Earlier preparation hashes are not reused as final runtime hashes.
