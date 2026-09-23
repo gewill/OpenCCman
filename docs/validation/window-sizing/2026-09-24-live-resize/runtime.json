@@ -1,0 +1,145 @@
+{
+  "source_sha": "9b335ac1e577c8237c2c05b389a003e8f88ec291",
+  "os": "macOS 27.0 (26A428)",
+  "xcode": "27.0 (27A266a)",
+  "build": "Debug, platform=macOS, CODE_SIGNING_ALLOWED=NO; isolated ad-hoc signed QA copy",
+  "build_log_sha256": "0a65357d0b736217171b896a6dd524e0705fb3ba4b04238b6697f7d468eafcc1",
+  "qa_bundle_id": "org.gewill.OpenCCman.WindowSizingQA20260924",
+  "qa_executable_sha256": "fd8483294120fd33ba0543345a43c04292abe5c696532dade71bf542aacfc34c",
+  "qa_debug_dylib_sha256": "737dc956b2d540a54eb46733397eaaf9d8051c94f3e84ffef14014103e9c9a38",
+  "display": {
+    "physical": "built-in Color LCD plus external MAG321UX OLED in mirror mode",
+    "logical_screen_count": 1,
+    "logical_screen_points": [
+      1496,
+      967
+    ],
+    "visible_frame_appkit_points": [
+      0,
+      60,
+      1496,
+      879
+    ]
+  },
+  "measurements": [
+    {
+      "stage": "fresh_first_window",
+      "pid": 89073,
+      "window_number": 4763,
+      "quartz_bounds_points": [
+        236,
+        56,
+        1024,
+        768
+      ]
+    },
+    {
+      "stage": "system_zoom",
+      "pid": 89073,
+      "window_number": 4763,
+      "quartz_bounds_points": [
+        0,
+        28,
+        1496,
+        879
+      ]
+    },
+    {
+      "stage": "right_edge_drag_intermediate",
+      "pid": 89073,
+      "window_number": 4763,
+      "quartz_bounds_points": [
+        0,
+        28,
+        1101,
+        879
+      ]
+    },
+    {
+      "stage": "right_edge_drag_minimum_width",
+      "pid": 89073,
+      "window_number": 4763,
+      "quartz_bounds_points": [
+        0,
+        28,
+        300,
+        879
+      ]
+    },
+    {
+      "stage": "bottom_edge_drag_minimum_height",
+      "pid": 89073,
+      "window_number": 4763,
+      "quartz_bounds_points": [
+        0,
+        28,
+        300,
+        412
+      ]
+    },
+    {
+      "stage": "additional_new_window",
+      "pid": 89073,
+      "window_number": 4807,
+      "quartz_bounds_points": [
+        29,
+        57,
+        1024,
+        768
+      ]
+    },
+    {
+      "stage": "existing_window_while_new_window_open",
+      "pid": 89073,
+      "window_number": 4763,
+      "quartz_bounds_points": [
+        0,
+        28,
+        300,
+        412
+      ]
+    },
+    {
+      "stage": "after_closing_new_window",
+      "pid": 89073,
+      "window_number": 4763,
+      "quartz_bounds_points": [
+        0,
+        28,
+        300,
+        412
+      ]
+    },
+    {
+      "stage": "quit_and_relaunch_restored_window",
+      "pid": 90117,
+      "window_number": 4817,
+      "quartz_bounds_points": [
+        0,
+        28,
+        300,
+        412
+      ]
+    }
+  ],
+  "content_checks": {
+    "after_drag_source": "鼠标里面的硅二极管坏了，导致光标分辨率降低。",
+    "after_drag_result": "鼠標裏面的硅二極管壞了，導致光標分辨率降低。",
+    "minimum_result_access": "main scroll area scrolled to result; Copy Result and Export TXT visible and enabled",
+    "new_window": "default source, empty result; existing converted window unchanged",
+    "relaunch": "native size restored; text state is not persisted by this app and was not a test expectation"
+  },
+  "recording": {
+    "path": "media/live-resize.mp4",
+    "duration_seconds": 45.266667,
+    "bytes": 413507,
+    "sha256": "b278b91a6edf241a83e9aa296b5521267eb22a99cc11e2a3263b67a3cdefd76c",
+    "capture": "ScreenCaptureKit app-only filter, 15 fps H.264; no audio, microphone, cursor, or other apps"
+  },
+  "limits": [
+    "No physical display disconnect/reconnect; monitors were mirrored",
+    "No user-adjustable Mac text-size path in current app",
+    "Not Xcode Cloud or TestFlight signed build",
+    "No continuous drag with long text or IME composition in this run"
+  ]
+}

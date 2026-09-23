@@ -1,8 +1,10 @@
 # Mac window sizing — issue #57
 
+Latest runtime: [2026-09-24 actual edge dragging, minimum result access, new window and restart](2026-09-24-live-resize/README.md). On current `develop` `9b335ac`, the isolated QA app was dragged from system Zoom through 1101 pt to 300 pt width, then to 300×412 pt; content stayed intact, a new window remained independent, and native size restoration passed. This closes the previous tool-specific gap in continuous drag evidence, **not** the physical display-removal, Mac user-adjustable large-text decision, or final signed-package gates.
+
 Implementation: [PR #74](https://github.com/gewill/OpenCCman/pull/74), merged into `develop` at `e6994c8`. Base `714f6bf`; first implementation checkpoint `48ad349`; CI app-build checkpoint `eb92b7e`. Runtime acceptance is in progress; this record is not a release approval.
 
-Latest: [2026-09-23 macOS reading-size follow-up](#2026-09-23-macos-reading-size-follow-up). The [2026-09-16 runtime matrix](2026-09-16-runtime/README.md) uses product source `4372fa4`; historical rows below keep their original source scope.
+Earlier: [2026-09-23 macOS reading-size follow-up](#2026-09-23-macos-reading-size-follow-up). The [2026-09-16 runtime matrix](2026-09-16-runtime/README.md) uses product source `4372fa4`; historical rows below keep their original source scope.
 
 ## Contract
 
@@ -48,7 +50,7 @@ Xcode 27 rejects the unchanged macOS 11 deployment target. A local-only experime
 
 ## Remaining gates
 
-The `4372fa4` runtime matrix covers both axes with the sidebar shown/hidden, recommended-width fallback and three minimum-window language/theme combinations. Before closing #57, define and verify a Mac large-text path, finish final-candidate live resize/interaction recording and screen-removal/restoration coverage, and link the #75 language fix validation. Physical monitor unplug has not been replaced by the synthetic disconnected-screen geometry check. Minimum-OS real-device verification remains #16. Window creation from external entries after all windows close belongs to #19; native WindowGroup model release belongs to #18. PR #74 has since merged; the issue remains open for these acceptance items.
+The `4372fa4` runtime matrix covers both axes with the sidebar shown/hidden, recommended-width fallback and three minimum-window language/theme combinations. The [2026-09-24 current-source run](2026-09-24-live-resize/README.md) adds actual live edge dragging, result access, new-window isolation and restart restoration. [#75](https://github.com/gewill/OpenCCman/issues/75) finished the language fix and closed after #76 merged. Before closing #57, resolve the Mac large-text product path and screen-removal/restoration coverage. Physical monitor unplug has not been replaced by the synthetic disconnected-screen geometry check. Minimum-OS real-device verification remains #16. Window creation from external entries after all windows close belongs to #19; native WindowGroup model release belongs to #18. PR #74 has since merged; the issue remains open for these acceptance items.
 
 [Apple NSWindow frame restoration](https://developer.apple.com/documentation/appkit/nswindow/setframeusingname(_:)), [NSView.window](https://developer.apple.com/documentation/appkit/nsview/window).
 
@@ -70,4 +72,4 @@ On macOS 27.0 / Xcode 27.0, the ad-hoc-signed isolated app `org.gewill.OpenCCman
 
 This is expected for the current SwiftUI macOS text behavior: [Apple documents that `dynamicTypeSize` cannot be changed by users on macOS and does not affect text size](https://developer.apple.com/documentation/swiftui/environmentvalues/dynamictypesize). Thus changing the system preferred reading size is **not** a valid substitute for testing a Mac large-text layout. The app has no in-app Mac text-scale setting in this source. A separate product decision and implementation would be needed for user-adjustable Mac text enlargement; iPhone/iPad Dynamic Type acceptance remains in #20. No enlargement or regression is inferred from the unchanged screenshots.
 
-CUA successfully clicked the layout control in this app, but dragging its right or bottom edge did not resize the window; a point outside the right edge returned `windowNotFoundAtPosition`. This tool limitation does not establish a window resizing defect or satisfy continuous-resize acceptance. Physical display removal/restoration also remains untested.
+CUA successfully clicked the layout control in this app, but that run's attempted right/bottom-edge drags did not resize the window; a point outside the right edge returned `windowNotFoundAtPosition`. This was a test-tool limitation, not an established app defect. The [2026-09-24 run](2026-09-24-live-resize/README.md) used the actual outermost window-edge coordinates and successfully resized the current source. Physical display removal/restoration remains untested.
