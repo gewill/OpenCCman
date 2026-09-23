@@ -3,6 +3,7 @@ import RevenueCat
 import SwiftUI
 
 struct ProScene: View {
+  @Environment(\.sizeCategory) private var sizeCategory
   @State var packages: [RevenueCat.Package] = []
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @State var isLoading: Bool = false
@@ -21,29 +22,43 @@ struct ProScene: View {
   }
 
   var navi: some View {
-    ZStack(alignment: .center) {
-      Text("Pro").font(.title)
-      HStack {
-        BackButton(isPresented: isPresented)
-        Spacer()
-
-        Button {
-          self.isLoading = true
-          self.errorMessage = ""
-          Purchases.shared.restorePurchases { customerInfo, error in
-            self.isLoading = false
-            self.showError(message: IAPManager.isCancellation(error) ? nil : error?.localizedDescription)
-            IAPManager.shared.applyCustomerInfo(customerInfo, error: error)
-          }
-        } label: {
-          Text("Restore")
+    Group {
+      if sizeCategory.isAccessibilityCategory {
+        VStack(spacing: Constant.padding) {
+          navigationActions
+          Text("Pro").font(.title)
+            .frame(maxWidth: .infinity)
         }
-        .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 12))
-        .disabled(self.isLoading)
+      } else {
+        ZStack(alignment: .center) {
+          Text("Pro").font(.title)
+          navigationActions
+        }
       }
-      .padding(.horizontal, Constant.padding)
     }
     .padding(.vertical, Constant.padding)
+  }
+
+  private var navigationActions: some View {
+    HStack {
+      BackButton(isPresented: isPresented)
+      Spacer()
+
+      Button {
+        self.isLoading = true
+        self.errorMessage = ""
+        Purchases.shared.restorePurchases { customerInfo, error in
+          self.isLoading = false
+          self.showError(message: IAPManager.isCancellation(error) ? nil : error?.localizedDescription)
+          IAPManager.shared.applyCustomerInfo(customerInfo, error: error)
+        }
+      } label: {
+        Text("Restore")
+      }
+      .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 12))
+      .disabled(self.isLoading)
+    }
+    .padding(.horizontal, Constant.padding)
   }
 
   var list: some View {
