@@ -147,6 +147,7 @@ def main():
     parser.add_argument('--disable-background-layout', action='store_true', help='Explicit isolated TextKit 1 experiment')
     parser.add_argument('--textkit2-no-anchor', action='store_true', help='Private TextKit 2 app bridge without the legacy glyph-based anchor keeper')
     parser.add_argument('--textkit2-modern-anchor', action='store_true', help='Private TextKit 2 app bridge with a diagnostic visible-character anchor')
+    parser.add_argument('--middle-composed', action='store_true', help='Use the midpoint composed character and its full range for visibility geometry')
     parser.add_argument('--engine-revision', help='Comparison only: full wrapper SHA in the private snapshot')
     parser.add_argument('--comparison-no-nul', action='store_true', help='Use the common-input comparison fixture without U+0000; default correctness fixture remains unchanged')
     parser.add_argument('--reuse-build', action='store_true', help='Rerun the already built, recorded source snapshot')
@@ -160,7 +161,7 @@ def main():
         parser.error('The TextKit 2 bridge variant requires --reflow and excludes TextKit 1 layout overrides')
     if args.textkit2_no_anchor and args.textkit2_modern_anchor:
         parser.error('Select one private TextKit 2 variant')
-    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.textkit2_no_anchor or args.textkit2_modern_anchor or args.packages or args.comparison_no_nul):
+    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.textkit2_no_anchor or args.textkit2_modern_anchor or args.middle_composed or args.packages or args.comparison_no_nul):
         parser.error('Reuse the recorded build without source/dependency overrides')
     source = args.output / 'source'
     if not args.reuse_build:
@@ -204,7 +205,8 @@ def main():
                         'activity': 'userInitiatedAllowingIdleSystemSleep; foreground required after root ready',
                         'extra_windows': 'two fixed-size hosting windows at /home; not native WindowGroup lifecycle',
                         'layout': 'role + precomputed UTF16 length acknowledgement and display flush; exact UTF8 validation after timer; not presentation',
-                        'navigation_target': 'middle next ordinary Han glyph within 128 UTF16 units; start/end composed-character boundary',
+                        'navigation_target': ('middle composed character with full composed-range geometry' if args.middle_composed else
+                                              'middle next ordinary Han glyph within 128 UTF16 units; start/end composed-character boundary'),
                         'timer': '20ms main timer gap includes harness work and scheduling; not FPS',
                         'memory': 'RSS high water includes all previous work, fixtures and validation'}}
         build = ['xcodebuild', '-project', str(source / 'OpenCCman.xcodeproj'), '-scheme', 'OpenCCman',
@@ -236,6 +238,8 @@ def main():
         profile_args = ['-performance-comparison-no-nul'] if metadata['conditions']['input_profile'] == 'comparison-without-nul' else []
         if metadata['application_variant'] in ('textkit2-no-anchor', 'textkit2-modern-anchor'):
             profile_args.append('-performance-require-textkit2')
+        if metadata['conditions']['navigation_target'].startswith('middle composed character'):
+            profile_args.append('-performance-middle-composed')
         process = subprocess.Popen(['open', '-n', '-W', '-a', str(app), '--args', '-performance-output', str(output),
                                     '-skip-whats-new', '-AppleLanguages', '(en)', '-AppleInterfaceStyle', 'Light']
                                    + (['-performance-reflow'] if args.reflow else []) + profile_args)
