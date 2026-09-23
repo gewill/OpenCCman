@@ -10,10 +10,10 @@ enum WhatsNewChecks {
     let key = WhatsNewCoordinator.lastPresentedVersionKey
     let first = UUID(), second = UUID()
     let ready = WhatsNewEligibility(isActive: true, isHome: true)
-    let coordinator = WhatsNewCoordinator(version: "1.3", defaults: defaults)
+    let coordinator = WhatsNewCoordinator(version: "2.0", defaults: defaults)
 
-    precondition(coordinator.release?.cards.count == 3)
-    precondition(Set(coordinator.release!.cards.map(\.id)).count == 3)
+    precondition(coordinator.release?.cards.map(\.id) == ["workspace", "presets", "files", "reliability"])
+    precondition(WhatsNewRelease.content(for: "1.3")?.cards.map(\.id) == ["presets", "files", "reliability"])
     precondition(WhatsNewRelease.content(for: "1.2") == nil)
     precondition(WhatsNewRelease.content(for: "1.4") == nil)
     precondition(WhatsNewRelease.content(for: "") == nil)
@@ -77,30 +77,30 @@ enum WhatsNewChecks {
     coordinator.didAppear(in: first) // Stale callback from the closed window.
     precondition(defaults.string(forKey: key) == nil)
     coordinator.didAppear(in: second)
-    precondition(defaults.string(forKey: key) == "1.3")
+    precondition(defaults.string(forKey: key) == "2.0")
     coordinator.finish(in: second)
     precondition(coordinator.reserve(for: first, eligibility: ready, manually: false) == nil)
 
-    let relaunched = WhatsNewCoordinator(version: "1.3", defaults: defaults)
+    let relaunched = WhatsNewCoordinator(version: "2.0", defaults: defaults)
     precondition(relaunched.reserve(for: first, eligibility: ready, manually: false) == nil,
                  "Relaunches and build-number changes within the marketing version must stay quiet")
     precondition(relaunched.reserve(for: first, eligibility: settings, manually: true) != nil)
     relaunched.didAppear(in: first)
     relaunched.finish(in: first)
 
-    defaults.set("1.2", forKey: key)
-    let upgraded = WhatsNewCoordinator(version: "1.3", defaults: defaults)
+    defaults.set("1.3", forKey: key)
+    let upgraded = WhatsNewCoordinator(version: "2.0", defaults: defaults)
     precondition(upgraded.reserve(for: first, eligibility: settings, manually: true) != nil)
     upgraded.didAppear(in: first)
     upgraded.finish(in: first)
     precondition(upgraded.reserve(for: first, eligibility: ready, manually: false) == nil,
                  "Manual viewing before automatic presentation also counts")
-    defaults.set("1.2", forKey: key)
-    let skipped = WhatsNewCoordinator(version: "1.3", defaults: defaults, skipAutomatic: true)
+    defaults.set("1.3", forKey: key)
+    let skipped = WhatsNewCoordinator(version: "2.0", defaults: defaults, skipAutomatic: true)
     precondition(skipped.reserve(for: first, eligibility: ready, manually: false) == nil)
     precondition(skipped.reserve(for: first, eligibility: settings, manually: true) != nil)
     skipped.finish(in: first)
-    let newVersion = WhatsNewCoordinator(version: "1.3", defaults: defaults)
+    let newVersion = WhatsNewCoordinator(version: "2.0", defaults: defaults)
     precondition(newVersion.reserve(for: first, eligibility: ready, manually: false) != nil)
     print("PASS: What’s New content, version persistence, presentation blockers, multi-window ownership, manual viewing and test opt-out")
   }

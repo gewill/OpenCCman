@@ -19,7 +19,7 @@ import sys
 
 root = Path(sys.argv[1])
 keys = {"whats_new_title", "whats_new_done"}
-keys.update(f"whats_new_{card}_{part}" for card in ("presets", "files", "reliability") for part in ("title", "detail"))
+keys.update(f"whats_new_{card}_{part}" for card in ("workspace", "presets", "files", "reliability") for part in ("title", "detail"))
 for path in sorted((root / "OpenCCman").glob("*.lproj/Localizable.strings")):
     strings = json.loads(subprocess.check_output(["plutil", "-convert", "json", "-o", "-", str(path)]))
     actual = {key for key in strings if key.startswith("whats_new_")}

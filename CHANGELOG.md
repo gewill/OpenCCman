@@ -13,9 +13,10 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 ## [Unreleased]
 
-Planned for 1.3: common conversion presets, a single-file text workflow, and
-conversion reliability improvements. iOS 14 and macOS 11 remain supported;
-pricing and the daily limit of 12 homepage conversions are unchanged.
+Current development targets 2.0: an adaptive workspace, common conversion
+presets, a single-file text workflow, and conversion reliability improvements.
+The minimum systems are iOS 15 and macOS 12; the homepage limit remains 12
+daily conversions.
 
 Xcode Cloud build **1.3 (44)** was verified in internal TestFlight on both
 platforms on 2026-09-13 ([#33]). That build predates the What’s New cards below.
@@ -53,10 +54,11 @@ and [What’s New validation record](docs/WHATS_NEW.md).
   late results from replacing the current text; it does not forcibly interrupt
   an already executing native conversion ([#2]).
 - Native What’s New cards in English, Simplified Chinese and Traditional Chinese.
-  A supported marketing version is shown automatically once, can be reopened in
-  Settings, and is recorded only when actually presented. Shared window ownership
-  and presentation guards defer the cards during conversion, import and other
-  app presentations ([#35]).
+  The 2.0 cards cover the adaptive workspace, presets, TXT files, and reliable
+  cancellation. A supported marketing version is shown automatically once, can
+  be reopened in Settings, and is recorded only when actually presented. Shared
+  window ownership and presentation guards defer the cards during conversion,
+  import and other app presentations ([#35]).
 - Internal: isolated checks for conversion, file handling, quota reservations,
   pasteboard ownership, What’s New state and localization, integrated into the
   app's GitHub Actions regression workflow ([#1], [#2], [#35]).

@@ -21,12 +21,23 @@ struct WhatsNewRelease: Identifiable {
   }
 
   static func content(for version: String) -> WhatsNewRelease? {
-    guard version == "1.3" else { return nil }
-    return WhatsNewRelease(version: version, cards: [
-      Card(id: "presets", symbol: "slider.horizontal.3"),
-      Card(id: "files", symbol: "doc.text"),
-      Card(id: "reliability", symbol: "checkmark.shield"),
-    ])
+    switch version {
+    case "1.3":
+      return WhatsNewRelease(version: version, cards: [
+        Card(id: "presets", symbol: "slider.horizontal.3"),
+        Card(id: "files", symbol: "doc.text"),
+        Card(id: "reliability", symbol: "checkmark.shield"),
+      ])
+    case "2.0":
+      return WhatsNewRelease(version: version, cards: [
+        Card(id: "workspace", symbol: "rectangle.split.2x1"),
+        Card(id: "presets", symbol: "slider.horizontal.3"),
+        Card(id: "files", symbol: "doc.text"),
+        Card(id: "reliability", symbol: "checkmark.shield"),
+      ])
+    default:
+      return nil
+    }
   }
 }
 
