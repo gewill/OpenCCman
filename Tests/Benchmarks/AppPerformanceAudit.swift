@@ -317,6 +317,13 @@ final class AppPerformanceAudit {
         }
       }
       record("seven_configurations_resident")
+      if ProcessInfo.processInfo.arguments.contains("-performance-hold-after-configurations") {
+        timer?.invalidate(); timer = nil
+        save(status: "profiling_hold")
+        if let activity { ProcessInfo.processInfo.endActivity(activity) }
+        activity = nil
+        return
+      }
       model.applyPreset(.taiwan)
       for mib in [1, 5, 10] {
         let url = URL(fileURLWithPath: output).deletingLastPathComponent().appendingPathComponent("fixture.txt")
