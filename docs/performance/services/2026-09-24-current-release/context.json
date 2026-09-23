@@ -1,0 +1,77 @@
+{
+  "sourceSHA": "736108a0a1a1622e318f20bb70d83416b19b4f3f",
+  "recordedUTC": "2026-09-23T18:27:51.124160+00:00",
+  "os": {
+    "version": "27.0",
+    "build": "26A428",
+    "arch": "arm64"
+  },
+  "hardware": {
+    "model": "Mac16,7",
+    "memoryBytes": 51539607552,
+    "cpu": "Apple M4 Pro"
+  },
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "build": {
+    "configuration": "Release",
+    "codeSigningBuild": "CODE_SIGNING_ALLOWED=NO",
+    "buildLogSHA256": "c2bc54850a75fd7adbe82e080e0e7fbc40cfaf46b08e48fb9202b84b43abffc8",
+    "unsignedExecutableSHA256": "2c5ade26ae99964748a71e24b87933db84db403137276684ec3e5a3cabad57f0",
+    "qaSignedExecutableSHA256": "7d53cbe35c4d7f98984c9cf79d91eb8a60cbe520d98aa25a9655b0cb3b4c2dac",
+    "qaInfoPlistSHA256": "f2cf46209b7d1566443e84242083923c029f7c2ce1bcc1e964d85fc8338277ea",
+    "entitlementsSHA256": "c0e0afd6abe100386f5bc3ee241557a7b91c9ce59b8c1e99e962bceb49729cfb",
+    "signatureVerified": true,
+    "sandboxEntitlementsReused": true
+  },
+  "qa": {
+    "bundleID": "org.gewill.OpenCCman.ServicesReleaseQA20260924",
+    "port": "OpenCCman Services Release QA 20260924",
+    "convertService": "OpenCCman Capacity Release QA Convert",
+    "openService": "OpenCCman Capacity Release QA Open",
+    "processPIDAtEnd": 6878,
+    "lastPresentedWhatsNewVersion": "2.0",
+    "firstPresentationDismissedBeforeFinalSamples": true,
+    "pbsUniqueServiceRegistrationObserved": true
+  },
+  "fixtures": {
+    "generatorSHA256": "99a4e254fc1a6e71b6fd947537a9a36e14bd5ac182cf7c40b09234c58d83dd7b",
+    "cliSHA256": "f91870fcfab117e42fa1ed65c44fc59043ae8340a358ab62f248e427ab5b1a7e",
+    "resourceManifestSHA256": "ae10b2fbf67844395aa5b5600a93b98c755336dfa9b2190f3bf1ba46bb13292d",
+    "fixtureManifestSHA256": "80764aae13b8ed36a538be644796bc5269fae3de4e2b0710f710948d23c2f165",
+    "mode": "s2t",
+    "source": "/tmp/openccman-22-target-fixtures-20260924"
+  },
+  "caller": {
+    "sourceSHA256": "ff88cd0a7dec0373b669c473c6d61a47c8a339eb60aa626b9bca438d6dc75471",
+    "optimizedBinarySHA256": "59669cfb089de9a4ab3cf408d4b8218d235c7f23c716adc89a7f3f0cff24dd6a",
+    "perInvocationTimeoutSeconds": 35,
+    "continuousSamplesPerSize": 5,
+    "pacedSamplesPerShape": 5,
+    "pacedDelaySeconds": 2,
+    "timedScope": "NSPerformService only; output read/encode/hash/compare after timer"
+  },
+  "excluded": {
+    "exploratoryDebug": "Debug package with delayed Whats New presentation; not comparable to final Release",
+    "exploratoryRelease": "Release package with delayed Whats New presentation; excluded before restart and seen-version verification"
+  },
+  "sourceTrackedStatus": "",
+  "reportCreatedAfterBuild": true,
+  "dependencies": {
+    "packageResolvedSHA256": "0f7de10fe83850d1a4e823a0369f02ee2071c7041d89036618c3ae420f6f91d6",
+    "checkoutRevisions": {
+      "BetterSafariView": "884533749e55949b2566030948c6fdbe2873ed0c",
+      "ColorVector": "0cd0169f1487d7371ee3fd7fe93f1e918fd93d00",
+      "ColorfulX": "af739ea2d891afc68ff53b01c701bb72b9ca4a69",
+      "IQKeyboardManager": "c00b1ae9fa1ad8af4465bb6ca901f6943fc98eba",
+      "KeyboardShortcuts": "1aef85578fdd4f9eaeeb8d53b7b4fc31bf08fe27",
+      "MSDisplayLink": "1ba3e769b734e456317fa7e45321fa7f53eefb67",
+      "SpringInterpolation": "cdb556516daa9b43c16aae9436dd39e19ff930fd",
+      "SwiftUIRouter": "e0cb32b54bb429aa43ce30240b0036bf223a62a3",
+      "SwiftyOpenCC": "6eded293f5c84c064f332cbc2832391165c82dda",
+      "SwiftyUserDefaults": "f66bcd04088582c8fbb5cb8554d577e303bae396",
+      "neumorphic": "1f5745173dedddf0227fffc47cbdaa3100e5569a",
+      "purchases-ios-spm": "629a56ecef190469914b8f0914bf0446363eb09f",
+      "swiftui-introspect": "a08b87f96b41055577721a6e397562b21ad52454"
+    }
+  }
+}
