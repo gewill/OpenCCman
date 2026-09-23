@@ -221,8 +221,14 @@ final class AppPerformanceAudit {
       let inputHash = digest(model.inputText), resultHash = digest(model.resultText)
       let count = (source.string as NSString).length
       for position in [0, count / 2, max(0, count - 2)] {
-        // Land on a complete composed character, including at emoji boundaries.
-        let range = (source.string as NSString).rangeOfComposedCharacterSequence(at: position)
+        let text = source.string as NSString
+        // The repeated fixture's midpoint can land inside a family emoji.
+        // Check an ordinary glyph nearby so firstRect measures text navigation,
+        // rather than the geometry of one UTF-16 unit of a composed character.
+        let nextPlain = position == count / 2
+          ? text.range(of: "汉", range: NSRange(location: position, length: min(128, count - position)))
+          : NSRange(location: NSNotFound, length: 0)
+        let range = nextPlain.location != NSNotFound ? nextPlain : text.rangeOfComposedCharacterSequence(at: position)
         let scrollStart = now()
         record("scroll_begin_\(mib)_\(position)")
         source.setSelectedRange(NSRange(location: range.location, length: 0))
@@ -238,7 +244,9 @@ final class AppPerformanceAudit {
             scrollAttempts = 2
           }
         }
-        var scrollDetails: [String: Any] = ["action_ms": ms(scrollStart), "scroll_attempts": scrollAttempts]
+        var scrollDetails: [String: Any] = ["action_ms": ms(scrollStart), "scroll_attempts": scrollAttempts,
+                                            "target_character": range.location,
+                                            "target_kind": nextPlain.location == NSNotFound ? "composed" : "next_plain_han"]
         if let scroll = source.enclosingScrollView {
           let target = source.firstRect(forCharacterRange: NSRange(location: range.location, length: 1), actualRange: nil)
           let viewport = window.convertToScreen(scroll.convert(scroll.bounds, to: nil))

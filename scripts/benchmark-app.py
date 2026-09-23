@@ -204,6 +204,7 @@ def main():
                         'activity': 'userInitiatedAllowingIdleSystemSleep; foreground required after root ready',
                         'extra_windows': 'two fixed-size hosting windows at /home; not native WindowGroup lifecycle',
                         'layout': 'role + precomputed UTF16 length acknowledgement and display flush; exact UTF8 validation after timer; not presentation',
+                        'navigation_target': 'middle next ordinary Han glyph within 128 UTF16 units; start/end composed-character boundary',
                         'timer': '20ms main timer gap includes harness work and scheduling; not FPS',
                         'memory': 'RSS high water includes all previous work, fixtures and validation'}}
         build = ['xcodebuild', '-project', str(source / 'OpenCCman.xcodeproj'), '-scheme', 'OpenCCman',
