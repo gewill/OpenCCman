@@ -1,0 +1,749 @@
+{
+  "pid": 47737,
+  "rows": [
+    {
+      "app_active": false,
+      "elapsed_ms": 0.135709,
+      "maximum_main_timer_gap_ms": 0,
+      "memory": {
+        "physical_footprint_bytes": 4375176,
+        "process_peak_rss_bytes": 19791872,
+        "rss_bytes": 19791872,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "process_initialized",
+      "process_cpu_ms": 34.977,
+      "visible_window_count": 0
+    },
+    {
+      "app_active": true,
+      "app_init_to_root_layout_ms": 439.975584,
+      "elapsed_ms": 439.997667,
+      "maximum_main_timer_gap_ms": 0,
+      "memory": {
+        "physical_footprint_bytes": 44827752,
+        "process_peak_rss_bytes": 108036096,
+        "rss_bytes": 107855872,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "root_layout_ready",
+      "proc_pidinfo_ok": true,
+      "process_cpu_ms": 348.768,
+      "process_start_to_root_layout_ms": 485.5198860168457,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "elapsed_ms": 487.100084,
+      "maximum_main_timer_gap_ms": 0,
+      "memory": {
+        "physical_footprint_bytes": 186189048,
+        "process_peak_rss_bytes": 122339328,
+        "rss_bytes": 122028032,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "source_ready",
+      "process_cpu_ms": 398.775,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 602.146042,
+      "export_matches_result": true,
+      "input_bytes": 262144,
+      "input_sha256": "7cac0487db06bd752fc889a2c0dbbcb036c07df529afbb3a1b8e858b40510e13",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 229131512,
+        "process_peak_rss_bytes": 167706624,
+        "rss_bytes": 167706624,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 72.899792,
+      "name": "first_conversion",
+      "options": 1057,
+      "output_bytes": 262144,
+      "output_sha256": "9b4f64b367e2f946e1f389646ce4ea7c9c45a0df670b5140f07942ab8bbbf2fd",
+      "process_cpu_ms": 489.891,
+      "result_layout_flush_ms": 8.820666,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 922.578125,
+      "export_matches_result": true,
+      "input_bytes": 262144,
+      "input_sha256": "7cac0487db06bd752fc889a2c0dbbcb036c07df529afbb3a1b8e858b40510e13",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 238044408,
+        "process_peak_rss_bytes": 170672128,
+        "rss_bytes": 170672128,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 21.374708,
+      "name": "hot_1",
+      "options": 1057,
+      "output_bytes": 262144,
+      "output_sha256": "9b4f64b367e2f946e1f389646ce4ea7c9c45a0df670b5140f07942ab8bbbf2fd",
+      "process_cpu_ms": 562.444,
+      "result_layout_flush_ms": 3.001083,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 1238.959875,
+      "export_matches_result": true,
+      "input_bytes": 262144,
+      "input_sha256": "7cac0487db06bd752fc889a2c0dbbcb036c07df529afbb3a1b8e858b40510e13",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 238699768,
+        "process_peak_rss_bytes": 171704320,
+        "rss_bytes": 171704320,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 20.349083,
+      "name": "hot_2",
+      "options": 1057,
+      "output_bytes": 262144,
+      "output_sha256": "9b4f64b367e2f946e1f389646ce4ea7c9c45a0df670b5140f07942ab8bbbf2fd",
+      "process_cpu_ms": 628.621,
+      "result_layout_flush_ms": 2.697459,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 1539.005875,
+      "export_matches_result": true,
+      "input_bytes": 262144,
+      "input_sha256": "7cac0487db06bd752fc889a2c0dbbcb036c07df529afbb3a1b8e858b40510e13",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 232670528,
+        "process_peak_rss_bytes": 177389568,
+        "rss_bytes": 176750592,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 11.690916,
+      "name": "hot_3",
+      "options": 1057,
+      "output_bytes": 262144,
+      "output_sha256": "9b4f64b367e2f946e1f389646ce4ea7c9c45a0df670b5140f07942ab8bbbf2fd",
+      "process_cpu_ms": 696.147,
+      "result_layout_flush_ms": 2.658958,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 1850.451125,
+      "export_matches_result": true,
+      "input_bytes": 262144,
+      "input_sha256": "7cac0487db06bd752fc889a2c0dbbcb036c07df529afbb3a1b8e858b40510e13",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 239650160,
+        "process_peak_rss_bytes": 179404800,
+        "rss_bytes": 178831360,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 19.699,
+      "name": "hot_4",
+      "options": 1057,
+      "output_bytes": 262144,
+      "output_sha256": "9b4f64b367e2f946e1f389646ce4ea7c9c45a0df670b5140f07942ab8bbbf2fd",
+      "process_cpu_ms": 760.208,
+      "result_layout_flush_ms": 0.133167,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 2178.258959,
+      "export_matches_result": true,
+      "input_bytes": 262144,
+      "input_sha256": "7cac0487db06bd752fc889a2c0dbbcb036c07df529afbb3a1b8e858b40510e13",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 239650160,
+        "process_peak_rss_bytes": 179404800,
+        "rss_bytes": 178847744,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 22.615,
+      "name": "hot_5",
+      "options": 1057,
+      "output_bytes": 262144,
+      "output_sha256": "9b4f64b367e2f946e1f389646ce4ea7c9c45a0df670b5140f07942ab8bbbf2fd",
+      "process_cpu_ms": 822.776,
+      "result_layout_flush_ms": 0.130042,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 2468.203167,
+      "export_matches_result": true,
+      "input_bytes": 69,
+      "input_sha256": "fa881d8c09525979cf427f5ea2bc598c526a4802d4c001b716557e6846d2e284",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 242042248,
+        "process_peak_rss_bytes": 181207040,
+        "rss_bytes": 181125120,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 9.784958,
+      "name": "configuration_2",
+      "options": 2,
+      "output_bytes": 69,
+      "output_sha256": "fa881d8c09525979cf427f5ea2bc598c526a4802d4c001b716557e6846d2e284",
+      "process_cpu_ms": 861.929,
+      "result_layout_flush_ms": 0.135791,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 2778.140334,
+      "export_matches_result": true,
+      "input_bytes": 69,
+      "input_sha256": "fa881d8c09525979cf427f5ea2bc598c526a4802d4c001b716557e6846d2e284",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 230262152,
+        "process_peak_rss_bytes": 181747712,
+        "rss_bytes": 181649408,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 14.87275,
+      "name": "configuration_1",
+      "options": 1,
+      "output_bytes": 69,
+      "output_sha256": "47029e383e3ed40a76ee3d5c7d9889f23421f899df4bc42f02027639fef286a3",
+      "process_cpu_ms": 907.004,
+      "result_layout_flush_ms": 4.403875,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 3073.094709,
+      "export_matches_result": true,
+      "input_bytes": 69,
+      "input_sha256": "fa881d8c09525979cf427f5ea2bc598c526a4802d4c001b716557e6846d2e284",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 230294920,
+        "process_peak_rss_bytes": 181878784,
+        "rss_bytes": 181780480,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 15.376583,
+      "name": "configuration_1025",
+      "options": 1025,
+      "output_bytes": 69,
+      "output_sha256": "33acdf0e737e2d4da50d684d58ca839cd476e869b1fa85ee48820a30fca03320",
+      "process_cpu_ms": 947.047,
+      "result_layout_flush_ms": 0.107666,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 3381.3555,
+      "export_matches_result": true,
+      "input_bytes": 69,
+      "input_sha256": "fa881d8c09525979cf427f5ea2bc598c526a4802d4c001b716557e6846d2e284",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 108758408,
+        "process_peak_rss_bytes": 182009856,
+        "rss_bytes": 181911552,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 16.380083,
+      "name": "configuration_33",
+      "options": 33,
+      "output_bytes": 69,
+      "output_sha256": "68fa504b68ee331822c61fa40ed80624e69227055f633d095d01e3bff2661b26",
+      "process_cpu_ms": 989.146,
+      "result_layout_flush_ms": 0.12125,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 3668.45425,
+      "export_matches_result": true,
+      "input_bytes": 69,
+      "input_sha256": "fa881d8c09525979cf427f5ea2bc598c526a4802d4c001b716557e6846d2e284",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 106087840,
+        "process_peak_rss_bytes": 184909824,
+        "rss_bytes": 183582720,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 10.355334,
+      "name": "configuration_1057",
+      "options": 1057,
+      "output_bytes": 69,
+      "output_sha256": "ed1d2f3751dd0a673e63c6915a6d020e01e668b580bd46445f774b1feabdfd1f",
+      "process_cpu_ms": 1026.997,
+      "result_layout_flush_ms": 2.604917,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 3973.606459,
+      "export_matches_result": true,
+      "input_bytes": 69,
+      "input_sha256": "fa881d8c09525979cf427f5ea2bc598c526a4802d4c001b716557e6846d2e284",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 106218912,
+        "process_peak_rss_bytes": 184909824,
+        "rss_bytes": 183926784,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 15.600333,
+      "name": "configuration_65",
+      "options": 65,
+      "output_bytes": 69,
+      "output_sha256": "4918cd268b7a8b2b5b58050e224dfe1b02a9afd242dea74214c39241ddb0d093",
+      "process_cpu_ms": 1069.169,
+      "result_layout_flush_ms": 0.115166,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 4260.162167,
+      "export_matches_result": true,
+      "input_bytes": 69,
+      "input_sha256": "fa881d8c09525979cf427f5ea2bc598c526a4802d4c001b716557e6846d2e284",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 106169760,
+        "process_peak_rss_bytes": 184909824,
+        "rss_bytes": 183943168,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 12.148,
+      "name": "configuration_1089",
+      "options": 1089,
+      "output_bytes": 69,
+      "output_sha256": "459b149f3624df692265d62886b2d8a5dbf82af35231df960899e7066bfb1bed",
+      "process_cpu_ms": 1109.481,
+      "result_layout_flush_ms": 3.317791,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "elapsed_ms": 4527.125209,
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 105940384,
+        "process_peak_rss_bytes": 184909824,
+        "rss_bytes": 183943168,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "seven_configurations_resident",
+      "process_cpu_ms": 1111.142,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 4589.462209,
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 236750240,
+        "process_peak_rss_bytes": 189562880,
+        "rss_bytes": 189235200,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "source_1MiB",
+      "process_cpu_ms": 1174.914,
+      "read_decode_ms": 9.111042,
+      "source_layout_flush_ms": 25.533417,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 4688.425542,
+      "export_matches_result": true,
+      "input_bytes": 1048576,
+      "input_sha256": "27efbab8866d9661ea4227677a34192b1b0543647e2c0786d6a24786048cb8c9",
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 247449016,
+        "process_peak_rss_bytes": 193593344,
+        "rss_bytes": 193511424,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 27.811666,
+      "name": "convert_1MiB",
+      "options": 1057,
+      "output_bytes": 1048576,
+      "output_sha256": "a9dcd29f213eef7794bfb3ab977d10eb0520af0fed097ff1273282360624d1bd",
+      "process_cpu_ms": 1274.034,
+      "result_layout_flush_ms": 0.158583,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 5092.484625,
+      "maximum_main_timer_gap_ms": 81.932292,
+      "memory": {
+        "physical_footprint_bytes": 262342096,
+        "process_peak_rss_bytes": 215072768,
+        "rss_bytes": 215007232,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "source_5MiB",
+      "process_cpu_ms": 1425.709,
+      "read_decode_ms": 4.040458,
+      "source_layout_flush_ms": 26.304791,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 5435.04325,
+      "export_matches_result": true,
+      "input_bytes": 5242880,
+      "input_sha256": "a6e587d6a7f5e71f6495cdb4922d5875b35a4f08052f0d06651de74d4e8bdd54",
+      "maximum_main_timer_gap_ms": 116.445875,
+      "memory": {
+        "physical_footprint_bytes": 287262184,
+        "process_peak_rss_bytes": 239943680,
+        "rss_bytes": 239943680,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 94.909291,
+      "name": "convert_5MiB",
+      "options": 1057,
+      "output_bytes": 5242880,
+      "output_sha256": "63b99996273695b444c331ccf7e34133974d904e00eec93d3524bf121b930f07",
+      "process_cpu_ms": 1772.392,
+      "result_layout_flush_ms": 2.49525,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 5984.252042,
+      "maximum_main_timer_gap_ms": 222.427708,
+      "memory": {
+        "physical_footprint_bytes": 327828992,
+        "process_peak_rss_bytes": 280592384,
+        "rss_bytes": 280477696,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "source_10MiB",
+      "process_cpu_ms": 2072.5370000000003,
+      "read_decode_ms": 10.471041,
+      "source_layout_flush_ms": 33.413875,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 6652.479167,
+      "export_matches_result": true,
+      "input_bytes": 10485760,
+      "input_sha256": "30dd4e4c696b7d1fb2deb5c4d4b5fd261d962f484c6fcd85744ec36a3853dcab",
+      "maximum_main_timer_gap_ms": 232.333417,
+      "memory": {
+        "physical_footprint_bytes": 376145456,
+        "process_peak_rss_bytes": 322142208,
+        "rss_bytes": 322142208,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 184.426583,
+      "name": "convert_10MiB",
+      "options": 1057,
+      "output_bytes": 10485760,
+      "output_sha256": "324edfbb081f9819ff7a517978ecd6ce09c9c067c757294b466c3bb91c747f29",
+      "process_cpu_ms": 2740.89,
+      "result_layout_flush_ms": 0.11875,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "elapsed_ms": 7176.889875,
+      "maximum_main_timer_gap_ms": 445.735708,
+      "memory": {
+        "physical_footprint_bytes": 364299824,
+        "process_peak_rss_bytes": 322224128,
+        "rss_bytes": 322125824,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "large_text_cleared",
+      "process_cpu_ms": 2760.7200000000003,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 7728.226875,
+      "export_matches_result": true,
+      "input_bytes": 1048576,
+      "input_sha256": "27efbab8866d9661ea4227677a34192b1b0543647e2c0786d6a24786048cb8c9",
+      "maximum_main_timer_gap_ms": 445.735708,
+      "memory": {
+        "physical_footprint_bytes": 388662832,
+        "process_peak_rss_bytes": 333168640,
+        "rss_bytes": 333103104,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 30.909875,
+      "name": "window_cycle_1_1",
+      "options": 1057,
+      "output_bytes": 1048576,
+      "output_sha256": "a9dcd29f213eef7794bfb3ab977d10eb0520af0fed097ff1273282360624d1bd",
+      "process_cpu_ms": 3054.9610000000002,
+      "result_layout_flush_ms": 0.139917,
+      "visible_window_count": 2
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 8538.067584,
+      "export_matches_result": true,
+      "input_bytes": 1048576,
+      "input_sha256": "27efbab8866d9661ea4227677a34192b1b0543647e2c0786d6a24786048cb8c9",
+      "maximum_main_timer_gap_ms": 445.735708,
+      "memory": {
+        "physical_footprint_bytes": 409617968,
+        "process_peak_rss_bytes": 341114880,
+        "rss_bytes": 340574208,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 26.387541,
+      "name": "window_cycle_1_2",
+      "options": 1057,
+      "output_bytes": 1048576,
+      "output_sha256": "a9dcd29f213eef7794bfb3ab977d10eb0520af0fed097ff1273282360624d1bd",
+      "process_cpu_ms": 3344.169,
+      "result_layout_flush_ms": 0.3185,
+      "visible_window_count": 3
+    },
+    {
+      "app_active": true,
+      "elapsed_ms": 8799.993875,
+      "maximum_main_timer_gap_ms": 445.735708,
+      "memory": {
+        "physical_footprint_bytes": 409650736,
+        "process_peak_rss_bytes": 341557248,
+        "rss_bytes": 340606976,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "three_windows_cycle_1",
+      "process_cpu_ms": 3357.627,
+      "visible_window_count": 3
+    },
+    {
+      "app_active": true,
+      "elapsed_ms": 8802.121625,
+      "maximum_main_timer_gap_ms": 445.735708,
+      "memory": {
+        "physical_footprint_bytes": 409667120,
+        "process_peak_rss_bytes": 341557248,
+        "rss_bytes": 340623360,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "windows_close_begin_cycle_1",
+      "process_cpu_ms": 3359.703,
+      "visible_window_count": 3
+    },
+    {
+      "app_active": true,
+      "elapsed_ms": 8821.595584,
+      "maximum_main_timer_gap_ms": 445.735708,
+      "memory": {
+        "physical_footprint_bytes": 409716272,
+        "process_peak_rss_bytes": 341557248,
+        "rss_bytes": 340672512,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "windows_close_returned_cycle_1",
+      "process_cpu_ms": 3369.059,
+      "visible_window_count": 1
+    },
+    {
+      "all_extra_models_alive": 0,
+      "app_active": true,
+      "elapsed_ms": 9359.579459,
+      "extra_models_alive": 0,
+      "maximum_main_timer_gap_ms": 445.735708,
+      "memory": {
+        "physical_footprint_bytes": 386254384,
+        "process_peak_rss_bytes": 341557248,
+        "rss_bytes": 340508672,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "windows_closed_cycle_1",
+      "process_cpu_ms": 3411.744,
+      "visible_window_count": 1
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 9910.495792,
+      "export_matches_result": true,
+      "input_bytes": 1048576,
+      "input_sha256": "27efbab8866d9661ea4227677a34192b1b0543647e2c0786d6a24786048cb8c9",
+      "maximum_main_timer_gap_ms": 445.735708,
+      "memory": {
+        "physical_footprint_bytes": 395576880,
+        "process_peak_rss_bytes": 342048768,
+        "rss_bytes": 341147648,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 31.33125,
+      "name": "window_cycle_2_1",
+      "options": 1057,
+      "output_bytes": 1048576,
+      "output_sha256": "a9dcd29f213eef7794bfb3ab977d10eb0520af0fed097ff1273282360624d1bd",
+      "process_cpu_ms": 3691.6620000000003,
+      "result_layout_flush_ms": 0.144542,
+      "visible_window_count": 2
+    },
+    {
+      "app_active": true,
+      "editors_match_model": true,
+      "elapsed_ms": 10718.224584,
+      "export_matches_result": true,
+      "input_bytes": 1048576,
+      "input_sha256": "27efbab8866d9661ea4227677a34192b1b0543647e2c0786d6a24786048cb8c9",
+      "maximum_main_timer_gap_ms": 445.735708,
+      "memory": {
+        "physical_footprint_bytes": 413795912,
+        "process_peak_rss_bytes": 346144768,
+        "rss_bytes": 339886080,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "model_completion_ms": 27.148666,
+      "name": "window_cycle_2_2",
+      "options": 1057,
+      "output_bytes": 1048576,
+      "output_sha256": "a9dcd29f213eef7794bfb3ab977d10eb0520af0fed097ff1273282360624d1bd",
+      "process_cpu_ms": 3977.615,
+      "result_layout_flush_ms": 0.136083,
+      "visible_window_count": 3
+    },
+    {
+      "app_active": true,
+      "elapsed_ms": 10979.229542,
+      "maximum_main_timer_gap_ms": 445.735708,
+      "memory": {
+        "physical_footprint_bytes": 413828680,
+        "process_peak_rss_bytes": 346144768,
+        "rss_bytes": 339918848,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "three_windows_cycle_2",
+      "process_cpu_ms": 3990.335,
+      "visible_window_count": 3
+    },
+    {
+      "app_active": true,
+      "elapsed_ms": 10982.871167,
+      "maximum_main_timer_gap_ms": 445.735708,
+      "memory": {
+        "physical_footprint_bytes": 413828680,
+        "process_peak_rss_bytes": 346144768,
+        "rss_bytes": 339918848,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "windows_close_begin_cycle_2",
+      "process_cpu_ms": 3993.823,
+      "visible_window_count": 3
+    },
+    {
+      "app_active": true,
+      "elapsed_ms": 11000.861667,
+      "maximum_main_timer_gap_ms": 445.735708,
+      "memory": {
+        "physical_footprint_bytes": 413828680,
+        "process_peak_rss_bytes": 346144768,
+        "rss_bytes": 339918848,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "windows_close_returned_cycle_2",
+      "process_cpu_ms": 4002.6459999999997,
+      "visible_window_count": 1
+    },
+    {
+      "all_extra_models_alive": 0,
+      "app_active": true,
+      "elapsed_ms": 11536.095042,
+      "extra_models_alive": 0,
+      "maximum_main_timer_gap_ms": 445.735708,
+      "memory": {
+        "physical_footprint_bytes": 383174216,
+        "process_peak_rss_bytes": 346144768,
+        "rss_bytes": 338952192,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "windows_closed_cycle_2",
+      "process_cpu_ms": 4047.956,
+      "visible_window_count": 1
+    }
+  ],
+  "schema": 1,
+  "status": "complete",
+  "window_content_points": [
+    1200,
+    800
+  ],
+  "metadata_sha256": "a1d0105710b3c36273a05bb5f339c6a0f02dde9180e1ababc020288202de3c3e",
+  "launch_to_exit_seconds": 11.642699749998428
+}
