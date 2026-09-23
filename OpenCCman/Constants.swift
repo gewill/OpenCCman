@@ -150,14 +150,18 @@ enum LocaleConstants: String, CaseIterable, Identifiable, Pickable {
   }
 
   var helpUrl: String {
-    "https://gewill.org/2023/12/17/introducing-OpenCCman-\(identifier)/"
+    "https://openccman.gewill.org/\(websiteLanguage)/support.html"
   }
 
   var privacyUrl: String {
+    "https://openccman.gewill.org/\(websiteLanguage)/privacy.html"
+  }
+
+  private var websiteLanguage: String {
     switch identifier {
-    case Self.zh_Hant.identifier: "\(helpUrl)#%E9%9A%B1%E7%A7%81%E6%94%BF%E7%AD%96"
-    case Self.zh_Hans.identifier: "\(helpUrl)#%E9%9A%90%E7%A7%81%E6%94%BF%E7%AD%96"
-    default: "\(helpUrl)#Privacy-policy"
+    case Self.zh_Hant.identifier: Self.zh_Hant.identifier
+    case Self.zh_Hans.identifier: Self.zh_Hans.identifier
+    default: Self.en.identifier
     }
   }
 
