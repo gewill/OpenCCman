@@ -10,6 +10,8 @@
 
 本目录跟踪 [#18](https://github.com/gewill/OpenCCman/issues/18)。[2026-09-14 完整结果](2026-09-14/README.md) 保存同机对照和原始数据。先在固定环境测量，再决定优化；引擎微基准不能替代真实编辑器、窗口和应用进程的结果。
 
+[2026-09-23 同机旧／新引擎应用对照](2026-09-23-engine-comparison/README.md)补充最终 2.0 源码的五轮交错测量，并记录旧 wrapper 在默认 U+0000 固定答案上的失败。两版性能比较使用显式 `--comparison-no-nul` 共同输入；默认正确性测试仍包含 U+0000，不得把这组共同输入结果当作旧版通过完整固定答案。
+
 ## 重复测量
 
 需要 macOS、Xcode、已解锁的图形登录会话和可用的 SwiftPM 依赖。输出目录必须是仓库外的新目录。脚本会复制源码和依赖到该目录，注入独立测试入口，构建 Release。原始工程、依赖缓存、正式应用和 `build*` 分支均不会修改。
@@ -29,6 +31,8 @@ python3 -m unittest discover -s Tests/Benchmarks -p 'test_*.py'
 ```
 
 不要同时启动两个测量进程，它们共用测试 bundle ID。`--reuse-build` 使用已记录的源码快照；修改工作区不会暗中改变已构建样本。`--start-index` 可追加样本，已有样本不会覆盖。失败、超时的 JSON 留在输出目录，比较器拒绝不完整样本。先将诊断样本移到独立目录，再进行正式比较；不要只挑选较快样本。
+
+如果旧版在默认语料的 U+0000 固定答案失败，先保留失败 JSON；需要测两版共同路径时，在**两次构建**中同时加入 `--comparison-no-nul`，各使用新的输出目录。`--reuse-build` 会读取锁定的输入配置，不能在复用时临时切换。此参数仅改变七配置小语料的 NUL，不改变默认回归或其他阶段语料；报告必须明确标注这一范围。
 
 `Tests/Benchmarks/AppPerformanceAudit.swift` **不在正式 Xcode target 中**。它仅由脚本加入临时项目，因此不会给正式版本增加购买绕过入口、自动转换或测试窗口。测试包使用独立 `org.gewill.OpenCCman.PerformanceAudit` 标识、独立偏好、临时 Pro 权益、ad-hoc 签名和关闭的 sandbox。RevenueCat 初始化保留；权益刷新、delegate 回写、评分和 What's New 弹窗在快照中屏蔽。此配置不验证购买、签名文件权限或正式 TestFlight 启动。
 

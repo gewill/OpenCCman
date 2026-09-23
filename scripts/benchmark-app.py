@@ -108,6 +108,7 @@ def main():
     parser.add_argument('--build-only', action='store_true', help='Build now, measure later without competing compiler load')
     parser.add_argument('--disable-background-layout', action='store_true', help='Explicit isolated TextKit 1 experiment')
     parser.add_argument('--engine-revision', help='Comparison only: full wrapper SHA in the private snapshot')
+    parser.add_argument('--comparison-no-nul', action='store_true', help='Use the common-input comparison fixture without U+0000; default correctness fixture remains unchanged')
     parser.add_argument('--reuse-build', action='store_true', help='Rerun the already built, recorded source snapshot')
     args = parser.parse_args()
     args.output = args.output.resolve()
@@ -115,7 +116,7 @@ def main():
         parser.error('Use positive samples and an output directory outside this repository')
     if args.engine_revision and not re.fullmatch(r'[0-9a-f]{40}', args.engine_revision):
         parser.error('Engine comparison revision must be a full lowercase SHA')
-    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.packages):
+    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.packages or args.comparison_no_nul):
         parser.error('Reuse the recorded build without source/dependency overrides')
     source = args.output / 'source'
     if not args.reuse_build:
@@ -145,6 +146,7 @@ def main():
                     'started_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
                     'source_hashes': source_hashes(source),
                     'conditions': {'protocol': PROTOCOL, 'suite': 'reflow' if args.reflow else 'conversion', 'configuration': 'Release -O',
+                        'input_profile': 'comparison-without-nul' if args.comparison_no_nul else 'default',
                         'isolation': 'ad-hoc signature; diagnostic bundle/preferences; sandbox disabled',
                         'sdk': 'RevenueCat configure retained; synthetic Pro; refresh/delegate/review/WhatsNew suppressed',
                         'window_content_points': [1200, 800], 'locale': 'en', 'theme': 'Light',
@@ -180,8 +182,10 @@ def main():
         if output.exists():
             raise RuntimeError(f'Refusing to overwrite existing sample {output}')
         launch = time.monotonic()
+        profile_args = ['-performance-comparison-no-nul'] if metadata['conditions']['input_profile'] == 'comparison-without-nul' else []
         process = subprocess.Popen(['open', '-n', '-W', '-a', str(app), '--args', '-performance-output', str(output),
-                                    '-skip-whats-new', '-AppleLanguages', '(en)', '-AppleInterfaceStyle', 'Light'] + (['-performance-reflow'] if args.reflow else []))
+                                    '-skip-whats-new', '-AppleLanguages', '(en)', '-AppleInterfaceStyle', 'Light']
+                                   + (['-performance-reflow'] if args.reflow else []) + profile_args)
         # LaunchServices can create this SwiftUI process without an untitled window.
         # Send one reopen event after initialization; include this handshake in the
         # process-start metric instead of waiting for a human activation.

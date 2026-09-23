@@ -293,7 +293,11 @@ final class AppPerformanceAudit {
         try await convert(model, window: window, name: "hot_\(index)")
         guard digest(model.resultText) == expectedHotHash else { throw NSError(domain: "PerformanceAudit", code: 2) }
       }
-      model.replaceSource("软件网络鼠标里面伪说\r\n\r\n👨‍👩‍👧‍👦 e\u{301}\0结束")
+      // The historical 1.2.0 wrapper truncates at U+0000. Keep the default
+      // correctness check intact, and use a common input only for its
+      // separately labeled performance comparison with 1.4.2.
+      let comparisonWithoutNUL = ProcessInfo.processInfo.arguments.contains("-performance-comparison-no-nul")
+      model.replaceSource("软件网络鼠标里面伪说\r\n\r\n👨‍👩‍👧‍👦 e\u{301}" + (comparisonWithoutNUL ? "结束" : "\0结束"))
       for target in ConversionConfiguration.Language.allCases {
         for variant in ConversionConfiguration.Variant.allCases {
           for region in ConversionConfiguration.Region.allCases {
@@ -306,7 +310,8 @@ final class AppPerformanceAudit {
                             33: "軟件網絡鼠標裡面偽說", 65: "軟件網絡鼠標裏面偽説",
                             1025: "軟體網路滑鼠裏面僞說", 1057: "軟體網路滑鼠裡面偽說",
                             1089: "軟體網路滑鼠裏面偽説"]
-            let expected = prefixes[model.options.rawValue]! + "\r\n\r\n👨‍👩‍👧‍👦 e\u{301}\0" + (target == .simplified ? "结束" : "結束")
+            let expected = prefixes[model.options.rawValue]! + "\r\n\r\n👨‍👩‍👧‍👦 e\u{301}"
+              + (comparisonWithoutNUL ? "" : "\0") + (target == .simplified ? "结束" : "結束")
             guard model.resultText == expected else { throw NSError(domain: "PerformanceAudit", code: 3, userInfo: [NSLocalizedDescriptionKey: "Known-answer fixture mismatch"] ) }
           }
         }
