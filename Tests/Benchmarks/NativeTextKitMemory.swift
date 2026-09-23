@@ -16,6 +16,18 @@ enum NativeTextKitMemory {
     }
     let mode = value(after: "--mode")
     precondition(mode == "tk1" || mode == "tk2")
+    let widthSwitch = arguments.contains("--width-switch")
+    let noRescroll = arguments.contains("--no-rescroll")
+    precondition(!noRescroll || widthSwitch)
+    let narrowWidth: Double
+    if arguments.contains("--narrow-width") {
+      guard let value = Double(value(after: "--narrow-width")), (300..<1200).contains(value) else {
+        fatalError("Invalid --narrow-width")
+      }
+      narrowWidth = value
+    } else {
+      narrowWidth = 800
+    }
     let input = URL(fileURLWithPath: value(after: "--input"))
     let output = URL(fileURLWithPath: value(after: "--output"))
     let source = try String(contentsOf: input, encoding: .utf8)
@@ -41,6 +53,10 @@ enum NativeTextKitMemory {
     editor.textContainerInset = NSSize(width: 0, height: 1)
     editor.textContainer?.widthTracksTextView = true
     editor.textContainer?.lineFragmentPadding = 0
+    if mode == "tk1" {
+      editor.layoutManager?.allowsNonContiguousLayout = true
+      editor.layoutManager?.backgroundLayoutEnabled = false
+    }
     editor.font = NSFont.userFont(ofSize: 0)
 
     let scroll = NSScrollView(frame: NSRect(x: 0, y: 0, width: 1200, height: 800))
@@ -80,6 +96,7 @@ enum NativeTextKitMemory {
         "textkit2": editor.textLayoutManager != nil,
         "fallback_events": switchCount,
         "visible": window.isVisible,
+        "window_content_points": [window.contentView?.bounds.width ?? 0, window.contentView?.bounds.height ?? 0],
         "viewport_y": scroll.contentView.bounds.minY,
         "editor_utf16": (editor.string as NSString).length
       ]
@@ -145,6 +162,23 @@ enum NativeTextKitMemory {
       try sample("scroll_\(name)", actionMS: Double(DispatchTime.now().uptimeNanoseconds - begin) / 1_000_000,
                  targetVisible: targetVisible, scrollAttempts: attempts,
                  targetRect: targetRect, viewportRect: viewportRect)
+    }
+    if widthSwitch {
+      let lastLocation = nsSource.rangeOfComposedCharacterSequence(at: max(0, sourceLength - 2)).location
+      let lastRange = NSRange(location: lastLocation, length: 0)
+      for (name, width) in [("width_narrow", narrowWidth), ("width_wide", 1200.0)] {
+        let begin = DispatchTime.now().uptimeNanoseconds
+        window.setContentSize(NSSize(width: width, height: 800))
+        if !noRescroll { editor.scrollRangeToVisible(lastRange) }
+        flush()
+        let targetRect = editor.firstRect(forCharacterRange: NSRange(location: lastLocation, length: 1), actualRange: nil)
+        let viewportRect = window.convertToScreen(scroll.convert(scroll.bounds, to: nil))
+        let visible = !targetRect.isEmpty && targetRect.intersects(viewportRect)
+        if !noRescroll { allTargetsVisible = allTargetsVisible && visible }
+        try sample(name, actionMS: Double(DispatchTime.now().uptimeNanoseconds - begin) / 1_000_000,
+                   targetVisible: visible, scrollAttempts: noRescroll ? 0 : 1, targetRect: targetRect,
+                   viewportRect: viewportRect)
+      }
     }
     let final: [String: Any] = [
       "status": allTargetsVisible ? "complete" : "target_not_visible", "pid": getpid(), "mode": mode,

@@ -135,6 +135,11 @@ final class AppPerformanceAudit {
       throw NSError(domain: "PerformanceAudit", code: 6,
                     userInfo: [NSLocalizedDescriptionKey: "Exact editor contents mismatch after stopping timer"])
     }
+    if ProcessInfo.processInfo.arguments.contains("-performance-require-textkit2") &&
+        (source.textLayoutManager == nil || result.textLayoutManager == nil) {
+      throw NSError(domain: "PerformanceAudit", code: 7,
+                    userInfo: [NSLocalizedDescriptionKey: "TextKit 2 editor switched to compatibility mode"])
+    }
   }
   private func awaitEditors(_ model: HomeViewModel, window: NSWindow) async throws {
     try await awaitEditorLengths((model.inputText.utf16.count, model.resultText.utf16.count), window: window)
@@ -225,6 +230,11 @@ final class AppPerformanceAudit {
         await yieldUI(window); await yieldUI(window)
         record("scroll_end_\(mib)_\(position)", ["action_ms": ms(scrollStart)])
         for axis in ["vertical", "horizontal"] {
+          if mib == 10, position == max(0, count - 2), axis == "vertical",
+             ProcessInfo.processInfo.arguments.contains("-performance-reflow-profile-pause") {
+            record("profile_before_final_layout")
+            try await Task.sleep(nanoseconds: 30_000_000_000)
+          }
           record("layout_begin_\(mib)_\(position)_\(axis)")
           let actionStart = now()
           NotificationCenter.default.post(name: .workspaceCommand, object: window, userInfo: ["command": axis])
@@ -239,7 +249,10 @@ final class AppPerformanceAudit {
           var details: [String: Any] = ["action_ms": actionMS, "selection": range.location,
             "input_sha256": inputHash, "output_sha256": resultHash,
             "source_viewport_y": source.enclosingScrollView?.contentView.bounds.minY ?? -1]
-          if #available(macOS 12.0, *) { details["textkit2"] = source.textLayoutManager != nil }
+          if #available(macOS 12.0, *) {
+            details["textkit2"] = source.textLayoutManager != nil
+            details["result_textkit2"] = editors(in: root).first(where: { !$0.isEditable })?.textLayoutManager != nil
+          }
           record("layout_end_\(mib)_\(position)_\(axis)", details)
         }
       }
@@ -270,6 +283,11 @@ final class AppPerformanceAudit {
       if ProcessInfo.processInfo.arguments.contains("-performance-reflow") {
         try await runReflow(model, window: window)
         timer?.invalidate(); timer = nil
+        if ProcessInfo.processInfo.arguments.contains("-performance-reflow-profile-hold") {
+          record("profiling_hold")
+          save(status: "profiling_hold")
+          return
+        }
         save(status: "complete")
         NSApp.terminate(nil)
         return

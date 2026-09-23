@@ -1,0 +1,40 @@
+{
+  "build_metadata_sha256": "a648dd4fea9098e99ad53b3b8aa69d1b98e5d38839a81b1f4ea52bd334ca79a8",
+  "source_commit": "d9ecd56f80983710695e2635d65deed6d0de0d66",
+  "variant": "textkit2-no-anchor",
+  "command": [
+    "open",
+    "-n",
+    "-W",
+    "-a",
+    "<private app>",
+    "--args",
+    "-performance-output",
+    "<profile>/run.json",
+    "-skip-whats-new",
+    "-AppleLanguages",
+    "(en)",
+    "-AppleInterfaceStyle",
+    "Light",
+    "-performance-reflow",
+    "-performance-require-textkit2",
+    "-performance-reflow-profile-pause",
+    "-performance-reflow-profile-hold"
+  ],
+  "instruments": [
+    "Allocations",
+    "VM Tracker"
+  ],
+  "xctrace_exit_code": 2,
+  "trace_exists": true,
+  "held_stages": [
+    "layout_begin_10_4512863_vertical",
+    "layout_end_10_4512863_vertical",
+    "layout_begin_10_4512863_horizontal",
+    "layout_end_10_4512863_horizontal",
+    "profiling_hold"
+  ],
+  "vmmap-summary.txt_exit_code": 0,
+  "vmmap-regions.txt_exit_code": 0,
+  "heap.txt_exit_code": 0
+}
