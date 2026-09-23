@@ -109,7 +109,7 @@ struct ProScene: View {
       }
     }
     .foregroundColor(.primary)
-    .frame(minWidth: 300, maxWidth: Constant.maxiPhoneScreenWidth)
+    .frame(maxWidth: Constant.maxiPhoneScreenWidth, alignment: .leading)
     .padding(Constant.padding * 2)
     .background(
       RoundedRectangle(cornerRadius: Constant.cornerRadius, style: .continuous)
