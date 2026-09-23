@@ -1,0 +1,136 @@
+{
+  "continuous-short-1024": {
+    "inputBytes": 1024,
+    "inputSHA256": "ac3ab2f473c50578fe4300cc0e5e5efdd737326a523d5db635219efadac12a8c",
+    "expectedBytes": 1024,
+    "expectedSHA256": "79063c4fb646e9d1f78c2f32a71d493949f8f0ef6e7f40666552c477e912704c",
+    "samples": 5,
+    "allCorrect": true,
+    "serviceCallMilliseconds": [
+      121.548541,
+      106.450375,
+      106.509625,
+      108.180708,
+      109.172459
+    ],
+    "medianMilliseconds": 108.180708,
+    "minMilliseconds": 106.450375,
+    "maxMilliseconds": 121.548541,
+    "files": [
+      "final/continuous-short-1024.jsonl"
+    ]
+  },
+  "continuous-short-1048576": {
+    "inputBytes": 1048576,
+    "inputSHA256": "c5baf78dc6f3e0910e842a28cb900a863fb22808f36c93431b22ef9f7fb9cbe7",
+    "expectedBytes": 1048576,
+    "expectedSHA256": "b21bd7e4b8728ddb3915b37c76dd84dd8ab2b52783510e7dd428bbfd46732441",
+    "samples": 5,
+    "allCorrect": true,
+    "serviceCallMilliseconds": [
+      122.569459,
+      107.679459,
+      105.825833,
+      106.869875,
+      106.778625
+    ],
+    "medianMilliseconds": 106.869875,
+    "minMilliseconds": 105.825833,
+    "maxMilliseconds": 122.569459,
+    "files": [
+      "final/continuous-short-1048576.jsonl"
+    ]
+  },
+  "continuous-short-5242880": {
+    "inputBytes": 5242880,
+    "inputSHA256": "b620087cf88dd80e5df1d515153a720ff13f657541076be377ed4ec469a9778f",
+    "expectedBytes": 5242880,
+    "expectedSHA256": "9d30b4eb969c68d60c1e06d0e011779ba8c45d0a34a610e9fcb2b52725a62b0d",
+    "samples": 5,
+    "allCorrect": true,
+    "serviceCallMilliseconds": [
+      229.713709,
+      210.774292,
+      525.981375,
+      523.083167,
+      525.518459
+    ],
+    "medianMilliseconds": 523.083167,
+    "minMilliseconds": 210.774292,
+    "maxMilliseconds": 525.981375,
+    "files": [
+      "final/continuous-short-5242880.jsonl"
+    ]
+  },
+  "continuous-short-10485760": {
+    "inputBytes": 10485760,
+    "inputSHA256": "8a020df3f5bf1f4e69a4b080da6616d69448a39a30e01a35b3683a8518edb816",
+    "expectedBytes": 10485760,
+    "expectedSHA256": "b00171e98ff0187530a7b44caeed0ec4532b991a5604fd6bbe2ce6d82c7f91bc",
+    "samples": 5,
+    "allCorrect": true,
+    "serviceCallMilliseconds": [
+      537.746,
+      737.171209,
+      1044.779125,
+      1147.378834,
+      1043.724458
+    ],
+    "medianMilliseconds": 1043.724458,
+    "minMilliseconds": 537.746,
+    "maxMilliseconds": 1147.378834,
+    "files": [
+      "final/continuous-short-10485760.jsonl"
+    ]
+  },
+  "paced-short-10MiB": {
+    "inputBytes": 10485760,
+    "inputSHA256": "8a020df3f5bf1f4e69a4b080da6616d69448a39a30e01a35b3683a8518edb816",
+    "expectedBytes": 10485760,
+    "expectedSHA256": "b00171e98ff0187530a7b44caeed0ec4532b991a5604fd6bbe2ce6d82c7f91bc",
+    "samples": 5,
+    "allCorrect": true,
+    "serviceCallMilliseconds": [
+      862.792125,
+      331.340416,
+      335.929875,
+      339.304041,
+      331.931833
+    ],
+    "medianMilliseconds": 335.929875,
+    "minMilliseconds": 331.340416,
+    "maxMilliseconds": 862.792125,
+    "files": [
+      "final/paced-short-paragraphs-10MiB-01.jsonl",
+      "final/paced-short-paragraphs-10MiB-02.jsonl",
+      "final/paced-short-paragraphs-10MiB-03.jsonl",
+      "final/paced-short-paragraphs-10MiB-04.jsonl",
+      "final/paced-short-paragraphs-10MiB-05.jsonl"
+    ]
+  },
+  "paced-long-10MiB": {
+    "inputBytes": 10485760,
+    "inputSHA256": "d9ce1492a3dc762c344824bc7f5dde1de8d35d8b0194cdf4e9f206099bb24f87",
+    "expectedBytes": 10485760,
+    "expectedSHA256": "e6d8cd4083d74159e9335223626c5ea4a72cc6d363640790bcc79cbb8128e903",
+    "samples": 5,
+    "allCorrect": true,
+    "serviceCallMilliseconds": [
+      968.962291,
+      334.401958,
+      333.220333,
+      334.254,
+      337.715708
+    ],
+    "medianMilliseconds": 334.401958,
+    "minMilliseconds": 333.220333,
+    "maxMilliseconds": 968.962291,
+    "files": [
+      "final/paced-long-paragraphs-10MiB-01.jsonl",
+      "final/paced-long-paragraphs-10MiB-02.jsonl",
+      "final/paced-long-paragraphs-10MiB-03.jsonl",
+      "final/paced-long-paragraphs-10MiB-04.jsonl",
+      "final/paced-long-paragraphs-10MiB-05.jsonl"
+    ]
+  }
+}
