@@ -1,6 +1,6 @@
 # What’s New cards
 
-参考 [Pingman #33](https://github.com/gewill/Pingman/issues/33)，OpenCCman 在应用内用原生 sheet 展示当前营销版本的新功能。首版内容对应已交付的 1.3 功能：常用转换预设、单个 TXT 文件导入与导出、取消和原稿保护。使用现有英文、简体中文、繁体中文三种语言。
+参考 [Pingman #33](https://github.com/gewill/Pingman/issues/33)，OpenCCman 在应用内用原生 sheet 展示当前营销版本的新功能。当前 2.0 内容包括自适应工作区、常用转换预设、单个 TXT 文件导入与导出、取消和原稿保护；保留 1.3 旧内容供历史版本使用。使用英文、简体中文、繁体中文三种语言。
 
 ## 展示规则
 
@@ -16,14 +16,14 @@
 
 ## 维护下一版内容
 
-1. 在 `OpenCCman/Model/WhatsNew.swift` 的 `WhatsNewRelease.content(for:)` 中定义该营销版本及卡片。当前只提供 `1.3`，不要为无内容的未来版本展示旧卡片。
+1. 在 `OpenCCman/Model/WhatsNew.swift` 的 `WhatsNewRelease.content(for:)` 中定义该营销版本及卡片。当前提供 `1.3` 与 `2.0`，不要为无内容的未来版本展示旧卡片。
 2. 在三份 `Localizable.strings` 中补齐所有标题和正文。只陈述已交付行为；取消不意味着正在运行的 C++ 已被强制中断。
 3. 更新 `Tests/Regression/WhatsNewChecks.swift` 和 `scripts/check-whats-new.sh` 的内容/语言预期，然后运行检查。
-4. 不要因为添加卡片而修改营销版本或构建号。按正常 PR 审核流程合入 `build` 后，才由现有 Xcode Cloud 流程发布。
+4. 不要因为添加卡片而修改营销版本或构建号。PR 以 `develop` 为目标；正式打包从 `build*` 分支通过 Xcode Cloud 发布。
 
 普通 UI 回归可传入启动参数 `-skip-whats-new`，只跳过自动卡片，设置入口仍可使用。首次展示专项检查不要传入该参数。当前仓库没有 XCUITest target；新增的自动化检查是隔离状态测试，不能替代真实 UI 验收。
 
-## 验证记录（2026-09-13）
+## 1.3 历史验证记录（2026-09-13）
 
 环境：Xcode 26.6（17F113），macOS 26.6.2，Apple Silicon。工程部署下限保持 iOS 14 / macOS 11，版本保持 1.3，依赖锁文件未改变。
 
@@ -59,6 +59,12 @@ xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
 以下尚未实际执行，不记作通过；状态测试已覆盖的分支也需要在设备上确认系统交互：
 
 - VoiceOver 连续朗读、最大辅助功能字号、iPhone/iPad 横竖屏和交互式下滑关闭；沿用 [辅助功能验收 #20](https://github.com/gewill/OpenCCman/issues/20)。
-- iOS 14 / macOS 11 真机的原生 sheet 行为；沿用 [最低系统验收 #16](https://github.com/gewill/OpenCCman/issues/16)。
+- 当前最低 iOS 15 / macOS 12 的原生 sheet 行为；沿用 [最低系统验收 #16](https://github.com/gewill/OpenCCman/issues/16)。
 - 转换尚未完成、导入/导出面板、错误/额度提示、Pro sheet 期间的实际 UI 延后与关闭后恢复；本次自动化验证的是相应状态条件及预约释放，未跑设备 UI 矩阵。
-- 本 PR 合并后的 Xcode Cloud 签名版本及 TestFlight。现有 1.3(44) 不包含这些新卡片。本次不触发发布分支或提交 App Review。
+- 2.0 的 Xcode Cloud 签名版本及 TestFlight。历史 1.3(44) 不包含这些新卡片。本次不触发发布分支或提交 App Review。
+
+## 2.0 内容接入（2026-09-23）
+
+工程已改为 `MARKETING_VERSION = 2.0`。此前内容函数仅接受 `1.3`，使 2.0 自动展示与设置页手动入口均不可用；本次按当前版本新增四张三语卡片，不修改既有弹窗互斥规则或已持久化的 1.3 记录。新的 2.0 构建首次实际展示后写入 `lastPresentedWhatsNewVersion = 2.0`。在无可见 Device Hub 窗口的模拟器 CLI 启动中，初始 `scenePhase` 为 `inactive`，因此未自动弹出；经交互使场景转为 `active`、回到主页后能自动展示。这个无窗口状态不能代替正常前台启动验收。
+
+本节只记录内容接入。#34 的任务中延后、系统面板、设备方向、VoiceOver、最低系统及签名包验证仍需分别记录实际结果。
