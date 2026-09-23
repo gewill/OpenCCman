@@ -1,0 +1,44 @@
+{
+  "build_metadata_sha256": "a648dd4fea9098e99ad53b3b8aa69d1b98e5d38839a81b1f4ea52bd334ca79a8",
+  "source_commit": "d9ecd56f80983710695e2635d65deed6d0de0d66",
+  "variant": "textkit2-no-anchor",
+  "profile_driver_sha256": "dd3c328dd64da3a0d0e8ccc3463f3576668bcc8fde0e3e27c62b034cea64acd7",
+  "malloc_stack_logging": false,
+  "command": [
+    "open",
+    "-n",
+    "-W",
+    "-a",
+    "<private app>",
+    "--args",
+    "-performance-output",
+    "<profile>/run.json",
+    "-skip-whats-new",
+    "-AppleLanguages",
+    "(en)",
+    "-AppleInterfaceStyle",
+    "Light",
+    "-performance-reflow",
+    "-performance-reflow-profile-pause",
+    "-performance-reflow-profile-hold",
+    "-performance-require-textkit2"
+  ],
+  "instruments": [
+    "Allocations",
+    "VM Tracker"
+  ],
+  "before-vmmap-summary.txt_exit_code": 0,
+  "before-heap.txt_exit_code": 0,
+  "before_capture_still_paused": true,
+  "xctrace_skipped": true,
+  "held_stages": [
+    "layout_begin_10_4512863_vertical",
+    "layout_end_10_4512863_vertical",
+    "layout_begin_10_4512863_horizontal",
+    "layout_end_10_4512863_horizontal",
+    "profiling_hold"
+  ],
+  "vmmap-summary.txt_exit_code": 0,
+  "vmmap-regions.txt_exit_code": 0,
+  "heap.txt_exit_code": 0
+}

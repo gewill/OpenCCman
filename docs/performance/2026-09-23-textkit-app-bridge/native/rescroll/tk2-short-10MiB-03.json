@@ -1,0 +1,207 @@
+{
+  "mode": "tk2",
+  "pid": 95153,
+  "rows": [
+    {
+      "editor_utf16": 0,
+      "elapsed_ms": 194.947292,
+      "fallback_events": 0,
+      "name": "empty_ready",
+      "physical_footprint_bytes": 46875560,
+      "rss_bytes": 108445696,
+      "textkit2": true,
+      "viewport_y": 0,
+      "visible": true,
+      "window_content_points": [
+        1200,
+        800
+      ]
+    },
+    {
+      "action_ms": 32.739583,
+      "editor_utf16": 4512865,
+      "elapsed_ms": 228.262542,
+      "fallback_events": 0,
+      "name": "first_display",
+      "physical_footprint_bytes": 64111720,
+      "rss_bytes": 130285568,
+      "textkit2": true,
+      "viewport_y": 0,
+      "visible": true,
+      "window_content_points": [
+        1200,
+        800
+      ]
+    },
+    {
+      "action_ms": 22.031208,
+      "editor_utf16": 4512865,
+      "elapsed_ms": 250.801459,
+      "fallback_events": 0,
+      "name": "scroll_start",
+      "physical_footprint_bytes": 64111720,
+      "rss_bytes": 130285568,
+      "scroll_attempts": 1,
+      "target_screen_rect": [
+        0,
+        845,
+        12,
+        14
+      ],
+      "target_visible": true,
+      "textkit2": true,
+      "viewport_screen_rect": [
+        0,
+        60,
+        1200,
+        800
+      ],
+      "viewport_y": 0,
+      "visible": true,
+      "window_content_points": [
+        1200,
+        800
+      ]
+    },
+    {
+      "action_ms": 28.081375,
+      "editor_utf16": 4512865,
+      "elapsed_ms": 279.350875,
+      "fallback_events": 0,
+      "name": "scroll_middle",
+      "physical_footprint_bytes": 202245296,
+      "rss_bytes": 143474688,
+      "scroll_attempts": 1,
+      "target_screen_rect": [
+        0,
+        475.0454545454122,
+        12,
+        14
+      ],
+      "target_visible": true,
+      "textkit2": true,
+      "viewport_screen_rect": [
+        0,
+        60,
+        1200,
+        800
+      ],
+      "viewport_y": 1948275.5,
+      "visible": true,
+      "window_content_points": [
+        1200,
+        800
+      ]
+    },
+    {
+      "action_ms": 23.456083,
+      "editor_utf16": 4512865,
+      "elapsed_ms": 303.337459,
+      "fallback_events": 0,
+      "name": "scroll_end",
+      "physical_footprint_bytes": 207668400,
+      "rss_bytes": 148176896,
+      "scroll_attempts": 1,
+      "target_screen_rect": [
+        60.064453125,
+        67.47740720817819,
+        6.673828125,
+        14
+      ],
+      "target_visible": true,
+      "textkit2": true,
+      "viewport_screen_rect": [
+        0,
+        60,
+        1200,
+        800
+      ],
+      "viewport_y": 3723742.5,
+      "visible": true,
+      "window_content_points": [
+        1200,
+        800
+      ]
+    },
+    {
+      "action_ms": 25.426583,
+      "editor_utf16": 4512865,
+      "elapsed_ms": 329.354667,
+      "fallback_events": 0,
+      "name": "width_narrow",
+      "physical_footprint_bytes": 209814704,
+      "rss_bytes": 144572416,
+      "scroll_attempts": 1,
+      "target_screen_rect": [
+        60.064453125,
+        67.21893491130322,
+        6.673828125,
+        14
+      ],
+      "target_visible": true,
+      "textkit2": true,
+      "viewport_screen_rect": [
+        0,
+        60,
+        500,
+        800
+      ],
+      "viewport_y": 3550793,
+      "visible": true,
+      "window_content_points": [
+        500,
+        800
+      ]
+    },
+    {
+      "action_ms": 23.482458,
+      "editor_utf16": 4512865,
+      "elapsed_ms": 353.339709,
+      "fallback_events": 0,
+      "name": "width_wide",
+      "physical_footprint_bytes": 208340144,
+      "rss_bytes": 144736256,
+      "scroll_attempts": 1,
+      "target_screen_rect": [
+        60.064453125,
+        67.21893491130322,
+        6.673828125,
+        14
+      ],
+      "target_visible": true,
+      "textkit2": true,
+      "viewport_screen_rect": [
+        0,
+        60,
+        1200,
+        800
+      ],
+      "viewport_y": 3550793,
+      "visible": true,
+      "window_content_points": [
+        1200,
+        800
+      ]
+    }
+  ],
+  "source_utf8_bytes": 10485760,
+  "source_utf16": 4512865,
+  "status": "complete",
+  "window_content_points": [
+    1200,
+    800
+  ],
+  "metadata_sha256": "f7162207c2f43b5d8bb1222e22b50cc40a47342a14e2bddbb469b5ae5ebc8a8f",
+  "command": [
+    "<output>/native-textkit-memory",
+    "--mode",
+    "tk2",
+    "--input",
+    "<output>/short-10MiB.txt",
+    "--output",
+    "<output>/tk2-short-10MiB-03.json",
+    "--width-switch",
+    "--narrow-width",
+    "500"
+  ]
+}

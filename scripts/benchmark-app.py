@@ -52,6 +52,31 @@ def prepare(destination):
     return source
 
 
+def prepare_textkit2_no_anchor(source):
+    """Replace the native editor only in the private benchmark snapshot.
+
+    The legacy glyph-based scroll keeper is intentionally excluded so this
+    first app-bridge comparison can isolate it as a separate integration axis.
+    """
+    editor = source / 'OpenCCman/View/WorkspaceTextEditor.swift'
+    replace_once(editor, '''      let storage = NSTextStorage()
+      let layout = NSLayoutManager()
+      layout.allowsNonContiguousLayout = true
+      layout.backgroundLayoutEnabled = false
+      storage.addLayoutManager(layout)
+      let container = NSTextContainer(containerSize: NSSize(width: 1, height: CGFloat.greatestFiniteMagnitude))
+      container.widthTracksTextView = true
+      container.lineFragmentPadding = 0
+      layout.addTextContainer(container)
+      let editor = NSTextView(frame: NSRect(x: 0, y: 0, width: 1, height: 1), textContainer: container)''',
+                 '''      let editor = NSTextView(usingTextLayoutManager: true)
+      editor.frame = NSRect(x: 0, y: 0, width: 1, height: 1)
+      editor.textContainer?.widthTracksTextView = true
+      editor.textContainer?.lineFragmentPadding = 0''')
+    replace_once(editor, '      scrollKeeper.attach(editor)\n      return viewport',
+                 '      // Private TextKit 2 benchmark: exclude the legacy glyph-based scroll keeper.\n      return viewport')
+
+
 def environment():
     return {'os': {'version': command(['sw_vers', '-productVersion']),
                    'build': command(['sw_vers', '-buildVersion']), 'arch': platform.machine()},
@@ -107,6 +132,7 @@ def main():
     parser.add_argument('--packages', type=pathlib.Path, help='Existing SourcePackages copied privately with APFS clones')
     parser.add_argument('--build-only', action='store_true', help='Build now, measure later without competing compiler load')
     parser.add_argument('--disable-background-layout', action='store_true', help='Explicit isolated TextKit 1 experiment')
+    parser.add_argument('--textkit2-no-anchor', action='store_true', help='Private TextKit 2 app bridge without the legacy glyph-based anchor keeper')
     parser.add_argument('--engine-revision', help='Comparison only: full wrapper SHA in the private snapshot')
     parser.add_argument('--comparison-no-nul', action='store_true', help='Use the common-input comparison fixture without U+0000; default correctness fixture remains unchanged')
     parser.add_argument('--reuse-build', action='store_true', help='Rerun the already built, recorded source snapshot')
@@ -116,7 +142,9 @@ def main():
         parser.error('Use positive samples and an output directory outside this repository')
     if args.engine_revision and not re.fullmatch(r'[0-9a-f]{40}', args.engine_revision):
         parser.error('Engine comparison revision must be a full lowercase SHA')
-    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.packages or args.comparison_no_nul):
+    if args.textkit2_no_anchor and (not args.reflow or args.disable_background_layout):
+        parser.error('The TextKit 2 bridge variant requires --reflow and excludes TextKit 1 layout overrides')
+    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.textkit2_no_anchor or args.packages or args.comparison_no_nul):
         parser.error('Reuse the recorded build without source/dependency overrides')
     source = args.output / 'source'
     if not args.reuse_build:
@@ -136,11 +164,14 @@ def main():
             replace_once(source / 'OpenCCman/View/WorkspaceScrollKeeper.swift',
                          '      self.clip = clip\n      size = clip.bounds.size',
                          '      self.clip = clip\n      size = clip.bounds.size\n      editor.layoutManager?.backgroundLayoutEnabled = false')
+        if args.textkit2_no_anchor:
+            prepare_textkit2_no_anchor(source)
         expected_lock = (source / LOCK).read_bytes()
         commit = command(['git', 'rev-parse', 'HEAD'], cwd=ROOT)
         metadata = {'schema': PROTOCOL, 'source_commit': commit, 'measurement_harness_commit': commit,
                     'comparison_engine_override': args.engine_revision,
-                    'application_variant': 'background-layout-off' if args.disable_background_layout else 'unchanged',
+                    'application_variant': ('textkit2-no-anchor' if args.textkit2_no_anchor else
+                                            'background-layout-off' if args.disable_background_layout else 'unchanged'),
                     'source_status': command(['git', 'status', '--short'], cwd=ROOT),
                     'pins': json.loads((source / LOCK).read_text()), **environment(),
                     'started_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
@@ -183,6 +214,8 @@ def main():
             raise RuntimeError(f'Refusing to overwrite existing sample {output}')
         launch = time.monotonic()
         profile_args = ['-performance-comparison-no-nul'] if metadata['conditions']['input_profile'] == 'comparison-without-nul' else []
+        if metadata['application_variant'] == 'textkit2-no-anchor':
+            profile_args.append('-performance-require-textkit2')
         process = subprocess.Popen(['open', '-n', '-W', '-a', str(app), '--args', '-performance-output', str(output),
                                     '-skip-whats-new', '-AppleLanguages', '(en)', '-AppleInterfaceStyle', 'Light']
                                    + (['-performance-reflow'] if args.reflow else []) + profile_args)
