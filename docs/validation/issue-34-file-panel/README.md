@@ -20,6 +20,6 @@ The native Import TXT picker then remained visible without a What’s New sheet.
 
 ## Remaining acceptance
 
-#34 stays open for successful/failed import, export and panel cancellation, active conversion and its success/failure/cancel paths, quota/error and Pro presentations, iPhone/iPad VoiceOver and orientations, iOS 15/macOS 12 execution, and the final Xcode Cloud/TestFlight build. The external preference reset and ad-hoc Debug signature limit this record to presentation coordination, not distribution acceptance.
+#34 stays open for successful/failed import, active conversion and its success/failure/cancel paths, quota/error and Pro presentations, iPhone/iPad VoiceOver and orientations, iOS 15/macOS 12 execution, and the final Xcode Cloud/TestFlight build. Mac export-panel cancellation and success are covered separately in the [export-panel record](../issue-34-export-panel/README.md). The external preference reset and ad-hoc Debug signature limit this record to presentation coordination, not distribution acceptance.
 
 Media SHA-256: `file-panel.png` `91814a79c5447d41ad9a4a00b7ee8785ad2963bacb17dd95fcbaaf0b0f86f2f7`; `import-cancel-card.mp4` `ea16c6604ee5a30d38e6b059b60ca258163e0f38d7c423723542642d6`; `whats-new-after-cancel.png` `a963b35074690ad349914a1734f618a64ba0579492ffb99e44fa8803177f606d`.
