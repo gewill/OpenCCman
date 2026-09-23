@@ -2,6 +2,14 @@
 
 2026-09-15，进行中。独立分支 `codex/closed-window-entries` 从 #76 的 `59cad17` 继续；依赖链为 #74 → #76 → 本修复。没有触发 Xcode Cloud，也没有修改依赖或最低系统。
 
+## 2026-09-23：同进程重开子项
+
+当前 `develop` 源码 `8619bec06b44075c1b0d53371bf830bb2c6fac65` 在 macOS 27.0／Xcode 27.0 上以 Debug 构建，覆盖独立 bundle ID `org.gewill.OpenCCman.WindowEntryValidation` 后进行 ad-hoc 签名。测试仅使用该 bundle 的独立偏好，未操作已安装的 TestFlight 包。完整构建成功，签名含应用现有 Sandbox、用户选取文件读写和客户端网络 entitlement。
+
+用 CUA 关闭隔离应用唯一主窗口后，测试进程 PID `70881` 仍运行且无窗口；通过 CUA 的系统应用选择（Launch Services）重开同一 bundle，PID 仍为 `70881`，可见一个新主窗口。[交互录屏](https://github.com/user-attachments/assets/44fbc1c8-7c78-4db0-8d26-d8a3387e8ff1) 使用 ScreenCaptureKit 仅录测试应用，不含其他应用、音频或麦克风；[Issue 验收记录](https://github.com/gewill/OpenCCman/issues/19#issuecomment-5792108636)。原始视频 SHA-256 为 `cb943f0e9b7004b856491f1cfe83a6b40d2488f1db5d4b2a66cf6da0880e235f`，测试可执行文件 SHA-256 为 `a6eb9cf3c94ba42bf71f09e4d24c037a69358d49ca3da7dd331e19818ddde03a`。
+
+这仅证明当前源码的同进程 Launch Services 重开路径。Dock 实际点击、Services、全局快捷键、状态栏菜单、连续请求及最终分发签名包仍未验收；最低 macOS 12 运行证据仍由 #16 追踪。不能据此关闭 #19。
+
 ## 当前证据
 
 - 本地 ad-hoc 签名的 Debug 基线应用，应用源码 `6af5ded`（与 `59cad17` 应用代码一致），在 macOS 27.0 关闭全部主窗口后，进程仍在，CGWindowList 显示该进程没有可见窗口。
