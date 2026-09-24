@@ -18,4 +18,4 @@ The [issue comment with three real screenshots and two interaction videos](https
 
 ## Remaining acceptance
 
-This covers only Mac export-panel cancellation and success under a diagnostic pending-card state. Conversion/import in progress, import errors, quota/error and Pro presentations, iPhone/iPad orientations and VoiceOver, iOS 15/macOS 12 execution, and the final signed Xcode Cloud/TestFlight build remain open. The ad-hoc Debug copy does not establish distribution behavior.
+This covers only Mac export-panel cancellation and success under a diagnostic pending-card state. Mac import success and invalid-UTF-8 error dismissal are covered in the [import-outcomes record](../issue-34-import-outcomes/README.md). Long-running conversion/import, quota/error and Pro presentations, iPhone/iPad orientations and VoiceOver, iOS 15/macOS 12 execution, and the final signed Xcode Cloud/TestFlight build remain open. The ad-hoc Debug copy does not establish distribution behavior.
