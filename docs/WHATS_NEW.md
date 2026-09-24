@@ -98,3 +98,7 @@ xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
 ## 2.0 iPhone 导出取消后恢复补验（2026-09-25）
 
 在 `develop` `1df42cb` 的独立 iPhone 15 Pro Max / iOS 18.6 Simulator QA 包上，实际打开系统文件导出面板，确认卡片未叠加；从“On My iPhone”返回“Browse”顶层，点击系统“Cancel”后，2.0 卡片出现一次，关闭后没有重复展示。Xcode 27.0、英文、浅色、普通字号；`testExportPanelDoesNotOverlapCards` 以屏幕左上导航点击回退，随后断言系统面板消失及卡片出现，在 iPhone 15 Pro Max / iOS 18.6 和 iPhone 17 Pro / iOS 26.5 两个专用模拟器各 1/1 通过。系统扩展的导航按钮未稳定出现在 app-scoped 无障碍树中，因此该回归仅在 iPhone 竖屏使用已实测坐标；iPad 保持原有“面板显示时不叠加”断言，取消路径未在 iPad 自动化。截图、交互录像与测试日志随本轮 PR 归档。此项是隔离 Debug 模拟器验收，未替代真机、最低系统及最终签名包。
+
+## 2.0 iPad 导出关闭后恢复补验（2026-09-25）
+
+在 `develop` `e01a404` 的独立 iPad Air 11-inch (M4) / iPadOS 26.5 Simulator QA 包上，系统 Files 导出面板显示时卡片保持隐藏；点击其左上角关闭按钮后，卡片出现一次并可正常关闭。扩展后的 `testExportPanelDoesNotOverlapCards` 在该专用 iPad 上 1/1 通过。Xcode 27.0、英文、浅色、普通字号、全屏竖屏；系统扩展按钮不在 app-scoped 无障碍树中，测试以实际观察的左上角坐标点击并断言面板消失。截图、交互录像及用例日志归档在本轮 PR。此项仍是隔离 Debug 模拟器验收，不能代替窄窗/横屏、真机、最低系统及签名包。
