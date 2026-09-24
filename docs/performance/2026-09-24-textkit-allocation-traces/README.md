@@ -16,6 +16,8 @@
 
 这些数值来自正在运行的**同一进程**，不能与先前未录制的三次中位数直接相减。`xctrace export` 的 [Allocations Statistics 原始 XML](baseline/allocations-statistics.xml)报告全录制期间 `NSTextParagraph` 2,061 次分配、387 个持续对象，`NSTextLayoutFragment` 1,651 次、397 个持续对象，`NSCountableTextRange` 49,269 次、593 个持续对象，`NSCountableTextLocation` 128,801 次、373 个持续对象。这里的“持续”是该 trace 统计口径，**不是泄漏判定**；Allocations 总量也不等于进程 RSS。VM Tracker 轨道存在，但本次命令行 `Regions Map` 导出没有行，尚未给出 VM 分类归因。
 
+运行 `python3 docs/performance/2026-09-24-textkit-allocation-traces/analyze.py` 可从原始 JSON/XML 重算阶段和对象计数。候选文件尚未归档时，脚本会明确输出 `INCOMPLETE`，不会生成候选差值。
+
 ## 对照与复核边界
 
 `firstRect` 候选已从归档提交 `be827fc6bbc010d8a1aec7874991c11a6a72c31e` 重建。新构建的 `source_commit`、应用变体、源码哈希、依赖锁、实际 checkout 修订和测试条件与 [原候选元数据](../2026-09-24-textkit-selection-candidates/raw/first-rect/metadata.json) 逐项一致；其独立测试副本签名已验证，**尚未运行 trace**。须等桌面空闲，附加录制后再比较同类对象、时间窗和分配栈，尤其区分转换阶段的选区可见性查询与切轴后的第二次滚动。
