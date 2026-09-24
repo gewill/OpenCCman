@@ -147,13 +147,16 @@ final class AppPerformanceAudit {
   }
   private func settle() async { try? await Task.sleep(nanoseconds: 250_000_000) }
   private func fixture(bytes: Int) -> String {
-    let singleParagraph = ProcessInfo.processInfo.arguments.contains("-performance-single-paragraph")
-    let unit = singleParagraph
-      ? "汉语转换，软件与网络。繁體中文👨‍👩‍👧‍👦e\u{301}"
+    let arguments = ProcessInfo.processInfo.arguments
+    let singleParagraph = arguments.contains("-performance-single-paragraph")
+    let plainParagraph = arguments.contains("-performance-plain-paragraph")
+    precondition(!(singleParagraph && plainParagraph))
+    let unit = plainParagraph ? "汉语转换，软件与网络。繁體中文"
+      : singleParagraph ? "汉语转换，软件与网络。繁體中文👨‍👩‍👧‍👦e\u{301}"
       : "汉语转换，软件与网络。繁體中文 👨‍👩‍👧‍👦 e\u{301}\r\n\r\n"
     let count = bytes / unit.utf8.count
     let text = String(repeating: unit, count: count) + String(repeating: "a", count: bytes - count * unit.utf8.count)
-    if singleParagraph {
+    if singleParagraph || plainParagraph {
       precondition(text.utf8.count == bytes && !text.contains("\r") && !text.contains("\n"))
     }
     return text

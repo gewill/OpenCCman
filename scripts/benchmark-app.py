@@ -157,6 +157,7 @@ def main():
     parser.add_argument('--textkit2-modern-anchor', action='store_true', help='Private TextKit 2 app bridge with a diagnostic visible-character anchor')
     parser.add_argument('--middle-composed', action='store_true', help='Use the midpoint composed character and its full range for visibility geometry')
     parser.add_argument('--single-paragraph', action='store_true', help='Use one unbroken 1/5/10 MiB paragraph in the reflow suite')
+    parser.add_argument('--plain-paragraph', action='store_true', help='Use one unbroken paragraph without Emoji or combining marks')
     parser.add_argument('--reflow-max-mib', type=int, choices=(1, 5, 10), help='Stop the reflow suite after this document size; recorded in the build')
     parser.add_argument('--engine-revision', help='Comparison only: full wrapper SHA in the private snapshot')
     parser.add_argument('--comparison-no-nul', action='store_true', help='Use the common-input comparison fixture without U+0000; default correctness fixture remains unchanged')
@@ -173,13 +174,15 @@ def main():
         parser.error('Select one private TextKit 2 variant')
     if args.textkit1_no_anchor and (not args.reflow or args.disable_background_layout or args.textkit2_no_anchor or args.textkit2_modern_anchor):
         parser.error('The TextKit 1 no-anchor variant requires --reflow and excludes other layout variants')
-    if args.single_paragraph and not args.reflow:
-        parser.error('The single-paragraph fixture requires --reflow')
+    if (args.single_paragraph or args.plain_paragraph) and not args.reflow:
+        parser.error('The paragraph fixtures require --reflow')
+    if args.single_paragraph and args.plain_paragraph:
+        parser.error('Select one paragraph fixture')
     if args.reflow_max_mib and not args.reflow:
         parser.error('The reflow size limit requires --reflow')
-    if args.single_paragraph and args.comparison_no_nul:
+    if (args.single_paragraph or args.plain_paragraph) and args.comparison_no_nul:
         parser.error('Select one input profile')
-    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.textkit1_no_anchor or args.textkit2_no_anchor or args.textkit2_modern_anchor or args.middle_composed or args.single_paragraph or args.reflow_max_mib or args.packages or args.comparison_no_nul):
+    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.textkit1_no_anchor or args.textkit2_no_anchor or args.textkit2_modern_anchor or args.middle_composed or args.single_paragraph or args.plain_paragraph or args.reflow_max_mib or args.packages or args.comparison_no_nul):
         parser.error('Reuse the recorded build without source/dependency overrides')
     source = args.output / 'source'
     if not args.reuse_build:
@@ -218,7 +221,8 @@ def main():
                     'started_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
                     'source_hashes': source_hashes(source),
                     'conditions': {'protocol': PROTOCOL, 'suite': 'reflow' if args.reflow else 'conversion', 'configuration': 'Release -O',
-                        'input_profile': ('single-paragraph' if args.single_paragraph else
+                        'input_profile': ('plain-paragraph' if args.plain_paragraph else
+                                          'single-paragraph' if args.single_paragraph else
                                           'comparison-without-nul' if args.comparison_no_nul else 'default'),
                         'reflow_max_mib': args.reflow_max_mib or 10,
                         'isolation': 'ad-hoc signature; diagnostic bundle/preferences; sandbox disabled',
@@ -261,6 +265,8 @@ def main():
         profile_args = ['-performance-comparison-no-nul'] if metadata['conditions']['input_profile'] == 'comparison-without-nul' else []
         if metadata['conditions']['input_profile'] == 'single-paragraph':
             profile_args.append('-performance-single-paragraph')
+        if metadata['conditions']['input_profile'] == 'plain-paragraph':
+            profile_args.append('-performance-plain-paragraph')
         if args.reflow:
             profile_args.extend(['-performance-reflow-max-mib', str(metadata['conditions']['reflow_max_mib'])])
         if metadata['application_variant'] in ('textkit2-no-anchor', 'textkit2-modern-anchor'):
