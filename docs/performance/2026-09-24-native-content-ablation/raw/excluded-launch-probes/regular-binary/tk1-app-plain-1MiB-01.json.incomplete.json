@@ -1,0 +1,14 @@
+{
+  "run": "tk1-app-plain-1MiB-01.json",
+  "reason": "failed",
+  "detail": "Native benchmark lost foreground focus",
+  "limit_seconds": 60,
+  "partial_status": "complete",
+  "completed_stages": [
+    "empty_ready",
+    "first_display",
+    "scroll_start",
+    "scroll_middle",
+    "scroll_end"
+  ]
+}
