@@ -88,3 +88,9 @@ xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
 补验发现原实现会在首次转换成功、What’s New 随后出现且被快速关闭时，紧接着弹出 StoreKit 评分提示。iPadOS 26.5 的失败前测试明确命中 `Not Now`，连续录屏保留了这一顺序。修复后，当前营销版本的更新卡片尚未读完时不预约评分，也不消耗 `lastVersionPromptedForReview`；后续一次成功转换仍可请求系统评分。Apple 的[评分与评论建议](https://developer.apple.com/design/human-interface-guidelines/ratings-and-reviews)强调避免首次启动及打断用户任务，这里据真实界面行为消除了连续弹窗。
 
 最终候选在 iPhone 15 Pro Max / iOS 18.6 和 iPad Air 11-inch (M4) / iPadOS 26.5 模拟器各跑五项，均 5/5 通过；iPad 的原失败断言修复后通过。Xcode 27.0，两端英文／浅色／常规字号，专用 QA 安装；`scripts/check-whats-new.sh`、核心回归和 macOS/iOS Debug 构建通过。前后截图、视频与精确来源提交附在本轮 PR／#34 评论。仍需真实 10 MiB 任务、VoiceOver 连续朗读、iOS 15/macOS 12、真机与最终签名包，Issue 继续开放。
+
+## 2.0 系统面板、Pro 与旋转补验（2026-09-25）
+
+在 #185 合并提交 `ab62b99` 上扩展隔离 XCUITest。iPhone 15 Pro Max / iOS 18.6 与 iPad Air 11-inch (M4) / iPadOS 26.5 的七项基础矩阵各 7/7 通过：原五项、真实系统导出面板打开时不叠加卡片，以及真实免费额度耗尽后的自定义 Pro 提示 → Pro sheet → 关闭后出现卡片。两端的横屏 Done 和系统下滑关闭测试通过；最大辅助字号 `accessibility-extra-extra-extra-large` 下的横屏 Done 亦在两端通过，测试后恢复到原 `large`。英文／浅色、Xcode 27.0，独立 QA bundle。系统横屏截图以 `simctl io screenshot` 采集，因 XCTest 截图曾捕获旋转过渡帧；截图、交互录像及测试日志随 PR 附上。
+
+导出面板的可见“取消”由系统 `com.apple.DocumentManager.Service` 扩展绘制，iOS 18 的 app-scoped XCUITest 将其误识别为屏外宿主节点；本轮只将**面板显示期间不叠加**记作通过，不把自动点击失败记作产品故障，也不把导出取消后的恢复记作已验收。隔离 QA bundle 的 RevenueCat 产品目录与正式 bundle ID 不匹配，Pro sheet 的商品可用性、购买和恢复均不在本轮结论内。VoiceOver 连续朗读、iOS 15/macOS 12、真实设备与最终签名包仍需补验，#34 保持开放。

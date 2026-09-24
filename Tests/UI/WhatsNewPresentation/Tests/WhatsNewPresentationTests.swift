@@ -45,6 +45,77 @@ final class WhatsNewPresentationTests: XCTestCase {
     expectCardsOnce(app)
   }
 
+  func testExportPanelDoesNotOverlapCards() {
+    let app = launch("-qa-suppress-review", "-qa-unread-whats-new-on-export")
+    defer { app.terminate() }
+    app.buttons["Convert"].tap()
+    XCTAssertTrue(app.buttons["Export TXT"].waitForExistence(timeout: 10))
+    app.buttons["Export TXT"].tap()
+    let picker = app.otherElements["Browse View (Picker)"]
+    XCTAssertTrue(picker.waitForExistence(timeout: 15))
+    XCTAssertFalse(app.buttons["whats-new-done"].exists)
+    capture(app, name: "native-exporter-without-cards")
+    // iOS 18's exporter Cancel is rendered by a document-provider extension
+    // that this app-scoped XCUITest cannot reliably target. The panel overlap
+    // assertion is real; dismissal remains a separate manual acceptance gate.
+  }
+
+  func testQuotaAlertAndProSheetDeferCards() {
+    let app = launch("-qa-exhaust-quota", "-qa-unread-whats-new-on-pro-alert")
+    defer { app.terminate() }
+    app.buttons["Convert"].tap()
+    XCTAssertTrue(app.staticTexts["Pro only feature"].waitForExistence(timeout: 10))
+    XCTAssertFalse(app.buttons["whats-new-done"].exists)
+    capture(app, name: "quota-alert-without-cards")
+    app.buttons["Pro"].tap()
+    let close = app.buttons["pro-sheet-close"]
+    XCTAssertTrue(close.waitForExistence(timeout: 15))
+    XCTAssertFalse(app.buttons["whats-new-done"].exists)
+    capture(app, name: "pro-sheet-without-cards")
+    close.tap()
+    expectCardsOnce(app)
+  }
+
+  func testLandscapeCardsRemainDismissible() {
+    XCUIDevice.shared.orientation = .portrait
+    let app = launch("-qa-suppress-review", "-qa-unread-whats-new-on-convert")
+    defer {
+      XCUIDevice.shared.orientation = .portrait
+      app.terminate()
+    }
+    app.buttons["Convert"].tap()
+    let done = app.buttons["whats-new-done"]
+    XCTAssertTrue(done.waitForExistence(timeout: 15))
+    XCUIDevice.shared.orientation = .landscapeLeft
+    let deadline = Date().addingTimeInterval(10)
+    while app.frame.width <= app.frame.height && Date() < deadline {
+      Thread.sleep(forTimeInterval: 0.2)
+    }
+    XCTAssertGreaterThan(app.frame.width, app.frame.height, "The simulator must finish rotating before layout assertions")
+    Thread.sleep(forTimeInterval: 1)
+    XCTAssertTrue(done.waitForExistence(timeout: 10))
+    XCTAssertTrue(done.isHittable, "The sheet dismissal control must remain reachable in landscape")
+    capture(app, name: "whats-new-landscape")
+    done.tap()
+    XCTAssertFalse(done.waitForExistence(timeout: 2))
+  }
+
+  func testCardsCanBeDismissedWithSystemSwipe() {
+    let app = launch("-qa-suppress-review", "-qa-unread-whats-new-on-convert")
+    defer { app.terminate() }
+    app.buttons["Convert"].tap()
+    let done = app.buttons["whats-new-done"]
+    XCTAssertTrue(done.waitForExistence(timeout: 15))
+    let sheet = app.otherElements["whats-new-sheet"]
+    XCTAssertTrue(sheet.exists)
+    capture(app, name: "cards-before-swipe")
+    sheet.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.05))
+      .press(forDuration: 0.05,
+             thenDragTo: sheet.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.85)))
+    XCTAssertFalse(done.waitForExistence(timeout: 4), "The native sheet should dismiss after a downward drag")
+    capture(app, name: "workspace-after-swipe")
+  }
+
   func testReviewRemainsAvailableAfterCardsWereRead() {
     let app = launch()
     defer { app.terminate() }

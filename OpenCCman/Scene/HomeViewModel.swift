@@ -191,6 +191,12 @@ class HomeViewModel: ObservableObject {
   func translate() {
     guard !isLoading, !isImporting, !inputText.isEmpty else { return }
     guard let reservation = TestNumbersPerDayManager.reserve() else {
+      #if DEBUG
+        if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
+           ProcessInfo.processInfo.arguments.contains("-qa-unread-whats-new-on-pro-alert") {
+          UserDefaults.standard.removeObject(forKey: WhatsNewCoordinator.lastPresentedVersionKey)
+        }
+      #endif
       showingProAlert = true
       return
     }

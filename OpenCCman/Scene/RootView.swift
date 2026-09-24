@@ -52,6 +52,11 @@ struct RootView: View {
            let release = whatsNew.release {
           UserDefaults.standard.set(release.version, forKey: WhatsNewCoordinator.lastPresentedVersionKey)
           UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastVersionPromptedForReview.rawValue)
+          if ProcessInfo.processInfo.arguments.contains("-qa-suppress-review") {
+            UserDefaults.standard.set(release.version, forKey: UserDefaultsKeys.lastVersionPromptedForReview.rawValue)
+          }
+          TestNumbersPerDayManager.setQuotaForQA(
+            exhausted: ProcessInfo.processInfo.arguments.contains("-qa-exhaust-quota"))
         }
       #endif
       isVisible = true
