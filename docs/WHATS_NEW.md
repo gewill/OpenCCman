@@ -94,3 +94,7 @@ xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
 在 #185 合并提交 `ab62b99` 上扩展隔离 XCUITest。iPhone 15 Pro Max / iOS 18.6 与 iPad Air 11-inch (M4) / iPadOS 26.5 的七项基础矩阵各 7/7 通过：原五项、真实系统导出面板打开时不叠加卡片，以及真实免费额度耗尽后的自定义 Pro 提示 → Pro sheet → 关闭后出现卡片。两端的横屏 Done 和系统下滑关闭测试通过；最大辅助字号 `accessibility-extra-extra-extra-large` 下的横屏 Done 亦在两端通过，测试后恢复到原 `large`。英文／浅色、Xcode 27.0，独立 QA bundle。系统横屏截图以 `simctl io screenshot` 采集，因 XCTest 截图曾捕获旋转过渡帧；截图、交互录像及测试日志随 PR 附上。
 
 导出面板的可见“取消”由系统 `com.apple.DocumentManager.Service` 扩展绘制，iOS 18 的 app-scoped XCUITest 将其误识别为屏外宿主节点；本轮只将**面板显示期间不叠加**记作通过，不把自动点击失败记作产品故障，也不把导出取消后的恢复记作已验收。隔离 QA bundle 的 RevenueCat 产品目录与正式 bundle ID 不匹配，Pro sheet 的商品可用性、购买和恢复均不在本轮结论内。VoiceOver 连续朗读、iOS 15/macOS 12、真实设备与最终签名包仍需补验，#34 保持开放。
+
+## 2.0 iPhone 导出取消后恢复补验（2026-09-25）
+
+在 `develop` `1df42cb` 的独立 iPhone 15 Pro Max / iOS 18.6 Simulator QA 包上，实际打开系统文件导出面板，确认卡片未叠加；从“On My iPhone”返回“Browse”顶层，点击系统“Cancel”后，2.0 卡片出现一次，关闭后没有重复展示。Xcode 27.0、英文、浅色、普通字号；`testExportPanelDoesNotOverlapCards` 以屏幕左上导航点击回退，随后断言系统面板消失及卡片出现，在 iPhone 15 Pro Max / iOS 18.6 和 iPhone 17 Pro / iOS 26.5 两个专用模拟器各 1/1 通过。系统扩展的导航按钮未稳定出现在 app-scoped 无障碍树中，因此该回归仅在 iPhone 竖屏使用已实测坐标；iPad 保持原有“面板显示时不叠加”断言，取消路径未在 iPad 自动化。截图、交互录像与测试日志随本轮 PR 归档。此项是隔离 Debug 模拟器验收，未替代真机、最低系统及最终签名包。

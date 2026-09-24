@@ -24,11 +24,14 @@ after What’s New, while a later conversion can still request a review.
 Additional cases cover the native export panel while open, an exhausted real
 quota leading through the Pro alert and Pro sheet, landscape dismissal, and a
 downward system-sheet swipe. The QA launch hook resets the isolated daily quota
-before each case so the Pro case cannot affect later conversions. Exporter
-**cancellation** is not asserted by XCUITest: on iOS 18 the visible Cancel is
-hosted by `com.apple.DocumentManager.Service`, while app-scoped accessibility
-queries resolve an offscreen host node. The panel overlap itself is checked
-with a real system picker; closure still needs device/manual verification.
+before each case so the Pro case cannot affect later conversions. On a portrait
+iPhone, the exporter case also returns to the Files browser root, cancels the
+system picker, and verifies that the pending cards appear once. On iOS 18 the
+visible Browse and Cancel controls are hosted by a system extension and are
+absent from app-scoped accessibility queries, so the test uses the observed
+top-left navigation position and checks the picker disappears after the taps.
+On iPad, this case still checks only that the real exporter does not overlap
+the cards while open; its cancellation remains to be verified separately.
 
 For the maximum Dynamic Type matrix, set the dedicated Simulator's content size
 with `xcrun simctl ui <UDID> content_size accessibility-extra-extra-extra-large`,
