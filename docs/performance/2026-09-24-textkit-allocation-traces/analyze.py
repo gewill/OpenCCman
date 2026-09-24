@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Recompute the archived #68 phase and allocation tables from raw exports."""
 
+import hashlib
 import json
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -24,6 +25,7 @@ CATEGORIES = (
     "NSTextLayoutFragment",
     "NSCountableTextRange",
     "NSCountableTextLocation",
+    "NSCoreTypesetter",
 )
 
 
@@ -31,6 +33,16 @@ def load(name):
     folder = ROOT / name
     run = json.loads((folder / "run-01.json").read_text())
     summary = json.loads((folder / "trace-summary.json").read_text())
+    for filename, expected_key in (
+        ("run-01.json", "run_01_json_sha256"),
+        ("allocations-statistics.xml", "allocations_statistics_xml_sha256"),
+        ("allocations-statistics-after-5MiB-convert.xml",
+         "allocations_statistics_after_5MiB_convert_xml_sha256"),
+        ("allocations-statistics-before-10MiB-scroll.xml",
+         "allocations_statistics_before_10MiB_scroll_xml_sha256"),
+    ):
+        actual = hashlib.sha256((folder / filename).read_bytes()).hexdigest()
+        assert actual == summary["exports"][expected_key], f"{name}/{filename}: export hash mismatch"
     categories = {
         row.attrib["category"]: row.attrib
         for row in ET.parse(folder / "allocations-statistics.xml").iter("row")
@@ -46,7 +58,20 @@ def load(name):
     stages = {row["name"]: row for row in run["rows"]}
     assert all(stage in stages for stage in STAGES)
     assert all(category in categories for category in CATEGORIES)
-    return stages, categories
+    windows = {}
+    for label, filename, mib, cutoff_key in (
+        ("after_5MiB", "allocations-statistics-after-5MiB-convert.xml", 5, "after_5MiB_ms"),
+        ("before_10MiB_scroll", "allocations-statistics-before-10MiB-scroll.xml", 10,
+         "before_10MiB_scroll_ms"),
+    ):
+        rows = {row.attrib["category"]: row.attrib for row in ET.parse(folder / filename).iter("row")}
+        assert all(category in rows for category in CATEGORIES)
+        alignment = summary["time_alignment"]
+        cutoff = alignment["export_cutoffs_ms"][cutoff_key]
+        stage_offsets = alignment["stage_trace_offsets_ms"]
+        assert stage_offsets[f"reflow_convert_{mib}MiB"] < cutoff < stage_offsets[f"scroll_begin_{mib}_0"]
+        windows[label] = rows
+    return stages, categories, windows
 
 
 def print_table(title, rows):
@@ -82,6 +107,17 @@ def main():
                             [data[name][1][category]["count-events"] if name in data
                              else "待录制" for name in VARIANTS]))
     print_table("Allocations 全 trace 分类计数：不等于泄漏或相同数量的 RSS", object_rows)
+
+    for stage, title in (("after_5MiB", "5 MiB 转换结束、首次滚动前"),
+                         ("before_10MiB_scroll", "10 MiB 转换结束、首次滚动前")):
+        rows = []
+        for category in ("All Heap & Anonymous VM", "NSTextParagraph", "NSCountableTextRange",
+                         "NSCountableTextLocation"):
+            for key in ("count-persistent", "count-events"):
+                rows.append((f"{category} {key}",
+                             [data[name][2][stage][category][key] if name in data
+                              else "待录制" for name in VARIANTS]))
+        print_table(f"{title}的 trace 时间窗：切点位于转换与滚动记录之间", rows)
 
     if complete:
         base = data["baseline"][0]["reflow_convert_10MiB"]

@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "source_commit": "be827fc6bbc010d8a1aec7874991c11a6a72c31e",
+  "application_variant": "textkit2-modern-anchor",
+  "original_build_metadata_sha256": "80d9db5bf0b57807ac4b0f2748350638e0974028e767b04099e2c949bfbb2792",
+  "original_build_marker_sha256": "012dd2192be415ae3a24fb4c0fe232e6d20239dd196dada4f15117cfe43f2e9b",
+  "original_executable_sha256": "e07ea9b10f4881425696796965cce09333832a08a46365dd2c524460a8a3b78d",
+  "traced_executable_sha256": "d9bd60ad5d854391f32f2794b50b110fc2133cc7509e4f2747887d86dca7a41f",
+  "diagnostic_entitlement": "com.apple.security.get-task-allow=true; isolated copy only",
+  "record_command": "xcrun xctrace record --template Allocations --time-limit 90s --no-prompt --attach <isolated-app-pid>",
+  "trace": {
+    "template": "Allocations",
+    "instruments_version": "27.0 (27A266a)",
+    "start_date": "2026-09-24T15:33:38.562+08:00",
+    "end_date": "2026-09-24T15:33:49.420+08:00",
+    "duration_seconds": 10.858396,
+    "target_type": "attached",
+    "target_pid": 34034,
+    "target_exit_status": "0",
+    "target_termination_reason": "exit(0)",
+    "tracks": [
+      "Allocations",
+      "VM Tracker"
+    ],
+    "local_trace_bundle_bytes": 746157523,
+    "local_trace_bundle_files": 229,
+    "tree_sha256": "4b6a1daae72a75f5e74029b084a2fe3f668cd3ba6fe0265089c0cc964803cc15",
+    "tree_hash_algorithm": "SHA256 of sorted relative path, NUL, binary SHA256 file digest, newline records"
+  },
+  "run": {
+    "status": "complete",
+    "pid": 34034,
+    "row_count": 59,
+    "all_conversion_stages_active": true
+  },
+  "time_alignment": {
+    "method": "trace start UTC compared with final run JSON mtime minus last row elapsed; approximate due save/exit latency",
+    "run_json_mtime_minus_trace_end_ms": -45.7,
+    "trace_start_at_app_elapsed_ms": 1912.9,
+    "stage_trace_offsets_ms": {
+      "reflow_convert_5MiB": 3376.1,
+      "scroll_begin_5_0": 3646.9,
+      "reflow_convert_10MiB": 6658.6,
+      "scroll_begin_10_0": 6923.1
+    },
+    "export_cutoffs_ms": {
+      "after_5MiB_ms": 3500,
+      "before_10MiB_scroll_ms": 6800
+    }
+  },
+  "exports": {
+    "run_01_json_sha256": "0324a99725b63ae32d94c8cac2a74037a667c5064be0816b0cdc2f3c0a9ae20d",
+    "allocations_statistics_xml_sha256": "7d7b234ffc27615a357d01d45d84ab9c9dcc7071c2940eb72c7966deed77becd",
+    "allocations_statistics_after_5MiB_convert_xml_sha256": "7e270fc8a568f5e321f2b3432e5ef313b4291ebbef6669afe284b76d6ef0edda",
+    "allocations_statistics_before_10MiB_scroll_xml_sha256": "9731a8659676480d2a3d3503fcafb017af090d2733e22cd42a61c078ad40ce5e"
+  },
+  "limitations": [
+    "single traced run per variant",
+    "trace recording changes overhead",
+    "raw .trace bundle retained locally and not included in repository",
+    "time-window alignment is approximate"
+  ]
+}

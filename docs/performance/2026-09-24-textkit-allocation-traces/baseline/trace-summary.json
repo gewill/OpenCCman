@@ -33,14 +33,31 @@
     "row_count": 59,
     "all_conversion_stages_active": true
   },
+  "time_alignment": {
+    "method": "trace start UTC compared with final run JSON mtime minus last row elapsed; approximate due save/exit latency",
+    "run_json_mtime_minus_trace_end_ms": -32.7,
+    "trace_start_at_app_elapsed_ms": 1553.2,
+    "stage_trace_offsets_ms": {
+      "reflow_convert_5MiB": 2925.8,
+      "scroll_begin_5_0": 3202.4,
+      "reflow_convert_10MiB": 4430.5,
+      "scroll_begin_10_0": 4707.0
+    },
+    "export_cutoffs_ms": {
+      "after_5MiB_ms": 3000,
+      "before_10MiB_scroll_ms": 4500
+    }
+  },
   "exports": {
-    "run_01_sha256": "cb4aaed0f4881182ae7fe0873f68380d974517d29bf1ca19f2c4d68cdd253b9d",
-    "allocations_statistics_sha256": "ecbb10b3132a8d9f73ef6f3de1133087ed6aada1f2a8ae6772c9f878516f2980"
+    "run_01_json_sha256": "cb4aaed0f4881182ae7fe0873f68380d974517d29bf1ca19f2c4d68cdd253b9d",
+    "allocations_statistics_xml_sha256": "ecbb10b3132a8d9f73ef6f3de1133087ed6aada1f2a8ae6772c9f878516f2980",
+    "allocations_statistics_after_5MiB_convert_xml_sha256": "9fa7a93da0f055f10017bf1cca4ae101f7147a7a12548ddaff19581d854f2c39",
+    "allocations_statistics_before_10MiB_scroll_xml_sha256": "c974bbb05049daac7aa5ec73d425f28a6d88cceec86d18298a097f7a177bcf86"
   },
   "limitations": [
-    "single traced run",
+    "single traced run per variant",
     "trace recording changes overhead",
-    "candidate trace pending",
-    "raw .trace bundle retained locally and not included in repository"
+    "raw .trace bundle retained locally and not included in repository",
+    "time-window alignment is approximate"
   ]
 }
