@@ -19,6 +19,7 @@ enum NativeTextKitMemory {
     let widthSwitch = arguments.contains("--width-switch")
     let noRescroll = arguments.contains("--no-rescroll")
     let recovery = arguments.contains("--recovery")
+    let secondEditor = arguments.contains("--second-editor")
     let contentWidth: Double
     if arguments.contains("--content-width") {
       guard let value = Double(value(after: "--content-width")), (300...1200).contains(value) else {
@@ -29,6 +30,7 @@ enum NativeTextKitMemory {
       contentWidth = 1200
     }
     precondition(!noRescroll || widthSwitch)
+    precondition(!secondEditor || recovery && !widthSwitch)
     let narrowWidth: Double
     if arguments.contains("--narrow-width") {
       guard let value = Double(value(after: "--narrow-width")), (300..<1200).contains(value) else {
@@ -49,34 +51,59 @@ enum NativeTextKitMemory {
 
     let app = NSApplication.shared
     app.setActivationPolicy(.regular)
-    let editor = NSTextView(usingTextLayoutManager: mode == "tk2")
+    func makeEditor() -> NSTextView {
+      let view = NSTextView(usingTextLayoutManager: mode == "tk2")
+      view.isRichText = false
+      view.isVerticallyResizable = true
+      view.isHorizontallyResizable = false
+      view.autoresizingMask = [.width]
+      view.minSize = .zero
+      view.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+      view.textContainerInset = NSSize(width: 0, height: 1)
+      view.textContainer?.widthTracksTextView = true
+      view.textContainer?.lineFragmentPadding = 0
+      if mode == "tk1" {
+        view.layoutManager?.allowsNonContiguousLayout = true
+        view.layoutManager?.backgroundLayoutEnabled = false
+      }
+      view.font = NSFont.userFont(ofSize: 0)
+      return view
+    }
+    let editor = makeEditor()
+    let companion = secondEditor ? makeEditor() : nil
     let observer = NotificationCenter.default.addObserver(
       forName: NSTextView.willSwitchToNSLayoutManagerNotification, object: editor, queue: .main
     ) { _ in switchCount += 1 }
     defer { NotificationCenter.default.removeObserver(observer) }
-    editor.isRichText = false
-    editor.isVerticallyResizable = true
-    editor.isHorizontallyResizable = false
-    editor.autoresizingMask = [.width]
-    editor.minSize = .zero
-    editor.maxSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-    editor.textContainerInset = NSSize(width: 0, height: 1)
-    editor.textContainer?.widthTracksTextView = true
-    editor.textContainer?.lineFragmentPadding = 0
-    if mode == "tk1" {
-      editor.layoutManager?.allowsNonContiguousLayout = true
-      editor.layoutManager?.backgroundLayoutEnabled = false
+    let companionObserver = companion.map { view in
+      NotificationCenter.default.addObserver(
+        forName: NSTextView.willSwitchToNSLayoutManagerNotification, object: view, queue: .main
+      ) { _ in switchCount += 1 }
     }
-    editor.font = NSFont.userFont(ofSize: 0)
+    defer { if let companionObserver { NotificationCenter.default.removeObserver(companionObserver) } }
 
-    let scroll = NSScrollView(frame: NSRect(x: 0, y: 0, width: contentWidth, height: 800))
-    scroll.hasVerticalScroller = true
-    scroll.autohidesScrollers = true
-    scroll.documentView = editor
-    let window = NSWindow(contentRect: scroll.bounds, styleMask: [.titled, .closable, .resizable],
+    func makeScroll(_ view: NSTextView, x: Double) -> NSScrollView {
+      let scroll = NSScrollView(frame: NSRect(x: x, y: 0, width: contentWidth, height: 800))
+      scroll.hasVerticalScroller = true
+      scroll.autohidesScrollers = true
+      scroll.documentView = view
+      return scroll
+    }
+    let scroll = makeScroll(editor, x: 0)
+    let companionScroll = companion.map { makeScroll($0, x: contentWidth) }
+    let windowWidth = contentWidth * (secondEditor ? 2 : 1)
+    let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: windowWidth, height: 800),
+                          styleMask: [.titled, .closable, .resizable],
                           backing: .buffered, defer: false)
-    window.contentView = scroll
-    window.setContentSize(NSSize(width: contentWidth, height: 800))
+    if let companionScroll {
+      let host = NSView(frame: NSRect(x: 0, y: 0, width: windowWidth, height: 800))
+      host.addSubview(scroll)
+      host.addSubview(companionScroll)
+      window.contentView = host
+    } else {
+      window.contentView = scroll
+    }
+    window.setContentSize(NSSize(width: windowWidth, height: 800))
     window.makeKeyAndOrderFront(nil)
 
     func perform() throws {
@@ -95,7 +122,7 @@ enum NativeTextKitMemory {
       }
     }
     func sample(_ name: String, actionMS: Double? = nil, targetVisible: Bool? = nil,
-                scrollAttempts: Int? = nil, targetRect: NSRect? = nil,
+                secondTargetVisible: Bool? = nil, scrollAttempts: Int? = nil, targetRect: NSRect? = nil,
                 viewportRect: NSRect? = nil) throws {
       var info = task_vm_info_data_t()
       var count = mach_msg_type_number_t(MemoryLayout.size(ofValue: info) / MemoryLayout<integer_t>.size)
@@ -120,8 +147,15 @@ enum NativeTextKitMemory {
         "editor_utf16": (editor.string as NSString).length,
         "storage_utf16": editor.textStorage?.length ?? -1
       ]
+      if let companion, let companionScroll {
+        row["second_textkit2"] = companion.textLayoutManager != nil
+        row["second_editor_utf16"] = (companion.string as NSString).length
+        row["second_storage_utf16"] = companion.textStorage?.length ?? -1
+        row["second_viewport_width"] = companionScroll.contentView.bounds.width
+      }
       if let actionMS { row["action_ms"] = actionMS }
       if let targetVisible { row["target_visible"] = targetVisible }
+      if let secondTargetVisible { row["second_target_visible"] = secondTargetVisible }
       if let scrollAttempts { row["scroll_attempts"] = scrollAttempts }
       if let targetRect { row["target_screen_rect"] = [targetRect.minX, targetRect.minY, targetRect.width, targetRect.height] }
       if let viewportRect { row["viewport_screen_rect"] = [viewportRect.minX, viewportRect.minY, viewportRect.width, viewportRect.height] }
@@ -129,7 +163,7 @@ enum NativeTextKitMemory {
       let report: [String: Any] = [
         "status": "running", "pid": getpid(), "mode": mode,
         "source_utf8_bytes": sourceBytes,
-        "source_utf16": sourceLength, "window_content_points": [contentWidth, 800], "rows": rows
+        "source_utf16": sourceLength, "window_content_points": [windowWidth, 800], "rows": rows
       ]
       try JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys])
         .write(to: output, options: .atomic)
@@ -139,6 +173,7 @@ enum NativeTextKitMemory {
     try sample("empty_ready")
     let assignStart = DispatchTime.now().uptimeNanoseconds
     editor.string = source
+    companion?.string = source
     flush()
     try sample("first_display", actionMS: Double(DispatchTime.now().uptimeNanoseconds - assignStart) / 1_000_000)
     var allTargetsVisible = true
@@ -163,24 +198,33 @@ enum NativeTextKitMemory {
       }
       let range = NSRange(location: location, length: 0)
       editor.setSelectedRange(range)
+      companion?.setSelectedRange(range)
       var targetVisible = false
+      var companionVisible = companion == nil
       var attempts = 0
       var targetRect = NSRect.zero
       var viewportRect = NSRect.zero
       for attempt in 1...8 {
         attempts = attempt
         editor.scrollRangeToVisible(range)
+        companion?.scrollRangeToVisible(range)
         flush()
         // firstRect requests actual geometry; an offset alone may be an
         // estimated offscreen position during noncontiguous layout.
         targetRect = editor.firstRect(forCharacterRange: NSRange(location: location, length: 1), actualRange: nil)
         viewportRect = window.convertToScreen(scroll.convert(scroll.bounds, to: nil))
         targetVisible = !targetRect.isEmpty && targetRect.intersects(viewportRect)
-        if targetVisible { break }
+        if let companion, let companionScroll {
+          let secondRect = companion.firstRect(forCharacterRange: NSRange(location: location, length: 1), actualRange: nil)
+          let secondViewport = window.convertToScreen(companionScroll.convert(companionScroll.bounds, to: nil))
+          companionVisible = !secondRect.isEmpty && secondRect.intersects(secondViewport)
+        }
+        if targetVisible && companionVisible { break }
       }
-      allTargetsVisible = allTargetsVisible && targetVisible
+      allTargetsVisible = allTargetsVisible && targetVisible && companionVisible
       try sample("scroll_\(name)", actionMS: Double(DispatchTime.now().uptimeNanoseconds - begin) / 1_000_000,
-                 targetVisible: targetVisible, scrollAttempts: attempts,
+                 targetVisible: targetVisible, secondTargetVisible: companion == nil ? nil : companionVisible,
+                 scrollAttempts: attempts,
                  targetRect: targetRect, viewportRect: viewportRect)
     }
     if widthSwitch {
@@ -203,7 +247,9 @@ enum NativeTextKitMemory {
     if recovery {
       try sample("recovery_before_clear")
       editor.string = ""
+      companion?.string = ""
       editor.undoManager?.removeAllActions()
+      companion?.undoManager?.removeAllActions()
       flush()
       try sample("recovery_clear_ack")
       func wait(_ seconds: TimeInterval) {
@@ -221,7 +267,7 @@ enum NativeTextKitMemory {
     let final: [String: Any] = [
       "status": allTargetsVisible ? "complete" : "target_not_visible", "pid": getpid(), "mode": mode,
       "source_utf8_bytes": sourceBytes,
-      "source_utf16": sourceLength, "window_content_points": [contentWidth, 800], "rows": rows
+      "source_utf16": sourceLength, "window_content_points": [windowWidth, 800], "rows": rows
     ]
     try JSONSerialization.data(withJSONObject: final, options: [.prettyPrinted, .sortedKeys])
       .write(to: output, options: .atomic)

@@ -40,7 +40,7 @@ def fixture(size, pattern):
     return line * (size // len(line)) + b'a' * (size % len(line))
 
 
-def validate(run, mode, size, width_switch=False, no_rescroll=False, recovery=False):
+def validate(run, mode, size, width_switch=False, no_rescroll=False, recovery=False, second_editor=False):
     if run.get('status') != 'complete' or run.get('mode') != mode or run.get('source_utf8_bytes') != size:
         raise ValueError('Incomplete or wrong native benchmark run')
     expected_names = ['empty_ready', 'first_display', 'scroll_start', 'scroll_middle', 'scroll_end']
@@ -59,8 +59,15 @@ def validate(run, mode, size, width_switch=False, no_rescroll=False, recovery=Fa
         expected_length = 0 if row['name'] == 'empty_ready' or row['name'].startswith('recovery_after_') or row['name'] == 'recovery_clear_ack' else run['source_utf16']
         if row['editor_utf16'] != expected_length or row['storage_utf16'] != expected_length:
             raise ValueError('Editor did not retain the complete source')
+        if second_editor and (row.get('second_textkit2') != (mode == 'tk2') or
+                              row.get('second_editor_utf16') != expected_length or
+                              row.get('second_storage_utf16') != expected_length or
+                              row.get('second_viewport_width') != row['editor_viewport_width']):
+            raise ValueError('Second editor did not match the requested source or text system')
         if (row['name'].startswith('scroll') or row['name'].startswith('width_') and not no_rescroll) and (not row['target_visible'] or row['scroll_attempts'] < 1):
             raise ValueError('Target character did not become visible')
+        if second_editor and row['name'].startswith('scroll_') and not row.get('second_target_visible'):
+            raise ValueError('Second editor target did not become visible')
         if row['rss_bytes'] <= 0 or row['physical_footprint_bytes'] <= 0:
             raise ValueError('Memory collection failed')
 
@@ -144,12 +151,16 @@ def main():
                         help='Initial native editor window width in points, default 1200')
     parser.add_argument('--no-rescroll', action='store_true', help='Do not restore the end caret after resizing')
     parser.add_argument('--recovery', action='store_true', help='Clear the native editor and measure recovery through 30 seconds')
+    parser.add_argument('--second-editor', action='store_true',
+                        help='Use two side-by-side native editors with the same input and viewport width')
     parser.add_argument('--activate-process', action='store_true',
                         help='Bring only the launched diagnostic PID to the foreground via System Events')
     args = parser.parse_args()
     output = args.output.resolve()
     if output == ROOT or ROOT in output.parents or output.exists() or args.samples < 1 or args.timeout < 1 or any(s < 1 or s > 10 for s in args.sizes) or not 300 <= args.narrow_width < 1200 or not 300 <= args.content_width <= 1200 or args.no_rescroll and not args.width_switch:
         parser.error('Use a new directory outside the repository; sizes must be 1–10 MiB')
+    if args.second_editor and (not args.recovery or args.width_switch):
+        parser.error('The paired-editor control requires recovery and excludes window resizing')
     output.mkdir(parents=True)
     app = output / 'NativeTextKitMemory.app'
     binary = app / 'Contents/MacOS/native-textkit-memory'
@@ -182,8 +193,9 @@ def main():
         'content_width_points': args.content_width,
         'no_rescroll': args.no_rescroll,
         'recovery': args.recovery,
+        'second_editor': args.second_editor,
         'activate_process': args.activate_process,
-        'sizes_mib': args.sizes, 'window_content_points': [args.content_width, 800],
+        'sizes_mib': args.sizes, 'window_content_points': [args.content_width * (2 if args.second_editor else 1), 800],
         'target': 'arm64-apple-macos12.0', 'arch': platform.machine(),
         'macos': command(['sw_vers', '-productVersion']),
         'macos_build': command(['sw_vers', '-buildVersion']),
@@ -212,6 +224,8 @@ def main():
                         command_line.append('--no-rescroll')
                 if args.recovery:
                     command_line.append('--recovery')
+                if args.second_editor:
+                    command_line.append('--second-editor')
                 try:
                     if args.activate_process:
                         prior = owned_pids(binary)
@@ -233,7 +247,8 @@ def main():
                     if result.returncode != 0 or not path.exists():
                         raise RuntimeError(f'exit {result.returncode}; output exists: {path.exists()}')
                     run = json.loads(path.read_text())
-                    validate(run, mode, mib * 1024 * 1024, args.width_switch, args.no_rescroll, args.recovery)
+                    validate(run, mode, mib * 1024 * 1024, args.width_switch, args.no_rescroll,
+                             args.recovery, args.second_editor)
                 except (subprocess.TimeoutExpired, subprocess.CalledProcessError, RuntimeError,
                         ValueError, json.JSONDecodeError) as error:
                     terminated = terminate_owned_app(path, binary)
@@ -262,6 +277,8 @@ def main():
                         run['command'].append('--no-rescroll')
                 if args.recovery:
                     run['command'].append('--recovery')
+                if args.second_editor:
+                    run['command'].append('--second-editor')
                 path.write_text(json.dumps(run, indent=2, ensure_ascii=False) + '\n')
                 runs.setdefault((mib, mode), []).append(run)
                 print(f'{name}: complete', flush=True)
