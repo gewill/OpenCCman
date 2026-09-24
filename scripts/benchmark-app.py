@@ -97,6 +97,29 @@ def prepare_textkit2_modern_anchor(source):
     replace_once(keeper, '  }\n\n#endif', '  }\n\n' + modern + '\n#endif')
 
 
+def prepare_profiling_start_gate(source):
+    """Wait for an external trace attach before the private benchmark runs."""
+    audit = source / 'Tests/Benchmarks/AppPerformanceAudit.swift'
+    replace_once(audit, '    Task { await run(model, window: window) }', '''    Task {
+      let arguments = ProcessInfo.processInfo.arguments
+      if let index = arguments.firstIndex(of: "-performance-start-gate") {
+        guard arguments.indices.contains(index + 1) else { fatalError("Missing profiling gate path") }
+        let path = arguments[index + 1]
+        for _ in 0..<600 {
+          if FileManager.default.fileExists(atPath: path) { break }
+          try? await Task.sleep(nanoseconds: 100_000_000)
+        }
+        guard FileManager.default.fileExists(atPath: path) else {
+          save(status: "profiling_gate_timeout")
+          NSApp.terminate(nil)
+          return
+        }
+        record("profiling_gate_release")
+      }
+      await run(model, window: window)
+    }''')
+
+
 def environment():
     return {'os': {'version': command(['sw_vers', '-productVersion']),
                    'build': command(['sw_vers', '-buildVersion']), 'arch': platform.machine()},
@@ -151,6 +174,8 @@ def main():
     parser.add_argument('--start-index', type=int, default=1)
     parser.add_argument('--packages', type=pathlib.Path, help='Existing SourcePackages copied privately with APFS clones')
     parser.add_argument('--build-only', action='store_true', help='Build now, measure later without competing compiler load')
+    parser.add_argument('--profiling-start-gate', action='store_true',
+                        help='Build-only private app that can wait for a trace-attach gate')
     parser.add_argument('--disable-background-layout', action='store_true', help='Explicit isolated TextKit 1 experiment')
     parser.add_argument('--textkit1-no-anchor', action='store_true', help='Private TextKit 1 app bridge without its viewport observer')
     parser.add_argument('--textkit2-no-anchor', action='store_true', help='Private TextKit 2 app bridge without the legacy glyph-based anchor keeper')
@@ -168,6 +193,8 @@ def main():
     args.output = args.output.resolve()
     if args.samples < 1 or args.start_index < 1 or args.timeout < 1 or args.output == ROOT or ROOT in args.output.parents:
         parser.error('Use positive samples and an output directory outside this repository')
+    if args.profiling_start_gate and not args.build_only:
+        parser.error('The private trace-attach gate requires --build-only')
     if args.engine_revision and not re.fullmatch(r'[0-9a-f]{40}', args.engine_revision):
         parser.error('Engine comparison revision must be a full lowercase SHA')
     if (args.textkit2_no_anchor or args.textkit2_modern_anchor) and (not args.reflow or args.disable_background_layout):
@@ -186,7 +213,7 @@ def main():
         parser.error('The reflow size limit requires --reflow')
     if any(paragraph_profiles) and args.comparison_no_nul:
         parser.error('Select one input profile')
-    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.textkit1_no_anchor or args.textkit2_no_anchor or args.textkit2_modern_anchor or args.middle_composed or any(paragraph_profiles) or args.reflow_max_mib or args.packages or args.comparison_no_nul):
+    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.textkit1_no_anchor or args.textkit2_no_anchor or args.textkit2_modern_anchor or args.middle_composed or any(paragraph_profiles) or args.reflow_max_mib or args.packages or args.comparison_no_nul or args.profiling_start_gate):
         parser.error('Reuse the recorded build without source/dependency overrides')
     source = args.output / 'source'
     if not args.reuse_build:
@@ -212,6 +239,8 @@ def main():
             prepare_textkit2_no_anchor(source)
         elif args.textkit1_no_anchor:
             prepare_textkit1_no_anchor(source)
+        if args.profiling_start_gate:
+            prepare_profiling_start_gate(source)
         expected_lock = (source / LOCK).read_bytes()
         commit = command(['git', 'rev-parse', 'HEAD'], cwd=ROOT)
         metadata = {'schema': PROTOCOL, 'source_commit': commit, 'measurement_harness_commit': commit,
@@ -231,6 +260,7 @@ def main():
                                           'single-paragraph' if args.single_paragraph else
                                           'comparison-without-nul' if args.comparison_no_nul else 'default'),
                         'reflow_max_mib': args.reflow_max_mib or 10,
+                        'profiling_start_gate': args.profiling_start_gate,
                         'isolation': 'ad-hoc signature; diagnostic bundle/preferences; sandbox disabled',
                         'sdk': 'RevenueCat configure retained; synthetic Pro; refresh/delegate/review/WhatsNew suppressed',
                         'window_content_points': [1200, 800], 'locale': 'en', 'theme': 'Light',
