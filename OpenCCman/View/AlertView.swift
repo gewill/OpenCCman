@@ -25,6 +25,9 @@ struct AlertView<Actions: View>: View {
       .frame(width: 271, height: 181)
       .padding(Constant.padding)
       .softRectangleStyle()
+      // Limit VoiceOver navigation to this custom alert while it is displayed.
+      .accessibilityElement(children: .contain)
+      .accessibilityAddTraits(.isModal)
     }
   }
 }
