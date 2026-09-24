@@ -25,6 +25,15 @@ struct HomeScene: View {
       #endif
     }
     .frame(minWidth: 300)
+    .overlay {
+      if viewModel.showingProAlert {
+        // Keep pointer and touch input in the custom modal without replacing the editors.
+        Color.clear
+          .contentShape(Rectangle())
+          .onTapGesture {}
+          .accessibilityHidden(true)
+      }
+    }
     .overlay(ProAlertView(showingProAlert: $viewModel.showingProAlert, showingProScene: $whatsNewWindow.showingProSheet) {
       whatsNewWindow.proSheetIsActive = false
     })
