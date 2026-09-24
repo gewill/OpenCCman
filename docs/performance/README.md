@@ -2,6 +2,8 @@
 
 # 应用性能基线
 
+[#68 TextKit 2 迁移结论](2026-09-24-textkit2-decision/README.md)：OpenCCman 2.0 暂缓迁移，继续使用已优化的 TextKit 1 编辑器；报告列出当前候选的同机对照、清空后内存证据、未完成范围和重新评估条件。
+
 [关闭窗口业务模型释放修复（#93）](window-observation-2026-09-17/README.md)记录原生宿主与 reader 回调清理、三轮录屏前后对照、文稿回归和失败证据。
 
 [保留窗口活动转换验收](retained-active-window.md)验证关闭另一窗口不会取消保留窗任务，并分别记录无录屏和录制时段的模型存活。
