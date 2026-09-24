@@ -29,6 +29,7 @@ def main():
     parser.add_argument("--max-mib", required=True, type=int, choices=(1, 5, 10))
     parser.add_argument("--samples", type=int, default=3)
     parser.add_argument("--timeout", type=int, default=120)
+    parser.add_argument("--recovery", action="store_true", help="Clear both editors and observe 5/30 second memory recovery")
     args = parser.parse_args()
     build = args.build.resolve()
     output = args.output.resolve()
@@ -43,6 +44,8 @@ def main():
             args.max_mib > conditions["reflow_max_mib"] or
             metadata["application_variant"] not in ("unchanged", "textkit2-modern-anchor", "textkit2-single-target")):
         parser.error("Requires a clean, ungated single-paragraph build with matching bounds")
+    if args.recovery and args.max_mib != 1:
+        parser.error("Recovery is currently bounded to one 1 MiB document")
     app = build / "derived/Build/Products/Release/OpenCCman.app"
     executable = app / "Contents/MacOS/OpenCCman"
     output.mkdir(parents=True)
@@ -54,7 +57,7 @@ def main():
         "input_profile": conditions["input_profile"],
         "build_reflow_max_mib": conditions["reflow_max_mib"],
         "run_reflow_max_mib": args.max_mib, "samples_requested": args.samples,
-        "timeout_seconds": args.timeout, "runs": [],
+        "timeout_seconds": args.timeout, "recovery": args.recovery, "runs": [],
     }
     for index in range(1, args.samples + 1):
         run = output / f"run-{index:02}.json"
@@ -64,6 +67,8 @@ def main():
                    "-performance-middle-composed", "-performance-reflow-max-mib", str(args.max_mib)]
         if metadata["application_variant"].startswith("textkit2-"):
             command.append("-performance-require-textkit2")
+        if args.recovery:
+            command.append("-performance-recovery")
         entry = {"index": index, "command": command, "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
         process = subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         pid = None
