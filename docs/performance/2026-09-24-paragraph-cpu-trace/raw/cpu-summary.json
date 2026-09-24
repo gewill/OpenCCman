@@ -1,0 +1,497 @@
+{
+  "schema": 1,
+  "pid": 33894,
+  "source_commit": "b5c0f270543d73091416efaf6abb49686bf6dece",
+  "trace_bytes": 56240413,
+  "cpu_export_sha256": "92d4cda5e30771b49c8f5dff2637d298e57c90ef614b68f6ff7728fff8797c09",
+  "signpost_export_sha256": "f1c56361b5306bec81d532e171518ef9550e735924c3b58279727dd8d21cad80",
+  "app_run_sha256": "da4454d853cf0a8c4974d6c0fb3080143fd7d564c814c5e269fb58dd21a13b93",
+  "windows_trace_ns": {
+    "source_ack": [
+      12080139625,
+      60085523791
+    ],
+    "conversion_and_publication": [
+      60201619708,
+      107658260541
+    ],
+    "first_layout": [
+      108168374875,
+      null
+    ]
+  },
+  "clock_alignment": {
+    "source_offset_ns": -1487339416,
+    "conversion_offset_ns": -1487184750,
+    "layout_start_trace_ns": 108168374875
+  },
+  "signposts": [
+    {
+      "name": "Result layout flush",
+      "start_ns": 1164704208,
+      "duration_ns": 5020167
+    },
+    {
+      "name": "Result exact validation",
+      "start_ns": 1170616041,
+      "duration_ns": 44798625
+    },
+    {
+      "name": "Source replacement",
+      "start_ns": 12078685541,
+      "duration_ns": 379042
+    },
+    {
+      "name": "Source editor acknowledgement",
+      "start_ns": 12080139625,
+      "duration_ns": 48005384166
+    },
+    {
+      "name": "Source exact validation",
+      "start_ns": 60087416208,
+      "duration_ns": 112315208
+    },
+    {
+      "name": "Model conversion",
+      "start_ns": 60201619708,
+      "duration_ns": 47456640833
+    },
+    {
+      "name": "Result layout flush",
+      "start_ns": 107660333583,
+      "duration_ns": 2097375
+    },
+    {
+      "name": "Result exact validation",
+      "start_ns": 107663995416,
+      "duration_ns": 222357792
+    }
+  ],
+  "sample_metadata": {
+    "cpu_rows": 721153,
+    "main_thread_samples": 718907,
+    "last_sample_trace_ns": 182508763041,
+    "stack_definitions": 17347,
+    "frame_definitions": 11780
+  },
+  "phases": {
+    "source_ack": {
+      "samples": 190805,
+      "unresolved_backtraces": 0,
+      "top_leaf_functions": [
+        [
+          "TCombiningEngine::ResolveCombiningMarks(TCombiningEngine::CombiningFlag, bool*, bool*)",
+          159033
+        ],
+        [
+          "-[NSATSLineFragment getTypographicLineHeight:baselineOffset:leading:]",
+          10477
+        ],
+        [
+          "-[NSATSLineFragment saveWithGlyphOrigin:]",
+          10421
+        ],
+        [
+          "blockForLocation",
+          4314
+        ],
+        [
+          "objc_msgSend",
+          479
+        ],
+        [
+          "_platform_memset",
+          454
+        ],
+        [
+          "get_glyph_ideal_advances",
+          229
+        ],
+        [
+          "bool ComputeIndex12or13<((anonymous namespace)::SubtableFormat12or13)0, unsigned short>((anonymous namespace)::ExtGroup const*, (anonymous namespace)::ExtGroup const*, unsigned int, unsigned short*)",
+          144
+        ],
+        [
+          "__bzero",
+          144
+        ],
+        [
+          "TFont::GetAdvancesForGlyphsWithStyleFromCG(unsigned int, unsigned short const*, double*, AdvanceStride, long, CGAffineTransform const&, bool, double, bool) const",
+          130
+        ],
+        [
+          "__CF_IS_OBJC",
+          106
+        ],
+        [
+          "MorphActionResultCode TAATMorphSubtableMorx::ProcessT<TRunGlue::TGlyphInSingleRun>(TRunGlue&, CFRange, unsigned int)",
+          104
+        ]
+      ],
+      "stack_contains": {
+        "text_view_replace": 190741,
+        "workspace_update": 190741,
+        "layout_manager": 190732,
+        "combining_marks": 159657
+      },
+      "example_stack": [
+        "TCombiningEngine::ResolveCombiningMarks(TCombiningEngine::CombiningFlag, bool*, bool*)",
+        "TTypesetter::DoAttachments(std::__1::tuple<TLine const*, TCharStream const*, void const* (*)(__CTRun const*, __CFString const*, void*), void*, std::__1::shared_ptr<TBidiLevelsProvider>*, unsigned int, unsigned char, bool, long*> const&, TRunGlue&, signed char*, SyncState*)",
+        "TTypesetter::TTypesetter(__CFArray const*, __CFString const*, void const* (*)(__CTRun const*, __CFString const*, void*), void*, __CFDictionary const*)",
+        "CTTypesetterCreateWithRunArrayAndOptions",
+        "-[NSATSGlyphStorage createCTTypesetter]",
+        "-[NSATSTypesetter _ctTypesetter]",
+        "-[NSATSLineFragment layoutForStartingGlyphAtIndex:characterIndex:minPosition:maxPosition:lineFragmentRect:]",
+        "-[NSATSTypesetter _layoutLineFragmentStartingWithGlyphAtIndex:characterIndex:atPoint:renderingContext:]",
+        "-[NSATSTypesetter layoutParagraphAtPoint:]",
+        "-[NSTypesetter _layoutGlyphsInLayoutManager:startingAtGlyphIndex:maxNumberOfLineFragments:maxCharacterIndex:nextGlyphIndex:nextCharacterIndex:]",
+        "-[NSTypesetter layoutCharactersInRange:forLayoutManager:maximumNumberOfLineFragments:]",
+        "-[NSATSTypesetter layoutCharactersInRange:forLayoutManager:maximumNumberOfLineFragments:]",
+        "-[NSLayoutManager(NSPrivate) _fillLayoutHoleForCharacterRange:desiredNumberOfLines:isSoft:]",
+        "_NSFastFillAllLayoutHolesForGlyphRange",
+        "-[NSLayoutManager ensureLayoutForBoundingRect:inTextContainer:]",
+        "-[NSTextView(NSSharing) _updateBlinkRectUsingLayoutManager]",
+        "-[NSTextView(NSSharing) updateInsertionPointStateAndRestartTimer:]",
+        "-[NSTextView(NSSharing) setSelectedRanges:affinity:stillSelecting:]",
+        "-[NSLayoutManager textStorage:edited:range:changeInLength:invalidatedRange:]",
+        "-[NSTextStorage _notifyEdited:range:changeInLength:invalidatedRange:]",
+        "-[NSTextStorage endEditing]",
+        "-[NSTextView replaceCharactersInRange:withString:]",
+        "WorkspaceTextEditorCoordinator.update(_:text:isEditable:isEnabled:accessibilityLabel:)",
+        "NativeWorkspaceTextEditor.updateNSView(_:context:)",
+        "protocol witness for NSViewRepresentable.updateNSView(_:context:) in conformance NativeWorkspaceTextEditor",
+        "PlatformViewRepresentableAdaptor.updateViewProvider(_:context:)",
+        "closure #1 in closure #1 in closure #7 in closure #1 in PlatformViewChild.updateValue()",
+        "ViewRendererHost.performExternalUpdate(_:)",
+        "closure #1 in closure #7 in closure #1 in PlatformViewChild.updateValue()",
+        "closure #1 in PlatformViewChild.updateValue()",
+        "partial apply for implicit closure #1 in closure #1 in closure #1 in Attribute.init<A>(_:)",
+        "AG::Graph::UpdateStack::update()",
+        "AG::Subgraph::update(unsigned int)",
+        "GraphHost.flushTransactions()",
+        "closure #1 in closure #1 in closure #1 in NSHostingView.beginTransaction()",
+        "partial apply for closure #1 in ViewGraphRootValueUpdater.updateGraph<A>(body:)",
+        "ViewGraphRootValueUpdater._updateViewGraph<A>(body:)",
+        "ViewGraphRootValueUpdater.updateGraph<A>(body:)",
+        "closure #1 in closure #1 in NSHostingView.beginTransaction()",
+        "<deduplicated_symbol>",
+        "specialized static NSRunLoop.flushObservers()",
+        "@objc closure #1 in static NSRunLoop.addObserver(_:)",
+        "__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__",
+        "__CFRunLoopDoObservers",
+        "_CFRunLoopRunSpecificWithOptions",
+        "RunCurrentEventLoopInMode",
+        "ReceiveNextEventCommon",
+        "_BlockUntilNextEventMatchingListInMode",
+        "_DPSBlockUntilNextEventMatchingListInMode",
+        "_DPSNextEvent",
+        "-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]",
+        "-[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]",
+        "-[NSApplication run]",
+        "NSApplicationMain",
+        "specialized runApp(_:)",
+        "runApp<A>(_:)",
+        "static App.main()",
+        "static OpenCCmanApp.$main()",
+        "main",
+        "start"
+      ]
+    },
+    "conversion_and_publication": {
+      "samples": 188412,
+      "unresolved_backtraces": 0,
+      "top_leaf_functions": [
+        [
+          "TCombiningEngine::ResolveCombiningMarks(TCombiningEngine::CombiningFlag, bool*, bool*)",
+          156612
+        ],
+        [
+          "-[NSATSLineFragment getTypographicLineHeight:baselineOffset:leading:]",
+          10546
+        ],
+        [
+          "-[NSATSLineFragment saveWithGlyphOrigin:]",
+          10341
+        ],
+        [
+          "blockForLocation",
+          4413
+        ],
+        [
+          "objc_msgSend",
+          485
+        ],
+        [
+          "_platform_memset",
+          484
+        ],
+        [
+          "get_glyph_ideal_advances",
+          216
+        ],
+        [
+          "bool ComputeIndex12or13<((anonymous namespace)::SubtableFormat12or13)0, unsigned short>((anonymous namespace)::ExtGroup const*, (anonymous namespace)::ExtGroup const*, unsigned int, unsigned short*)",
+          147
+        ],
+        [
+          "__bzero",
+          135
+        ],
+        [
+          "__CF_IS_OBJC",
+          114
+        ],
+        [
+          "TFont::GetAdvancesForGlyphsWithStyleFromCG(unsigned int, unsigned short const*, double*, AdvanceStride, long, CGAffineTransform const&, bool, double, bool) const",
+          108
+        ],
+        [
+          "_xzm_free_main",
+          107
+        ]
+      ],
+      "stack_contains": {
+        "workspace_update": 188300,
+        "layout_manager": 188274,
+        "text_view_replace": 188297,
+        "combining_marks": 157177
+      },
+      "example_stack": [
+        "TCombiningEngine::ResolveCombiningMarks(TCombiningEngine::CombiningFlag, bool*, bool*)",
+        "TTypesetter::DoAttachments(std::__1::tuple<TLine const*, TCharStream const*, void const* (*)(__CTRun const*, __CFString const*, void*), void*, std::__1::shared_ptr<TBidiLevelsProvider>*, unsigned int, unsigned char, bool, long*> const&, TRunGlue&, signed char*, SyncState*)",
+        "TTypesetter::TTypesetter(__CFArray const*, __CFString const*, void const* (*)(__CTRun const*, __CFString const*, void*), void*, __CFDictionary const*)",
+        "CTTypesetterCreateWithRunArrayAndOptions",
+        "-[NSATSGlyphStorage createCTTypesetter]",
+        "-[NSATSTypesetter _ctTypesetter]",
+        "-[NSATSLineFragment layoutForStartingGlyphAtIndex:characterIndex:minPosition:maxPosition:lineFragmentRect:]",
+        "-[NSATSTypesetter _layoutLineFragmentStartingWithGlyphAtIndex:characterIndex:atPoint:renderingContext:]",
+        "-[NSATSTypesetter layoutParagraphAtPoint:]",
+        "-[NSTypesetter _layoutGlyphsInLayoutManager:startingAtGlyphIndex:maxNumberOfLineFragments:maxCharacterIndex:nextGlyphIndex:nextCharacterIndex:]",
+        "-[NSTypesetter layoutCharactersInRange:forLayoutManager:maximumNumberOfLineFragments:]",
+        "-[NSATSTypesetter layoutCharactersInRange:forLayoutManager:maximumNumberOfLineFragments:]",
+        "-[NSLayoutManager(NSPrivate) _fillLayoutHoleForCharacterRange:desiredNumberOfLines:isSoft:]",
+        "_NSFastFillAllLayoutHolesForGlyphRange",
+        "-[NSTextView(NSPrivate) _ensureLayoutCompleteForVisibleRectWithExtensionFactor:minimumExtensionDistance:repetitions:]",
+        "-[NSTextView setNeedsDisplayInRect:avoidAdditionalLayout:]",
+        "-[NSView _updateLayerGeometryFromView]",
+        "-[NSView setFrameSize:]",
+        "-[NSTextView(NSPrivate) _setFrameSize:forceScroll:]",
+        "-[NSTextView setFrameSize:]",
+        "-[NSLayoutManager(NSPrivate) _resizeTextViewForTextContainer:]",
+        "-[NSLayoutManager(NSPrivate) _recalculateUsageForTextContainerAtIndex:]",
+        "_enableTextViewResizing",
+        "-[NSLayoutManager textStorage:edited:range:changeInLength:invalidatedRange:]",
+        "-[NSTextStorage _notifyEdited:range:changeInLength:invalidatedRange:]",
+        "-[NSTextStorage endEditing]",
+        "-[NSTextView replaceCharactersInRange:withString:]",
+        "WorkspaceTextEditorCoordinator.update(_:text:isEditable:isEnabled:accessibilityLabel:)",
+        "NativeWorkspaceTextEditor.updateNSView(_:context:)",
+        "protocol witness for NSViewRepresentable.updateNSView(_:context:) in conformance NativeWorkspaceTextEditor",
+        "PlatformViewRepresentableAdaptor.updateViewProvider(_:context:)",
+        "closure #1 in closure #1 in closure #7 in closure #1 in PlatformViewChild.updateValue()",
+        "ViewRendererHost.performExternalUpdate(_:)",
+        "closure #1 in closure #7 in closure #1 in PlatformViewChild.updateValue()",
+        "closure #1 in PlatformViewChild.updateValue()",
+        "partial apply for implicit closure #1 in closure #1 in closure #1 in Attribute.init<A>(_:)",
+        "AG::Graph::UpdateStack::update()",
+        "AG::Subgraph::update(unsigned int)",
+        "GraphHost.flushTransactions()",
+        "closure #1 in closure #1 in closure #1 in NSHostingView.beginTransaction()",
+        "partial apply for closure #1 in ViewGraphRootValueUpdater.updateGraph<A>(body:)",
+        "ViewGraphRootValueUpdater._updateViewGraph<A>(body:)",
+        "ViewGraphRootValueUpdater.updateGraph<A>(body:)",
+        "closure #1 in closure #1 in NSHostingView.beginTransaction()",
+        "<deduplicated_symbol>",
+        "specialized static NSRunLoop.flushObservers()",
+        "@objc closure #1 in static NSRunLoop.addObserver(_:)",
+        "__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__",
+        "__CFRunLoopDoObservers",
+        "_CFRunLoopRunSpecificWithOptions",
+        "RunCurrentEventLoopInMode",
+        "ReceiveNextEventCommon",
+        "_BlockUntilNextEventMatchingListInMode",
+        "_DPSBlockUntilNextEventMatchingListInMode",
+        "_DPSNextEvent",
+        "-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]",
+        "-[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]",
+        "-[NSApplication run]",
+        "NSApplicationMain",
+        "specialized runApp(_:)",
+        "runApp<A>(_:)",
+        "static App.main()",
+        "static OpenCCmanApp.$main()",
+        "main",
+        "start"
+      ]
+    },
+    "first_layout": {
+      "samples": 293644,
+      "unresolved_backtraces": 0,
+      "top_leaf_functions": [
+        [
+          "TCombiningEngine::ResolveCombiningMarks(TCombiningEngine::CombiningFlag, bool*, bool*)",
+          275033
+        ],
+        [
+          "-[NSATSLineFragment getTypographicLineHeight:baselineOffset:leading:]",
+          4861
+        ],
+        [
+          "-[NSATSLineFragment saveWithGlyphOrigin:]",
+          4771
+        ],
+        [
+          "blockForLocation",
+          1985
+        ],
+        [
+          "objc_msgSend",
+          593
+        ],
+        [
+          "get_glyph_ideal_advances",
+          442
+        ],
+        [
+          "_platform_memset",
+          396
+        ],
+        [
+          "bool ComputeIndex12or13<((anonymous namespace)::SubtableFormat12or13)0, unsigned short>((anonymous namespace)::ExtGroup const*, (anonymous namespace)::ExtGroup const*, unsigned int, unsigned short*)",
+          284
+        ],
+        [
+          "TFont::GetAdvancesForGlyphsWithStyleFromCG(unsigned int, unsigned short const*, double*, AdvanceStride, long, CGAffineTransform const&, bool, double, bool) const",
+          224
+        ],
+        [
+          "__NSGetTransformedAdvances",
+          168
+        ],
+        [
+          "__bzero",
+          142
+        ],
+        [
+          "TRun::GetNextUncombinedCharRange(long, bool&) const",
+          128
+        ]
+      ],
+      "stack_contains": {
+        "layout_manager": 293627,
+        "combining_marks": 276071
+      },
+      "example_stack": [
+        "TCombiningEngine::ResolveCombiningMarks(TCombiningEngine::CombiningFlag, bool*, bool*)",
+        "TTypesetter::DoAttachments(std::__1::tuple<TLine const*, TCharStream const*, void const* (*)(__CTRun const*, __CFString const*, void*), void*, std::__1::shared_ptr<TBidiLevelsProvider>*, unsigned int, unsigned char, bool, long*> const&, TRunGlue&, signed char*, SyncState*)",
+        "TTypesetter::TTypesetter(__CFArray const*, __CFString const*, void const* (*)(__CTRun const*, __CFString const*, void*), void*, __CFDictionary const*)",
+        "CTTypesetterCreateWithRunArrayAndOptions",
+        "-[NSATSGlyphStorage createCTTypesetter]",
+        "-[NSATSTypesetter _ctTypesetter]",
+        "-[NSATSLineFragment layoutForStartingGlyphAtIndex:characterIndex:minPosition:maxPosition:lineFragmentRect:]",
+        "-[NSATSTypesetter _layoutLineFragmentStartingWithGlyphAtIndex:characterIndex:atPoint:renderingContext:]",
+        "-[NSATSTypesetter layoutParagraphAtPoint:]",
+        "-[NSTypesetter _layoutGlyphsInLayoutManager:startingAtGlyphIndex:maxNumberOfLineFragments:maxCharacterIndex:nextGlyphIndex:nextCharacterIndex:]",
+        "-[NSTypesetter layoutCharactersInRange:forLayoutManager:maximumNumberOfLineFragments:]",
+        "-[NSATSTypesetter layoutCharactersInRange:forLayoutManager:maximumNumberOfLineFragments:]",
+        "-[NSLayoutManager(NSPrivate) _fillLayoutHoleForCharacterRange:desiredNumberOfLines:isSoft:]",
+        "_NSFastFillAllLayoutHolesForGlyphRange",
+        "-[NSLayoutManager(NSPrivate) _rectArrayForRange:withinSelectionRange:rangeIsCharRange:singleRectOnly:fullLineRectsOnly:inTextContainer:rectCount:rangeWithinContainer:glyphsDrawOutsideLines:rectArray:rectArrayCapacity:]",
+        "-[NSLayoutManager(NSPrivate) _rectArrayForRange:withinSelectionRange:rangeIsCharRange:singleRectOnly:fullLineRectsOnly:inTextContainer:rectCount:rangeWithinContainer:glyphsDrawOutsideLines:]",
+        "-[NSLayoutManager(NSPrivate) _boundingRectForGlyphRange:inTextContainer:fast:fullLineRectsOnly:]",
+        "-[NSTextView(NSPrivate) _setFrameSize:forceScroll:]",
+        "-[NSTextView setFrameSize:]",
+        "-[NSView setFrame:]",
+        "-[NSView resizeWithOldSuperviewSize:]",
+        "-[NSView resizeSubviewsWithOldSize:]",
+        "-[NSView setFrameSize:]",
+        "-[NSClipView setFrameSize:]",
+        "-[NSView setFrame:]",
+        "-[NSScrollView _setContentViewFrame:]",
+        "-[NSScrollView _applyContentAreaLayout:]",
+        "-[NSScrollView tile]",
+        "-[NSScrollView _tileWithoutRecursing]",
+        "-[NSScrollView _update]",
+        "-[NSView setFrameSize:]",
+        "-[NSScrollView setFrameSize:]",
+        "-[NSView setFrame:]",
+        "-[NSView resizeWithOldSuperviewSize:]",
+        "-[NSView resizeSubviewsWithOldSize:]",
+        "AppKitPlatformViewHost.resizeSubviews(withOldSize:)",
+        "@objc AppKitPlatformViewHost.resizeSubviews(withOldSize:)",
+        "-[NSView setFrameSize:]",
+        "CoreViewSetGeometry",
+        "DisplayList.ViewUpdater.Platform.updateGeometry(_:item:size:state:clipRectChanged:)",
+        "DisplayList.ViewUpdater.Platform.updateState(_:item:size:state:)",
+        "DisplayList.ViewUpdater.Platform.updateItemView(_:index:item:state:)",
+        "DisplayList.ViewUpdater.ViewCache.update(item:platform:state:tag:in:)",
+        "DisplayList.ViewUpdater.updateItemView(container:from:localState:)",
+        "DisplayList.ViewUpdater.updateInheritedView(container:from:parentState:)",
+        "DisplayList.ViewUpdater.update(container:from:parentState:)",
+        "DisplayList.ViewUpdater.updateInheritedView(container:from:parentState:)",
+        "DisplayList.ViewUpdater.update(container:from:parentState:)",
+        "DisplayList.ViewUpdater.updateInheritedView(container:from:parentState:)",
+        "DisplayList.ViewUpdater.updateItemView(container:from:localState:)",
+        "DisplayList.ViewUpdater.updateInheritedView(container:from:parentState:)",
+        "DisplayList.ViewUpdater.update(container:from:parentState:)",
+        "DisplayList.ViewUpdater.updateInheritedView(container:from:parentState:)",
+        "DisplayList.ViewUpdater.update(container:from:parentState:)",
+        "DisplayList.ViewUpdater.updateInheritedView(container:from:parentState:)",
+        "DisplayList.ViewUpdater.update(container:from:parentState:)",
+        "DisplayList.ViewUpdater.render(rootView:from:time:version:maxVersion:environment:)",
+        "closure #1 in renderOnMainThread #1 () in ViewGraph.renderDisplayList(_:asynchronously:time:nextTime:targetTimestamp:version:maxVersion:)",
+        "ViewGraphRenderDelegate.withMainThreadRender(wasAsync:_:)",
+        "ViewGraph.renderDisplayList(_:asynchronously:time:nextTime:targetTimestamp:version:maxVersion:)",
+        "protocol witness for ViewGraphRenderHost.renderDisplayList(_:asynchronously:time:nextTime:targetTimestamp:version:maxVersion:) in conformance ViewGraph",
+        "closure #1 in ViewGraphRootValueUpdater.render(interval:updateDisplayList:targetTimestamp:)",
+        "ViewGraphRootValueUpdater.render(interval:updateDisplayList:targetTimestamp:)",
+        "closure #1 in NSHostingView.layout()",
+        "<deduplicated_symbol>",
+        "<deduplicated_symbol>",
+        "+[NSAnimationContext runAnimationGroup:]",
+        "NSHostingView.layout()",
+        "@objc NSHostingView.layout()",
+        "0x18893420c",
+        "0x188934234",
+        "0x1889e4d24",
+        "0x1889e5890",
+        "___NSViewLayout_block_invoke",
+        "NSPerformVisuallyAtomicChange",
+        "_NSViewLayout",
+        "__36-[NSView _layoutSubtreeWithOldSize:]_block_invoke",
+        "NSPerformVisuallyAtomicChange",
+        "-[NSView _layoutSubtreeWithOldSize:]",
+        "__56-[NSView _layoutSubtreeIfNeededAndAllowTemporaryEngine:]_block_invoke",
+        "NSPerformVisuallyAtomicChange",
+        "-[NSView _layoutSubtreeIfNeededAndAllowTemporaryEngine:]",
+        "NSPerformVisuallyAtomicChange",
+        "-[NSView layoutSubtreeIfNeeded]",
+        "closure #1 in closure #1 in AppPerformanceAudit.yieldUI(_:)",
+        "0x10223bb77",
+        "_dispatch_call_block_and_release",
+        "_dispatch_client_callout",
+        "_dispatch_main_queue_drain.cold.6",
+        "_dispatch_main_queue_drain",
+        "_dispatch_main_queue_callback_4CF",
+        "__CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__",
+        "__CFRunLoopRun",
+        "_CFRunLoopRunSpecificWithOptions",
+        "RunCurrentEventLoopInMode",
+        "ReceiveNextEventCommon",
+        "_BlockUntilNextEventMatchingListInMode",
+        "_DPSBlockUntilNextEventMatchingListInMode",
+        "_DPSNextEvent",
+        "-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]",
+        "-[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]",
+        "-[NSApplication run]",
+        "NSApplicationMain",
+        "specialized runApp(_:)",
+        "runApp<A>(_:)",
+        "static App.main()",
+        "static OpenCCmanApp.$main()",
+        "main",
+        "start"
+      ]
+    }
+  }
+}

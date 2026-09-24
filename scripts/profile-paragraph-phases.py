@@ -75,7 +75,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--build", required=True, type=Path, help="Verified private benchmark build")
     parser.add_argument("--output", required=True, type=Path, help="Fresh directory outside the repository")
-    parser.add_argument("--probe-only", action="store_true", help="Attach for five seconds before the document workload")
+    parser.add_argument("--probe-only", action="store_true",
+                        help="Attach for five seconds without explicit reopen; the app may start work automatically")
     args = parser.parse_args()
     build = args.build.resolve()
     output = args.output.resolve()

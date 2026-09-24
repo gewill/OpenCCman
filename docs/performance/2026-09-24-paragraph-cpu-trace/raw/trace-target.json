@@ -1,0 +1,32 @@
+{
+  "processes": [
+    {
+      "name": "OpenCCman",
+      "pid": "33894",
+      "termination_reason": "exit(0)"
+    },
+    {
+      "name": "OpenCCman",
+      "pid": "33894",
+      "termination_reason": null
+    }
+  ],
+  "schemas": [
+    "OSSignpostIntervals",
+    "PointsOfInterestEvents",
+    "StateReportingIntervals",
+    "cpu-profile",
+    "dyld-library-load",
+    "kdebug",
+    "kdebug-counters-with-kdebug-sample",
+    "kdebug-counters-with-pmi-sample",
+    "kdebug-strings",
+    "life-cycle-period",
+    "os-log",
+    "os-signpost",
+    "os-signpost-arg",
+    "process-info",
+    "thread-info",
+    "tick"
+  ]
+}
