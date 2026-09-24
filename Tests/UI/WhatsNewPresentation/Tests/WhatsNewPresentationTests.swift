@@ -55,9 +55,21 @@ final class WhatsNewPresentationTests: XCTestCase {
     XCTAssertTrue(picker.waitForExistence(timeout: 15))
     XCTAssertFalse(app.buttons["whats-new-done"].exists)
     capture(app, name: "native-exporter-without-cards")
-    // iOS 18's exporter Cancel is rendered by a document-provider extension
-    // that this app-scoped XCUITest cannot reliably target. The panel overlap
-    // assertion is real; dismissal remains a separate manual acceptance gate.
+    // The Files browser is hosted by a system extension. On iPhone its Browse
+    // button can lead to a parent location before Cancel becomes available,
+    // and neither control is consistently exposed in the app's XCUI tree.
+    // Tap the top-left navigation control until the picker closes, then assert
+    // the pending cards appear. Keep the iPad assertion above independent of
+    // this iPhone-specific system navigation layout.
+    if app.frame.width < 600 {
+      let topLeftNavigation = app.coordinate(withNormalizedOffset: CGVector(dx: 0.115, dy: 0.105))
+      for _ in 0..<3 where picker.exists {
+        topLeftNavigation.tap()
+        Thread.sleep(forTimeInterval: 0.7)
+      }
+      XCTAssertFalse(picker.exists, "The native exporter must close after cancelling")
+      expectCardsOnce(app)
+    }
   }
 
   func testQuotaAlertAndProSheetDeferCards() {
