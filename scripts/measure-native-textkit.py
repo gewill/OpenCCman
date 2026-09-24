@@ -40,12 +40,15 @@ def fixture(size, pattern):
     return line * (size // len(line)) + b'a' * (size % len(line))
 
 
-def validate(run, mode, size, width_switch=False, no_rescroll=False):
+def validate(run, mode, size, width_switch=False, no_rescroll=False, recovery=False):
     if run.get('status') != 'complete' or run.get('mode') != mode or run.get('source_utf8_bytes') != size:
         raise ValueError('Incomplete or wrong native benchmark run')
     expected_names = ['empty_ready', 'first_display', 'scroll_start', 'scroll_middle', 'scroll_end']
     if width_switch:
         expected_names += ['width_narrow', 'width_wide']
+    if recovery:
+        expected_names += ['recovery_before_clear', 'recovery_clear_ack',
+                           'recovery_after_5s', 'recovery_after_30s']
     if [row['name'] for row in run['rows']] != expected_names:
         raise ValueError('Native benchmark stages differ')
     for row in run['rows']:
@@ -53,7 +56,8 @@ def validate(run, mode, size, width_switch=False, no_rescroll=False):
             raise ValueError('Text system changed or window not visible')
         if row.get('app_active') is False:
             raise ValueError('Native benchmark lost foreground focus')
-        if row['editor_utf16'] != (0 if row['name'] == 'empty_ready' else run['source_utf16']):
+        expected_length = 0 if row['name'] == 'empty_ready' or row['name'].startswith('recovery_after_') or row['name'] == 'recovery_clear_ack' else run['source_utf16']
+        if row['editor_utf16'] != expected_length or row['storage_utf16'] != expected_length:
             raise ValueError('Editor did not retain the complete source')
         if (row['name'].startswith('scroll') or row['name'].startswith('width_') and not no_rescroll) and (not row['target_visible'] or row['scroll_attempts'] < 1):
             raise ValueError('Target character did not become visible')
@@ -98,6 +102,34 @@ def terminate_owned_app(path, binary):
         return False
 
 
+def owned_pids(binary):
+    """Find only running processes whose executable path is this private bundle."""
+    pids = set()
+    for line in command(['ps', '-axo', 'pid=,command=']).splitlines():
+        fields = line.strip().split(maxsplit=1)
+        if len(fields) == 2 and (fields[1] == str(binary) or fields[1].startswith(str(binary) + ' ')):
+            pids.add(int(fields[0]))
+    return pids
+
+
+def activate_owned_app(binary, prior):
+    """The AppKit process name differs from its bundle name; target its exact PID."""
+    deadline = time.monotonic() + 10
+    while time.monotonic() < deadline:
+        current = owned_pids(binary) - prior
+        if len(current) == 1:
+            pid = current.pop()
+            script = ('tell application "System Events" to set frontmost of first '
+                      f'application process whose unix id is {pid} to true')
+            subprocess.run(['osascript', '-e', script], check=True, capture_output=True,
+                           text=True, timeout=10)
+            return pid
+        if len(current) > 1:
+            raise RuntimeError('Multiple new private TextKit app processes')
+        time.sleep(0.05)
+    raise RuntimeError('Private TextKit app did not start for foreground activation')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', required=True, type=Path, help='New directory outside the repository')
@@ -108,10 +140,15 @@ def main():
     parser.add_argument('--modes', nargs='+', choices=('tk1', 'tk2'), default=['tk1', 'tk2'])
     parser.add_argument('--width-switch', action='store_true', help='Resize 1200→800→1200 pt at the end-of-document caret')
     parser.add_argument('--narrow-width', type=int, default=800, help='First resize width in points, default 800')
+    parser.add_argument('--content-width', type=int, default=1200,
+                        help='Initial native editor window width in points, default 1200')
     parser.add_argument('--no-rescroll', action='store_true', help='Do not restore the end caret after resizing')
+    parser.add_argument('--recovery', action='store_true', help='Clear the native editor and measure recovery through 30 seconds')
+    parser.add_argument('--activate-process', action='store_true',
+                        help='Bring only the launched diagnostic PID to the foreground via System Events')
     args = parser.parse_args()
     output = args.output.resolve()
-    if output == ROOT or ROOT in output.parents or output.exists() or args.samples < 1 or args.timeout < 1 or any(s < 1 or s > 10 for s in args.sizes) or not 300 <= args.narrow_width < 1200 or args.no_rescroll and not args.width_switch:
+    if output == ROOT or ROOT in output.parents or output.exists() or args.samples < 1 or args.timeout < 1 or any(s < 1 or s > 10 for s in args.sizes) or not 300 <= args.narrow_width < 1200 or not 300 <= args.content_width <= 1200 or args.no_rescroll and not args.width_switch:
         parser.error('Use a new directory outside the repository; sizes must be 1–10 MiB')
     output.mkdir(parents=True)
     app = output / 'NativeTextKitMemory.app'
@@ -142,8 +179,11 @@ def main():
         'pattern': args.pattern, 'samples': args.samples, 'modes': args.modes,
         'width_switch': args.width_switch,
         'narrow_width_points': args.narrow_width,
+        'content_width_points': args.content_width,
         'no_rescroll': args.no_rescroll,
-        'sizes_mib': args.sizes, 'window_content_points': [1200, 800],
+        'recovery': args.recovery,
+        'activate_process': args.activate_process,
+        'sizes_mib': args.sizes, 'window_content_points': [args.content_width, 800],
         'target': 'arm64-apple-macos12.0', 'arch': platform.machine(),
         'macos': command(['sw_vers', '-productVersion']),
         'macos_build': command(['sw_vers', '-buildVersion']),
@@ -164,19 +204,38 @@ def main():
                 name = f'{mode}-{args.pattern}-{mib}MiB-{sample:02}.json'
                 path = output / name
                 command_line = ['open', '-n', '-W', '-a', str(app), '--args', '--mode', mode,
-                                '--input', str(output / f'{args.pattern}-{mib}MiB.txt'), '--output', str(path)]
+                                '--input', str(output / f'{args.pattern}-{mib}MiB.txt'), '--output', str(path),
+                                '--content-width', str(args.content_width)]
                 if args.width_switch:
                     command_line += ['--width-switch', '--narrow-width', str(args.narrow_width)]
                     if args.no_rescroll:
                         command_line.append('--no-rescroll')
+                if args.recovery:
+                    command_line.append('--recovery')
                 try:
-                    result = subprocess.run(command_line, timeout=args.timeout, capture_output=True, text=True)
+                    if args.activate_process:
+                        prior = owned_pids(binary)
+                        process = subprocess.Popen(command_line, stdout=subprocess.PIPE,
+                                                   stderr=subprocess.PIPE, text=True)
+                        try:
+                            activated_pid = activate_owned_app(binary, prior)
+                            stdout, stderr = process.communicate(timeout=args.timeout)
+                        except BaseException:
+                            if process.poll() is None:
+                                process.terminate()
+                                process.communicate(timeout=5)
+                            raise
+                        result = subprocess.CompletedProcess(command_line, process.returncode, stdout, stderr)
+                    else:
+                        activated_pid = None
+                        result = subprocess.run(command_line, timeout=args.timeout, capture_output=True, text=True)
                     (output / (name + '.stderr')).write_text(result.stderr)
                     if result.returncode != 0 or not path.exists():
                         raise RuntimeError(f'exit {result.returncode}; output exists: {path.exists()}')
                     run = json.loads(path.read_text())
-                    validate(run, mode, mib * 1024 * 1024, args.width_switch, args.no_rescroll)
-                except (subprocess.TimeoutExpired, RuntimeError, ValueError, json.JSONDecodeError) as error:
+                    validate(run, mode, mib * 1024 * 1024, args.width_switch, args.no_rescroll, args.recovery)
+                except (subprocess.TimeoutExpired, subprocess.CalledProcessError, RuntimeError,
+                        ValueError, json.JSONDecodeError) as error:
                     terminated = terminate_owned_app(path, binary)
                     partial_status, completed_stages = partial_stages(path)
                     failure = {
@@ -190,12 +249,19 @@ def main():
                     print(f'{name}: {failure["reason"]}', flush=True)
                     continue
                 run['metadata_sha256'] = sha(output / 'metadata.json')
+                if activated_pid is not None:
+                    if run['pid'] != activated_pid:
+                        raise RuntimeError('Foreground activation targeted the wrong process')
+                    run['activated_pid'] = activated_pid
                 run['command'] = ['open', '-n', '-W', '-a', '<output>/NativeTextKitMemory.app', '--args',
-                                  '--mode', mode, '--input', f'<output>/{args.pattern}-{mib}MiB.txt', '--output', f'<output>/{name}']
+                                  '--mode', mode, '--input', f'<output>/{args.pattern}-{mib}MiB.txt', '--output',
+                                  f'<output>/{name}', '--content-width', str(args.content_width)]
                 if args.width_switch:
                     run['command'] += ['--width-switch', '--narrow-width', str(args.narrow_width)]
                     if args.no_rescroll:
                         run['command'].append('--no-rescroll')
+                if args.recovery:
+                    run['command'].append('--recovery')
                 path.write_text(json.dumps(run, indent=2, ensure_ascii=False) + '\n')
                 runs.setdefault((mib, mode), []).append(run)
                 print(f'{name}: complete', flush=True)
@@ -204,10 +270,14 @@ def main():
         key = f'{mode}-{args.pattern}-{mib}MiB'
         summary[key] = {'complete_samples': len(group), 'expected_samples': args.samples}
         for stage in (['first_display', 'scroll_middle', 'scroll_end'] +
-                      (['width_narrow', 'width_wide'] if args.width_switch else [])):
+                      (['width_narrow', 'width_wide'] if args.width_switch else []) +
+                      (['recovery_before_clear', 'recovery_clear_ack',
+                        'recovery_after_5s', 'recovery_after_30s'] if args.recovery else [])):
             rows = [next(row for row in run['rows'] if row['name'] == stage) for run in group]
             summary[key][stage] = {}
             for metric in ('action_ms', 'rss_bytes', 'physical_footprint_bytes'):
+                if not all(metric in row for row in rows):
+                    continue
                 values = [row[metric] for row in rows]
                 summary[key][stage][metric] = {'median': statistics.median(values), 'range': [min(values), max(values)]}
     (output / 'summary.json').write_text(json.dumps({'complete': summary, 'incomplete': incomplete}, indent=2) + '\n')

@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "source_commit": "252d7e7cd6a35746f0bac46a894a39672d0fcf0a",
+  "source_status": "",
+  "source_sha256": "2f5b22dc6285d66acfec05f847d266977ae449495bd37005955830489a557176",
+  "driver_sha256": "dfa80f2178db31a74fb8025f6b62be151fa2812623e453a92f1bbc1fde518a74",
+  "binary_sha256": "ea007edd296929ae468ac24f39dd72648bddc3353dda976ffeb2e8ddcdf434b3",
+  "bundle_info_sha256": "34e10ddd9eed87d1d65ad468be1cf87ddbe1fab2953731ad2484b48ebc66e4be",
+  "signature": "ad hoc, verified; private diagnostic bundle only",
+  "build_command": [
+    "xcrun",
+    "swiftc",
+    "-O",
+    "-g",
+    "-target",
+    "arm64-apple-macos12.0",
+    "-framework",
+    "AppKit",
+    "Tests/Benchmarks/NativeTextKitMemory.swift",
+    "-o",
+    "<output>/NativeTextKitMemory.app/Contents/MacOS/native-textkit-memory"
+  ],
+  "pattern": "app-mixed",
+  "samples": 1,
+  "modes": [
+    "tk1",
+    "tk2"
+  ],
+  "width_switch": false,
+  "narrow_width_points": 800,
+  "content_width_points": 440,
+  "no_rescroll": false,
+  "recovery": true,
+  "activate_process": true,
+  "sizes_mib": [
+    1
+  ],
+  "window_content_points": [
+    440,
+    800
+  ],
+  "target": "arm64-apple-macos12.0",
+  "arch": "arm64",
+  "macos": "27.0",
+  "macos_build": "26A428",
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "fixture_sha256": {
+    "1": "3589430ad438ead1803658c8c0d77d32d30f5694b0b1787ffc512d4e32f8b239"
+  },
+  "run_order": "size, sample, requested modes",
+  "limit_seconds_per_process": 120
+}
