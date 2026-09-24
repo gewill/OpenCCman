@@ -360,6 +360,39 @@ final class AppPerformanceAudit {
     }
   }
 
+  private func runReflowRecovery(_ model: HomeViewModel, window: NSWindow) async throws {
+    guard let root = window.contentView,
+          let source = editors(in: root).first(where: { $0.isEditable }),
+          let result = editors(in: root).first(where: { !$0.isEditable }) else {
+      throw NSError(domain: "ReflowAudit", code: 3,
+                    userInfo: [NSLocalizedDescriptionKey: "Recovery editors are missing"])
+    }
+    let sourceIdentity = ObjectIdentifier(source)
+    let resultIdentity = ObjectIdentifier(result)
+    record("recovery_before_clear", ["source_utf16_units": source.textStorage?.length ?? -1,
+                                     "result_utf16_units": result.textStorage?.length ?? -1])
+    model.replaceSource("")
+    try await awaitEditorLengths((0, 0), window: window)
+    try validateEditors(model, window: window)
+    guard editors(in: root).first(where: { $0.isEditable }).map(ObjectIdentifier.init) == sourceIdentity,
+          editors(in: root).first(where: { !$0.isEditable }).map(ObjectIdentifier.init) == resultIdentity,
+          model.exportSnapshot == nil else {
+      throw NSError(domain: "ReflowAudit", code: 4,
+                    userInfo: [NSLocalizedDescriptionKey: "Recovery changed editor identity or retained the export snapshot"])
+    }
+    record("recovery_clear_ack", ["source_utf16_units": source.textStorage?.length ?? -1,
+                                  "result_utf16_units": result.textStorage?.length ?? -1,
+                                  "source_can_undo": source.undoManager?.canUndo ?? false])
+    try await Task.sleep(nanoseconds: 5_000_000_000)
+    await yieldUI(window)
+    record("recovery_after_5s", ["source_utf16_units": source.textStorage?.length ?? -1,
+                                 "result_utf16_units": result.textStorage?.length ?? -1])
+    try await Task.sleep(nanoseconds: 25_000_000_000)
+    await yieldUI(window)
+    record("recovery_after_30s", ["source_utf16_units": source.textStorage?.length ?? -1,
+                                  "result_utf16_units": result.textStorage?.length ?? -1])
+  }
+
   private func run(_ model: HomeViewModel, window: NSWindow) async {
     await yieldUI(window)
     var processInfo = proc_bsdinfo()
@@ -383,6 +416,9 @@ final class AppPerformanceAudit {
     do {
       if ProcessInfo.processInfo.arguments.contains("-performance-reflow") {
         try await runReflow(model, window: window)
+        if ProcessInfo.processInfo.arguments.contains("-performance-recovery") {
+          try await runReflowRecovery(model, window: window)
+        }
         timer?.invalidate(); timer = nil
         if ProcessInfo.processInfo.arguments.contains("-performance-reflow-profile-hold") {
           record("profiling_hold")
