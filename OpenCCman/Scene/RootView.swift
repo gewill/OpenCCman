@@ -48,6 +48,10 @@ struct RootView: View {
     .onAppear {
       #if DEBUG
         if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
+           ProcessInfo.processInfo.arguments.contains("-qa-unread-whats-new-at-launch") {
+          UserDefaults.standard.removeObject(forKey: WhatsNewCoordinator.lastPresentedVersionKey)
+        }
+        if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
            ProcessInfo.processInfo.arguments.contains("-qa-mark-whats-new-read-at-launch"),
            let release = whatsNew.release {
           UserDefaults.standard.set(release.version, forKey: WhatsNewCoordinator.lastPresentedVersionKey)
@@ -127,6 +131,14 @@ struct RootView: View {
 
   private var whatsNewEligibility: WhatsNewEligibility {
     var active = isVisible && scenePhase == .active
+    #if DEBUG
+      // A headless XCUITest Simulator stays scene-inactive even while the app
+      // is visible to XCTest. Keep this override confined to the QA bundle.
+      if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
+         ProcessInfo.processInfo.arguments.contains("-qa-assume-active-for-whats-new") {
+        active = isVisible
+      }
+    #endif
     #if os(macOS)
       active = active && isMainWindow
     #endif

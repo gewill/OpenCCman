@@ -15,8 +15,15 @@ bash scripts/check-whats-new-ui.sh <simulator-UDID>
 The script builds the current app source with the resolved package versions,
 reinstalls only the QA bundle, runs all UI cases, and prints the result directory
 containing build logs and an `.xcresult`. Keep that directory when attaching
-evidence to #34. Each test starts by marking the current card read in the QA
-bundle, then makes it unread while the file picker or conversion is active.
+evidence to #34. The task-deferral tests start by marking the current card read
+in the QA bundle, then make it unread while the file picker or conversion is
+active. The launch/relaunch case instead marks the release unread before the
+home scene appears, confirms the automatic sheet, relaunches without the unread
+argument to verify that the read state persisted, and opens it manually from
+Settings. Headless XCUITest leaves the Simulator scene phase `inactive`, so
+this one case uses a Debug-only, exact-QA-bundle argument to make the home scene
+eligible. It checks the on-screen presentation and persistence logic, not a
+real foreground transition, signed first install, or TestFlight launch.
 The UI verifies deferral, appearance after success/failure/cancellation, one-time
 dismissal, and the absence of a late result after cancellation. It also checks
 that the first conversion does not produce a StoreKit review prompt immediately
