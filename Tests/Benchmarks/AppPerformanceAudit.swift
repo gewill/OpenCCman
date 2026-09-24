@@ -217,7 +217,11 @@ final class AppPerformanceAudit {
 
   private func runReflow(_ model: HomeViewModel, window: NSWindow) async throws {
     model.applyPreset(.taiwan)
-    for mib in [1, 5, 10] {
+    let arguments = ProcessInfo.processInfo.arguments
+    let maxMiB = arguments.firstIndex(of: "-performance-reflow-max-mib")
+      .flatMap { index in arguments.indices.contains(index + 1) ? Int(arguments[index + 1]) : nil } ?? 10
+    precondition([1, 5, 10].contains(maxMiB))
+    for mib in [1, 5, 10] where mib <= maxMiB {
       model.replaceSource(fixture(bytes: mib * 1024 * 1024))
       try await awaitEditors(model, window: window)
       try await convert(model, window: window, name: "reflow_convert_\(mib)MiB")
