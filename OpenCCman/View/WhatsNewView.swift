@@ -11,6 +11,7 @@ struct WhatsNewView: View {
         Button("whats_new_done") { presentationMode.wrappedValue.dismiss() }
           .keyboardShortcut(.cancelAction)
           .padding(12)
+          .accessibilitySortPriority(-1)
           .accessibilityIdentifier("whats-new-done")
       }
       ScrollView {
