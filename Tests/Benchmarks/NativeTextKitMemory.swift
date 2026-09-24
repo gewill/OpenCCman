@@ -18,6 +18,16 @@ enum NativeTextKitMemory {
     precondition(mode == "tk1" || mode == "tk2")
     let widthSwitch = arguments.contains("--width-switch")
     let noRescroll = arguments.contains("--no-rescroll")
+    let recovery = arguments.contains("--recovery")
+    let contentWidth: Double
+    if arguments.contains("--content-width") {
+      guard let value = Double(value(after: "--content-width")), (300...1200).contains(value) else {
+        fatalError("Invalid --content-width")
+      }
+      contentWidth = value
+    } else {
+      contentWidth = 1200
+    }
     precondition(!noRescroll || widthSwitch)
     let narrowWidth: Double
     if arguments.contains("--narrow-width") {
@@ -39,9 +49,6 @@ enum NativeTextKitMemory {
 
     let app = NSApplication.shared
     app.setActivationPolicy(.regular)
-    // Standalone swiftc binaries do not enter NSApplication.run(), which
-    // normally completes launch before activation.
-    app.finishLaunching()
     let editor = NSTextView(usingTextLayoutManager: mode == "tk2")
     let observer = NotificationCenter.default.addObserver(
       forName: NSTextView.willSwitchToNSLayoutManagerNotification, object: editor, queue: .main
@@ -62,19 +69,23 @@ enum NativeTextKitMemory {
     }
     editor.font = NSFont.userFont(ofSize: 0)
 
-    let scroll = NSScrollView(frame: NSRect(x: 0, y: 0, width: 1200, height: 800))
+    let scroll = NSScrollView(frame: NSRect(x: 0, y: 0, width: contentWidth, height: 800))
     scroll.hasVerticalScroller = true
     scroll.autohidesScrollers = true
     scroll.documentView = editor
     let window = NSWindow(contentRect: scroll.bounds, styleMask: [.titled, .closable, .resizable],
                           backing: .buffered, defer: false)
     window.contentView = scroll
-    window.setContentSize(NSSize(width: 1200, height: 800))
+    window.setContentSize(NSSize(width: contentWidth, height: 800))
     window.makeKeyAndOrderFront(nil)
-    app.activate(ignoringOtherApps: true)
-    for _ in 0..<100 where !app.isActive {
-      RunLoop.main.run(until: Date().addingTimeInterval(0.01))
-    }
+
+    func perform() throws {
+      // Activation is requested after the standard AppKit event loop starts.
+      // Calling activate before run() can leave every sample in the background.
+      app.activate(ignoringOtherApps: true)
+      for _ in 0..<500 where !app.isActive {
+        RunLoop.main.run(until: Date().addingTimeInterval(0.01))
+      }
 
     func flush() {
       for _ in 0..<2 {
@@ -104,8 +115,10 @@ enum NativeTextKitMemory {
         "app_active": NSApp.isActive,
         "visible": window.isVisible,
         "window_content_points": [window.contentView?.bounds.width ?? 0, window.contentView?.bounds.height ?? 0],
+        "editor_viewport_width": scroll.contentView.bounds.width,
         "viewport_y": scroll.contentView.bounds.minY,
-        "editor_utf16": (editor.string as NSString).length
+        "editor_utf16": (editor.string as NSString).length,
+        "storage_utf16": editor.textStorage?.length ?? -1
       ]
       if let actionMS { row["action_ms"] = actionMS }
       if let targetVisible { row["target_visible"] = targetVisible }
@@ -116,7 +129,7 @@ enum NativeTextKitMemory {
       let report: [String: Any] = [
         "status": "running", "pid": getpid(), "mode": mode,
         "source_utf8_bytes": sourceBytes,
-        "source_utf16": sourceLength, "window_content_points": [1200, 800], "rows": rows
+        "source_utf16": sourceLength, "window_content_points": [contentWidth, 800], "rows": rows
       ]
       try JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys])
         .write(to: output, options: .atomic)
@@ -187,14 +200,42 @@ enum NativeTextKitMemory {
                    viewportRect: viewportRect)
       }
     }
+    if recovery {
+      try sample("recovery_before_clear")
+      editor.string = ""
+      editor.undoManager?.removeAllActions()
+      flush()
+      try sample("recovery_clear_ack")
+      func wait(_ seconds: TimeInterval) {
+        let end = Date().addingTimeInterval(seconds)
+        while Date() < end {
+          RunLoop.main.run(until: min(end, Date().addingTimeInterval(0.05)))
+        }
+        flush()
+      }
+      wait(5)
+      try sample("recovery_after_5s")
+      wait(25)
+      try sample("recovery_after_30s")
+    }
     let final: [String: Any] = [
       "status": allTargetsVisible ? "complete" : "target_not_visible", "pid": getpid(), "mode": mode,
       "source_utf8_bytes": sourceBytes,
-      "source_utf16": sourceLength, "window_content_points": [1200, 800], "rows": rows
+      "source_utf16": sourceLength, "window_content_points": [contentWidth, 800], "rows": rows
     ]
     try JSONSerialization.data(withJSONObject: final, options: [.prettyPrinted, .sortedKeys])
       .write(to: output, options: .atomic)
     window.close()
+    }
+    DispatchQueue.main.async {
+      do { try perform() }
+      catch {
+        fputs("Native TextKit diagnostic failed: \(error)\n", stderr)
+        exit(1)
+      }
+      app.terminate(nil)
+    }
+    app.run()
   }
 }
 
