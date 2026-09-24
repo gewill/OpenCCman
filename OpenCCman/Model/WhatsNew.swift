@@ -39,6 +39,12 @@ struct WhatsNewRelease: Identifiable {
       return nil
     }
   }
+
+  @MainActor
+  static func hasUnreadContent(for version: String, defaults: UserDefaults) -> Bool {
+    guard let release = content(for: version) else { return false }
+    return defaults.string(forKey: WhatsNewCoordinator.lastPresentedVersionKey) != release.version
+  }
 }
 
 /// Shared by all WindowGroups. Reserving a window never records a presentation.
@@ -107,7 +113,17 @@ final class WhatsNewWindowState: ObservableObject {
 
   // A false presentation binding starts dismissal; the host's onDismiss ends it.
   @Published var conversionSettingsIsActive = false
-  @Published var showingImporter = false
+  @Published var showingImporter = false {
+    didSet {
+      #if DEBUG
+        if showingImporter,
+           Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
+           ProcessInfo.processInfo.arguments.contains("-qa-unread-whats-new-on-import") {
+          UserDefaults.standard.removeObject(forKey: "lastPresentedWhatsNewVersion")
+        }
+      #endif
+    }
+  }
   @Published var showingExporter = false
   @Published var showingProSheet = false {
     didSet {

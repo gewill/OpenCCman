@@ -46,6 +46,14 @@ struct RootView: View {
         }
     }
     .onAppear {
+      #if DEBUG
+        if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
+           ProcessInfo.processInfo.arguments.contains("-qa-mark-whats-new-read-at-launch"),
+           let release = whatsNew.release {
+          UserDefaults.standard.set(release.version, forKey: WhatsNewCoordinator.lastPresentedVersionKey)
+          UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastVersionPromptedForReview.rawValue)
+        }
+      #endif
       isVisible = true
       presentWhatsNewIfReady()
     }

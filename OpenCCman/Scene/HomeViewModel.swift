@@ -60,6 +60,9 @@ class HomeViewModel: ObservableObject {
   private var conversionID: UUID?
   private var importTask: Task<Void, Never>?
   private var importID: UUID?
+  #if DEBUG
+    private var didInjectQAUnreadCards = false
+  #endif
   #if os(macOS)
     weak var window: NSWindow?
 
@@ -196,6 +199,14 @@ class HomeViewModel: ObservableObject {
     resultText = ""
     localProgress = 0.0
     error = nil
+    #if DEBUG
+      if !didInjectQAUnreadCards,
+         Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
+         ProcessInfo.processInfo.arguments.contains("-qa-unread-whats-new-on-convert") {
+        UserDefaults.standard.removeObject(forKey: "lastPresentedWhatsNewVersion")
+        didInjectQAUnreadCards = true
+      }
+    #endif
 
     let currentInput = inputText
     let currentConfiguration = configuration
@@ -207,6 +218,17 @@ class HomeViewModel: ObservableObject {
 
     conversionTask = Task(priority: .userInitiated) { [weak self] in
       do {
+        #if DEBUG
+          if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests" {
+            if ProcessInfo.processInfo.arguments.contains("-qa-delay-conversion") {
+              try await Task.sleep(nanoseconds: 2_000_000_000)
+            }
+            if ProcessInfo.processInfo.arguments.contains("-qa-fail-conversion") {
+              throw NSError(domain: "OpenCCman.WhatsNewUITests", code: 1,
+                            userInfo: [NSLocalizedDescriptionKey: "QA conversion failure"])
+            }
+          }
+        #endif
         let result = try await ChineseConversionService.shared.convert(currentInput, options: currentOptions)
         try Task.checkCancellation()
         guard let self, self.conversionID == identifier else {
@@ -315,8 +337,9 @@ class HomeViewModel: ObservableObject {
   func showReview() {
     guard lastVersionPromptedForReview != Bundle.main.appVersion else { return }
 
-    ReviewHandler.requestReview()
-    lastVersionPromptedForReview = Bundle.main.appVersion
+    if ReviewHandler.requestReview() {
+      lastVersionPromptedForReview = Bundle.main.appVersion
+    }
   }
 
   // MARK: - Options

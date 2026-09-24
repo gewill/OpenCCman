@@ -21,7 +21,7 @@
 3. 更新 `Tests/Regression/WhatsNewChecks.swift` 和 `scripts/check-whats-new.sh` 的内容/语言预期，然后运行检查。
 4. 不要因为添加卡片而修改营销版本或构建号。PR 以 `develop` 为目标；正式打包从 `build*` 分支通过 Xcode Cloud 发布。
 
-普通 UI 回归可传入启动参数 `-skip-whats-new`，只跳过自动卡片，设置入口仍可使用。首次展示专项检查不要传入该参数。当前仓库没有 XCUITest target；新增的自动化检查是隔离状态测试，不能替代真实 UI 验收。
+普通 UI 回归可传入启动参数 `-skip-whats-new`，只跳过自动卡片，设置入口仍可使用。首次展示专项检查不要传入该参数。`Tests/UI/WhatsNewPresentation` 提供独立 iOS XCUITest 工程与隔离 QA 包；`scripts/check-whats-new.sh` 仍是纯状态测试，两者都不能替代最终签名包与最低系统验收。
 
 ## 1.3 历史验证记录（2026-09-13）
 
@@ -60,7 +60,7 @@ xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
 
 - VoiceOver 连续朗读仍待 [辅助功能验收 #20](https://github.com/gewill/OpenCCman/issues/20)；最大辅助功能字号、iPhone/iPad 横竖屏和交互式下滑关闭已在部分模拟器实测，见下节，仍需最终签名包与最低系统复核。
 - 当前最低 iOS 15 / macOS 12 的原生 sheet 行为；沿用 [最低系统验收 #16](https://github.com/gewill/OpenCCman/issues/16)。
-- 转换尚未完成、导入/导出面板、其他错误提示期间的实际 UI 延后与关闭后恢复；额度提示和 Pro sheet 的 Mac 实测见下节，尚未完成三端矩阵。
+- 真实长转换、长导入、导入/导出面板与其他错误提示的完整三端矩阵；iPhone/iPad 的可控延迟转换、失败、取消和导入取消已有专项 UI 测试，额度提示和 Pro sheet 的 Mac 实测见下节。
 - 2.0 的 Xcode Cloud 签名版本及 TestFlight。历史 1.3(44) 不包含这些新卡片。本次不触发发布分支或提交 App Review。
 
 ## 2.0 内容接入（2026-09-23）
@@ -80,3 +80,11 @@ xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
 同一 `develop` 应用源码 `2fefef4` 的独立 iOS Simulator Debug 包，在 iPhone 15 Pro Max / iOS 18.6 和 iPad Air 11-inch (M2) / iPadOS 26.5 上各运行三个相互隔离的 XCUITest：普通字号竖横屏与横屏 Done、竖屏交互下滑、最大辅助字号竖横屏与 Done。六项均通过，每项 1 次、0 失败。英文／浅色；每项从全新安装的 QA 包开始，最大辅助字号测试后恢复为 `large`。[Issue #34 的真实截图、视频和测试边界](https://github.com/gewill/OpenCCman/issues/34#issuecomment-5818592627)。
 
 一次未隔离的前置试跑曾用 `-lastPresentedWhatsNewVersion 1.0` 启动参数持续覆盖偏好，造成关闭后立即重新判为未读；删除该测试参数、每项全新安装后六项通过，没有产品代码修复。横屏 XCTest 截图抓到旋转过渡帧，因此不作为稳定横屏图片；成功交互由用例结果与录像支持，先前 #34 的稳定横屏截图继续保留。此次模拟器回归不替代 VoiceOver、长任务取消、最低系统、真实设备或最终签名包验收。
+
+## 2.0 弹窗竞态与系统评分补验（2026-09-25）
+
+在 `develop` `636ee84` 基础上的隔离 Debug QA bundle 中，用独立 XCUITest 工程固定了五条真实 UI 路径：系统导入面板取消、延迟转换成功、延迟转换取消、模拟转换失败，以及已读更新卡片后的正常评分请求。测试参数仅对精确 QA bundle ID 和 Debug 构建生效，延迟和失败为可控注入；不改变正式包行为，也不宣称能中断 C++。运行入口与边界见 [`Tests/UI/WhatsNewPresentation/README.md`](../Tests/UI/WhatsNewPresentation/README.md)。
+
+补验发现原实现会在首次转换成功、What’s New 随后出现且被快速关闭时，紧接着弹出 StoreKit 评分提示。iPadOS 26.5 的失败前测试明确命中 `Not Now`，连续录屏保留了这一顺序。修复后，当前营销版本的更新卡片尚未读完时不预约评分，也不消耗 `lastVersionPromptedForReview`；后续一次成功转换仍可请求系统评分。Apple 的[评分与评论建议](https://developer.apple.com/design/human-interface-guidelines/ratings-and-reviews)强调避免首次启动及打断用户任务，这里据真实界面行为消除了连续弹窗。
+
+最终候选在 iPhone 15 Pro Max / iOS 18.6 和 iPad Air 11-inch (M4) / iPadOS 26.5 模拟器各跑五项，均 5/5 通过；iPad 的原失败断言修复后通过。Xcode 27.0，两端英文／浅色／常规字号，专用 QA 安装；`scripts/check-whats-new.sh`、核心回归和 macOS/iOS Debug 构建通过。前后截图、视频与精确来源提交附在本轮 PR／#34 评论。仍需真实 10 MiB 任务、VoiceOver 连续朗读、iOS 15/macOS 12、真机与最终签名包，Issue 继续开放。
