@@ -33,6 +33,37 @@ final class WhatsNewPresentationTests: XCTestCase {
     XCTAssertFalse(done.waitForExistence(timeout: 2), "Cards must not reopen after dismissal")
   }
 
+  func testEligibleUnreadCardsAppearOnceAcrossRelaunchAndCanBeReopenedFromSettings() {
+    let app = XCUIApplication(bundleIdentifier: appID)
+    app.launchArguments = ["-AppleLanguages", "(en)", "-qa-unread-whats-new-at-launch",
+                           "-qa-assume-active-for-whats-new"]
+    app.launch()
+    defer { app.terminate() }
+
+    let done = app.buttons["whats-new-done"]
+    XCTAssertTrue(done.waitForExistence(timeout: 20), "An unread release should open when the home scene is eligible")
+    capture(app, name: "unread-cards-on-launch")
+    done.tap()
+    XCTAssertFalse(done.waitForExistence(timeout: 3))
+
+    app.terminate()
+    app.launchArguments = ["-AppleLanguages", "(en)", "-qa-assume-active-for-whats-new"]
+    app.launch()
+    XCTAssertTrue(app.buttons["Convert"].waitForExistence(timeout: 20))
+    XCTAssertFalse(done.waitForExistence(timeout: 3), "A read release must stay dismissed after relaunch")
+    capture(app, name: "home-after-relaunch-without-cards")
+
+    app.buttons["More"].tap()
+    app.buttons["Settings"].tap()
+    let whatsNewSettings = app.buttons["whats-new-settings"]
+    XCTAssertTrue(whatsNewSettings.waitForExistence(timeout: 10))
+    whatsNewSettings.tap()
+    XCTAssertTrue(done.waitForExistence(timeout: 10), "Settings should allow a manual replay")
+    capture(app, name: "manual-cards-from-settings")
+    done.tap()
+    XCTAssertFalse(done.waitForExistence(timeout: 3))
+  }
+
   func testImportCancellationDefersCards() {
     let app = launch("-qa-unread-whats-new-on-import")
     defer { app.terminate() }
