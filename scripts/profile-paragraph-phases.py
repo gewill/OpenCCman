@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Capture CPU stacks and signposts from an owned private 5 MiB app build."""
+"""Capture CPU or memory instruments from an owned private 5 MiB app build."""
 
 import argparse
 import hashlib
@@ -77,6 +77,8 @@ def main():
     parser.add_argument("--output", required=True, type=Path, help="Fresh directory outside the repository")
     parser.add_argument("--probe-only", action="store_true",
                         help="Attach for five seconds without explicit reopen; the app may start work automatically")
+    parser.add_argument("--profile", choices=("cpu", "memory"), default="cpu",
+                        help="CPU Profiler + signposts, or Allocations + VM Tracker")
     args = parser.parse_args()
     build = args.build.resolve()
     output = args.output.resolve()
@@ -108,14 +110,19 @@ def main():
                       "-skip-whats-new", "-AppleLanguages", "(en)", "-AppleInterfaceStyle", "Light",
                       "-performance-reflow", "-performance-single-paragraph", "-performance-reflow-max-mib", "5",
                       "-performance-middle-composed"]
-    trace_command = ["xcrun", "xctrace", "record", "--instrument", "CPU Profiler",
-                     "--instrument", "Points of Interest", "--attach", "<owned PID>",
+    instruments = (["CPU Profiler", "Points of Interest"] if args.profile == "cpu" else
+                   ["Allocations", "VM Tracker", "Points of Interest"])
+    trace_command = ["xcrun", "xctrace", "record"]
+    for instrument in instruments:
+        trace_command.extend(("--instrument", instrument))
+    trace_command += ["--attach", "<owned PID>",
                      "--time-limit", "190s" if not args.probe_only else "5s",
                      "--no-prompt", "--output", str(trace_path)]
     manifest = {"schema": 1, "build_metadata_sha256": sha256(build / "metadata.json"),
                 "source_commit": metadata["source_commit"], "driver_sha256": sha256(Path(__file__)),
                 "debug_entitlements_sha256": sha256(entitlement), "signature_verified": True,
-                "mode": "probe" if args.probe_only else "workload", "launch_command": launch_command,
+                "mode": "probe" if args.probe_only else "workload", "profile": args.profile,
+                "instruments": instruments, "launch_command": launch_command,
                 "trace_command": trace_command, "idle_before_seconds": idle_seconds()}
     app_process = None
     trace_process = None
@@ -136,12 +143,12 @@ def main():
         while not trace_path.exists() and trace_process.poll() is None and time.monotonic() < attach_deadline:
             time.sleep(0.1)
         if trace_process.poll() is not None or not trace_path.exists():
-            raise RuntimeError("CPU Profiler did not attach to the owned process")
+            raise RuntimeError("Instruments did not attach to the owned process")
         # The trace bundle can exist before recording actually begins. Allow
         # startup to settle, then verify signposts and process identity later.
         time.sleep(3)
         if trace_process.poll() is not None:
-            raise RuntimeError("CPU Profiler exited before the workload")
+            raise RuntimeError("Instruments exited before the workload")
         manifest["stage_before_reopen"] = (report_at(report_path) or initial)["rows"][-1]["name"]
         if not args.probe_only:
             subprocess.run(["open", "-a", str(app)], check=True)
@@ -151,11 +158,17 @@ def main():
                 if app_process.poll() is not None:
                     break
                 if trace_process.poll() is not None:
-                    raise RuntimeError("CPU Profiler exited while the app was running")
+                    raise RuntimeError("Instruments exited while the app was running")
                 time.sleep(0.25)
             manifest["app_timed_out"] = app_process.poll() is None
         else:
             manifest["reopened"] = False
+            # Allocations can take longer than the nominal five-second window
+            # to inject its agent. Keep the owned app alive until xctrace ends.
+            try:
+                manifest["xctrace_exit_code"] = trace_process.wait(timeout=25)
+            except subprocess.TimeoutExpired:
+                raise RuntimeError("Probe recording did not finish within 25 seconds")
         if app_process.poll() is None and owned_pid is not None:
             manifest["owned_app_termination_requested"] = terminate_owned(owned_pid, executable)
         if app_process is not None:
@@ -164,7 +177,7 @@ def main():
             except subprocess.TimeoutExpired:
                 app_process.terminate()
                 manifest["launch_exit_code"] = app_process.wait(timeout=5)
-        if trace_process is not None:
+        if trace_process is not None and "xctrace_exit_code" not in manifest:
             try:
                 manifest["xctrace_exit_code"] = trace_process.wait(timeout=30)
             except subprocess.TimeoutExpired:
