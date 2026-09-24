@@ -1,0 +1,154 @@
+{
+  "mode": "tk1",
+  "pid": 23279,
+  "rows": [
+    {
+      "app_active": true,
+      "editor_utf16": 0,
+      "elapsed_ms": 214.205459,
+      "fallback_events": 0,
+      "name": "empty_ready",
+      "physical_footprint_bytes": 37471240,
+      "rss_bytes": 103645184,
+      "textkit2": false,
+      "viewport_y": 0,
+      "visible": true,
+      "window_content_points": [
+        1200,
+        800
+      ]
+    },
+    {
+      "action_ms": 70920.406667,
+      "app_active": true,
+      "editor_utf16": 1856874,
+      "elapsed_ms": 71135.138709,
+      "fallback_events": 0,
+      "name": "first_display",
+      "physical_footprint_bytes": 409716056,
+      "rss_bytes": 442843136,
+      "textkit2": false,
+      "viewport_y": 0,
+      "visible": true,
+      "window_content_points": [
+        1200,
+        800
+      ]
+    },
+    {
+      "action_ms": 23.272792,
+      "app_active": true,
+      "editor_utf16": 1856874,
+      "elapsed_ms": 71159.123667,
+      "fallback_events": 0,
+      "name": "scroll_start",
+      "physical_footprint_bytes": 406111576,
+      "rss_bytes": 443236352,
+      "scroll_attempts": 1,
+      "target_screen_rect": [
+        0,
+        842,
+        12,
+        17
+      ],
+      "target_visible": true,
+      "textkit2": false,
+      "viewport_screen_rect": [
+        0,
+        60,
+        1200,
+        800
+      ],
+      "viewport_y": 0,
+      "visible": true,
+      "window_content_points": [
+        1200,
+        800
+      ]
+    },
+    {
+      "action_ms": 77.838667,
+      "app_active": true,
+      "editor_utf16": 1856874,
+      "elapsed_ms": 71237.43275,
+      "fallback_events": 0,
+      "name": "scroll_middle",
+      "physical_footprint_bytes": 385205592,
+      "rss_bytes": 445513728,
+      "scroll_attempts": 1,
+      "target_screen_rect": [
+        524.021484375,
+        454.5,
+        12,
+        17
+      ],
+      "target_visible": true,
+      "textkit2": false,
+      "viewport_screen_rect": [
+        0,
+        60,
+        1200,
+        800
+      ],
+      "viewport_y": 144673.5,
+      "visible": true,
+      "window_content_points": [
+        1200,
+        800
+      ]
+    },
+    {
+      "action_ms": 23.33975,
+      "app_active": true,
+      "editor_utf16": 1856874,
+      "elapsed_ms": 71261.236542,
+      "fallback_events": 0,
+      "name": "scroll_end",
+      "physical_footprint_bytes": 394167640,
+      "rss_bytes": 446332928,
+      "scroll_attempts": 1,
+      "target_screen_rect": [
+        874.91015625,
+        67,
+        6.673828125,
+        17
+      ],
+      "target_visible": true,
+      "textkit2": false,
+      "viewport_screen_rect": [
+        0,
+        60,
+        1200,
+        800
+      ],
+      "viewport_y": 289347,
+      "visible": true,
+      "window_content_points": [
+        1200,
+        800
+      ]
+    }
+  ],
+  "source_utf8_bytes": 5242880,
+  "source_utf16": 1856874,
+  "status": "complete",
+  "window_content_points": [
+    1200,
+    800
+  ],
+  "metadata_sha256": "4d9ff51bf9feec0cdb38483498eae1c521a8ab27844d9f3ffd9076fe5a97af24",
+  "command": [
+    "open",
+    "-n",
+    "-W",
+    "-a",
+    "<output>/NativeTextKitMemory.app",
+    "--args",
+    "--mode",
+    "tk1",
+    "--input",
+    "<output>/app-combining-5MiB.txt",
+    "--output",
+    "<output>/tk1-app-combining-5MiB-01.json"
+  ]
+}

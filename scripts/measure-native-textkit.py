@@ -10,6 +10,7 @@ import plistlib
 import signal
 import statistics
 import subprocess
+import time
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'Tests/Benchmarks/NativeTextKitMemory.swift'
@@ -73,16 +74,28 @@ def partial_stages(path):
 def terminate_owned_app(path, binary):
     """A timed-out `open -W` can leave its launched app running."""
     if not path.exists():
-        return
+        return False
     try:
         pid = json.loads(path.read_text()).get('pid')
         if not isinstance(pid, int) or pid <= 0:
-            return
-        command_line = command(['ps', '-p', str(pid), '-o', 'command='])
-        if str(binary) in command_line:
-            os.kill(pid, signal.SIGTERM)
+            return False
+        def owns_pid():
+            try:
+                return str(binary) in command(['ps', '-p', str(pid), '-o', 'command='])
+            except subprocess.CalledProcessError:
+                return False
+        if not owns_pid():
+            return False
+        os.kill(pid, signal.SIGTERM)
+        for _ in range(25):
+            if not owns_pid():
+                return True
+            time.sleep(0.1)
+        if owns_pid():
+            os.kill(pid, signal.SIGKILL)
+        return True
     except (OSError, ValueError, subprocess.CalledProcessError):
-        pass
+        return False
 
 
 def main():
@@ -164,12 +177,13 @@ def main():
                     run = json.loads(path.read_text())
                     validate(run, mode, mib * 1024 * 1024, args.width_switch, args.no_rescroll)
                 except (subprocess.TimeoutExpired, RuntimeError, ValueError, json.JSONDecodeError) as error:
-                    terminate_owned_app(path, binary)
+                    terminated = terminate_owned_app(path, binary)
                     partial_status, completed_stages = partial_stages(path)
                     failure = {
                         'run': name, 'reason': 'timeout' if isinstance(error, subprocess.TimeoutExpired) else 'failed',
                         'detail': str(error), 'limit_seconds': args.timeout,
                         'partial_status': partial_status, 'completed_stages': completed_stages,
+                        'owned_app_termination_requested': terminated,
                     }
                     incomplete.append(failure)
                     (output / (name + '.incomplete.json')).write_text(json.dumps(failure, indent=2) + '\n')
