@@ -21,6 +21,22 @@
 
 这两个候选共享“在锚点恢复后滚动选区”的步骤，因此额外滚动可能与旧慢路径有关；但本次没有独立剥离几何查询、二次滚动和异步回调的成本，不能据此作精确归因。两者在首次文中滚动时的流程峰值已升到约 412 MiB，而基线约 292 MiB，也说明不能只在文末加一个例外就宣称解决。表中动作耗时包括主队列动作和两轮 display flush，**不是屏幕呈现延迟**；峰值 RSS 包含转换、两编辑器和语料，不是单个选区对象的分配量。
 
+### 内存差异从哪个阶段开始
+
+重新按阶段读取上述九份完整运行 JSON：每组各三个新进程，以下均为三次中位数，单位 MiB。`RSS` 和 `physical_footprint` 是该阶段的进程快照；`peak RSS` 是截至该阶段的进程高水位，不能当作该阶段新增分配。九份样本在这些阶段的 `rusage_status`、`task_info_status` 均为 0。候选与基线的 `metadata.json` 条件和依赖锁相同，10 MiB 输入哈希相同；源码哈希只在私有滚动诊断文件有差异。候选不是交错运行，系统缓存也未清除。
+
+| 阶段与指标 | #155 现代锚点 | `firstRect` 候选 | 可视片段候选 |
+| --- | ---: | ---: | ---: |
+| 1 MiB 转换完成：RSS | 161.5 | 161.4 | 160.3 |
+| 5 MiB 转换完成：RSS | 207.1 | 234.6 | 236.6 |
+| 10 MiB 转换完成：RSS | 282.1 | 403.9 | 403.0 |
+| 10 MiB 转换完成：physical footprint | 216.0 | 231.0 | 230.6 |
+| 10 MiB 首次滚动前：RSS | 288.9 | 410.3 | 409.4 |
+| 文末切为上下布局后：peak RSS | 291.5 | 546.6 | 545.8 |
+| 文末切为上下布局后：physical footprint | 219.8 | 239.5 | 239.5 |
+
+1 MiB 阶段三组接近；5 MiB 开始分离，到 10 MiB 转换完成、尚未执行该文稿的滚动或切轴时，两候选的 RSS 已比基线高约 121–122 MiB。因此只剖析最后一次切轴会漏掉更早的差异。最终的 peak RSS 相差约 254–255 MiB，但同阶段 physical footprint 只相差约 20 MiB；这两个指标不能互相替代，也不能仅凭它们判定泄漏或具体保留对象。下一轮应使用 [Apple 的内存分析流程](https://developer.apple.com/documentation/xcode/gathering-information-about-memory-use)，对转换完成前后、首次滚动和切轴分别记录 Allocations、VM Tracker 与对象引用/分配时间线，再定位差异从何而来。
+
 ## 原始证据与复核
 
 [raw/first-rect/](raw/first-rect/) 和 [raw/visible-fragments/](raw/visible-fragments/) 各保存候选源码、元数据、构建产物清单、三次完整运行 JSON 和摘要。根目录 [checksums.json](checksums.json) 给出所有归档文件的 SHA-256。对照基线见 [PR #155 的原始样本](../2026-09-24-textkit-composed-geometry/raw/tk2-anchor/)。在三组 `run-*.json` 中检查 `scroll_end_10_2256432`、`layout_end_10_2256432_{vertical,horizontal}` 和 `layout_end_10_4512863_vertical` 即可核对上表。
