@@ -223,8 +223,35 @@ final class AppPerformanceAudit {
       .flatMap { index in arguments.indices.contains(index + 1) ? Int(arguments[index + 1]) : nil } ?? 10
     precondition([1, 5, 10].contains(maxMiB))
     for mib in [1, 5, 10] where mib <= maxMiB {
-      model.replaceSource(fixture(bytes: mib * 1024 * 1024))
-      try await awaitEditors(model, window: window)
+      let stage = "\(mib)MiB"
+      let bytes = mib * 1024 * 1024
+      record("source_fixture_begin_\(stage)")
+      let fixtureStart = now()
+      let fixtureText = fixture(bytes: bytes)
+      let expectedLength = fixtureText.utf16.count
+      record("source_fixture_end_\(stage)", ["action_ms": ms(fixtureStart), "input_bytes": bytes,
+                                              "input_utf16_units": expectedLength])
+
+      record("source_replace_begin_\(stage)")
+      let replaceStart = now()
+      os_signpost(.begin, log: log, name: "Source replacement")
+      model.replaceSource(fixtureText)
+      os_signpost(.end, log: log, name: "Source replacement")
+      record("source_replace_end_\(stage)", ["action_ms": ms(replaceStart)])
+
+      record("source_editor_ack_begin_\(stage)")
+      let acknowledgementStart = now()
+      os_signpost(.begin, log: log, name: "Source editor acknowledgement")
+      try await awaitEditorLengths((expectedLength, model.resultText.utf16.count), window: window)
+      os_signpost(.end, log: log, name: "Source editor acknowledgement")
+      record("source_editor_ack_end_\(stage)", ["action_ms": ms(acknowledgementStart)])
+
+      record("source_exact_validation_begin_\(stage)")
+      let validationStart = now()
+      os_signpost(.begin, log: log, name: "Source exact validation")
+      try validateEditors(model, window: window)
+      os_signpost(.end, log: log, name: "Source exact validation")
+      record("source_exact_validation_end_\(stage)", ["action_ms": ms(validationStart)])
       try await convert(model, window: window, name: "reflow_convert_\(mib)MiB")
       guard let root = window.contentView,
             let source = editors(in: root).first(where: { $0.isEditable }) else { throw NSError(domain: "ReflowAudit", code: 1) }
