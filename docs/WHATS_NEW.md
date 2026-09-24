@@ -56,11 +56,11 @@ xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
 
 统一跟踪：[What’s New 设备与弹窗延后 UI 验收 #34](https://github.com/gewill/OpenCCman/issues/34)。
 
-以下尚未实际执行，不记作通过；状态测试已覆盖的分支也需要在设备上确认系统交互：
+以下项目尚未完整执行，不记作通过；状态测试已覆盖的分支也需要在设备上确认系统交互：
 
-- VoiceOver 连续朗读、最大辅助功能字号、iPhone/iPad 横竖屏和交互式下滑关闭；沿用 [辅助功能验收 #20](https://github.com/gewill/OpenCCman/issues/20)。
+- VoiceOver 连续朗读仍待 [辅助功能验收 #20](https://github.com/gewill/OpenCCman/issues/20)；最大辅助功能字号、iPhone/iPad 横竖屏和交互式下滑关闭已在部分模拟器实测，见下节，仍需最终签名包与最低系统复核。
 - 当前最低 iOS 15 / macOS 12 的原生 sheet 行为；沿用 [最低系统验收 #16](https://github.com/gewill/OpenCCman/issues/16)。
-- 转换尚未完成、导入/导出面板、错误/额度提示、Pro sheet 期间的实际 UI 延后与关闭后恢复；本次自动化验证的是相应状态条件及预约释放，未跑设备 UI 矩阵。
+- 转换尚未完成、导入/导出面板、其他错误提示期间的实际 UI 延后与关闭后恢复；额度提示和 Pro sheet 的 Mac 实测见下节，尚未完成三端矩阵。
 - 2.0 的 Xcode Cloud 签名版本及 TestFlight。历史 1.3(44) 不包含这些新卡片。本次不触发发布分支或提交 App Review。
 
 ## 2.0 内容接入（2026-09-23）
@@ -68,3 +68,15 @@ xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
 工程已改为 `MARKETING_VERSION = 2.0`。此前内容函数仅接受 `1.3`，使 2.0 自动展示与设置页手动入口均不可用；本次按当前版本新增四张三语卡片，不修改既有弹窗互斥规则或已持久化的 1.3 记录。新的 2.0 构建首次实际展示后写入 `lastPresentedWhatsNewVersion = 2.0`。在无可见 Device Hub 窗口的模拟器 CLI 启动中，初始 `scenePhase` 为 `inactive`，因此未自动弹出；经交互使场景转为 `active`、回到主页后能自动展示。这个无窗口状态不能代替正常前台启动验收。
 
 本节只记录内容接入。#34 的任务中延后、系统面板、设备方向、VoiceOver、最低系统及签名包验证仍需分别记录实际结果。
+
+## 2.0 Mac 额度与 Pro 延后实测（2026-09-25）
+
+在 `develop` 的 `2fefef4` 上使用 Xcode 27.0 (27A266a)、macOS 27.0 构建无正式签名的隔离 Debug 应用，英文／浅色、1024×768 px 窗口。只为测试 bundle 预置当日 12/12 次额度，并在额度提示显示期间把已展示版本从 2.0 改为 1.0：提示没有被更新卡片覆盖，进入 Pro sheet 后仍未覆盖；关闭 Pro sheet 回主页时卡片出现一次，点完成后不再重复展示。读回隔离偏好显示已展示版本为 2.0、当日计数仍为 12、`isPro=0`；原文未变、结果为空。
+
+[Issue #34 实测记录、截图与交互录像](https://github.com/gewill/OpenCCman/issues/34#issuecomment-5818116935)。隔离 bundle 没有真实商店配置，录像中的 RevenueCat offerings 错误不代表正式应用的购买状态。这次只验证 Mac 额度／Pro 延后；触控设备方向和手势另见下节，转换进行中、其他错误提示、VoiceOver、最低系统及最终签名包仍按 #34/#20/#16 继续验收。
+
+## 2.0 iPhone 与 iPad 交互复核（2026-09-25）
+
+同一 `develop` 应用源码 `2fefef4` 的独立 iOS Simulator Debug 包，在 iPhone 15 Pro Max / iOS 18.6 和 iPad Air 11-inch (M2) / iPadOS 26.5 上各运行三个相互隔离的 XCUITest：普通字号竖横屏与横屏 Done、竖屏交互下滑、最大辅助字号竖横屏与 Done。六项均通过，每项 1 次、0 失败。英文／浅色；每项从全新安装的 QA 包开始，最大辅助字号测试后恢复为 `large`。[Issue #34 的真实截图、视频和测试边界](https://github.com/gewill/OpenCCman/issues/34#issuecomment-5818592627)。
+
+一次未隔离的前置试跑曾用 `-lastPresentedWhatsNewVersion 1.0` 启动参数持续覆盖偏好，造成关闭后立即重新判为未读；删除该测试参数、每项全新安装后六项通过，没有产品代码修复。横屏 XCTest 截图抓到旋转过渡帧，因此不作为稳定横屏图片；成功交互由用例结果与录像支持，先前 #34 的稳定横屏截图继续保留。此次模拟器回归不替代 VoiceOver、长任务取消、最低系统、真实设备或最终签名包验收。
