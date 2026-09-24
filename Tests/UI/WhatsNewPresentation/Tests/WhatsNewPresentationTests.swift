@@ -173,4 +173,49 @@ final class WhatsNewPresentationTests: XCTestCase {
     expectCardsOnce(app)
     XCTAssertFalse(app.buttons["Copy Result"].isEnabled)
   }
+
+  func testVoiceOverCardReadingOrder() throws {
+    guard #available(iOS 27.0, *) else {
+      throw XCTSkip("VoiceOver speech automation requires iOS 27")
+    }
+    let app = launch("-qa-suppress-review", "-qa-unread-whats-new-on-convert")
+    defer { app.terminate() }
+    app.buttons["Convert"].tap()
+    XCTAssertTrue(app.buttons["whats-new-done"].waitForExistence(timeout: 15))
+    capture(app, name: "voiceover-whats-new-sheet")
+
+    let voiceOver = XCUIDevice.shared.voiceOverService
+    let wasEnabled = voiceOver.isEnabled
+    defer {
+      if !wasEnabled {
+        do {
+          try voiceOver.disable()
+          XCTAssertFalse(voiceOver.isEnabled, "The test must restore VoiceOver to its initial state")
+        } catch {
+          XCTFail("Could not restore VoiceOver: \(error)")
+        }
+      }
+    }
+    if !wasEnabled { try voiceOver.enable() }
+
+    var utterances = [try voiceOver.currentSpeech().utterance]
+    for _ in 0..<8 {
+      let utterance = try voiceOver.moveForward().utterance
+      if utterance == utterances.last { break }
+      utterances.append(utterance)
+      if utterance.hasPrefix("Done") { break }
+    }
+    print("VOICEOVER_UTTERANCES: \(utterances)")
+    let expectedStarts = [
+      "OpenCCman What’s New", "OpenCCman 2.0", "A workspace that fits your screen",
+      "Your conversion, one tap away", "Bring your text files", "Stay in control", "Done"
+    ]
+    XCTAssertEqual(utterances.count, expectedStarts.count, "Every card must lead to the dismissal button")
+    for (actual, expected) in zip(utterances, expectedStarts) {
+      XCTAssertTrue(actual.hasPrefix(expected), "Expected \(expected), heard \(actual)")
+    }
+    XCTAssertTrue(app.buttons["whats-new-done"].isHittable)
+    Thread.sleep(forTimeInterval: 1)
+    capture(app, name: "voiceover-done-focus")
+  }
 }
