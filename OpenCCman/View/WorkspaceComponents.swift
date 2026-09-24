@@ -11,6 +11,12 @@ struct ConversionInspector: View {
     VStack(alignment: .leading, spacing: Constant.padding) {
       if showsPresetList {
         Text("Conversion Preset").font(.headline)
+        if viewModel.selectedPreset == nil {
+          Text("preset_custom")
+            .font(.subheadline)
+            .foregroundColor(.secondary)
+            .accessibilityIdentifier("conversion-preset-custom")
+        }
         ForEach(ConversionConfiguration.Preset.allCases) { preset in
           Button { viewModel.applyPreset(preset) } label: {
             HStack {
