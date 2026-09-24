@@ -38,7 +38,10 @@ enum NativeTextKitMemory {
     var switchCount = 0
 
     let app = NSApplication.shared
-    app.setActivationPolicy(.accessory)
+    app.setActivationPolicy(.regular)
+    // Standalone swiftc binaries do not enter NSApplication.run(), which
+    // normally completes launch before activation.
+    app.finishLaunching()
     let editor = NSTextView(usingTextLayoutManager: mode == "tk2")
     let observer = NotificationCenter.default.addObserver(
       forName: NSTextView.willSwitchToNSLayoutManagerNotification, object: editor, queue: .main
@@ -69,6 +72,9 @@ enum NativeTextKitMemory {
     window.setContentSize(NSSize(width: 1200, height: 800))
     window.makeKeyAndOrderFront(nil)
     app.activate(ignoringOtherApps: true)
+    for _ in 0..<100 where !app.isActive {
+      RunLoop.main.run(until: Date().addingTimeInterval(0.01))
+    }
 
     func flush() {
       for _ in 0..<2 {
@@ -95,6 +101,7 @@ enum NativeTextKitMemory {
         "physical_footprint_bytes": info.phys_footprint,
         "textkit2": editor.textLayoutManager != nil,
         "fallback_events": switchCount,
+        "app_active": NSApp.isActive,
         "visible": window.isVisible,
         "window_content_points": [window.contentView?.bounds.width ?? 0, window.contentView?.bounds.height ?? 0],
         "viewport_y": scroll.contentView.bounds.minY,

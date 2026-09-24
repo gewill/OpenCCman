@@ -3,8 +3,11 @@
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import platform
+import plistlib
+import signal
 import statistics
 import subprocess
 
@@ -13,7 +16,14 @@ SOURCE = ROOT / 'Tests/Benchmarks/NativeTextKitMemory.swift'
 SHORT_LINE = '汉语转换，软件与网络。繁體中文 👨‍👩‍👧‍👦 e\u0301\r\n\r\n'
 LONG_LINE = ('汉语转换，软件与网络。繁體中文 👨‍👩‍👧‍👦 e\u0301 ' * 180) + '\r\n\r\n'
 SINGLE_LINE = '汉语转换，软件与网络。繁體中文 👨‍👩‍👧‍👦 e\u0301 '
-LINES = {'short': SHORT_LINE, 'long': LONG_LINE, 'single': SINGLE_LINE}
+APP_PREFIX = '汉语转换，软件与网络。繁體中文'
+LINES = {
+    'short': SHORT_LINE, 'long': LONG_LINE, 'single': SINGLE_LINE,
+    'app-mixed': APP_PREFIX + '👨‍👩‍👧‍👦e\u0301',
+    'app-plain': APP_PREFIX,
+    'app-emoji': APP_PREFIX + '👨‍👩‍👧‍👦',
+    'app-combining': APP_PREFIX + 'e\u0301',
+}
 
 
 def command(args):
@@ -40,6 +50,8 @@ def validate(run, mode, size, width_switch=False, no_rescroll=False):
     for row in run['rows']:
         if row['textkit2'] != (mode == 'tk2') or row['fallback_events'] or not row['visible']:
             raise ValueError('Text system changed or window not visible')
+        if row.get('app_active') is False:
+            raise ValueError('Native benchmark lost foreground focus')
         if row['editor_utf16'] != (0 if row['name'] == 'empty_ready' else run['source_utf16']):
             raise ValueError('Editor did not retain the complete source')
         if (row['name'].startswith('scroll') or row['name'].startswith('width_') and not no_rescroll) and (not row['target_visible'] or row['scroll_attempts'] < 1):
@@ -58,6 +70,21 @@ def partial_stages(path):
     return partial.get('status'), [row.get('name') for row in partial.get('rows', [])]
 
 
+def terminate_owned_app(path, binary):
+    """A timed-out `open -W` can leave its launched app running."""
+    if not path.exists():
+        return
+    try:
+        pid = json.loads(path.read_text()).get('pid')
+        if not isinstance(pid, int) or pid <= 0:
+            return
+        command_line = command(['ps', '-p', str(pid), '-o', 'command='])
+        if str(binary) in command_line:
+            os.kill(pid, signal.SIGTERM)
+    except (OSError, ValueError, subprocess.CalledProcessError):
+        pass
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', required=True, type=Path, help='New directory outside the repository')
@@ -74,15 +101,31 @@ def main():
     if output == ROOT or ROOT in output.parents or output.exists() or args.samples < 1 or args.timeout < 1 or any(s < 1 or s > 10 for s in args.sizes) or not 300 <= args.narrow_width < 1200 or args.no_rescroll and not args.width_switch:
         parser.error('Use a new directory outside the repository; sizes must be 1–10 MiB')
     output.mkdir(parents=True)
-    binary = output / 'native-textkit-memory'
+    app = output / 'NativeTextKitMemory.app'
+    binary = app / 'Contents/MacOS/native-textkit-memory'
+    binary.parent.mkdir(parents=True)
     build = ['xcrun', 'swiftc', '-O', '-g', '-target', 'arm64-apple-macos12.0', '-framework', 'AppKit', str(SOURCE), '-o', str(binary)]
     with (output / 'build.log').open('w') as log:
         subprocess.run(build, stdout=log, stderr=subprocess.STDOUT, check=True)
+    info = app / 'Contents/Info.plist'
+    info.write_bytes(plistlib.dumps({
+        'CFBundleExecutable': binary.name,
+        'CFBundleIdentifier': 'org.gewill.OpenCCman.NativeTextKitMemory',
+        'CFBundleName': 'NativeTextKitMemory',
+        'CFBundlePackageType': 'APPL',
+        'LSMinimumSystemVersion': '12.0',
+    }))
+    subprocess.run(['codesign', '--force', '--sign', '-', str(app)], check=True,
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    subprocess.run(['codesign', '--verify', '--deep', '--strict', str(app)], check=True,
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     metadata = {
         'schema': 1, 'source_commit': command(['git', 'rev-parse', 'HEAD']),
         'source_status': command(['git', 'status', '--short']),
-        'source_sha256': sha(SOURCE), 'driver_sha256': sha(Path(__file__)), 'binary_sha256': sha(binary),
-        'build_command': build[:-3] + ['Tests/Benchmarks/NativeTextKitMemory.swift', '-o', '<output>/native-textkit-memory'],
+        'source_sha256': sha(SOURCE), 'driver_sha256': sha(Path(__file__)),
+        'binary_sha256': sha(binary), 'bundle_info_sha256': sha(info),
+        'signature': 'ad hoc, verified; private diagnostic bundle only',
+        'build_command': build[:-3] + ['Tests/Benchmarks/NativeTextKitMemory.swift', '-o', '<output>/NativeTextKitMemory.app/Contents/MacOS/native-textkit-memory'],
         'pattern': args.pattern, 'samples': args.samples, 'modes': args.modes,
         'width_switch': args.width_switch,
         'narrow_width_points': args.narrow_width,
@@ -107,7 +150,8 @@ def main():
             for mode in args.modes:
                 name = f'{mode}-{args.pattern}-{mib}MiB-{sample:02}.json'
                 path = output / name
-                command_line = [str(binary), '--mode', mode, '--input', str(output / f'{args.pattern}-{mib}MiB.txt'), '--output', str(path)]
+                command_line = ['open', '-n', '-W', '-a', str(app), '--args', '--mode', mode,
+                                '--input', str(output / f'{args.pattern}-{mib}MiB.txt'), '--output', str(path)]
                 if args.width_switch:
                     command_line += ['--width-switch', '--narrow-width', str(args.narrow_width)]
                     if args.no_rescroll:
@@ -120,6 +164,7 @@ def main():
                     run = json.loads(path.read_text())
                     validate(run, mode, mib * 1024 * 1024, args.width_switch, args.no_rescroll)
                 except (subprocess.TimeoutExpired, RuntimeError, ValueError, json.JSONDecodeError) as error:
+                    terminate_owned_app(path, binary)
                     partial_status, completed_stages = partial_stages(path)
                     failure = {
                         'run': name, 'reason': 'timeout' if isinstance(error, subprocess.TimeoutExpired) else 'failed',
@@ -131,7 +176,8 @@ def main():
                     print(f'{name}: {failure["reason"]}', flush=True)
                     continue
                 run['metadata_sha256'] = sha(output / 'metadata.json')
-                run['command'] = ['<output>/native-textkit-memory', '--mode', mode, '--input', f'<output>/{args.pattern}-{mib}MiB.txt', '--output', f'<output>/{name}']
+                run['command'] = ['open', '-n', '-W', '-a', '<output>/NativeTextKitMemory.app', '--args',
+                                  '--mode', mode, '--input', f'<output>/{args.pattern}-{mib}MiB.txt', '--output', f'<output>/{name}']
                 if args.width_switch:
                     run['command'] += ['--width-switch', '--narrow-width', str(args.narrow_width)]
                     if args.no_rescroll:
