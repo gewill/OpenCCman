@@ -97,6 +97,18 @@ def prepare_textkit2_modern_anchor(source):
     replace_once(keeper, '  }\n\n#endif', '  }\n\n' + modern + '\n#endif')
 
 
+def prepare_textkit2_single_target(source):
+    """Use the archived #169 single-target keeper in a private build."""
+    prepare_textkit2_modern_anchor(source)
+    original = (ROOT / 'Tests/Benchmarks/ModernWorkspaceScrollKeeper.swift').read_text()
+    candidate = (ROOT / 'docs/performance/2026-09-24-textkit-scroll-ablation/raw/'
+                 'firstrect-single-target-scroll/ModernWorkspaceScrollKeeper.swift.txt').read_text()
+    if original == candidate:
+        raise RuntimeError('Single-target candidate unexpectedly matches the legacy keeper')
+    replace_once(source / 'Tests/Benchmarks/ModernWorkspaceScrollKeeper.swift', original, candidate)
+    replace_once(source / 'OpenCCman/View/WorkspaceScrollKeeper.swift', original, candidate)
+
+
 def prepare_profiling_start_gate(source):
     """Wait for an external trace attach before the private benchmark runs."""
     audit = source / 'Tests/Benchmarks/AppPerformanceAudit.swift'
@@ -180,6 +192,8 @@ def main():
     parser.add_argument('--textkit1-no-anchor', action='store_true', help='Private TextKit 1 app bridge without its viewport observer')
     parser.add_argument('--textkit2-no-anchor', action='store_true', help='Private TextKit 2 app bridge without the legacy glyph-based anchor keeper')
     parser.add_argument('--textkit2-modern-anchor', action='store_true', help='Private TextKit 2 app bridge with a diagnostic visible-character anchor')
+    parser.add_argument('--textkit2-single-target', action='store_true',
+                        help='Private TextKit 2 bridge with the archived #169 single-target keeper')
     parser.add_argument('--middle-composed', action='store_true', help='Use the midpoint composed character and its full range for visibility geometry')
     parser.add_argument('--single-paragraph', action='store_true', help='Use one unbroken 1/5/10 MiB paragraph in the reflow suite')
     parser.add_argument('--plain-paragraph', action='store_true', help='Use one unbroken paragraph without Emoji or combining marks')
@@ -197,11 +211,11 @@ def main():
         parser.error('The private trace-attach gate requires --build-only')
     if args.engine_revision and not re.fullmatch(r'[0-9a-f]{40}', args.engine_revision):
         parser.error('Engine comparison revision must be a full lowercase SHA')
-    if (args.textkit2_no_anchor or args.textkit2_modern_anchor) and (not args.reflow or args.disable_background_layout):
+    if (args.textkit2_no_anchor or args.textkit2_modern_anchor or args.textkit2_single_target) and (not args.reflow or args.disable_background_layout):
         parser.error('The TextKit 2 bridge variant requires --reflow and excludes TextKit 1 layout overrides')
-    if args.textkit2_no_anchor and args.textkit2_modern_anchor:
+    if sum((args.textkit2_no_anchor, args.textkit2_modern_anchor, args.textkit2_single_target)) > 1:
         parser.error('Select one private TextKit 2 variant')
-    if args.textkit1_no_anchor and (not args.reflow or args.disable_background_layout or args.textkit2_no_anchor or args.textkit2_modern_anchor):
+    if args.textkit1_no_anchor and (not args.reflow or args.disable_background_layout or args.textkit2_no_anchor or args.textkit2_modern_anchor or args.textkit2_single_target):
         parser.error('The TextKit 1 no-anchor variant requires --reflow and excludes other layout variants')
     paragraph_profiles = (args.single_paragraph, args.plain_paragraph,
                           args.emoji_paragraph, args.combining_paragraph)
@@ -213,7 +227,7 @@ def main():
         parser.error('The reflow size limit requires --reflow')
     if any(paragraph_profiles) and args.comparison_no_nul:
         parser.error('Select one input profile')
-    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.textkit1_no_anchor or args.textkit2_no_anchor or args.textkit2_modern_anchor or args.middle_composed or any(paragraph_profiles) or args.reflow_max_mib or args.packages or args.comparison_no_nul or args.profiling_start_gate):
+    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.textkit1_no_anchor or args.textkit2_no_anchor or args.textkit2_modern_anchor or args.textkit2_single_target or args.middle_composed or any(paragraph_profiles) or args.reflow_max_mib or args.packages or args.comparison_no_nul or args.profiling_start_gate):
         parser.error('Reuse the recorded build without source/dependency overrides')
     source = args.output / 'source'
     if not args.reuse_build:
@@ -233,7 +247,9 @@ def main():
             replace_once(source / 'OpenCCman/View/WorkspaceScrollKeeper.swift',
                          '      self.clip = clip\n      size = clip.bounds.size',
                          '      self.clip = clip\n      size = clip.bounds.size\n      editor.layoutManager?.backgroundLayoutEnabled = false')
-        if args.textkit2_modern_anchor:
+        if args.textkit2_single_target:
+            prepare_textkit2_single_target(source)
+        elif args.textkit2_modern_anchor:
             prepare_textkit2_modern_anchor(source)
         elif args.textkit2_no_anchor:
             prepare_textkit2_no_anchor(source)
@@ -245,7 +261,8 @@ def main():
         commit = command(['git', 'rev-parse', 'HEAD'], cwd=ROOT)
         metadata = {'schema': PROTOCOL, 'source_commit': commit, 'measurement_harness_commit': commit,
                     'comparison_engine_override': args.engine_revision,
-                    'application_variant': ('textkit1-no-anchor' if args.textkit1_no_anchor else
+                    'application_variant': ('textkit2-single-target' if args.textkit2_single_target else
+                                            'textkit1-no-anchor' if args.textkit1_no_anchor else
                                             'textkit2-modern-anchor' if args.textkit2_modern_anchor else
                                             'textkit2-no-anchor' if args.textkit2_no_anchor else
                                             'background-layout-off' if args.disable_background_layout else 'unchanged'),
@@ -309,7 +326,7 @@ def main():
             profile_args.append('-performance-combining-paragraph')
         if args.reflow:
             profile_args.extend(['-performance-reflow-max-mib', str(metadata['conditions']['reflow_max_mib'])])
-        if metadata['application_variant'] in ('textkit2-no-anchor', 'textkit2-modern-anchor'):
+        if metadata['application_variant'] in ('textkit2-no-anchor', 'textkit2-modern-anchor', 'textkit2-single-target'):
             profile_args.append('-performance-require-textkit2')
         if metadata['conditions']['navigation_target'].startswith('middle composed character'):
             profile_args.append('-performance-middle-composed')
