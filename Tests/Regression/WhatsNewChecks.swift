@@ -12,6 +12,9 @@ enum WhatsNewChecks {
     let ready = WhatsNewEligibility(isActive: true, isHome: true)
     let coordinator = WhatsNewCoordinator(version: "2.0", defaults: defaults)
 
+    precondition(WhatsNewRelease.hasUnreadContent(for: "2.0", defaults: defaults))
+    precondition(!WhatsNewRelease.hasUnreadContent(for: "9.9", defaults: defaults))
+
     precondition(coordinator.release?.cards.map(\.id) == ["workspace", "presets", "files", "reliability"])
     precondition(WhatsNewRelease.content(for: "1.3")?.cards.map(\.id) == ["presets", "files", "reliability"])
     precondition(WhatsNewRelease.content(for: "1.2") == nil)
@@ -78,6 +81,7 @@ enum WhatsNewChecks {
     precondition(defaults.string(forKey: key) == nil)
     coordinator.didAppear(in: second)
     precondition(defaults.string(forKey: key) == "2.0")
+    precondition(!WhatsNewRelease.hasUnreadContent(for: "2.0", defaults: defaults))
     coordinator.finish(in: second)
     precondition(coordinator.reserve(for: first, eligibility: ready, manually: false) == nil)
 

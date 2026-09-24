@@ -25,7 +25,7 @@ protocol Segmentable: Identifiable, Hashable { var title: String { get } }
 extension Bundle { var appVersion: String { "core-checks" } }
 @MainActor enum ReviewHandler {
   static var requests = 0
-  static func requestReview() { requests += 1 }
+  static func requestReview() -> Bool { requests += 1; return true }
 }
 extension Notification.Name {
   static let globalShortcutDidConvertText = Notification.Name("GlobalShortcutDidConvertText")

@@ -2,8 +2,16 @@ import Foundation
 import StoreKit
 import SwiftUI
 
+@MainActor
 class ReviewHandler {
-  static func requestReview() {
+  @discardableResult
+  static func requestReview() -> Bool {
+    // A conversion can finish while an unread What’s New sheet is waiting for
+    // the task to end. Skip this request rather than opening StoreKit right
+    // after the user dismisses the cards; a later conversion may ask again.
+    guard !WhatsNewRelease.hasUnreadContent(for: Bundle.main.appVersion, defaults: .standard) else {
+      return false
+    }
     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
       #if os(iOS)
         let activeScenes = UIApplication.shared.connectedScenes
@@ -20,5 +28,6 @@ class ReviewHandler {
         SKStoreReviewController.requestReview()
       #endif
     }
+    return true
   }
 }
