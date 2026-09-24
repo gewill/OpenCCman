@@ -147,9 +147,16 @@ final class AppPerformanceAudit {
   }
   private func settle() async { try? await Task.sleep(nanoseconds: 250_000_000) }
   private func fixture(bytes: Int) -> String {
-    let line = "汉语转换，软件与网络。繁體中文 👨‍👩‍👧‍👦 e\u{301}\r\n\r\n"
-    let count = bytes / line.utf8.count
-    return String(repeating: line, count: count) + String(repeating: "a", count: bytes - count * line.utf8.count)
+    let singleParagraph = ProcessInfo.processInfo.arguments.contains("-performance-single-paragraph")
+    let unit = singleParagraph
+      ? "汉语转换，软件与网络。繁體中文👨‍👩‍👧‍👦e\u{301}"
+      : "汉语转换，软件与网络。繁體中文 👨‍👩‍👧‍👦 e\u{301}\r\n\r\n"
+    let count = bytes / unit.utf8.count
+    let text = String(repeating: unit, count: count) + String(repeating: "a", count: bytes - count * unit.utf8.count)
+    if singleParagraph {
+      precondition(text.utf8.count == bytes && !text.contains("\r") && !text.contains("\n"))
+    }
+    return text
   }
   private func convert(_ model: HomeViewModel, window: NSWindow, name: String) async throws {
     let begin = now()
@@ -211,7 +218,11 @@ final class AppPerformanceAudit {
 
   private func runReflow(_ model: HomeViewModel, window: NSWindow) async throws {
     model.applyPreset(.taiwan)
-    for mib in [1, 5, 10] {
+    let arguments = ProcessInfo.processInfo.arguments
+    let maxMiB = arguments.firstIndex(of: "-performance-reflow-max-mib")
+      .flatMap { index in arguments.indices.contains(index + 1) ? Int(arguments[index + 1]) : nil } ?? 10
+    precondition([1, 5, 10].contains(maxMiB))
+    for mib in [1, 5, 10] where mib <= maxMiB {
       model.replaceSource(fixture(bytes: mib * 1024 * 1024))
       try await awaitEditors(model, window: window)
       try await convert(model, window: window, name: "reflow_convert_\(mib)MiB")
