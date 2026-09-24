@@ -44,6 +44,16 @@ enum TestNumbersPerDayManager {
     return usedCount(on: today) >= FreeFeature.maxTestNumber
   }
 
+  #if DEBUG
+    static func setQuotaForQA(exhausted: Bool) {
+      guard Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests" else { return }
+      lock.lock()
+      defer { lock.unlock() }
+      let today = dayFormatter.string(from: Date())
+      appDefaults[\.testNumbersPerDay] = exhausted ? [today: FreeFeature.maxTestNumber] : [:]
+    }
+  #endif
+
   private static var isPro: Bool {
     UserDefaults.standard.bool(forKey: UserDefaultsKeys.isPro.rawValue)
   }

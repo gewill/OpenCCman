@@ -124,7 +124,17 @@ final class WhatsNewWindowState: ObservableObject {
       #endif
     }
   }
-  @Published var showingExporter = false
+  @Published var showingExporter = false {
+    didSet {
+      #if DEBUG
+        if showingExporter,
+           Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
+           ProcessInfo.processInfo.arguments.contains("-qa-unread-whats-new-on-export") {
+          UserDefaults.standard.removeObject(forKey: WhatsNewCoordinator.lastPresentedVersionKey)
+        }
+      #endif
+    }
+  }
   @Published var showingProSheet = false {
     didSet {
       if showingProSheet {

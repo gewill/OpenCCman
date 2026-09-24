@@ -42,6 +42,7 @@ struct ProScene: View {
   private var navigationActions: some View {
     HStack {
       BackButton(isPresented: isPresented)
+        .accessibilityIdentifier("pro-sheet-close")
       Spacer()
 
       Button {
