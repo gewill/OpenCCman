@@ -20,6 +20,15 @@ enum NativeTextKitMemory {
     let noRescroll = arguments.contains("--no-rescroll")
     let recovery = arguments.contains("--recovery")
     let secondEditor = arguments.contains("--second-editor")
+    let holdSeconds: Double
+    if arguments.contains("--hold-after-recovery") {
+      guard let value = Double(value(after: "--hold-after-recovery")), (1...120).contains(value) else {
+        fatalError("Invalid --hold-after-recovery")
+      }
+      holdSeconds = value
+    } else {
+      holdSeconds = 0
+    }
     let contentWidth: Double
     if arguments.contains("--content-width") {
       guard let value = Double(value(after: "--content-width")), (300...1200).contains(value) else {
@@ -31,6 +40,7 @@ enum NativeTextKitMemory {
     }
     precondition(!noRescroll || widthSwitch)
     precondition(!secondEditor || recovery && !widthSwitch)
+    precondition(holdSeconds == 0 || recovery)
     let narrowWidth: Double
     if arguments.contains("--narrow-width") {
       guard let value = Double(value(after: "--narrow-width")), (300..<1200).contains(value) else {
@@ -263,6 +273,10 @@ enum NativeTextKitMemory {
       try sample("recovery_after_5s")
       wait(25)
       try sample("recovery_after_30s")
+      if holdSeconds > 0 {
+        try sample("profiling_hold")
+        wait(holdSeconds)
+      }
     }
     let final: [String: Any] = [
       "status": allTargetsVisible ? "complete" : "target_not_visible", "pid": getpid(), "mode": mode,

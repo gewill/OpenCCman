@@ -155,6 +155,8 @@ def main():
                         help='Use two side-by-side native editors with the same input and viewport width')
     parser.add_argument('--activate-process', action='store_true',
                         help='Bring only the launched diagnostic PID to the foreground via System Events')
+    parser.add_argument('--build-only', action='store_true',
+                        help='Prepare and sign a private native app without launching measurements')
     args = parser.parse_args()
     output = args.output.resolve()
     if output == ROOT or ROOT in output.parents or output.exists() or args.samples < 1 or args.timeout < 1 or any(s < 1 or s > 10 for s in args.sizes) or not 300 <= args.narrow_width < 1200 or not 300 <= args.content_width <= 1200 or args.no_rescroll and not args.width_switch:
@@ -195,6 +197,7 @@ def main():
         'recovery': args.recovery,
         'second_editor': args.second_editor,
         'activate_process': args.activate_process,
+        'build_only': args.build_only,
         'sizes_mib': args.sizes, 'window_content_points': [args.content_width * (2 if args.second_editor else 1), 800],
         'target': 'arm64-apple-macos12.0', 'arch': platform.machine(),
         'macos': command(['sw_vers', '-productVersion']),
@@ -208,6 +211,8 @@ def main():
         path.write_bytes(fixture(mib * 1024 * 1024, args.pattern))
         metadata['fixture_sha256'][str(mib)] = sha(path)
     (output / 'metadata.json').write_text(json.dumps(metadata, indent=2, ensure_ascii=False) + '\n')
+    if args.build_only:
+        return
     runs = {}
     incomplete = []
     for mib in args.sizes:
