@@ -1,0 +1,11 @@
+{
+  "provenance": "observed benchmark-app.py --reuse-build --reflow --samples 1 --timeout 120; subprocess.TimeoutExpired; process exited with code 1",
+  "outcome": "deadline_exceeded",
+  "deadline_seconds": 120,
+  "run_json_status_at_timeout": "running",
+  "last_recorded_stage": "layout_begin_5_0_vertical",
+  "last_recorded_elapsed_ms": 107793.319208,
+  "target_pid": 61146,
+  "target_process_alive_after_cleanup": false,
+  "note": "This sidecar records the observed terminal outcome; the original partial run JSON is unmodified."
+}

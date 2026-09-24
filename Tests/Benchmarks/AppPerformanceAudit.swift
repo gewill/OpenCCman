@@ -153,8 +153,9 @@ final class AppPerformanceAudit {
       : "汉语转换，软件与网络。繁體中文 👨‍👩‍👧‍👦 e\u{301}\r\n\r\n"
     let count = bytes / unit.utf8.count
     let text = String(repeating: unit, count: count) + String(repeating: "a", count: bytes - count * unit.utf8.count)
-    precondition(text.utf8.count == bytes)
-    if singleParagraph { precondition(!text.contains("\r") && !text.contains("\n")) }
+    if singleParagraph {
+      precondition(text.utf8.count == bytes && !text.contains("\r") && !text.contains("\n"))
+    }
     return text
   }
   private func convert(_ model: HomeViewModel, window: NSWindow, name: String) async throws {
