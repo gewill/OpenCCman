@@ -25,13 +25,13 @@ Additional cases cover the native export panel while open, an exhausted real
 quota leading through the Pro alert and Pro sheet, landscape dismissal, and a
 downward system-sheet swipe. The QA launch hook resets the isolated daily quota
 before each case so the Pro case cannot affect later conversions. On a portrait
-iPhone, the exporter case also returns to the Files browser root, cancels the
-system picker, and verifies that the pending cards appear once. On iOS 18 the
-visible Browse and Cancel controls are hosted by a system extension and are
-absent from app-scoped accessibility queries, so the test uses the observed
-top-left navigation position and checks the picker disappears after the taps.
-On iPad, this case still checks only that the real exporter does not overlap
-the cards while open; its cancellation remains to be verified separately.
+iPhone, the exporter case returns to the Files browser root and cancels; on a
+portrait iPad, it uses the Files browser's top-left close control. Both paths
+verify that the picker disappears and the pending cards appear once. The
+system extension's controls are absent from app-scoped accessibility queries,
+so the test uses each device's observed top-left navigation position. This
+coordinate step is limited to full-screen portrait iPhone/iPad and needs
+revalidation if the system file browser layout changes.
 
 For the maximum Dynamic Type matrix, set the dedicated Simulator's content size
 with `xcrun simctl ui <UDID> content_size accessibility-extra-extra-extra-large`,
