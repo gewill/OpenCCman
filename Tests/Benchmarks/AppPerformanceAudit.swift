@@ -159,6 +159,8 @@ final class AppPerformanceAudit {
     return text
   }
   private func convert(_ model: HomeViewModel, window: NSWindow, name: String) async throws {
+    let segmented = ProcessInfo.processInfo.arguments.contains("-performance-reflow")
+    if segmented { record("model_conversion_begin_\(name)") }
     let begin = now()
     os_signpost(.begin, log: log, name: "Model conversion")
     var observer: AnyCancellable?
@@ -174,18 +176,34 @@ final class AppPerformanceAudit {
     guard model.error == nil, !model.resultText.isEmpty, model.exportSnapshot?.text == model.resultText else {
       throw NSError(domain: "PerformanceAudit", code: 1, userInfo: [NSLocalizedDescriptionKey: "Conversion failed or export mismatch: \(name)"])
     }
+    if segmented { record("model_conversion_end_\(name)", ["action_ms": ms(begin)]) }
     let lengths = (model.inputText.utf16.count, model.resultText.utf16.count)
+    if segmented { record("result_editor_ack_begin_\(name)") }
     let layoutStart = now()
     os_signpost(.begin, log: log, name: "Result layout flush")
     try await awaitEditorLengths(lengths, window: window)
     os_signpost(.end, log: log, name: "Result layout flush")
     let layoutMS = ms(layoutStart)
+    if segmented { record("result_editor_ack_end_\(name)", ["action_ms": layoutMS]) }
+    if segmented { record("result_exact_validation_begin_\(name)") }
+    let validationStart = now()
+    if segmented { os_signpost(.begin, log: log, name: "Result exact validation") }
     try validateEditors(model, window: window)
+    if segmented {
+      os_signpost(.end, log: log, name: "Result exact validation")
+      record("result_exact_validation_end_\(name)", ["action_ms": ms(validationStart)])
+      record("result_digest_begin_\(name)")
+    }
+    let digestStart = now()
     let resultHash = digest(model.resultText)
+    let inputHash = digest(model.inputText)
+    let inputBytes = model.inputText.utf8.count
+    let outputBytes = model.resultText.utf8.count
+    if segmented { record("result_digest_end_\(name)", ["action_ms": ms(digestStart)]) }
     record(name, ["model_completion_ms": Double(finished - begin) / 1_000_000,
-                  "result_layout_flush_ms": layoutMS, "input_bytes": model.inputText.utf8.count,
-                  "input_sha256": digest(model.inputText), "output_sha256": resultHash,
-                  "output_bytes": model.resultText.utf8.count, "options": model.options.rawValue,
+                  "result_layout_flush_ms": layoutMS, "input_bytes": inputBytes,
+                  "input_sha256": inputHash, "output_sha256": resultHash,
+                  "output_bytes": outputBytes, "options": model.options.rawValue,
                   "export_matches_result": true, "editors_match_model": true])
     await settle()
   }
@@ -223,8 +241,35 @@ final class AppPerformanceAudit {
       .flatMap { index in arguments.indices.contains(index + 1) ? Int(arguments[index + 1]) : nil } ?? 10
     precondition([1, 5, 10].contains(maxMiB))
     for mib in [1, 5, 10] where mib <= maxMiB {
-      model.replaceSource(fixture(bytes: mib * 1024 * 1024))
-      try await awaitEditors(model, window: window)
+      let stage = "\(mib)MiB"
+      let bytes = mib * 1024 * 1024
+      record("source_fixture_begin_\(stage)")
+      let fixtureStart = now()
+      let fixtureText = fixture(bytes: bytes)
+      let expectedLength = fixtureText.utf16.count
+      record("source_fixture_end_\(stage)", ["action_ms": ms(fixtureStart), "input_bytes": bytes,
+                                              "input_utf16_units": expectedLength])
+
+      record("source_replace_begin_\(stage)")
+      let replaceStart = now()
+      os_signpost(.begin, log: log, name: "Source replacement")
+      model.replaceSource(fixtureText)
+      os_signpost(.end, log: log, name: "Source replacement")
+      record("source_replace_end_\(stage)", ["action_ms": ms(replaceStart)])
+
+      record("source_editor_ack_begin_\(stage)")
+      let acknowledgementStart = now()
+      os_signpost(.begin, log: log, name: "Source editor acknowledgement")
+      try await awaitEditorLengths((expectedLength, model.resultText.utf16.count), window: window)
+      os_signpost(.end, log: log, name: "Source editor acknowledgement")
+      record("source_editor_ack_end_\(stage)", ["action_ms": ms(acknowledgementStart)])
+
+      record("source_exact_validation_begin_\(stage)")
+      let validationStart = now()
+      os_signpost(.begin, log: log, name: "Source exact validation")
+      try validateEditors(model, window: window)
+      os_signpost(.end, log: log, name: "Source exact validation")
+      record("source_exact_validation_end_\(stage)", ["action_ms": ms(validationStart)])
       try await convert(model, window: window, name: "reflow_convert_\(mib)MiB")
       guard let root = window.contentView,
             let source = editors(in: root).first(where: { $0.isEditable }) else { throw NSError(domain: "ReflowAudit", code: 1) }
