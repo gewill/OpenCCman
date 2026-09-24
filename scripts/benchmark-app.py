@@ -77,6 +77,13 @@ def prepare_textkit2_no_anchor(source):
                  '      // Private TextKit 2 benchmark: exclude the legacy glyph-based scroll keeper.\n      return viewport')
 
 
+def prepare_textkit1_no_anchor(source):
+    """Ablate only the production TextKit 1 viewport observer in a private app."""
+    editor = source / 'OpenCCman/View/WorkspaceTextEditor.swift'
+    replace_once(editor, '      scrollKeeper.attach(editor)\n      return viewport',
+                 '      // Private benchmark: omit the viewport observer.\n      return viewport')
+
+
 def prepare_textkit2_modern_anchor(source):
     prepare_textkit2_no_anchor(source)
     editor = source / 'OpenCCman/View/WorkspaceTextEditor.swift'
@@ -145,6 +152,7 @@ def main():
     parser.add_argument('--packages', type=pathlib.Path, help='Existing SourcePackages copied privately with APFS clones')
     parser.add_argument('--build-only', action='store_true', help='Build now, measure later without competing compiler load')
     parser.add_argument('--disable-background-layout', action='store_true', help='Explicit isolated TextKit 1 experiment')
+    parser.add_argument('--textkit1-no-anchor', action='store_true', help='Private TextKit 1 app bridge without its viewport observer')
     parser.add_argument('--textkit2-no-anchor', action='store_true', help='Private TextKit 2 app bridge without the legacy glyph-based anchor keeper')
     parser.add_argument('--textkit2-modern-anchor', action='store_true', help='Private TextKit 2 app bridge with a diagnostic visible-character anchor')
     parser.add_argument('--middle-composed', action='store_true', help='Use the midpoint composed character and its full range for visibility geometry')
@@ -163,13 +171,15 @@ def main():
         parser.error('The TextKit 2 bridge variant requires --reflow and excludes TextKit 1 layout overrides')
     if args.textkit2_no_anchor and args.textkit2_modern_anchor:
         parser.error('Select one private TextKit 2 variant')
+    if args.textkit1_no_anchor and (not args.reflow or args.disable_background_layout or args.textkit2_no_anchor or args.textkit2_modern_anchor):
+        parser.error('The TextKit 1 no-anchor variant requires --reflow and excludes other layout variants')
     if args.single_paragraph and not args.reflow:
         parser.error('The single-paragraph fixture requires --reflow')
     if args.reflow_max_mib and not args.reflow:
         parser.error('The reflow size limit requires --reflow')
     if args.single_paragraph and args.comparison_no_nul:
         parser.error('Select one input profile')
-    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.textkit2_no_anchor or args.textkit2_modern_anchor or args.middle_composed or args.single_paragraph or args.reflow_max_mib or args.packages or args.comparison_no_nul):
+    if args.reuse_build and (args.engine_revision or args.disable_background_layout or args.textkit1_no_anchor or args.textkit2_no_anchor or args.textkit2_modern_anchor or args.middle_composed or args.single_paragraph or args.reflow_max_mib or args.packages or args.comparison_no_nul):
         parser.error('Reuse the recorded build without source/dependency overrides')
     source = args.output / 'source'
     if not args.reuse_build:
@@ -193,11 +203,14 @@ def main():
             prepare_textkit2_modern_anchor(source)
         elif args.textkit2_no_anchor:
             prepare_textkit2_no_anchor(source)
+        elif args.textkit1_no_anchor:
+            prepare_textkit1_no_anchor(source)
         expected_lock = (source / LOCK).read_bytes()
         commit = command(['git', 'rev-parse', 'HEAD'], cwd=ROOT)
         metadata = {'schema': PROTOCOL, 'source_commit': commit, 'measurement_harness_commit': commit,
                     'comparison_engine_override': args.engine_revision,
-                    'application_variant': ('textkit2-modern-anchor' if args.textkit2_modern_anchor else
+                    'application_variant': ('textkit1-no-anchor' if args.textkit1_no_anchor else
+                                            'textkit2-modern-anchor' if args.textkit2_modern_anchor else
                                             'textkit2-no-anchor' if args.textkit2_no_anchor else
                                             'background-layout-off' if args.disable_background_layout else 'unchanged'),
                     'source_status': command(['git', 'status', '--short'], cwd=ROOT),

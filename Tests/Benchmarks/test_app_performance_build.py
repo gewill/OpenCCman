@@ -50,6 +50,19 @@ class BuildVerification(unittest.TestCase):
                             '      self.clip = clip\n      size = clip.bounds.size\n      editor.layoutManager?.backgroundLayoutEnabled = false')
         self.assertEqual(path.read_text().count('backgroundLayoutEnabled = false'), before + 1)
 
+    def test_textkit1_no_anchor_keeps_native_editor_construction(self):
+        editor = self.source / 'OpenCCman/View/WorkspaceTextEditor.swift'
+        editor.parent.mkdir(parents=True)
+        original = (ROOT / 'OpenCCman/View/WorkspaceTextEditor.swift').read_text()
+        editor.write_text(original)
+        DRIVER.prepare_textkit1_no_anchor(self.source)
+        updated = editor.read_text()
+        self.assertEqual(updated.count('scrollKeeper.attach(editor)'), 0)
+        self.assertEqual(updated.count('let layout = NSLayoutManager()'), 1)
+        self.assertEqual(updated.count('let editor = NSTextView('), 1)
+        self.assertEqual(updated.replace('      // Private benchmark: omit the viewport observer.\n',
+                                         '      scrollKeeper.attach(editor)\n'), original)
+
     def test_accepts_verified_unchanged_build(self):
         DRIVER.verify_build(self.output)
 
