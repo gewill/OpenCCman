@@ -31,7 +31,7 @@ and [What’s New validation record](docs/WHATS_NEW.md).
   content minimum remains narrow at 300 × 360 pt, plus the system titlebar
   ([#57](https://github.com/gewill/OpenCCman/issues/57)).
 - Customer Center in Settings: RevenueCatUI on iOS 15+, with purchase status,
-  explicit restore and support on iOS 14 and native macOS. Purchase updates share
+  explicit restore and support on native macOS. Purchase updates share
   one policy that preserves cached Pro access on failure or cancellation ([#71](https://github.com/gewill/OpenCCman/issues/71)).
 - Internal: isolated StoreKit transaction tests and Pro access/quota regressions;
   a separate local Debug scheme leaves normal archives free of test products ([#70](https://github.com/gewill/OpenCCman/issues/70)).
