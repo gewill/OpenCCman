@@ -88,7 +88,23 @@ struct MainWindowLifetimeChecks {
     replacement.close()
     settle()
     precondition(LifetimeModel.live.isEmpty, "Reused host must release its new model on close")
-    print("PASS: retained hosts, unrelated/duplicate close, hidden window state, fresh and reused windows, final release")
+    // WindowGroup can also reopen the *same* NSWindow and retained host. A new
+    // CGWindow number does not necessarily mean a new NSWindow identity.
+    let sameWindow = makeWindow()
+    let sameHost = sameWindow.contentView!
+    sameWindow.close()
+    settle()
+    precondition(LifetimeModel.live.isEmpty, "Closed same-window host must release its model")
+    sameWindow.makeKeyAndOrderFront(nil)
+    sameHost.layoutSubtreeIfNeeded()
+    settle()
+    precondition(LifetimeModel.live.count == 1, "Reopened same window must remount content")
+    sameWindow.close()
+    settle()
+    withExtendedLifetime(sameHost) {
+      precondition(LifetimeModel.live.isEmpty, "Reopened same-window model must release on close")
+    }
+    print("PASS: retained hosts, unrelated/duplicate close, hidden window state, new and reused windows, final release")
   }
 }
 #endif
