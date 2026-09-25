@@ -12,13 +12,14 @@ and actual signed-app checks. It does not count unperformed tests as passing.
 | ASC iOS build | `dc274d67-37e8-4f31-992f-c63f51daaa08`, 2.0(54), `VALID`, iOS 15.0 minimum |
 | ASC Mac build | `9693281f-6e46-4233-8f2e-747c809f32ed`, 2.0(54), `VALID`, macOS 12.0 minimum |
 | Store drafts | Both 2.0 drafts attached to their respective Build 54, `PREPARE_FOR_SUBMISSION`, `MANUAL` release |
-| Store validation | iOS and Mac: zero errors/blocking; nonblocking copyright and keyword warnings. IAP validation: zero errors/warnings/blocking. |
-| Release PR | [#210](https://github.com/gewill/OpenCCman/pull/210), release head `30f102d43f5c85d8038aa62cb15cf116b4a88342` |
-| Main CI protection | `App Regression` required, GitHub Actions app ID 15368; PR head check passed. Existing PR/admin/force-push/deletion settings retained. |
+| Store validation | iOS and Mac: zero errors/blocking after correcting copyright to `2023 gewill`; two nonblocking English keyword-overlap warnings per platform. IAP validation: zero errors/warnings/blocking. |
+| Release PR | [#210](https://github.com/gewill/OpenCCman/pull/210), draft; the PR head is checked separately before merge |
+| Main CI protection | `App Regression` required, GitHub Actions app ID 15368; checks for `d9de3e5` passed (runs `36123054419` and `36123062245`). Existing PR/admin/force-push/deletion settings retained. |
 
 The release head merges `main` into the candidate. Compared with the Cloud
-source, only README content changes; app sources, project, dependencies, and
-workflow match. The branch remains a draft until acceptance and main integration.
+source, only README, CHANGELOG, and this validation record change; app sources,
+project, dependencies, and workflow match. The branch remains a draft until
+acceptance and main integration.
 
 ## Signed Mac checks completed
 
@@ -36,6 +37,9 @@ read/write access.
 - An invalid UTF-8 file showed a decoding error. A `10 MiB + 1 byte` file showed
   the size error. Both failures retained the previous source, result, and source
   filename.
+- Imported `前文\0汉字\r\n末尾` and confirmed exported bytes
+  `前文\0漢字\r\n末尾`; the embedded NUL did not truncate the suffix. Cancelling
+  the save panel retained the source and result.
 - A TextEdit selection changed from simplified to traditional through a
   visible OpenCCman Services menu item. This Mac lists several same-named
   services from old QA copies; the test does **not** establish that Build 54
@@ -50,7 +54,7 @@ read/write access.
 | [#15](https://github.com/gewill/OpenCCman/issues/15) full file/Services/shortcut/TCC matrix | Partial Mac result above | Complete focused remaining cases; do not infer provenance from duplicate Services names. |
 | [#16](https://github.com/gewill/OpenCCman/issues/16) minimum-system runtime | No iOS 15/macOS 12 environment available | Maintainer supplies environment or explicitly accepts release risk; keep issue open unless actual evidence is obtained. |
 | [#17](https://github.com/gewill/OpenCCman/issues/17) ASC privacy questionnaire | CLI cannot read published label | Log in to ASC web, compare final label with policy and SDK audit. |
-| [#18–#20](https://github.com/gewill/OpenCCman/issues/18) performance, all-windows-closed entry points, accessibility/IME | Prior candidate evidence exists; Build 54 scope not fully repeated | Review actual evidence and decide which runtime checks must precede publication. |
+| [#18](https://github.com/gewill/OpenCCman/issues/18), [#19](https://github.com/gewill/OpenCCman/issues/19), [#20](https://github.com/gewill/OpenCCman/issues/20) performance, all-windows-closed entry points, accessibility/IME | Prior candidate evidence exists; Build 54 scope not fully repeated | Maintainer accepted tracking these P1 remainders after launch; keep issues open and do not present unperformed checks as passed. |
 | Main merge, tag, App Review, public release | Not started | Complete release acceptance, merge PR, submit both versions for review; they release manually after approval. |
 | IAP price | US lifetime price still $2.99 | Change to agreed $5.99 at coordinated public 2.0 launch, preserving existing entitlements; do not increase while 1.2 remains public. |
 
