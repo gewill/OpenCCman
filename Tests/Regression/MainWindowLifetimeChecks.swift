@@ -70,7 +70,25 @@ struct MainWindowLifetimeChecks {
     withExtendedLifetime(hosts) {
       precondition(LifetimeModel.live.isEmpty, "All closed business models must release")
     }
-    print("PASS: retained hosts, unrelated/duplicate close, hidden window state, fresh window and final release")
+    // SwiftUI may reuse a retained WindowGroup host when the last window is
+    // closed and the app is reopened. Its business content must mount again.
+    let original = makeWindow()
+    let reusedHost = original.contentView!
+    original.close()
+    settle()
+    precondition(LifetimeModel.live.isEmpty, "Closed reusable host must release its model")
+    let replacement = NSWindow(contentRect: NSRect(x: 120, y: 120, width: 300, height: 200),
+      styleMask: [.titled, .closable], backing: .buffered, defer: false)
+    replacement.isReleasedWhenClosed = false
+    replacement.contentView = reusedHost
+    replacement.orderFront(nil)
+    replacement.contentView?.layoutSubtreeIfNeeded()
+    settle()
+    precondition(LifetimeModel.live.count == 1, "A host attached to a new window must remount content")
+    replacement.close()
+    settle()
+    precondition(LifetimeModel.live.isEmpty, "Reused host must release its new model on close")
+    print("PASS: retained hosts, unrelated/duplicate close, hidden window state, fresh and reused windows, final release")
   }
 }
 #endif

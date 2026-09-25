@@ -1,5 +1,8 @@
 # Physical display disconnect/reconnect acceptance for #57
 
+The 2026-09-25 hardware run, measurements, recording limitation, and
+window-reopen fix are recorded in [physical-run-2026-09-25.md](physical-run-2026-09-25.md).
+
 This is the remaining hardware-only window-sizing check. Geometry tests already
 cover a disconnected screen rectangle, and prior UI runs moved the window
 between two connected displays. Neither reproduces physically removing a
