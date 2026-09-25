@@ -51,8 +51,9 @@ stages, visible controls, preserved text, and a valid restored frame. If the
 external monitor is unavailable, report “not run”; rerunning the geometry
 script or moving between displays is not a substitute.
 
-The Mac large-text product path is tracked separately in #191 and remains an
-unchecked #57 acceptance item until a real large-text layout is verified.
+The Mac large-text product path is tracked separately in #191. Its partial
+300×412 pt runtime evidence is recorded in the [large-text follow-up](../mac-text-size/followup-2026-09-25.md),
+but the complete matrix remains an unchecked #57 acceptance item.
 
 Apple documents [`NSApplication.didChangeScreenParametersNotification`](https://developer.apple.com/documentation/appkit/nsapplication/didchangescreenparametersnotification)
 for attached-display configuration changes and notes that [`NSWindow.screen`](https://developer.apple.com/documentation/appkit/nswindow/screen)
