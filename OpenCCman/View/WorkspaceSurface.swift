@@ -132,6 +132,7 @@ struct WorkspaceSurface: View {
       }
       if resolution.isTemporaryVertical {
         Text("workspace_temporary_vertical").appFont(.caption).foregroundColor(.secondary)
+          .fixedSize(horizontal: false, vertical: true)
       }
       Menu("workspace_pane_sizes") {
         Button("workspace_equal") { resetRatio() }
