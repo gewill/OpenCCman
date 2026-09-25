@@ -55,10 +55,28 @@ Importing a 10 MiB + 1 byte TXT showed the capacity error and likewise
 preserved all three. Canceling the system save panel retained both editor
 contents and left the previously saved file's SHA-256 unchanged
 (`48317fe6af692be8e07717941cfbbaeb0441ae880a74aa5e41317094c71c2e9d`).
-The 10 MiB exact boundary was not exercised.
+An exact 10 MiB ASCII TXT imported and converted; its exported result is
+10,485,760 bytes of ASCII `a`, matching the source byte for byte. The separate
+QA window was closed afterward; the original app window remained open.
 These checks used the native app UI and byte-level inspection of the exported
-file. They do not cover drag-and-drop, the exact size boundary, TCC denial/revocation,
-Services, or cross-app shortcut behavior on Build 55.
+file. They do not cover drag-and-drop, TCC denial/revocation, or cross-app
+shortcut behavior on Build 55.
+
+For the system Services check, Launch Services still had 166 registered
+OpenCCman QA app records (95 existing temporary app bundles and 71 missing
+paths) alongside the installed TestFlight app and its system-managed
+placeholder. Only the QA records were unregistered; no app bundle was deleted.
+Afterward TextEdit's Services menu had one `Convert Chinese Text with
+OpenCCman` entry. Invoking it on selected
+`鼠标里面的硅二极管坏了，导致光标分辨率降低。` replaced the selection with
+`滑鼠裡面的矽二極體壞了，導致游標解析度降低。`. The temporary TextEdit document was saved
+under `/tmp`, leaving no new document in iCloud. This establishes the selected
+text Services path in this cleaned local environment. In the signed app's
+shortcut settings, global shortcuts were enabled and Accessibility permission
+was granted, but the "Convert selected text" binding was empty; "Open selected
+text" was bound to Option-Command-R. No conversion shortcut was invoked or
+counted as passing. The no-selection, clipboard-race, target-switch, TCC, and
+global-shortcut matrix remains open.
 
 On a wired iPhone 17 Pro Max running iOS 27.0, `devicectl device info apps`
 identified TestFlight 2.0(55). The existing purchase identity showed lifetime
@@ -74,21 +92,45 @@ that setting can make IAP attribution use the production account. The precise
 transaction behind the
 automatic entitlement was not independently identified. A clean test requires
 installation followed by production Media & Purchases sign-out, Sandbox sign-in,
-and first launch in that state. No first purchase or cancellation has passed.
+and first launch in that state. The maintainer then followed that sequence:
+before a transaction, `Buy Now` remained available; tapping it opened an
+Apple Sandbox sheet labeled as a no-charge test. Canceling with the sheet's
+close button returned to `Buy Now` without granting Pro. After app restart,
+the unpaid state remained. The maintainer then confirmed the Sandbox purchase
+on the device. The Pro page changed to lifetime Pro, retained it after another
+app restart, and retained it after explicitly tapping Restore. Device screenshots
+were captured with `devicectl`; the Apple purchase sheet contains the test
+account identifier and is kept local, not uploaded to GitHub. This covers the
+new-purchase/cancel/restore/restart path, but not refund or offline behavior.
+
+One unresolved [price-display discrepancy](https://github.com/gewill/OpenCCman/issues/212)
+was observed before the purchase:
+OpenCCman's price card showed `$2.99`, while the Apple Sandbox confirmation
+sheet showed `£2.99`. The app renders RevenueCat's
+`package.localizedPriceString`, rather than a hard-coded currency. A restart
+still showed `$2.99`. The source of the mismatch is not established; this
+candidate must not be called fully price-verified based on the successful
+Sandbox transaction. The ASC Sandbox list identifies the tester's storefront
+as United Kingdom. Read-only `asc iap pricing summary` reports this product
+at `2.99 GBP` in the United Kingdom and `2.99 USD` in the United States, with
+no scheduled price changes. The Apple sheet matches the UK storefront while
+the app card matches the US listing. The public price has not changed.
 
 ## Remaining launch gates
 
 - [#14](https://github.com/gewill/OpenCCman/issues/14): iPhone TestFlight
-  cancellation and first purchase with the new Sandbox identity, followed by
-  restore, app restart, and entitlement checks. The maintainer performs
-  transaction prompts. Existing-purchase restore and restart passed separately.
+  cancellation, first purchase, explicit restore, app restart, and entitlement
+  checks passed on the clean Sandbox identity; older-purchase restore passed
+  separately. [Price currency mismatch](https://github.com/gewill/OpenCCman/issues/212),
+  refund/revocation, offline and failure
+  paths remain. The maintainer performed transaction prompts.
 - [#15](https://github.com/gewill/OpenCCman/issues/15): focused Mac
-  Services/shortcut/TCC and remaining file workflow acceptance on the signed
+  shortcut/TCC and remaining Services/file workflow acceptance on the signed
   55 package. The UTF-8, BOM, CRLF, Unicode, NUL, export-name, invalid
-  decoding, and 10 MiB + 1 byte rejection checks above passed; the exact
-  boundary and other scenarios remain.
-  Duplicate QA Services registrations prevented firm Build 54 handler
-  attribution, and its global shortcut was not confirmed.
+  decoding, and 10 MiB / 10 MiB + 1 byte boundary checks above passed.
+  TextEdit selected-text Services conversion passed after QA registrations
+  were removed. Other scenarios remain; Build 54's global shortcut was not
+  confirmed and is not counted as Build 55 evidence.
 - [#16](https://github.com/gewill/OpenCCman/issues/16): no iOS 15 or macOS 12
   runtime is available. Keep as a pre-release gate unless explicit release-risk
   acceptance is given; static minimum-version settings alone are not runtime
