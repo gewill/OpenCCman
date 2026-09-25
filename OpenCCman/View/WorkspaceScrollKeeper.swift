@@ -2,21 +2,10 @@ import SwiftUI
 #if os(macOS)
   import AppKit
 
-  /// Window-owned state survives a settings route that dismantles its native editor.
-  @MainActor
-  final class WorkspaceEditorReadingState {
-    var position: WorkspaceScrollKeeper.ReadingPosition?
-
-    func invalidate() { position = nil }
-  }
-
   /// Observes the existing TextEditor; never replaces its delegate or selection.
   @MainActor
   final class WorkspaceScrollKeeper: ObservableObject {
-    struct ReadingPosition {
-      let character: Int
-      let lineOffset: CGFloat
-    }
+    typealias ReadingPosition = WorkspaceEditorReadingState.Position
 
     private weak var editor: NSTextView?
     private weak var clip: NSClipView?
