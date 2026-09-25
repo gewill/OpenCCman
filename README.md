@@ -62,7 +62,7 @@ Production builds use Xcode Cloud. Push a temporary branch whose name starts wit
 
 ## Upstream sync
 
-The coordinator lives on [`main`](https://github.com/gewill/OpenCCman/tree/main), while application updates target `develop`. The default-branch coordinator migration was merged in [PR #44](https://github.com/gewill/OpenCCman/pull/44); see the [current CI and migration status](docs/CI.md). It proposes a SwiftyOpenCC PR first, then pins the merged, validated fork revision in an app PR. Maintainers review and merge each PR; all other dependencies remain locked.
+Application development lives on [`develop`](https://github.com/gewill/OpenCCman/tree/develop), while `main` hosts the upstream coordinator. It checks wrapper commits and stable OpenCC releases every Monday at 09:17 (UTC+8), opens a SwiftyOpenCC PR first, then pins the merged, validated fork revision in an app PR. Maintainers review and merge each PR; all other dependencies remain locked. See the [CI and migration status](docs/CI.md).
 
 See the shared [upstream sync guide](https://github.com/gewill/OpenCCman/blob/main/docs/upstream-sync.md) for the Monday 09:17 (UTC+8) schedule, manual commands, CI setup and rollback. Engine-specific work is covered by the [SwiftyOpenCC maintenance guide](https://github.com/gewill/SwiftyOpenCC/blob/master/docs/upstream-sync.md).
 
@@ -70,6 +70,10 @@ See the shared [upstream sync guide](https://github.com/gewill/OpenCCman/blob/ma
 
 1. [BYVoid](https://github.com/BYVoid)‘s original SDK [OpenCC](https://github.com/BYVoid/OpenCC) 
 2. [ddddxxx](https://github.com/ddddxxx)‘s Swift SDK [SwiftyOpenCC](https://github.com/ddddxxx/SwiftyOpenCC)
+
+## Branching and CI
+
+Application PRs target `develop`; the upstream coordinator remains on the default branch `main`. Merge the [application CI migration](https://github.com/gewill/OpenCCman/blob/develop/docs/CI.md) first and wait for its merged `App Regression` check before switching the live coordinator configuration. See the [branching policy](https://github.com/gewill/OpenCCman/blob/develop/docs/BRANCHING.md) for release and temporary Xcode Cloud packaging branches.
 
 ## License
 
