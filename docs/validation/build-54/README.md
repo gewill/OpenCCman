@@ -46,6 +46,24 @@ read/write access.
   handled this invocation. The attempted global shortcut produced no
   confirmable change and is **not** counted as passing.
 
+## Store privacy and declarations readback
+
+On 2026-09-25, the signed-in App Store Connect web UI showed the App Privacy
+answer published six days earlier. The product-page preview displayed “Data
+Not Linked to You” for Purchases and Usage Data. The listed data types were
+Purchase History (Analytics and App Functionality) and Product Interaction
+(Analytics), matching the [privacy audit](../../release/app-privacy-review-2026-09-16.md).
+The English privacy-policy URL was
+`https://openccman.gewill.org/en/privacy.html`, marked “Edited” for the next
+app version. All three production policy URLs returned HTTP 200 and included
+the corresponding RevenueCat, Customer Center, and Slack disclosures.
+
+App Information showed the developer identified as a non-trader for this app.
+It displayed optional China mainland ICP and Vietnam game-license setup and
+the conditional regulated-medical-device declaration; no pending required
+declaration was shown for this Utilities app. This is a web UI readback, not a
+signed-build privacy report. Confirm the policy URLs after version publication.
+
 ## Remaining release gates
 
 | Gate | Current state | Owner or action |
@@ -53,12 +71,12 @@ read/write access.
 | [#14](https://github.com/gewill/OpenCCman/issues/14) Sandbox/TestFlight purchase, cancellation, restore, restart, and entitlement | Pending on Build 54 | Maintainer performs transaction prompts on iPhone; assistant records outcomes without account or receipt data. |
 | [#15](https://github.com/gewill/OpenCCman/issues/15) full file/Services/shortcut/TCC matrix | Partial Mac result above | Complete focused remaining cases; do not infer provenance from duplicate Services names. |
 | [#16](https://github.com/gewill/OpenCCman/issues/16) minimum-system runtime | No iOS 15/macOS 12 environment available | Maintainer supplies environment or explicitly accepts release risk; keep issue open unless actual evidence is obtained. |
-| [#17](https://github.com/gewill/OpenCCman/issues/17) ASC privacy questionnaire | CLI cannot read published label | Log in to ASC web, compare final label with policy and SDK audit. |
+| [#17](https://github.com/gewill/OpenCCman/issues/17) ASC privacy questionnaire | Current published answers read back in ASC web UI; three production policy pages accessible | Confirm edited policy URLs after publication and complete signed-build privacy report. |
 | [#18](https://github.com/gewill/OpenCCman/issues/18), [#19](https://github.com/gewill/OpenCCman/issues/19), [#20](https://github.com/gewill/OpenCCman/issues/20) performance, all-windows-closed entry points, accessibility/IME | Prior candidate evidence exists; Build 54 scope not fully repeated | Maintainer accepted tracking these P1 remainders after launch; keep issues open and do not present unperformed checks as passed. |
 | Main merge, tag, App Review, public release | Not started | Complete release acceptance, merge PR, submit both versions for review; they release manually after approval. |
 | IAP price | US lifetime price still $2.99 | Change to agreed $5.99 at coordinated public 2.0 launch, preserving existing entitlements; do not increase while 1.2 remains public. |
 
-The privacy-policy URLs for English, Simplified Chinese, and Traditional Chinese
-returned HTTP 200, and both version metadata validation reports are nonblocking.
-The published ASC privacy answer itself still requires a web readback. Public
-App Store version remains 1.2 at the time of this record.
+Both version metadata validation reports are nonblocking. The published ASC
+privacy answer has been read back; its edited policy URL still follows the next
+app version. ASC showed 1.2 as the current distributed version during this
+readback.
