@@ -146,7 +146,14 @@ struct WindowContentLifetime<Content: View>: View {
     Group {
       if !closed { content() }
     }
-    .background(MainWindowReader { windowID = ObjectIdentifier($0) }
+    .background(MainWindowReader { window in
+      let attachedID = ObjectIdentifier(window)
+      guard windowID != attachedID else { return }
+      windowID = attachedID
+      // WindowGroup may attach a retained host to a new NSWindow after the
+      // previous one closed. The old content is gone; mount fresh content.
+      closed = false
+    }
       .allowsHitTesting(false).accessibilityHidden(true))
     .onReceive(NotificationCenter.default.publisher(for: NSWindow.willCloseNotification)) { notification in
       guard !closed, let window = notification.object as? NSWindow,
