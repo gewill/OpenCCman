@@ -32,12 +32,12 @@ long enough to assert that cards do not appear over it. The successful case
 checks the replacement source and cleared result; the failure case checks the
 error alert, preserved source and appearance only after dismissing the alert.
 The two-second delay tests presentation ordering, not large-file throughput.
-These two file-selection cases currently run on iPhone. On the dedicated
-iPad Air 11-inch (M4) / iPadOS 26.5 Simulator, XCUITest found both TXT cells
-in the native Files picker, but single and double tap left that picker open.
-The cases explicitly skip on iPad until that selection path is resolved; the
-existing iPad import-cancellation case still runs. This is a remaining #34
-acceptance item, not proof that iPad import is broken for users.
+These two file-selection cases run on iPhone and iPad. The dedicated iPad Air
+11-inch (M4) / iPadOS 26.5 Simulator completed both selections and the full
+presentation suite from a fresh test build; see the [iPad follow-up](../../../docs/validation/issue-34-import-outcomes/ipad-followup-2026-09-25.md).
+An earlier iPad run left the native Files picker open after taps. That result
+was not reproduced in the follow-up, but its cause is not established; do not
+claim this run proves every iPadOS Files configuration or physical device.
 The UI verifies deferral, appearance after success/failure/cancellation, one-time
 dismissal, and the absence of a late result after cancellation. It also checks
 that the first conversion does not produce a StoreKit review prompt immediately

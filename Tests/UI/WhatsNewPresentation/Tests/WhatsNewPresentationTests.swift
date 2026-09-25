@@ -103,9 +103,6 @@ final class WhatsNewPresentationTests: XCTestCase {
   func testImportSuccessDefersCardsUntilSourceIsReplaced() throws {
     let app = launch("-qa-unread-whats-new-on-import", "-qa-delay-import")
     defer { app.terminate() }
-    if app.frame.width >= 600 {
-      throw XCTSkip("The iPadOS 26.5 Files picker did not finish selection in the QA Simulator; #34 retains iPad import acceptance")
-    }
     importFixture("success", in: app)
     XCTAssertTrue(app.buttons["Cancel"].firstMatch.waitForExistence(timeout: 5))
     XCTAssertFalse(app.buttons["whats-new-done"].exists)
@@ -121,9 +118,6 @@ final class WhatsNewPresentationTests: XCTestCase {
   func testImportFailurePreservesSourceAndDefersCardsUntilAlertCloses() throws {
     let app = launch("-qa-unread-whats-new-on-import", "-qa-delay-import")
     defer { app.terminate() }
-    if app.frame.width >= 600 {
-      throw XCTSkip("The iPadOS 26.5 Files picker did not finish selection in the QA Simulator; #34 retains iPad import acceptance")
-    }
     let source = app.textViews["Source"]
     source.tap()
     source.typeText("Original draft")
