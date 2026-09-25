@@ -27,6 +27,48 @@ sys.exit(0 if any(device["udid"] == udid for group in devices.values() for devic
   exit 2
 fi
 
+# A failed assertion left VoiceOver enabled after one XCUITest run despite the
+# test's defer. Independently restore the dedicated Simulator's prior state.
+xcrun devicectl device info voiceover --device "$device_id" \
+  --json-output "$result_dir/voiceover-before.json" >/dev/null
+initial_voiceover="$(python3 - "$result_dir/voiceover-before.json" <<'PY'
+import json, sys
+print(str(json.load(open(sys.argv[1]))['result']['enabled']).lower())
+PY
+)"
+restore_voiceover() {
+  xcrun devicectl device info voiceover --device "$device_id" \
+    --json-output "$result_dir/voiceover-after-test.json" >/dev/null || return 1
+  local current
+  current="$(python3 - "$result_dir/voiceover-after-test.json" <<'PY'
+import json, sys
+print(str(json.load(open(sys.argv[1]))['result']['enabled']).lower())
+PY
+)"
+  if [[ "$current" != "$initial_voiceover" ]]; then
+    if [[ "$initial_voiceover" == true ]]; then
+      xcrun devicectl device settings voiceover --device "$device_id" --enable >/dev/null || return 1
+    else
+      xcrun devicectl device settings voiceover --device "$device_id" --disable >/dev/null || return 1
+    fi
+  fi
+  xcrun devicectl device info voiceover --device "$device_id" \
+    --json-output "$result_dir/voiceover-restored.json" >/dev/null || return 1
+  python3 - "$result_dir/voiceover-restored.json" "$initial_voiceover" <<'PY'
+import json, sys
+actual = str(json.load(open(sys.argv[1]))['result']['enabled']).lower()
+if actual != sys.argv[2]:
+    raise SystemExit(f'VoiceOver restoration failed: expected {sys.argv[2]}, got {actual}')
+PY
+}
+on_exit() {
+  local result=$?
+  trap - EXIT
+  restore_voiceover || result=1
+  exit "$result"
+}
+trap on_exit EXIT
+
 xcodebuild -project "$repo_root/OpenCCman.xcodeproj" -scheme OpenCCman \
   -configuration Debug -destination 'generic/platform=iOS Simulator' \
   -derivedDataPath "$result_dir/app-derived" -onlyUsePackageVersionsFromResolvedFile \

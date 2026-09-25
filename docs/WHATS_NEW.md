@@ -12,7 +12,7 @@
 - 延迟触发的系统评价请求遇到已展示的系统 sheet 时跳过，避免叠加。
 - 内容为本地静态图标和文字，不请求远程内容、不引导购买、不改变额度或转换选项。
 
-关闭按钮固定可见；卡片区域可滚动。使用系统字体、前景色、装饰图标的辅助功能隐藏和按卡片组合的阅读顺序。VoiceOver 前向导航从标题、版本、卡片依次到达“完成”，按钮视觉位置不变。sheet 显式传递应用当前语言，支持同一进程内切换语言后再次查看。[iOS 27 模拟器朗读顺序实测](validation/issue-34-voiceover/README.md)。
+关闭按钮固定可见；卡片区域可滚动。使用系统字体、前景色、装饰图标的辅助功能隐藏和按卡片组合的阅读顺序。VoiceOver 在 iOS 27 模拟器上可从标题、版本、卡片依次到达“完成”，并反向返回标题；按钮视觉位置不变。sheet 显式传递应用当前语言，支持同一进程内切换语言后再次查看。[iOS 27 模拟器双向朗读顺序实测](validation/issue-34-voiceover/bidirectional-2026-09-25.md)。
 
 ## 维护下一版内容
 
@@ -58,7 +58,7 @@ xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
 
 以下项目尚未完整执行，不记作通过；状态测试已覆盖的分支也需要在设备上确认系统交互：
 
-- iOS 27 模拟器已验证 VoiceOver 前向导航可从标题经过四张卡片到达“完成”；其他系统、真机与完整段落朗读仍待 [辅助功能验收 #20](https://github.com/gewill/OpenCCman/issues/20)。最大辅助功能字号、iPhone/iPad 横竖屏和交互式下滑关闭已在部分模拟器实测，见下节，仍需最终签名包与最低系统复核。
+- iOS 27 模拟器已验证 VoiceOver 双向导航覆盖标题、四张卡片和“完成”；其他系统、真机与完整段落朗读仍待 [辅助功能验收 #20](https://github.com/gewill/OpenCCman/issues/20)。最大辅助功能字号、iPhone/iPad 横竖屏和交互式下滑关闭已在部分模拟器实测，见下节，仍需最终签名包与最低系统复核。
 - 当前最低 iOS 15 / macOS 12 的原生 sheet 行为；沿用 [最低系统验收 #16](https://github.com/gewill/OpenCCman/issues/16)。
 - 真实长转换、长导入、导入/导出面板与其他错误提示的完整三端矩阵；iPhone/iPad 的可控延迟转换、失败、取消和导入取消已有专项 UI 测试，额度提示和 Pro sheet 的 Mac 实测见下节。
 - 2.0 的 Xcode Cloud 签名版本及 TestFlight。历史 1.3(44) 不包含这些新卡片。本次不触发发布分支或提交 App Review。
