@@ -112,3 +112,7 @@ iPad Air 11-inch (M4) / iPadOS 26.5 专用模拟器可在系统 Files 中定位�
 ## 2.0 iPad 导入完成与错误顺序补验（2026-09-25）
 
 在后续 `develop` `0594029` 的隔离 iPad Air 11-inch (M4) / iPadOS 26.5 Debug QA 包中，系统 Files 单击测试 TXT 实际关闭选择器并到达应用导入回调。移除两条 iPad 跳过条件后，成功导入和非法 UTF-8 专项首次 2/2 通过；全新测试 Runner 的完整 What’s New UI 套件 13 项中 12 通过、1 项 iOS 27 专用 VoiceOver 用例跳过、0 失败；录像时再运行两条专项 2/2 通过。应用代码未变，先前面板未关闭的原因不能由本轮结果确定。[补验记录](validation/issue-34-import-outcomes/ipad-followup-2026-09-25.md)列明环境、截图、录像和未覆盖范围。真机、最低系统、真实前台首次展示、VoiceOver 朗读及签名包仍留在 #34。
+
+## 2.0 当前源码 iOS 27 VoiceOver 复核（2026-09-25）
+
+在 `develop` 合并提交 `2527283` 的 iPhone 18 Pro / iOS 27.0 专用模拟器上，完整 What’s New UI 套件 13/13 通过；VoiceOver 前向阅读专项再次单独运行 1/1 通过。实际顺序为标题、版本、四张卡片、完成按钮，测试前后 VoiceOver 均为关闭。截图、无声交互录像、运行日志及覆盖边界见[合并后复核记录](validation/issue-34-voiceover/followup-2026-09-25.md)。朗读完整段落、其他系统及真机、真实前台首次启动、长任务、最低系统和签名包仍待验收，#34／#20 保持开放。

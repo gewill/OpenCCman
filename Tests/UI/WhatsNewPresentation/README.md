@@ -60,11 +60,19 @@ run the landscape case, then restore its prior size. `simctl io <UDID> screensho
 captures a stable landscape image; XCUITest's `app.screenshot()` can capture a
 rotated transition frame even when the control is hittable and the test passes.
 
+The iOS 27-only `testVoiceOverCardReadingOrder` enables VoiceOver on a dedicated
+Simulator, navigates forward through the heading, version, four cards and Done,
+then restores the initial VoiceOver state. It checks utterance prefixes and
+focus order, not full-paragraph speech. The full 13-case suite and a focused
+rerun passed on iPhone 18 Pro / iOS 27.0; see the
+[current-source follow-up](../../../docs/validation/issue-34-voiceover/followup-2026-09-25.md).
+
 The two-second conversion delay and synthetic failure are available only in a
 Debug build with the exact QA bundle ID and test launch arguments. They expose
 the presentation state long enough to inspect; they do not measure OpenCC speed,
 prove C++ work can be interrupted, or replace a real 10 MiB import. The tests
-do not establish VoiceOver narration, iOS 15, physical-device, or signed
-TestFlight behavior. The QA bundle has a different bundle ID from the store
+do not establish VoiceOver narration outside the tested iOS 27 forward path,
+iOS 15, physical-device, or signed TestFlight behavior. The QA bundle has a
+different bundle ID from the store
 app, so its RevenueCat Pro sheet can show unavailable products; only sheet
 presentation and dismissal are validated here, not purchase configuration.
