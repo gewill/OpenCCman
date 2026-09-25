@@ -101,7 +101,15 @@ on the device. The Pro page changed to lifetime Pro, retained it after another
 app restart, and retained it after explicitly tapping Restore. Device screenshots
 were captured with `devicectl`; the Apple purchase sheet contains the test
 account identifier and is kept local, not uploaded to GitHub. This covers the
-new-purchase/cancel/restore/restart path, but not refund or offline behavior.
+new-purchase/cancel/restore/restart path. With the purchased Sandbox identity,
+the maintainer then enabled airplane mode, disabled Wi-Fi, fully quit and
+reopened the app. The Pro page still showed lifetime Pro; `devicectl` captured
+the screen with the airplane icon and no Wi-Fi icon. After restoring cellular
+and Wi-Fi, the Pro page still showed lifetime Pro. [Issue #14 records paired
+screenshots](https://github.com/gewill/OpenCCman/issues/14#issuecomment-5831816319).
+This demonstrates offline retention and reconnection for this purchased
+identity; it does not cover first-launch offline lookup failure, refund, or
+revocation.
 
 One unresolved [price-display discrepancy](https://github.com/gewill/OpenCCman/issues/212)
 was observed before the purchase:
@@ -122,8 +130,9 @@ the app card matches the US listing. The public price has not changed.
   cancellation, first purchase, explicit restore, app restart, and entitlement
   checks passed on the clean Sandbox identity; older-purchase restore passed
   separately. [Price currency mismatch](https://github.com/gewill/OpenCCman/issues/212),
-  refund/revocation, offline and failure
-  paths remain. The maintainer performed transaction prompts.
+  refund/revocation, first-launch offline lookup failure, and other failure
+  paths remain. Offline retention after purchase and reconnection passed. The
+  maintainer performed transaction prompts.
 - [#15](https://github.com/gewill/OpenCCman/issues/15): focused Mac
   shortcut/TCC and remaining Services/file workflow acceptance on the signed
   55 package. The UTF-8, BOM, CRLF, Unicode, NUL, export-name, invalid
