@@ -122,7 +122,24 @@ Sandbox transaction. The ASC Sandbox list identifies the tester's storefront
 as United Kingdom. Read-only `asc iap pricing summary` reports this product
 at `2.99 GBP` in the United Kingdom and `2.99 USD` in the United States, with
 no scheduled price changes. The Apple sheet matches the UK storefront while
-the app card matches the US listing. The public price has not changed.
+the app card matches the US listing. After the Sandbox purchase, RevenueCatUI
+Customer Center displayed `£2.99` on the lifetime purchase record. Its SDK
+formats the completed transaction's price and currency separately from the
+pre-purchase `Package.localizedPriceString`; this narrows the investigation but
+does not establish the reason for the earlier USD product display. The public
+price has not changed. [Issue #212 includes the Customer Center
+screen](https://github.com/gewill/OpenCCman/issues/212#issuecomment-5831851855).
+
+The maintainer opened Customer Center's `Request a refund` action for that
+Sandbox purchase. The system sheet displayed `Cannot Connect` and `Retry`
+instead of a refund reason or normal submission form; Retry was not tapped.
+Customer Center then showed `Apple has received the refund request` under the
+purchase. [Apple defines that status](https://developer.apple.com/documentation/storekit/transaction/refundrequeststatus)
+as request receipt, not refund approval.
+After closing the failed sheet and restarting the app, the Pro page still
+showed lifetime Pro. This is an inconclusive refund/revocation test, not a
+successful refund or an entitlement regression. [Issue #14 records the system
+error screen](https://github.com/gewill/OpenCCman/issues/14#issuecomment-5831891519).
 
 ## Remaining launch gates
 
@@ -131,7 +148,9 @@ the app card matches the US listing. The public price has not changed.
   checks passed on the clean Sandbox identity; older-purchase restore passed
   separately. [Price currency mismatch](https://github.com/gewill/OpenCCman/issues/212),
   refund/revocation, first-launch offline lookup failure, and other failure
-  paths remain. Offline retention after purchase and reconnection passed. The
+  paths remain. The refund system sheet returned `Cannot Connect`, while
+  Customer Center showed request receipt; after restart Pro remained active.
+  Offline retention after purchase and reconnection passed. The
   maintainer performed transaction prompts.
 - [#15](https://github.com/gewill/OpenCCman/issues/15): focused Mac
   shortcut/TCC and remaining Services/file workflow acceptance on the signed
