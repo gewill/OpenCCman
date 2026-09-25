@@ -2,9 +2,24 @@ import XCTest
 
 final class WhatsNewPresentationTests: XCTestCase {
   private let appID = "org.gewill.OpenCCman.WhatsNewUITests"
+  private var initialVoiceOverEnabled: Bool?
 
   override func setUpWithError() throws {
     continueAfterFailure = false
+  }
+
+  override func tearDownWithError() throws {
+    if #available(iOS 27.0, *), let initialVoiceOverEnabled {
+      let voiceOver = XCUIDevice.shared.voiceOverService
+      if voiceOver.isEnabled != initialVoiceOverEnabled {
+        if initialVoiceOverEnabled { try voiceOver.enable() }
+        else { try voiceOver.disable() }
+      }
+      XCTAssertEqual(voiceOver.isEnabled, initialVoiceOverEnabled,
+                     "The test must restore the prior VoiceOver state even after an assertion fails")
+      self.initialVoiceOverEnabled = nil
+    }
+    try super.tearDownWithError()
   }
 
   private func launch(_ arguments: String...) -> XCUIApplication {
@@ -352,6 +367,7 @@ final class WhatsNewPresentationTests: XCTestCase {
 
     let voiceOver = XCUIDevice.shared.voiceOverService
     let wasEnabled = voiceOver.isEnabled
+    initialVoiceOverEnabled = wasEnabled
     defer {
       if !wasEnabled {
         do {
@@ -380,8 +396,23 @@ final class WhatsNewPresentationTests: XCTestCase {
     for (actual, expected) in zip(utterances, expectedStarts) {
       XCTAssertTrue(actual.hasPrefix(expected), "Expected \(expected), heard \(actual)")
     }
-    XCTAssertTrue(app.buttons["whats-new-done"].isHittable)
-    Thread.sleep(forTimeInterval: 1)
     capture(app, name: "voiceover-done-focus")
+    var reverseUtterances: [String] = []
+    for _ in 0..<(expectedStarts.count - 1) {
+      let spoken = try voiceOver.moveBackward().utterance
+      reverseUtterances.append(spoken)
+      XCTAssertEqual(try voiceOver.currentSpeech().utterance, spoken,
+                     "The VoiceOver cursor must remain on the element just read")
+    }
+    print("VOICEOVER_REVERSE_UTTERANCES: \(reverseUtterances)")
+    let reverseExpectedStarts = [
+      "Stay in control", "Bring your text files", "Your conversion, one tap away",
+      "A workspace that fits your screen", "OpenCCman 2.0", "What’s New Heading"
+    ]
+    for (actual, expected) in zip(reverseUtterances, reverseExpectedStarts) {
+      XCTAssertTrue(actual.hasPrefix(expected), "Expected \(expected) on reverse navigation, heard \(actual)")
+    }
+    capture(app, name: "voiceover-back-at-heading")
+    XCTAssertTrue(app.buttons["whats-new-done"].isHittable)
   }
 }

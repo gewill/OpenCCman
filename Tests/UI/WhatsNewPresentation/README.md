@@ -62,10 +62,12 @@ rotated transition frame even when the control is hittable and the test passes.
 
 The iOS 27-only `testVoiceOverCardReadingOrder` enables VoiceOver on a dedicated
 Simulator, navigates forward through the heading, version, four cards and Done,
-then restores the initial VoiceOver state. It checks utterance prefixes and
-focus order, not full-paragraph speech. The full 13-case suite and a focused
-rerun passed on iPhone 18 Pro / iOS 27.0; see the
-[current-source follow-up](../../../docs/validation/issue-34-voiceover/followup-2026-09-25.md).
+then backwards to the heading. It checks spoken titles, focus order and that
+`currentSpeech()` agrees with each reverse move, not full-paragraph speech.
+The script records and restores the Simulator's initial VoiceOver state even
+when XCTest fails; the test also restores that state during teardown. On the
+current 2.0 source, the 14-case suite passed on iPhone 18 Pro / iOS 27.0 with
+the iPad-only case skipped; see the [bidirectional follow-up](../../../docs/validation/issue-34-voiceover/bidirectional-2026-09-25.md).
 
 The two-second conversion delay and synthetic failure are available only in a
 Debug build with the exact QA bundle ID and test launch arguments. They expose
