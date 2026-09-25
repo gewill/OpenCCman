@@ -159,9 +159,14 @@ final class WhatsNewPresentationTests: XCTestCase {
         Thread.sleep(forTimeInterval: 0.7)
       }
     } else {
-      app.coordinate(withNormalizedOffset: CGVector(dx: 0.045, dy: 0.071)).tap()
+      // iPadOS 18.6 places Cancel near 5% of the screen's height; the
+      // former 7.1% point lands below the button.
+      app.coordinate(withNormalizedOffset: CGVector(dx: 0.05, dy: 0.05)).tap()
     }
-    XCTAssertFalse(picker.exists, "The native exporter must close after cancelling")
+    let pickerDismissed = XCTNSPredicateExpectation(
+      predicate: NSPredicate(format: "exists == false"), object: picker)
+    XCTAssertEqual(XCTWaiter().wait(for: [pickerDismissed], timeout: 10), .completed,
+                   "The native exporter must close after cancelling")
     expectCardsOnce(app)
   }
 
@@ -277,6 +282,62 @@ final class WhatsNewPresentationTests: XCTestCase {
     alert.buttons["OK"].tap()
     expectCardsOnce(app)
     XCTAssertFalse(app.buttons["Copy Result"].isEnabled)
+  }
+
+  func testIPadPresetSegmentsPreserveSelectionAndDisableInactiveOptions() throws {
+    let app = launch("-qa-suppress-review")
+    defer { app.terminate() }
+    guard app.frame.width >= 600 else { throw XCTSkip("iPad-only control validation") }
+
+    app.buttons["Conversion settings"].tap()
+    let target = app.descendants(matching: .any)["conversion-segment-Target Language"]
+    let variant = app.descendants(matching: .any)["conversion-segment-Variant"]
+    let region = app.descendants(matching: .any)["conversion-segment-Region Idiom"]
+    XCTAssertTrue(target.waitForExistence(timeout: 10), app.debugDescription)
+    XCTAssertTrue(variant.waitForExistence(timeout: 10))
+    XCTAssertTrue(region.waitForExistence(timeout: 10))
+    let inspector = app.scrollViews.containing(.any,
+      identifier: "conversion-segment-Target Language").firstMatch
+    XCTAssertTrue(inspector.exists)
+
+    func reveal(_ element: XCUIElement) {
+      for _ in 0..<8 where !element.isHittable { inspector.swipeUp() }
+      XCTAssertTrue(element.isHittable, "The selected control must remain reachable at this text size")
+    }
+
+    let simplified = target.buttons["Simplified Chinese"]
+    let traditional = target.buttons["Traditional Chinese"]
+    reveal(simplified)
+    reveal(traditional)
+    simplified.tap()
+    XCTAssertTrue(simplified.isSelected)
+    XCTAssertFalse(variant.buttons["Taiwan Standard"].isEnabled)
+    XCTAssertFalse(region.buttons["Taiwan Idiom"].isEnabled)
+    capture(app, name: "ipad-simplified-advanced-disabled")
+
+    traditional.tap()
+    let taiwanStandard = variant.buttons["Taiwan Standard"]
+    let taiwanIdiom = region.buttons["Taiwan Idiom"]
+    reveal(taiwanStandard)
+    taiwanStandard.tap()
+    reveal(taiwanIdiom)
+    taiwanIdiom.tap()
+    XCTAssertTrue(traditional.isSelected)
+    XCTAssertTrue(variant.buttons["Taiwan Standard"].isSelected)
+    XCTAssertTrue(region.buttons["Taiwan Idiom"].isSelected)
+    capture(app, name: "ipad-taiwan-segments-selected")
+
+    app.buttons["Done"].tap()
+    app.buttons["Convert"].tap()
+    let result = app.textViews["Result"]
+    XCTAssertTrue(result.waitForExistence(timeout: 10))
+    let converted = XCTNSPredicateExpectation(
+      predicate: NSPredicate(format: "value CONTAINS %@", "滑鼠"), object: result)
+    XCTAssertEqual(XCTWaiter().wait(for: [converted], timeout: 10), .completed,
+                   "Taiwan idiom conversion should use the chosen segment state")
+    XCTAssertTrue(app.buttons["Copy Result"].isEnabled)
+    XCTAssertTrue(app.buttons["Export TXT"].isEnabled)
+    capture(app, name: "ipad-taiwan-converted")
   }
 
   func testVoiceOverCardReadingOrder() throws {
