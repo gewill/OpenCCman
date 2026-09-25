@@ -64,6 +64,18 @@ the conditional regulated-medical-device declaration; no pending required
 declaration was shown for this Utilities app. This is a web UI readback, not a
 signed-build privacy report. Confirm the policy URLs after version publication.
 
+Xcode Organizer reports from the Cloud run's iOS and macOS Archives are saved
+as [iOS PDF](OpenCCman-2.0-54-iOS-PrivacyReport.pdf) and
+[macOS PDF](OpenCCman-2.0-54-macOS-PrivacyReport.pdf). Both show RevenueCat's
+Purchase History as App Functionality, unlinked, and untracked, but also report
+`Missing an expected key: 'NSPrivacyCollectedDataTypes'` in the app's own
+manifest. The Archives have internal version 2.0(30); App Store Connect's
+distributed builds from the same Cloud run are 2.0(54). In a temporary copy of
+the iOS Archive, adding an empty array for that key removed the report error
+without adding any collected-data entry. The original Archive was restored.
+The source fix is [PR #211](https://github.com/gewill/OpenCCman/pull/211);
+these two PDFs record the Build 54 problem, not privacy-report acceptance.
+
 ## Remaining release gates
 
 | Gate | Current state | Owner or action |
@@ -71,7 +83,7 @@ signed-build privacy report. Confirm the policy URLs after version publication.
 | [#14](https://github.com/gewill/OpenCCman/issues/14) Sandbox/TestFlight purchase, cancellation, restore, restart, and entitlement | Pending on Build 54 | Maintainer performs transaction prompts on iPhone; assistant records outcomes without account or receipt data. |
 | [#15](https://github.com/gewill/OpenCCman/issues/15) full file/Services/shortcut/TCC matrix | Partial Mac result above | Complete focused remaining cases; do not infer provenance from duplicate Services names. |
 | [#16](https://github.com/gewill/OpenCCman/issues/16) minimum-system runtime | No iOS 15/macOS 12 environment available | Maintainer supplies environment or explicitly accepts release risk; keep issue open unless actual evidence is obtained. |
-| [#17](https://github.com/gewill/OpenCCman/issues/17) ASC privacy questionnaire | Current published answers read back in ASC web UI; three production policy pages accessible | Confirm edited policy URLs after publication and complete signed-build privacy report. |
+| [#17](https://github.com/gewill/OpenCCman/issues/17) ASC privacy questionnaire | Current published answers read back in ASC web UI; three production policy pages accessible; Build 54 Archive reports contain a manifest-key error | Merge #211, package a new Cloud candidate, regenerate clean reports, then confirm edited policy URLs after publication. |
 | [#18](https://github.com/gewill/OpenCCman/issues/18), [#19](https://github.com/gewill/OpenCCman/issues/19), [#20](https://github.com/gewill/OpenCCman/issues/20) performance, all-windows-closed entry points, accessibility/IME | Prior candidate evidence exists; Build 54 scope not fully repeated | Maintainer accepted tracking these P1 remainders after launch; keep issues open and do not present unperformed checks as passed. |
 | Main merge, tag, App Review, public release | Not started | Complete release acceptance, merge PR, submit both versions for review; they release manually after approval. |
 | IAP price | US lifetime price still $2.99 | Change to agreed $5.99 at coordinated public 2.0 launch, preserving existing entitlements; do not increase while 1.2 remains public. |
