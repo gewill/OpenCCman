@@ -117,6 +117,8 @@ iPad Air 11-inch (M4) / iPadOS 26.5 专用模拟器可在系统 Files 中定位�
 
 在 `develop` 合并提交 `2527283` 的 iPhone 18 Pro / iOS 27.0 专用模拟器上，完整 What’s New UI 套件 13/13 通过；VoiceOver 前向阅读专项再次单独运行 1/1 通过。实际顺序为标题、版本、四张卡片、完成按钮，测试前后 VoiceOver 均为关闭。截图、无声交互录像、运行日志及覆盖边界见[合并后复核记录](validation/issue-34-voiceover/followup-2026-09-25.md)。朗读完整段落、其他系统及真机、真实前台首次启动、长任务、最低系统和签名包仍待验收，#34／#20 保持开放。
 
+之后在 `develop` `cd8d005` 的同类专用 iOS 27 模拟器上，新增逐张核对四段卡片正文末尾在辅助功能树中完整暴露的断言；完整 UI 套件 14 项中 13 通过、1 项 iPad 专项跳过。`XCUIVoiceOverService` 返回的四张卡片语音各恰为 64 字符，故此次只证明辅助功能内容完整及既有语音前缀／顺序，不声称全文语音朗读已通过。[运行截图、日志及边界](validation/issue-34-voiceover/full-detail-2026-09-25.md)另有记录；#34／#20 仍开放。
+
 ## 2.0 真实 Mac 前台与新包状态（2026-09-25）
 
 当前 `develop` `fc5a901` 的独立签名 Mac Debug QA App 在实际获得前台焦点后自动显示 2.0 卡片；点击 Done 后工作区原文和结果仍在。另有设置页手动重看与关闭录像。iOS 模拟器无可见前台时 `scenePhase` 始终为 `inactive`，已安装的物理 iPhone QA 包尚未启动；ASC 最新 Build 53 早于卡片实现。[来源、真实截图／视频及未覆盖边界](validation/issue-34-foreground-2026-09-25.md)逐项记录。#34 仍开放。

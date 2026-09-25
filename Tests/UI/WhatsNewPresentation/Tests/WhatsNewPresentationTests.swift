@@ -365,6 +365,21 @@ final class WhatsNewPresentationTests: XCTestCase {
     XCTAssertTrue(app.buttons["whats-new-done"].waitForExistence(timeout: 15))
     capture(app, name: "voiceover-whats-new-sheet")
 
+    // The speech service currently returns only the first 64 characters of
+    // each combined card on this Simulator. Verify that the accessibility
+    // element exposes the end of every detail as well as checking spoken order.
+    let detailEndings = [
+      "iPhone keeps a focused stacked layout.",
+      "Advanced options are still available.",
+      "to a location you choose.",
+      "unfinished conversions do not use your daily allowance."
+    ]
+    for ending in detailEndings {
+      let card = app.descendants(matching: .any).matching(
+        NSPredicate(format: "label CONTAINS %@", ending)).firstMatch
+      XCTAssertTrue(card.exists, "The complete card detail must be exposed to accessibility: \(ending)")
+    }
+
     let voiceOver = XCUIDevice.shared.voiceOverService
     let wasEnabled = voiceOver.isEnabled
     initialVoiceOverEnabled = wasEnabled
