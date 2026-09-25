@@ -5,17 +5,14 @@ import SwiftUI
   /// Observes the existing TextEditor; never replaces its delegate or selection.
   @MainActor
   final class WorkspaceScrollKeeper: ObservableObject {
-    private struct Anchor {
-      let character: Int
-      let lineOffset: CGFloat
-    }
+    typealias ReadingPosition = WorkspaceEditorReadingState.Position
 
     private weak var editor: NSTextView?
     private weak var clip: NSClipView?
     private var observations: [NSObjectProtocol] = []
     private var size = NSSize.zero
-    private var anchor: Anchor?
-    private var pending: Anchor?
+    private var anchor: ReadingPosition?
+    private var pending: ReadingPosition?
     private var revision = 0
     private var restoring = false
     private var restorationScheduled = false
@@ -55,6 +52,31 @@ import SwiftUI
         MainActor.assumeIsolated { self?.textChanged() }
       })
       capture()
+    }
+
+    func currentReadingPosition() -> ReadingPosition? {
+      if pending == nil { capture() }
+      return pending ?? anchor
+    }
+
+    func restoreReadingPosition(_ position: ReadingPosition) {
+      guard let editor, let storage = editor.textStorage,
+            position.character < storage.length else { return }
+      let selection = editor.selectedRange()
+      pending = position
+      restorationScheduled = true
+      let currentRevision = revision
+      DispatchQueue.main.async { [weak self] in
+        guard let self, revision == currentRevision, let pending = self.pending else { return }
+        restore(pending, ifSelectionIs: selection)
+        DispatchQueue.main.async { [weak self] in
+          guard let self, revision == currentRevision, let pending = self.pending else { return }
+          restore(pending, ifSelectionIs: selection)
+          self.pending = nil
+          restorationScheduled = false
+          capture()
+        }
+      }
     }
 
     func changeTypography(_ change: () -> Void) {
@@ -157,7 +179,7 @@ import SwiftUI
         let rect = layout.lineFragmentRect(forGlyphAt: glyph, effectiveRange: nil)
         let offset = point.y - origin.y - rect.minY
         guard clip.bounds == bounds, offset >= -origin.y, offset < rect.height else { continue }
-        anchor = Anchor(character: character, lineOffset: offset)
+        anchor = ReadingPosition(character: character, lineOffset: offset)
         return
       }
       // An unresolved estimate is not a reading position. Do not restore it as
@@ -165,7 +187,7 @@ import SwiftUI
       anchor = nil
     }
 
-    private func restore(_ anchor: Anchor, ifSelectionIs selection: NSRange) {
+    private func restore(_ anchor: ReadingPosition, ifSelectionIs selection: NSRange) {
       guard let editor, let clip, let layout = editor.layoutManager,
             let storage = editor.textStorage, anchor.character < storage.length else { return }
       // A new caret/selection navigation takes precedence over a queued width

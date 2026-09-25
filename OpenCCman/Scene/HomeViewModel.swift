@@ -14,16 +14,30 @@ import SwiftyUserDefaults
 
 @MainActor
 class HomeViewModel: ObservableObject {
+  #if os(macOS)
+    let sourceReadingState = WorkspaceEditorReadingState()
+    let resultReadingState = WorkspaceEditorReadingState()
+  #endif
+
   @Published var inputText: String = "鼠标里面的硅二极管坏了，导致光标分辨率降低。" {
     didSet {
       guard inputText != oldValue else { return }
+      #if os(macOS)
+        sourceReadingState.invalidate()
+      #endif
       cancelImport()
       cancelConversion()
       resultText = ""
       exportSnapshot = nil
     }
   }
-  @Published var resultText: String = ""
+  @Published var resultText: String = "" {
+    didSet {
+      #if os(macOS)
+        if resultText != oldValue { resultReadingState.invalidate() }
+      #endif
+    }
+  }
 
   @Published var options: ChineseConverter.Options = []
   @Published var targetOptions: Language = appDefaults[\.targetOptions]
