@@ -130,6 +130,22 @@ does not establish the reason for the earlier USD product display. The public
 price has not changed. [Issue #212 includes the Customer Center
 screen](https://github.com/gewill/OpenCCman/issues/212#issuecomment-5831851855).
 
+A second, newly created United Kingdom Sandbox tester reproduced the mismatch.
+The maintainer installed TestFlight 2.0(55) using the production Media &
+Purchases account, signed out of that account **before the first app launch**,
+and confirmed the second Sandbox tester was signed in under Developer settings.
+The fresh Pro page showed `Buy Now` at `$2.99`; its Apple confirmation sheet
+showed `£2.99` and stated that the test purchase would not be charged. The
+maintainer canceled with the sheet's close button, and the page still showed
+`Buy Now` at `$2.99` without a Pro grant. [Issue #212 records the valid retest
+and a safe app screenshot](https://github.com/gewill/OpenCCman/issues/212#issuecomment-5832154638).
+The system sheet screenshot remains local because it contains a test account
+identifier. An earlier attempt with the second tester was invalid: production
+Media & Purchases remained signed in and the screen changed to Pro after a
+brief sheet; it is not evidence of a second Sandbox purchase. Reproducing on
+two valid UK Sandbox identities rules out a one-off tester history, but it does
+not yet isolate StoreKit product metadata, RevenueCat caching, or app timing.
+
 The maintainer opened Customer Center's `Request a refund` action for that
 Sandbox purchase. The system sheet displayed `Cannot Connect` and `Retry`
 instead of a refund reason or normal submission form; Retry was not tapped.
