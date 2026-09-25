@@ -5,10 +5,14 @@ struct WorkspaceTextEditor: View {
   @Binding var text: String
   var isEditable = true
   var label = ""
+  #if os(macOS)
+    var readingState: WorkspaceEditorReadingState?
+  #endif
 
   var body: some View {
     #if os(macOS)
-      NativeWorkspaceTextEditor(text: $text, isEditable: isEditable, label: label)
+      NativeWorkspaceTextEditor(text: $text, isEditable: isEditable, label: label,
+                                readingState: readingState)
     #else
       TextEditor(text: $text)
         .clearTextEdtorStyle(isEditable: isEditable)
@@ -35,13 +39,16 @@ struct WorkspaceTextEditor: View {
     private var appliedTextSize = AppTextSize.standard
     private let scrollKeeper = WorkspaceScrollKeeper()
     private let editingUndoManager = UndoManager()
+    private let readingState: WorkspaceEditorReadingState?
+    private var didRestoreReadingPosition = false
 
     #if WORKSPACE_SCROLL_CHECKS
       var isScrollRestorationPending: Bool { scrollKeeper.isRestorationPending }
     #endif
 
-    init(text: Binding<String>) {
+    init(text: Binding<String>, readingState: WorkspaceEditorReadingState? = nil) {
       self.text = text
+      self.readingState = readingState
     }
 
     func makeViewport() -> WorkspaceEditorViewport {
@@ -113,16 +120,34 @@ struct WorkspaceTextEditor: View {
       let value = text.wrappedValue
       // A layout, language, theme or task update must not write back into the
       // native editor: doing so would disturb marked text, selection and undo.
-      guard !matchesRenderedBytes(value) else { return }
-      applyingSource = true
-      defer { applyingSource = false }
-      if editor.hasMarkedText() { editor.unmarkText() }
-      editor.string = value
-      renderedText = value
-      // Old edit operations refer to the previous document's character ranges.
-      // Native edits update renderedText before publishing, so their echo does
-      // not clear the undo history.
-      editor.undoManager?.removeAllActions()
+      if !matchesRenderedBytes(value) {
+        applyingSource = true
+        defer { applyingSource = false }
+        if editor.hasMarkedText() { editor.unmarkText() }
+        editor.string = value
+        renderedText = value
+        // Old edit operations refer to the previous document's character ranges.
+        // Native edits update renderedText before publishing, so their echo does
+        // not clear the undo history.
+        editor.undoManager?.removeAllActions()
+      }
+      if !didRestoreReadingPosition {
+        didRestoreReadingPosition = true
+        if let position = readingState?.position {
+          scrollKeeper.restoreReadingPosition(position)
+        }
+      }
+    }
+
+    func saveReadingPosition(in viewport: WorkspaceEditorViewport) {
+      guard let readingState, let editor = viewport.documentView as? NSTextView else { return }
+      // A source replacement can race route teardown. Only retain a position
+      // in the document actually held by the window model.
+      guard editor.string.utf8.elementsEqual(text.wrappedValue.utf8) else {
+        readingState.invalidate()
+        return
+      }
+      readingState.position = scrollKeeper.currentReadingPosition()
     }
 
     func textDidChange(_ notification: Notification) {
@@ -157,9 +182,10 @@ struct WorkspaceTextEditor: View {
     @Binding var text: String
     var isEditable: Bool
     var label: String
+    var readingState: WorkspaceEditorReadingState?
 
     func makeCoordinator() -> WorkspaceTextEditorCoordinator {
-      WorkspaceTextEditorCoordinator(text: $text)
+      WorkspaceTextEditorCoordinator(text: $text, readingState: readingState)
     }
 
     func makeNSView(context: Context) -> WorkspaceEditorViewport {
@@ -174,6 +200,7 @@ struct WorkspaceTextEditor: View {
     }
 
     static func dismantleNSView(_ viewport: WorkspaceEditorViewport, coordinator: WorkspaceTextEditorCoordinator) {
+      coordinator.saveReadingPosition(in: viewport)
       (viewport.documentView as? NSTextView)?.delegate = nil
     }
   }

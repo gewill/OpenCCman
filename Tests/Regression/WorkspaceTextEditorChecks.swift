@@ -112,6 +112,9 @@ enum WorkspaceTextEditorChecks {
     precondition(editor.string.utf8.elementsEqual(source.utf8))
     print("PASS: complete text, typing/binding, undo/redo, marked text echo, selection, independent undo, disabled/read-only and external replacement")
 
+    checkRouteReadingPosition(editable: true)
+    checkRouteReadingPosition(editable: false)
+
     // Exercise the real representable in SwiftUI layout, without opening a
     // window. Large text must not supply the viewport's intrinsic content size.
     let paragraph = "中文布局 👩🏽‍💻 e\u{301}\r\n"
@@ -139,6 +142,51 @@ enum WorkspaceTextEditorChecks {
     withExtendedLifetime(host) {
       precondition(native.layoutManager!.firstUnlaidCharacterIndex() < native.textStorage!.length)
     }
+  }
+
+  /// Settings removes the whole workspace route and creates new native editors.
+  /// Both panes must regain their own logical top line, without retaining text.
+  @MainActor private static func checkRouteReadingPosition(editable: Bool) {
+    let paragraph = "段落 👩🏽‍💻 e\u{301} 中文換行與獨立閱讀位置\n"
+    var document = String(repeating: paragraph, count: 20_000)
+    let binding = Binding(get: { document }, set: { document = $0 })
+    let state = WorkspaceEditorReadingState()
+    let first = WorkspaceTextEditorCoordinator(text: binding, readingState: state)
+    let firstViewport = first.makeViewport()
+    firstViewport.setFrameSize(NSSize(width: 420, height: 240))
+    first.update(firstViewport, text: binding, isEditable: editable, isEnabled: true)
+    let firstEditor = firstViewport.documentView as! NSTextView
+    let midpoint = (document as NSString).length / 2
+    firstEditor.scrollRangeToVisible(NSRange(location: midpoint, length: 1))
+    settle(first)
+    let before = topLine(firstEditor, firstViewport)
+    precondition(before.location > 0)
+    first.saveReadingPosition(in: firstViewport)
+    precondition(state.position != nil)
+
+    let second = WorkspaceTextEditorCoordinator(text: binding, readingState: state)
+    let secondViewport = second.makeViewport()
+    secondViewport.setFrameSize(NSSize(width: 420, height: 240))
+    second.update(secondViewport, text: binding, isEditable: editable, isEnabled: true)
+    settle(second)
+    let secondEditor = secondViewport.documentView as! NSTextView
+    let after = topLine(secondEditor, secondViewport)
+    precondition(NSLocationInRange(before.location, after),
+                 "Settings return lost the \(editable ? "source" : "result") reading line")
+    precondition(secondEditor.string.utf8.elementsEqual(document.utf8))
+
+    state.invalidate()
+    precondition(state.position == nil)
+    let third = WorkspaceTextEditorCoordinator(text: binding, readingState: state)
+    let thirdViewport = third.makeViewport()
+    thirdViewport.setFrameSize(NSSize(width: 420, height: 240))
+    third.update(thirdViewport, text: binding, isEditable: editable, isEnabled: true)
+    settle(third)
+    precondition(topLine(thirdViewport.documentView as! NSTextView, thirdViewport).location == 0,
+                 "A new document must not inherit the previous reading position")
+    record(["scenario": "settings-route-reading-position", "editable": editable,
+            "before": [before.location, before.length], "after": [after.location, after.length],
+            "passed": true])
   }
 
   /// Exercise the actual factory/delegate/keeper together, without opening a

@@ -137,7 +137,7 @@ struct SourcePane: View {
           }
       }
       .readSize { headerHeight = $0.height }
-      WorkspaceTextEditor(text: $viewModel.inputText, label: "Source")
+      sourceEditor
         .accessibilityLabel(Text("Source"))
         .disabled(viewModel.isImporting)
         .frame(maxWidth: .infinity)
@@ -149,6 +149,15 @@ struct SourcePane: View {
         )
     }
     .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
+  }
+
+  @ViewBuilder private var sourceEditor: some View {
+    #if os(macOS)
+      WorkspaceTextEditor(text: $viewModel.inputText, label: "Source",
+                          readingState: viewModel.sourceReadingState)
+    #else
+      WorkspaceTextEditor(text: $viewModel.inputText, label: "Source")
+    #endif
   }
 }
 
@@ -194,7 +203,7 @@ struct ResultPane: View {
         }
       }
       .readSize { headerHeight = $0.height }
-      WorkspaceTextEditor(text: .constant(viewModel.resultText), isEditable: false, label: "Result")
+      resultEditor
         .accessibilityLabel(Text("Result"))
         .frame(maxWidth: .infinity, alignment: .topLeading)
         .frame(height: paneHeight.map { max(180, $0 - headerHeight - 60) } ?? editorHeight)
@@ -205,6 +214,15 @@ struct ResultPane: View {
         )
     }
     .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
+  }
+
+  @ViewBuilder private var resultEditor: some View {
+    #if os(macOS)
+      WorkspaceTextEditor(text: .constant(viewModel.resultText), isEditable: false,
+                          label: "Result", readingState: viewModel.resultReadingState)
+    #else
+      WorkspaceTextEditor(text: .constant(viewModel.resultText), isEditable: false, label: "Result")
+    #endif
   }
 }
 
