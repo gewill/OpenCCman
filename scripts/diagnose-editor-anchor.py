@@ -30,8 +30,9 @@ def main():
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     keeper = ROOT / 'OpenCCman/View/WorkspaceScrollKeeper.swift'
+    reading_state = ROOT / 'OpenCCman/Model/WorkspaceEditorReadingState.swift'
     checks = ROOT / 'Tests/Regression/EditorScrollChecks.swift'
-    sources = {str(p.relative_to(ROOT)): sha(p) for p in (keeper, checks)}
+    sources = {str(p.relative_to(ROOT)): sha(p) for p in (reading_state, keeper, checks)}
     source = keeper.read_text()
     if args.first_pass_delay_ms:
         anchor = '          // Noncontiguous layout initially estimates offscreen geometry.'
@@ -52,9 +53,9 @@ def main():
 '''
     source = replace_once(source, '    private func textChanged() {', trace + '    private func textChanged() {')
     source = replace_once(source, '    private func viewportChanged() {', '    private func viewportChanged() {\n      diagnostic("viewportChanged")')
-    line = '      anchor = Anchor(character: character, lineOffset: point.y - origin.y - rect.minY)'
+    line = '        anchor = ReadingPosition(character: character, lineOffset: offset)'
     source = replace_once(source, line, line + '\n      diagnostic("captured")')
-    line = '    private func restore(_ anchor: Anchor, ifSelectionIs selection: NSRange) {'
+    line = '    private func restore(_ anchor: ReadingPosition, ifSelectionIs selection: NSRange) {'
     source = replace_once(source, line, line + '\n      diagnostic("restoreRequested")')
     source = replace_once(source, '            capture()\n          }', '            capture()\n            diagnostic("restorationFinished")\n          }')
     traced = output / 'TracedKeeper.swift'
@@ -85,7 +86,7 @@ def main():
     save()
     for variant, file in [('baseline', baseline), ('traced', traced)]:
         with (output / f'{variant}-compile.log').open('wb') as log:
-            result = subprocess.run(['xcrun', 'swiftc', '-warnings-as-errors', '-D', 'WORKSPACE_SCROLL_CHECKS', str(file), str(prefix), '-o', str(output / variant)], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
+            result = subprocess.run(['xcrun', 'swiftc', '-warnings-as-errors', '-D', 'WORKSPACE_SCROLL_CHECKS', str(reading_state), str(file), str(prefix), '-o', str(output / variant)], cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
         report[variant + 'CompileExit'] = result.returncode
         save()
         if result.returncode:
