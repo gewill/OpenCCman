@@ -24,6 +24,20 @@ Settings. Headless XCUITest leaves the Simulator scene phase `inactive`, so
 this one case uses a Debug-only, exact-QA-bundle argument to make the home scene
 eligible. It checks the on-screen presentation and persistence logic, not a
 real foreground transition, signed first install, or TestFlight launch.
+For import-success and invalid-UTF-8 cases, the script enables file sharing
+only in the unsigned QA app, places a valid UTF-8 TXT and an invalid byte
+sequence in its Documents directory, and selects them through the native Files
+picker. A Debug-only, exact-QA-bundle delay keeps the real import task visible
+long enough to assert that cards do not appear over it. The successful case
+checks the replacement source and cleared result; the failure case checks the
+error alert, preserved source and appearance only after dismissing the alert.
+The two-second delay tests presentation ordering, not large-file throughput.
+These two file-selection cases currently run on iPhone. On the dedicated
+iPad Air 11-inch (M4) / iPadOS 26.5 Simulator, XCUITest found both TXT cells
+in the native Files picker, but single and double tap left that picker open.
+The cases explicitly skip on iPad until that selection path is resolved; the
+existing iPad import-cancellation case still runs. This is a remaining #34
+acceptance item, not proof that iPad import is broken for users.
 The UI verifies deferral, appearance after success/failure/cancellation, one-time
 dismissal, and the absence of a late result after cancellation. It also checks
 that the first conversion does not produce a StoreKit review prompt immediately

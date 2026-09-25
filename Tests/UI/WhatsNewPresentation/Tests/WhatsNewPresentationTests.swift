@@ -26,6 +26,8 @@ final class WhatsNewPresentationTests: XCTestCase {
   private func expectCardsOnce(_ app: XCUIApplication) {
     let done = app.buttons["whats-new-done"]
     XCTAssertTrue(done.waitForExistence(timeout: 15))
+    // Wait for the system sheet animation before preserving visual evidence.
+    Thread.sleep(forTimeInterval: 0.6)
     capture(app, name: "cards-after-task")
     done.tap()
     let gone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: done)
@@ -74,6 +76,70 @@ final class WhatsNewPresentationTests: XCTestCase {
     capture(app, name: "native-importer-without-cards")
     cancel.tap()
     expectCardsOnce(app)
+  }
+
+  private func importFixture(_ filename: String, in app: XCUIApplication) {
+    app.buttons["Import TXT"].tap()
+    XCTAssertTrue(app.buttons["Cancel"].firstMatch.waitForExistence(timeout: 15))
+    XCTAssertFalse(app.buttons["whats-new-done"].exists)
+    if app.buttons["Browse"].exists {
+      app.buttons["Browse"].tap()
+    }
+    let localStorage = app.cells.matching(
+      NSPredicate(format: "identifier BEGINSWITH 'DOC.sidebar.item.On My '"))
+      .firstMatch
+    if localStorage.waitForExistence(timeout: 5) {
+      localStorage.tap()
+    }
+    let appFolder = app.cells["OpenCCman, Container"]
+    if appFolder.waitForExistence(timeout: 5) {
+      appFolder.tap()
+    }
+    let file = app.cells["\(filename), txt"]
+    XCTAssertTrue(file.waitForExistence(timeout: 10), "The QA fixture must be visible in Files")
+    file.tap()
+  }
+
+  func testImportSuccessDefersCardsUntilSourceIsReplaced() throws {
+    let app = launch("-qa-unread-whats-new-on-import", "-qa-delay-import")
+    defer { app.terminate() }
+    if app.frame.width >= 600 {
+      throw XCTSkip("The iPadOS 26.5 Files picker did not finish selection in the QA Simulator; #34 retains iPad import acceptance")
+    }
+    importFixture("success", in: app)
+    XCTAssertTrue(app.buttons["Cancel"].firstMatch.waitForExistence(timeout: 5))
+    XCTAssertFalse(app.buttons["whats-new-done"].exists)
+    capture(app, name: "import-running-without-cards")
+    expectCardsOnce(app)
+    let source = app.textViews["Source"].value as? String ?? ""
+    XCTAssertTrue(source.contains("測試導入"))
+    XCTAssertTrue(source.contains("😀"))
+    XCTAssertTrue(app.staticTexts["success.txt"].exists)
+    XCTAssertFalse(app.buttons["Copy Result"].isEnabled)
+  }
+
+  func testImportFailurePreservesSourceAndDefersCardsUntilAlertCloses() throws {
+    let app = launch("-qa-unread-whats-new-on-import", "-qa-delay-import")
+    defer { app.terminate() }
+    if app.frame.width >= 600 {
+      throw XCTSkip("The iPadOS 26.5 Files picker did not finish selection in the QA Simulator; #34 retains iPad import acceptance")
+    }
+    let source = app.textViews["Source"]
+    source.tap()
+    source.typeText("Original draft")
+    let original = source.value as? String
+    XCTAssertTrue(original?.contains("Original draft") == true)
+    importFixture("bad-encoding", in: app)
+    XCTAssertTrue(app.buttons["Cancel"].firstMatch.waitForExistence(timeout: 5))
+    XCTAssertFalse(app.buttons["whats-new-done"].exists)
+    let alert = app.alerts["Error"]
+    XCTAssertTrue(alert.waitForExistence(timeout: 10))
+    XCTAssertFalse(app.buttons["whats-new-done"].exists)
+    capture(app, name: "import-error-without-cards")
+    alert.buttons["OK"].tap()
+    expectCardsOnce(app)
+    XCTAssertEqual(source.value as? String, original)
+    XCTAssertFalse(app.buttons["Copy Result"].isEnabled)
   }
 
   func testExportPanelDoesNotOverlapCards() {
