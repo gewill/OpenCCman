@@ -166,6 +166,24 @@ struct WindowContentLifetime<Content: View>: View {
         host?.layoutSubtreeIfNeeded()
       }
     }
+    .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeKeyNotification)) { notification in
+      guard closed, let window = notification.object as? NSWindow,
+            ObjectIdentifier(window) == windowID, window.isVisible else { return }
+      // A WindowGroup may reopen the same NSWindow and hosting view, so the
+      // reader's window-identity callback will not run a second time.
+      closed = false
+    }
+    .onReceive(NotificationCenter.default.publisher(for: NSWindow.didUpdateNotification)) { notification in
+      guard closed, let window = notification.object as? NSWindow,
+            ObjectIdentifier(window) == windowID else { return }
+      // AppKit can send its update before orderFront marks a reused window
+      // visible. Check on the next main-loop turn, after the order completes.
+      DispatchQueue.main.async { [weak window] in
+        guard let window, closed, ObjectIdentifier(window) == windowID,
+              window.isVisible else { return }
+        closed = false
+      }
+    }
   }
 }
 #endif

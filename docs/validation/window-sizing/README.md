@@ -83,3 +83,7 @@ From `develop` `2fefef4`, an isolated ad-hoc Debug bundle ran on Xcode 27.0 / ma
 ## 2026-09-25 app text-size follow-up
 
 The Mac in-app 100%/125%/150% control has since been implemented by #194. On current `develop` `fc5a901`, an isolated signed Debug app was exercised at 1024×768 pt in English/light across all three settings and at 150% through layout and keyboard shortcuts. The [run record](../mac-text-size/english-light-1024-keyboard-2026-09-25.md) and [real screenshots/videos](https://github.com/gewill/OpenCCman/issues/57#issuecomment-5826557413) separate what was observed from the remaining matrix. The only detected display is still built-in; physical external-display disconnect/reconnect remains open.
+
+## 2026-09-25 same-window reopening follow-up
+
+The actual MAG321UX OLED disconnect/reconnect was later completed, and #203 repaired reopening when SwiftUI attaches a retained host to a new `NSWindow`; see the current #57 issue status for those results. A later isolated QA run exposed a different blank-window path. [The same-window regression, repair, real before/after screenshots, and window-close/reopen video](reused-same-window-2026-09-25.md) show its exact scope. #57 remains open for #191's remaining large-text, keyboard, and VoiceOver acceptance and final release gates; earlier sections above describe their historical state at the time of each run.
