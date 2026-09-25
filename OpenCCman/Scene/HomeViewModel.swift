@@ -311,6 +311,12 @@ class HomeViewModel: ObservableObject {
     importID = identifier
     importTask = Task { [weak self] in
       do {
+        #if DEBUG
+          if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
+             ProcessInfo.processInfo.arguments.contains("-qa-delay-import") {
+            try await Task.sleep(nanoseconds: 2_000_000_000)
+          }
+        #endif
         let imported = try await read()
         try Task.checkCancellation()
         guard let self, self.importID == identifier else { return }

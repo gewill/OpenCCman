@@ -30,16 +30,32 @@ fi
 xcodebuild -project "$repo_root/OpenCCman.xcodeproj" -scheme OpenCCman \
   -configuration Debug -destination 'generic/platform=iOS Simulator' \
   -derivedDataPath "$result_dir/app-derived" -onlyUsePackageVersionsFromResolvedFile \
-  CODE_SIGNING_ALLOWED=NO PRODUCT_BUNDLE_IDENTIFIER="$bundle_id" build \
+  CODE_SIGNING_ALLOWED=NO PRODUCT_BUNDLE_IDENTIFIER="$bundle_id" \
+  INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace=YES build \
   > "$result_dir/app-build.log" 2>&1 || {
     tail -n 80 "$result_dir/app-build.log" >&2
     exit 1
   }
 
+# Expose only the unsigned QA app's Documents directory to the native Files
+# picker. The production Info.plist and file-sharing behavior are unchanged.
+app_bundle="$result_dir/app-derived/Build/Products/Debug-iphonesimulator/OpenCCman.app"
+plutil -insert UIFileSharingEnabled -bool YES "$app_bundle/Info.plist"
+
 # Only this QA bundle is removed. A fresh install isolates the presentation
 # preference and conversion quota for every run.
 xcrun simctl uninstall "$device_id" "$bundle_id" >/dev/null 2>&1 || true
-xcrun simctl install "$device_id" "$result_dir/app-derived/Build/Products/Debug-iphonesimulator/OpenCCman.app"
+xcrun simctl install "$device_id" "$app_bundle"
+qa_container="$(xcrun simctl get_app_container "$device_id" "$bundle_id" data)"
+python3 - "$qa_container" <<'PY'
+from pathlib import Path
+import sys
+
+documents = Path(sys.argv[1]) / 'Documents'
+documents.mkdir(exist_ok=True)
+(documents / 'success.txt').write_bytes('測試導入\r\n😀 café\r\n'.encode('utf-8'))
+(documents / 'bad-encoding.txt').write_bytes(b'\xff\xfe\x80')
+PY
 
 xcodebuild test \
   -project "$repo_root/Tests/UI/WhatsNewPresentation/WhatsNewPresentation.xcodeproj" \

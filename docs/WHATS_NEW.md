@@ -102,3 +102,9 @@ xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
 ## 2.0 iPad 导出关闭后恢复补验（2026-09-25）
 
 在 `develop` `e01a404` 的独立 iPad Air 11-inch (M4) / iPadOS 26.5 Simulator QA 包上，系统 Files 导出面板显示时卡片保持隐藏；点击其左上角关闭按钮后，卡片出现一次并可正常关闭。扩展后的 `testExportPanelDoesNotOverlapCards` 在该专用 iPad 上 1/1 通过。Xcode 27.0、英文、浅色、普通字号、全屏竖屏；系统扩展按钮不在 app-scoped 无障碍树中，测试以实际观察的左上角坐标点击并断言面板消失。截图、交互录像及用例日志归档在本轮 PR。此项仍是隔离 Debug 模拟器验收，不能代替窄窗/横屏、真机、最低系统及签名包。
+
+## 2.0 iPhone 导入完成与错误顺序补验（2026-09-25）
+
+在 `develop` `4425781` 基础上的隔离 iPhone 15 Pro Max / iOS 18.6 Debug QA 包中，真实 Files 面板选择 UTF-8 TXT 后，导入运行期间卡片保持隐藏；成功替换原稿、清空旧结果后，卡片仅展示一次。非法 UTF-8 路径先出现错误提示，原草稿不变，点 OK 后卡片才展示一次。完整 UI 套件 13 项、0 失败、1 项现有 iOS 27 专用 VoiceOver 测试跳过；加强原稿断言后的两条导入用例再次 2/2 通过。截图与交互录像随 PR 附上，测试方法、文件校验和与边界见[专项记录](validation/issue-34-import-outcomes/ios-qa-2026-09-25.md)。
+
+iPad Air 11-inch (M4) / iPadOS 26.5 专用模拟器可在系统 Files 中定位测试文件，但自动化单击和双击 TXT 后面板未关闭，尚未到达应用导入回调；两条选择用例在 iPad 明确跳过，不能将其记为 iPad 导入通过或产品故障。#34 继续跟踪 iPad 选择、真机、最低系统和签名包。
