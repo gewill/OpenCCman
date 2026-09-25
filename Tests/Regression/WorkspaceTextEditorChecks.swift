@@ -47,11 +47,41 @@ enum WorkspaceTextEditorChecks {
     coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true)
     precondition(editor.hasMarkedText() && editor.markedRange() == marked)
     precondition(editor.selectedRange() == markedSelection && editor.string == textBeforeUpdate)
+    let fontDuringComposition = editor.font
+    coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true, textSize: .large)
+    precondition(editor.hasMarkedText() && editor.font == fontDuringComposition,
+                 "Do not reflow an active input-method composition")
     viewport.setFrameSize(NSSize(width: 760, height: 260))
     settle(coordinator)
     precondition(editor.markedRange() == marked && editor.selectedRange() == markedSelection,
                  "Production resize must preserve marked text and its selection")
     editor.unmarkText()
+    let committedSelection = editor.selectedRange()
+    let committedText = editor.string
+    let originalFontSize = editor.font!.pointSize
+    coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true, textSize: .large)
+    settle(coordinator)
+    precondition(editor.font!.pointSize == originalFontSize * AppTextSize.large.multiplier)
+    precondition(editor.selectedRange() == committedSelection && editor.string == committedText)
+    coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true, textSize: .standard)
+    settle(coordinator)
+    precondition(editor.font!.pointSize == originalFontSize && editor.undoManager!.canUndo)
+
+    // The size change is presentation, not a document edit in the undo stack.
+    var undoSource = "before"
+    let undoBinding = Binding(get: { undoSource }, set: { undoSource = $0 })
+    let undoCoordinator = WorkspaceTextEditorCoordinator(text: undoBinding)
+    let undoViewport = undoCoordinator.makeViewport()
+    undoCoordinator.update(undoViewport, text: undoBinding, isEditable: true, isEnabled: true)
+    let undoEditor = undoViewport.documentView as! NSTextView
+    undoEditor.insertText("X", replacementRange: NSRange(location: 0, length: 0))
+    undoEditor.breakUndoCoalescing()
+    precondition(undoSource == "Xbefore")
+    undoCoordinator.update(undoViewport, text: undoBinding, isEditable: true, isEnabled: true,
+                           textSize: .extraLarge)
+    settle(undoCoordinator)
+    undoEditor.undoManager!.undo()
+    precondition(undoSource == "before", "Typography must not insert an undo step")
 
     // Rendering the read-only output must not discard the source undo history.
     var result = "converted"
@@ -157,6 +187,26 @@ enum WorkspaceTextEditorChecks {
       precondition(editor.selectedRange() == selection)
       precondition(editor.layoutManager === manager && editor.delegate === initialDelegate)
       precondition(editor.isEditable == editable && editor.isSelectable)
+      precondition(editor.string.utf8.elementsEqual(original.utf8))
+    }
+
+    // Reflow from an app-local size change must retain the logical reading
+    // position and native editing state for both input and read-only result.
+    for textSize in [AppTextSize.extraLarge, .standard] {
+      let before = topLine(editor, viewport)
+      let started = CFAbsoluteTimeGetCurrent()
+      coordinator.update(viewport, text: binding, isEditable: editable, isEnabled: true,
+                         textSize: textSize)
+      settle(coordinator)
+      let elapsed = CFAbsoluteTimeGetCurrent() - started
+      let after = topLine(editor, viewport)
+      let retained = NSLocationInRange(before.location, after)
+      record(["scenario": "production-type-size-\(textSize.rawValue)", "MiB": mebibytes,
+              "editable": editable, "before": [before.location, before.length],
+              "after": [after.location, after.length], "seconds": elapsed, "passed": retained])
+      precondition(retained, "Typography reflow lost the top reading line")
+      precondition(editor.selectedRange() == selection)
+      precondition(editor.layoutManager === manager && editor.delegate === initialDelegate)
       precondition(editor.string.utf8.elementsEqual(original.utf8))
     }
 

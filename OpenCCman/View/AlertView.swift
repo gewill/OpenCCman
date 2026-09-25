@@ -16,9 +16,9 @@ struct AlertView<Actions: View>: View {
 //      Color.black.opacity(0.3)
       VStack(spacing: 10) {
         Text(title)
-          .font(.title)
+          .appFont(.title)
         Text(subtitle)
-          .font(.body)
+          .appFont(.body)
         Spacer()
         actions
       }

@@ -57,6 +57,7 @@ for locale in en zh-Hans zh-Hant; do
   cp -R "$repo_root/OpenCCman/$locale.lproj" "$app_dir/Resources/"
 done
 xcrun swiftc -I "$audit_dir" -L "$audit_dir" -lNeumorphic \
+  "$repo_root/OpenCCman/View/AppTypography.swift" \
   "$repo_root/OpenCCman/View/AppControlStyle.swift" \
   "$repo_root/OpenCCman/View/SegmentView.swift" \
   "$repo_root/OpenCCman/extensions/StringExtensions.swift" \

@@ -32,6 +32,7 @@ struct WorkspaceTextEditor: View {
     private var text: Binding<String>
     private var renderedText: String?
     private var applyingSource = false
+    private var appliedTextSize = AppTextSize.standard
     private let scrollKeeper = WorkspaceScrollKeeper()
     private let editingUndoManager = UndoManager()
 
@@ -82,7 +83,7 @@ struct WorkspaceTextEditor: View {
     }
 
     func update(_ viewport: WorkspaceEditorViewport, text: Binding<String>, isEditable: Bool, isEnabled: Bool,
-                accessibilityLabel: String = "") {
+                accessibilityLabel: String = "", textSize: AppTextSize = .standard) {
       self.text = text
       guard let editor = viewport.documentView as? NSTextView else { return }
       editor.isEditable = isEditable && isEnabled
@@ -90,6 +91,25 @@ struct WorkspaceTextEditor: View {
       // SwiftUI's modifier labels the representable's scroll view. Label the
       // actual text area as well, so direct VoiceOver navigation keeps its role.
       editor.setAccessibilityLabel(accessibilityLabel.isEmpty ? nil : accessibilityLabel)
+      let nativeFont = NSFont.userFont(ofSize: 0) ?? NSFont.systemFont(ofSize: 12)
+      let scaledFont = nativeFont.withSize(nativeFont.pointSize * textSize.multiplier)
+      if !editor.hasMarkedText(), appliedTextSize != textSize {
+        scrollKeeper.changeTypography {
+          // This is a plain-text editor. AppKit can leave hundreds of
+          // thousands of separate attribute runs after visiting a distant
+          // paragraph; NSTextView.font then updates each run synchronously.
+          // Rebuild one uniform run without replacing the editor or its text.
+          let selection = editor.selectedRange()
+          let attributes: [NSAttributedString.Key: Any] = [
+            .font: scaledFont,
+            .foregroundColor: editor.textColor ?? NSColor.labelColor
+          ]
+          editor.textStorage?.setAttributedString(NSAttributedString(string: editor.string, attributes: attributes))
+          editor.typingAttributes[.font] = scaledFont
+          if editor.selectedRange() != selection { editor.setSelectedRange(selection) }
+        }
+        appliedTextSize = textSize
+      }
       let value = text.wrappedValue
       // A layout, language, theme or task update must not write back into the
       // native editor: doing so would disturb marked text, selection and undo.
@@ -133,6 +153,7 @@ struct WorkspaceTextEditor: View {
   }
 
   private struct NativeWorkspaceTextEditor: NSViewRepresentable {
+    @Environment(\.appTextSize) private var textSize
     @Binding var text: String
     var isEditable: Bool
     var label: String
@@ -148,7 +169,8 @@ struct WorkspaceTextEditor: View {
     func updateNSView(_ viewport: WorkspaceEditorViewport, context: Context) {
       context.coordinator.update(viewport, text: $text, isEditable: isEditable,
                                  isEnabled: context.environment.isEnabled,
-                                 accessibilityLabel: label.localized(in: context.environment.locale))
+                                 accessibilityLabel: label.localized(in: context.environment.locale),
+                                 textSize: textSize)
     }
 
     static func dismantleNSView(_ viewport: WorkspaceEditorViewport, coordinator: WorkspaceTextEditorCoordinator) {

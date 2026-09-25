@@ -38,7 +38,7 @@ struct ChangeLanguageScene: View {
   var navi: some View {
     ZStack(alignment: .center) {
       Text("Language")
-        .font(.title)
+        .appFont(.title)
         .foregroundColor(Color.Neumorphic.secondary)
       HStack {
         BackButton()

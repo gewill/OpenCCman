@@ -41,7 +41,7 @@ struct PickableView<T: Pickable>: View {
   var body: some View {
     VStack(alignment: .leading, spacing: Padding.verLarge) {
       if let title {
-        Text(title).font(.headline)
+        Text(title).appFont(.headline)
       }
       ScrollView {
         VStack(spacing: Padding.normal) {

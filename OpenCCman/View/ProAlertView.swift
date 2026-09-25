@@ -32,7 +32,7 @@ struct ProAlertView: View {
         ProScene(isPresented: true)
           .environment(\.locale, locale)
       }
-      .font(.body)
+      .appFont(.body)
   }
 }
 

@@ -24,9 +24,9 @@
                 windowState.showingConversionSettings = true
               } label: {
                 VStack(alignment: .leading, spacing: 6) {
-                  Label("workspace_settings", systemImage: "slider.horizontal.3").font(.headline)
+                  Label("workspace_settings", systemImage: "slider.horizontal.3").appFont(.headline)
                   Text((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey)
-                    .font(.subheadline).fixedSize(horizontal: false, vertical: true)
+                    .appFont(.subheadline).fixedSize(horizontal: false, vertical: true)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
               }
@@ -67,7 +67,7 @@
 
     private var header: some View {
       HStack(alignment: .center, spacing: 12) {
-        Text("OpenCCman").font(.title2).fixedSize(horizontal: false, vertical: true)
+        Text("OpenCCman").appFont(.title2).fixedSize(horizontal: false, vertical: true)
         Spacer(minLength: 0)
         Menu {
           Button("Help") { navigator.navigate("/help") }

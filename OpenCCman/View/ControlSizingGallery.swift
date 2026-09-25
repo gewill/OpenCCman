@@ -12,7 +12,7 @@ struct ControlSizingGallery: View {
   var body: some View {
     ScrollView {
       VStack(alignment: .leading, spacing: 16) {
-        Text("Control sizing · runtime measurements").font(.headline)
+        Text("Control sizing · runtime measurements").appFont(.headline)
         Text("Activations: \(taps) · Segment: \(selected)")
           .accessibilityIdentifier("sizing-counter")
         ControlMeasurement(title: "Neumorphic 2.4.1 · requested 30×30") {
@@ -36,7 +36,7 @@ struct ControlSizingGallery: View {
           }
         }
         ControlMeasurement(title: "Complete primary bounds") {
-          Button { taps += 1 } label: { Text("Convert").font(.headline) }
+          Button { taps += 1 } label: { Text("Convert").appFont(.headline) }
             .appNeumorphicButtonStyle(Capsule(), kind: .primary, role: .accent)
             .accessibilityLabel("Sized primary")
         }
@@ -84,7 +84,7 @@ private struct ControlMeasurement<Content: View>: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 4) {
       Text("\(title) · \(Int(size.width.rounded()))×\(Int(size.height.rounded())) pt")
-        .font(.caption)
+        .appFont(.caption)
       content
         .readSize { size = $0 }
         .overlay(Rectangle().strokeBorder(Color.orange, lineWidth: 0.5).allowsHitTesting(false))
