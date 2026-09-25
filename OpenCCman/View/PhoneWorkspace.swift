@@ -31,7 +31,8 @@
                 .frame(maxWidth: .infinity, alignment: .leading)
               }
               .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 12))
-              SourcePane(editorHeight: max(180, min(200, geometry.size.height * 0.25)), showsConversionAction: false)
+              SourcePane(editorHeight: max(180, min(200, geometry.size.height * 0.25)),
+                         showsConversionAction: !showsPinnedConversionAction)
               ResultPane(editorHeight: 200, export: export)
               if !isPro, !keyboardVisible {
                 MyAppView()
@@ -39,19 +40,21 @@
             }
             .padding(12)
           }
-          HStack(spacing: 16) {
-            if keyboardVisible {
-              Button { UIApplication.shared.endEditing() } label: {
-                Image(systemName: "keyboard.chevron.compact.down")
+          if showsPinnedConversionAction {
+            HStack(spacing: 16) {
+              if keyboardVisible {
+                Button { UIApplication.shared.endEditing() } label: {
+                  Image(systemName: "keyboard.chevron.compact.down")
+                }
+                .appNeumorphicButtonStyle(Circle(), kind: .icon)
+                .accessibilityLabel(Text("workspace_dismiss_keyboard"))
               }
-              .appNeumorphicButtonStyle(Circle(), kind: .icon)
-              .accessibilityLabel(Text("workspace_dismiss_keyboard"))
+              Spacer(minLength: 0)
+              ConversionAction()
             }
-            Spacer(minLength: 0)
-            ConversionAction()
+            .padding(12)
+            .background(Color.Neumorphic.main)
           }
-          .padding(12)
-          .background(Color.Neumorphic.main)
         }
       }
       .background(WorkspaceKeyboardProbe(isVisible: $keyboardVisible).frame(width: 0, height: 0))
@@ -63,6 +66,13 @@
           .environmentObject(viewModel)
           .environmentObject(windowState)
       }
+    }
+
+    // Keep the action reachable above the keyboard and while a long conversion
+    // is running. Otherwise it shares the source header instead of reserving a
+    // full-width footer that hides the result pane.
+    private var showsPinnedConversionAction: Bool {
+      keyboardVisible || viewModel.isLoading
     }
 
     private var header: some View {
