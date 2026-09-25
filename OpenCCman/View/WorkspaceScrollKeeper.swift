@@ -20,6 +20,7 @@ import SwiftUI
     private var restoring = false
     private var restorationScheduled = false
     private var capturing = false
+    private var changingTypography = false
 
     #if WORKSPACE_SCROLL_CHECKS
       // Test synchronization only; absent from application builds. A timed
@@ -56,7 +57,38 @@ import SwiftUI
       capture()
     }
 
+    func changeTypography(_ change: () -> Void) {
+      guard let editor, let clip else { change(); return }
+      capture()
+      let readingAnchor = anchor
+      let selection = editor.selectedRange()
+      restoring = true
+      changingTypography = true
+      change()
+      changingTypography = false
+      restoring = false
+      guard let readingAnchor else { return }
+      pending = readingAnchor
+      restorationScheduled = true
+      let currentRevision = revision
+      DispatchQueue.main.async { [weak self] in
+        guard let self, revision == currentRevision, let pending = self.pending else { return }
+        restore(pending, ifSelectionIs: selection)
+        DispatchQueue.main.async { [weak self] in
+          guard let self, revision == currentRevision, let pending = self.pending else { return }
+          restore(pending, ifSelectionIs: selection)
+          self.pending = nil
+          restorationScheduled = false
+          self.size = clip.bounds.size
+          capture()
+        }
+      }
+    }
+
     private func textChanged() {
+      // Replacing the attributed spelling of the same plain text is a visual
+      // change, not a new document. Keep the captured reading anchor.
+      guard !changingTypography else { return }
       revision += 1
       pending = nil
       restorationScheduled = false

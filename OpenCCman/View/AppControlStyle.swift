@@ -31,13 +31,15 @@ struct AppNeumorphicButtonStyle<S: InsettableShape>: ButtonStyle {
   @Environment(\.neumorphicTheme) private var theme
   @Environment(\.isEnabled) private var isEnabled
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
+  @Environment(\.appTextSize) private var textSize
 
   func makeBody(configuration: Configuration) -> some View {
     let colors = theme.resolvedButtonColors(for: role)
     let height = kind == .primary ? AppControlMetrics.primaryHeight : AppControlMetrics.height
     configuration.label
       .fixedSize(horizontal: false, vertical: true)
-      .font(kind == .icon ? .system(size: AppControlMetrics.iconSize) : .body)
+      .font(kind == .icon ? .system(size: AppControlMetrics.iconSize) :
+              AppTypography.font(.body, size: textSize))
       .padding(.horizontal, kind == .icon ? 0 : 10)
       .padding(.vertical, kind == .icon ? 0 : AppControlMetrics.contentInset)
       .frame(width: kind == .icon ? height : nil)
@@ -91,11 +93,12 @@ struct AppSegmentButtonStyle: ButtonStyle {
   @Environment(\.neumorphicTheme) private var theme
   @Environment(\.isEnabled) private var isEnabled
   @Environment(\.accessibilityReduceMotion) private var reduceMotion
+  @Environment(\.appTextSize) private var textSize
 
   func makeBody(configuration: Configuration) -> some View {
     let colors = theme.resolvedButtonColors(for: .accent)
     configuration.label
-      .font(.body.weight(selected ? .semibold : .regular))
+      .font(AppTypography.font(.body, weight: selected ? .semibold : .regular, size: textSize))
       .multilineTextAlignment(.center)
       .fixedSize(horizontal: false, vertical: true)
       .padding(.horizontal, Self.horizontalInset)

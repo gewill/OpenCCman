@@ -19,6 +19,7 @@ struct SettingsScene: View {
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   #if os(macOS)
     @AppStorage(UserDefaultsKeys.showMenuBarIcon.rawValue) var showMenuBarIcon: Bool = false
+    @AppStorage(UserDefaultsKeys.macTextSize.rawValue) private var macTextSizeRaw = AppTextSize.standard.rawValue
   #endif
 
   var body: some View {
@@ -32,7 +33,7 @@ struct SettingsScene: View {
   var navi: some View {
     ZStack(alignment: .center) {
       Text("Settings")
-        .font(.title)
+        .appFont(.title)
         .foregroundColor(Color.Neumorphic.secondary)
       HStack {
         BackButton()
@@ -102,6 +103,20 @@ struct SettingsScene: View {
 
         #if os(macOS)
           VStack(spacing: Constant.padding) {
+            HStack(alignment: .center, spacing: 8) {
+              Text("mac_text_size")
+              Spacer(minLength: 0)
+              Picker("mac_text_size", selection: $macTextSizeRaw) {
+                Text("100%").tag(AppTextSize.standard.rawValue)
+                Text("125%").tag(AppTextSize.large.rawValue)
+                Text("150%").tag(AppTextSize.extraLarge.rawValue)
+              }
+              .labelsHidden()
+              .pickerStyle(SegmentedPickerStyle())
+              .fixedSize()
+              .accessibilityIdentifier("mac-text-size")
+            }
+            Divider()
             HStack(alignment: .center, spacing: 6) {
               Text("Show Menu Bar Icon".localizedStringKey)
               Spacer()
@@ -142,7 +157,7 @@ struct SettingsScene: View {
         if isPro == false {
           VStack(alignment: .leading) {
             Text("My more apps:")
-              .font(.headline)
+              .appFont(.headline)
             ForEach(allMyApps) { model in
 
               HStack(alignment: .center, spacing: 6) {
@@ -151,9 +166,9 @@ struct SettingsScene: View {
                   .frame(width: 60, height: 60)
                 VStack(alignment: .leading) {
                   Text(model.name.localizedStringKey)
-                    .font(.headline)
+                    .appFont(.headline)
                   Text(model.des.localizedStringKey)
-                    .font(.body)
+                    .appFont(.body)
                 }
                 Spacer()
 

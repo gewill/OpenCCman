@@ -10,10 +10,10 @@ struct ConversionInspector: View {
   var body: some View {
     VStack(alignment: .leading, spacing: Constant.padding) {
       if showsPresetList {
-        Text("Conversion Preset").font(.headline)
+        Text("Conversion Preset").appFont(.headline)
         if viewModel.selectedPreset == nil {
           Text("preset_custom")
-            .font(.subheadline)
+            .appFont(.subheadline)
             .foregroundColor(.secondary)
             .accessibilityIdentifier("conversion-preset-custom")
         }
@@ -35,7 +35,7 @@ struct ConversionInspector: View {
         }
       } else {
         VStack(alignment: .leading, spacing: 8) {
-          Text("Conversion Preset").font(.headline)
+          Text("Conversion Preset").appFont(.headline)
           Menu {
             ForEach(ConversionConfiguration.Preset.allCases) { preset in
               Button {
@@ -81,7 +81,7 @@ struct SourcePane: View {
     VStack(alignment: .leading, spacing: Constant.padding) {
       VStack(alignment: .leading, spacing: Constant.padding) {
         HStack {
-          Text("Source").font(.headline)
+          Text("Source").appFont(.headline)
           Button {
             guard let string = getClipboardString(),
                   string.isEmpty == false
@@ -118,10 +118,10 @@ struct SourcePane: View {
           }
         }
         if let filename = viewModel.sourceFilename {
-          Text(filename).font(.caption).lineLimit(1).truncationMode(.middle)
+          Text(filename).appFont(.caption).lineLimit(1).truncationMode(.middle)
         }
         Text("text_file_hint")
-          .font(.caption)
+          .appFont(.caption)
           .foregroundColor(.secondary)
           .frame(maxWidth: .infinity, alignment: .leading)
           .padding(10)
@@ -163,7 +163,7 @@ struct ResultPane: View {
     VStack(alignment: .leading, spacing: Constant.padding) {
       VStack(alignment: .leading, spacing: Constant.padding) {
         HStack {
-          Text("Result").font(.headline)
+          Text("Result").appFont(.headline)
           Button(action: {
             copyToClipboard(text: viewModel.resultText)
           }, label: {
@@ -184,13 +184,13 @@ struct ResultPane: View {
           }
         }
         if viewModel.resultText.isEmpty, viewModel.exportSnapshot != nil {
-          Text("previous_result_available").font(.caption).foregroundColor(.secondary)
+          Text("previous_result_available").appFont(.caption).foregroundColor(.secondary)
         }
         if viewModel.resultConfigurationChanged {
-          Text("workspace_result_settings_changed").font(.caption).foregroundColor(.secondary)
+          Text("workspace_result_settings_changed").appFont(.caption).foregroundColor(.secondary)
         }
         if viewModel.resultText.isEmpty, !viewModel.isLoading {
-          Text("workspace_result_empty").font(.caption).foregroundColor(.secondary)
+          Text("workspace_result_empty").appFont(.caption).foregroundColor(.secondary)
         }
       }
       .readSize { headerHeight = $0.height }
@@ -224,7 +224,7 @@ struct ConversionAction: View {
         viewModel.translate()
       }, label: {
         Text("Convert")
-          .font(.headline)
+          .appFont(.headline)
       })
       .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 20), kind: .primary, role: .accent)
       .keyboardShortcut("t")

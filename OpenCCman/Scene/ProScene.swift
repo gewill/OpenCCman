@@ -18,7 +18,7 @@ struct ProScene: View {
       self.navi
       self.list
     }
-    .font(.body)
+    .appFont(.body)
   }
 
   var navi: some View {
@@ -26,12 +26,12 @@ struct ProScene: View {
       if sizeCategory.isAccessibilityCategory {
         VStack(spacing: Constant.padding) {
           navigationActions
-          Text("Pro").font(.title)
+          Text("Pro").appFont(.title)
             .frame(maxWidth: .infinity)
         }
       } else {
         ZStack(alignment: .center) {
-          Text("Pro").font(.title)
+          Text("Pro").appFont(.title)
           navigationActions
         }
       }
@@ -91,7 +91,7 @@ struct ProScene: View {
     Group {
       VStack(alignment: .leading, spacing: Constant.padding) {
         Text("Premium features: ")
-          .font(.headline)
+          .appFont(.headline)
         ForEach(ProFeature.allCases) { feature in
           Divider()
           HStack {
@@ -106,7 +106,7 @@ struct ProScene: View {
       }
       VStack(alignment: .leading, spacing: Constant.padding) {
         Text("Free features: ")
-          .font(.headline)
+          .appFont(.headline)
         ForEach(FreeFeature.allCases) { feature in
           Divider()
           HStack {
@@ -137,7 +137,7 @@ struct ProScene: View {
     CardReflectionView {
       VStack(spacing: 20) {
         Text("pro_lifetime")
-          .font(.title)
+          .appFont(.title)
         Text("Thanks for your support!")
       }
       .foregroundColor(.yellow)
@@ -150,11 +150,11 @@ struct ProScene: View {
         CardReflectionView {
           VStack(spacing: 10) {
             Text(package.storeProduct.localizedTitle)
-              .font(.title)
+              .appFont(.title)
             Text(package.storeProduct.localizedDescription)
-              .font(.headline)
+              .appFont(.headline)
             Text(package.localizedPriceString)
-              .font(.title)
+              .appFont(.title)
           }
           .foregroundColor(.white)
         }
@@ -170,7 +170,7 @@ struct ProScene: View {
           }
         } label: {
           Text("Buy Now")
-            .font(.headline)
+            .appFont(.headline)
         }
         .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 30), role: .accent)
         .disabled(self.isLoading)

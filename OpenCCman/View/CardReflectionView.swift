@@ -49,7 +49,7 @@ struct CardReflectionView_Previews: PreviewProvider {
   static var previews: some View {
     CardReflectionView(content: {
       Text("Logo")
-        .font(.title)
+        .appFont(.title)
         .foregroundColor(.white)
     })
     .padding()

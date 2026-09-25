@@ -24,4 +24,5 @@ enum UserDefaultsKeys: String {
   case regionOptions
   case lastVersionPromptedForReview
   case showMenuBarIcon
+  case macTextSize
 }

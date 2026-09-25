@@ -20,7 +20,7 @@ struct ChangeColorSchemeScene: View {
   var navi: some View {
     ZStack(alignment: .center) {
       Text("Appearance")
-        .font(.title)
+        .appFont(.title)
         .foregroundColor(Color.Neumorphic.secondary)
       HStack {
         BackButton()

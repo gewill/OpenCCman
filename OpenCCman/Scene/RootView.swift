@@ -17,6 +17,7 @@ struct RootView: View {
     @StateObject private var windowSizing = MainWindowSizing()
     @State private var isMainWindow = false
     @State private var windowID: ObjectIdentifier?
+    @AppStorage(UserDefaultsKeys.macTextSize.rawValue) private var macTextSizeRaw = AppTextSize.standard.rawValue
   #endif
 
   var body: some View {
@@ -32,6 +33,10 @@ struct RootView: View {
     }
     .background(Color.Neumorphic.main)
     .neumorphicTheme(.openCCman)
+    #if os(macOS)
+      .environment(\.appTextSize, AppTextSize(rawValue: macTextSizeRaw) ?? .standard)
+      .font(AppTypography.font(.body, size: AppTextSize(rawValue: macTextSizeRaw) ?? .standard))
+    #endif
     .onChange(of: navigator.path) { newPath in
       print("Current path:", newPath)
     }

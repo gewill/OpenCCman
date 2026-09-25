@@ -92,7 +92,7 @@ struct WorkspaceSurface: View {
     VStack(alignment: .leading, spacing: 8) {
       #if os(iOS)
         HStack {
-          Text("OpenCCman").font(.headline)
+          Text("OpenCCman").appFont(.headline)
           Spacer()
           Menu {
             Button("Help") { navigator.navigate("/help") }
@@ -131,14 +131,14 @@ struct WorkspaceSurface: View {
         }
       }
       if resolution.isTemporaryVertical {
-        Text("workspace_temporary_vertical").font(.caption).foregroundColor(.secondary)
+        Text("workspace_temporary_vertical").appFont(.caption).foregroundColor(.secondary)
       }
       Menu("workspace_pane_sizes") {
         Button("workspace_equal") { resetRatio() }
         Button("workspace_source_larger") { adjustRatio(by: 0.05, axis: resolution.axis) }
         Button("workspace_result_larger") { adjustRatio(by: -0.05, axis: resolution.axis) }
       }
-      .font(.caption)
+      .appFont(.caption)
       .frame(minHeight: AppControlMetrics.height)
     }
   }
@@ -293,12 +293,12 @@ struct ConversionSettingsSheet: View {
         if sizeCategory.isAccessibilityCategory {
           VStack(alignment: .leading, spacing: 8) {
             HStack { Spacer(); doneButton }
-            Text("workspace_settings").font(.headline)
+            Text("workspace_settings").appFont(.headline)
               .fixedSize(horizontal: false, vertical: true)
           }
         } else {
           HStack {
-            Text("workspace_settings").font(.headline)
+            Text("workspace_settings").appFont(.headline)
             Spacer()
             doneButton
           }

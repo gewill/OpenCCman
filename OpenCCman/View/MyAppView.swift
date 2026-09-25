@@ -15,8 +15,8 @@ struct MyAppView: View {
         Image(model.iconName).resizable().frame(width: 32, height: 32)
           .accessibilityHidden(true)
         VStack(alignment: .leading, spacing: 4) {
-          Text(model.name.localizedStringKey).font(.headline)
-          Text(model.des.localizedStringKey).font(.callout)
+          Text(model.name.localizedStringKey).appFont(.headline)
+          Text(model.des.localizedStringKey).appFont(.callout)
             .fixedSize(horizontal: false, vertical: true)
         }
         Spacer(minLength: 0)

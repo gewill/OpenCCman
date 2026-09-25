@@ -32,7 +32,7 @@ struct ShortcutSettingsScene: View {
     var navi: some View {
         ZStack(alignment: .center) {
             Text("Shortcut Settings".localizedStringKey)
-                .font(.title)
+                .appFont(.title)
                 .foregroundColor(Color.Neumorphic.secondary)
             HStack {
                 BackButton()
@@ -56,14 +56,14 @@ struct ShortcutSettingsScene: View {
                     // Permission Status
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Permissions".localizedStringKey)
-                            .font(.headline)
+                            .appFont(.headline)
 
                         HStack {
                             Image(systemName: shortcutService.hasAccessibilityPermission ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
                                 .foregroundColor(shortcutService.hasAccessibilityPermission ? .green : .orange)
 
                             Text(shortcutService.hasAccessibilityPermission ? "Accessibility permission granted".localizedStringKey : "Accessibility permission required".localizedStringKey)
-                                .font(.body)
+                                .appFont(.body)
 
                             Spacer()
 
@@ -90,7 +90,7 @@ struct ShortcutSettingsScene: View {
                     // Enable/Disable Toggle
                     HStack {
                         Text("Enable Global Shortcut".localizedStringKey)
-                            .font(.headline)
+                            .appFont(.headline)
                         Spacer()
                         Toggle("Enable Global Shortcut", isOn: $shortcutService.isEnabled)
                             .toggleStyle(AppNeumorphicSwitchStyle())
@@ -106,7 +106,7 @@ struct ShortcutSettingsScene: View {
                     // Convert Selected Text Shortcut
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Convert Selected Text Shortcut".localizedStringKey)
-                            .font(.headline)
+                            .appFont(.headline)
 
                         HStack {
                           KeyboardShortcuts.Recorder("", name: .convertSelectedText)
@@ -129,7 +129,7 @@ struct ShortcutSettingsScene: View {
                     // Open Selected Text Shortcut
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Open Selected Text Shortcut".localizedStringKey)
-                            .font(.headline)
+                            .appFont(.headline)
 
                         HStack {
                           KeyboardShortcuts.Recorder("", name: .openSelectedText)
@@ -153,12 +153,12 @@ struct ShortcutSettingsScene: View {
                     // Instructions
                     VStack(alignment: .leading, spacing: 10) {
                         Text("How to Use".localizedStringKey)
-                            .font(.headline)
+                            .appFont(.headline)
 
                         Text(shortcutService.hasAccessibilityPermission ?
                             "shortcut_instructions_enabled".localizedStringKey :
                             "shortcut_instructions_disabled".localizedStringKey)
-                        .font(.body)
+                        .appFont(.body)
                         .foregroundColor(Color.Neumorphic.secondary.opacity(0.8))
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }
@@ -172,10 +172,10 @@ struct ShortcutSettingsScene: View {
                     // Additional Info
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Tips".localizedStringKey)
-                            .font(.headline)
+                            .appFont(.headline)
 
                         Text("shortcut_tips".localizedStringKey)
-                        .font(.body)
+                        .appFont(.body)
                         .foregroundColor(Color.Neumorphic.secondary.opacity(0.8))
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }
@@ -194,11 +194,10 @@ struct ShortcutSettingsScene: View {
                             .foregroundColor(Color.Neumorphic.secondary.opacity(0.5))
 
                         Text("Global Shortcut".localizedStringKey)
-                            .font(.title2)
-                            .fontWeight(.semibold)
+                            .appFont(.title2, weight: .semibold)
 
                         Text("Global shortcut feature is only available on macOS".localizedStringKey)
-                            .font(.body)
+                            .appFont(.body)
                             .multilineTextAlignment(.center)
                             .foregroundColor(Color.Neumorphic.secondary.opacity(0.7))
                     }

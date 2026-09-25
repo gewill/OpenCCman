@@ -18,23 +18,23 @@ struct WhatsNewView: View {
         VStack(alignment: .leading, spacing: 24) {
           VStack(alignment: .leading, spacing: 8) {
             Text("whats_new_title")
-              .font(.largeTitle.bold())
+              .appFont(.largeTitle, weight: .bold)
               .accessibilityAddTraits(.isHeader)
             Text("OpenCCman \(release.version)")
-              .font(.title3)
+              .appFont(.title3)
               .foregroundColor(.secondary)
           }
           ForEach(release.cards) { card in
             VStack(alignment: .leading, spacing: 12) {
               Image(systemName: card.symbol)
-                .font(.title)
+                .appFont(.title)
                 .foregroundColor(.accentColor)
                 .accessibilityHidden(true)
               Text(LocalizedStringKey(card.titleKey))
-                .font(.headline)
+                .appFont(.headline)
                 .accessibilityAddTraits(.isHeader)
               Text(LocalizedStringKey(card.detailKey))
-                .font(.body)
+                .appFont(.body)
                 .foregroundColor(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             }

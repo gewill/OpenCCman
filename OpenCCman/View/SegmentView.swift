@@ -17,7 +17,7 @@ struct SegmentView<T: Segmentable>: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       Text(title.localizedStringKey)
-        .font(.headline)
+        .appFont(.headline)
       picker
         .frame(maxWidth: .infinity)
         .appSegmentTrack()
@@ -51,7 +51,7 @@ struct SegmentView<T: Segmentable>: View {
         let words = option.title.localized(in: locale).split(whereSeparator: { $0.isWhitespace })
         ForEach(Array(words.enumerated()), id: \.offset) { _, word in
           Text(String(word))
-            .font(.body.weight(.semibold))
+            .appFont(.body, weight: .semibold)
             .fixedSize()
             .background(
               GeometryReader { geometry in

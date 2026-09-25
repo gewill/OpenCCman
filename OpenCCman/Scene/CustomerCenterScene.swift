@@ -48,14 +48,14 @@ private struct PurchaseSupportView: View {
     VStack(spacing: Constant.padding) {
       HStack {
         BackButton()
-        Text("customer_center_title").font(.title2).bold()
+        Text("customer_center_title").appFont(.title2, weight: .bold)
         Spacer(minLength: 0)
       }
       .padding(Constant.padding)
 
       ScrollView {
         VStack(alignment: .leading, spacing: Constant.padding) {
-          Text(isPro ? "pro_lifetime" : "Basic features").font(.headline)
+          Text(isPro ? "pro_lifetime" : "Basic features").appFont(.headline)
             .accessibilityIdentifier("customer-center-access")
           Text("customer_center_lifetime_hint").foregroundColor(.secondary)
           if let messageKey {
