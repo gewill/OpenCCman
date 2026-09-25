@@ -108,3 +108,7 @@ xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
 在 `develop` `4425781` 基础上的隔离 iPhone 15 Pro Max / iOS 18.6 Debug QA 包中，真实 Files 面板选择 UTF-8 TXT 后，导入运行期间卡片保持隐藏；成功替换原稿、清空旧结果后，卡片仅展示一次。非法 UTF-8 路径先出现错误提示，原草稿不变，点 OK 后卡片才展示一次。完整 UI 套件 13 项、0 失败、1 项现有 iOS 27 专用 VoiceOver 测试跳过；加强原稿断言后的两条导入用例再次 2/2 通过。截图与交互录像随 PR 附上，测试方法、文件校验和与边界见[专项记录](validation/issue-34-import-outcomes/ios-qa-2026-09-25.md)。
 
 iPad Air 11-inch (M4) / iPadOS 26.5 专用模拟器可在系统 Files 中定位测试文件，但自动化单击和双击 TXT 后面板未关闭，尚未到达应用导入回调；两条选择用例在 iPad 明确跳过，不能将其记为 iPad 导入通过或产品故障。#34 继续跟踪 iPad 选择、真机、最低系统和签名包。
+
+## 2.0 iPad 导入完成与错误顺序补验（2026-09-25）
+
+在后续 `develop` `0594029` 的隔离 iPad Air 11-inch (M4) / iPadOS 26.5 Debug QA 包中，系统 Files 单击测试 TXT 实际关闭选择器并到达应用导入回调。移除两条 iPad 跳过条件后，成功导入和非法 UTF-8 专项首次 2/2 通过；全新测试 Runner 的完整 What’s New UI 套件 13 项中 12 通过、1 项 iOS 27 专用 VoiceOver 用例跳过、0 失败；录像时再运行两条专项 2/2 通过。应用代码未变，先前面板未关闭的原因不能由本轮结果确定。[补验记录](validation/issue-34-import-outcomes/ipad-followup-2026-09-25.md)列明环境、截图、录像和未覆盖范围。真机、最低系统、真实前台首次展示、VoiceOver 朗读及签名包仍留在 #34。

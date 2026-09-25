@@ -1,5 +1,7 @@
 # #34 Mac import success and invalid-UTF-8 deferral (2026-09-24)
 
+Later iOS evidence: [iPhone and initial iPad run](ios-qa-2026-09-25.md), [iPad Files-selection follow-up](ipad-followup-2026-09-25.md).
+
 This is a runtime acceptance slice, not completion of #34. No application source changed.
 
 ## Source and isolation
