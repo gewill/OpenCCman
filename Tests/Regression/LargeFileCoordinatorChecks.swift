@@ -81,9 +81,9 @@ enum LargeFileCoordinatorChecks {
     // Atomic commit can win a cancellation race. The UI must display the saved
     // file, not overwrite a successful result with a synthetic cancellation.
     let committingWorker = Worker(commitWins: true)
-    let committing = MacLargeFileCoordinator(enabled: true) { source, destination, _, progress in
+    let committing = MacLargeFileCoordinator(enabled: true, operation: { source, destination, _, progress in
       try await committingWorker.run(source: source, destination: destination, progress: progress)
-    }
+    })
     try committing.offer(OpenedTextFile(url: input), configuration: configuration,
                          qualified: true, owner: owner, window: nil)
     committing.start(destination: output)
@@ -96,9 +96,9 @@ enum LargeFileCoordinatorChecks {
     committing.cancel()
     precondition(!committing.isBusy)
 
-    let failing = MacLargeFileCoordinator(enabled: true) { _, _, _, _ in
+    let failing = MacLargeFileCoordinator(enabled: true, operation: { _, _, _, _ in
       throw TextFileService.FileError.invalidUTF8
-    }
+    })
     try failing.offer(OpenedTextFile(url: input), configuration: configuration,
                       qualified: true, owner: owner, window: nil)
     failing.start(destination: output)

@@ -78,7 +78,7 @@ final class MacLargeFileCoordinator: ObservableObject {
   @Published private(set) var failureDescription: String?
 
   private let operation: Operation
-  private let reportError: (Error) -> Void
+  private let reportError: @MainActor (Error) -> Void
   private let enabled: Bool
   private var source: OpenedTextFile?
   private var conversionTask: Task<Void, Never>?
@@ -87,7 +87,7 @@ final class MacLargeFileCoordinator: ObservableObject {
   private var ownerClosed = false
 
   init(enabled: Bool = MacLargeFileCoordinator.isEnabled,
-       reportError: @escaping (Error) -> Void = { NSApp.presentError($0) },
+       reportError: @escaping @MainActor (Error) -> Void = { NSApp.presentError($0) },
        operation: @escaping Operation = { source, destination, options, progress in
     try await StreamingTextFileService.convert(
       source: source, destination: destination, options: options, progress: progress)
