@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "source_commit": "7ff9e1a3c8c5be1621f818c90a53336493755402",
+  "build_metadata_sha256": "4a7fd2b206b15d815442ff00aa42e92364fe6f86cdaa268408bd025265f0b544",
+  "driver_sha256": "0def0e297308ed694ea09028af67c7e218ff8b5cb80c4377464634f510590add",
+  "hold_seconds": 60,
+  "modes": [
+    "tk1",
+    "tk2"
+  ],
+  "captures": [
+    {
+      "mode": "tk1",
+      "command": [
+        "open",
+        "-n",
+        "-W",
+        "-a",
+        "<build>/NativeTextKitMemory.app",
+        "--args",
+        "--mode",
+        "tk1",
+        "--input",
+        "<build>/app-mixed-1MiB.txt",
+        "--output",
+        "<output>/tk1-hold.json",
+        "--content-width",
+        "440",
+        "--recovery",
+        "--second-editor",
+        "--hold-after-recovery",
+        "60"
+      ],
+      "pid": 25992,
+      "heap_sha256": "fe5d14f0f6dd20f4414af3c69e5ad15273c7698ba8217ce3b95f9edcc051766d",
+      "vmmap_sha256": "4a4fc5802874cfc7f50da4e66af3fa39b19add447eeb54dcfcbb672981778b8b",
+      "report_sha256": "b749224a5888fa292bb9acac28e761366cf5c5bd0b8f303aac801cdda5ea9027",
+      "captured": true,
+      "terminated_owned_app": true
+    },
+    {
+      "mode": "tk2",
+      "command": [
+        "open",
+        "-n",
+        "-W",
+        "-a",
+        "<build>/NativeTextKitMemory.app",
+        "--args",
+        "--mode",
+        "tk2",
+        "--input",
+        "<build>/app-mixed-1MiB.txt",
+        "--output",
+        "<output>/tk2-hold.json",
+        "--content-width",
+        "440",
+        "--recovery",
+        "--second-editor",
+        "--hold-after-recovery",
+        "60"
+      ],
+      "pid": 26370,
+      "heap_sha256": "f51e2bfd41ba819efe361325de76da86abfae843dfa8b1c3c2542aeaabf99684",
+      "vmmap_sha256": "b610c53b0d38aa1fbb98a2f75e0443218aa9b90fb92090adb93a8381ddaa9fdd",
+      "report_sha256": "bb3d3b1c179b9d3f408df2edcbfda2b010fe6f03308cd64c6ef12d09403f1d93",
+      "captured": true,
+      "terminated_owned_app": true
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "protocol": "native-window-lifecycle-cycles-1",
+  "bundle_id": "org.gewill.OpenCCman.NativeWindowLifecycleAuditAutoCycles",
+  "automatic": false,
+  "cycles": true,
+  "diagnostic_minimum_macos": "11.0",
+  "source_sha": "3b16fe91ffa942288b6c2c6de780f055e3520aca",
+  "source_status": "",
+  "harness_sha256": "49de032310c85c4df59c6e749162f64667cd6c98a5fa8702e68e45fad1a0591e",
+  "preparer_sha256": "06aa74516912aadb79277118f30ce86cd419fa9da176ff65bc519eba18499cc3",
+  "prepared_harness_sha256": "430a55595b449f72b84dca61b75d5b350678c14b74a0ffbf94dadb618d78fd0f",
+  "modified_source_sha256": {
+    "OpenCCman/OpenCCmanApp.swift": {
+      "before": "8aae01c4e4a24d3f9fdb845737b80e171965d46a96b271a25a02eb46c26dad85",
+      "after": "fe59a92903b12bc376ae5eea94ca1b739609f4d12472f045b7bb4084d149c447"
+    },
+    "OpenCCman/Scene/HomeViewModel.swift": {
+      "before": "f8830e4d876b2c4f4d11b7b5899d6fdee67021166e178d7fa4bffeb37cefbe2a",
+      "after": "e74c9d0207ab7014cf7b4fa6bcc55bfb3394cfff4b4273f86bf16f8452cbd6f8"
+    },
+    "OpenCCman/AppDelegate.swift": {
+      "before": "47b8cef30eab57a403b87b2680742446ad4371497164436b4c7551f0752279f4",
+      "after": "079b01556bb6899e8ebf471c090d71e9739ec16f1f36147047adc95638336d24"
+    },
+    "OpenCCman/Info.plist": {
+      "before": "8068892aaac197d35865cf11bb4404d05b194805671736d91d1510e56b04c13e",
+      "after": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c"
+    },
+    "OpenCCman.xcodeproj/project.pbxproj": {
+      "before": "f5485be5014377923e77bcbe17ed50f7df3d0cb1d8dfcc1dff9f9aebf1514e2c",
+      "after": "077a3da4193c975d772e7ce7e089c540eef79cd08cdfa429c4ff62221ff54600"
+    },
+    "OpenCCman/Services/GlobalShortcutService.swift": {
+      "before": "48ca6cc84ef2bd77e2594639104c74bd02125d2c0731308d29ecb68a23ccb1b4",
+      "after": "d79bd6a2435d44fd76469a0b682fa03d6650e07dd7267fa0d843facb56a2ab63"
+    }
+  },
+  "unchanged_source_sha256": {
+    "OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "f0df8bb107a449d6143911ecd9a8a25b9bb7d03718e9d449658598d4d3e833e5",
+    "OpenCCman/Scene/RootView.swift": "60b10e8d7f531bdedda42c16fedba56c5735747c5a22bf2524f1eb41d6e4700b"
+  },
+  "variant": "Real WindowGroup/Router/RootView; weak model logging; isolated free preferences; no purchase setup or Services/global shortcut registration",
+  "run": "Not launched. Three native menu cycles, two new windows per cycle; clear only new sources; +5/+20 observations, then final close +5/+20. No external queries/recording required.",
+  "driver_sha256": "3fcde1301eea672f879f31377f11dfa5c6154a0ba4845685cc2d0a88092910f0"
+}

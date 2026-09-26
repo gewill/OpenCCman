@@ -1,0 +1,44 @@
+{
+  "protocol": "native-window-lifecycle-automatic-1",
+  "bundle_id": "org.gewill.OpenCCman.NativeWindowLifecycleAuditAuto",
+  "automatic": true,
+  "diagnostic_minimum_macos": "13.0",
+  "source_sha": "60401fb51c00c2eba6c9b807b56f4f29e1aedfe5",
+  "source_status": "",
+  "harness_sha256": "2cdb02ce7eb4b5ec61ff3d648b8d31af52c817ef0a849e2162779283d0be82b8",
+  "preparer_sha256": "583019b57072bd5f104a87461d314098093d972420f7bdc0a01591303392c26c",
+  "prepared_harness_sha256": "e76d43bafbd42316ba6087ead371579da4382e47997d1d9e2b4b9a2b24bc9e81",
+  "modified_source_sha256": {
+    "OpenCCman/OpenCCmanApp.swift": {
+      "before": "8aae01c4e4a24d3f9fdb845737b80e171965d46a96b271a25a02eb46c26dad85",
+      "after": "b3b1bc4addb9c30a4061722134dd51af4ac77ae869c984a10e4479f7305d1944"
+    },
+    "OpenCCman/Scene/HomeViewModel.swift": {
+      "before": "f8830e4d876b2c4f4d11b7b5899d6fdee67021166e178d7fa4bffeb37cefbe2a",
+      "after": "e74c9d0207ab7014cf7b4fa6bcc55bfb3394cfff4b4273f86bf16f8452cbd6f8"
+    },
+    "OpenCCman/AppDelegate.swift": {
+      "before": "47b8cef30eab57a403b87b2680742446ad4371497164436b4c7551f0752279f4",
+      "after": "079b01556bb6899e8ebf471c090d71e9739ec16f1f36147047adc95638336d24"
+    },
+    "OpenCCman/Info.plist": {
+      "before": "8068892aaac197d35865cf11bb4404d05b194805671736d91d1510e56b04c13e",
+      "after": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c"
+    },
+    "OpenCCman.xcodeproj/project.pbxproj": {
+      "before": "f5485be5014377923e77bcbe17ed50f7df3d0cb1d8dfcc1dff9f9aebf1514e2c",
+      "after": "077a3da4193c975d772e7ce7e089c540eef79cd08cdfa429c4ff62221ff54600"
+    },
+    "OpenCCman/Services/GlobalShortcutService.swift": {
+      "before": "48ca6cc84ef2bd77e2594639104c74bd02125d2c0731308d29ecb68a23ccb1b4",
+      "after": "d79bd6a2435d44fd76469a0b682fa03d6650e07dd7267fa0d843facb56a2ab63"
+    }
+  },
+  "unchanged_source_sha256": {
+    "OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "f0df8bb107a449d6143911ecd9a8a25b9bb7d03718e9d449658598d4d3e833e5",
+    "OpenCCman/Scene/RootView.swift": "60b10e8d7f531bdedda42c16fedba56c5735747c5a22bf2524f1eb41d6e4700b"
+  },
+  "variant": "Real WindowGroup/Router/RootView; weak model logging; isolated free preferences; no purchase setup or Services/global shortcut registration",
+  "run": "Not launched. Automatic diagnostic requires macOS 13+: native openWindow/performClose; first/pair hold 10 seconds, then +5/+20 observations after each close. No AX queries required.",
+  "driver_sha256": "757c478ece308de512299005ce5ed639a3256e7529be7f10b3bf45a366a6c5a5"
+}

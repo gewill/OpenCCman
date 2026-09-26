@@ -1,0 +1,15 @@
+{
+  "complete": {},
+  "incomplete": [
+    {
+      "run": "tk2-single-10MiB-01.json",
+      "reason": "timeout",
+      "detail": "Command '['/private/tmp/openccman-68-native-single-10-tk2/native-textkit-memory', '--mode', 'tk2', '--input', '/private/tmp/openccman-68-native-single-10-tk2/single-10MiB.txt', '--output', '/private/tmp/openccman-68-native-single-10-tk2/tk2-single-10MiB-01.json']' timed out after 120 seconds",
+      "limit_seconds": 120,
+      "partial_status": "running",
+      "completed_stages": [
+        "empty_ready"
+      ]
+    }
+  ]
+}

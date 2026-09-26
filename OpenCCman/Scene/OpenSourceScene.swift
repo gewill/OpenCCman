@@ -13,7 +13,7 @@ struct OpenSourceScene: View {
   var navi: some View {
     ZStack(alignment: .center) {
       Text("Open Source")
-        .font(.title)
+        .appFont(.title)
         .foregroundColor(Color.Neumorphic.secondary)
       HStack {
         BackButton()
@@ -39,11 +39,11 @@ struct OpenSourceScene: View {
               } label: {
                 VStack(alignment: .leading) {
                   Text(model.name)
-                    .font(.title3)
+                    .appFont(.title3)
                   Divider()
                   Text(model.link)
                 }.foregroundColor(.accentColor)
-              }.softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 16)
+              }.appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 20))
             }
           ) {
             Text(model.licence)

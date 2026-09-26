@@ -1,40 +1,43 @@
 import SwiftUI
 
 struct ProAlertView: View {
+  @Environment(\.locale) private var locale
   @Binding var showingProAlert: Bool
-  @State private var showingProScene = false
+  @Binding var showingProScene: Bool
+  var onProDismiss: () -> Void = {}
 
   var body: some View {
     EmptyView()
       .alertView(title: "Pro only feature", subtitle: ProFeature.unlimitedTestNumbers.rawValue.localizedStringKey, isPresented: $showingProAlert) {
         HStack(spacing: 10) {
           Button {
-            showingProAlert.toggle()
-            showingProScene.toggle()
+            showingProScene = true
+            showingProAlert = false
           } label: {
             Text("Pro")
-              .frame(width: 120, height: 44)
+              .frame(minWidth: 100)
           }
-          .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 0, mainColor: Color.accent, textColor: Color.Neumorphic.main)
+          .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 20), role: .accent)
 
           Button {
             showingProAlert.toggle()
           } label: {
             Text("Cancel")
-              .frame(width: 120, height: 44)
+              .frame(minWidth: 100)
           }
-          .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 0, mainColor: Color.accent, textColor: Color.Neumorphic.main)
+          .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 20), role: .accent)
         }
       }
-      .sheet(isPresented: $showingProScene) {
+      .sheet(isPresented: $showingProScene, onDismiss: onProDismiss) {
         ProScene(isPresented: true)
+          .environment(\.locale, locale)
       }
-      .font(.body)
+      .appFont(.body)
   }
 }
 
 struct ProOverlayView_Previews: PreviewProvider {
   static var previews: some View {
-    ProAlertView(showingProAlert: .constant(true))
+    ProAlertView(showingProAlert: .constant(true), showingProScene: .constant(false))
   }
 }

@@ -1,0 +1,32 @@
+{
+  "date": "2026-09-16",
+  "previousHead": "4da64c9b6f5dfc909eb15c29b1b67b71323e6954",
+  "mergedDevelop": "c08bb0295ecf63f46e09b20e7c5911767a2528b1",
+  "resolvedConflict": {
+    "path": "docs/validation/customer-center/README.md",
+    "resolution": "Preserve links to both locale synchronization and prior VoiceOver observation/cleanup."
+  },
+  "commands": [
+    {
+      "command": "python3 scripts/check-iap-locale.py",
+      "exitCode": 0
+    },
+    {
+      "command": "bash scripts/check-pro-access.sh",
+      "exitCode": 0
+    },
+    {
+      "command": "bash scripts/check-quota.sh",
+      "exitCode": 0
+    },
+    {
+      "command": "python3 scripts/check-project.py",
+      "exitCode": 0
+    }
+  ],
+  "swiftSourceCount": 58,
+  "localizationCount": 3,
+  "scope": "Actual IAPManager with recording SDK double, Pro state and real quota model integration, syntax/resources. Not genuine StoreKit purchase or RevenueCatUI runtime acceptance.",
+  "warnings": "Existing Locale.current.languageCode/scriptCode deprecations retained; deployment targets unchanged.",
+  "redactions": "Worktree and temporary fixture paths replaced with labeled placeholders."
+}

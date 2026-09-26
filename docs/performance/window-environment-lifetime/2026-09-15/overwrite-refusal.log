@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/rxwill/git/MyApps/OpenCCman-window-environment-lifetime/scripts/prepare-minimal-window-lifetime.py", line 103, in <module>
+    main()
+    ~~~~^^
+  File "/Users/rxwill/git/MyApps/OpenCCman-window-environment-lifetime/scripts/prepare-minimal-window-lifetime.py", line 25, in main
+    output.mkdir(parents=True, exist_ok=False)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 1011, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+FileExistsError: [Errno 17] File exists: '/Users/rxwill/git/MyApps/OpenCCman-window-environment-lifetime/.build/environment-control/observed'

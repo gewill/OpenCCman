@@ -1,0 +1,1888 @@
+{
+  "pid" : 1333,
+  "rows" : [
+    {
+      "app_active" : false,
+      "elapsed_ms" : 0.214,
+      "maximum_main_timer_gap_ms" : 0,
+      "memory" : {
+        "physical_footprint_bytes" : 4604504,
+        "process_peak_rss_bytes" : 20135936,
+        "rss_bytes" : 20135936,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "name" : "process_initialized",
+      "visible_window_count" : 0
+    },
+    {
+      "app_active" : true,
+      "app_init_to_root_layout_ms" : 514.43666700000006,
+      "elapsed_ms" : 514.44820800000002,
+      "maximum_main_timer_gap_ms" : 0,
+      "memory" : {
+        "physical_footprint_bytes" : 46400544,
+        "process_peak_rss_bytes" : 112377856,
+        "rss_bytes" : 111837184,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "name" : "root_layout_ready",
+      "proc_pidinfo_ok" : true,
+      "process_start_to_root_layout_ms" : 564.81099128723145,
+      "visible_window_count" : 1
+    },
+    {
+      "app_active" : true,
+      "elapsed_ms" : 819.78541700000005,
+      "export_matches_result" : true,
+      "input_bytes" : 1048576,
+      "input_sha256" : "27efbab8866d9661ea4227677a34192b1b0543647e2c0786d6a24786048cb8c9",
+      "maximum_main_timer_gap_ms" : 70.527874999999995,
+      "memory" : {
+        "physical_footprint_bytes" : 238683408,
+        "process_peak_rss_bytes" : 177553408,
+        "rss_bytes" : 177553408,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "model_completion_ms" : 87.315166000000005,
+      "name" : "interactive_conversion",
+      "options" : 1057,
+      "output_bytes" : 1048576,
+      "output_sha256" : "a9dcd29f213eef7794bfb3ab977d10eb0520af0fed097ff1273282360624d1bd",
+      "result_layout_flush_ms" : 71.739958000000001,
+      "visible_window_count" : 1
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 2241.6727500000002,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 141755760,
+        "process_peak_rss_bytes" : 202735616,
+        "rss_bytes" : 202735616,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_3",
+      "visible_window_count" : 1
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 3242.356542,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 142378352,
+        "process_peak_rss_bytes" : 206602240,
+        "rss_bytes" : 205701120,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_4",
+      "visible_window_count" : 1
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 4242.3092500000002,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 142378352,
+        "process_peak_rss_bytes" : 206602240,
+        "rss_bytes" : 205701120,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_5",
+      "visible_window_count" : 1
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 5241.3076250000004,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 142394736,
+        "process_peak_rss_bytes" : 206602240,
+        "rss_bytes" : 205717504,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_6",
+      "visible_window_count" : 1
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 6241.3127080000004,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 142427504,
+        "process_peak_rss_bytes" : 206667776,
+        "rss_bytes" : 205766656,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_7",
+      "visible_window_count" : 1
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 7241.3143330000003,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 142345584,
+        "process_peak_rss_bytes" : 206667776,
+        "rss_bytes" : 205684736,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_8",
+      "visible_window_count" : 1
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 8241.2957079999996,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 142345584,
+        "process_peak_rss_bytes" : 206667776,
+        "rss_bytes" : 205684736,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_9",
+      "visible_window_count" : 1
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 9241.3883750000005,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 142263664,
+        "process_peak_rss_bytes" : 206667776,
+        "rss_bytes" : 205602816,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_10",
+      "visible_window_count" : 1
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 10241.306500000001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 142263664,
+        "process_peak_rss_bytes" : 206667776,
+        "rss_bytes" : 205602816,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_11",
+      "visible_window_count" : 1
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 11241.556542,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 142263664,
+        "process_peak_rss_bytes" : 206667776,
+        "rss_bytes" : 205471744,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_12",
+      "visible_window_count" : 1
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 12241.392625,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 140297584,
+        "process_peak_rss_bytes" : 206667776,
+        "rss_bytes" : 205651968,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_13",
+      "visible_window_count" : 1
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 13298.954292,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 140805488,
+        "process_peak_rss_bytes" : 206766080,
+        "rss_bytes" : 206684160,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_14",
+      "visible_window_count" : 1
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 14241.296082999999,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 141493616,
+        "process_peak_rss_bytes" : 209076224,
+        "rss_bytes" : 208175104,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_15",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 15242.262708,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 141526384,
+        "process_peak_rss_bytes" : 209108992,
+        "rss_bytes" : 208207872,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_16",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 16242.260542,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 141526384,
+        "process_peak_rss_bytes" : 209108992,
+        "rss_bytes" : 208207872,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_17",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 17241.293291999998,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 141526384,
+        "process_peak_rss_bytes" : 209108992,
+        "rss_bytes" : 208207872,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_18",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 18242.264958,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 157025648,
+        "process_peak_rss_bytes" : 239091712,
+        "rss_bytes" : 223723520,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_19",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 19242.277666999998,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 156976496,
+        "process_peak_rss_bytes" : 239091712,
+        "rss_bytes" : 223674368,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_20",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 2,
+      "app_active" : true,
+      "elapsed_ms" : 20242.299875000001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 169346464,
+        "process_peak_rss_bytes" : 241172480,
+        "rss_bytes" : 240812032,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 2,
+      "name" : "interactive_snapshot_21",
+      "visible_window_count" : 3
+    },
+    {
+      "all_models_alive" : 2,
+      "app_active" : true,
+      "elapsed_ms" : 21242.346708000001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 169756064,
+        "process_peak_rss_bytes" : 243793920,
+        "rss_bytes" : 242728960,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 2,
+      "name" : "interactive_snapshot_22",
+      "visible_window_count" : 4
+    },
+    {
+      "all_models_alive" : 2,
+      "app_active" : true,
+      "elapsed_ms" : 22242.269917000001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 169788832,
+        "process_peak_rss_bytes" : 243793920,
+        "rss_bytes" : 242761728,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 2,
+      "name" : "interactive_snapshot_23",
+      "visible_window_count" : 4
+    },
+    {
+      "all_models_alive" : 2,
+      "app_active" : true,
+      "elapsed_ms" : 23242.267583000001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 169788832,
+        "process_peak_rss_bytes" : 243793920,
+        "rss_bytes" : 242761728,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 2,
+      "name" : "interactive_snapshot_24",
+      "visible_window_count" : 4
+    },
+    {
+      "all_models_alive" : 2,
+      "app_active" : true,
+      "elapsed_ms" : 24242.268082999999,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 169788832,
+        "process_peak_rss_bytes" : 243793920,
+        "rss_bytes" : 242761728,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 2,
+      "name" : "interactive_snapshot_25",
+      "visible_window_count" : 4
+    },
+    {
+      "all_models_alive" : 2,
+      "app_active" : true,
+      "elapsed_ms" : 25242.27075,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 169559456,
+        "process_peak_rss_bytes" : 243793920,
+        "rss_bytes" : 242515968,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 2,
+      "name" : "interactive_snapshot_26",
+      "visible_window_count" : 4
+    },
+    {
+      "all_models_alive" : 2,
+      "app_active" : true,
+      "elapsed_ms" : 26242.273458,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 169444768,
+        "process_peak_rss_bytes" : 243793920,
+        "rss_bytes" : 242417664,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 2,
+      "name" : "interactive_snapshot_27",
+      "visible_window_count" : 4
+    },
+    {
+      "all_models_alive" : 2,
+      "app_active" : true,
+      "elapsed_ms" : 27242.305958000001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 169444768,
+        "process_peak_rss_bytes" : 243793920,
+        "rss_bytes" : 242417664,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 2,
+      "name" : "interactive_snapshot_28",
+      "visible_window_count" : 4
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 28242.281917,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178357664,
+        "process_peak_rss_bytes" : 251985920,
+        "rss_bytes" : 251297792,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_29",
+      "visible_window_count" : 5
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 29241.547792000001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178800056,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251838464,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_30",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 30242.271874999999,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178816440,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251838464,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_31",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 31242.274042000001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178816440,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251805696,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_32",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 32242.312999999998,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178881976,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251871232,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_33",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 33241.289541999999,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178685368,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251674624,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_34",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 34241.298416999998,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178570680,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251559936,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_35",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 35241.374958,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178570680,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251559936,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_36",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 36241.440583000003,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178570680,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251559936,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_37",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 37241.381458000003,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178570680,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251559936,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_38",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 38241.415542000002,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178570680,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251510784,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_39",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 39241.455833,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178587064,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251478016,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_40",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 40241.496749999998,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178587064,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251494400,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_41",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 41241.486041999997,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178587064,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251494400,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_42",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 42241.589667,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 178587064,
+        "process_peak_rss_bytes" : 252903424,
+        "rss_bytes" : 251494400,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_43",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 43241.495416999998,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 185222584,
+        "process_peak_rss_bytes" : 264847360,
+        "rss_bytes" : 258146304,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_44",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 44241.568458000002,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 185255352,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 258179072,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_45",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 45241.629667000001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 185255352,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 258179072,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 3,
+      "name" : "interactive_snapshot_46",
+      "visible_window_count" : 6
+    },
+    {
+      "all_models_alive" : 3,
+      "app_active" : true,
+      "elapsed_ms" : 46241.603792000002,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 186336696,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 259096576,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 2,
+      "name" : "interactive_snapshot_47",
+      "visible_window_count" : 4
+    },
+    {
+      "all_models_alive" : 2,
+      "app_active" : true,
+      "elapsed_ms" : 47241.674874999997,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 185648568,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 259096576,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_48",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 48241.404833000001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179750328,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 254132224,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_49",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 49241.711000000003,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179783096,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 254099456,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_50",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 50241.742082999997,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179783096,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 254099456,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_51",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 51242.096124999996,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179783096,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246300672,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_52",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 52241.844208000002,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179783096,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246300672,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_53",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 53241.860083,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179684792,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246202368,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_54",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 54241.899624999998,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179684792,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246202368,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_55",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 55241.924791999998,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179684792,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246202368,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_56",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 56241.976000000002,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179684792,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246202368,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_57",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 57241.991792000001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179701176,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246218752,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_58",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 58242.011917000003,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179701176,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246218752,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_59",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 59242.043292000002,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179701176,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246218752,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_60",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 60242.097249999999,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179701176,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246218752,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_61",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 61242.134041999998,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179701176,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246218752,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_62",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 62242.163249999998,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179701176,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246218752,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_63",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 63242.199667000001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179701176,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246218752,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_64",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 64242.219624999998,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179733944,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246251520,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_65",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 65242.237542000003,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179766712,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246284288,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_66",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 66242.121375000002,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179815864,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246333440,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_67",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 67242.098666999998,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179815864,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246333440,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_68",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 68242.112332999997,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179815864,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246333440,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_69",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 69242.152417000005,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179815864,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246333440,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_70",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 70242.165582999995,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179815864,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246333440,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_71",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 71242.223582999999,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179815864,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246333440,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_72",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 72242.222250000006,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179815864,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246333440,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_73",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 73242.290041999993,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179815864,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246333440,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_74",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 74242.331166999997,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179815864,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246333440,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_75",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 75241.286957999997,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179832248,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246349824,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_76",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 76241.817792000002,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179832248,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246349824,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_77",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 77241.746291999996,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179832248,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246349824,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_78",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 78241.648375000004,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179832248,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246349824,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_79",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 79241.665416999997,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179832248,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246349824,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_80",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 80241.75,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179832248,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246349824,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_81",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 81241.567792000002,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179832248,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246349824,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_82",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 82241.881542000003,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179832248,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246349824,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_83",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 83241.934624999994,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 179832248,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 246349824,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_84",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 84241.870500000005,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149390776,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224411648,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_85",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 85241.855874999994,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149390776,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224411648,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_86",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 86241.924125000005,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149390776,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224411648,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_87",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 87241.875333000004,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149390776,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224411648,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_88",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 88241.659916999997,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149390776,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224411648,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_89",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 89241.995207999993,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149390776,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224411648,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_90",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 90241.841958000005,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149390776,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224411648,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_91",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 91241.94025,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149390776,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224411648,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_92",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 92242.001457999999,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149390776,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224411648,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_93",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 93241.895082999996,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149407160,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224428032,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_94",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 94242.056874999995,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149407160,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224428032,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_95",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 95242.091083000007,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149407160,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224428032,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_96",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 96242.130583000006,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149407160,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224428032,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_97",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 97242.155499999993,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149407160,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224428032,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_98",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 98242.177582999997,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149439928,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224460800,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_99",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 99242.114124999993,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149439928,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224460800,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_100",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 100242.264417,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149439928,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224460800,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_101",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 101242.250375,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149439928,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224460800,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_102",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 102241.775417,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149439928,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224460800,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_103",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 103241.80562499999,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149439928,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224460800,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_104",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 104241.863667,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149439928,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224460800,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_105",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 105241.896542,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149439928,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224460800,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_106",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 106241.88529200001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149439928,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224460800,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_107",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 107241.893667,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149439928,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224460800,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_108",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 108241.91575,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149439928,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224460800,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_109",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 109241.95512499999,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149439928,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224460800,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_110",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 110242.058542,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149439928,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224460800,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_111",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 111241.996417,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149456312,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224477184,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_112",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 112242.01758299999,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149456312,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224477184,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_113",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 113242.03745800001,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149456312,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224477184,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_114",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 114242.091417,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149456312,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224477184,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_115",
+      "visible_window_count" : 2
+    },
+    {
+      "all_models_alive" : 1,
+      "app_active" : true,
+      "elapsed_ms" : 115242.122208,
+      "maximum_main_timer_gap_ms" : 415.22179199999999,
+      "memory" : {
+        "physical_footprint_bytes" : 149456312,
+        "process_peak_rss_bytes" : 274644992,
+        "rss_bytes" : 224477184,
+        "rusage_status" : 0,
+        "task_info_status" : 0
+      },
+      "models_with_visible_windows" : 1,
+      "name" : "interactive_snapshot_116",
+      "visible_window_count" : 2
+    }
+  ],
+  "schema" : 1,
+  "status" : "interactive_ready",
+  "window_content_points" : [
+    1200,
+    800
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "sourceSHA": "6de377c3f8f1973ba06b04fc489b7125caa613ea",
+  "run": 34958289040,
+  "configuration": "Release",
+  "toolchain": "Xcode 26.3\nBuild version 17C529",
+  "artifactSHA256": "24c55fc3c40fcc075fa2256fe7fefd6bd15fa279faa02dbd02c4daebfab83eb5",
+  "providerApp": "<HOME>/Applications/OpenCCman Optimized Probe 6de377c.app",
+  "providerBundleID": "org.gewill.OpenCCman.ServicesOptimizedValidation",
+  "providerBinarySHA256BeforeSigning": "b00a830da0780e7239bc8d4039604460d1914aa0a88f2413c2f2839136f4f438",
+  "providerBinarySHA256AfterSigning": "3b01e6516d5eed50c6f4fa25571fe325019892fc1dc24ce728f2e43f4479575f",
+  "plistChanges": {
+    "CFBundleIdentifier": "org.gewill.OpenCCman.ServicesOptimizedValidation",
+    "CFBundleName": "OpenCCman Optimized Probe 6de377c",
+    "CFBundleDisplayName": "OpenCCman Optimized Probe 6de377c",
+    "NSServices": [
+      {
+        "NSMenuItem": {
+          "default": "OpenCCman Optimized 6de377c Convert"
+        },
+        "NSMessage": "convertSelectedText",
+        "NSPortName": "OpenCCmanOptimizedProbe6DE377C",
+        "NSReturnTypes": [
+          "NSStringPboardType"
+        ],
+        "NSSendTypes": [
+          "NSStringPboardType"
+        ]
+      },
+      {
+        "NSMenuItem": {
+          "default": "OpenCCman Optimized 6de377c Open"
+        },
+        "NSMessage": "openSelectedTextInApp",
+        "NSPortName": "OpenCCmanOptimizedProbe6DE377C",
+        "NSSendTypes": [
+          "NSStringPboardType"
+        ]
+      }
+    ]
+  },
+  "preferencesOriginallyExisted": false,
+  "minimumOS": "11.0",
+  "signing": "ad-hoc local validation, not distribution signing"
+}

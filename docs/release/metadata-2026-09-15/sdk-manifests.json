@@ -1,0 +1,37 @@
+{
+  "RevenueCat": {
+    "revision": "155ea739f45f54189ca83ee9088b373c1415d98b",
+    "path": "purchases-ios-spm/Sources/PrivacyInfo.xcprivacy",
+    "sha256": "76c876c73bf37d63b2944d0491e4d9a43d420de78b66512fcca27a484ae92e79",
+    "manifest": {
+      "NSPrivacyAccessedAPITypes": [
+        {
+          "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults",
+          "NSPrivacyAccessedAPITypeReasons": [
+            "CA92.1"
+          ]
+        }
+      ],
+      "NSPrivacyCollectedDataTypes": [
+        {
+          "NSPrivacyCollectedDataType": "NSPrivacyCollectedDataTypePurchaseHistory",
+          "NSPrivacyCollectedDataTypeLinked": false,
+          "NSPrivacyCollectedDataTypeTracking": false,
+          "NSPrivacyCollectedDataTypePurposes": [
+            "NSPrivacyCollectedDataTypePurposeAppFunctionality"
+          ]
+        }
+      ],
+      "NSPrivacyTracking": false
+    }
+  },
+  "IQKeyboardManagerSwift": {
+    "revision": "c00b1ae9fa1ad8af4465bb6ca901f6943fc98eba",
+    "path": "IQKeyboardManager/IQKeyboardManagerSwift/PrivacyInfo.xcprivacy",
+    "sha256": "776cc3ae33d1e62960ac9c854320ff4ab8f942519c567214168a65e467f226e8",
+    "manifest": {
+      "NSPrivacyCollectedDataTypes": [],
+      "NSPrivacyTracking": false
+    }
+  }
+}

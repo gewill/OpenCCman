@@ -16,15 +16,18 @@ struct AlertView<Actions: View>: View {
 //      Color.black.opacity(0.3)
       VStack(spacing: 10) {
         Text(title)
-          .font(.title)
+          .appFont(.title)
         Text(subtitle)
-          .font(.body)
+          .appFont(.body)
         Spacer()
         actions
       }
       .frame(width: 271, height: 181)
       .padding(Constant.padding)
       .softRectangleStyle()
+      // Limit VoiceOver navigation to this custom alert while it is displayed.
+      .accessibilityElement(children: .contain)
+      .accessibilityAddTraits(.isModal)
     }
   }
 }
@@ -81,16 +84,16 @@ struct AlertViewBox: View {
           showGradient.toggle()
         } label: {
           Text("Delete")
-            .frame(width: 120, height: 44)
+            .frame(minWidth: 100)
         }
-        .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 0, textColor: Color.pink)
+        .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 20), foreground: .pink)
         Button {
           showingAlert.toggle()
         } label: {
           Text("Cancel")
-            .frame(width: 120, height: 44)
+            .frame(minWidth: 100)
         }
-        .softButtonStyle(RoundedRectangle(cornerRadius: 20), padding: 0)
+        .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 20))
       }
     }
   }

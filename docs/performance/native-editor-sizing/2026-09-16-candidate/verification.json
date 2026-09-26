@@ -1,0 +1,33 @@
+{
+  "stages": {
+    "1mib-a": {
+      "import_to_driver_ready_ms": 143.70225000000028,
+      "conversion_to_verified_export_ms": 244.54600000000028,
+      "native_conversion_ms": 31.9285
+    },
+    "1mib-b": {
+      "import_to_driver_ready_ms": 180.11354200000642,
+      "conversion_to_verified_export_ms": 276.76754199999414,
+      "native_conversion_ms": 24.495083
+    },
+    "10mib-a": {
+      "import_to_driver_ready_ms": 240.03166699998837,
+      "conversion_to_verified_export_ms": 639.3989589999983,
+      "native_conversion_ms": 241.251167
+    },
+    "10mib-b": {
+      "import_to_driver_ready_ms": 254.40054200000304,
+      "conversion_to_verified_export_ms": 640.2197500000038,
+      "native_conversion_ms": 263.199542
+    }
+  },
+  "pid": 13508,
+  "sampled_peak_footprint_bytes": 153030208,
+  "kernel_peak_rss_bytes": 435339264,
+  "final_live_models": [],
+  "successful_exports": 5,
+  "raw_sha256": "9d9b2f1d8dadd6e8313e8a3ec8728de6127ae014a56a84a67181ced63581e130",
+  "run_url": "https://github.com/gewill/OpenCCman/actions/runs/35016893287",
+  "independent_protocol_reverification": true,
+  "scope": "Candidate correctness only; do not compare timing across different runners."
+}

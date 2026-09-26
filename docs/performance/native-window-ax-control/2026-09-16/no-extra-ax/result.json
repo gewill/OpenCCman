@@ -1,0 +1,194 @@
+{
+  "valid_protocol": true,
+  "mode": "existing-log",
+  "raw_sha256": "12f0c096307dbb06653ac3db4963d441e5742d9fa6c6a4f65ebabb04704ca2de",
+  "observations": {
+    "driver_pair_visible": {
+      "created_total": 2,
+      "elapsed_ms": 10371.796917,
+      "event": "driver_pair_visible",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 55559224,
+      "pid": 7126,
+      "process_peak_rss_bytes": 110313472,
+      "rss_bytes": 110313472,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "driver_before_second_close": {
+      "created_total": 2,
+      "elapsed_ms": 20452.515875,
+      "event": "driver_before_second_close",
+      "live_model_numbers": [
+        1,
+        2
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        },
+        {
+          "converting": false,
+          "importing": false,
+          "number": 2
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 54838304,
+      "pid": 7126,
+      "process_peak_rss_bytes": 111575040,
+      "rss_bytes": 110346240,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 2
+    },
+    "driver_second_closed": {
+      "created_total": 2,
+      "elapsed_ms": 20552.398792,
+      "event": "driver_second_closed",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 54117408,
+      "pid": 7126,
+      "process_peak_rss_bytes": 111575040,
+      "rss_bytes": 110411776,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "driver_second_plus_5": {
+      "created_total": 2,
+      "elapsed_ms": 25652.463375,
+      "event": "driver_second_plus_5",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 49726496,
+      "pid": 7126,
+      "process_peak_rss_bytes": 111575040,
+      "rss_bytes": 105349120,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "driver_second_plus_20": {
+      "created_total": 2,
+      "elapsed_ms": 40651.538,
+      "event": "driver_second_plus_20",
+      "live_model_numbers": [
+        1
+      ],
+      "model_states": [
+        {
+          "converting": false,
+          "importing": false,
+          "number": 1
+        }
+      ],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 56149024,
+      "pid": 7126,
+      "process_peak_rss_bytes": 111575040,
+      "rss_bytes": 104267776,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 1
+    },
+    "driver_final_closed": {
+      "created_total": 2,
+      "elapsed_ms": 40751.516792,
+      "event": "driver_final_closed",
+      "live_model_numbers": [],
+      "model_states": [],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 54264864,
+      "pid": 7126,
+      "process_peak_rss_bytes": 111575040,
+      "rss_bytes": 104497152,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "driver_final_plus_5": {
+      "created_total": 2,
+      "elapsed_ms": 45751.928834,
+      "event": "driver_final_plus_5",
+      "live_model_numbers": [],
+      "model_states": [],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 44221472,
+      "pid": 7126,
+      "process_peak_rss_bytes": 111575040,
+      "rss_bytes": 95289344,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "driver_final_plus_20": {
+      "created_total": 2,
+      "elapsed_ms": 60751.756709,
+      "event": "driver_final_plus_20",
+      "live_model_numbers": [],
+      "model_states": [],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 44106784,
+      "pid": 7126,
+      "process_peak_rss_bytes": 111575040,
+      "rss_bytes": 94208000,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    },
+    "driver_finished": {
+      "created_total": 2,
+      "elapsed_ms": 60752.347875,
+      "event": "driver_finished",
+      "live_model_numbers": [],
+      "model_states": [],
+      "os": "Version 27.0 (Build 26A428)",
+      "physical_footprint_bytes": 44106784,
+      "pid": 7126,
+      "process_peak_rss_bytes": 111575040,
+      "rss_bytes": 94208000,
+      "rusage_status": 0,
+      "task_info_status": 0,
+      "visible_main_capable_windows": 0
+    }
+  }
+}

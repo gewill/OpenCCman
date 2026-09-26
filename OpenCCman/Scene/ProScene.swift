@@ -1,15 +1,16 @@
-import Glassfy
 import Neumorphic
+import RevenueCat
 import SwiftUI
 
 struct ProScene: View {
-  @State var skus: [Glassfy.Sku] = []
-  @State var permissions: [Glassfy.Permission] = []
+  @Environment(\.sizeCategory) private var sizeCategory
+  @State var packages: [RevenueCat.Package] = []
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   @State var isLoading: Bool = false
   @State var errorMessage: String = ""
+  @State private var errorMessageID = UUID()
   var isPresented: Bool = false
-  
+
   // MARK: - life cycle
 
   var body: some View {
@@ -17,32 +18,48 @@ struct ProScene: View {
       self.navi
       self.list
     }
-    .font(.body)
+    .appFont(.body)
   }
 
   var navi: some View {
-    ZStack(alignment: .center) {
-      Text("Pro").font(.title)
-      HStack {
-        BackButton(isPresented: isPresented)
-        Spacer()
-
-        Button {
-          self.isLoading = true
-          Glassfy.restorePurchases { permissions, error in
-            self.showError(message: error?.localizedDescription)
-            self.setPermissions(permissions?.all)
-            self.isLoading = false
-          }
-        } label: {
-          Text("Restore")
+    Group {
+      if sizeCategory.isAccessibilityCategory {
+        VStack(spacing: Constant.padding) {
+          navigationActions
+          Text("Pro").appFont(.title)
+            .frame(maxWidth: .infinity)
         }
-        .softButtonStyle(RoundedRectangle(cornerRadius: 12), padding: 12)
-        .disabled(self.isLoading)
+      } else {
+        ZStack(alignment: .center) {
+          Text("Pro").appFont(.title)
+          navigationActions
+        }
       }
-      .padding(.horizontal, Constant.padding)
     }
     .padding(.vertical, Constant.padding)
+  }
+
+  private var navigationActions: some View {
+    HStack {
+      BackButton(isPresented: isPresented)
+        .accessibilityIdentifier("pro-sheet-close")
+      Spacer()
+
+      Button {
+        self.isLoading = true
+        self.errorMessage = ""
+        Purchases.shared.restorePurchases { customerInfo, error in
+          self.isLoading = false
+          self.showError(message: IAPManager.isCancellation(error) ? nil : error?.localizedDescription)
+          IAPManager.shared.applyCustomerInfo(customerInfo, error: error)
+        }
+      } label: {
+        Text("Restore")
+      }
+      .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 12))
+      .disabled(self.isLoading)
+    }
+    .padding(.horizontal, Constant.padding)
   }
 
   var list: some View {
@@ -74,12 +91,13 @@ struct ProScene: View {
     Group {
       VStack(alignment: .leading, spacing: Constant.padding) {
         Text("Premium features: ")
-          .font(.headline)
+          .appFont(.headline)
         ForEach(ProFeature.allCases) { feature in
           Divider()
           HStack {
             feature.image
               .resizable()
+              .renderingMode(.template)
               .foregroundColor(feature.color)
               .frame(width: 30, height: 30)
             Text(feature.rawValue.localizedStringKey)
@@ -88,7 +106,7 @@ struct ProScene: View {
       }
       VStack(alignment: .leading, spacing: Constant.padding) {
         Text("Free features: ")
-          .font(.headline)
+          .appFont(.headline)
         ForEach(FreeFeature.allCases) { feature in
           Divider()
           HStack {
@@ -107,11 +125,11 @@ struct ProScene: View {
       }
     }
     .foregroundColor(.primary)
-    .frame(minWidth: 300, maxWidth: Constant.maxiPhoneScreenWidth)
+    .frame(maxWidth: Constant.maxiPhoneScreenWidth, alignment: .leading)
     .padding(Constant.padding * 2)
     .background(
       RoundedRectangle(cornerRadius: Constant.cornerRadius, style: .continuous)
-        .stroke(Color.separator, lineWidth: 0.5)
+        .stroke(Color("separator"), lineWidth: 0.5)
     )
   }
 
@@ -119,7 +137,7 @@ struct ProScene: View {
     CardReflectionView {
       VStack(spacing: 20) {
         Text("pro_lifetime")
-          .font(.title)
+          .appFont(.title)
         Text("Thanks for your support!")
       }
       .foregroundColor(.yellow)
@@ -127,37 +145,34 @@ struct ProScene: View {
   }
 
   var skuView: some View {
-    ForEach(skus, id: \.skuId) { sku in
+    ForEach(packages) { package in
       VStack(spacing: 20) {
         CardReflectionView {
           VStack(spacing: 10) {
-            Text(sku.product.localizedTitle)
-              .font(.title)
-            Text(sku.product.localizedDescription)
-              .font(.headline)
-            Text(sku.product.localizedPrice)
-              .font(.title)
+            Text(package.storeProduct.localizedTitle)
+              .appFont(.title)
+            Text(package.storeProduct.localizedDescription)
+              .appFont(.headline)
+            Text(package.localizedPriceString)
+              .appFont(.title)
           }
           .foregroundColor(.white)
         }
 
         Button {
           self.isLoading = true
-          Glassfy.purchase(sku: sku) { transaction, error in
-            self.showError(message: error?.localizedDescription)
+          self.errorMessage = ""
+          Purchases.shared.purchase(package: package) { _, customerInfo, error, userCancelled in
             self.isLoading = false
-            guard let t = transaction, error == nil else {
-              return
-            }
-            self.setPermissions(t.permissions.all)
+            let update = ProAccessUpdate(activeEntitlement: nil, failed: error != nil, cancelled: userCancelled)
+            self.showError(message: update.shouldShowError ? error?.localizedDescription : nil)
+            IAPManager.shared.applyCustomerInfo(customerInfo, error: error, cancelled: userCancelled)
           }
         } label: {
           Text("Buy Now")
-            .font(.title)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 6)
+            .appFont(.headline)
         }
-        .softButtonStyle(RoundedRectangle(cornerRadius: 30), padding: 6, mainColor: Color.accent, textColor: Color.Neumorphic.main)
+        .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 30), role: .accent)
         .disabled(self.isLoading)
         .padding(.bottom, 10)
       }
@@ -167,21 +182,22 @@ struct ProScene: View {
   // MARK: -
 
   func updateOfferingsAndPermissions() {
-    guard isPro == false else { return }
+    guard isLoading == false else { return }
 
     isLoading = true
+    errorMessage = ""
     let group = DispatchGroup()
     group.enter()
-    Glassfy.offerings { offers, error in
-      self.showError(message: error?.localizedDescription)
+    Purchases.shared.getOfferings { offerings, error in
+      self.showError(message: IAPManager.isCancellation(error) ? nil : error?.localizedDescription)
+      self.setOfferings(offerings)
       group.leave()
-      self.skus = offers?.all.flatMap { $0.skus } ?? []
     }
     group.enter()
-    Glassfy.permissions { permissions, error in
-      self.showError(message: error?.localizedDescription)
+    Purchases.shared.getCustomerInfo { customerInfo, error in
+      self.showError(message: IAPManager.isCancellation(error) ? nil : error?.localizedDescription)
+      IAPManager.shared.applyCustomerInfo(customerInfo, error: error)
       group.leave()
-      self.setPermissions(permissions?.all)
     }
     group.notify(queue: .main) {
       self.isLoading = false
@@ -190,36 +206,32 @@ struct ProScene: View {
 
   func updateOfferings() {
     isLoading = true
-    Glassfy.offerings { offers, error in
-      self.showError(message: error?.localizedDescription)
+    Purchases.shared.getOfferings { offerings, error in
+      self.showError(message: IAPManager.isCancellation(error) ? nil : error?.localizedDescription)
       self.isLoading = false
-      self.skus = offers?.all.flatMap { $0.skus } ?? []
+      self.setOfferings(offerings)
     }
   }
 
   func updatePermissions() {
-    Glassfy.permissions { permissions, error in
-      self.showError(message: error?.localizedDescription)
-      self.setPermissions(permissions?.all)
+    Purchases.shared.getCustomerInfo { customerInfo, error in
+      IAPManager.shared.applyCustomerInfo(customerInfo, error: error)
     }
   }
 
-  func setPermissions(_ permissions: [Glassfy.Permission]?) {
-    if let permissions,
-       permissions.contains(where: { $0.isValid && $0.permissionId == IAPManager.Permission.pro_lifetime.rawValue })
-    {
-      isPro = true
-    } else {
-      isPro = false
-    }
-
-    self.permissions = permissions ?? []
+  func setOfferings(_ offerings: RevenueCat.Offerings?) {
+    guard let offerings else { return }
+    let offering = offerings.current ?? offerings.all[IAPManager.Offering.pro_lifetime.rawValue]
+    self.packages = offering?.availablePackages ?? []
   }
 
   func showError(message: String?) {
     if let message, message.isEmpty == false {
+      let messageID = UUID()
+      errorMessageID = messageID
       errorMessage = message
       DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        guard self.errorMessageID == messageID else { return }
         self.errorMessage = ""
       }
     }

@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "source_commit": "d9ecd56f80983710695e2635d65deed6d0de0d66",
+  "source_status": "M Tests/Benchmarks/AppPerformanceAudit.swift\n M Tests/Benchmarks/NativeTextKitMemory.swift\n A docs/performance/2026-09-23-textkit-app-bridge/README.md\n A docs/performance/2026-09-23-textkit-app-bridge/candidate.patch.gz\n A docs/performance/2026-09-23-textkit-app-bridge/comparison.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/no-rescroll/metadata.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/no-rescroll/summary.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/no-rescroll/tk1-short-10MiB-01.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/no-rescroll/tk1-short-10MiB-02.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/no-rescroll/tk1-short-10MiB-03.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/no-rescroll/tk2-short-10MiB-01.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/no-rescroll/tk2-short-10MiB-02.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/no-rescroll/tk2-short-10MiB-03.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/rescroll/metadata.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/rescroll/summary.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/rescroll/tk1-short-10MiB-01.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/rescroll/tk1-short-10MiB-02.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/rescroll/tk1-short-10MiB-03.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/rescroll/tk2-short-10MiB-01.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/rescroll/tk2-short-10MiB-02.json\n A docs/performance/2026-09-23-textkit-app-bridge/native/rescroll/tk2-short-10MiB-03.json\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk1/before-heap.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk1/before-vmmap-summary.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk1/build-complete.json\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk1/heap.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk1/manifest.json\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk1/metadata.json\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk1/run.json\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk1/vmmap-regions.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk1/vmmap-summary.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-no-anchor/before-heap.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-no-anchor/before-vmmap-summary.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-no-anchor/build-complete.json\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-no-anchor/heap.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-no-anchor/manifest.json\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-no-anchor/metadata.json\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-no-anchor/run.json\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-no-anchor/vmmap-regions.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-no-anchor/vmmap-summary.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-stacks/heap.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-stacks/malloc-history-NSCountableTextLocation.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-stacks/malloc-history-NSCountableTextRange.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-stacks/malloc-history-NSTextParagraph.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-stacks/manifest.json\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-stacks/run.json\n A docs/performance/2026-09-23-textkit-app-bridge/profile/tk2-stacks/vmmap-summary.txt.gz\n A docs/performance/2026-09-23-textkit-app-bridge/profile/xctrace-failure/manifest.json\n A docs/performance/2026-09-23-textkit-app-bridge/profile/xctrace-failure/own-process-attach.log\n A docs/performance/2026-09-23-textkit-app-bridge/profile/xctrace-failure/xctrace.log\n A docs/performance/2026-09-23-textkit-app-bridge/raw/tk1/build-complete.json\n A docs/performance/2026-09-23-textkit-app-bridge/raw/tk1/metadata.json\n A docs/performance/2026-09-23-textkit-app-bridge/raw/tk1/run-01.json\n A docs/performance/2026-09-23-textkit-app-bridge/raw/tk1/run-02.json\n A docs/performance/2026-09-23-textkit-app-bridge/raw/tk1/run-03.json\n A docs/performance/2026-09-23-textkit-app-bridge/raw/tk1/summary.json\n A docs/performance/2026-09-23-textkit-app-bridge/raw/tk2-no-anchor/build-complete.json\n A docs/performance/2026-09-23-textkit-app-bridge/raw/tk2-no-anchor/metadata.json\n A docs/performance/2026-09-23-textkit-app-bridge/raw/tk2-no-anchor/run-01.json\n A docs/performance/2026-09-23-textkit-app-bridge/raw/tk2-no-anchor/run-02.json\n A docs/performance/2026-09-23-textkit-app-bridge/raw/tk2-no-anchor/run-03.json\n A docs/performance/2026-09-23-textkit-app-bridge/raw/tk2-no-anchor/run-04.json\n A docs/performance/2026-09-23-textkit-app-bridge/raw/tk2-no-anchor/summary.json\n M docs/performance/README.md\n M scripts/benchmark-app.py\n A scripts/compare-textkit-bridge.py\n M scripts/measure-native-textkit.py\n A scripts/profile-textkit-bridge.py",
+  "source_sha256": "59236d35429a570db5713cff1e768a58b91a88372843baf64ca3a551205f4946",
+  "driver_sha256": "2fb12a69f2deae76474d1219ae7e6d358bd4fa0a56d94d31fdcb5f893d0e60a9",
+  "binary_sha256": "924df9760adee79eecec1cb941640d313fcb1602a577e2cfd89cd7f1ab7d824c",
+  "build_command": [
+    "xcrun",
+    "swiftc",
+    "-O",
+    "-g",
+    "-target",
+    "arm64-apple-macos12.0",
+    "-framework",
+    "AppKit",
+    "Tests/Benchmarks/NativeTextKitMemory.swift",
+    "-o",
+    "<output>/native-textkit-memory"
+  ],
+  "pattern": "short",
+  "samples": 3,
+  "modes": [
+    "tk1",
+    "tk2"
+  ],
+  "width_switch": true,
+  "narrow_width_points": 500,
+  "no_rescroll": false,
+  "sizes_mib": [
+    10
+  ],
+  "window_content_points": [
+    1200,
+    800
+  ],
+  "target": "arm64-apple-macos12.0",
+  "arch": "arm64",
+  "macos": "27.0",
+  "macos_build": "26A428",
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "fixture_sha256": {
+    "10": "30dd4e4c696b7d1fb2deb5c4d4b5fd261d962f484c6fcd85744ec36a3853dcab"
+  },
+  "run_order": "size, sample, requested modes",
+  "limit_seconds_per_process": 120
+}

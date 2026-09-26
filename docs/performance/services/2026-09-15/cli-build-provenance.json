@@ -1,0 +1,29 @@
+{
+  "coreSHA": "025f371dc76b598d77384fbdab90c937471844d8",
+  "archiveSHA256": "49780d981f2a65e4736a49314fa4398301ff782b9a55a9b18395edd6b3a53914",
+  "cmake": {
+    "version": "4.4.3",
+    "url": "https://github.com/Kitware/CMake/releases/download/v4.4.3/cmake-4.4.3-macos10.10-universal.tar.gz",
+    "sha256": "217a8c7bef7b70e8f9dc3748e625b92b19732b3eb26f6d99f23ef3f2768a8665",
+    "executable": "cmake-4.4.3-macos10.10-universal/CMake.app/Contents/bin/cmake"
+  },
+  "configureArguments": [
+    "-G",
+    "Unix Makefiles",
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DBUILD_SHARED_LIBS=OFF",
+    "-DBUILD_DOCUMENTATION=OFF",
+    "-DBUILD_OPENCC_JIEBA_PLUGIN=OFF",
+    "-DBUILD_PYTHON=OFF",
+    "-DENABLE_GTEST=OFF",
+    "-DENABLE_BENCHMARK=OFF",
+    "-DOPENCC_DICT_FORMAT=ocd2",
+    "-DOPENCC_ENABLE_INSTALL=OFF"
+  ],
+  "buildTargets": [
+    "opencc"
+  ],
+  "resources": "Read-only pinned wrapper resources, independently hash-checked before generating fixtures.",
+  "CLI_version": "Open Chinese Convert (OpenCC) Command Line Tool\nVersion: 1.4.2",
+  "sourceCheckout": "Isolated clone at coreSHA; no enclosing application git description"
+}

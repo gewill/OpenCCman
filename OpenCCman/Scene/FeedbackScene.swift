@@ -16,12 +16,12 @@ struct FeedbackScene: View {
       navi
       list
     }
-    .font(.body)
+    .appFont(.body)
   }
 
   var navi: some View {
     ZStack(alignment: .center) {
-      Text("Feedback").font(.title)
+      Text("Feedback").appFont(.title)
       HStack {
         BackButton()
           .padding(.horizontal, Constant.padding)

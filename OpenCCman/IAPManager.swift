@@ -1,5 +1,5 @@
 import Foundation
-import Glassfy
+import RevenueCat
 import SwiftUI
 
 enum FreeFeature: String, CaseIterable, Identifiable {
@@ -41,7 +41,7 @@ enum ProFeature: String, CaseIterable, Identifiable {
   var id: ProFeature { self }
 }
 
-final class IAPManager {
+final class IAPManager: NSObject, PurchasesDelegate {
   enum Sku: String {
     case ios_openccman_pro_lifetime_3
   }
@@ -56,49 +56,60 @@ final class IAPManager {
 
   static let shared = IAPManager()
 
-  private init() {}
+  private override init() {
+    super.init()
+  }
 
   func configure() {
-    Glassfy.initialize(apiKey: "5c8f0f454192402bb96b6d1b2f841769")
+    guard Purchases.isConfigured == false else { return }
+
+    // Reads AppleLanguages first, then the legacy key; never writes, so the
+    // launch path stays free of preference mutations.
+    let locale = LocaleConstants.savedSelection
+    Purchases.proxyURL = URL(string: "https://api.rc-backup.com/")!
+    Purchases.configure(with: Configuration.Builder(withAPIKey: "appl_EJkSanbpeFhoNJsZaUbpIZPduCi")
+      .with(preferredUILocaleOverride: locale.identifier)
+      .build())
+    Purchases.shared.delegate = self
   }
 
-  func checkProLifetime(completion: @escaping (Bool) -> Void) {
-    Glassfy.permissions { permissions, error in
-      guard let permissions = permissions, error == nil else {
-        completion(false)
-        return
-      }
+  func updatePreferredUILocale(_ locale: LocaleConstants) {
+    guard Purchases.isConfigured else { return }
+    // Use the same effective language as the app, including its system fallback.
+    Purchases.shared.overridePreferredUILocale(locale.identifier)
+  }
 
-      if let permission = permissions[Permission.pro_lifetime.rawValue],
-         permission.isValid {
-        completion(true)
-      } else {
-        completion(false)
-      }
+  func checkProLifetime(completion: @escaping (Bool?) -> Void) {
+    Purchases.shared.getCustomerInfo { customerInfo, _ in
+      completion(customerInfo.map { $0.entitlements.active[Permission.pro_lifetime.rawValue] != nil })
     }
   }
 
-  func purchase(sku: Glassfy.Sku) {
-    Glassfy.purchase(sku: sku) { transaction, error in
-      guard let t = transaction, error == nil else {
-        return
-      }
+  func purchases(_ purchases: Purchases, receivedUpdated customerInfo: CustomerInfo) {
+    applyCustomerInfo(customerInfo)
+  }
+
+  static func isCancellation(_ error: Error?) -> Bool {
+    guard let error = error as NSError? else { return false }
+    return error.domain == ErrorCode.errorDomain && error.code == ErrorCode.purchaseCancelledError.rawValue
+  }
+
+  func refreshAccess() {
+    Purchases.shared.getCustomerInfo { [weak self] info, error in
+      self?.applyCustomerInfo(info, error: error)
     }
   }
 
-  func getPermissions() {
-    Glassfy.permissions { permissions, error in
-      guard let permissions = permissions, error == nil else {
-        return
-      }
+  func applyCustomerInfo(_ info: CustomerInfo?, error: Error? = nil, cancelled: Bool = false) {
+    let update = ProAccessUpdate(
+      activeEntitlement: info.map { $0.entitlements.active[Permission.pro_lifetime.rawValue] != nil },
+      failed: error != nil, cancelled: cancelled || Self.isCancellation(error)
+    )
+    let apply = {
+      let defaults = UserDefaults.standard
+      let key = UserDefaultsKeys.isPro.rawValue
+      defaults.set(update.applying(to: defaults.bool(forKey: key)), forKey: key)
     }
-  }
-
-  func restorePurchases() {
-    Glassfy.restorePurchases { permissions, error in
-      guard let permissions = permissions, error == nil else {
-        return
-      }
-    }
+    if Thread.isMainThread { apply() } else { DispatchQueue.main.async(execute: apply) }
   }
 }

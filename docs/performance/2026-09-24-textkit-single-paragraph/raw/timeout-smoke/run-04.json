@@ -1,0 +1,47 @@
+{
+  "pid": 75068,
+  "rows": [
+    {
+      "app_active": false,
+      "elapsed_ms": 0.160291,
+      "maximum_main_timer_gap_ms": 0,
+      "memory": {
+        "physical_footprint_bytes": 4457120,
+        "process_peak_rss_bytes": 19857408,
+        "rss_bytes": 19857408,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "process_initialized",
+      "process_cpu_ms": 36.284,
+      "visible_window_count": 0
+    },
+    {
+      "app_active": true,
+      "app_init_to_root_layout_ms": 426.915541,
+      "elapsed_ms": 426.922416,
+      "maximum_main_timer_gap_ms": 0,
+      "memory": {
+        "physical_footprint_bytes": 48137344,
+        "process_peak_rss_bytes": 112525312,
+        "rss_bytes": 112312320,
+        "rusage_status": 0,
+        "task_info_status": 0
+      },
+      "name": "root_layout_ready",
+      "proc_pidinfo_ok": true,
+      "process_cpu_ms": 368.852,
+      "process_start_to_root_layout_ms": 477.1289825439453,
+      "visible_window_count": 1
+    }
+  ],
+  "schema": 1,
+  "status": "timeout",
+  "window_content_points": [
+    1200,
+    800
+  ],
+  "timeout_seconds": 2,
+  "last_recorded_stage": "root_layout_ready",
+  "metadata_sha256": "3a6414383651058eea265b44cf8cd74836f89e9950e72b9514a8b8435f85339e"
+}

@@ -102,6 +102,8 @@ stdout 只输出一条 JSON；详细日志在 stderr／产物内。`status` 为 
 
 ## 回滚与维护
 
+应用已使用锁定 wrapper 的按字节长度传递与 NUL 保留能力，移除了应用层重复扫描。若恢复到尚无该能力的旧 revision，需在同一回滚 PR 中恢复 `ChineseConversionService` 的旧 NUL 兼容处理，并通过七组配置的固定 NUL 字节回归；不能只改 pin 后忽略截断失败。详见[扫描优化与验证](performance/2026-09-15-byte-scan/README.md)。
+
 合并前直接关闭不接受的 PR。合并后先开 App PR 恢复原 revision；需要时再通过 Revert PR 撤销整个 fork 同步 merge（子模块、配置、字典及 manifest 一起恢复），不重写历史。把报告中的候选 id 加入 main 配置的 `ignoredCandidates.fork`／`ignoredCandidates.app`，防止被撤回的候选再次提出。新来源 SHA 会生成新 id，不受旧候选忽略影响。[GitHub 回滚 PR](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/reverting-a-pull-request)
 
 协调器源码／配置变更走 main PR，`Upstream Coordinator Tests` 在 Ubuntu 自动跑本地 Git 与假 GitHub 集成回归。手动复现：
@@ -131,3 +133,7 @@ CMake 的版本与官方下载校验和由 fork 的 `BuildTools/cmake.json` 锁�
 隔离演练还使用临时 Git 仓库执行 fork merge commit → app 推广 → 新提交恢复旧 pin → revert 整个 fork merge，验证祖先关系保留、忽略清单阻止旧候选以及新来源仍可继续。生成器/编译器在该流程测试中使用替身；这不是生产仓库回滚或未来 OpenCC 版本的真实构建记录。
 
 应用正式打包使用 Xcode Cloud；依赖 PR 合入 `develop` 后，在明确需要云端验收包时从发布候选建立临时 `build/*`，触发 iOS/macOS 归档。旧 `build` 引用退出前不能创建 `build/*`。GitHub 回归与候选检查不等于云端分发通过。App ID、workflow 和构建记录规则见 [应用分支的 Xcode Cloud 指南](https://github.com/gewill/OpenCCman/blob/develop/docs/XCODE_CLOUD.md)。
+
+## 真实核心来源演练
+
+[#21 的隔离演练记录](validation/upstream-replay/README.md) 补充真实核心资源生成、编译、官方 CLI 与失败恢复证据，并区分本地 GitHub fixture、实际构建和生产权限验收。该演练不生成生产更新或触发发布。

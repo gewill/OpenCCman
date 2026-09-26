@@ -1,0 +1,23 @@
+name: WhatsNewPresentation
+options:
+  deploymentTarget:
+    iOS: '15.0'
+settings:
+  base:
+    GENERATE_INFOPLIST_FILE: YES
+    CODE_SIGNING_ALLOWED: NO
+    SWIFT_VERSION: '5.0'
+targets:
+  WhatsNewPresentationTests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [Tests]
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.gewill.OpenCCman.WhatsNewPresentationTests
+schemes:
+  WhatsNewPresentationTests:
+    build:
+      targets:
+        WhatsNewPresentationTests: [test]
+    test:
+      targets: [WhatsNewPresentationTests]

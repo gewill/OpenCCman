@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<user>/git/MyApps/OpenCCman-textkit/scripts/benchmark-app.py", line 171, in <module>
+    main()
+    ~~~~^^
+  File "<user>/git/MyApps/OpenCCman-textkit/scripts/benchmark-app.py", line 143, in main
+    process.wait(timeout=args.timeout)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1279, in wait
+    return self._wait(timeout=timeout)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2076, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['open', '-n', '-W', '-a', '/private/tmp/openccman-65-baseline/derived/Build/Products/Release/OpenCCman.app', '--args', '-performance-output', '/private/tmp/openccman-65-baseline/run-01.json', '-skip-whats-new', '-AppleLanguages', '(en)', '-AppleInterfaceStyle', 'Light', '-performance-reflow']' timed out after 90 seconds

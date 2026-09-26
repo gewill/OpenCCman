@@ -8,7 +8,7 @@ struct ChangeColorSchemeScene: View {
 
   var body: some View {
     ZStack(alignment: .top) {
-      Color.main
+      Color("mainColor")
         .ignoresSafeArea()
       VStack(spacing: Constant.padding) {
         navi
@@ -20,7 +20,7 @@ struct ChangeColorSchemeScene: View {
   var navi: some View {
     ZStack(alignment: .center) {
       Text("Appearance")
-        .font(.title)
+        .appFont(.title)
         .foregroundColor(Color.Neumorphic.secondary)
       HStack {
         BackButton()

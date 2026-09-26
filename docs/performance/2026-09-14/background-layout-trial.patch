@@ -1,0 +1,14 @@
+diff --git a/OpenCCman/View/WorkspaceScrollKeeper.swift b/OpenCCman/View/WorkspaceScrollKeeper.swift
+index 8db0d04..ba9f97a 100644
+--- a/OpenCCman/View/WorkspaceScrollKeeper.swift
++++ b/OpenCCman/View/WorkspaceScrollKeeper.swift
+@@ -29,6 +29,9 @@ import SwiftUI
+       self.editor = editor
+       self.clip = clip
+       size = clip.bounds.size
++      // Full-document idle layout competes with input on the main thread.
++      // Keep native on-demand layout, selection and scroll restoration intact.
++      editor.layoutManager?.backgroundLayoutEnabled = false
+       clip.postsBoundsChangedNotifications = true
+       clip.postsFrameChangedNotifications = true
+       for name in [NSView.boundsDidChangeNotification, NSView.frameDidChangeNotification] {

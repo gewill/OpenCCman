@@ -1,0 +1,87 @@
+Window: "OpenCCman", App: OpenCCman.
+0 standard window OpenCCman, Secondary Actions: Raise, ID: SwiftUI.WindowGroup<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUIRouter.Router<SwiftUI.ModifiedContent<OpenCCman.RootView, SwiftUI._AppearanceActionModifier>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<OpenCCman.WhatsNewCoordinator>>>, SwiftUI._EnvironmentKeyWritingModifier<Foundation.Locale>>, SwiftUI._PreferenceWritingModifier<SwiftUI.PreferredColorSchemeKey>>>-1-AppWindow-1
+	1 container
+		2 button Description: 轉換設定, ID: sidebar.left
+		3 container 編輯區配置
+			4 button Description: 左右, ID: workspace-horizontal
+			5 button (selected) Description: 上下, ID: workspace-vertical
+		6 button 轉換
+		7 menu button 調整編輯區大小
+		8 scroll area
+			9 text 轉換預設
+			10 menu button 轉換預設, Value: 繁體 · OpenCC
+			11 text 目標語言
+			12 container Description: 目標語言, ID: conversion-segment-Target Language
+				13 button 簡體中文
+				14 button (selected) 繁體中文
+			15 text 異體字轉換
+			16 container Description: 異體字轉換, ID: conversion-segment-Variant
+				17 button (selected) OpenCC標準
+				18 button 臺灣標準
+				19 button 香港標準
+			20 text 地域用詞轉換
+			21 container Description: 地域用詞轉換, ID: conversion-segment-Region Idiom
+				22 button (selected) 不轉換
+				23 button 臺灣模式
+		24 scroll area Secondary Actions: Scroll Up, Scroll Down
+			25 container
+				26 text 原文
+				27 button Description: 貼上文字, ID: doc.on.clipboard
+				28 button 匯入 TXT
+				29 text 匯入或拖至此處：單個 UTF-8 TXT 檔案或純文字，上限 10 MiB。
+				30 scroll area Description: 原文, Secondary Actions: Scroll Up, Scroll Down
+					31 text entry area Description: 原文, Value: 第 00000 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 
+第 00001 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 
+第 00002 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 
+					32 scroll bar (settable, float) 0
+						33 value indicator (settable, float) 0
+						34 increment arrow button
+						35 decrement arrow button
+						36 increment page button
+						37 decrement page button
+			38 unknown Description: 調整編輯區大小, Details: 50%, Secondary Actions: Increment, Decrement
+			39 container
+				40 text 結果
+				41 button Description: 複製結果, ID: doc.on.doc
+				42 button Description: 匯出 TXT, ID: square.and.arrow.up
+				43 scroll area Description: 結果, Secondary Actions: Scroll Up, Scroll Down
+					44 text entry area Description: 結果, Value: 第 00000 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 
+第 00001 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 
+第 00002 段 中文重排 👩🏽‍💻 é
+Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 中文 Reading position 
+					45 scroll bar (settable, float) 0
+						46 value indicator (settable, float) 0
+						47 increment arrow button
+						48 decrement arrow button
+						49 increment page button
+						50 decrement page button
+			51 text iPerfman 一個 iPerf3 工具
+			52 button 獲取
+			53 button 移除推薦
+			54 scroll bar (settable, float) 0
+				55 value indicator (settable, float) 0
+				56 increment arrow button
+				57 decrement arrow button
+				58 increment page button
+				59 decrement page button
+	60 toolbar
+		61 menu button chevron.pulldown, ID: ellipsis.circle
+		62 button Description: 轉換預設, Secondary Actions: Increment, Decrement, Delete, Cancel, Move previous, Remove from toolbar
+	63 close button
+	64 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	65 minimize button
+	66 text OpenCCman
+67 menu bar
+	68 OpenCCman
+	69 File
+	70 Edit
+	71 View
+	72 Window
+	73 Help
+
+The focused UI element is 0 standard window OpenCCman, Secondary Actions: Raise, ID: SwiftUI.WindowGroup<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUIRouter.Router<SwiftUI.ModifiedContent<OpenCCman.RootView, SwiftUI._AppearanceActionModifier>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<OpenCCman.WhatsNewCoordinator>>>, SwiftUI._EnvironmentKeyWritingModifier<Foundation.Locale>>, SwiftUI._PreferenceWritingModifier<SwiftUI.PreferredColorSchemeKey>>>-1-AppWindow-1

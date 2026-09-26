@@ -1,0 +1,10 @@
+{
+  "reason": "First follow-up caller used swiftc default (-Onone), historical caller documented -O; preserve all first-run records, repeat with matching -O.",
+  "providerBinaryUnchanged": true,
+  "probeCompileCommand": "xcrun swiftc -O Tests/Benchmarks/ServicesWaitProbe.swift -o <run-2>/services-wait-probe",
+  "probeBinarySHA256": "a7704dd7e76175960720367ed57ff65f82b31520604b4e715610eebd9125a2f8",
+  "probeSourceSHA256": "ff88cd0a7dec0373b669c473c6d61a47c8a339eb60aa626b9bca438d6dc75471",
+  "sourceSHA": "6de377c3f8f1973ba06b04fc489b7125caa613ea",
+  "preferencesBeforeRelaunch": "absent after run-1 cleanup",
+  "firstRunQualification": "correctness and diagnostic evidence; exclude from the strict historical timing comparison"
+}

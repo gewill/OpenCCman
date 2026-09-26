@@ -1,0 +1,438 @@
+name: App Regression
+
+# Keep the required check available for every PR, including documentation.
+# build* branches are reserved for Xcode Cloud, not integration CI.
+on:
+  pull_request:
+    branches: [main, develop, 'codex/**', 'release/**', 'hotfix/**']
+  push:
+    branches: [main, develop, 'release/**', 'hotfix/**']
+  workflow_dispatch:
+    inputs:
+      regression_system:
+        description: System for a one-off regression run (ordinary PRs remain macOS 15)
+        type: choice
+        options:
+          - macos-15
+          - macos-26
+        default: macos-15
+      measure_app_baseline:
+        description: Measure five fresh-process Release application baseline samples
+        type: boolean
+        default: false
+      build_services_validation:
+        description: Build an unsigned Release Mac app for manual Services measurements
+        type: boolean
+        default: false
+      compare_workspace_editor:
+        description: Compare baseline and candidate Release document workflows sequentially on one runner
+        type: boolean
+        default: false
+      diagnose_editor_anchor:
+        description: Run a fixed macOS 15 editor anchor timing probe
+        type: boolean
+        default: false
+      build_ios_validation:
+        description: Build an unsigned arm64 iOS Simulator app for local UI validation
+        type: boolean
+        default: false
+      diagnose_window_lifetime:
+        description: Compare EnvironmentObject and ObservedObject in native WindowGroup on macOS 15
+        type: boolean
+        default: false
+      observe_window_hosts:
+        description: Add weak window/content-view observations to the lifetime diagnostic
+        type: boolean
+        default: false
+
+      build_window_lifecycle:
+        description: Build an isolated Release native window lifecycle diagnostic app
+        type: boolean
+        default: false
+      profile_document_stages:
+        description: Sample import and conversion stacks in the full retained-window document protocol
+        type: boolean
+        default: false
+      active_anchor_window_lifecycle:
+        description: Also close another native window while the retained window converts
+        type: boolean
+        default: false
+      document_window_lifecycle:
+        description: Measure fixed 1/10 MiB documents and native-call active close without CUA
+        type: boolean
+        default: false
+      cycle_window_lifecycle:
+        description: Build and measure three native menu window cycles without CUA
+        type: boolean
+        default: false
+      automatic_window_lifecycle:
+        description: Build and measure real WindowGroup with a fixed self-driving protocol (macOS 13+ diagnostic only)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: app-regression-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    name: App Regression
+    if: github.event_name != 'workflow_dispatch' || (!inputs.measure_app_baseline && !inputs.compare_workspace_editor && !inputs.build_window_lifecycle && !inputs.automatic_window_lifecycle && !inputs.cycle_window_lifecycle && !inputs.document_window_lifecycle && !inputs.profile_document_stages && !inputs.active_anchor_window_lifecycle && !inputs.diagnose_editor_anchor && !inputs.diagnose_window_lifetime)
+    runs-on: ${{ inputs.regression_system == 'macos-26' && 'macos-26' || 'macos-15' }}
+    timeout-minutes: 20
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Record regression environment and source
+        run: |
+          sw_vers
+          xcodebuild -version
+          git rev-parse HEAD
+          shasum -a 256 OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+      - name: Check validation scripts propagate failures
+        run: python3 Tests/Regression/CheckScriptChecks.py
+      - name: Check project and source syntax
+        run: bash scripts/check-project.sh
+      - name: Check real conversion, presets and file workflow
+        run: python3 scripts/check-core.py
+      - name: Check performance report comparability
+        run: python3 -m unittest discover -s Tests/Benchmarks -p 'test_*.py'
+      - name: Check window layout resolution and recovery
+        run: bash scripts/check-workspace.sh
+      - name: Check Mac window geometry
+        run: bash scripts/check-window-sizing.sh
+      - name: Check closed-window request coalescing
+        run: bash scripts/check-window-reopen.sh
+      - name: Check complete Mac control bounds
+        run: bash scripts/check-control-sizing.sh
+      - name: Check native editor scroll anchors
+        run: bash scripts/check-editor-scroll.sh
+      - name: Check workspace editor bindings and bounded measurement
+        run: bash scripts/check-workspace-editor.sh
+      - name: Check native editor and window introspection
+        run: python3 scripts/check-introspection.py
+      - name: Check Pro access updates
+        run: bash scripts/check-pro-access.sh
+      - name: Check local StoreKit transactions
+        run: bash scripts/check-storekit.sh "${{ runner.temp }}/openccman-storekit"
+      - name: Upload StoreKit failure evidence
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: storekit-failure
+          path: |
+            ${{ runner.temp }}/openccman-storekit/xcodebuild.log
+            ${{ runner.temp }}/openccman-storekit/StoreKit.xcresult
+          if-no-files-found: ignore
+      - name: Check quota reservations
+        run: bash scripts/check-quota.sh
+      - name: Check What’s New presentation and localizations
+        run: bash scripts/check-whats-new.sh
+      - name: Check control labels in the selected app language
+        run: bash scripts/check-control-labels.sh
+      - name: Check stored app language representation
+        run: python3 scripts/check-app-language.py
+      - name: Check isolated pasteboard preservation
+        run: bash scripts/check-pasteboard.sh
+
+      - name: Build macOS validation app
+        env:
+          DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+        run: |
+          xcodebuild -version
+          xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
+            -configuration Debug -destination 'platform=macOS' \
+            -derivedDataPath "${{ runner.temp }}/openccman-app" \
+            -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
+            CODE_SIGNING_ALLOWED=NO ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
+            PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.PRValidation build
+          ditto -c -k --keepParent \
+            "${{ runner.temp }}/openccman-app/Build/Products/Debug/OpenCCman.app" \
+            "${{ runner.temp }}/OpenCCman-validation.zip"
+      - name: Verify dependency lock is unchanged
+        run: git diff --exit-code -- OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+      - name: Upload unsigned macOS validation app
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: macos-validation-app
+          path: ${{ runner.temp }}/OpenCCman-validation.zip
+          retention-days: 7
+
+  window-lifetime-diagnostic:
+    name: Native WindowGroup lifetime comparison
+    if: github.event_name == 'workflow_dispatch' && inputs.diagnose_window_lifetime
+    runs-on: macos-15
+    timeout-minutes: 8
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Observe both native lifetime controls
+        env:
+          OBSERVE_HOSTS: ${{ inputs.observe_window_hosts }}
+        run: |
+          args=()
+          if [[ "$OBSERVE_HOSTS" == "true" ]]; then args+=(--observe-hosts); fi
+          python3 scripts/diagnose-window-lifetime.py --output "${{ runner.temp }}/window-lifetime" "${args[@]}"
+      - name: Preserve observations and failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: window-lifetime-diagnostic
+          path: ${{ runner.temp }}/window-lifetime
+          retention-days: 7
+          if-no-files-found: error
+
+  ios-validation:
+    name: Build iOS Simulator validation app
+    if: github.event_name == 'workflow_dispatch' && inputs.build_ios_validation
+    runs-on: ${{ inputs.regression_system == 'macos-26' && 'macos-26' || 'macos-15' }}
+    timeout-minutes: 20
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Build and package simulator app
+        run: |
+          sw_vers
+          xcodebuild -version
+          git rev-parse HEAD > "${{ runner.temp }}/source-sha.txt"
+          xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
+            -configuration Debug -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "${{ runner.temp }}/openccman-ios" \
+            -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=NO \
+            PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.UIValidation build
+          git diff --exit-code -- OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+          ditto -c -k --keepParent \
+            "${{ runner.temp }}/openccman-ios/Build/Products/Debug-iphonesimulator/OpenCCman.app" \
+            "${{ runner.temp }}/OpenCCman-ios-validation.zip"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ios-simulator-validation-app
+          path: |
+            ${{ runner.temp }}/OpenCCman-ios-validation.zip
+            ${{ runner.temp }}/source-sha.txt
+          retention-days: 7
+
+  window-lifecycle-validation:
+    name: Build native window lifecycle diagnostic app
+    if: github.event_name == 'workflow_dispatch' && (inputs.build_window_lifecycle || inputs.automatic_window_lifecycle || inputs.cycle_window_lifecycle || inputs.document_window_lifecycle || inputs.profile_document_stages || inputs.active_anchor_window_lifecycle)
+    runs-on: macos-15
+    timeout-minutes: 20
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Prepare isolated diagnostic source and build Release app
+        env:
+          AUTOMATIC_LIFECYCLE: ${{ inputs.automatic_window_lifecycle }}
+          CYCLE_LIFECYCLE: ${{ inputs.cycle_window_lifecycle }}
+          DOCUMENT_LIFECYCLE: ${{ inputs.document_window_lifecycle }}
+          ACTIVE_ANCHOR_LIFECYCLE: ${{ inputs.active_anchor_window_lifecycle }}
+          PROFILE_DOCUMENT_STAGES: ${{ inputs.profile_document_stages }}
+        run: |
+          prepare_args=()
+          build_args=()
+          diagnostic_bundle=org.gewill.OpenCCman.NativeWindowLifecycleAudit
+          if [[ "$ACTIVE_ANCHOR_LIFECYCLE" == "true" || "$PROFILE_DOCUMENT_STAGES" == "true" ]]; then
+            prepare_args+=(--documents --active-anchor)
+            diagnostic_bundle+=AutoDocumentsActiveAnchor
+          elif [[ "$DOCUMENT_LIFECYCLE" == "true" ]]; then
+            prepare_args+=(--documents)
+            diagnostic_bundle+=AutoDocuments
+          elif [[ "$CYCLE_LIFECYCLE" == "true" ]]; then
+            prepare_args+=(--cycles)
+            diagnostic_bundle+=AutoCycles
+          elif [[ "$AUTOMATIC_LIFECYCLE" == "true" ]]; then
+            prepare_args+=(--automatic)
+            build_args+=(MACOSX_DEPLOYMENT_TARGET=13.0)
+            diagnostic_bundle+=Auto
+          fi
+          python3 scripts/prepare-window-lifecycle.py "${prepare_args[@]}" --output "${{ runner.temp }}/native-window-lifecycle"
+          mkdir -p "${{ runner.temp }}/lifecycle-artifact"
+          set -o pipefail
+          bash scripts/check-workspace-editor.sh 2>&1 | tee "${{ runner.temp }}/lifecycle-artifact/workspace-editor-checks.log"
+          xcodebuild -version > "${{ runner.temp }}/lifecycle-artifact/xcode-version.txt"
+          git rev-parse HEAD > "${{ runner.temp }}/lifecycle-artifact/source-sha.txt"
+          cp "${{ runner.temp }}/native-window-lifecycle/preparation.json" "${{ runner.temp }}/lifecycle-artifact/"
+          cp OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved "${{ runner.temp }}/lifecycle-artifact/"
+          set -o pipefail
+          xcodebuild -project "${{ runner.temp }}/native-window-lifecycle/source/OpenCCman.xcodeproj" \
+            -scheme OpenCCman -configuration Release -destination 'platform=macOS' \
+            -derivedDataPath "${{ runner.temp }}/lifecycle-derived" \
+            -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
+            CODE_SIGNING_ALLOWED=NO ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
+            PRODUCT_BUNDLE_IDENTIFIER="$diagnostic_bundle" "${build_args[@]}" build \
+            2>&1 | tee "${{ runner.temp }}/lifecycle-artifact/build.log"
+          cmp OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved \
+            "${{ runner.temp }}/native-window-lifecycle/source/OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
+          ditto -c -k --keepParent "${{ runner.temp }}/lifecycle-derived/Build/Products/Release/OpenCCman.app" \
+            "${{ runner.temp }}/lifecycle-artifact/OpenCCman-lifecycle.zip"
+      - name: Measure automatic native windows without CUA observation
+        if: inputs.automatic_window_lifecycle || inputs.cycle_window_lifecycle || inputs.document_window_lifecycle || inputs.profile_document_stages || inputs.active_anchor_window_lifecycle
+        env:
+          CYCLE_LIFECYCLE: ${{ inputs.cycle_window_lifecycle }}
+          DOCUMENT_LIFECYCLE: ${{ inputs.document_window_lifecycle }}
+          ACTIVE_ANCHOR_LIFECYCLE: ${{ inputs.active_anchor_window_lifecycle }}
+          PROFILE_DOCUMENT_STAGES: ${{ inputs.profile_document_stages }}
+        run: |
+          check_args=()
+          if [[ "$PROFILE_DOCUMENT_STAGES" == "true" ]]; then check_args+=(--profile-stages); fi
+          if [[ "$ACTIVE_ANCHOR_LIFECYCLE" == "true" || "$PROFILE_DOCUMENT_STAGES" == "true" ]]; then
+            check_args+=(--documents --active-anchor)
+          elif [[ "$DOCUMENT_LIFECYCLE" == "true" ]]; then
+            check_args+=(--documents)
+          elif [[ "$CYCLE_LIFECYCLE" == "true" ]]; then check_args+=(--cycles); fi
+          # Main diagnostic runs have no CUA/recording. Gate object release as
+          # well as protocol integrity; stack-sampling runs remain observational.
+          if [[ "$PROFILE_DOCUMENT_STAGES" != "true" ]]; then check_args+=(--require-model-release); fi
+          python3 scripts/check-native-window-lifecycle.py "${check_args[@]}" \
+            --app "${{ runner.temp }}/lifecycle-derived/Build/Products/Release/OpenCCman.app" \
+            --output "${{ runner.temp }}/lifecycle-artifact/automatic"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: native-window-lifecycle-app
+          path: ${{ runner.temp }}/lifecycle-artifact/
+          retention-days: 7
+
+  editor-anchor-diagnostic:
+    name: Bounded macOS 15 anchor trace
+    if: github.event_name == 'workflow_dispatch' && inputs.diagnose_editor_anchor
+    runs-on: macos-15
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Run fixed original and traced samples
+        run: python3 scripts/diagnose-editor-anchor.py --output "${{ runner.temp }}/editor-anchor-diagnostic" --repetitions 20
+      - name: Check controlled slow first restoration
+        run: python3 scripts/diagnose-editor-anchor.py --output "${{ runner.temp }}/editor-anchor-slow-pass" --repetitions 3 --first-pass-delay-ms 120
+      - name: Preserve all samples including failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: editor-anchor-diagnostic
+          path: |
+            ${{ runner.temp }}/editor-anchor-diagnostic
+            ${{ runner.temp }}/editor-anchor-slow-pass
+          retention-days: 7
+          if-no-files-found: error
+
+  workspace-editor-comparison:
+    name: Same-runner Release editor comparison
+    if: github.event_name == 'workflow_dispatch' && inputs.compare_workspace_editor
+    runs-on: macos-15
+    timeout-minutes: 45
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Compare exact baseline and candidate commits
+        run: |
+          python3 scripts/compare-workspace-editor.py \
+            --baseline cb73fc528b3c9d53dfc840b8ae48e1cae7426fcb \
+            --candidate "$(git rev-parse HEAD)" \
+            --output "${{ runner.temp }}/workspace-editor-comparison"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: workspace-editor-comparison
+          path: ${{ runner.temp }}/workspace-editor-comparison/
+          retention-days: 7
+
+  services-validation:
+    name: Build Release Services validation app
+    if: github.event_name == 'workflow_dispatch' && inputs.build_services_validation
+    runs-on: macos-15
+    timeout-minutes: 20
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Build and archive the validation artifact
+        run: |
+          mkdir -p "${{ runner.temp }}/services-artifact"
+          git rev-parse HEAD > "${{ runner.temp }}/services-artifact/source-sha.txt"
+          xcodebuild -version > "${{ runner.temp }}/services-artifact/xcode-version.txt"
+          cp OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved \
+            "${{ runner.temp }}/services-artifact/Package.resolved"
+          xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
+            -configuration Release -destination 'platform=macOS' \
+            -derivedDataPath "${{ runner.temp }}/services-app" \
+            -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
+            CODE_SIGNING_ALLOWED=NO ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
+            PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.ServicesValidation build
+          ditto -c -k --keepParent \
+            "${{ runner.temp }}/services-app/Build/Products/Release/OpenCCman.app" \
+            "${{ runner.temp }}/services-artifact/OpenCCman-services-validation.zip"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: services-release-validation-app
+          path: ${{ runner.temp }}/services-artifact
+          retention-days: 7
+
+  application-performance-baseline:
+    name: Release application performance baseline
+    if: github.event_name == 'workflow_dispatch' && inputs.measure_app_baseline
+    runs-on: macos-15
+    timeout-minutes: 35
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Measure five fresh processes with the locked dependencies
+        run: |
+          python3 scripts/benchmark-app.py \
+            --output "${{ runner.temp }}/app-performance-baseline" \
+            --samples 5 --timeout 180
+      - name: Validate sample provenance, foreground state and configuration coverage
+        env:
+          BASELINE_DIR: ${{ runner.temp }}/app-performance-baseline
+        run: |
+          python3 - <<'PYTHON'
+          import os
+          from pathlib import Path
+          import runpy
+          import subprocess
+          validator = runpy.run_path('scripts/compare-app-performance.py')
+          metadata, samples = validator['load'](Path(os.environ['BASELINE_DIR']))
+          if len(samples) != 5:
+              raise ValueError('Expected exactly five complete independent samples')
+          head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          if metadata['source_commit'] != head:
+              raise ValueError('Measured source differs from the checked-out candidate')
+          print('Validated five complete samples, source SHA, foreground, seven configurations and memory collection')
+          PYTHON
+      - name: Preserve provenance and all samples, including failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: app-performance-baseline
+          path: |
+            ${{ runner.temp }}/app-performance-baseline/*.json
+            ${{ runner.temp }}/app-performance-baseline/build.log
+          retention-days: 14
+          if-no-files-found: error

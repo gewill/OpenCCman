@@ -1,0 +1,24 @@
+{
+  "sourceSHA": "eab5003bfdd938f08b936826225d7ab482d6f703",
+  "setupUTC": "2026-09-15T09:48:42.055024+00:00",
+  "fault": "s2t.json removed from disposable copied bundle; Swift converter init throws fileNotFound",
+  "removedResource": "Contents/Resources/SwiftyOpenCC_OpenCC.bundle/Contents/Resources/Official/s2t.json",
+  "removedResourceSHA256": "a188392af5ca23e1d602c5a93651f1d852fccdaa24c2b29abed7a0c8ac359048",
+  "goodProviderUnchangedSHA256": "11b54d162172123fbf742441f7188d74176df9360b8e53ad7bcfffd61b526e21",
+  "faultProviderBinarySHA256": "9cb4122644dedd183635864d7b82b490248e060c8926032bc7541a850aef206d",
+  "service": {
+    "NSMenuItem": {
+      "default": "OpenCCman Failure eab5003 Convert"
+    },
+    "NSMessage": "convertSelectedText",
+    "NSPortName": "OpenCCmanServicesFailureEAB5003",
+    "NSSendTypes": [
+      "NSStringPboardType"
+    ],
+    "NSReturnTypes": [
+      "NSStringPboardType"
+    ]
+  },
+  "bundleID": "org.gewill.OpenCCman.ServicesFailureValidation",
+  "preferencesOriginallyExisted": false
+}

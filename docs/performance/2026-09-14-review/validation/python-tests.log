@@ -1,0 +1,31 @@
+test_accepts_verified_unchanged_build (test_app_performance_build.BuildVerification.test_accepts_verified_unchanged_build) ... ok
+test_rejects_build_without_success_marker (test_app_performance_build.BuildVerification.test_rejects_build_without_success_marker) ... ok
+test_rejects_changed_app (test_app_performance_build.BuildVerification.test_rejects_changed_app) ... ok
+test_rejects_changed_checkout (test_app_performance_build.BuildVerification.test_rejects_changed_checkout) ... ok
+test_rejects_changed_lock (test_app_performance_build.BuildVerification.test_rejects_changed_lock) ... ok
+test_rejects_changed_metadata (test_app_performance_build.BuildVerification.test_rejects_changed_metadata) ... ok
+test_rejects_changed_source (test_app_performance_build.BuildVerification.test_rejects_changed_source) ... ok
+test_variant_anchor_changes_only_attachment (test_app_performance_build.BuildVerification.test_variant_anchor_changes_only_attachment) ... ok
+test_accepts_only_engine_revision_change (test_app_performance_report.Reports.test_accepts_only_engine_revision_change) ... ok
+test_changed_output_is_explicit (test_app_performance_report.Reports.test_changed_output_is_explicit) ... ok
+test_equal_samples_have_no_regression (test_app_performance_report.Reports.test_equal_samples_have_no_regression) ... ok
+test_rejects_background_or_hidden_run (test_app_performance_report.Reports.test_rejects_background_or_hidden_run) ... ok
+test_rejects_bad_collection_and_validation (test_app_performance_report.Reports.test_rejects_bad_collection_and_validation) ... ok
+test_rejects_different_input (test_app_performance_report.Reports.test_rejects_different_input) ... ok
+test_rejects_duplicate_stages (test_app_performance_report.Reports.test_rejects_duplicate_stages) ... ok
+test_rejects_environment_changes (test_app_performance_report.Reports.test_rejects_environment_changes) ... ok
+test_rejects_failed_run (test_app_performance_report.Reports.test_rejects_failed_run) ... ok
+test_rejects_harness_and_driver_changes (test_app_performance_report.Reports.test_rejects_harness_and_driver_changes) ... ok
+test_rejects_incomplete_coverage (test_app_performance_report.Reports.test_rejects_incomplete_coverage) ... ok
+test_rejects_legacy_protocol (test_app_performance_report.Reports.test_rejects_legacy_protocol) ... ok
+test_rejects_missing_or_wrong_checkout_proof (test_app_performance_report.Reports.test_rejects_missing_or_wrong_checkout_proof) ... ok
+test_rejects_missing_stage (test_app_performance_report.Reports.test_rejects_missing_stage) ... ok
+test_rejects_nondeterministic_output (test_app_performance_report.Reports.test_rejects_nondeterministic_output) ... ok
+test_rejects_rewritten_metadata (test_app_performance_report.Reports.test_rejects_rewritten_metadata) ... ok
+test_rejects_too_few_samples (test_app_performance_report.Reports.test_rejects_too_few_samples) ... ok
+test_rejects_unrelated_dependency_drift (test_app_performance_report.Reports.test_rejects_unrelated_dependency_drift) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.071s
+
+OK

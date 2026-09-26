@@ -1,0 +1,461 @@
+{
+  "schema": 1,
+  "source_export_sha256": "b7de682ea6aa435d7f1856ea2d823f5ae6bfceb72dbcd8ec650d6545fd84e3ed",
+  "samples": 45369,
+  "main_samples": 43069,
+  "main_cycles": 40094708579,
+  "all_cycles": 42154685772,
+  "note": "CPU-cycle weighted inclusive stacks overlap. Diagnostic conversion/layout/AX interaction, not unprofiled timing. Environment and binary paths omitted.",
+  "main_self_cycles": [
+    [
+      "objc_msgSend",
+      2900358474
+    ],
+    [
+      "-[NSAttributeDictionary objectForKey:]",
+      2111159332
+    ],
+    [
+      "_platform_memset",
+      1540001226
+    ],
+    [
+      "bool ComputeIndex12or13<((anonymous namespace)::SubtableFormat12or13)0, unsigned short>((anonymous namespace)::ExtGroup const*, (anonymous namespace)::ExtGroup const*, unsigned int, unsigned short*)",
+      1242739897
+    ],
+    [
+      "__CF_IS_OBJC",
+      1083778796
+    ],
+    [
+      "__CFStorageFindByte",
+      670047726
+    ],
+    [
+      "get_glyph_ideal_advances",
+      622848034
+    ],
+    [
+      "blockForLocation",
+      609939144
+    ],
+    [
+      "_platform_memmove",
+      563185112
+    ],
+    [
+      "_NSGlyphTreeMoveToCharacterIndex",
+      546704404
+    ],
+    [
+      "-[NSGlyphGenerator generateGlyphsForGlyphStorage:desiredNumberOfCharacters:glyphIndex:characterIndex:]",
+      478201712
+    ],
+    [
+      "__bzero",
+      461095163
+    ],
+    [
+      "<deduplicated_symbol>",
+      449207201
+    ],
+    [
+      "-[NSMutableAttributedString(NSMutableAttributedStringKitAdditions) fixFontAttributeInRange:]",
+      404517320
+    ],
+    [
+      "_xzm_free",
+      383287129
+    ],
+    [
+      "_NSGlyphTreeGetFirstHoleAfterGlyphIndex",
+      357081056
+    ],
+    [
+      "__CFStringHash",
+      331535638
+    ],
+    [
+      "_xzm_xzone_malloc_tiny",
+      321049779
+    ],
+    [
+      "TFont::GetAdvancesForGlyphsWithStyleFromCG(unsigned int, unsigned short const*, double*, AdvanceStride, long, CGAffineTransform const&, bool, double, bool) const",
+      310533554
+    ],
+    [
+      "objc_release",
+      310397189
+    ],
+    [
+      "TAATMorphSubtableMorx::Process(TRunGlue&, CFRange)",
+      293222901
+    ],
+    [
+      "TAATLookupTable::LookupSingleTable(unsigned short, unsigned long*) const",
+      267268296
+    ],
+    [
+      "_NSLayoutTreeMoveToGlyphIndex",
+      249418528
+    ],
+    [
+      "_CFRelease",
+      223359561
+    ],
+    [
+      "CFCharacterSetIsLongCharacterMember",
+      218674372
+    ],
+    [
+      "CFStorageGetValues",
+      210235672
+    ],
+    [
+      "_NSGlyphTreeMoveToGlyphIndex",
+      199061206
+    ],
+    [
+      "__NSGetTransformedAdvances",
+      196124515
+    ],
+    [
+      "_CFStringGetCStringPtrInternal",
+      187479179
+    ],
+    [
+      "_NSGlyphNodeSetInvariants",
+      186607913
+    ]
+  ],
+  "main_text_inclusive_cycles": [
+    [
+      "-[NSLayoutManager(NSPrivate) _fillLayoutHoleForCharacterRange:desiredNumberOfLines:isSoft:]",
+      22359978475
+    ],
+    [
+      "+[NSLayoutManager(NSPrivate) _doSomeBackgroundLayout]",
+      22259097889
+    ],
+    [
+      "-[NSLayoutManager(NSPrivate) _fillLayoutHoleAtIndex:desiredNumberOfLines:]",
+      22252561410
+    ],
+    [
+      "-[NSTextView(NSTextViewAccessibility) accessibilityChildrenAttribute]",
+      9921063697
+    ],
+    [
+      "-[NSTextStorage ensureAttributesAreFixedInRange:]",
+      8499344001
+    ],
+    [
+      "-[NSTextStorage _fixAttributesInRange:]",
+      8474206612
+    ],
+    [
+      "-[NSTextStorage fixFontAttributeInRange:]",
+      7789825065
+    ],
+    [
+      "-[NSLayoutManager(NSPrivate) _fillGlyphHoleForCharacterRange:startGlyphIndex:desiredNumberOfCharacters:]",
+      4863681189
+    ],
+    [
+      "-[NSLayoutManager glyphIndexForCharacterAtIndex:]",
+      3324698092
+    ],
+    [
+      "-[NSLayoutManager invalidateDisplayForCharacterRange:]",
+      2758490861
+    ],
+    [
+      "-[NSTextView setFrameSize:]",
+      2290106377
+    ],
+    [
+      "-[NSTextView(NSPrivate) _setFrameSize:forceScroll:]",
+      2281741658
+    ],
+    [
+      "-[NSTextView drawRect:]",
+      1869746825
+    ],
+    [
+      "-[NSLayoutManager(NSPrivate) _primitiveGlyphRangeForCharacterRange:]",
+      1815140895
+    ],
+    [
+      "-[NSLayoutManager glyphRangeForCharacterRange:actualCharacterRange:]",
+      1623439812
+    ],
+    [
+      "_NSLayoutTreeSetLocationForGlyphRange",
+      1424985607
+    ],
+    [
+      "-[NSLayoutManager(NSPrivate) _drawGlyphsForGlyphRange:atPoint:]",
+      1346027275
+    ],
+    [
+      "-[NSText(NSTextAccessibilityPrivate) accessibilityTextLinks]",
+      926730723
+    ],
+    [
+      "-[NSLayoutManager setGlyphs:properties:characterIndexes:font:forGlyphRange:]",
+      815993469
+    ],
+    [
+      "-[NSLayoutManager(NSPrivate) _resizeTextViewForTextContainer:]",
+      812358363
+    ],
+    [
+      "-[NSLayoutManager _primitiveInvalidateDisplayForGlyphRange:]",
+      744767943
+    ],
+    [
+      "-[NSLayoutManager(NSPrivate) setLineFragmentRect:forGlyphRange:usedRect:baselineOffset:]",
+      670341424
+    ],
+    [
+      "-[NSLayoutManager(NSPrivate) _boundingRectForGlyphRange:inTextContainer:fast:fullLineRectsOnly:]",
+      659292883
+    ],
+    [
+      "-[NSLayoutManager(NSPrivate) _rectArrayForRange:withinSelectionRange:rangeIsCharRange:singleRectOnly:fullLineRectsOnly:inTextContainer:rectCount:rangeWithinContainer:glyphsDrawOutsideLines:]",
+      657292694
+    ],
+    [
+      "-[NSLayoutManager(NSPrivate) _rectArrayForRange:withinSelectionRange:rangeIsCharRange:singleRectOnly:fullLineRectsOnly:inTextContainer:rectCount:rangeWithinContainer:glyphsDrawOutsideLines:rectArray:rectArrayCapacity:]",
+      651291286
+    ],
+    [
+      "-[NSTextView setNeedsDisplayInRect:avoidAdditionalLayout:]",
+      533721461
+    ],
+    [
+      "-[NSLayoutManager showCGGlyphs:positions:count:font:textMatrix:attributes:inContext:]",
+      501590936
+    ],
+    [
+      "-[NSLayoutManager(OtherSupport) _showCGGlyphs:positions:count:font:textMatrix:attributes:inContext:]",
+      498590724
+    ],
+    [
+      "-[NSLayoutManager setLineFragmentRect:forGlyphRange:usedRect:]",
+      473443484
+    ],
+    [
+      "_NSLayoutTreeSetLineFragmentRectForGlyphRange",
+      447878402
+    ],
+    [
+      "-[NSLayoutManager characterRangeForGlyphRange:actualGlyphRange:]",
+      421767129
+    ],
+    [
+      "_NSLayoutNodeAppendLineFragment",
+      388147365
+    ],
+    [
+      "-[NSLayoutManager(NSPrivate) _invalidateDisplayIfNeeded]",
+      347366027
+    ],
+    [
+      "-[NSLayoutManager(NSPrivate) _glyphRangeForBoundingRect:inTextContainer:fast:okToFillHoles:]",
+      329422008
+    ],
+    [
+      "-[NSLayoutManager(NSPrivate) _firstPassGlyphRangeForBoundingRect:inTextContainer:okToFillHoles:]",
+      325421562
+    ]
+  ],
+  "example_stacks": {
+    "bridge": [
+      "protocol witness for _ObjectiveCBridgeable._bridgeToObjectiveC() in conformance Int32",
+      "bridgeAnythingNonVerbatimToObjectiveC(swift::OpaqueValue*, swift::TargetMetadata<swift::InProcess> const*, bool)",
+      "bridgeAnythingNonVerbatimToObjectiveC(swift::OpaqueValue*, swift::TargetMetadata<swift::InProcess> const*, bool)",
+      "_SwiftDeferredNSDictionary.bridgeValues()",
+      "_SwiftDeferredNSDictionary.getObjects(_:andKeys:count:)",
+      "@objc _SwiftDeferredNSDictionary.getObjects(_:andKeys:count:)",
+      "_writeJSONObject",
+      "___writeJSONObject_block_invoke",
+      "_writeJSONObject",
+      "___writeJSONArray_block_invoke",
+      "__NSARRAY_IS_CALLING_OUT_TO_A_BLOCK__",
+      "__NSArrayEnumerate",
+      "_writeJSONArray",
+      "___writeJSONObject_block_invoke",
+      "_writeJSONObject",
+      "-[_NSJSONWriter dataWithRootObject:options:]",
+      "+[NSJSONSerialization dataWithJSONObject:options:error:]",
+      "AppPerformanceAudit.save(status:error:)",
+      "closure #1 in closure #2 in AppPerformanceAudit.run(_:window:)",
+      "partial apply for closure #1 in closure #2 in AppPerformanceAudit.run(_:window:)",
+      "specialized thunk for @callee_guaranteed () -> (@out A, @error @owned Error)",
+      "closure #2 in AppPerformanceAudit.run(_:window:)",
+      "thunk for @escaping @callee_guaranteed @Sendable (@guaranteed NSTimer) -> ()",
+      "__NSFireTimer",
+      "__CFRUNLOOP_IS_CALLING_OUT_TO_A_TIMER_CALLBACK_FUNCTION__",
+      "__CFRunLoopDoTimer",
+      "__CFRunLoopDoTimers",
+      "__CFRunLoopRun",
+      "_CFRunLoopRunSpecificWithOptions",
+      "RunCurrentEventLoopInMode",
+      "ReceiveNextEventCommon",
+      "_BlockUntilNextEventMatchingListInMode",
+      "_DPSBlockUntilNextEventMatchingListInMode",
+      "_DPSNextEvent",
+      "-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]",
+      "-[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]",
+      "-[NSApplication run]",
+      "NSApplicationMain",
+      "specialized runApp(_:)",
+      "runApp<A>(_:)",
+      "static App.main()",
+      "static OpenCCmanApp.$main()",
+      "start"
+    ],
+    "text_update": [
+      "__CFStringChangeSizeMultiple",
+      "CFStringCreateMutableCopy",
+      "_copyResourceURLsFromBundle",
+      "_CFBundleCopyFindResources",
+      "CFBundleCopyResourceURLForLocalization",
+      "_CFBundleGetStringsSources",
+      "_copyStringTable",
+      "_CFBundleCopyLocalizedStringForLocalizationTableURLAndMarkdownOption",
+      "_CFBundleCopyLocalizedStringForLocalizationAndTableURL",
+      "AXLocalizedStringForLocale",
+      "AXNSLocalizedStringForLocale",
+      "AXSSAccessibilityDescriptionForSymbolName",
+      "AXSwiftUIDescriptionForSymbolName",
+      "specialized static AccessibilityCore.description(for:in:)",
+      "AccessibilityImageLabel.SystemSymbolTextStorage.resolve<A>(into:in:with:)",
+      "specialized Text.resolve<A>(into:in:with:)",
+      "Text.resolveAttributedString(in:includeDefaultAttributes:options:idiom:)",
+      "static AccessibilityCore.textResolvedToAttributedText(_:in:options:idiom:)",
+      "static AccessibilityCore.textsResolvedToAttributedText(_:in:options:idiom:separator:)",
+      "PlatformItemList.Item.Accessibility.resolvedAttributedLabel.getter",
+      "PlatformItemList.Item.accessibilityEffectiveText.getter",
+      "specialized PlatformItemList.Item.applyAccessibilityProperties(to:textAttribute:)",
+      "AppKitPopUpAdaptor.PlatformView.updateNSView(_:context:)",
+      "PlatformViewRepresentableAdaptor.updateViewProvider(_:context:)",
+      "closure #1 in closure #1 in closure #7 in closure #1 in PlatformViewChild.updateValue()",
+      "ViewRendererHost.performExternalUpdate(_:)",
+      "closure #1 in closure #7 in closure #1 in PlatformViewChild.updateValue()",
+      "closure #1 in PlatformViewChild.updateValue()",
+      "partial apply for implicit closure #1 in closure #1 in closure #1 in Attribute.init<A>(_:)",
+      "AG::Graph::UpdateStack::update()",
+      "AG::Subgraph::update(unsigned int)",
+      "specialized GraphHost.runTransaction(_:do:id:)",
+      "GraphHost.flushTransactions()",
+      "closure #1 in ViewGraphRootValueUpdater.render(interval:updateDisplayList:targetTimestamp:)",
+      "ViewGraphRootValueUpdater.render(interval:updateDisplayList:targetTimestamp:)",
+      "specialized AccessibilityNode.sendAction<A>(_:value:)",
+      "@objc AccessibilityNode.accessibilityPerformPress()",
+      "NSAccessibilityPerformEntryPointBOOL",
+      "NSAccessibilityEntryPointPerformAction",
+      "PerformAction",
+      "_AXXMIGPerformAction",
+      "_XPerformAction",
+      "mshMIGPerform",
+      "__CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE1_PERFORM_FUNCTION__",
+      "__CFRunLoopDoSource1",
+      "__CFRunLoopRun",
+      "_CFRunLoopRunSpecificWithOptions",
+      "RunCurrentEventLoopInMode",
+      "ReceiveNextEventCommon",
+      "_BlockUntilNextEventMatchingListInMode",
+      "_DPSBlockUntilNextEventMatchingListInMode",
+      "_DPSNextEvent",
+      "-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]",
+      "-[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]",
+      "-[NSApplication run]",
+      "NSApplicationMain",
+      "specialized runApp(_:)",
+      "runApp<A>(_:)",
+      "static App.main()",
+      "static OpenCCmanApp.$main()",
+      "start"
+    ],
+    "layout": [
+      "-[NSConcreteTextStorage attribute:atIndex:effectiveRange:]",
+      "-[NSLayoutManager(NSPrivate) _blockRangeForCharRange:]",
+      "-[NSLayoutManager(NSPrivate) _firstPassGlyphRangeForBoundingRect:inTextContainer:okToFillHoles:]",
+      "-[NSLayoutManager(NSPrivate) _glyphRangeForBoundingRect:inTextContainer:fast:okToFillHoles:]",
+      "-[NSTextView drawRect:]",
+      "0x1925014f0",
+      "0x192501518",
+      "0x1924c6e0c",
+      "0x1924c79e4",
+      "_NSViewDrawRect",
+      "-[NSView _recursive:displayRectIgnoringOpacity:inContext:stopAtLayerBackedViews:]",
+      "-[NSView(NSLayerKitGlue) _drawViewBackingLayer:inContext:drawingHandler:]",
+      "-[NSViewBackingLayer drawInContext:]",
+      "0x192523fb0",
+      "0x192524a80",
+      "0x1925bfe14",
+      "0x1925c03d8",
+      "-[NSViewBackingLayer display]",
+      "CA::Layer::display_if_needed(CA::Transaction*)",
+      "CA::Context::commit_transaction(CA::Transaction*, double, double*)",
+      "CA::Transaction::commit()",
+      "CA::Transaction::flush_as_runloop_observer(bool)",
+      "stepTransactionFlush",
+      "UC::DriverCore::continueProcessing()",
+      "__CFRUNLOOP_IS_CALLING_OUT_TO_AN_OBSERVER_CALLBACK_FUNCTION__",
+      "__CFRunLoopDoObservers",
+      "_CFRunLoopRunSpecificWithOptions",
+      "RunCurrentEventLoopInMode",
+      "ReceiveNextEventCommon",
+      "_BlockUntilNextEventMatchingListInMode",
+      "_DPSBlockUntilNextEventMatchingListInMode",
+      "_DPSNextEvent",
+      "-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]",
+      "-[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]",
+      "-[NSApplication run]",
+      "NSApplicationMain",
+      "specialized runApp(_:)",
+      "runApp<A>(_:)",
+      "static App.main()",
+      "static OpenCCmanApp.$main()",
+      "start"
+    ],
+    "scroll_keeper": [
+      "_xzm_free",
+      "_timerRelease",
+      "CFRunLoopTimerInvalidate",
+      "-[NSScrollerImpPair _cancelOverlayScrollerHideTimer]",
+      "-[NSScrollerImpPair _rescheduleOverlayScrollerHideTimerWithDelay:]",
+      "-[NSScrollerImpPair _updateOverlayScrollersStateWithReason:forcingVisibilityForHorizontalKnob:verticalKnob:]",
+      "-[NSClipView _immediateScrollToPoint:]",
+      "-[NSClipView scrollToPoint:]",
+      "WorkspaceScrollKeeper.restore(_:)",
+      "closure #1 in WorkspaceScrollKeeper.viewportChanged()",
+      "<deduplicated_symbol>",
+      "_dispatch_call_block_and_release",
+      "_dispatch_client_callout",
+      "_dispatch_main_queue_drain.cold.6",
+      "_dispatch_main_queue_drain",
+      "_dispatch_main_queue_callback_4CF",
+      "__CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__",
+      "__CFRunLoopRun",
+      "_CFRunLoopRunSpecificWithOptions",
+      "RunCurrentEventLoopInMode",
+      "ReceiveNextEventCommon",
+      "_BlockUntilNextEventMatchingListInMode",
+      "_DPSBlockUntilNextEventMatchingListInMode",
+      "_DPSNextEvent",
+      "-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]",
+      "-[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:]",
+      "-[NSApplication run]",
+      "NSApplicationMain",
+      "specialized runApp(_:)",
+      "runApp<A>(_:)",
+      "static App.main()",
+      "static OpenCCmanApp.$main()",
+      "start"
+    ]
+  }
+}

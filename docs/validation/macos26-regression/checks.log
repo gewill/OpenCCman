@@ -1,0 +1,42 @@
+App Regression	Record regression environment and source	2026-09-16T07:04:12.2801540Z ProductVersion:		26.6.2
+App Regression	Record regression environment and source	2026-09-16T07:04:12.2802390Z BuildVersion:		25G83
+App Regression	Record regression environment and source	2026-09-16T07:04:15.2579580Z Xcode 26.3
+App Regression	Record regression environment and source	2026-09-16T07:04:15.2625270Z Build version 17C529
+App Regression	Check project and source syntax	2026-09-16T07:04:26.7218830Z PASS: parsed 62 Swift sources and 3 localization files
+App Regression	Check real conversion, presets and file workflow	2026-09-16T07:05:11.3428660Z PASS: real model notification subscribers; two explicit window targets; unbound rejection; exact Unicode/NUL/CRLF; export replacement; malformed payload; unchanged quota
+App Regression	Check real conversion, presets and file workflow	2026-09-16T07:05:11.3447120Z PASS: 7 option combinations × 11 fixtures; fixed NUL contracts, phrase boundaries, whitespace, Unicode and converter reuse
+App Regression	Check real conversion, presets and file workflow	2026-09-16T07:05:11.3449690Z PASS: model release, repeated taps, single publication, cancellation/replacement, empty input and quota guard
+App Regression	Check real conversion, presets and file workflow	2026-09-16T07:05:11.3482550Z PASS: presets, UTF-8/BOM/Unicode/NUL files, size limit, invalid input, cancellation and import replacement
+App Regression	Check real conversion, presets and file workflow	2026-09-16T07:05:11.3485500Z PASS: real NSURL/NSString providers and cancellation without a provider callback
+App Regression	Check Mac window geometry	2026-09-16T07:05:17.9025940Z PASS: saved geometry, corrupt history, negative-origin and disconnected displays, oversized windows and idempotence
+App Regression	Check Mac window geometry	2026-09-16T07:05:22.5615350Z PASS: native first launch, provisional autosave, minimum size, idempotent attachment, window reader and sheet-dismissal bounds
+App Regression	Check Mac window geometry	2026-09-16T07:05:22.9526640Z PASS: native restoration, provisional autosave, minimum size, idempotent attachment, window reader and sheet-dismissal bounds
+App Regression	Check closed-window request coalescing	2026-09-16T07:05:23.5629820Z PASS: burst coalescing, process/window readiness, failure retry, obsolete callbacks
+App Regression	Check complete Mac control bounds	2026-09-16T07:05:45.4933170Z PASS: upstream 30→44 reproduction; Mac icon 28, text 28, primary 32, segment 28, switch 28 and multiline growth
+App Regression	Check complete Mac control bounds	2026-09-16T07:05:45.4979530Z PASS: native segment narrow/wide, live English/Traditional Chinese, selection stability and accessibility layout
+App Regression	Check native editor scroll anchors	2026-09-16T07:05:56.1891080Z PASS: 1/5/10 MiB long paragraphs retain the native editor and selection through reflow
+App Regression	Check native editor scroll anchors	2026-09-16T07:05:56.1921830Z PASS: Native editor retained through attach, middle/tail resize, selection, composition and replacement
+App Regression	Check native editor scroll anchors	2026-09-16T07:05:56.1924820Z PASS: navigation during pending reflow keeps the new caret visible
+App Regression	Check native editor scroll anchors	2026-09-16T07:05:56.1930000Z PASS: on-demand document end, native text reflow, selection, rapid resize, new-document reset and marked range preservation
+App Regression	Check workspace editor bindings and bounded measurement	2026-09-16T07:06:19.7453410Z PASS: complete text, typing/binding, undo/redo, marked text echo, selection, independent undo, disabled/read-only and external replacement
+App Regression	Check workspace editor bindings and bounded measurement	2026-09-16T07:06:19.7496570Z PASS: SwiftUI bounded sizing leaves distant text unlaid; first unlaid 0, characters 2720000
+App Regression	Check native editor and window introspection	2026-09-16T07:06:45.9448110Z PASS: native workspace source/result and window callback; result read-only; TextKit 1 configured before inspection; content and style preserved; legacy window predicate control. Version 26.6.2 (Build 25G83)
+App Regression	Check Pro access updates	2026-09-16T07:06:53.3335840Z PASS: verified restore/revocation, missing/failed/cancelled snapshots and real quota integration
+App Regression	Check Pro access updates	2026-09-16T07:06:53.5201450Z PASS: Customer Center localized keys in English, Simplified and Traditional Chinese
+App Regression	Check local StoreKit transactions	2026-09-16T07:06:53.8403030Z PASS: local Debug catalog and independent standard Release archive scheme
+App Regression	Check local StoreKit transactions	2026-09-16T07:08:24.1422800Z ** TEST SUCCEEDED **
+App Regression	Check quota reservations	2026-09-16T07:08:34.5481630Z PASS: quota reservations, concurrent cap, idempotent cleanup, cancellation, deinit, midnight and Pro exemption.
+App Regression	Check What’s New presentation and localizations	2026-09-16T07:08:36.6219530Z PASS: What’s New content, version persistence, presentation blockers, multi-window ownership, manual viewing and test opt-out
+App Regression	Check What’s New presentation and localizations	2026-09-16T07:08:36.9192870Z PASS: en.lproj, all 8 What’s New strings
+App Regression	Check What’s New presentation and localizations	2026-09-16T07:08:36.9201260Z PASS: zh-Hans.lproj, all 8 What’s New strings
+App Regression	Check What’s New presentation and localizations	2026-09-16T07:08:36.9209570Z PASS: zh-Hant.lproj, all 8 What’s New strings
+App Regression	Check control labels in the selected app language	2026-09-16T07:08:40.1827880Z PASS: released control labels resolve English, Simplified/Traditional Chinese, underscore locales, live locale changes and missing-key fallback
+App Regression	Check isolated pasteboard preservation	2026-09-16T07:08:47.0681820Z PASS: multi-item text/RTF/image/file URL preservation, ownership checks, later user copy, identical text, empty clipboard.
+App Regression	Build macOS validation app	2026-09-16T07:08:48.1377280Z Xcode 26.3
+App Regression	Build macOS validation app	2026-09-16T07:08:48.1478890Z Build version 17C529
+App Regression	Build macOS validation app	2026-09-16T07:13:31.5548240Z ** BUILD SUCCEEDED **
+Build iOS Simulator validation app	Build and package simulator app	2026-09-16T07:04:13.4108020Z ProductVersion:		26.6.2
+Build iOS Simulator validation app	Build and package simulator app	2026-09-16T07:04:13.4108730Z BuildVersion:		25G83
+Build iOS Simulator validation app	Build and package simulator app	2026-09-16T07:04:16.8080040Z Xcode 26.3
+Build iOS Simulator validation app	Build and package simulator app	2026-09-16T07:04:16.8108710Z Build version 17C529
+Build iOS Simulator validation app	Build and package simulator app	2026-09-16T07:07:11.4279040Z ** BUILD SUCCEEDED **

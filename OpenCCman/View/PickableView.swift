@@ -41,7 +41,7 @@ struct PickableView<T: Pickable>: View {
   var body: some View {
     VStack(alignment: .leading, spacing: Padding.verLarge) {
       if let title {
-        Text(title).font(.headline)
+        Text(title).appFont(.headline)
       }
       ScrollView {
         VStack(spacing: Padding.normal) {
@@ -60,6 +60,9 @@ struct PickableView<T: Pickable>: View {
       .softRectangleStyle()
     }
     .fixedSize(horizontal: false, vertical: true)
+    .onChange(of: initialContent?.id) { selectedID in
+      selectionIndex = options.firstIndex(where: { $0.id == selectedID }) ?? -1
+    }
   }
 
   func binding(for index: Int) -> Binding<Bool> {
@@ -84,29 +87,28 @@ struct PickableSingleChoiceView: View {
   }
 
   var body: some View {
-    VStack {
+    Button {
+      if allowCancelSelect {
+        selected.toggle()
+      } else if selected == false {
+        selected = true
+      }
+    } label: {
       HStack {
         Text(title)
           .frame(maxWidth: .infinity, alignment: .leading)
         if selected {
           Image(systemName: "checkmark")
             .foregroundColor(color)
-        } else {
-//          Image(systemName: "circle")
-//            .foregroundColor(color)
+            .accessibilityHidden(true)
         }
       }
+      .padding(.vertical, AppControlMetrics.contentInset)
+      .frame(minHeight: AppControlMetrics.height)
       .contentShape(Rectangle())
-      .onTapGesture {
-        if allowCancelSelect {
-          selected.toggle()
-        } else {
-          if selected == false {
-            selected = true
-          }
-        }
-      }
     }
+    .buttonStyle(.plain)
+    .accessibilityAddTraits(selected ? .isSelected : [])
     .frame(maxWidth: .infinity)
   }
 }

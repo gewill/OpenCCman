@@ -1,15 +1,158 @@
 // MARK: - IAP
+"Error" = "Error";
 "pro_lifetime" = "Lifetime Pro";
 "pro_lifetime_des" = "Pay once, use for a lifetime.";
 
 // MARK: - Help
-"help description" =  "
-Open Chinese Convert (OpenCC, 開放中文轉換) is an opensource project for conversions between Traditional Chinese, Simplified Chinese and Japanese Kanji (Shinjitai). It supports character-level and phrase-level conversion, character variant conversion and regional idioms among Mainland China, Taiwan and Hong Kong. This is not translation tool between Mandarin and Cantonese, etc.
+"help_intro" = "Open Chinese Convert (OpenCC, 開放中文轉換) is an opensource project for conversions between Traditional Chinese, Simplified Chinese and Japanese Kanji (Shinjitai). It supports character-level and phrase-level conversion, character variant conversion and regional idioms among Mainland China, Taiwan and Hong Kong. This is not translation tool between Mandarin and Cantonese, etc.";
 
-**Features**
+"help_features_title" = "Features";
+"help_features_content" = "Strictly differentiate between 「one simplified to many traditionals」 and 「one simplified to many variants」.\nCompletely compatible with different variants and can realize dynamic substitution.\nStrictly scrutinize one-simplified-to-multiple-traditional entries, and the principle is 「if it can be divided, then it will be divided」.\nSupport Mainland China, Taiwan, Hong Kong, different variants and regional customary word conversion, such as 「裏」「裡」、「鼠標」「滑鼠」.";
 
-Strictly differentiate between 「one simplified to many traditionals」 and 「one simplified to many variants」.
-Completely compatible with different variants and can realize dynamic substitution.
-Strictly scrutinize one-simplified-to-multiple-traditional entries, and the principle is 「if it can be divided, then it will be divided」.
-Support Mainland China, Taiwan, Hong Kong, different variants and regional customary word conversion, such as 「裏」「裡」、「鼠標」「滑鼠」.
-";
+"help_global_service_title" = "Global Service (macOS)";
+"help_global_service_intro" = "OpenCCman provides multiple ways to convert Chinese text from any application:";
+
+"help_method1_title" = "Method 1: Global Keyboard Shortcuts (Recommended)";
+"help_method1_content" = "OpenCCman provides two global keyboard shortcuts:\n\n• Convert Selected Text (default: ⌘⌥T) - Automatically converts and replaces selected text in editable fields\n• Open Selected Text (default: ⌘⌥R) - Opens selected text in OpenCCman for manual conversion\n\n1. Go to Settings > Global Shortcut to configure your shortcuts\n2. Select any Chinese text in any application\n3. Press your configured shortcut\n4. Convert shortcut: Text will be automatically converted and replaced in-place (works in text editors, browsers, etc.)\n5. Open shortcut: OpenCCman will open with the text ready for conversion";
+
+"help_method2_title" = "Method 2: Right-click Services";
+"help_method2_content" = "OpenCCman provides two right-click services:\n\n• \"Convert Chinese Text with OpenCCman\" - Automatically converts and replaces the selected text\n• \"Open Selected Text in OpenCCman\" - Opens the app with the selected text for manual conversion\n\n1. Select text in any app (Safari, TextEdit, etc.)\n2. Right-click and choose your preferred service from the Services menu\n3. For convert service: text is automatically converted and replaced\n4. For open service: OpenCCman opens with the text ready for conversion";
+
+"help_service_tip" = "You can also assign keyboard shortcuts to these services in System Settings > Keyboard > Keyboard Shortcuts > Services > Text for even faster access.";
+
+"help_service_details_title" = "Service Details";
+"help_service_details_content" = "• Convert Service: Best for quick, automatic conversion when you're confident with current settings\n• Open Service: Perfect when you want to review the text, adjust conversion settings, or keep both original and converted text visible\n• Both services work in any macOS application that supports text selection";
+
+"help_conclusion" = "The keyboard shortcut method is fastest for immediate conversion. Use the \"Open Selected Text\" service when you want to review or adjust settings before converting.";
+
+// MARK: - Services
+"Convert Chinese Text with OpenCCman" = "Convert Chinese Text with OpenCCman";
+"Open Selected Text in OpenCCman" = "Open Selected Text in OpenCCman";
+
+// MARK: - Shortcut Settings
+"Global Shortcut" = "Global Shortcut";
+"Shortcut Settings" = "Shortcut Settings";
+"Enable Global Shortcut" = "Enable Global Shortcut";
+"Keyboard Shortcut" = "Keyboard Shortcut";
+"Convert Selected Text Shortcut" = "Convert Selected Text Shortcut";
+"Open Selected Text Shortcut" = "Open Selected Text Shortcut";
+"Convert Selected Text" = "Convert Selected Text";
+"Open Selected Text" = "Open Selected Text";
+"Settings" = "Settings";
+"Help" = "Help";
+"Quit" = "Quit";
+"Show Menu Bar Icon" = "Show Menu Bar Icon";
+"How to Use" = "How to Use";
+"Tips" = "Tips";
+"Test" = "Test";
+"Permissions" = "Permissions";
+"Accessibility Permission Required" = "Accessibility Permission Required";
+"Open System Preferences" = "Open System Preferences";
+"Cancel" = "Cancel";
+"Grant Permission" = "Grant Permission";
+"Try Again" = "Try Again";
+"Refresh" = "Refresh";
+"No Text Selected" = "No Text Selected";
+"Please select some Chinese text first, then try the shortcut again." = "Please select some Chinese text first, then try the shortcut again.";
+"OK" = "OK";
+"Accessibility permission granted" = "Accessibility permission granted";
+"Accessibility permission required" = "Accessibility permission required";
+
+"Global shortcut feature is only available on macOS" = "Global shortcut feature is only available on macOS";
+"shortcut_instructions_enabled" = "1. Enable the global shortcuts above\n2. Click the shortcut recorders to set your preferred key combinations\n3. Select Chinese text in any application\n4. Press your configured shortcut:\n   • Convert shortcut: Text will be automatically converted and replaced in-place (works in editable fields)\n   • Open shortcut: OpenCCman will open with the text ready for conversion\n5. OpenCCman will also show the conversion result for reference";
+"shortcut_instructions_disabled" = "To use the global shortcut features:\n1. First grant accessibility permission above\n2. After granting permission, click \"Refresh\" to update status\n3. Then enable the global shortcuts and configure your shortcuts\n\nAccessibility permission allows OpenCCman to read selected text from other applications.";
+"shortcut_tips" = "• The shortcut recorders allow you to easily set any key combination\n• Common shortcuts like ⌘⌥T, ⌘⌥R, ⌘⌥C work well\n• Avoid conflicts with system shortcuts\n• Both shortcuts work globally across all applications";
+
+// MARK: - Accessibility Permission Alert
+"accessibility_permission_intro" = "OpenCCman needs accessibility permission to read selected text from other applications.";
+"accessibility_permission_instructions_title" = "Please:";
+"accessibility_permission_step1" = "1. Click \"Open System Preferences\" below";
+"accessibility_permission_step2" = "2. Find \"OpenCCman\" in the list";
+"accessibility_permission_step3" = "3. Check the box next to it";
+"accessibility_permission_step4" = "4. Return to OpenCCman and try again";
+
+// MARK: - Presets and text files
+"Conversion Preset" = "Conversion Preset";
+"preset_simplified" = "Simplified Chinese";
+"preset_traditional" = "Traditional · OpenCC";
+"preset_taiwan" = "Taiwan · Standard + Idioms";
+"preset_hong_kong" = "Hong Kong · Traditional";
+"preset_custom" = "Custom";
+"Import TXT" = "Import TXT";
+"Export TXT" = "Export TXT";
+"Paste Text" = "Paste Text";
+"Copy Result" = "Copy Result";
+"previous_result_available" = "The previous successful result is still available to export.";
+"text_file_hint" = "Import, or drop here, one UTF-8 TXT file or plain text, up to 10 MiB.";
+"file_error_type" = "Choose a regular TXT file encoded as UTF-8, or drop plain text.";
+"file_error_size" = "This text exceeds the 10 MiB import limit.";
+"file_error_encoding" = "This file is not valid UTF-8. Save it as UTF-8 and try again.";
+"file_error_single_item" = "Import one file or text item at a time.";
+
+// MARK: - What’s New
+"whats_new_title" = "What’s New";
+"whats_new_done" = "Done";
+"whats_new_workspace_title" = "A workspace that fits your screen";
+"whats_new_workspace_detail" = "On Mac and iPad, place source and result side by side or stack them. Each window remembers your choice; iPhone keeps a focused stacked layout.";
+"whats_new_presets_title" = "Your conversion, one tap away";
+"whats_new_presets_detail" = "Choose Simplified Chinese, OpenCC Traditional, Taiwan Standard with idioms, or Hong Kong Traditional. Advanced options are still available.";
+"whats_new_files_title" = "Bring your text files";
+"whats_new_files_detail" = "Import or drop one UTF-8 TXT file up to 10 MiB, then export the converted result to a location you choose.";
+"whats_new_reliability_title" = "Stay in control";
+"whats_new_reliability_detail" = "Cancel a conversion to stop its result from appearing. Import errors keep your draft, and unfinished conversions do not use your daily allowance.";
+
+"On" = "On";
+
+"Off" = "Off";
+
+"In progress" = "In progress";
+
+"workspace_result_settings_changed" = "Settings changed. This result uses the previous conversion settings.";
+
+"workspace_result_empty" = "Convert the source text to see a result here.";
+
+"workspace_more" = "More";
+
+"workspace_remove_recommendation" = "Remove recommendations";
+
+"workspace_settings" = "Conversion settings";
+
+"workspace_horizontal" = "Side by side";
+
+"workspace_vertical" = "Stacked";
+
+"workspace_layout" = "Editor layout";
+
+"workspace_equal" = "Equal panes";
+
+"workspace_source_larger" = "Larger source";
+
+"workspace_result_larger" = "Larger result";
+
+"workspace_pane_sizes" = "Pane sizes";
+
+"workspace_temporary_vertical" = "Using stacked layout in this window. Side by side will return when space permits.";
+
+"Done" = "Done";
+
+"Pro" = "Pro";
+
+"workspace_dismiss_keyboard" = "Dismiss keyboard";
+
+// Customer Center
+"customer_center_title" = "Customer Center";
+"customer_center_lifetime_hint" = "Lifetime Pro is a one-time purchase with no renewal.";
+"customer_center_loading" = "Checking purchase status";
+"customer_center_refresh" = "Refresh Status";
+"customer_center_unavailable" = "Unable to check purchases. Your last known access is unchanged. Try again or contact support.";
+"customer_center_restored" = "Your lifetime Pro purchase is restored.";
+"customer_center_no_purchases" = "No lifetime Pro purchase was found for this store account.";
+
+"Launch at login" = "Launch at login";
+
+"restart_app_title" = "Restart App";
+"language_changed_title" = "Language Changed";
+"restart_app_message" = "Some content may not update until you restart the app.";
+"Later" = "Later";
+"Restart" = "Restart";
+"mac_text_size" = "Text Size";

@@ -79,13 +79,153 @@
 
 // MARK: - Help
 "Help" = "帮助";
-"help description" =  "
-中文简繁转换开源项目，支持词汇级别的转换、异体字转换和地区习惯用词转换（中国大陆、台湾、香港、日本新字体）。不提供普通话与粤语的转换。
+"help_intro" = "中文简繁转换开源项目，支持词汇级别的转换、异体字转换和地区习惯用词转换（中国大陆、台湾、香港、日本新字体）。不提供普通话与粤语的转换。";
 
-**特点**
+"help_features_title" = "特点";
+"help_features_content" = "严格区分「一简对多繁」和「一简对多异」。\n完全兼容异体字，可以实现动态替换。\n严格审校一简对多繁词条，原则为「能分则不合」。\n支持中国大陆、台湾、香港异体字和地区习惯用词转换，如「裏」「裡」、「鼠標」「滑鼠」。";
 
-严格区分「一简对多繁」和「一简对多异」。
-完全兼容异体字，可以实现动态替换。
-严格审校一简对多繁词条，原则为「能分则不合」。
-支持中国大陆、台湾、香港异体字和地区习惯用词转换，如「裏」「裡」、「鼠標」「滑鼠」。
-";
+"help_global_service_title" = "全局服务 (macOS)";
+"help_global_service_intro" = "OpenCCman 提供多种方式在任何应用程序中转换中文文本：";
+
+"help_method1_title" = "方法一：全局键盘快捷键（推荐）";
+"help_method1_content" = "OpenCCman 提供两种全局键盘快捷键：\n\n• 转换选中文本（默认：⌘⌥T）- 自动转换并在可编辑字段中替换选中的文本\n• 打开选中文本（默认：⌘⌥R）- 在 OpenCCman 中打开选中文本以便手动转换\n\n1. 前往「设置 > 全局快捷键」配置您的快捷键\n2. 在任何应用程序中选择中文文本\n3. 按下您配置的快捷键\n4. 转换快捷键：文本将自动转换并就地替换（适用于文本编辑器、浏览器等）\n5. 打开快捷键：OpenCCman 将打开并载入文本，准备进行转换";
+
+"help_method2_title" = "方法二：右键服务";
+"help_method2_content" = "OpenCCman 提供两种右键服务：\n\n• 「使用 OpenCCman 转换中文文本」- 自动转换并替换选中的文本\n• 「在 OpenCCman 中打开选中文本」- 打开应用程序，将选中文本载入以便手动转换\n\n1. 在任何应用（Safari、文本编辑等）中选择文本\n2. 右键点击并从「服务」菜单中选择您偏好的服务\n3. 转换服务：文本将自动转换并替换\n4. 打开服务：OpenCCman 将打开并载入文本，准备进行转换";
+
+"help_service_tip" = "您也可以在「系统设置 > 键盘 > 键盘快捷键 > 服务 > 文本」中为这些服务分配键盘快捷键，以便更快速地访问。";
+
+"help_service_details_title" = "服务详情";
+"help_service_details_content" = "• 转换服务：适合快速自动转换，当您对当前设置有信心时使用\n• 打开服务：适合想要查看文本、调整转换设置或保持原文和转换文本同时可见时使用\n• 两种服务都可在任何支持文本选择的 macOS 应用程序中使用";
+
+"help_conclusion" = "键盘快捷键方式最快速，适合立即转换。当您想要在转换前查看或调整设置时，请使用「打开选中文本」服务。";
+
+// MARK: - Services
+"Convert Chinese Text with OpenCCman" = "使用 OpenCCman 转换中文文本";
+"Open Selected Text in OpenCCman" = "在 OpenCCman 中打开选中文本";
+
+// MARK: - Shortcut Settings
+"Global Shortcut" = "全局快捷键";
+"Shortcut Settings" = "快捷键设置";
+"Enable Global Shortcut" = "启用全局快捷键";
+"Keyboard Shortcut" = "键盘快捷键";
+"Convert Selected Text Shortcut" = "转换选中文本快捷键";
+"Open Selected Text Shortcut" = "打开选中文本快捷键";
+"Convert" = "转换";
+"Convert Selected Text" = "转换选中文本";
+"Open Selected Text" = "打开选中文本";
+"Settings" = "设置";
+"Help" = "帮助";
+"Quit" = "退出";
+"Show Menu Bar Icon" = "显示菜单栏图标";
+"How to Use" = "使用方法";
+"Tips" = "提示";
+"Test" = "测试";
+"Permissions" = "权限";
+"Accessibility Permission Required" = "需要辅助功能权限";
+"Open System Preferences" = "打开系统偏好设置";
+"Cancel" = "取消";
+"Grant Permission" = "授予权限";
+"Try Again" = "重试";
+"Refresh" = "刷新";
+"No Text Selected" = "未选择文本";
+"Please select some Chinese text first, then try the shortcut again." = "请先选择一些中文文本，然后再试一次快捷键。";
+"OK" = "确定";
+"Accessibility permission granted" = "已授予辅助功能权限";
+"Accessibility permission required" = "需要辅助功能权限";
+
+"Global shortcut feature is only available on macOS" = "全局快捷键功能仅在 macOS 上可用";
+"shortcut_instructions_enabled" = "1. 启用上面的全局快捷键\n2. 点击快捷键录制器设置您喜欢的按键组合\n3. 在任何应用程序中选择中文文本\n4. 按下您配置的快捷键：\n   • 转换快捷键：文本将自动转换并就地替换（适用于可编辑字段）\n   • 打开快捷键：OpenCCman 将打开并载入文本，准备进行转换\n5. OpenCCman 也会显示转换结果以供参考";
+"shortcut_instructions_disabled" = "要使用全局快捷键功能：\n1. 首先授予上面的辅助功能权限\n2. 授予权限后，点击「刷新」更新状态\n3. 然后启用全局快捷键并配置您的快捷键\n\n辅助功能权限允许 OpenCCman 从其他应用程序读取选中的文本。";
+"shortcut_tips" = "• 快捷键录制器允许您轻松设置任何按键组合\n• 常用快捷键如 ⌘⌥T、⌘⌥R、⌘⌥C 效果很好\n• 避免与系统快捷键冲突\n• 两个快捷键都在所有应用程序中全局工作";
+
+// MARK: - Accessibility Permission Alert
+"accessibility_permission_intro" = "OpenCCman 需要辅助功能权限来读取其他应用程序中的选中文本。";
+"accessibility_permission_instructions_title" = "请按以下步骤操作：";
+"accessibility_permission_step1" = "1. 点击下方的「打开系统偏好设置」";
+"accessibility_permission_step2" = "2. 在列表中找到「OpenCCman」";
+"accessibility_permission_step3" = "3. 勾选旁边的复选框";
+"accessibility_permission_step4" = "4. 返回 OpenCCman 并重试";
+"Error" = "错误";
+
+// MARK: - Presets and text files
+"Conversion Preset" = "转换预设";
+"preset_simplified" = "简体中文";
+"preset_traditional" = "繁体 · OpenCC";
+"preset_taiwan" = "台湾正体＋台湾词组";
+"preset_hong_kong" = "香港繁体";
+"preset_custom" = "自定义";
+"Import TXT" = "导入 TXT";
+"Export TXT" = "导出 TXT";
+"Paste Text" = "粘贴文本";
+"Copy Result" = "复制结果";
+"previous_result_available" = "仍可导出上一次成功转换的结果。";
+"text_file_hint" = "导入或拖至此处：单个 UTF-8 TXT 文件或纯文本，最大 10 MiB。";
+"file_error_type" = "请选择 UTF-8 编码的普通 TXT 文件，或拖入纯文本。";
+"file_error_size" = "文本超过 10 MiB 导入上限。";
+"file_error_encoding" = "文件不是有效的 UTF-8 编码。请另存为 UTF-8 后重试。";
+"file_error_single_item" = "一次只能导入一个文件或文本项目。";
+
+// MARK: - What’s New
+"whats_new_title" = "新功能";
+"whats_new_done" = "完成";
+"whats_new_workspace_title" = "随屏幕调整的转换工作区";
+"whats_new_workspace_detail" = "Mac 和 iPad 可将原文与结果左右或上下排列，各窗口分别记住选择；iPhone 使用简洁的上下布局。";
+"whats_new_presets_title" = "常用转换，一选即用";
+"whats_new_presets_detail" = "快速选择简体、OpenCC 繁体、台湾正体与词组，或香港繁体。高级选项依然保留。";
+"whats_new_files_title" = "直接转换 TXT 文稿";
+"whats_new_files_detail" = "导入或拖入一个不超过 10 MiB 的 UTF-8 TXT 文件，转换后导出到你选择的位置。";
+"whats_new_reliability_title" = "转换过程，由你掌控";
+"whats_new_reliability_detail" = "取消转换即可阻止结果回写。导入失败时保留原稿，未完成的转换不占每日额度。";
+
+"On" = "开";
+
+"Off" = "关";
+
+"In progress" = "正在处理";
+
+"workspace_result_settings_changed" = "设置已更改。此结果使用上次转换时的设置。";
+
+"workspace_result_empty" = "转换原文后，结果会显示在这里。";
+
+"workspace_more" = "更多";
+
+"workspace_remove_recommendation" = "移除推荐";
+
+"workspace_settings" = "转换设置";
+
+"workspace_horizontal" = "左右";
+
+"workspace_vertical" = "上下";
+
+"workspace_layout" = "编辑区布局";
+
+"workspace_equal" = "恢复均分";
+
+"workspace_source_larger" = "扩大原文";
+
+"workspace_result_larger" = "扩大结果";
+
+"workspace_pane_sizes" = "调整编辑区大小";
+
+"workspace_temporary_vertical" = "当前空间使用上下布局；空间足够时将恢复左右布局。";
+
+"workspace_dismiss_keyboard" = "收起键盘";
+
+// Customer Center
+"customer_center_title" = "用户中心";
+"customer_center_lifetime_hint" = "终身 Pro 为一次性购买，无需续订。";
+"customer_center_loading" = "正在查询购买状态";
+"customer_center_refresh" = "刷新状态";
+"customer_center_unavailable" = "暂时无法查询购买记录，已保留上次的权益状态。请重试或联系支持。";
+"customer_center_restored" = "已恢复终身 Pro 购买。";
+"customer_center_no_purchases" = "当前商店账号未找到终身 Pro 购买记录。";
+
+"Launch at login" = "登录时启动";
+
+"restart_app_title" = "重新启动应用";
+"language_changed_title" = "语言已更改";
+"restart_app_message" = "部分内容需要重新启动应用后才会更新。";
+"Later" = "稍后";
+"Restart" = "重新启动";
+"mac_text_size" = "文字大小";

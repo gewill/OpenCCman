@@ -1,0 +1,350 @@
+{
+  "schema": 2,
+  "source_commit": "2e6e079644c8578b80986e555b023f0d207e4c95",
+  "measurement_harness_commit": "2e6e079644c8578b80986e555b023f0d207e4c95",
+  "comparison_engine_override": null,
+  "application_variant": "unchanged",
+  "source_status": "",
+  "pins": {
+    "originHash": "4973edc8399cd6907657a489fda38f85f33d2bf0b6445bde8fc48fec1ff94260",
+    "pins": [
+      {
+        "identity": "bettersafariview",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/stleamist/BetterSafariView",
+        "state": {
+          "revision": "884533749e55949b2566030948c6fdbe2873ed0c",
+          "version": "2.4.2"
+        }
+      },
+      {
+        "identity": "colorfulx",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/Lakr233/ColorfulX",
+        "state": {
+          "revision": "af739ea2d891afc68ff53b01c701bb72b9ca4a69",
+          "version": "5.8.3"
+        }
+      },
+      {
+        "identity": "colorvector",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/Lakr233/ColorVector.git",
+        "state": {
+          "revision": "0cd0169f1487d7371ee3fd7fe93f1e918fd93d00",
+          "version": "1.0.5"
+        }
+      },
+      {
+        "identity": "iqkeyboardmanager",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/hackiftekhar/IQKeyboardManager",
+        "state": {
+          "revision": "c00b1ae9fa1ad8af4465bb6ca901f6943fc98eba",
+          "version": "6.5.16"
+        }
+      },
+      {
+        "identity": "keyboardshortcuts",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/sindresorhus/KeyboardShortcuts",
+        "state": {
+          "revision": "1aef85578fdd4f9eaeeb8d53b7b4fc31bf08fe27",
+          "version": "2.4.0"
+        }
+      },
+      {
+        "identity": "msdisplaylink",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/Lakr233/MSDisplayLink.git",
+        "state": {
+          "revision": "1ba3e769b734e456317fa7e45321fa7f53eefb67",
+          "version": "2.1.0"
+        }
+      },
+      {
+        "identity": "neumorphic",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/gewill/neumorphic.git",
+        "state": {
+          "revision": "1f5745173dedddf0227fffc47cbdaa3100e5569a",
+          "version": "2.4.1"
+        }
+      },
+      {
+        "identity": "purchases-ios-spm",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/RevenueCat/purchases-ios-spm.git",
+        "state": {
+          "revision": "629a56ecef190469914b8f0914bf0446363eb09f",
+          "version": "5.78.0"
+        }
+      },
+      {
+        "identity": "springinterpolation",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/Lakr233/SpringInterpolation.git",
+        "state": {
+          "revision": "cdb556516daa9b43c16aae9436dd39e19ff930fd",
+          "version": "1.4.0"
+        }
+      },
+      {
+        "identity": "swiftui-introspect",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/siteline/swiftui-introspect",
+        "state": {
+          "revision": "a08b87f96b41055577721a6e397562b21ad52454",
+          "version": "26.0.0"
+        }
+      },
+      {
+        "identity": "swiftuirouter",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/frzi/SwiftUIRouter.git",
+        "state": {
+          "revision": "e0cb32b54bb429aa43ce30240b0036bf223a62a3",
+          "version": "1.4.0"
+        }
+      },
+      {
+        "identity": "swiftyopencc",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/gewill/SwiftyOpenCC",
+        "state": {
+          "revision": "6eded293f5c84c064f332cbc2832391165c82dda"
+        }
+      },
+      {
+        "identity": "swiftyuserdefaults",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/sunshinejr/SwiftyUserDefaults",
+        "state": {
+          "revision": "f66bcd04088582c8fbb5cb8554d577e303bae396",
+          "version": "5.3.0"
+        }
+      }
+    ],
+    "version": 3
+  },
+  "os": {
+    "version": "27.0",
+    "build": "26A428",
+    "arch": "arm64"
+  },
+  "hardware": "Mac16,7\n51539607552\nApple M4 Pro",
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "started_utc": "2026-09-24T08:35:33Z",
+  "source_hashes": {
+    "OpenCCman/AppDelegate.swift": "2c835af49775fb72fb8a1c38246265174e543dc7fb775582b9bbf3096de55c8d",
+    "OpenCCman/Constants.swift": "dbff1615cbf52a024bd47f7bd25c830d18c5d0590bafaa327265287dba651901",
+    "OpenCCman/Helpers/ReviewHandler.swift": "5c65cae6cef4b2ddd9f7d434ac6a0295b81e64a924e2ad4482bd62d81a2585e1",
+    "OpenCCman/IAPManager.swift": "cc17ad405c01d4e38aa78bdfefe33191cedb50231876ca84825df4f51aa0a740",
+    "OpenCCman/Model/ConversionConfiguration.swift": "2287fbaf31e4b682c4fa21fe06748dd12088bcb61926f675f0ef31bf799bbefc",
+    "OpenCCman/Model/ConvertedTextDocument.swift": "d1ed6c797941ea1bb296ccab4e1e06b3eca502d960a465dd602d061de7e517d6",
+    "OpenCCman/Model/MainWindowGeometry.swift": "285cd41ddda8485d21a8e40d20aa9757e14766fa140a200d9bebd594998a2fec",
+    "OpenCCman/Model/MainWindowReopenController.swift": "9d2b8625d5eb7f302bf0d8857b23d3eada4f3b7b914c732adabeb19437c3d05f",
+    "OpenCCman/Model/MyAppModel.swift": "38359e8de6db0dcccc657aa07eb3e7e54360a6baa77133d7ecd83d9d866f176f",
+    "OpenCCman/Model/OpenSourceModel.swift": "79dc2059b5bab96518b4d07049d1c5d509e9d288575ab90500964a93a6b46d83",
+    "OpenCCman/Model/ProAccessUpdate.swift": "23183bb528d0170ac68587fcb2d05fee80c5b741f29565a3aa210b8f9d48d172",
+    "OpenCCman/Model/TestNumbersPerDayManager.swift": "602ef6c77ce4c22710914906fe4736842da9cf5150f6a62a67ebcd8ed11ffb9f",
+    "OpenCCman/Model/UserDefaultsKeys.swift": "c8d9fdc6ad273d918ce262d40b296d68026695b733b845f5c1a38624217cb0cf",
+    "OpenCCman/Model/WhatsNew.swift": "fbfeb0e361cc98a685e70b4c626121c060465df57ff548574652d79835684a64",
+    "OpenCCman/Model/WorkspaceLayout.swift": "3736aa44bf1b062a81e41cb84623252f5b49b76b0ab13b2ca14e01c1cb725e4c",
+    "OpenCCman/OpenCCmanApp.swift": "51d794190eca9b4481c5fdaf9c8cd46852045a0af3977dad40dd38ae7fc02c58",
+    "OpenCCman/Scene/ChangeColorSchemeScene.swift": "ef5b7129d0901c4a8e6365266d7d90311c126c75729c88bf3bf93111b9cd1433",
+    "OpenCCman/Scene/ChangeLanguageScene.swift": "34c3599d2a4248072a417e9c2781db498734ac021f6f333db528495c9236c286",
+    "OpenCCman/Scene/CustomerCenterScene.swift": "b4f217fe21cd33f7e37d45910062f90ed44b3845bb8b7145257463f22c8d34d4",
+    "OpenCCman/Scene/FeedbackScene.swift": "47d9edd3a1e14a65b9083981e9bd6ae8de42d880783c34f0759b9db34257aa7c",
+    "OpenCCman/Scene/HelpScene.swift": "8d08c8b5ec2e6420de2128a0e348d64a882c70d4889c8a2ffc81c54525588f30",
+    "OpenCCman/Scene/HomeScene.swift": "b74b0a706f53b6ff9aa56194119024477d504354aec6a456374eff54d524e274",
+    "OpenCCman/Scene/HomeViewModel.swift": "f8830e4d876b2c4f4d11b7b5899d6fdee67021166e178d7fa4bffeb37cefbe2a",
+    "OpenCCman/Scene/OpenSourceScene.swift": "89b6a5b9677539c13c09c777e140e3f2b63de68e698ce7e3feee8353a08b10db",
+    "OpenCCman/Scene/ProScene.swift": "f32ba39b4f1a8187ef4e47bce5a1a9aa9cd74725f9cdf972b73375f9be2e2dd1",
+    "OpenCCman/Scene/RootView.swift": "2b40ca7401380dd28496fb891156443ad8305db54dc53f82b6b6660162c3d30a",
+    "OpenCCman/Scene/SettingsScene.swift": "db9bc5647d5bb4cfcf78841c2abff100964e9a9e7b11ed8bfc2d24c59751d700",
+    "OpenCCman/Scene/ShortcutSettingsScene.swift": "c28d0afc27d3de4036da6f8c3169758274d22fe7f8c97625e2952038599be5ba",
+    "OpenCCman/Services/ChineseConversionService.swift": "2f9b951421406dab71bee5e8da9125ba8cac154284e01138b8e062cd64083a0a",
+    "OpenCCman/Services/GlobalShortcutService.swift": "48ca6cc84ef2bd77e2594639104c74bd02125d2c0731308d29ecb68a23ccb1b4",
+    "OpenCCman/Services/TextFileService.swift": "e69abd07291096af899a42aae20c7725045673fc09665b0b98c5c504ef10e8d3",
+    "OpenCCman/Styles/Styles.swift": "ab0a0a2632180782b249372d42802c985704944dcfb325fd45c0e95206cd95e1",
+    "OpenCCman/View/AlertView.swift": "1bb64f603b58d198f8df65ebb13d0d0a7751282a95e5e70b2c6fb5357ff0330f",
+    "OpenCCman/View/AppControlStyle.swift": "0abce11d49a921ecb6d7563b845bb929fca76ba1a3f2215085bdae3931b82a92",
+    "OpenCCman/View/BackButton.swift": "35c5314d128d4c992520b1e1a0005b7f3d83fe5d33eab48425f891be13628d9f",
+    "OpenCCman/View/CardReflectionView.swift": "bd8fe43f713d1a491043d63a9b24a3fe51b29bb8591c6e97a2c494d762eb9d54",
+    "OpenCCman/View/CellButton.swift": "9c279028fc7b8060f4a39e4e195b51983771ba7a516a857613f5b0aca4ad3ab1",
+    "OpenCCman/View/ControlSizingGallery.swift": "ea1b2e1e61f078918da8649e6cab1e73270cfb0be51170f81e2f92ec2fd02171",
+    "OpenCCman/View/LoadingView.swift": "daf670974997bed4763a0467558617fdb21b6a43c9344f65cac4047a9b42c5db",
+    "OpenCCman/View/MainWindowSizing.swift": "c5132c127e0d8e75fabd40e80c3dbbf9d88385a0517e102a1caa3b8f59e4f59d",
+    "OpenCCman/View/MyAppView.swift": "a7b9967b450b82a4ce39de83b5e672e88e5e013adfee58b6bd4eb4619b495e77",
+    "OpenCCman/View/PhoneWorkspace.swift": "8a12ed0a09a8eee953ed1e46b8195113cb36b446483d5b60c6a94ce221fb0f89",
+    "OpenCCman/View/PickableView.swift": "b44fe9b1dab18fd3f640678efb4c39cd961a686b556f9edb0f60511e57b422ce",
+    "OpenCCman/View/ProAlertView.swift": "8164f8c8cc49028d5a74b1bd3fd77dc0ea4f1a4ccd6d9c5bcb2f353c7bef2345",
+    "OpenCCman/View/SegmentView.swift": "1b1b5cf547975a1f97892ddeb001a0dc93ac99e63aaeff34836aba6f0e8dc8c8",
+    "OpenCCman/View/WhatsNewView.swift": "dc5b58b52a77cae94252e38e1722d7b9ad9bb3be3c355063f229abcdc962c787",
+    "OpenCCman/View/WorkspaceComponents.swift": "ab439a2413b07152afa4d1f05efef5cd80261c3dcbdac5ea8bfa6d8cb3dc836e",
+    "OpenCCman/View/WorkspacePreferences.swift": "9496926b963bbaafac61439148e75d6e67abe2187644993d4248e018fdf99f1e",
+    "OpenCCman/View/WorkspaceScrollKeeper.swift": "6dce795d81bec08e90c9fa05abe5cf969746029600c3982892aaf02e8866eafc",
+    "OpenCCman/View/WorkspaceSurface.swift": "45bfbf27830820652a4f54f85522afb3dcb8f6c225606d5ced11258ed1bc4bb1",
+    "OpenCCman/View/WorkspaceTextEditor.swift": "37352746a6838b695c6ed496924db6636c27fc74ea17380386d3b05ac9fb02ed",
+    "OpenCCman/extensions/BoolExtensions.swift": "fde7bd25ba2ffedad438610581d41710c8355ff0e1b55947800889d6ac4b6e75",
+    "OpenCCman/extensions/BundleExtensions.swift": "5963b3abaaea9e3ef7efe4db0e2615aff09f6cdf0aff009eb9b328d3a21f1c4b",
+    "OpenCCman/extensions/ColorExtensions.swift": "2d72f9a19b62997472296fdb6b5b3419d306f60a6f7d52dc5cb37775dac95784",
+    "OpenCCman/extensions/DateExtensions.swift": "766f05d1938ffcf9c0cfdf74ac048fc59460d75c2ad837013a2ea69c277e7fb8",
+    "OpenCCman/extensions/DoubleExtensions.swift": "a3a87e2c836a59b661b973a94330d7c395422b539eb85de68171857b9fc6eb08",
+    "OpenCCman/extensions/ImageExtensions.swift": "104c7fdf1dbd3f87d48285d7900b4b87c5cc7414ba58f233cbd2276a0b65f016",
+    "OpenCCman/extensions/IntExtensions.swift": "a7fb9af832c454c0cb348f435d15b67dfeb8216aad54ead2ce9c820a864778df",
+    "OpenCCman/extensions/SKProductExtensions.swift": "5e8a25bc7c9700bad76740d15167db374cebfd6e750400c5233d367722ce8a60",
+    "OpenCCman/extensions/StringExtensions.swift": "1fcf7e7e090abf720cdf49c3d708d980daf48d881667b9b22ef683ee27635e3e",
+    "OpenCCman/extensions/UIApplicationExtensions.swift": "bf6e9ac1d641f5541b6d22748b0007df1e7bf8514e97ef39f8c0086226c8d83f",
+    "OpenCCman/extensions/ViewExtensions.swift": "b9b55ae465ca9a2bec03c76c9ab738f3047226c168e0304baf5683a4a7bc0310",
+    "OpenCCman.xcodeproj/project.pbxproj": "2146a57532465ef11f4121fdcb603eccbede2d6e1a02dffbd1c253f2cc69c309",
+    "Tests/Benchmarks/AppPerformanceAudit.swift": "97870dd1731ad00110a735a83cf2ced425c058ed61e3cdb4e01f5488d7ee06d1",
+    "Tests/Benchmarks/ByteScanBenchmark.swift": "5d6c6bce0bc194990201aa023b4cc0898faa1697d1c2cdc59d4c31245fcb1794",
+    "Tests/Benchmarks/ConversionBenchmark.swift": "d69d929fbb947ea79b3cac4a00cbda11dc51df775c0134652e7bad87cdf32f67",
+    "Tests/Benchmarks/MinimalWindowLifetime.swift": "4b735ba854ca824757fa38b0b3685176a8c2e3ac3016488654661b35f724ee2d",
+    "Tests/Benchmarks/ModernWorkspaceScrollKeeper.swift": "0445579139a7b4a78984e9e9c677a1a8cec5eb20a1aa07742926314c11d6710f",
+    "Tests/Benchmarks/NativeTextKitMemory.swift": "59236d35429a570db5713cff1e768a58b91a88372843baf64ca3a551205f4946",
+    "Tests/Benchmarks/NativeWindowLifecycleAudit.swift": "49de032310c85c4df59c6e749162f64667cd6c98a5fa8702e68e45fad1a0591e",
+    "Tests/Benchmarks/ServicesWaitProbe.swift": "ff88cd0a7dec0373b669c473c6d61a47c8a339eb60aa626b9bca438d6dc75471",
+    "Tests/Benchmarks/WeakWindowHosts.swift": "c10c0dc2cc741287881b824a00a049883aec40236c9564766def5e0eb412a718",
+    "Tests/Benchmarks/WindowCycleDriver.swift": "3fcde1301eea672f879f31377f11dfa5c6154a0ba4845685cc2d0a88092910f0",
+    "Tests/Benchmarks/WindowDocumentDriver.swift": "21a3ffe3afe1ec97477d478c975aa2a1f61026294557fd4c3e1b705b49fbe81c",
+    "Tests/Benchmarks/WindowLifetimeDriver.swift": "757c478ece308de512299005ce5ed639a3256e7529be7f10b3bf45a366a6c5a5",
+    "Tests/Benchmarks/test_app_performance_build.py": "61d2e8204505e9e98b042f51cdaa0dc0594831ba03722ddabca85a7e2976717c",
+    "Tests/Benchmarks/test_app_performance_report.py": "270e2f10efd27f17a58a431440eca573d859ab7a36f6979a7c732bdfafd69228",
+    "Tests/Benchmarks/test_byte_scan_report.py": "031012e157a817829bdcdb5923b11e16e4d09a694d1478a0923aee679e91f8b5",
+    "Tests/Benchmarks/test_native_window_lifecycle.py": "dc4daeb3af0265c19cc2a365f4ec227b9dfdca4e6c0f94ad3d94a62ed17c841e",
+    "Tests/Benchmarks/test_retained_active_window.py": "8f72b529de19717f5024f607e67900ee75ce353d0dea440e7a25f19b6761b7e0",
+    "Tests/Benchmarks/test_window_cycles.py": "f248fbb1c789a01c521239f9a40a0eaa83a11db81f971fd51fa613e72b338a94",
+    "Tests/Benchmarks/test_window_documents.py": "e6caaa99afd8a5a6a2a5d759f3bef7af8e23cbf99e9d76424aec0c940cc6be1b",
+    "Tests/Benchmarks/test_window_lifetime.py": "5f173172a639b808c9269d85accc657cb012da01a0e3c33a853df4e215a2aeb2",
+    "Tests/Benchmarks/test_window_stage_profile.py": "a6084602b186c00371d74ff9a37336739011660620b5df5304e803c50a6bfbca",
+    "Tests/Benchmarks/test_workspace_editor_comparison.py": "7dfe8d8a2990bfdcb4789641529c3e5d05a661554d4419b7190c8b6c4098263d",
+    "Tests/Diagnostics/WindowReopenProbe.swift": "bd011863ecbc8664c553e5d25048938353081117eebe87faf705d7c483ef9a05",
+    "Tests/Regression/AppLanguageChecks.swift": "85e5c011ca0739bdadc0cfaa2d5f385253fed2b6b1cf353d0b0446528f867f69",
+    "Tests/Regression/CheckScriptChecks.py": "d3bc20586beef0d01411ab62457a0a343d82ad32e27c44f165b6e4b34194521c",
+    "Tests/Regression/ControlLabelChecks.swift": "8b323e43907ff8a0b3c38c60cc2ca048a0d9dccf27ed3f513853e55197bf38b9",
+    "Tests/Regression/ControlSizingChecks.swift": "53212a57767014aaafca51e34793bb16bfe91f561f636f299717e0e581170dd2",
+    "Tests/Regression/CoreChecks.swift": "07904130bc176edc058d623fbc2bb7ffc304678b27cca35663d7a5399532401b",
+    "Tests/Regression/CoreSupport.swift": "2409ebf905ab99ea75dab8e8cbc4102355a465e31f0206ba1af2741c85d2cab2",
+    "Tests/Regression/EditorScrollChecks.swift": "f030506b45be4781751337d73f0e48dbbbf6a180eaa39b8dbd7e397a552b2d8e",
+    "Tests/Regression/FileChecks.swift": "07a3876007b10e10bdd4cca4944e84e44195c376eea7fae90b058ea323d3f2af",
+    "Tests/Regression/IAPLocaleChecks.swift": "a95911161cde8246f55c7be265df453a35e063bfa9d79fa7c64b1040894f6034",
+    "Tests/Regression/IAPLocaleSDKDouble.swift": "b62e05789eedd0f89ad7e33be4aa2165982761562381e459f39913821c368941",
+    "Tests/Regression/IntrospectionChecks.swift": "ab881bb48a7d2b178d95968696f7175f13fa33f4130129b36aac0db6ba8293fc",
+    "Tests/Regression/MainWindowGeometryChecks.swift": "ac89f7c072bdfcfa11afaa749da6e5ea022902ea59444d080ff4082212377b61",
+    "Tests/Regression/MainWindowLifetimeChecks.swift": "49cf905adab4e6f1777fe453b1ac949cbcfb564b69f8e8400902d9b74d0daaf1",
+    "Tests/Regression/MainWindowNativeChecks.swift": "4c15c3242cd0e49ae87ca4f5b44bc96fb044498a94093e40a71bdcb9a8f0578d",
+    "Tests/Regression/MainWindowReopenChecks.swift": "4df35a96cf46c7637c3c64d8bbe0ffece45c45db02526cea49c127cc864cf0ac",
+    "Tests/Regression/ModelLifetimeChecks.swift": "a94be810ee4276888931ffb9f80f81c4c50f3459e5b404be9fe478e909f53382",
+    "Tests/Regression/PasteboardChecks.swift": "a880b3b11ad9a400d933f9f79a3a823fcf8110046ac06f3a73299a7afc3ce8bf",
+    "Tests/Regression/ProAccessChecks.swift": "0c805a85b6a58ad067f03678fb305669487b4b6f1df0a14691e658647a2ec99d",
+    "Tests/Regression/ProviderChecks.swift": "1893b3969c92703b79014627d216832a861c4aafe440b74d2383f19d2d6d61bb",
+    "Tests/Regression/QuotaChecks.swift": "8918ed43df3e2c1f3214bae3e22ba7f24ce41ed72f136ec1a4beb2b5d1176b3f",
+    "Tests/Regression/QuotaSupport.swift": "6af32fe336ea502eb938e230dee1a26f26916cb692625a7447b4cc7bddc487fe",
+    "Tests/Regression/SegmentLayoutChecks.swift": "8ac637f351ff6d07d548815293430a7cc0d5cc2315b7b77a4255885f2f2f5e7a",
+    "Tests/Regression/WhatsNewChecks.swift": "eb975ad363ae5c5df41dc07ea0f995150dc25ea376662a4c1194d8567b6ccf46",
+    "Tests/Regression/WindowNotificationChecks.swift": "f933f4f4f8ac37afeec501daa0e1e4aa2e87382f877c3efba112b6315acd3454",
+    "Tests/Regression/WorkspaceChecks.swift": "52a4d6beaffde1110042690833fbaa8015f2ad9d58c0b65471b4f6a43dcd5b38",
+    "Tests/Regression/WorkspaceTextEditorChecks.swift": "14a6e093030611965b7723ec9eca95f8b0cdda45b9394ba8b427295602d2b073",
+    "Tests/StoreKit/StoreKitHost.swift": "5dfbdaf760908e0202763087b8968497c3f5ce2a23f4e65bf2c0c281a61ccb71",
+    "Tests/StoreKit/StoreKitRegression.xcodeproj/project.pbxproj": "d283277ffac3fb1a1e54e97b4a5b360c3966303d491e992ceeb9441111e081ad",
+    "Tests/StoreKit/StoreKitRegressionTests.swift": "b434cf0cc3baf938aee76f05f41e47f7377b16acc0895f931959d89480038109",
+    "Tests/Toolchain/RevenueCatInitializer/ExtensionInitializer.swift": "5e3ce6538fc7e0e804a22ec1b7308489b91b547b8ec033dbc8f9882478d5479b",
+    "Tests/Toolchain/RevenueCatInitializer/PrimaryInitializer.swift": "026ae8996110805cca0f44a034f16b1758ffd4fd62d453553b4191265dc0092c",
+    "Tests/manual/real_upstream_replay.py": "0479ac039fb8ef7237136716ed0d51c526c8d9d5f68e615bc41c406492c0ab4b",
+    "Tests/test_upstream_sync.py": "dc4cc58f0d4796cc090c60ef194a58ca8419f57fc899c43ac582fb2b352f2ebf",
+    "docs/performance/2026-09-14-review/analyze.py": "5795ba8df37ee688b60a83b90d74601f30f19ba0986ff20fbc1ba810adfce40e",
+    "docs/performance/2026-09-15-contiguous-input/ContiguousInputBenchmark.swift": "07dd3f2e01debe6ecc111ca6066b6bb9cf66e103196423777450c541be56274b",
+    "docs/performance/2026-09-15-contiguous-input/Package.swift": "d8431fc18573b983a0e3c9433873d4767f8087d06fbb81440c6ce236318053c2",
+    "docs/performance/2026-09-24-textkit-allocation-traces/analyze.py": "cdc1d51109117dabaca0f6d2da1680e9dbc2af498e7944f699d5d0e7bcac7c4b",
+    "docs/performance/2026-09-24-textkit-scroll-ablation/analyze.py": "1603327d1deb48d8d7f94e97478bc38ee90f18d092b29998ddcd3cdb12429a8f",
+    "docs/performance/native-editor-sizing/2026-09-16-anchor-ui/RecordWindow.swift": "c88c204ffacc5a8280605d372e5d8b4491708a0f164be1f93d5c858b99ac94ca",
+    "docs/performance/native-file-panels/verify.py": "f92c9dcf92816f149914314b3646ef9e3ebbdec97baa359b82c7703a4beacfaf",
+    "docs/performance/native-window-ax-control/2026-09-16/recorded-demonstration/RecordOwnedApp.swift": "0289b47f1724f6fb7978263093401b770f2a39bacc4fd25f189a905405252711",
+    "docs/performance/native-window-lifecycle/2026-09-15-empty/RecordOwnedApp.swift": "c9a2d3cb375e5be1d06636caa5a6038b113da3bece6908dd019fb441e2a544eb",
+    "docs/performance/native-window-lifecycle/2026-09-15-introspection-cycles/capture-cycle.py": "712c5c44c588cb90fa755b951c937c60cd0c0c382018802511209c67b8bef899",
+    "docs/performance/native-window-three-cycles/2026-09-16/recorded-demonstration/RecordOwnedApp.swift": "5b5209a07d1c39c9646045c716b2db94ba9df7e90f5568f79bd7cffa59f6ff0b",
+    "docs/performance/services/2026-09-15/configuration-series/run-configuration-series.py": "addc2b99dd5b3e569379a667c72fcead6f4f663503515d7e433b38f3c89561b4",
+    "docs/performance/services/2026-09-15/optimized-s2t/run-2/run-s2t-series.py": "ba6d0bd11a716ec07d27eacef20276dcffdc302a46490261d76945f2658c0f64",
+    "docs/performance/services/2026-09-15/optimized-s2t/run-s2t-series.py": "0a943d6a841aa2b232c04cbb0d3396ec319a05c2fd94358ddb217d10d655a971",
+    "docs/performance/services/2026-09-24-current-release/validate.py": "29b60ecfb82c99ac95ecab3820e8746a942e257af9dd645ab55cfdaf33b92dbf",
+    "docs/performance/weak-window-hosts/2026-09-16/Probe.swift": "67e6610811ae2ec976530b1972677914b99702aa4a7786d383f039b7156273c9",
+    "docs/performance/weak-window-hosts/2026-09-16/ci-macos15/observed/Probe.swift": "5eb36ffd58447f0afc8c900b095f24182b6e5c25bd6f9fe5de070bbe38665060",
+    "docs/performance/weak-window-hosts/2026-09-16/ci-macos15/text/Probe.swift": "67e6610811ae2ec976530b1972677914b99702aa4a7786d383f039b7156273c9",
+    "docs/performance/window-environment-lifetime/2026-09-15/auto-text/Probe.swift": "e744c11ef3d3eee235ca0c6dfe2df563657dfd4c510b4c38af35d4b9474086c5",
+    "docs/performance/window-environment-lifetime/2026-09-15/ax-control/Probe.swift": "f98e919f3d7be343fc182d015dcdb16b800fd3c2d6dcffc599039a550d2e73ac",
+    "docs/performance/window-environment-lifetime/2026-09-15/ci-macos15/observed/Probe.swift": "a38c65ca2b904366ddc67a83c6fa918a29aa34a2a2e9f1e291de455f5398c2d3",
+    "docs/performance/window-environment-lifetime/2026-09-15/ci-macos15/text/Probe.swift": "f98e919f3d7be343fc182d015dcdb16b800fd3c2d6dcffc599039a550d2e73ac",
+    "docs/performance/window-environment-lifetime/2026-09-15/observed/Probe.swift": "f7170a4577de101b6e58a67fa1b367546f3ccd55fd041adfb7e8f00b44ce6df6",
+    "docs/performance/window-environment-lifetime/2026-09-15/observed/RecordProbe.swift": "5f27694921a0e804dc91abefd7e303f8aaf6604c4e4210a6376bd1836561b90f",
+    "docs/performance/window-environment-lifetime/2026-09-15/sample.py": "b8b1fbac55719d5a8733dda7f585c755585b5af9d5b067e97da06974e4a795c7",
+    "docs/performance/window-environment-lifetime/2026-09-15/text/Probe.swift": "2be9ab4e95052b3e1bffcc3fd7b2e4ac20184ef82c08b016b4661b33c94a2f6b",
+    "docs/performance/window-environment-lifetime/2026-09-15/text/RecordProbe.swift": "761a891079f23584e57d675f5510413484ab6dff2a2914f078d36add994dbfbe",
+    "docs/validation/issue-20-ios27-readonly/probe/Tests/OpenCCmanVoiceOverProbe.swift": "90f535017d46ce2af8b9bdfa0ca922f2730f8bf446e4346d31f83725cdc3f3f9",
+    "docs/validation/issue-20-keyboard-runtime/RecordWindow.swift": "a05a8e291facc70fba34b1f382d7f1e727d6b8b694b4b73db53883193f932fc2",
+    "docs/validation/issue-34-file-panel/RecordWindow.swift": "9774c51d479e9d965b5965f2789c224c63cf63af566fc6a1fcac921b1dce369b",
+    "docs/validation/issue-65-final/analyze.py": "5708c090eb498cba36705c55b39425a6847bda52066ba1d90ee711819133cd42",
+    "docs/validation/issue-65-final/mobile-fixture.py": "27257641fb77ad9eb9644e38def976a491fd175002b29ab4b9e2fa108ba27e49",
+    "scripts/app_performance.py": "c3521b8f207f3ce7d087ed1f19709b2758fe8589a562d87b1447cc2aa71485b7",
+    "scripts/benchmark-app.py": "3868b935262e1e30199c36cd3fd32aa7f78bea0db646e2222eab21bc7e5e4fe5",
+    "scripts/benchmark-byte-scan.py": "1fb51a9660558665ec3600805390f0c63e56f1a0982c0e787e6d06af5163a1a3",
+    "scripts/check-app-language.py": "10501129fed37a04c8423473574c393689721a732e933f2f1a846645e02f270d",
+    "scripts/check-core.py": "a3469441e97ea67700eaf9a51ecb0064773ded8feef4b55e579dcf610f775765",
+    "scripts/check-iap-locale.py": "1196d342f7b46eb28009d8565189d3482f0b96632b765942c12ab54c828eb52b",
+    "scripts/check-introspection.py": "fc1cbe9da75f89012a4918031b87c616fd52abd6806ea7e8a4c462e91880f565",
+    "scripts/check-native-window-lifecycle.py": "9e977bff79a720282fd33b465d3d366ed9664655581a9406267748c3fdbf4e87",
+    "scripts/check-project.py": "d6abc972b5d9b1beac3007950fc108c54420b5218d302bb27a5f29403f7fb458",
+    "scripts/compare-app-performance.py": "bf6943f7c464de61351c7920666cf3533bfc37dd8326a0b6015ae88c76025068",
+    "scripts/compare-textkit-bridge.py": "965aa169d72f26a4c589a597982be7ad4d591291e589c9c9a66199b5c534f663",
+    "scripts/compare-workspace-editor.py": "5ceb905593f8b474c0e7ecf7c9962f715af48298f535dda6c87226c7bea59066",
+    "scripts/diagnose-editor-anchor.py": "7472bf3e40e5ea2f9824c19e39e1be440ed65b8183f79f67ef6022ecfa2f3c2e",
+    "scripts/diagnose-revenuecat-initializer.py": "2fcc0b702bfc2d9255599f5463bf245cd4f6efac2407a75f05469bf1ac9c7b5e",
+    "scripts/diagnose-window-lifetime.py": "f14b314ff2e7ef6fc0ab837d8a4090205009d37fe402d23a1e9d4e345bd3c04f",
+    "scripts/generate-services-fixtures.py": "99a4e254fc1a6e71b6fd947537a9a36e14bd5ac182cf7c40b09234c58d83dd7b",
+    "scripts/measure-native-textkit.py": "2fb12a69f2deae76474d1219ae7e6d358bd4fa0a56d94d31fdcb5f893d0e60a9",
+    "scripts/prepare-minimal-window-lifetime.py": "00f5ef5717508cbeeba429bd17c72d3795c0f5a8168f0f43a376d03579c63fe1",
+    "scripts/prepare-window-lifecycle.py": "cc9f040c32a01c6b1958802f61fe695da32fb659a78061b9ca795a0235b5c3da",
+    "scripts/profile-textkit-bridge.py": "dd3c328dd64da3a0d0e8ccc3463f3576668bcc8fde0e3e27c62b034cea64acd7",
+    "scripts/sync-upstream.py": "26ba41b6caa3871866037dc7a8ecf9ba2229979cbf7caa63df801c7a5484b6d3",
+    "scripts/window_document_protocol.py": "62a0208798d4a22d8a3c773a80751f1d4fa1a89556fadc14155cc5fd911da880",
+    "scripts/window_stage_profile.py": "1e8fecea7c871678e98d7801e9b43e7f4eba29ceb10b2ad9d7473de3c25c9a09"
+  },
+  "conditions": {
+    "protocol": 2,
+    "suite": "reflow",
+    "configuration": "Release -O",
+    "input_profile": "single-paragraph",
+    "isolation": "ad-hoc signature; diagnostic bundle/preferences; sandbox disabled",
+    "sdk": "RevenueCat configure retained; synthetic Pro; refresh/delegate/review/WhatsNew suppressed",
+    "window_content_points": [
+      1200,
+      800
+    ],
+    "locale": "en",
+    "theme": "Light",
+    "launch": "fresh process; one reopen event after initialization; OS/file caches not purged",
+    "activity": "userInitiatedAllowingIdleSystemSleep; foreground required after root ready",
+    "extra_windows": "two fixed-size hosting windows at /home; not native WindowGroup lifecycle",
+    "layout": "role + precomputed UTF16 length acknowledgement and display flush; exact UTF8 validation after timer; not presentation",
+    "navigation_target": "middle next ordinary Han glyph within 128 UTF16 units; start/end composed-character boundary",
+    "timer": "20ms main timer gap includes harness work and scheduling; not FPS",
+    "memory": "RSS high water includes all previous work, fixtures and validation"
+  },
+  "resolved_checkout_revisions": {
+    "bettersafariview": "884533749e55949b2566030948c6fdbe2873ed0c",
+    "keyboardshortcuts": "1aef85578fdd4f9eaeeb8d53b7b4fc31bf08fe27",
+    "springinterpolation": "cdb556516daa9b43c16aae9436dd39e19ff930fd",
+    "neumorphic": "1f5745173dedddf0227fffc47cbdaa3100e5569a",
+    "colorvector": "0cd0169f1487d7371ee3fd7fe93f1e918fd93d00",
+    "purchases-ios-spm": "629a56ecef190469914b8f0914bf0446363eb09f",
+    "swiftyopencc": "6eded293f5c84c064f332cbc2832391165c82dda",
+    "iqkeyboardmanager": "c00b1ae9fa1ad8af4465bb6ca901f6943fc98eba",
+    "swiftyuserdefaults": "f66bcd04088582c8fbb5cb8554d577e303bae396",
+    "msdisplaylink": "1ba3e769b734e456317fa7e45321fa7f53eefb67",
+    "swiftuirouter": "e0cb32b54bb429aa43ce30240b0036bf223a62a3",
+    "colorfulx": "af739ea2d891afc68ff53b01c701bb72b9ca4a69",
+    "swiftui-introspect": "a08b87f96b41055577721a6e397562b21ad52454"
+  }
+}

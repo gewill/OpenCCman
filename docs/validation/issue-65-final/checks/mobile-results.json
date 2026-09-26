@@ -1,0 +1,34 @@
+{
+  "source_commit": "5d527bd3978d73be5f028804d579c86da0f66752",
+  "bundle": "org.gewill.OpenCCman.Validation65",
+  "configuration": "Debug; ad-hoc local app; no performance harness injection",
+  "source_1MiB_sha256": "668c1c90ed5a4d4bb5ffc615c027ffba4af51c5d01b320b6a9d76c64a011f3b9",
+  "expected_1MiB_sha256": "f19c287b401a439c548403e18d1b47ec24f21cd3873ada7636932c200c0e8dde",
+  "one_MiB_byte_equality": [
+    "ipad-output.txt",
+    "ipad-after-readonly.txt",
+    "phone-output-after-popup.txt"
+  ],
+  "ten_MiB": {
+    "phone": {
+      "input_bytes": 10485760,
+      "output_bytes": 10485760,
+      "exact_expected_output": true,
+      "input_sha256": "bac9da9ec5867e93e128e026ed9dd0ba1ab81558fd4c26858d8c1b8a433952c8",
+      "output_sha256": "bdd6bb8e7dd86c248f26dfd1e7c1d40cff00c4b1732da5f55b468ac617114d53"
+    },
+    "ipad": {
+      "input_bytes": 10485760,
+      "output_bytes": 10485760,
+      "exact_expected_output": true,
+      "input_sha256": "bac9da9ec5867e93e128e026ed9dd0ba1ab81558fd4c26858d8c1b8a433952c8",
+      "output_sha256": "bdd6bb8e7dd86c248f26dfd1e7c1d40cff00c4b1732da5f55b468ac617114d53"
+    }
+  },
+  "restored": {
+    "phone_clipboard": true,
+    "ipad_clipboard": true,
+    "phone_and_ipad_shutdown": true,
+    "voiceover": "System Settings switch off; no VoiceOver process"
+  }
+}

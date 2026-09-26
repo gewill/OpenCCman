@@ -4,7 +4,7 @@ import SwiftUI
 struct CardReflectionView<Content: View>: View {
   @State var translation: CGSize = .zero
   @State var isDragging = false
-  @State var colors: [Color] = ColorfulPreset.neon.colors
+  @State var colors: ColorfulPreset = ColorfulPreset.neon
   let content: Content
 
   // MARK: - life cycle
@@ -49,7 +49,7 @@ struct CardReflectionView_Previews: PreviewProvider {
   static var previews: some View {
     CardReflectionView(content: {
       Text("Logo")
-        .font(.title)
+        .appFont(.title)
         .foregroundColor(.white)
     })
     .padding()

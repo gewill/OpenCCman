@@ -1,0 +1,4 @@
+PASS: 1/5/10 MiB long paragraphs retain the native editor and selection through reflow
+PASS: Native editor retained through attach, middle/tail resize, selection, composition and replacement
+PASS: navigation during pending reflow keeps the new caret visible
+PASS: on-demand document end, native text reflow, selection, rapid resize, new-document reset and marked range preservation
