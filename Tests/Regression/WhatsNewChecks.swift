@@ -25,7 +25,7 @@ enum WhatsNewChecks {
 
     // Every blocker defers both automatic and manual requests, without writing defaults.
     let blockers: [WritableKeyPath<WhatsNewEligibility, Bool>] = [
-      \.isConverting, \.isImporting, \.hasFilePanel, \.hasAlert, \.hasProSheet, \.hasSettingsSheet,
+      \.isConverting, \.isImporting, \.hasFilePanel, \.hasAlert, \.hasProSheet, \.hasSettingsSheet, \.hasLargeFileTask,
     ]
     for blocker in blockers {
       var busy = ready

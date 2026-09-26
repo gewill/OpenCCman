@@ -34,7 +34,8 @@ struct HomeScene: View {
           .accessibilityHidden(true)
       }
     }
-    .overlay(ProAlertView(showingProAlert: $viewModel.showingProAlert, showingProScene: $whatsNewWindow.showingProSheet) {
+    .overlay(ProAlertView(showingProAlert: $viewModel.showingProAlert, showingProScene: $whatsNewWindow.showingProSheet,
+                          detailKey: viewModel.proAlertDetailKey) {
       whatsNewWindow.proSheetIsActive = false
     })
     .fileImporter(isPresented: $whatsNewWindow.showingImporter, allowedContentTypes: [.plainText]) { result in
