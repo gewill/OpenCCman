@@ -7,7 +7,7 @@ The storyboard follows the [App Store screenshot prompt guide](https://github.co
 | Platform | Source and conditions | Current screenshot sequence |
 | --- | --- | --- |
 | iPhone | iPhone 18 Pro Max simulator, iOS 27.0, 1320×2868, light appearance, system status bar set to 9:41. App language independently launched as `en`, `zh-Hans`, or `zh-Hant`. | `01-workspace.png`: actual converted result and compact Convert button. `02-presets.png`: four presets and advanced segment controls. |
-| iPad | iPad Pro 13-inch (M5) simulator, iPadOS 27.0, 2064×2752, light appearance, same locale matrix. | `01-side-by-side.png`: actual result in two panes. `02-stacked.png`: same source/result after switching layout. |
+| iPad | iPad Pro 13-inch (M5) simulator, iPadOS 26.5, 2064×2752, light appearance, same locale matrix. | `01-side-by-side.png`: actual result in two panes. `02-stacked.png`: same source/result after switching layout. |
 | Mac | macOS 27.0, 1280×800 pt app window captured at 2560×1600 px, light appearance. App language changed in Settings and restarted for each capture. | `01-workspace.png`: sidebar, preset, source/result panes and actual conversion. |
 
 The sample text is `鼠标里面的硅二极管坏了，导致光标分辨率降低。`, converted with the OpenCC Traditional preset. It is demonstration content, not a customer document or a performance measurement. In-app recommendations are below the photographed workspace; the screenshots do not imply that a free user has no recommendations.
