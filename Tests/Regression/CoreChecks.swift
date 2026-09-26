@@ -117,6 +117,8 @@ import OpenCC
     print("PASS: model release, repeated taps, single publication, cancellation/replacement, empty input and quota guard")
     try await checkPresetsAndFiles()
     try await checkProviders()
+    try await checkStreamingFiles()
+    try await LargeFileCoordinatorChecks.run()
   }
 
   @MainActor private static func waitUntilIdle(_ model: HomeViewModel) async {

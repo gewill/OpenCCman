@@ -78,6 +78,13 @@ struct SourcePane: View {
   @State private var headerHeight: CGFloat = 0
   var showsConversionAction = true
 
+  private var fileImportHint: LocalizedStringKey {
+    #if os(macOS)
+      if MacLargeFileCoordinator.isEnabled { return "mac_text_file_hint" }
+    #endif
+    return "text_file_hint"
+  }
+
   var body: some View {
     VStack(alignment: .leading, spacing: Constant.padding) {
       VStack(alignment: .leading, spacing: Constant.padding) {
@@ -127,7 +134,7 @@ struct SourcePane: View {
         if let filename = viewModel.sourceFilename {
           Text(filename).appFont(.caption).lineLimit(1).truncationMode(.middle)
         }
-        Text("text_file_hint")
+        Text(fileImportHint)
           .appFont(.caption)
           .foregroundColor(.secondary)
           .frame(maxWidth: .infinity, alignment: .leading)

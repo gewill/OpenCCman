@@ -15,6 +15,11 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 Changes after the 2.0 release candidate target `develop`.
 
+- Internal: prepare Mac Pro file-to-file conversion with bounded UTF-8 streaming,
+  coordinated atomic saves, progress and cancellation. Files never enter the
+  editor. The production entry remains disabled pending the 1 GiB capacity,
+  sandbox, entitlement and minimum-system gates in [#52](https://github.com/gewill/OpenCCman/issues/52).
+
 ## [2.0]
 
 The application source at `2f782714103d68b4972bee93e47bda8cafee1959`
