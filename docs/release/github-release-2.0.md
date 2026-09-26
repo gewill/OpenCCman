@@ -13,6 +13,8 @@ iPhone, iPad, and Mac.
 - Cancel a conversion without letting an older result overwrite the current
   text. The embedded OpenCC core is updated to 1.4.2, so some dictionary
   results may differ from earlier versions.
+- Use the Customer Center to view Pro status and restore purchases. On macOS 13
+  and later, Settings also offers an optional Launch at Login switch.
 
 The minimum systems are **iOS 15 and macOS 12**. The homepage allowance
 remains 12 conversions per day; existing lifetime Pro access is retained.

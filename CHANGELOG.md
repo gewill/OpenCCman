@@ -33,6 +33,9 @@ See the [Build 56 release record](docs/validation/build-56/README.md).
 - Customer Center in Settings: RevenueCatUI on iOS 15+, with purchase status,
   explicit restore and support on native macOS. Purchase updates share
   one policy that preserves cached Pro access on failure or cancellation ([#71](https://github.com/gewill/OpenCCman/issues/71)).
+- An optional Launch at Login switch in Mac Settings, visible on macOS 13 and
+  later. It is hidden on macOS 12, where the system API is unavailable
+  ([#119](https://github.com/gewill/OpenCCman/issues/119)).
 - Internal: isolated StoreKit transaction tests and Pro access/quota regressions;
   a separate local Debug scheme leaves normal archives free of test products ([#70](https://github.com/gewill/OpenCCman/issues/70)).
 
