@@ -4,7 +4,18 @@ import SwiftUI
 struct MacLargeFileTaskView: View {
   @ObservedObject var coordinator: MacLargeFileCoordinator
 
+  @ViewBuilder
   var body: some View {
+    if #available(macOS 15.4, *) {
+      // Let the app delegate cancel and await cleanup when the user quits.
+      // SwiftUI's default sheet policy can otherwise block termination first.
+      content.presentationPreventsAppTermination(false)
+    } else {
+      content
+    }
+  }
+
+  private var content: some View {
     VStack(alignment: .leading, spacing: 20) {
       Label(title.localizedStringKey, systemImage: symbol)
         .appFont(.title2, weight: .semibold)
