@@ -4,7 +4,7 @@ GitHub Actions 负责回归与依赖候选验证，Xcode Cloud 负责正式签�
 
 ## 工作流
 
-下表描述已合入 develop 的工作流。main 目前还没有应用回归文件，不能仅因触发模式包含 main 就认为 main 推送已会运行 App Regression；其发布整合与保护门禁需分别完成。
+下表描述已合入 develop、并由发布 PR #210 带向 main 的工作流。2026-09-26，PR #210 已产生成功的 `App Regression`，main 已配置来源绑定 GitHub Actions（app ID 15368）的必需检查；工作流文件仍待 PR 合并，不能把 PR 检查当成合并后精确 main SHA 的推送检查。
 
 | 工作流 / 检查 | 触发条件 | 执行环境与范围 |
 | --- | --- | --- |
@@ -50,7 +50,7 @@ PR 与合并后真实 GitHub Actions 运行结果是线上验收依据。纯迁�
 
 以下发布事项改由 [#122](https://github.com/gewill/OpenCCman/issues/122) 跟踪：
 
-- `main` 的应用回归文件随验收后的发布 PR 进入后再增加对应必需检查；当前只要求 PR，避免永久等待。
+- `main` 的应用回归文件随发布 PR #210 进入；PR 检查已成功且必需检查已配置。合并后仍需核对精确 main SHA 上的推送检查。
 - 旧 `build` 与 1.3 打包分支已归档，命名空间已释放，Build 49/50 两端 VALID；见[归档证据](validation/branch-archive-2026-09-17.json)。
 - 在明确需要发布验收包时验证临时 `build/*` 的 Xcode Cloud 触发与 TestFlight 产物。
 

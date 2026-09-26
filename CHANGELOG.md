@@ -13,16 +13,16 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 ## [Unreleased]
 
-Current development targets 2.0: an adaptive workspace, common conversion
-presets, a single-file text workflow, and conversion reliability improvements.
-The minimum systems are iOS 15 and macOS 12; the homepage limit remains 12
-daily conversions.
+Changes after the 2.0 release candidate target `develop`.
 
-Xcode Cloud build **1.3 (44)** was verified in internal TestFlight on both
-platforms on 2026-09-13 ([#33]). That build predates the What’s New cards below.
-TestFlight availability is not a public App Store release; remaining acceptance
-work is tracked in the [release validation record](docs/v1.3-release-validation-2026-09-13.md)
-and [What’s New validation record](docs/WHATS_NEW.md).
+## [2.0]
+
+The application source at `2f782714103d68b4972bee93e47bda8cafee1959`
+produced Xcode Cloud Build 56 for iOS and Mac. Both 2.0(56) versions were
+submitted for App Review on 2026-09-26 with manual public release selected;
+submission does not establish public availability. The minimum systems are
+iOS 15 and macOS 12, and the homepage limit remains 12 daily conversions.
+See the [Build 56 release record](docs/validation/build-56/README.md).
 
 ### Added
 
@@ -31,8 +31,11 @@ and [What’s New validation record](docs/WHATS_NEW.md).
   content minimum remains narrow at 300 × 360 pt, plus the system titlebar
   ([#57](https://github.com/gewill/OpenCCman/issues/57)).
 - Customer Center in Settings: RevenueCatUI on iOS 15+, with purchase status,
-  explicit restore and support on iOS 14 and native macOS. Purchase updates share
+  explicit restore and support on native macOS. Purchase updates share
   one policy that preserves cached Pro access on failure or cancellation ([#71](https://github.com/gewill/OpenCCman/issues/71)).
+- An optional Launch at Login switch in Mac Settings, visible on macOS 13 and
+  later. It is hidden on macOS 12, where the system API is unavailable
+  ([#119](https://github.com/gewill/OpenCCman/issues/119)).
 - Internal: isolated StoreKit transaction tests and Pro access/quota regressions;
   a separate local Debug scheme leaves normal archives free of test products ([#70](https://github.com/gewill/OpenCCman/issues/70)).
 
@@ -68,6 +71,11 @@ and [What’s New validation record](docs/WHATS_NEW.md).
   candidates; see the [upstream sync guide].
 
 ### Changed
+
+- On iPhone, place the normal Convert action in the source pane header so a
+  full-width bottom bar no longer covers the result reading area. Keep the
+  single action above the keyboard and keep Cancel pinned while conversion is
+  running; accessibility text sizes put the action on its own row ([#50](https://github.com/gewill/OpenCCman/issues/50)).
 
 - Conversion segments stack when the available width cannot fit complete words
   at the current text size, and return to rows when space allows. The inspector's
@@ -198,7 +206,8 @@ Source snapshot: `v1.0-macOS`.
 - Settings, language selection, help, open-source information and a lifetime Pro
   purchase option.
 
-[Unreleased]: https://github.com/gewill/OpenCCman/compare/cc8c7e83215261d94b272e354bf2b03c522e4c8c...build
+[Unreleased]: https://github.com/gewill/OpenCCman/compare/v2.0...develop
+[2.0]: https://github.com/gewill/OpenCCman/compare/cc8c7e83215261d94b272e354bf2b03c522e4c8c...v2.0
 [1.2]: https://github.com/gewill/OpenCCman/compare/v1.1-macOS...cc8c7e83215261d94b272e354bf2b03c522e4c8c
 [1.1]: https://github.com/gewill/OpenCCman/compare/v1.0-macOS...v1.1-macOS
 [1.0]: https://github.com/gewill/OpenCCman/tree/v1.0-macOS

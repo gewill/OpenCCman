@@ -1,6 +1,6 @@
 # Xcode Cloud 构建与发布
 
-OpenCCman 正式构建和分发使用 Xcode Cloud。执行构建、修改 workflow 或更新 TestFlight 信息前，应先核对本文。配置再次核对日期：2026-09-17；以下 App 和 workflow ID 来自 App Store Connect 实际查询。
+OpenCCman 正式构建和分发使用 Xcode Cloud。执行构建、修改 workflow 或更新 TestFlight 信息前，应先核对本文。配置再次核对日期：2026-09-17；以下 App 和 workflow ID 来自 App Store Connect 实际查询。当前 2.0 Build 56 的准确运行、产物和提审状态见 [发布候选记录](validation/build-56/README.md)，历史章节保留当时事实。
 
 ## App 与 workflow
 
@@ -23,7 +23,7 @@ OpenCCman 正式构建和分发使用 Xcode Cloud。执行构建、修改 workfl
 2. 仅在需要云端验收包时，从明确的 `release/*` 或 `main` 提交创建并推送临时 `build/<version>-<YYYYMMDD>`，事先确认 SHA、版本与 `Package.resolved`。旧 `build` 已退出，命名冲突解除；普通 PR 合并不再承担打包入口。正式发布记录使用云端 run/build 号、平台和 source commit；本地工程 build 号不能代替云端产物身份。
 3. 推送后先检查是否已自动触发。只有自动触发失败且需要构建时才手动运行，避免重复归档。不要为了文档核对启动新的构建。
 4. 同时核对 iOS/macOS action 和 App Store Connect processing 状态。归档成功、整个 run 成功、处理为 `VALID`、可供 TestFlight 安装是不同阶段。
-5. 用本次云端产物完成购买、文件、跨 App 和旧系统验收。只有需要发布测试说明时才修改本次新 build 的 What to Test；不要误改旧 build 或顺带通知测试者。
+5. 按本次已确认的发布范围验收云端产物，记录仍未测试的路径与维护者接受的风险；2.0 Build 56 的 #14/#15/#16/#212 后续项已移至 v2.1，不能写为通过。只有需要发布测试说明时才修改本次新 build 的 What to Test；不要误改旧 build 或顺带通知测试者。
 
 ## 查询与手动补跑
 
