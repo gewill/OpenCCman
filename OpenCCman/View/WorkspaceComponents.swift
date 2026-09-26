@@ -71,6 +71,7 @@ struct ConversionInspector: View {
 struct SourcePane: View {
   @EnvironmentObject private var viewModel: HomeViewModel
   @EnvironmentObject private var whatsNewWindow: WhatsNewWindowState
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @State private var isDropTargeted = false
   var editorHeight: CGFloat = 200
   var paneHeight: CGFloat?
@@ -96,7 +97,13 @@ struct SourcePane: View {
           .accessibilityLabel(Text("Paste Text"))
 
           Spacer()
-          if showsConversionAction {
+          if showsConversionAction && !dynamicTypeSize.isAccessibilitySize {
+            ConversionAction()
+          }
+        }
+        if showsConversionAction && dynamicTypeSize.isAccessibilitySize {
+          HStack {
+            Spacer(minLength: 0)
             ConversionAction()
           }
         }
