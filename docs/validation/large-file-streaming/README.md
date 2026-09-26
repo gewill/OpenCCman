@@ -1,6 +1,6 @@
 # Mac large-file conversion candidate
 
-Issue: [#52](https://github.com/gewill/OpenCCman/issues/52). Wrapper: [SwiftyOpenCC #8](https://github.com/gewill/SwiftyOpenCC/pull/8).
+Issue: [#52](https://github.com/gewill/OpenCCman/issues/52). Wrapper: [SwiftyOpenCC #8](https://github.com/gewill/SwiftyOpenCC/pull/8) with follow-ups [#9](https://github.com/gewill/SwiftyOpenCC/pull/9), [#10](https://github.com/gewill/SwiftyOpenCC/pull/10) and [#11](https://github.com/gewill/SwiftyOpenCC/pull/11).
 
 ## Scope and release gate
 
@@ -43,12 +43,13 @@ describe the existing 10 MiB capability.
 
 ## Validation protocol
 
-Measured source `a5f49ca7831764b5e25bfbf6667cb34421d16280`; wrapper merge
-`13c36927e95e4845e573a19d70771670cd1f3fb6`; OpenCC
+Measured source `3a03f18e9bf25de5a7232db340417a886cc4eed8`; wrapper merge
+`570c0a52402bdba9488a3e9ecfb2879f0b37526e`; OpenCC
 `025f371dc76b598d77384fbdab90c937471844d8`. Both source worktrees were clean
 when the main capacity run started. [Raw capacity evidence](capacity.json)
 includes individual samples, complete hashes, source hashes and measurement
-scope. Wrapper PR #8 passed required OpenCC Compatibility before merge.
+scope. Each wrapper PR passed required OpenCC Compatibility before merge, and the
+wrapper merge commit passed it again after merging.
 
 On Apple M4 Pro / 48 GiB, macOS 27.0 (26A428), Xcode 27.0 (27A266a), Release
 service with preloaded `s2t` converter and 256 KiB I/O, three fresh processes per
@@ -56,14 +57,14 @@ cell produced complete matching output hashes:
 
 | Input | No-newline median | Multiline median | Conversion sampled peak RSS range (both corpora) |
 | --- | ---: | ---: | ---: |
-| 10 MiB | 146 ms | 157 ms | 45.5–49.0 MiB |
-| 20 MiB | 287 ms | 308 ms | 46.1–55.1 MiB |
-| 50 MiB | 708 ms | 765 ms | 45.5–55.9 MiB |
-| 100 MiB | 1,415 ms | 1,535 ms | 47.8–57.8 MiB |
-| 1 GiB | 14,607 ms | 15,946 ms | 57.8–61.2 MiB |
+| 10 MiB | 92 ms | 100 ms | 46.1–49.6 MiB |
+| 20 MiB | 179 ms | 192 ms | 47.6–56.3 MiB |
+| 50 MiB | 448 ms | 475 ms | 49.4–56.9 MiB |
+| 100 MiB | 893 ms | 962 ms | 51.0–57.5 MiB |
+| 1 GiB | 9,007 ms | 9,839 ms | 57.3–60.5 MiB |
 
 The 30 independent cancellation probes requested cancellation after the first
-successfully written 256 KiB block and returned after cleanup in 0.19–0.47 ms;
+successfully written 256 KiB block and returned after cleanup in 0.18–0.39 ms;
 each preserved an existing destination and removed temporary output. These are
 block-boundary service timings, not worst-case UI cancellation latency. Runtime
 and OS page accounting vary; these results show bounded behavior for this fixed
@@ -71,10 +72,18 @@ configuration/corpus, not a universal capacity or speed guarantee. No other
 task-owned build ran during the measurement matrix.
 
 An additional three 1 GiB runs consisting entirely of unmatched ASCII completed
-in 2.50–2.52 seconds at 54.8–56.2 MiB sampled peak RSS, with matching full hashes
+in 1.87–1.90 seconds at 55.3–56.0 MiB sampled peak RSS, with matching full hashes
 and successful cancellation cleanup. [Raw unmatched-run evidence](unmatched.json)
 specifically exercises the path that must not accumulate a whole unmatched
 logical segment.
+
+The previous record measured wrapper `13c3692` at App `a5f49ca` on the same Mac,
+system and Xcode, with byte-identical measured sources: 1 GiB medians of
+14,607 ms and 15,946 ms at 57.8–61.2 MiB, and unmatched runs of 2.50–2.52 s.
+The newer wrapper matches each streamed byte once instead of twice and keeps
+stage buffers reserved, so conversion is faster with the same peak memory.
+At `3a03f18`, `scripts/check-core.py`, dependency resolution and the macOS and
+iOS Simulator builds passed; only the SwiftyOpenCC pin changed.
 
 Run `scripts/check-core.py` against the pinned wrapper. It includes all seven App
 configurations, real NSItemProvider temporary-file lifetime, invalid UTF-8,
@@ -100,9 +109,12 @@ python3 scripts/benchmark-streaming-files.py \
 [Native UI records and RSS samples](ui-runtime.json) cover the signed Debug QA
 application on the same Mac and system. The general UI run used App source
 `7079f2823776b440bc4b2c19453dca306181e72f`; the three conversion/file-service source
-hashes still exactly match measured source `a5f49ca`. Together, the Release
+hashes still exactly match measured source `3a03f18`. Together, the Release
 capacity and unmatched records contain **33 full-output hash passes and 33
 successful cancellation/cleanup probes**. UI memory is a separate measurement.
+The native runs below used wrapper `13c3692`. They were not repeated after the
+wrapper update, which changes only internal matching and buffer reservation;
+the service outputs above remain byte-identical.
 
 | Native operation | Observed result |
 | --- | --- |

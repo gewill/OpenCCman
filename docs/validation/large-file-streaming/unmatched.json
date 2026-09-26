@@ -1,8 +1,8 @@
 {
   "metadata": {
     "protocol": 2,
-    "app_sha": "a5f49ca7831764b5e25bfbf6667cb34421d16280",
-    "wrapper_sha": "13c36927e95e4845e573a19d70771670cd1f3fb6",
+    "app_sha": "3a03f18e9bf25de5a7232db340417a886cc4eed8",
+    "wrapper_sha": "570c0a52402bdba9488a3e9ecfb2879f0b37526e",
     "source_sha256": {
       "OpenCCman/Services/ChineseConversionService.swift": "2f9b951421406dab71bee5e8da9125ba8cac154284e01138b8e062cd64083a0a",
       "OpenCCman/Services/TextFileService.swift": "513d0ff615611da1e7c935c411be95b3ffe168545509d056c0fdd002e3c015d9",
@@ -10,12 +10,13 @@
       "Tests/Benchmarks/StreamingFileBenchmark.swift": "277c2a45195890e2c12f694f1ebbe4bb034bd155a640c729cd3d5a94af169b1c"
     },
     "opencc_sha": "025f371dc76b598d77384fbdab90c937471844d8",
-    "started_at": "2026-09-26T11:44:58.898765+00:00",
+    "started_at": "2026-09-26T17:48:32.453850+00:00",
     "wrapper_source_sha256": {
-      "Sources/OpenCC/ChineseConversionStream.swift": "2a6144028b37023b2b73f5297466b441e42015bb482b80532c1f6456aaaa808d",
-      "Sources/OpenCC/ChineseConverter.swift": "cb90f3a9d629da1d767f8a801cca215eb0f6f52f95ba95268820ce5b23b4567e",
+      "Sources/OpenCC/ChineseConversionStream.swift": "93aafdbaa85b9496f0c3f874689a1894f8281ab9450fd25db53f5c3f921f031a",
+      "Sources/OpenCC/ChineseConverter.swift": "7ed855e31e4ca082b2eb073078a70da5aff0889e66e6e11d84bba3c0e9ccdd06",
       "Sources/OpenCC/ConfigurationName.swift": "1eef7be9d62562b3495f4a6fae85471a434cbb4162794f9294672ec2e4d442d5",
-      "Sources/OpenCC/ConversionError.swift": "92fe543dfa52a3e33d098800b82cd02fa049253bb15875b97b5cebdffd226c32",
+      "Sources/OpenCC/ConversionError.swift": "4ca6eea23317afa0e1c9dfa06e86327cd03b1b85257c930603515784a10e9fca",
+      "Sources/OpenCC/ConversionStreamError.swift": "a301dfde370049b5af5fd096bd2a05aad7bd8180142a6c209fb471e491881657",
       "Sources/OpenCC/Resources/Compatibility/legacy-hk2s-tw-idiom.json": "a2991f291273d785fdf83bde52531ada322bbdd418bbf5eff66d15ee047b3d15",
       "Sources/OpenCC/Resources/Compatibility/legacy-s2hk-tw-idiom.json": "9bc5f79a7f78689fc4e4da1ebf83036fe8807dec0b1e042b069ceff1ed83a0d4",
       "Sources/OpenCC/Resources/Compatibility/legacy-s2t-tw-idiom.json": "806229133d3d2d66dd68cbdfa9fa95edcae055e87672786c56df884cf093890b",
@@ -59,15 +60,14 @@
       "Sources/OpenCC/Resources/Official/tw2sp.json": "f8cf900c1b456a7d2e8477f5bf146814071d28ad64ef37fbc0ae757930c167d5",
       "Sources/OpenCC/Resources/Official/tw2t.json": "5bc1991e12b35100b2df4b6b534bbaeeb18fbbabe5cd5c15c611736011225530",
       "Sources/OpenCC/Resources/manifest.json": "ae10b2fbf67844395aa5b5600a93b98c755336dfa9b2190f3bf1ba46bb13292d",
-      "Sources/copencc/ExactStream.hpp": "0e76590441f5edaa9d5791c3f3bfaf0dfabd3a91c4d462115b0c4c2ba7199fa1",
+      "Sources/copencc/ExactStream.hpp": "54dfe9d98dfae68d5e6c78e41908c494f34f4e090ab27dc4cc96c5bf49bddfc9",
       "Sources/copencc/include/header.h": "e6867102f134705b070322a71adaeb8d2ef62b6a51cb1083199bc4890b7d2137",
       "Sources/copencc/include/module.modulemap": "108ef9679468ed940257b47df095113656d5b618c13e7ecdcaf37970d0b6ac80",
       "Sources/copencc/source.cpp": "d0a06e11d6a0e31cca12f03fda9b22bfd1652399bc794105be99c9d9780a4010",
       "Tests/LinuxMain.swift": "536d3cde09378bc25ee4ffd5680d16e50ab1b2f42fa8112dad82aac372a1013f",
       "Tests/OpenCCTests/OpenCCTests.swift": "27c39f54fa163a200d8745322362e4d069c2652a2a66c5ab48cd92d98a1fa3d9",
-      "Tests/OpenCCTests/StreamingTests.swift": "12ed791d0e4b0e534c1c53ca9a8e2f8f3ee820d63a432114e882a62ad51915a3",
+      "Tests/OpenCCTests/StreamingTests.swift": "c3f4b8923d7346fa6045196f9db14f84b1662b88256db799eae3551a750caeb4",
       "Tests/OpenCCTests/testcases/testcases.json": "3f8273c5f432090ec1a8a01bd4d545046ad5a28e69eb41a081c5e3e54d3e402b",
-      "Tests/__pycache__/test_build_validation.cpython-314.pyc": "4a045bb43139749b17b1468db736a3e0848e5f9d1ef7be327e95940b0b345f08",
       "Tests/test_build_validation.py": "3c35b4838590aa7143cdabb0452e7f4fac7e1bba69271b84f097cd4c8f20e87b"
     },
     "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
@@ -81,8 +81,8 @@
     "xcode": "Xcode 27.0\nBuild version 27A266a",
     "app_worktree_status": "",
     "wrapper_worktree_status": "",
-    "binary_sha256": "08d7e76203d07fe744ff4ae402c1d380edfd62f53b72da7a3e5a81b31a9de1c4",
-    "completed_at": "2026-09-26T11:45:19.319951+00:00"
+    "binary_sha256": "132aa44ddb2280cd46a583b0963f27e4dd7f67dc8886410353b4563fe2ddf63b",
+    "completed_at": "2026-09-26T17:48:52.037275+00:00"
   },
   "samples": [
     {
@@ -90,20 +90,20 @@
       "cancellation": {
         "existing_destination_preserved": true,
         "note": "Additional conversion in the same process, cancelled after the first written block; timing ends when the async service returns after cleanup. Excluded from successful-conversion memory samples and process high-water.",
-        "request_to_cleanup_completion_ms": 0.227167,
+        "request_to_cleanup_completion_ms": 0.208292,
         "requested_after_input_bytes": 262144,
         "temporary_output_removed": true
       },
       "configuration": "s2t",
-      "conversion_and_commit_ms": 2502.645542,
+      "conversion_and_commit_ms": 1876.327416,
       "conversion_memory": {
-        "baseline_physical_footprint_bytes": 30245608,
-        "baseline_rss_bytes": 37535744,
+        "baseline_physical_footprint_bytes": 30786208,
+        "baseline_rss_bytes": 37994496,
         "failed_samples": 0,
-        "peak_physical_footprint_bytes": 43877336,
-        "peak_rss_bytes": 58933248,
+        "peak_physical_footprint_bytes": 46236488,
+        "peak_rss_bytes": 57950208,
         "sample_interval_ms": 10,
-        "samples": 252
+        "samples": 189
       },
       "corpus": "unmatched",
       "cpu_model": "Apple M4 Pro",
@@ -116,7 +116,7 @@
       "os": "Version 27.0 (Build 26A428)",
       "output_bytes": 1073741824,
       "physical_memory_bytes": 51539607552,
-      "process_max_rss_bytes": 58966016,
+      "process_max_rss_bytes": 57950208,
       "protocol": 2
     },
     {
@@ -124,20 +124,20 @@
       "cancellation": {
         "existing_destination_preserved": true,
         "note": "Additional conversion in the same process, cancelled after the first written block; timing ends when the async service returns after cleanup. Excluded from successful-conversion memory samples and process high-water.",
-        "request_to_cleanup_completion_ms": 0.241,
+        "request_to_cleanup_completion_ms": 0.233,
         "requested_after_input_bytes": 262144,
         "temporary_output_removed": true
       },
       "configuration": "s2t",
-      "conversion_and_commit_ms": 2499.534458,
+      "conversion_and_commit_ms": 1899.600458,
       "conversion_memory": {
-        "baseline_physical_footprint_bytes": 29983440,
-        "baseline_rss_bytes": 37224448,
+        "baseline_physical_footprint_bytes": 29655688,
+        "baseline_rss_bytes": 36880384,
         "failed_samples": 0,
-        "peak_physical_footprint_bytes": 42877816,
-        "peak_rss_bytes": 58605568,
+        "peak_physical_footprint_bytes": 40387424,
+        "peak_rss_bytes": 58703872,
         "sample_interval_ms": 10,
-        "samples": 251
+        "samples": 191
       },
       "corpus": "unmatched",
       "cpu_model": "Apple M4 Pro",
@@ -150,7 +150,7 @@
       "os": "Version 27.0 (Build 26A428)",
       "output_bytes": 1073741824,
       "physical_memory_bytes": 51539607552,
-      "process_max_rss_bytes": 58605568,
+      "process_max_rss_bytes": 59293696,
       "protocol": 2
     },
     {
@@ -158,20 +158,20 @@
       "cancellation": {
         "existing_destination_preserved": true,
         "note": "Additional conversion in the same process, cancelled after the first written block; timing ends when the async service returns after cleanup. Excluded from successful-conversion memory samples and process high-water.",
-        "request_to_cleanup_completion_ms": 0.218958,
+        "request_to_cleanup_completion_ms": 0.244416,
         "requested_after_input_bytes": 262144,
         "temporary_output_removed": true
       },
       "configuration": "s2t",
-      "conversion_and_commit_ms": 2517.784083,
+      "conversion_and_commit_ms": 1868.461833,
       "conversion_memory": {
-        "baseline_physical_footprint_bytes": 27837064,
-        "baseline_rss_bytes": 36585472,
+        "baseline_physical_footprint_bytes": 30147232,
+        "baseline_rss_bytes": 37421056,
         "failed_samples": 0,
-        "peak_physical_footprint_bytes": 44385120,
-        "peak_rss_bytes": 57425920,
+        "peak_physical_footprint_bytes": 46695240,
+        "peak_rss_bytes": 58310656,
         "sample_interval_ms": 10,
-        "samples": 253
+        "samples": 188
       },
       "corpus": "unmatched",
       "cpu_model": "Apple M4 Pro",
@@ -184,7 +184,7 @@
       "os": "Version 27.0 (Build 26A428)",
       "output_bytes": 1073741824,
       "physical_memory_bytes": 51539607552,
-      "process_max_rss_bytes": 57753600,
+      "process_max_rss_bytes": 58376192,
       "protocol": 2
     }
   ]
