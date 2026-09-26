@@ -69,6 +69,11 @@ and [What’s New validation record](docs/WHATS_NEW.md).
 
 ### Changed
 
+- On iPhone, place the normal Convert action in the source pane header so a
+  full-width bottom bar no longer covers the result reading area. Keep the
+  single action above the keyboard and keep Cancel pinned while conversion is
+  running; accessibility text sizes put the action on its own row ([#50](https://github.com/gewill/OpenCCman/issues/50)).
+
 - Conversion segments stack when the available width cannot fit complete words
   at the current text size, and return to rows when space allows. The inspector's
   preset label sits above its menu to keep narrow sidebars readable
