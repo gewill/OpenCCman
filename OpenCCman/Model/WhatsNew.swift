@@ -95,9 +95,11 @@ struct WhatsNewEligibility: Equatable {
   var hasAlert = false
   var hasProSheet = false
   var hasSettingsSheet = false
+  var isLaunchTransitionRunning = false
 
   var canPresent: Bool {
     isActive && isSupportedRoute && !isConverting && !isImporting && !hasFilePanel && !hasAlert && !hasProSheet && !hasSettingsSheet
+      && !isLaunchTransitionRunning
   }
 }
 

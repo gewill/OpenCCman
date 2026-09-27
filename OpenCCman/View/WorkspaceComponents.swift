@@ -65,6 +65,7 @@ struct ConversionInspector: View {
       .disabled(viewModel.targetOptions == .simplified)
     }
     .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
+    .launchSettle(order: 0)
   }
 }
 
@@ -82,7 +83,7 @@ struct SourcePane: View {
     VStack(alignment: .leading, spacing: Constant.padding) {
       VStack(alignment: .leading, spacing: Constant.padding) {
         HStack {
-          Text("Source").appFont(.headline)
+          Text("Source").appFont(.headline).launchHandoffTarget(.source)
           Button {
             guard let string = getClipboardString(),
                   string.isEmpty == false
@@ -156,6 +157,7 @@ struct SourcePane: View {
         )
     }
     .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
+    .launchSettle(order: 1)
   }
 
   @ViewBuilder private var sourceEditor: some View {
@@ -179,7 +181,7 @@ struct ResultPane: View {
     VStack(alignment: .leading, spacing: Constant.padding) {
       VStack(alignment: .leading, spacing: Constant.padding) {
         HStack {
-          Text("Result").appFont(.headline)
+          Text("Result").appFont(.headline).launchHandoffTarget(.result)
           Button(action: {
             copyToClipboard(text: viewModel.resultText)
           }, label: {
@@ -221,6 +223,7 @@ struct ResultPane: View {
         )
     }
     .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
+    .launchSettle(order: 2)
   }
 
   @ViewBuilder private var resultEditor: some View {
@@ -236,6 +239,10 @@ struct ResultPane: View {
 struct ConversionAction: View {
   @EnvironmentObject private var viewModel: HomeViewModel
   var body: some View {
+    Group { action }.launchSettle(pop: true, order: 1)
+  }
+
+  @ViewBuilder private var action: some View {
     if viewModel.isLoading {
       Button { viewModel.cancelConversion() } label: {
         Text("Cancel")
