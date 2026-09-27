@@ -2,7 +2,7 @@
 
 OpenCCman 采用与 Pingman 相同的精简版 Git Flow：常驻分支为 `main` 与 `develop`，开发、发布、热修复和打包使用临时分支。日常 PR 合入 `develop`；只有需要 Xcode Cloud 产物时才推送 `build` 前缀的分支。
 
-**2026-09-16 已核实：日常开发和 CI 已迁移到 `develop`，默认分支协调器也已使用 `develop` 作为应用 PR 目标。** [#43](https://github.com/gewill/OpenCCman/pull/43) 与 [#44](https://github.com/gewill/OpenCCman/pull/44) 均于 2026-09-13 合并。默认分支仍为 `main`；main/develop 的 PR 保护与 develop 的 App Regression 门禁已启用；旧 `build` 已于 2026-09-17 归档；正式发布主线整合由 #122 跟踪，见文末账本、[CI 说明](CI.md)与 [#110](https://github.com/gewill/OpenCCman/issues/110)。
+**2026-09-28 已核实：日常开发和 CI 在 `develop`；发布 PR #210 已合入 `main`，`main` 精确合并提交 `c7734f5` 的 App Regression 成功，并已创建指向它的注释 Tag `v2.0`。** 2.0 仍待手动公开发布；[上架准备记录](release/launch-2.0-20260928.md)列出价格与网站闸门。[#43](https://github.com/gewill/OpenCCman/pull/43) 与 [#44](https://github.com/gewill/OpenCCman/pull/44) 于 2026-09-13 完成早期迁移；默认分支仍为 `main`。旧 `build` 于 2026-09-17 归档；下方保留历史账本。
 
 ## 分支职责
 
