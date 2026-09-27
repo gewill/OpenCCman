@@ -75,10 +75,13 @@ struct OpenCCmanApp: App {
     skipAutomatic: ProcessInfo.processInfo.arguments.contains("-skip-whats-new")
   )
 
+  @StateObject private var launchTransition = LaunchTransitionCoordinator()
+
   var body: some Scene {
     WindowGroup {
       appContent
       .environmentObject(whatsNew)
+      .environmentObject(launchTransition)
       .environment(\.locale, selectedLocale.locale)
       .environment(\.selectedLocale, $selectedLocale)
       .preferredColorScheme(selectedTheme.colorScheme)

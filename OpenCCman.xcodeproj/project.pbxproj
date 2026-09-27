@@ -88,6 +88,8 @@
 		BEA956392B31EB7B00E04625 /* ColorfulX in Frameworks */ = {isa = PBXBuildFile; productRef = BEA956382B31EB7B00E04625 /* ColorfulX */; };
 		BEA9563D2B31FF8C00E04625 /* ChangeColorSchemeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9563C2B31FF8C00E04625 /* ChangeColorSchemeScene.swift */; };
 		CC0913202600000000000001 /* WhatsNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0913202600000000000002 /* WhatsNew.swift */; };
+		CC2609270000000000000001 /* LaunchMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2609270000000000000002 /* LaunchMotion.swift */; };
+		CC2609270000000000000003 /* LaunchTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2609270000000000000004 /* LaunchTransition.swift */; };
 		CC0913202600000000000101 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0913202600000000000102 /* WhatsNewView.swift */; };
 		3C3627644470F73B7875003F /* CustomerCenterScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAFB8436EC14FFC357BCEFA /* CustomerCenterScene.swift */; };
 		43088A90EB27980ABB8606C3 /* ProAccessUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860A8029E8FF16CE13720671 /* ProAccessUpdate.swift */; };
@@ -169,6 +171,8 @@
 		BEA770F82B2CAEA900AFA2F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BEA9563C2B31FF8C00E04625 /* ChangeColorSchemeScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeColorSchemeScene.swift; sourceTree = "<group>"; };
 		CC0913202600000000000002 /* WhatsNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNew.swift; sourceTree = "<group>"; };
+		CC2609270000000000000002 /* LaunchMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchMotion.swift; sourceTree = "<group>"; };
+		CC2609270000000000000004 /* LaunchTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchTransition.swift; sourceTree = "<group>"; };
 		CC0913202600000000000102 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 		7CAFB8436EC14FFC357BCEFA /* CustomerCenterScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCman/Scene/CustomerCenterScene.swift; sourceTree = SOURCE_ROOT; };
 		860A8029E8FF16CE13720671 /* ProAccessUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCman/Model/ProAccessUpdate.swift; sourceTree = SOURCE_ROOT; };
@@ -277,6 +281,7 @@
 				C19100000000000000000002 /* AppTypography.swift */,
 				AFB640B710F84822A640F70B /* ControlSizingGallery.swift */,
 				0F9AF3BD81CB48F2AB40A779 /* WorkspaceComponents.swift */,
+				CC2609270000000000000004 /* LaunchTransition.swift */,
 				B0CEA5A92A9F470794A1D1CE /* WorkspacePreferences.swift */,
 				CC0913202600000000000102 /* WhatsNewView.swift */,
 				BE3AECA22B2EF3B200820673 /* BackButton.swift */,
@@ -297,6 +302,7 @@
 			children = (
 				14C5B905AAE54E0EB4641B5D /* WorkspaceLayout.swift */,
 				CC0913202600000000000002 /* WhatsNew.swift */,
+				CC2609270000000000000002 /* LaunchMotion.swift */,
 				BE727E332B2DF85E00C63DB2 /* UserDefaultsKeys.swift */,
 				BE3AECA62B2EF43C00820673 /* MyAppModel.swift */,
 				BE3AECA82B2EF46000820673 /* OpenSourceModel.swift */,
@@ -479,6 +485,8 @@
 				C6DC3122255A43B8BDC575DD /* WorkspaceLayout.swift in Sources */,
 				CC0913202600000000000101 /* WhatsNewView.swift in Sources */,
 				CC0913202600000000000001 /* WhatsNew.swift in Sources */,
+				CC2609270000000000000001 /* LaunchMotion.swift in Sources */,
+				CC2609270000000000000003 /* LaunchTransition.swift in Sources */,
 				CC0912202600000000000001 /* ChineseConversionService.swift in Sources */,
 				CC0912202600000000000041 /* TextFileService.swift in Sources */,
 				C05200000000000000000031 /* MacLargeFileTaskView.swift in Sources */,
@@ -684,8 +692,6 @@
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -726,8 +732,6 @@
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

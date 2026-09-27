@@ -16,7 +16,7 @@
     var body: some View {
       GeometryReader { geometry in
         VStack(spacing: 0) {
-          header.padding(.horizontal, 12).padding(.vertical, 8)
+          header.padding(.horizontal, 12).padding(.vertical, 8).launchSettle()
           ScrollView {
             VStack(alignment: .leading, spacing: 16) {
               Button {
@@ -31,6 +31,7 @@
                 .frame(maxWidth: .infinity, alignment: .leading)
               }
               .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 12))
+              .launchSettle()
               SourcePane(editorHeight: max(180, min(200, geometry.size.height * 0.25)),
                          showsConversionAction: !showsPinnedConversionAction)
               ResultPane(editorHeight: 200, export: export)
