@@ -122,6 +122,9 @@ final class StoreKitRegressionTests: XCTestCase {
     _ = try await buy()
     let transaction = try XCTUnwrap(session.allTransactions().first)
     try session.refundTransaction(identifier: transaction.identifier)
+    // Xcode 27 on macOS 27 publishes a local refund about 15 s later unless the
+    // store syncs; earlier tools published it within seconds (#218).
+    try await AppStore.sync()
     try await waitForEntitlement(false)
   }
 }
