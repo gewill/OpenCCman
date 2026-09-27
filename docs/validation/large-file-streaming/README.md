@@ -160,6 +160,36 @@ The sandbox evidence includes `com.apple.security.app-sandbox` and
 native save/cancel/replace outcomes. Enabling the Debug QA entitlement override
 for these file-flow tests does not validate StoreKit or RevenueCat purchases.
 
+## Native safety acceptance
+
+On 2026-09-27 the same Mac, system and Xcode ran the scenarios below in a signed
+Debug QA build of `3025c98` with wrapper `570c0a5`, using only native file
+panels. The [record](safety-native.json) lists fixtures, hashes and observed
+messages; screenshots are attached to #52.
+
+| Scenario | Observed result |
+| --- | --- |
+| 12 MiB file with an invalid UTF-8 byte at 11 MiB, replacing an existing file | Failed with the invalid UTF-8 message; the existing file is unchanged. |
+| Destination is the source, or a symbolic link to it | Rejected with "Choose a different file from the source"; source and link are unchanged. |
+| Source grows during a 1 GiB conversion | Failed with "The source file changed"; the existing destination is unchanged. |
+| Destination locked with `uchg` | Failed with "Operation not permitted"; the locked file is unchanged. |
+| Existing file in a read-only directory | Failed with "Permission denied"; the file is unchanged. |
+| Real disk full on a 20 MiB volume | Failed with the not-enough-space message; the existing file is unchanged and the volume's free space returned to its previous value. |
+| Close the owning window during conversion | Not possible: the close button and File > Close are disabled, the Window menu has no Close, and Command-W and Option-Command-W do nothing. |
+| Cancel a conversion to a new file | The sheet closed after cleanup and no output file was created. |
+
+Another process cannot list temporary output inside the app container. For the
+boot-volume cases, the app showed the primary error rather than the
+cleanup-failure error it reports whenever removing temporary output fails. The
+disk-full case checks cleanup directly on its own volume.
+
+Decisions: cancellation exactly before commit and cleanup failure stay covered
+by the fault-injection regression, because neither can be triggered reliably by
+hand. The UI prevents closing the owning window while the task sheet is shown;
+the coordinator regression covers programmatic owner close. Real read
+interruptions from removable volumes or file providers, forced termination and
+power loss move to #217.
+
 ## Remaining acceptance
 
 - macOS 12 runtime remains unverified (#16). A macOS 12 deployment target build
@@ -174,8 +204,8 @@ for these file-flow tests does not validate StoreKit or RevenueCat purchases.
   hashes and exact underlying log hashes. CI uses Xcode 26.3 separately; its
   status is not inferred from these local failures.
 - Forced process termination, power loss, file-provider eviction and removable
-  volumes need separate recovery acceptance; normal cancellation/quit guarantees
-  do not cover an externally killed process.
+  volumes need separate recovery acceptance, tracked in #217; normal
+  cancellation/quit guarantees do not cover an externally killed process.
 
 Runtime measurements, source hashes and UI evidence accompany the candidate PR.
 This document is an implementation/acceptance record, not a public capacity claim.
