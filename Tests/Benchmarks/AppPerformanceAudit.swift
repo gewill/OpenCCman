@@ -217,7 +217,11 @@ final class AppPerformanceAudit {
 
   private func createLoadedWindow(name: String) async throws -> NSWindow {
     let coordinator = WhatsNewCoordinator(version: Bundle.main.appVersion, skipAutomatic: true)
-    let root = Router(initialPath: "/home") { RootView() }.environmentObject(coordinator)
+    let root = Router(initialPath: "/home") { RootView() }
+      .environmentObject(coordinator)
+      .environmentObject(LaunchTransitionCoordinator(
+        arguments: ["-skip-launch-transition"], reduceMotion: false, voiceOver: false
+      ))
       .environment(\.locale, Locale(identifier: "en"))
       .frame(width: 1200, height: 800)
     let extra = NSWindow(contentRect: NSRect(x: 100, y: 100, width: 1200, height: 800),
