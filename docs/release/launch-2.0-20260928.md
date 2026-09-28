@@ -8,7 +8,7 @@
 - [网站 PR #4](https://github.com/gewill/OpenCCman-website/pull/4) 已合并（`8ea7249`），该提交经 `./deploy.sh` 部署到 Cloudflare Pages。正式域名的简体、繁体、英文首页已读回 2.0 文案，下载、隐私和支持入口均存在。
 - [GitHub Release `v2.0`](https://github.com/gewill/OpenCCman/releases/tag/v2.0) 于 UTC 00:40:35 公开，Tag 仍指向 `main` 发布提交 `c7734f5`。
 
-**传播与验收未完成：**截至本次读回，Apple Lookup API 的美国、英国、台湾店面仍返回 1.2；ASC `READY_FOR_DISTRIBUTION` 不证明各店面用户已经看到 2.0。真实购买页和系统确认面板的新价格／币种一致性、旧 Pro 权益及恢复购买，也尚未在公开 2.0 产物上重测；[#212](https://github.com/gewill/OpenCCman/issues/212) 保持打开。此次按维护者“现在就发布网站 APP 以及 GitHub”的指令执行了同窗口公开，未等待 Lookup API 传播结束。后续必须继续读回商店与完成购买页核对；若币种仍不一致，按 #212 处理。
+**传播与验收读回：**发布后第一次 Apple Lookup API 查询美国、英国、台湾店面仍返回 1.2；随后同日再次查询三个店面均返回 **2.0**。ASC 的 iOS 与 macOS 版本持续为 `READY_FOR_DISTRIBUTION`、`downloadable: true`。这证明所查店面的版本目录已经更新，不等于每台设备已经安装新版。真实购买页和系统确认面板的新价格／币种一致性、旧 Pro 权益及恢复购买，尚未在公开 2.0 产物上重测；[#212](https://github.com/gewill/OpenCCman/issues/212) 保持打开。此次按维护者“现在就发布网站 APP 以及 GitHub”的指令执行了同窗口公开。若币种仍不一致，按 #212 处理。
 
 以下保留**执行前快照与计划**，供审计当时的来源和取舍；其中“尚未发布／尚未调价”的状态已经过时，以本节执行读回为准。
 
