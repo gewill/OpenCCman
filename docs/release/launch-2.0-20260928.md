@@ -1,4 +1,16 @@
-# OpenCCman 2.0 上架准备（2026-09-28）
+# OpenCCman 2.0 上架记录（2026-09-28）
+
+## 执行与读回（UTC 2026-09-28 00:36–00:41）
+
+- 发布文档 [PR #222](https://github.com/gewill/OpenCCman/pull/222) 在 `App Regression` 成功后合入 `develop`（`6b85871`）。应用源码和 `v2.0` Tag 未因此改变。
+- iOS `17a9e553-7399-4e0c-97be-e1695f06b7d0` 和 macOS `ca370499-5c15-4510-8a7e-36ef7ebff15d` 均已执行手动发布；ASC 各自读回 2.0(56) `READY_FOR_DISTRIBUTION`、`downloadable: true`。
+- 唯一终身 Pro IAP `6474501747` 的美国基准价在 2026-09-28 生效为 **US$5.99**；ASC 读回英国 £5.99、台湾 NT$190、中国大陆 ¥38。原 US$2.99 区间的结束日及新价区间的开始日均为 2026-09-28。既有永久权益没有迁移或重置。
+- [网站 PR #4](https://github.com/gewill/OpenCCman-website/pull/4) 已合并（`8ea7249`），该提交经 `./deploy.sh` 部署到 Cloudflare Pages。正式域名的简体、繁体、英文首页已读回 2.0 文案，下载、隐私和支持入口均存在。
+- [GitHub Release `v2.0`](https://github.com/gewill/OpenCCman/releases/tag/v2.0) 于 UTC 00:40:35 公开，Tag 仍指向 `main` 发布提交 `c7734f5`。
+
+**传播与验收读回：**发布后第一次 Apple Lookup API 查询美国、英国、台湾店面仍返回 1.2；随后同日再次查询三个店面均返回 **2.0**。ASC 的 iOS 与 macOS 版本持续为 `READY_FOR_DISTRIBUTION`、`downloadable: true`。这证明所查店面的版本目录已经更新，不等于每台设备已经安装新版。真实购买页和系统确认面板的新价格／币种一致性、旧 Pro 权益及恢复购买，尚未在公开 2.0 产物上重测；[#212](https://github.com/gewill/OpenCCman/issues/212) 保持打开。此次按维护者“现在就发布网站 APP 以及 GitHub”的指令执行了同窗口公开。若币种仍不一致，按 #212 处理。
+
+以下保留**执行前快照与计划**，供审计当时的来源和取舍；其中“尚未发布／尚未调价”的状态已经过时，以本节执行读回为准。
 
 ## 已核实状态
 
