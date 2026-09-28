@@ -53,6 +53,8 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
     ]:
         shutil.copy2(path, sources / path.name)
     if not args.benchmark and not args.model_lifetime:
+        shutil.copy2(root / "OpenCCman/Services/ConvertTextIntent.swift", sources / "ConvertTextIntent.swift")
+        shutil.copy2(root / "Tests/Regression/ShortcutsChecks.swift", sources / "ShortcutsChecks.swift")
         shutil.copy2(root / "Tests/Regression/FileChecks.swift", sources / "FileChecks.swift")
         shutil.copy2(root / "Tests/Regression/ProviderChecks.swift", sources / "ProviderChecks.swift")
         shutil.copy2(root / "Tests/Regression/WindowNotificationChecks.swift", sources / "WindowNotificationChecks.swift")
