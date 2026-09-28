@@ -4,7 +4,7 @@ GitHub Actions 负责回归与依赖候选验证，Xcode Cloud 负责正式签�
 
 ## 工作流
 
-下表描述已合入 develop、并由发布 PR #210 带向 main 的工作流。2026-09-26，PR #210 已产生成功的 `App Regression`，main 已配置来源绑定 GitHub Actions（app ID 15368）的必需检查；工作流文件仍待 PR 合并，不能把 PR 检查当成合并后精确 main SHA 的推送检查。
+下表描述已合入 `develop`、并由发布 PR #210 带入 `main` 的工作流。2026-09-28 已读回：`main` 精确合并提交 `c7734f5a6f4ac3f5f9b5786d78ab1c49268364f3` 的推送 `App Regression` 成功（run `36229902055`）；`main` 继续要求来源绑定 GitHub Actions（app ID 15368）的检查。通过回归不等于 App Store 已公开发布，见[上架准备记录](release/launch-2.0-20260928.md)。
 
 | 工作流 / 检查 | 触发条件 | 执行环境与范围 |
 | --- | --- | --- |
