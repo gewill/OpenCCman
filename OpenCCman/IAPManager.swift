@@ -23,11 +23,25 @@ enum FreeFeature: String, CaseIterable, Identifiable {
 enum ProFeature: String, CaseIterable, Identifiable {
   case adFree = "AD free"
   case unlimitedTestNumbers = "Unlimited calculations"
+  #if os(macOS)
+    case largeFileConversion = "pro_large_file_conversion"
+  #endif
+
+  static var allCases: [ProFeature] {
+    var features: [ProFeature] = [.adFree, .unlimitedTestNumbers]
+    #if os(macOS)
+      if MacLargeFileCoordinator.isEnabled { features.append(.largeFileConversion) }
+    #endif
+    return features
+  }
 
   var image: Image {
     switch self {
     case .adFree: return Image("AdFree")
     case .unlimitedTestNumbers: return Image("infinite")
+    #if os(macOS)
+      case .largeFileConversion: return Image(systemName: "doc.text")
+    #endif
     }
   }
 
@@ -35,6 +49,9 @@ enum ProFeature: String, CaseIterable, Identifiable {
     switch self {
     case .adFree: return Color.primary
     case .unlimitedTestNumbers: return Color.red
+    #if os(macOS)
+      case .largeFileConversion: return Color.primary
+    #endif
     }
   }
 

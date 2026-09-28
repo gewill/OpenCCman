@@ -1,0 +1,125 @@
+{
+  "protocol": 1,
+  "date": "2026-09-27",
+  "environment": {
+    "app_sha": "3025c98aca775947145d4b86b5c4dda7fb9e9429",
+    "wrapper_sha": "570c0a52402bdba9488a3e9ecfb2879f0b37526e",
+    "opencc_sha": "025f371dc76b598d77384fbdab90c937471844d8",
+    "os": "macOS 27.0 (26A428)",
+    "hardware": "Mac16,7",
+    "cpu_model": "Apple M4 Pro",
+    "xcode": "Xcode 27.0 (27A266a)",
+    "bundle_id": "org.gewill.OpenCCman.WhatsNewUITests",
+    "configuration": "Debug",
+    "signing": "Apple Development, team RLK76T8Y89",
+    "signed_entitlements": {
+      "com.apple.security.app-sandbox": true,
+      "com.apple.security.files.user-selected.read-write": true,
+      "com.apple.security.get-task-allow": true,
+      "com.apple.security.network.client": true
+    },
+    "qa_flags_for_conversion": [
+      "-qa-enable-large-file-conversion",
+      "-qa-large-file-pro"
+    ],
+    "configuration_used": "Traditional Chinese · OpenCC Standard (s2t)",
+    "access": "Native NSOpenPanel/NSSavePanel only; no automatic import."
+  },
+  "fixtures": {
+    "existing_destination_sha256": "80019b13eb6b3e67755a5e633364322401226143eb638d4b7491d7d7eec92678",
+    "existing_destination_bytes": 38,
+    "valid_100mib": {
+      "bytes": 104857276,
+      "sha256": "a8e802bcb25fa7088ba791a9eb70cf25bfbb9802fb4373268984b1445ba03c20"
+    },
+    "valid_1gib_bytes": 1073741758,
+    "invalid_utf8": {
+      "bytes": 12582883,
+      "invalid_byte": "0xFF",
+      "invalid_offset": 11534320
+    },
+    "tiny_volume": "20 MiB APFS disk image mounted at /Volumes/OCTiny, 19,780 KiB available"
+  },
+  "scenarios": [
+    {
+      "id": "invalid_utf8",
+      "source": "invalid_utf8",
+      "destination": "replace existing destination",
+      "observed": "Could Not Convert File: This file is not valid UTF-8. Save it as UTF-8 and try again.",
+      "checks": "Existing destination hash, size and modification time unchanged; no new file.",
+      "status": "passed"
+    },
+    {
+      "id": "destination_is_source",
+      "source": "valid_100mib",
+      "destination": "the source file itself",
+      "observed": "Could Not Convert File: Choose a different file from the source.",
+      "checks": "Source hash, size and modification time unchanged.",
+      "status": "passed"
+    },
+    {
+      "id": "destination_symlink_to_source",
+      "source": "valid_100mib",
+      "destination": "symbolic link pointing to the source",
+      "observed": "Could Not Convert File: Choose a different file from the source.",
+      "checks": "Symbolic link not replaced; source hash unchanged.",
+      "status": "passed"
+    },
+    {
+      "id": "source_changed_during_conversion",
+      "source": "valid_1gib",
+      "destination": "replace existing destination",
+      "action": "Appended 2 bytes to the source at about 2% progress.",
+      "observed": "Could Not Convert File: The source file changed. Import it again.",
+      "checks": "Existing destination hash, size and modification time unchanged; no new file.",
+      "status": "passed"
+    },
+    {
+      "id": "locked_destination",
+      "source": "valid_100mib",
+      "destination": "existing file with the user immutable flag (uchg)",
+      "observed": "Could Not Convert File: The operation couldn't be completed. Operation not permitted",
+      "checks": "Locked file hash unchanged and flag still set; no new file.",
+      "status": "passed"
+    },
+    {
+      "id": "read_only_directory",
+      "source": "valid_100mib",
+      "destination": "existing file in a mode 555 directory",
+      "observed": "Could Not Convert File: The operation couldn't be completed. Permission denied",
+      "checks": "Existing file hash unchanged; no new file.",
+      "status": "passed"
+    },
+    {
+      "id": "disk_full",
+      "source": "valid_100mib",
+      "destination": "existing file on the 20 MiB volume",
+      "observed": "Could Not Convert File: The file couldn't be saved because there isn't enough space.",
+      "checks": "Existing file hash unchanged; available space back to 19,780 KiB, so the partial output staged on that volume was removed.",
+      "status": "passed"
+    },
+    {
+      "id": "owner_window_close_during_task",
+      "source": "valid_1gib",
+      "destination": "new file",
+      "action": "During conversion (up to 72%): clicked the close button, opened File and Window menus, pressed Command-W and Option-Command-W.",
+      "observed": "Close button disabled; File > Close disabled; the Window menu has no Close item; neither shortcut closed the window. Conversion continued.",
+      "status": "not reachable natively"
+    },
+    {
+      "id": "cancel_new_destination",
+      "source": "valid_1gib",
+      "destination": "new file",
+      "action": "Cancel at about 72% progress.",
+      "observed": "Task sheet closed after cleanup; workspace text and result unchanged.",
+      "checks": "No output file created at the destination.",
+      "status": "passed"
+    }
+  ],
+  "decisions": [
+    "Cancellation exactly before commit and cleanup failure stay covered by the fault-injection regression (scripts/check-core.py); they cannot be triggered reliably by hand.",
+    "The owning window cannot be closed natively while its task sheet is shown, so owner-close is prevented by the UI; the coordinator regression covers programmatic owner close.",
+    "Read errors are covered by EIO injection; real removable-volume and file-provider interruptions, forced termination and power loss move to #217."
+  ],
+  "boundary": "Temporary output inside the app container cannot be listed from another process; for boot-volume scenarios, cleanup is inferred from the primary error being shown instead of the cleanup-failure error. The disk-full scenario verifies cleanup directly on its own volume."
+}

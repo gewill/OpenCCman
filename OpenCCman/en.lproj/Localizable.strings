@@ -156,3 +156,30 @@
 "Later" = "Later";
 "Restart" = "Restart";
 "mac_text_size" = "Text Size";
+
+// Mac file conversion
+"pro_large_file_conversion" = "Convert TXT files larger than 10 MiB and up to 1 GiB on Mac with Pro.";
+"large_file_title" = "Convert Large File";
+"large_file_explanation" = "Convert this file directly to a new UTF-8 TXT file. Your current text and result stay in the workspace. The file will not open in the editor.";
+"large_file_choose_destination" = "Choose Destination…";
+"large_file_convert_and_save" = "Convert and Save";
+"large_file_converting" = "Converting File";
+"large_file_progress" = "File conversion progress";
+"large_file_keep_open" = "Keep this window open until the converted file is saved.";
+"large_file_cancelling" = "Cancelling…";
+"large_file_cleanup" = "Finishing cleanup before closing this task.";
+"large_file_complete" = "Conversion Complete";
+"large_file_saved" = "Your converted file is ready.";
+"large_file_show_in_finder" = "Show in Finder";
+"large_file_failed" = "Could Not Convert File";
+"large_file_retry_import" = "Import the file again to retry. Your current workspace text and result are unchanged.";
+"large_file_busy" = "A file conversion is already open in another window. Finish or cancel that task before starting another.";
+"file_error_source_changed" = "The source file changed. Import it again.";
+"file_error_source_unavailable" = "This file is no longer available. Import it again.";
+"file_error_same_destination" = "Choose a different file from the source.";
+"file_error_destination" = "Choose a regular file as the destination.";
+"file_error_destination_changed" = "The destination changed during conversion. Choose it again.";
+"large_file_capacity" = "This file exceeds the 1 GiB limit. Choose a smaller TXT file.";
+"file_error_temporary_cleanup_failed" = "Conversion stopped, but its temporary file could not be removed.";
+"large_file_cleanup_recovery" = "Remove the remaining temporary conversion folder in Finder:";
+"mac_text_file_hint" = "Import or drop UTF-8 TXT or plain text up to 10 MiB to edit. Pro converts TXT files up to 1 GiB directly to a new file.";

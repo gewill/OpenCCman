@@ -16,6 +16,8 @@ struct RootView: View {
   @State private var windowFrame: CGRect = .zero
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   #if os(macOS)
+    @ObservedObject private var largeFile = MacLargeFileCoordinator.shared
+    @State private var largeFilePresentationIsActive = false
     @StateObject private var windowSizing = MainWindowSizing()
     @State private var isMainWindow = false
     @State private var windowID: ObjectIdentifier?
@@ -66,6 +68,19 @@ struct RootView: View {
           whatsNewWindow.manualRequest = nil
         }
     }
+    #if os(macOS)
+    .sheet(isPresented: Binding(
+      get: { largeFile.session?.owner == viewModel.windowOwnerID },
+      set: { if !$0, !largeFile.isWorking { largeFile.cancel() } }
+    ), onDismiss: {
+      largeFilePresentationIsActive = false
+      presentWhatsNewIfReady()
+    }) {
+      MacLargeFileTaskView(coordinator: largeFile)
+        .environment(\.locale, locale)
+        .onAppear { largeFilePresentationIsActive = true }
+    }
+    #endif
     .onAppear {
       #if DEBUG
         if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
@@ -102,6 +117,9 @@ struct RootView: View {
       viewModel.cancelConversion()
       whatsNewRelease = nil
       whatsNew.finish(in: presentationID)
+      #if os(macOS)
+        largeFile.ownerDidClose(viewModel.windowOwnerID)
+      #endif
     }
     #if os(macOS)
     .frame(minWidth: MainWindowGeometry.minimumContentSize.width,
@@ -112,11 +130,15 @@ struct RootView: View {
       isMainWindow = window.isMainWindow
       viewModel.window = window
       AppDelegate.registerReadyWindow(window)
+      #if DEBUG
+        viewModel.importLargeFileForQAIfRequested()
+      #endif
     }.allowsHitTesting(false).accessibilityHidden(true))
     .onReceive(NotificationCenter.default.publisher(for: NSWindow.willCloseNotification)) { notification in
       guard isTargetWindow(for: notification) else { return }
       viewModel.cancelConversion()
       viewModel.cancelImport()
+      largeFile.ownerDidClose(viewModel.windowOwnerID)
     }
     .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeMainNotification)) { notification in
       if isTargetWindow(for: notification) {
@@ -164,7 +186,7 @@ struct RootView: View {
     #if os(macOS)
       active = active && isMainWindow
     #endif
-    return WhatsNewEligibility(
+    var eligibility = WhatsNewEligibility(
       isActive: active,
       isHome: navigator.path == "/home",
       isSupportedRoute: navigator.path == "/home" || navigator.path == "/settings",
@@ -176,6 +198,10 @@ struct RootView: View {
       hasSettingsSheet: whatsNewWindow.conversionSettingsIsActive,
       isLaunchTransitionRunning: launchReveal.isActive
     )
+    #if os(macOS)
+      eligibility.hasLargeFileTask = largeFile.isBusy || largeFilePresentationIsActive
+    #endif
+    return eligibility
   }
 
   /// Start once the window has a frame and its scene is active: by then the

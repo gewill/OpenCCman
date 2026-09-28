@@ -39,6 +39,8 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
     for path in [
         root / "OpenCCman/Services/ChineseConversionService.swift",
         root / "OpenCCman/Services/TextFileService.swift",
+        root / "OpenCCman/Services/StreamingTextFileService.swift",
+        root / "OpenCCman/Services/MacLargeFileCoordinator.swift",
         root / "OpenCCman/Model/ConversionConfiguration.swift",
         root / "OpenCCman/Model/ConvertedTextDocument.swift",
         root / "OpenCCman/Model/TestNumbersPerDayManager.swift",
@@ -54,11 +56,13 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
         shutil.copy2(root / "Tests/Regression/FileChecks.swift", sources / "FileChecks.swift")
         shutil.copy2(root / "Tests/Regression/ProviderChecks.swift", sources / "ProviderChecks.swift")
         shutil.copy2(root / "Tests/Regression/WindowNotificationChecks.swift", sources / "WindowNotificationChecks.swift")
+        shutil.copy2(root / "Tests/Regression/StreamingFileChecks.swift", sources / "StreamingFileChecks.swift")
+        shutil.copy2(root / "Tests/Regression/LargeFileCoordinatorChecks.swift", sources / "LargeFileCoordinatorChecks.swift")
     (package / "Package.swift").write_text('''// swift-tools-version: 5.9
 import PackageDescription
 let package = Package(
     name: "OpenCCmanCoreChecks",
-    platforms: [.macOS(.v11)],
+    platforms: [.macOS(.v12)],
     dependencies: [\n''' + ",\n".join(dependencies) + '''\n],
     targets: [.executableTarget(name: "CoreChecks", dependencies: [
         .product(name: "OpenCC", package: "swiftyopencc"),
