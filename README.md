@@ -1,35 +1,27 @@
 # OpenCCman
 
-Convert Chinese text with [OpenCC](https://github.com/BYVoid/OpenCC)
+A native Chinese text conversion app for iPhone, iPad and Mac, powered by [OpenCC](https://github.com/BYVoid/OpenCC). Convert between Simplified and Traditional Chinese and adapt regional wording on your device.
 
-An OpenCC UI for iOS、iPadOS、macOS by SwiftUI with ❤️
+[Website](https://openccman.gewill.org/) · [App Store](https://apps.apple.com/app/id6474449401) · [Privacy policy](https://openccman.gewill.org/en/privacy.html) · [Support](https://openccman.gewill.org/en/support.html)
 
-See the [Changelog](CHANGELOG.md) for notable changes and the current unreleased work.
+[![Download on the App Store](assets/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg)](https://apps.apple.com/app/id6474449401)
 
-[![Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917](./assets/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg)](https://apps.apple.com/app/id6474449401)
+## OpenCCman 2.0
 
-## 1.3
+- Choose from four common presets: Simplified Chinese, OpenCC Traditional, Taiwan Standard with Taiwan idioms, and Hong Kong Traditional. Advanced character and regional wording options remain available. Simplified output is not a complete reverse conversion of Taiwan-specific vocabulary.
+- Read source and result side by side or stacked on Mac and iPad. Each window keeps its layout preference, while narrow windows temporarily stack the panes. The iPhone workspace uses a compact Convert action to leave more room for text.
+- On Mac, use customizable global shortcuts to convert selected text in another app and replace it in an editable field, or open the selection in OpenCCman. Compatible apps can also use macOS Services. Replacement requires Accessibility permission and support from the source app.
+- Import or drop one UTF-8 TXT file up to 10 MiB, including files with a BOM; export the latest successful result as UTF-8 without a BOM. Line endings, blank lines and Unicode text are preserved. Batch conversion, Big5/GBK decoding and files over 10 MiB are not supported, including with Pro.
+- Cancel a conversion or import without letting a late result replace the current text. Cancellation does not forcibly interrupt native conversion already in progress.
+- Use OpenCCman free for 12 successful homepage conversions per day. Lifetime Pro removes that limit and in-app recommendations; existing lifetime purchases remain valid. Importing, exporting and changing presets do not use the daily allowance.
 
-- Four presets: Simplified, OpenCC Traditional, Taiwan Standard + Idioms, and Hong Kong Traditional. Existing advanced preferences remain available.
-- Import one UTF-8 `.txt` file (with or without BOM), up to 10 MiB. Drop a file or plain text onto the indicated drop area.
-- Export the latest successful conversion as a new UTF-8 file without BOM. Line endings, blank lines and Unicode are preserved.
-- Cancel conversion or import without accepting late results. Failed imports leave the current draft intact.
-- Daily homepage quota reservations are shared across windows; only successful conversions consume a use.
-- Localized What’s New cards appear once per supported marketing version and can be reopened in Settings. See the [presentation rules and validation record](docs/WHATS_NEW.md).
-
-iOS 14 / macOS 11 remain supported. Batch conversion, Shortcuts, history and custom dictionaries are not part of 1.3.
+OpenCCman 2.0 requires **iOS/iPadOS 15 or macOS 12**. Optional Launch at Login is available on macOS 13 or later. See the [2.0 changelog](CHANGELOG.md#20) and [release record](docs/release/launch-2.0-20260928.md) for technical changes and validation limits.
 
 ## Development
 
-See the [branching policy](docs/BRANCHING.md) for PR targets and Xcode Cloud packaging branches. The [CI guide](docs/CI.md) describes checks, runner selection and migration status.
+Daily application work targets `develop`; `main` carries published releases and the weekly upstream coordinator. Only temporary `build`-prefixed branches trigger Xcode Cloud packaging. Read the [branching policy](docs/BRANCHING.md), [CI guide](docs/CI.md) and [Xcode Cloud guide](docs/XCODE_CLOUD.md) before changing release or build configuration.
 
-## Adaptive workspace design
-
-The selected sidebar direction now has [detailed iPhone, iPad and Mac UI mockups](docs/design/adaptive-workspace/README.md), including side-by-side/stacked layouts, keyboard and task states. The [implementation plan](docs/design/adaptive-workspace/PLAN.md) tracks delivery and acceptance; these are design proposals, not implemented features.
-
-## Development checks
-
-Run on macOS with Xcode command-line tools and Python 3; no simulator is required:
+On macOS with Xcode command-line tools and Python 3, run the relevant isolated checks:
 
 ```sh
 bash scripts/check-project.sh
@@ -40,49 +32,12 @@ bash scripts/check-control-labels.sh
 bash scripts/check-pasteboard.sh
 ```
 
-Core checks compile the actual app model/services with the dependencies pinned in `Package.resolved`. All preferences and pasteboards used by these checks are isolated from the running app. See [1.3 validation](docs/version-1.3-validation.md) for coverage and remaining release checks.
+These checks do not replace a signed Xcode Cloud build or device acceptance. The [adaptive workspace validation](docs/validation/adaptive-workspace/README.md), [performance evidence](docs/performance/README.md) and [Build 56 record](docs/validation/build-56/README.md) describe what was tested and what remains open.
 
-## Project status
+The [upstream sync guide](docs/upstream-sync.md) explains the weekly, reviewed SwiftyOpenCC and OpenCC update flow. Engine-specific maintenance is documented in the [SwiftyOpenCC repository](https://github.com/gewill/SwiftyOpenCC/blob/master/docs/upstream-sync.md).
 
-The [work handoff (2026-09-16)](docs/handoff/2026-09-16/README.md) records exact PR heads and CI results, performance evidence, dependency order, pending human decisions, and preserved local validation environments. It is a dated snapshot; re-check GitHub before continuing.
+Earlier [1.3 validation](docs/version-1.3-validation.md), [project audit](docs/project-status-and-follow-up-2026-09-13.md) and [handoff](docs/handoff/2026-09-16/README.md) are dated historical records, not the current release status.
 
-Neumorphic is pinned to the stable **2.4.1** release. Unused button styles and the obsolete VisualEffects dependency/credit have been removed; the remaining 14 dependency pins are unchanged. See the [platform sizing fix and runtime before/after captures](docs/validation/control-sizing/README.md), and the [control adoption audit](docs/NEUMORPHIC_CONTROLS.md) for segmented selectors, switches, loading indicators, cards, and the controls that retain system behavior.
+## Credits and license
 
-The [application performance baseline](docs/performance/README.md) documents isolated Release measurements, raw samples, engine comparisons and the limits of each metric.
-
-See the [complete project status and follow-up report (2026-09-13)](docs/project-status-and-follow-up-2026-09-13.md) for delivered work, validation evidence, remaining release gates and concrete improvement recommendations.
-
-The [1.3 follow-up validation record](docs/v1.3-release-validation-2026-09-13.md) tracks the latest tooling checks and the Xcode Cloud resource-signing blocker.
-
-The [release metadata and privacy audit (2026-09-15)](docs/release/metadata-2026-09-15/README.md) includes three-language candidate copy, current ASC version discrepancies and remaining privacy/release gates. These drafts have not been applied to App Store Connect.
-
-## Xcode Cloud release builds
-
-Production builds use Xcode Cloud. Push a temporary branch whose name starts with `build` only when a cloud package is needed; it triggers the existing iOS and macOS workflow. Everyday application PRs target `develop`. The legacy `build` branch must be retired before creating `build/*` branches. See [Xcode Cloud configuration and release checks](docs/XCODE_CLOUD.md) for the verified App/workflow IDs, diagnostics and acceptance steps. Local archives and exports are diagnostic evidence; release acceptance uses the cloud build and its exact source commit.
-
-## Upstream sync
-
-Application development lives on [`develop`](https://github.com/gewill/OpenCCman/tree/develop), while `main` hosts the upstream coordinator. It checks wrapper commits and stable OpenCC releases every Monday at 09:17 (UTC+8), opens a SwiftyOpenCC PR first, then pins the merged, validated fork revision in an app PR. Maintainers review and merge each PR; all other dependencies remain locked. See the [CI and migration status](docs/CI.md).
-
-See the shared [upstream sync guide](https://github.com/gewill/OpenCCman/blob/main/docs/upstream-sync.md) for the Monday 09:17 (UTC+8) schedule, manual commands, CI setup and rollback. Engine-specific work is covered by the [SwiftyOpenCC maintenance guide](https://github.com/gewill/SwiftyOpenCC/blob/master/docs/upstream-sync.md).
-
-## Thanks
-
-1. [BYVoid](https://github.com/BYVoid)‘s original SDK [OpenCC](https://github.com/BYVoid/OpenCC) 
-2. [ddddxxx](https://github.com/ddddxxx)‘s Swift SDK [SwiftyOpenCC](https://github.com/ddddxxx/SwiftyOpenCC)
-
-## Branching and CI
-
-Application PRs target `develop`; the upstream coordinator remains on the default branch `main`. Merge the [application CI migration](https://github.com/gewill/OpenCCman/blob/develop/docs/CI.md) first and wait for its merged `App Regression` check before switching the live coordinator configuration. See the [branching policy](https://github.com/gewill/OpenCCman/blob/develop/docs/BRANCHING.md) for release and temporary Xcode Cloud packaging branches.
-
-## License
-
-MIT License
-
-### Adaptive workspace
-
-macOS and iPad support horizontal or vertical source/result panes, a settings
-inspector or sheet, and independent window layout preferences. iPhone uses a
-stacked workspace with a keyboard-aware conversion action. Narrow windows fall
-back without overwriting the chosen layout. See the [UI specification and designs](docs/design/adaptive-workspace/README.md)
-and [runtime screenshots, checks and remaining acceptance](docs/validation/adaptive-workspace/README.md).
+OpenCCman builds on [OpenCC](https://github.com/BYVoid/OpenCC) by BYVoid and [SwiftyOpenCC](https://github.com/ddddxxx/SwiftyOpenCC) by ddddxxx. Licensed under [MIT](LICENSE).
