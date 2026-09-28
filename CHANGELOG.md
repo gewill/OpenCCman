@@ -13,16 +13,17 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 ## [Unreleased]
 
-Changes after the 2.0 release candidate target `develop`.
+Changes after the published 2.0 release target `develop`.
 
 ## [2.0]
 
 The application source at `2f782714103d68b4972bee93e47bda8cafee1959`
 produced Xcode Cloud Build 56 for iOS and Mac. Both 2.0(56) versions were
-submitted for App Review on 2026-09-26 with manual public release selected;
-submission does not establish public availability. The minimum systems are
-iOS 15 and macOS 12, and the homepage limit remains 12 daily conversions.
-See the [Build 56 release record](docs/validation/build-56/README.md).
+published on 2026-09-28; the US, UK and Taiwan storefront catalogs subsequently
+returned 2.0. The minimum systems are iOS 15 and macOS 12, and the homepage
+limit remains 12 daily conversions. See the [2.0 release record](docs/release/launch-2.0-20260928.md)
+and [Build 56 validation](docs/validation/build-56/README.md) for the exact
+source, distribution and remaining acceptance boundaries.
 
 ### Added
 
