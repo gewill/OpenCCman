@@ -1,0 +1,51 @@
+{
+  "date": "2026-09-28",
+  "issue": 52,
+  "hostToolchain": "Xcode 27.0 (27A266a)",
+  "guest": {
+    "virtualization": "VirtualBuddy, Apple Silicon ARM64",
+    "productVersion": "12.6.1",
+    "buildVersion": "21G217",
+    "darwinKernel": "21.6.0"
+  },
+  "application": {
+    "sourceCommit": "f0d305051700a53329577214f0bf007924021189",
+    "bundleIdentifier": "org.gewill.OpenCCman.WhatsNewUITests",
+    "build": "ad-hoc signed Debug QA",
+    "minimumSystem": "macOS 12.0",
+    "sandboxEntitlements": [
+      "com.apple.security.app-sandbox",
+      "com.apple.security.files.user-selected.read-write"
+    ],
+    "qaZipSha256": "f9c01868cfa624c3ff52c0926a1a0885b877a58ceb8ad8a61cf3d98022c8d547",
+    "launchArguments": [
+      "-qa-enable-large-file-conversion",
+      "-qa-large-file-pro",
+      "-skip-whats-new"
+    ]
+  },
+  "fixture": {
+    "kind": "UTF-8 BOM, CRLF, Chinese phrases and Emoji",
+    "bytes": 12587041,
+    "sha256": "7987411410af1fff567c7c9811b927e9ed3d0d97f812b7d0ab4f0c8e8d8485f7"
+  },
+  "steps": [
+    "Confirmed guest product version and build with sw_vers.",
+    "Transferred the QA ZIP and fixture over the isolated VM bridge, then verified both SHA-256 values in the guest.",
+    "Launched the QA app; selected input.txt using the native Import TXT panel.",
+    "Observed the 12.6 MB large-file confirmation with Traditional Chinese / OpenCC Standard and the unchanged existing editor draft.",
+    "Used the native save panel to choose input-converted.txt in the guest home directory.",
+    "Observed the Conversion Complete sheet and verified the output with guest shasum and wc."
+  ],
+  "output": {
+    "bytes": 12587038,
+    "sha256": "df35cbf080d6ccaac92c04c7b403ce627948b64273d44aa70a6307856e065e80",
+    "matchesExpected": true
+  },
+  "limitations": [
+    "QA in-memory Pro override is not a StoreKit or RevenueCat entitlement test.",
+    "This minimum-system smoke test used 12 MiB, not a 1 GiB fixture.",
+    "The app was built on the host with Xcode 27 and run in the macOS 12 guest; it was not built in the guest.",
+    "The native UI was observed through VirtualBuddy but no guest screenshot artifact was retained."
+  ]
+}
