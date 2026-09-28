@@ -1,0 +1,50 @@
+{
+  "app_sha": "93bb152f53893b2032f585e9ee534214ee3dbe0b",
+  "wrapper_sha": "564b094b2b69f2c1e907fa3d89fe6845469a4e4e",
+  "source_sha256": {
+    "OpenCCman/Services/ChineseConversionService.swift": "2f9b951421406dab71bee5e8da9125ba8cac154284e01138b8e062cd64083a0a",
+    "OpenCCman/Services/TextFileService.swift": "513d0ff615611da1e7c935c411be95b3ffe168545509d056c0fdd002e3c015d9",
+    "OpenCCman/Services/StreamingTextFileService.swift": "1edd6badc5d259e8942da650afe2804cdb2abe6fa594774be34668fb7e112176",
+    "Tests/Benchmarks/StreamingForceKillProbe.swift": "8b8999d89a1ad8d3a43f6b755c9e9e66d508e4145eb99e5d318ea0d7731b6591"
+  },
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "started_at": "2026-09-28T21:07:00.324738+00:00",
+  "scope": "Unsandboxed copied service sources, fixed generated UTF-8 text, 20 MiB existing-target cases",
+  "binary_sha256": "4b8e3c7f0568eb501e63ae1ff26c553b87f8d7db14c3e2f2604b33d782a32cb3",
+  "cases": [
+    {
+      "phase": "middle",
+      "source_bytes": 20971520,
+      "source_sha256": "9c209f13a67a06ef501b60a06d918fd8b4a5f2cda94cbbda943fb664c50cc290",
+      "destination_sha256_before_and_after_kill": "cce5d3bf234e712abb2a75eec09e7b40b17441749c6d8dcadee1034c65409a21",
+      "destination_sha256_after_next_process": "c97e9078f30fc83df35df41d3f9657d345e227ae8746fa466ff4c5f36517a5b0",
+      "staging_path": "/var/folders/h1/t5wxjp210_gd35wqdgrl5y3c0000gn/T/TemporaryItems/NSIRD_StreamingForceKillProbe_E9e8pB",
+      "staging_after_kill": [
+        {
+          "name": "352DC198-3B9B-4F4A-96DC-025EB1E3A323.txt",
+          "bytes": 1048534
+        }
+      ],
+      "orphan_staging_after_next_process": true,
+      "child_exit": -9
+    },
+    {
+      "phase": "before-commit",
+      "source_bytes": 20971520,
+      "source_sha256": "9c209f13a67a06ef501b60a06d918fd8b4a5f2cda94cbbda943fb664c50cc290",
+      "destination_sha256_before_and_after_kill": "cce5d3bf234e712abb2a75eec09e7b40b17441749c6d8dcadee1034c65409a21",
+      "destination_sha256_after_next_process": "c97e9078f30fc83df35df41d3f9657d345e227ae8746fa466ff4c5f36517a5b0",
+      "staging_path": "/var/folders/h1/t5wxjp210_gd35wqdgrl5y3c0000gn/T/TemporaryItems/NSIRD_StreamingForceKillProbe_EUI7ry",
+      "staging_after_kill": [
+        {
+          "name": "E5535BFF-B7C3-4E68-96C1-19D1F0EBEC60.txt",
+          "bytes": 20971520
+        }
+      ],
+      "orphan_staging_after_next_process": true,
+      "child_exit": -9
+    }
+  ],
+  "completed_at": "2026-09-28T21:07:12.896380+00:00"
+}
