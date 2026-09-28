@@ -28,6 +28,8 @@
 		CC0912202600000000000031 /* ConvertedTextDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000032 /* ConvertedTextDocument.swift */; };
 		CC0912202600000000000021 /* ConversionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000022 /* ConversionConfiguration.swift */; };
 		CC0912202600000000000001 /* ChineseConversionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000002 /* ChineseConversionService.swift */; };
+		CC2609280000000000000001 /* ConvertTextIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2609280000000000000002 /* ConvertTextIntent.swift */; };
+		CC2609280000000000000011 /* AppShortcuts.strings in Resources */ = {isa = PBXBuildFile; fileRef = CC2609280000000000000015 /* AppShortcuts.strings */; };
 		0920E96C2E3F4D3C003C9715 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */; };
 		095E17452E40746F0051BBB7 /* ServicesMenu.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */; };
 		CC0912202600000000000011 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000012 /* PrivacyInfo.xcprivacy */; };
@@ -117,6 +119,10 @@
 		CC0912202600000000000032 /* ConvertedTextDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertedTextDocument.swift; sourceTree = "<group>"; };
 		CC0912202600000000000022 /* ConversionConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionConfiguration.swift; sourceTree = "<group>"; };
 		CC0912202600000000000002 /* ChineseConversionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseConversionService.swift; sourceTree = "<group>"; };
+		CC2609280000000000000002 /* ConvertTextIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertTextIntent.swift; sourceTree = "<group>"; };
+		CC2609280000000000000012 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AppShortcuts.strings; sourceTree = "<group>"; };
+		CC2609280000000000000013 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/AppShortcuts.strings"; sourceTree = "<group>"; };
+		CC2609280000000000000014 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/AppShortcuts.strings"; sourceTree = "<group>"; };
 		0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = ServicesMenu.xcstrings; sourceTree = "<group>"; };
 		CC0912202600000000000012 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -209,6 +215,7 @@
 				860A8029E8FF16CE13720671 /* ProAccessUpdate.swift */,
 				7CAFB8436EC14FFC357BCEFA /* CustomerCenterScene.swift */,
 				CC0912202600000000000002 /* ChineseConversionService.swift */,
+				CC2609280000000000000002 /* ConvertTextIntent.swift */,
 				CC0912202600000000000042 /* TextFileService.swift */,
 				C05200000000000000000022 /* MacLargeFileCoordinator.swift */,
 				C05200000000000000000012 /* StreamingTextFileService.swift */,
@@ -346,6 +353,7 @@
 				0920E96B2E3F4D3C003C9715 /* InfoPlist.xcstrings */,
 				095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */,
 				BE727E3A2B2E00D000C63DB2 /* Localizable.strings */,
+				CC2609280000000000000015 /* AppShortcuts.strings */,
 				09DBEC542E3BC69000DD9C5B /* Services */,
 				BE3AEC8A2B2EF18F00820673 /* Scene */,
 				BE727E2F2B2DF60E00C63DB2 /* View */,
@@ -455,6 +463,7 @@
 				095E17452E40746F0051BBB7 /* ServicesMenu.xcstrings in Resources */,
 				CC0912202600000000000011 /* PrivacyInfo.xcprivacy in Resources */,
 				BE727E382B2E00D000C63DB2 /* Localizable.strings in Resources */,
+				CC2609280000000000000011 /* AppShortcuts.strings in Resources */,
 				0920E96C2E3F4D3C003C9715 /* InfoPlist.xcstrings in Resources */,
 				BEA770EB2B2C904A00AFA2F0 /* Assets.xcassets in Resources */,
 			);
@@ -488,6 +497,7 @@
 				CC2609270000000000000001 /* LaunchMotion.swift in Sources */,
 				CC2609270000000000000003 /* LaunchTransition.swift in Sources */,
 				CC0912202600000000000001 /* ChineseConversionService.swift in Sources */,
+				CC2609280000000000000001 /* ConvertTextIntent.swift in Sources */,
 				CC0912202600000000000041 /* TextFileService.swift in Sources */,
 				C05200000000000000000031 /* MacLargeFileTaskView.swift in Sources */,
 				C05200000000000000000021 /* MacLargeFileCoordinator.swift in Sources */,
@@ -542,6 +552,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		CC2609280000000000000015 /* AppShortcuts.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CC2609280000000000000012 /* en */,
+				CC2609280000000000000013 /* zh-Hans */,
+				CC2609280000000000000014 /* zh-Hant */,
+			);
+			name = AppShortcuts.strings;
+			sourceTree = "<group>";
+		};
 		BE727E3A2B2E00D000C63DB2 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
