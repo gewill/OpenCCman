@@ -24,9 +24,21 @@ enum ShortcutsChecks {
       }
     }
 
+    let boundaryPrefix = String(repeating: "a", count: TextFileService.maximumBytes - "头发".utf8.count)
+    let boundary = ConvertChineseTextIntent()
+    boundary.text = boundaryPrefix + "头发"
+    boundary.preset = .traditional
+    precondition(boundary.text.utf8.count == TextFileService.maximumBytes)
+    let boundaryResult = try await boundary.perform()
+    precondition(boundaryResult.value == boundaryPrefix + "頭髮",
+                 "Exactly 10 MiB of UTF-8 text must be accepted and converted completely")
+
     let oversized = ConvertChineseTextIntent()
-    oversized.text = String(repeating: "a", count: TextFileService.maximumBytes + 1)
+    oversized.text = String(repeating: "a", count: TextFileService.maximumBytes - 2) + "中"
     oversized.preset = .traditional
+    precondition(oversized.text.count < TextFileService.maximumBytes &&
+                 oversized.text.utf8.count == TextFileService.maximumBytes + 1,
+                 "Capacity must be measured in UTF-8 bytes rather than characters")
     do {
       _ = try await oversized.perform()
       preconditionFailure("Shortcuts must reject text beyond the declared capacity")
@@ -35,6 +47,6 @@ enum ShortcutsChecks {
     }
     precondition(coreQuotaCount == homepageUsesBefore,
                  "Shortcuts must remain free without charging the homepage quota")
-    print("PASS: free Shortcuts action runs at the exhausted homepage quota, matches four presets, preserves Unicode/NUL/newlines and rejects over-limit text")
+    print("PASS: free Shortcuts action runs at the exhausted homepage quota, matches four presets, preserves Unicode/NUL/newlines, accepts exactly 10 MiB and rejects over-limit UTF-8 text")
   }
 }
