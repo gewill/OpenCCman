@@ -29,8 +29,8 @@ private final class FileProgressThrottle: @unchecked Sendable {
 final class MacLargeFileCoordinator: ObservableObject {
   static let shared = MacLargeFileCoordinator()
   static let maximumBytes: UInt64 = 1024 * 1024 * 1024
-  // Enable only after the capacity and minimum-system acceptance in #52/#16.
-  nonisolated static let productionEnabled = false
+  // The 2.1 candidate exposes the validated direct-to-file workflow to Pro.
+  nonisolated static let productionEnabled = true
   nonisolated static var isEnabled: Bool {
     #if DEBUG
       if isQABundle, ProcessInfo.processInfo.arguments.contains("-qa-enable-large-file-conversion") { return true }
