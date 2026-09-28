@@ -48,7 +48,8 @@ After quitting the QA app, the same shortcut again returned
 `頭髮和乾杯。EMOJI 🧪` while Shortcuts stayed in front. The system started the
 QA app process in the background during the run; this verifies the closed-app
 invocation, but does not prove that no workspace window was created behind
-Shortcuts.
+Shortcuts. Bringing that QA window forward afterwards showed its existing
+source `鼠标里面的硅二极管坏了，导致光标分辨率降低。` and empty result unchanged.
 
 Still open before closing #26: system Shortcuts invocation and downstream
 output on iPhone and iPad, Mac cancellation and continuous-run matrix,
