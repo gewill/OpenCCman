@@ -32,8 +32,21 @@ existing conversion service for empty/CRLF/Unicode/NUL samples, and checks a
 specific over-limit error. It exercises `perform()` directly, separate from
 the system Shortcuts editor test above.
 
+On 2026-09-28, after #229 merged as `fbd48cde68c1bdee6857179fcbddef52e7580bb5`,
+the Mac Shortcuts editor also verified downstream output in the same isolated
+QA bundle. A three-step shortcut connected **Text** (`头发和干杯。Emoji 🧪`) →
+**Convert Chinese Text** (Traditional · OpenCC) → the system **Change Case**
+(UPPERCASE). The OpenCCman action produced `頭髮和乾杯。Emoji 🧪`; the final
+Shortcuts result bubble and accessibility tree showed
+`頭髮和乾杯。EMOJI 🧪`. This demonstrates that the conversion result reached
+another system action. Two identically named actions appeared in this local
+QA environment. Choosing the first produced “couldn’t communicate with the
+app”; the second, from the installed `org.gewill.OpenCCman.ShortcutsQA`,
+worked. The duplicate registration has not been reproduced with a single
+published app installation and does not establish a production defect.
+
 Still open before closing #26: system Shortcuts invocation and downstream
-output on iPhone and iPad, Mac downstream action execution and cancellation,
-three-language UI checks in a signed package, and a final signed build. Xcode
-27 Device Hub was inspected but its computer-control window timed out during
+output on iPhone and iPad, Mac cancellation and closed-app/continuous-run
+matrix, three-language UI checks in a signed package, and a final signed build.
+Xcode 27 Device Hub was inspected but its computer-control window timed out during
 this run; simulator installation and launch alone are not Shortcuts acceptance.
