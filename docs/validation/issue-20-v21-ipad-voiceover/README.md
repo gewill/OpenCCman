@@ -33,6 +33,6 @@
 
 ## 复现及尚未通过的范围
 
-按[原运行说明](../issue-20-v21-voiceover/README.md#重跑与剩余范围)用上述 bundle ID 构建并安装 App，以 `xcodegen generate` 生成探针工程。将 `xcodebuild test` destination 指向专用 iPad 模拟器 `C9D2FE51-2CE6-48DC-B133-4E83F6A50996`；本轮为避免 XCUITest 结果收集互相影响，分别用 `-only-testing:OpenCCman21VoiceOverProbe/CurrentVoiceOverProbe/testHomeAndConvertedResultSpeech` 与 `.../testPresetSheetSpeechAndDisabledOptions` 执行，`-parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO`。测试后用 `xcrun devicectl device info voiceover --device <UDID>` 读回关闭状态。构建日志 SHA-256 `c907efd70ce8068c9e8c83440579285c6ff953bef2033b87c63860ee7810e5dc`；原始完整日志和 `.xcresult` 保存在本机 `/private/tmp/openccman-20-ipad-*`，仓库保存关键 speech attachments 与界面媒体。
+按[原运行说明](../issue-20-v21-voiceover/README.md#重跑与剩余范围)用上述 bundle ID 构建并安装 App，以 `xcodegen generate` 生成探针工程。创建同型号与系统的专用 iPad 模拟器，将其当前 UDID 用作 `xcodebuild test -destination 'platform=iOS Simulator,id=<UDID>'`；本轮历史 UDID 为 `C9D2FE51-2CE6-48DC-B133-4E83F6A50996`，取证后已关闭并删除。为避免 XCUITest 结果收集互相影响，分别用 `-only-testing:OpenCCman21VoiceOverProbe/CurrentVoiceOverProbe/testHomeAndConvertedResultSpeech` 与 `.../testPresetSheetSpeechAndDisabledOptions` 执行，`-parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO`。测试后用 `xcrun devicectl device info voiceover --device <UDID>` 读回关闭状态。构建日志 SHA-256 `c907efd70ce8068c9e8c83440579285c6ff953bef2033b87c63860ee7810e5dc`；原始完整日志和 `.xcresult` 保存在本机 `/private/tmp/openccman-20-ipad-*`，仓库保存关键 speech attachments 与界面媒体。
 
 仍需在签名分发包、真实设备及最低系统上验证：VoiceOver 手势独立激活、三语言／大字号／深色、完整焦点及键盘顺序、真实中文输入法组合文字、长文选择与复制、转换取消、文件导入导出及错误弹窗。iOS 15／macOS 12 的最低系统由 #16 跟踪；本轮不将本地未签名模拟器结果算作其通过。
