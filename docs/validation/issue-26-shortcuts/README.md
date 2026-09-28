@@ -3,8 +3,9 @@
 Captured 2026-09-28 from the #26 candidate based on `develop`
 `e9caf37593c7ec24ebb02e9d7134ff9b0bffc14e`. The Mac test used Xcode
 27.0 on macOS 27.0, an isolated `org.gewill.OpenCCman.ShortcutsQA` build,
-and Apple Development signing. The iPhone Simulator build was installed and
-launched on iOS 26.5; its Shortcuts editor was not operated in this run.
+and Apple Development signing. At this initial capture, the iPhone Simulator
+build was only installed and launched. The later sections record system
+Shortcuts editor runs on iPhone and iPad separately.
 
 | Before: Shortcuts search on the published app | Candidate action discovered |
 | --- | --- |
@@ -53,7 +54,8 @@ source `鼠标里面的硅二极管坏了，导致光标分辨率降低。` and 
 
 At the time of this Mac run, system Shortcuts invocation and downstream output
 on iPhone and iPad, Mac cancellation and continuous-run matrix, three-language
-UI checks in a signed package, and a final signed build remained open. Xcode
+UI checks in a signed package, and a final signed build remained open. The
+later iPhone and iPad sections supersede those two simulator gaps. Xcode
 27 Device Hub was inspected but its computer-control window timed out during
 that run; simulator installation and launch alone were not Shortcuts acceptance.
 The iPhone editor result below supersedes that particular iPhone gap.
@@ -96,7 +98,38 @@ and returned blob SHAs were checked against local `git hash-object`; see
 and hash-verified after entering the test sample; the mirror helper was stopped.
 
 This closes the earlier **iPhone Simulator editor not operated** evidence gap.
-It does not close #26: iPad system execution, a physical/final-distribution
-build, three-language UI, cancellation/continuous-run matrix and larger system
-input/error cases remain. Direct `perform()` regression covers more strings and
-quota behavior but is a separate layer of evidence.
+It does not close #26: a physical/final-distribution build, three-language UI,
+cancellation/continuous-run matrix and larger system input/error cases remain.
+Direct `perform()` regression covers more strings and quota behavior but is a
+separate layer of evidence.
+
+## 2026-09-28: iPad system Shortcuts execution
+
+The iPad Air 11-inch (M4) simulator running iPadOS 26.5 used the same
+`org.gewill.OpenCCman.ShortcutsQA` bundle identified above. In the actual
+Shortcuts editor, **Text** read the simulator clipboard containing
+`头发干杯。Emoji 🧪`, **Convert Chinese Text** received that Text output with
+`Traditional · OpenCC`, and the system **Copy to Clipboard** explicitly
+received the conversion output. After Run, the result bubble displayed
+`頭髮乾杯。Emoji 🧪`. Separately, `xcrun simctl pbpaste` read back exactly
+`頭髮乾杯。Emoji 🧪` from the simulator clipboard. This verifies the returned
+value through the downstream system action, in addition to the visible result.
+
+Returning to the isolated OpenCCman app showed its pre-existing source
+`鼠标里面的硅二极管坏了，导致光标分辨率降低。` and an empty result. The Shortcuts run did not
+replace the open workspace's content.
+
+| iPad Shortcuts result | Workspace after Shortcuts |
+| --- | --- |
+| ![Text, OpenCCman conversion, system Copy and converted result](media/ipad-shortcuts-chinese-result.png) | ![Existing source and empty result preserved](media/ipad-workspace-after-shortcut.png) |
+
+[iPad Shortcuts interaction video](media/ipad-shortcuts-run.mp4) shows Run and
+the converted result. The native captures are 1640×2360 in English, Light
+appearance, default text size; the H.264 video is 3.41 seconds. The iPad
+screen was mirrored through `serve-sim` for UI interaction and
+`xcrun simctl io` made the screenshots and recording. All three media files
+were uploaded with `gh api POST repos/gewill/OpenCCman/git/blobs`; the returned
+SHAs matched local `git hash-object` (see
+[`ipad-uploads.json`](media/ipad-uploads.json)). The host clipboard was saved
+and restored with a matching hash. This was simulator testing, not physical
+device or App Store/TestFlight acceptance.
