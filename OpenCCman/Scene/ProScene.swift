@@ -1,6 +1,8 @@
 import Neumorphic
 import RevenueCat
+import StoreKit
 import SwiftUI
+import os
 
 struct ProScene: View {
   @Environment(\.sizeCategory) private var sizeCategory
@@ -220,9 +222,14 @@ struct ProScene: View {
   }
 
   func setOfferings(_ offerings: RevenueCat.Offerings?) {
-    guard let offerings else { return }
+    guard let offerings else {
+      PriceSourceDiagnostics.record(packages)
+      return
+    }
     let offering = offerings.current ?? offerings.all[IAPManager.Offering.pro_lifetime.rawValue]
-    self.packages = offering?.availablePackages ?? []
+    let availablePackages = offering?.availablePackages ?? []
+    self.packages = availablePackages
+    PriceSourceDiagnostics.record(availablePackages)
   }
 
   func showError(message: String?) {
@@ -233,6 +240,59 @@ struct ProScene: View {
       DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
         guard self.errorMessageID == messageID else { return }
         self.errorMessage = ""
+      }
+    }
+  }
+}
+
+/// Opt-in metadata comparison for #212. It never reads an account, receipt,
+/// transaction or entitlement, and it does not affect the price shown to users.
+private enum PriceSourceDiagnostics {
+  private struct RevenueCatPrice: Sendable {
+    let productID: String
+    let displayPrice: String
+    let currencyCode: String?
+  }
+
+  static func record(_ packages: [RevenueCat.Package]) {
+    guard ProcessInfo.processInfo.arguments.contains("-qa-price-source-diagnostics") else { return }
+    let revenueCatPrices = packages.map {
+      RevenueCatPrice(productID: $0.storeProduct.productIdentifier,
+                      displayPrice: $0.localizedPriceString,
+                      currencyCode: $0.storeProduct.currencyCode)
+    }
+    Task {
+      let storefront = await Storefront.current
+      let storefrontCurrency: String
+      if #available(iOS 17.0, macOS 14.0, *) {
+        storefrontCurrency = storefront?.currency?.identifier ?? "nil"
+      } else {
+        storefrontCurrency = "unavailable"
+      }
+      let productID = IAPManager.Sku.ios_openccman_pro_lifetime_3.rawValue
+      let revenueCat = revenueCatPrices.first { $0.productID == productID }
+      let prefix = [
+        "PRICE_SOURCE",
+        "storefront=\(storefront?.countryCode ?? "nil")",
+        "storefrontCurrency=\(storefrontCurrency)",
+        "product=\(productID)",
+        "revenueCatPriceAtOffering=\(revenueCat?.displayPrice ?? "nil")",
+        "revenueCatCurrency=\(revenueCat?.currencyCode ?? "nil")",
+      ]
+      do {
+        let native = try await Product.products(for: [productID]).first { $0.id == productID }
+        let line = (prefix + [
+          "nativePriceAtFetch=\(native?.displayPrice ?? "nil")",
+          "nativeCurrency=\(native?.priceFormatStyle.currencyCode ?? "nil")",
+        ]).joined(separator: " ")
+        Logger(subsystem: "OpenCCman", category: "PriceSource")
+          .notice("\(line, privacy: .public)")
+        print(line)
+      } catch {
+        let line = (prefix + ["nativeProductError=\(type(of: error))"]).joined(separator: " ")
+        Logger(subsystem: "OpenCCman", category: "PriceSource")
+          .error("\(line, privacy: .public)")
+        print(line)
       }
     }
   }
