@@ -150,16 +150,13 @@ enum LargeFileCoordinatorChecks {
     do {
       try disabled.offer(disabledSource, configuration: configuration,
                          qualified: true, owner: owner, window: nil)
-      preconditionFailure("The production capacity gate must reject file tasks before approval")
+      preconditionFailure("An explicitly disabled coordinator must reject file tasks")
     } catch TextFileService.FileError.tooLarge {}
     precondition(!disabled.isBusy)
     do {
       _ = try disabledSource.beginReading()
       preconditionFailure("A disabled feature must release the rejected descriptor")
     } catch TextFileService.FileError.sourceUnavailable {}
-    precondition(!MacLargeFileCoordinator.productionEnabled,
-                 "Enable capacity only after #52/#16 acceptance evidence")
-
     // Sparse files exercise the real opened-descriptor metadata boundary
     // without allocating or converting a GiB of test data.
     let sparse = directory.appendingPathComponent("capacity.txt")
@@ -185,11 +182,11 @@ enum LargeFileCoordinatorChecks {
     model.resultText = "Original result"
     model.importFile(sparse)
     await waitUntil { !model.isImporting }
-    precondition(model.error as? TextFileService.FileError == .tooLarge,
-                 "Production keeps its existing 10 MiB import limit while acceptance is pending")
+    precondition(model.error as? MacLargeFileCoordinator.StartError == .exceedsCapacity,
+                 "Production must reject files above the 1 GiB direct-export limit")
     precondition(!model.showingProAlert, "Files above the supported capacity must not open the paywall")
     precondition(model.inputText == "Original draft" && model.resultText == "Original result")
-    print("PASS: one Mac file task across windows; capacity gate; entitlement/configuration snapshot; owner close and quit cleanup; recovery report; commit race and failure state")
+    print("PASS: one Mac file task across windows; 1 GiB capacity; entitlement/configuration snapshot; owner close and quit cleanup; recovery report; commit race and failure state")
   }
 
   private static func waitForWorker(_ worker: Worker) async {
