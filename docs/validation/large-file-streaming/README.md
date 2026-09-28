@@ -192,8 +192,22 @@ power loss move to #217.
 
 ## Remaining acceptance
 
-- macOS 12 runtime remains unverified (#16). A macOS 12 deployment target build
-  on macOS 27 does not satisfy this gate.
+- The minimum-system **large-file smoke test passed on macOS 12.6.1** in a
+  VirtualBuddy Apple Silicon VM on 2026-09-28. The merged `develop` commit
+  `f0d305051700a53329577214f0bf007924021189` was built with Xcode 27.0
+  into a sandboxed Debug QA app with a macOS 12 deployment target and
+  user-selected-file read/write entitlement. The exact QA bundle and launch
+  arguments enabled the normally closed candidate and an **in-memory** Pro
+  override. Through native Import and Save panels, a 12,587,041-byte UTF-8
+  BOM/CRLF/Emoji fixture was converted directly to a new TXT. The completed
+  sheet reported success, the existing editor text was unchanged, and the
+  output was 12,587,038 bytes with SHA-256
+  `df35cbf080d6ccaac92c04c7b403ce627948b64273d44aa70a6307856e065e80`,
+  matching the expected OpenCC s2t output. The input and QA ZIP SHA-256 values,
+  OS build and steps are in [the minimum-system record](monterey.json). This
+  confirms an actual macOS 12 launch, sandbox file-panel flow and output
+  correctness for this fixture. It does **not** establish a 1 GiB run or real
+  purchase on macOS 12. #16 retains broader minimum-system acceptance.
 - Real purchase/restore/offline entitlement acceptance remains with #14/#71.
   The unchanged isolated StoreKit test target fails refund propagation and
   injected user cancellation locally on Xcode 27/macOS 27. Both failures also
