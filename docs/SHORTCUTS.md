@@ -2,8 +2,9 @@
 
 The **Convert Chinese Text** action accepts a text value and one of the four
 existing presets, then returns the converted text for the next action. It does
-not read or change the open editor, and it does not open a window. The action
-is free and does not use any of the 12 daily homepage conversions.
+not read or change the text in an open editor. Shortcuts may start the app
+process to run the action. The action is free and does not use any of the 12
+daily homepage conversions.
 
 The action is available on iOS and iPadOS 16 or later and macOS 13 or later.
 OpenCCman itself continues to support iOS and iPadOS 15 and macOS 12; these
@@ -18,8 +19,8 @@ returns an error; this action does not accept files or perform batch conversion.
    to the clipboard result and choose a **Conversion Preset**. The default is
    **OpenCC Traditional**.
 3. Add **Copy to Clipboard** and connect it to the conversion result.
-4. Put `鼠标\r\n台湾` on the clipboard and run the shortcut. The Taiwan preset
-   should produce `滑鼠\r\n臺灣` with the same line break.
+4. Put `鼠标台湾` on the clipboard and run the shortcut. The Taiwan preset
+   should produce `滑鼠臺灣` in the clipboard.
 
 ## Convert shared text
 

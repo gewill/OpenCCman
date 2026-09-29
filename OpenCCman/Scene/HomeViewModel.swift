@@ -14,12 +14,14 @@ import SwiftyUserDefaults
 
 @MainActor
 class HomeViewModel: ObservableObject {
+  static let exampleSourceText = "鼠标里面的硅二极管坏了，导致光标分辨率降低。"
+
   #if os(macOS)
     let sourceReadingState = WorkspaceEditorReadingState()
     let resultReadingState = WorkspaceEditorReadingState()
   #endif
 
-  @Published var inputText: String = "鼠标里面的硅二极管坏了，导致光标分辨率降低。" {
+  @Published var inputText: String = "" {
     didSet {
       guard inputText != oldValue else { return }
       #if os(macOS)
@@ -198,6 +200,17 @@ class HomeViewModel: ObservableObject {
 
   var selectedPreset: ConversionConfiguration.Preset? { configuration.preset }
 
+  var canFillExample: Bool {
+    inputText.isEmpty && resultText.isEmpty && exportSnapshot == nil && !isImporting && !isLoading
+  }
+
+  var canClearSource: Bool { !inputText.isEmpty }
+
+  func fillExampleIfEmpty() {
+    guard canFillExample else { return }
+    replaceSource(Self.exampleSourceText)
+  }
+
   func applyPreset(_ preset: ConversionConfiguration.Preset) {
     let configuration = preset.configuration
     targetOptions = configuration.target
@@ -301,6 +314,19 @@ class HomeViewModel: ObservableObject {
     inputText = text
     self.sourceFilename = sourceFilename
     resultText = ""
+    exportSnapshot = nil
+  }
+
+  func clearSource() {
+    guard canClearSource else { return }
+    // Invalidate both task IDs before replacing the document so a late worker
+    // cannot publish a result or imported draft after confirmation.
+    cancelImport()
+    cancelConversion()
+    inputText = ""
+    sourceFilename = nil
+    resultText = ""
+    resultConfiguration = nil
     exportSnapshot = nil
   }
 

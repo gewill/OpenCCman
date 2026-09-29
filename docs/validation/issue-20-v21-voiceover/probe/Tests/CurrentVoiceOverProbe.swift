@@ -46,7 +46,9 @@ final class CurrentVoiceOverProbe: XCTestCase {
     XCTAssertTrue(expected.contains("鼠標"), "Conversion must produce the expected traditional sample")
 
     if !wasEnabled { try service.enable() }
-    var converted = [(try service.currentSpeech()).utterance]
+    // A fresh VoiceOver cursor may have no current utterance. Move to a
+    // readable element before collecting speech, as in the home/sheet probe.
+    var converted = [(try service.moveForward()).utterance]
     for _ in 0..<25 {
       if converted.last?.contains("鼠標裏面的硅二極管壞了") == true { break }
       converted.append((try service.moveForward()).utterance)
@@ -121,7 +123,7 @@ final class CurrentVoiceOverProbe: XCTestCase {
   }
 
   private func speechSequence(_ service: XCUIVoiceOverService, count: Int) throws -> [String] {
-    var speech = [(try service.currentSpeech()).utterance]
+    var speech = [(try service.moveForward()).utterance]
     for _ in 0..<count { speech.append((try service.moveForward()).utterance) }
     return speech
   }

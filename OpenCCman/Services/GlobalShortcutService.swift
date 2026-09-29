@@ -22,6 +22,66 @@ extension KeyboardShortcuts.Name {
     static let openSelectedText = Self("openSelectedText", default: .init(.r, modifiers: [.command, .option]))
 }
 
+@MainActor
+private struct ShortcutTextCapture {
+    let text: String
+    let selection: ShortcutSelection?
+}
+
+// AX identity is only a guard for automatic replacement. Applications that do
+// not expose a focused editable element and selected text still get the result
+// in OpenCCman, where the user can copy it manually.
+@MainActor
+private struct ShortcutSelection {
+    let window: AXUIElement
+    let element: AXUIElement
+    let range: CFRange
+    let text: String
+
+    static func capture(in application: NSRunningApplication) -> Self? {
+        guard NSWorkspace.shared.frontmostApplication?.processIdentifier == application.processIdentifier else {
+            return nil
+        }
+        let appElement = AXUIElementCreateApplication(application.processIdentifier)
+        AXUIElementSetMessagingTimeout(appElement, 0.25)
+        var windowValue: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(appElement, kAXFocusedWindowAttribute as CFString, &windowValue) == .success,
+              let windowValue,
+              CFGetTypeID(windowValue) == AXUIElementGetTypeID() else { return nil }
+        let window = windowValue as! AXUIElement
+        var focusedValue: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(appElement, kAXFocusedUIElementAttribute as CFString, &focusedValue) == .success,
+              let focusedValue,
+              CFGetTypeID(focusedValue) == AXUIElementGetTypeID() else { return nil }
+        let focused = focusedValue as! AXUIElement
+        AXUIElementSetMessagingTimeout(focused, 0.25)
+
+        var rangeValue: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(focused, kAXSelectedTextRangeAttribute as CFString, &rangeValue) == .success,
+              let rangeValue,
+              CFGetTypeID(rangeValue) == AXValueGetTypeID() else { return nil }
+        let axRange = rangeValue as! AXValue
+        var range = CFRange()
+        guard AXValueGetValue(axRange, .cfRange, &range), range.length > 0 else { return nil }
+
+        var textValue: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(focused, kAXSelectedTextAttribute as CFString, &textValue) == .success,
+              let text = textValue as? String,
+              !text.isEmpty else { return nil }
+        return Self(window: window, element: focused, range: range, text: text)
+    }
+
+    func matches(in application: NSRunningApplication, text expectedText: String? = nil) -> Bool {
+        guard let current = Self.capture(in: application) else { return false }
+        return CFEqual(window, current.window)
+            && CFEqual(element, current.element)
+            && range.location == current.range.location
+            && range.length == current.range.length
+            && text == current.text
+            && (expectedText == nil || text == expectedText)
+    }
+}
+
 // MARK: - Global Shortcut Service
 
 @MainActor
@@ -129,15 +189,16 @@ class GlobalShortcutService: ObservableObject {
         isPerformingAction = true
         Task {
             defer { isPerformingAction = false }
-            guard let text = await getSelectedText(from: sourceApplication), !text.isEmpty else {
+            guard let capture = await getSelectedText(from: sourceApplication, forReplacement: convert),
+                  !capture.text.isEmpty else {
                 showNoTextSelectedAlert()
                 return
             }
 
             if convert {
-                await convertText(text, in: sourceApplication)
+                await convertText(capture, in: sourceApplication)
             } else {
-                bringAppToFrontAndSetTextOnly(originalText: text)
+                bringAppToFrontAndSetTextOnly(originalText: capture.text)
             }
         }
     }
@@ -155,10 +216,14 @@ class GlobalShortcutService: ObservableObject {
     
     // MARK: - Text Capture
 
-    private func getSelectedText(from application: NSRunningApplication) async -> String? {
+    private func getSelectedText(
+        from application: NSRunningApplication,
+        forReplacement: Bool
+    ) async -> ShortcutTextCapture? {
         let pasteboard = NSPasteboard.general
         guard let originalClipboard = PasteboardSnapshot(pasteboard) else { return nil }
         let originalChangeCount = originalClipboard.changeCount
+        let selection = forReplacement ? ShortcutSelection.capture(in: application) : nil
 
         // A copy changes ownership even when its text matches the existing clipboard.
         // Leave the current contents intact if the source application cannot copy.
@@ -171,13 +236,22 @@ class GlobalShortcutService: ObservableObject {
             if copiedChangeCount != originalChangeCount {
                 let text = pasteboard.string(forType: .string)
                 originalClipboard.restore(to: pasteboard, ifUnchangedSince: copiedChangeCount)
-                return text
+                guard let text else { return nil }
+                // The copied text can still be converted when AX does not expose
+                // a stable selection, but it must never be pasted automatically.
+                let verifiedSelection = selection?.matches(in: application, text: text) == true ? selection : nil
+                return ShortcutTextCapture(text: text, selection: verifiedSelection)
             }
         }
         return nil
     }
 
-    private func simulateKeyPress(keyCode: CGKeyCode, in application: NSRunningApplication) async -> Bool {
+    private func simulateKeyPress(
+        keyCode: CGKeyCode,
+        in application: NSRunningApplication,
+        matching selection: ShortcutSelection? = nil
+    ) async -> Bool {
+        if let selection, !selection.matches(in: application) { return false }
         guard NSWorkspace.shared.frontmostApplication?.processIdentifier == application.processIdentifier,
               let keyDownEvent = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: true),
               let keyUpEvent = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: false) else {
@@ -194,7 +268,7 @@ class GlobalShortcutService: ObservableObject {
 
     // MARK: - Text Conversion
     
-    private func convertText(_ text: String, in application: NSRunningApplication) async {
+    private func convertText(_ capture: ShortcutTextCapture, in application: NSRunningApplication) async {
         let options = ConversionConfiguration(
             target: appDefaults[\.targetOptions],
             variant: appDefaults[\.variantOptions],
@@ -202,9 +276,11 @@ class GlobalShortcutService: ObservableObject {
         ).options
 
         do {
-            let convertedText = try await ChineseConversionService.shared.convert(text, options: options)
-            await replaceSelectedText(with: convertedText, in: application)
-            bringAppToFrontAndSetText(originalText: text, convertedText: convertedText)
+            let convertedText = try await ChineseConversionService.shared.convert(capture.text, options: options)
+            if let selection = capture.selection {
+                await replaceSelectedText(with: convertedText, in: application, matching: selection)
+            }
+            bringAppToFrontAndSetText(originalText: capture.text, convertedText: convertedText)
         } catch {
             NSAlert(error: error).runModal()
         }
@@ -212,9 +288,13 @@ class GlobalShortcutService: ObservableObject {
 
     // MARK: - Text Replacement
 
-    private func replaceSelectedText(with convertedText: String, in application: NSRunningApplication) async {
-        // Conversion may finish after the user has switched apps. Never paste into a new target.
-        guard NSWorkspace.shared.frontmostApplication?.processIdentifier == application.processIdentifier else { return }
+    private func replaceSelectedText(
+        with convertedText: String,
+        in application: NSRunningApplication,
+        matching selection: ShortcutSelection
+    ) async {
+        // Conversion may finish after focus or selection moved within the same app.
+        guard selection.matches(in: application) else { return }
         let pasteboard = NSPasteboard.general
         guard let originalClipboard = PasteboardSnapshot(pasteboard),
               pasteboard.changeCount == originalClipboard.changeCount else { return }
@@ -224,7 +304,7 @@ class GlobalShortcutService: ObservableObject {
             originalClipboard.restore(to: pasteboard, ifUnchangedSince: replacementChangeCount)
         }
         guard written,
-              await simulateKeyPress(keyCode: CGKeyCode(kVK_ANSI_V), in: application) else { return }
+              await simulateKeyPress(keyCode: CGKeyCode(kVK_ANSI_V), in: application, matching: selection) else { return }
         // Event posting has no paste-completion callback. Allow the receiving app to read first.
         try? await Task.sleep(nanoseconds: 800_000_000)
     }
