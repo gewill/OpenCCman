@@ -304,7 +304,7 @@ struct LaunchTransitionOverlay: View {
       path.addLines(points.map { CGPoint(x: center.x + ($0.x - LaunchMark.center.x) * k, y: center.y + ($0.y - LaunchMark.center.y) * k) })
     }
     .stroke(Color(arc == .blue ? "LaunchRingBlue" : "LaunchRingPurple"),
-            style: StrokeStyle(lineWidth: LaunchMark.lineWidth * k * (1 - 0.4 * fade), lineCap: .butt, lineJoin: .miter))
+            style: StrokeStyle(lineWidth: LaunchMark.lineWidth * k * (1 - 0.4 * fade), lineCap: LaunchMark.lineCap, lineJoin: LaunchMark.lineJoin))
     .opacity(Double(1 - fade))
   }
 

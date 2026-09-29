@@ -1,0 +1,6 @@
+// Xcode 26's actool can only compile an Icon Composer file on a macOS 26 or later
+// host; on macOS 15 its icon renderer crashes. CI jobs on macOS 15 point
+// XCODE_XCCONFIG_FILE here to build without the icon, and the App icon job
+// compiles it on macOS 26 (scripts/check-app-icon.sh).
+EXCLUDED_SOURCE_FILE_NAMES = AppIcon.icon
+ASSETCATALOG_COMPILER_APPICON_NAME =

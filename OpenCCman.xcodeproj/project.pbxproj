@@ -85,6 +85,7 @@
 		BEA770E72B2C904900AFA2F0 /* OpenCCmanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA770E62B2C904900AFA2F0 /* OpenCCmanApp.swift */; };
 		BEA770E92B2C904900AFA2F0 /* HomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA770E82B2C904900AFA2F0 /* HomeScene.swift */; };
 		BEA770EB2B2C904A00AFA2F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */; };
+		CC2609290000000000000001 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = CC2609290000000000000002 /* AppIcon.icon */; };
 		BEA770EF2B2C904A00AFA2F0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEA770EE2B2C904A00AFA2F0 /* Preview Assets.xcassets */; };
 		BEA770F72B2C92B700AFA2F0 /* OpenCC in Frameworks */ = {isa = PBXBuildFile; productRef = BEA770F62B2C92B700AFA2F0 /* OpenCC */; };
 		BEA956392B31EB7B00E04625 /* ColorfulX in Frameworks */ = {isa = PBXBuildFile; productRef = BEA956382B31EB7B00E04625 /* ColorfulX */; };
@@ -172,6 +173,7 @@
 		BEA770E62B2C904900AFA2F0 /* OpenCCmanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCmanApp.swift; sourceTree = "<group>"; };
 		BEA770E82B2C904900AFA2F0 /* HomeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScene.swift; sourceTree = "<group>"; };
 		BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CC2609290000000000000002 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		BEA770EC2B2C904A00AFA2F0 /* OpenCCman.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenCCman.entitlements; sourceTree = "<group>"; };
 		BEA770EE2B2C904A00AFA2F0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BEA770F82B2CAEA900AFA2F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				BE3F71DE2B2F4F47001496EA /* AppDelegate.swift */,
 				BE2C6D682B2D81A300FC4112 /* Constants.swift */,
 				BE3AEC9D2B2EF2D400820673 /* IAPManager.swift */,
+				CC2609290000000000000002 /* AppIcon.icon */,
 				BEA770EA2B2C904A00AFA2F0 /* Assets.xcassets */,
 				BEA770EC2B2C904A00AFA2F0 /* OpenCCman.entitlements */,
 				CC0912202600000000000012 /* PrivacyInfo.xcprivacy */,
@@ -465,6 +468,7 @@
 				BE727E382B2E00D000C63DB2 /* Localizable.strings in Resources */,
 				CC2609280000000000000011 /* AppShortcuts.strings in Resources */,
 				0920E96C2E3F4D3C003C9715 /* InfoPlist.xcstrings in Resources */,
+				CC2609290000000000000001 /* AppIcon.icon in Resources */,
 				BEA770EB2B2C904A00AFA2F0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
