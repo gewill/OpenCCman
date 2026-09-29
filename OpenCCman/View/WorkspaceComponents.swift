@@ -152,16 +152,33 @@ struct SourcePane: View {
           }
       }
       .readSize { headerHeight = $0.height }
-      sourceEditor
-        .accessibilityLabel(Text("Source"))
-        .disabled(viewModel.isImporting)
-        .frame(maxWidth: .infinity)
-        .frame(height: paneHeight.map { max(180, $0 - headerHeight - 60) } ?? editorHeight)
-        .padding(Constant.padding)
-        .background(
-          RoundedRectangle(cornerRadius: 10)
-            .stroke(Color.secondary, lineWidth: 1)
-        )
+      ZStack(alignment: .topLeading) {
+        sourceEditor
+          .accessibilityLabel(Text("Source"))
+          .accessibilityHint(viewModel.inputText.isEmpty ? Text("source_empty_prompt") : Text(""))
+          .disabled(viewModel.isImporting)
+        if viewModel.inputText.isEmpty && !viewModel.isImporting {
+          VStack(alignment: .leading, spacing: 8) {
+            Text("source_empty_prompt")
+              .appFont(.body)
+              .foregroundColor(.secondary)
+              .fixedSize(horizontal: false, vertical: true)
+              .allowsHitTesting(false)
+            if viewModel.canFillExample {
+              Button("source_fill_example") { viewModel.fillExampleIfEmpty() }
+                .appNeumorphicButtonStyle(Capsule())
+            }
+          }
+          .padding(8)
+        }
+      }
+      .frame(maxWidth: .infinity)
+      .frame(height: paneHeight.map { max(180, $0 - headerHeight - 60) } ?? editorHeight)
+      .padding(Constant.padding)
+      .background(
+        RoundedRectangle(cornerRadius: 10)
+          .stroke(Color.secondary, lineWidth: 1)
+      )
     }
     .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
     .launchSettle(order: 1)
