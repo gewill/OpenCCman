@@ -6,6 +6,10 @@
   "xcodeCloudStatus": "SUCCEEDED, not yet App Store reviewed or released",
   "qaBundleID": "org.gewill.OpenCCman.WhatsNewUITests",
   "capture": "Local unsigned Debug QA from Build 59 source; iPhone 18 Pro Max iOS 27.0 and iPad Pro 13-inch (M5) iPadOS 26.5 Simulator; light, app locale per image",
+  "sourceOverrides": {
+    "marketing/preview/zh-Hans/01-convert-and-clear.mp4": "bd4c2de95ef85c8d27dcb0a7555bf81696a18eb0",
+    "raw/preview/zh-Hans/01-convert-and-clear-recording.mp4": "bd4c2de95ef85c8d27dcb0a7555bf81696a18eb0"
+  },
   "renderer": "scripts/store-assets/render-marketing-screenshots.swift",
   "rendererSHA256": "9751ca411eb99b6e76705776c353d41299f6351910f908a55b72f5c4fe1207c2",
   "assets": [
@@ -281,8 +285,8 @@
     },
     {
       "path": "marketing/preview/zh-Hans/01-convert-and-clear.mp4",
-      "bytes": 1043765,
-      "sha256": "10d2b1a5e5f0c81a2e64daa05c208c4fe835f725daef7e58b3de2ab12ce3d232",
+      "bytes": 980726,
+      "sha256": "8444004f320e7f1f49640ffd6698a84724ca461119173df8710a31bc1a59cf91",
       "durationSeconds": 22.7,
       "streams": [
         {
@@ -301,7 +305,7 @@
           "avg_frame_rate": "0/0"
         }
       ],
-      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+      "uiSourceCommit": "bd4c2de95ef85c8d27dcb0a7555bf81696a18eb0"
     },
     {
       "path": "marketing/preview/zh-Hans/02-ipad-workspace.mp4",
@@ -628,9 +632,9 @@
     },
     {
       "path": "raw/preview/zh-Hans/01-convert-and-clear-recording.mp4",
-      "bytes": 17405957,
-      "sha256": "c27c9341b941a27bcab9d1cd0ebcba74a1260588b1fb79c3216a37fceb294453",
-      "durationSeconds": 34.875,
+      "bytes": 16496624,
+      "sha256": "ed0e52efb3006dff2d06442d232f6abe2cb6c3a9998d04c37bb90234e335f410",
+      "durationSeconds": 31.013333,
       "streams": [
         {
           "codec_name": "h264",
@@ -638,10 +642,10 @@
           "width": 1320,
           "height": 2868,
           "level": 50,
-          "avg_frame_rate": "2416/279"
+          "avg_frame_rate": "12075/1163"
         }
       ],
-      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+      "uiSourceCommit": "bd4c2de95ef85c8d27dcb0a7555bf81696a18eb0"
     },
     {
       "path": "raw/preview/zh-Hans/02-ipad-workspace-recording.mp4",

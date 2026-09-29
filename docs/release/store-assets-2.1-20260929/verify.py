@@ -17,6 +17,7 @@ actual = {
     for path in parent.rglob("*") if path.is_file()
 }
 assert expected == actual, f"Missing or extra assets: {expected ^ actual}"
+assert set(manifest.get("sourceOverrides", {})) <= expected, "A source override names no asset"
 
 for item in manifest["assets"]:
     path = root / item["path"]
