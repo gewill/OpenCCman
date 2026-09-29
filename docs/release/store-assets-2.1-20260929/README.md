@@ -36,4 +36,12 @@ ffmpeg -ss 11.9 -i raw/preview/zh-Hans/01-convert-and-clear-recording.mp4 \
 
 ## Review and upload boundary
 
-Full-size and thumbnail visual reviews covered the Simplified Chinese iPhone sequence and iPad/Mac representative frames; automated dimension, hash and video checks cover every file. The other localized layouts were captured by passing UI tests but still need a final human-language review. No user-comprehension or conversion experiment was performed. The new Mac Pro file workflow is not pictured because signed-build purchase and file handling acceptance is still open. These files have **not** been uploaded to App Store Connect. Build 59 success is a packaging result, not public release or signed-device visual acceptance.
+Full-size and thumbnail visual reviews covered the Simplified Chinese iPhone sequence and iPad/Mac representative frames; automated dimension, hash and video checks cover every file. The other localized layouts were captured by passing UI tests but still need a final human-language review. No user-comprehension or conversion experiment was performed. The new Mac Pro file workflow is not pictured because signed-build purchase and file handling acceptance is still open. Build 59 success is a packaging result, not public release or signed-device visual acceptance.
+
+## App Store Connect staging (2026-09-29)
+
+The iOS and Mac 2.1 versions are **drafts** in `PREPARE_FOR_SUBMISSION`, with Build 59 attached. Their version IDs are `02cd9cf1-769a-43a9-a48e-09991ac63a6b` (iOS) and `2b464434-d44b-43c3-bd8b-3b4104a42966` (Mac). All 21 titled PNGs were uploaded to their matching language and device sets: four iPhone, two iPad and one Mac per locale. An App Store Connect readback found every screenshot in `COMPLETE`, with its MD5 matching the corresponding local file. Inherited 2.0 screenshots were removed from the 2.1 drafts; a before/after ID and checksum comparison found the live 2.0 screenshot sets unchanged.
+
+The Simplified Chinese App Preview was uploaded to the iOS 2.1 draft and reads back as `COMPLETE`, with matching MD5. The old inherited iPhone previews were removed from the 2.1 drafts; English and Traditional Chinese have screenshots but no 2.1 preview video. The API initially returned an empty preview-image size even after marking the new video `COMPLETE`, so its processed thumbnail and App Store presentation still need a visual check before submission.
+
+This staging is not App Review submission. Human-language review, signed-device visual parity and remaining release acceptance are separate gates.
