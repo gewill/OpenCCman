@@ -30,6 +30,8 @@ xcrun swiftc OpenCCman/Model/LaunchMotion.swift scripts/render-brand-mark.swift 
 
 `scripts/check-launch-transition.sh`（App Regression 的一部分）会运行 `render-brand-mark --check`：圆环图层与 `LaunchMark` 不一致，或图标的深色颜色与开屏色板不一致时失败。
 
+编译 `.icon` 需要 macOS 26 及以上的主机：Xcode 26.3 的 actool 在 macOS 15 上会崩溃。CI 在 macOS 15 上构建时经 `scripts/without-app-icon.xcconfig` 省略图标，另由 `App icon` 任务在 macOS 26 上运行 `scripts/check-app-icon.sh`，编译两端并检查浅色、深色、着色图标与旧系统回退图；本地也可直接运行该脚本。详见 [CI 说明](CI.md)。
+
 ## 字体来源与授权
 
 “简”“繁”的轮廓取自霞鹜文楷（LXGW WenKai）Medium 1.520，采用 SIL Open Font License 1.1。2.0 图标中的两个字就是用这款字体排的：按字形外框对齐后，与旧图标逐像素比对的差异只在抗锯齿边缘。矢量化没有改变字形。仓库和 App 只包含这两个字的轮廓路径，不分发字体文件。
