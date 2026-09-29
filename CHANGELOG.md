@@ -41,6 +41,13 @@ macOS 12; the homepage allowance remains 12 conversions per day.
   ([#245](https://github.com/gewill/OpenCCman/issues/245),
   [#246](https://github.com/gewill/OpenCCman/issues/246)).
 
+### Changed
+
+- The app icon is a layered Icon Composer icon shared by iOS and Mac, with its
+  own dark, clear and tinted appearances; iOS 15–18 and macOS 12–15 show
+  flattened versions of it. The launch mark uses the icon's heavier, rounded
+  arcs ([#251](https://github.com/gewill/OpenCCman/issues/251)).
+
 ### Fixed
 
 - The Mac global Convert shortcut now verifies that the focused window,
