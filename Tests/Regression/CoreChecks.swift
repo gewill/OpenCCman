@@ -68,6 +68,21 @@ import OpenCC
     }
     precondition(releasedModel == nil, "Combine subscriptions must not retain the view model")
 
+    let exampleModel = HomeViewModel()
+    precondition(exampleModel.inputText.isEmpty && exampleModel.resultText.isEmpty && exampleModel.exportSnapshot == nil)
+    precondition(exampleModel.canFillExample && coreQuotaCount == 0)
+    exampleModel.fillExampleIfEmpty()
+    precondition(exampleModel.inputText == HomeViewModel.exampleSourceText && coreQuotaCount == 0,
+                 "Trying the example only fills the source and does not reserve quota")
+    exampleModel.inputText = "My own draft"
+    exampleModel.fillExampleIfEmpty()
+    precondition(exampleModel.inputText == "My own draft", "The example cannot overwrite a draft")
+    exampleModel.inputText = ""
+    exampleModel.resultText = "Previous result"
+    exampleModel.fillExampleIfEmpty()
+    precondition(exampleModel.inputText.isEmpty && exampleModel.resultText == "Previous result",
+                 "The example cannot discard a result")
+
     let model = HomeViewModel()
     var nonemptyResults = 0
     let observation = model.$resultText.sink { if !$0.isEmpty { nonemptyResults += 1 } }
