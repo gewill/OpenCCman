@@ -119,18 +119,22 @@ enum LaunchMotion {
 }
 
 /// The launch mark: the app icon's ring and glyphs without the plate, drawn in
-/// the icon's 1024 pt design space and shown at `size` points. The launch
-/// screen image (Assets `LaunchMark`) is rendered from the same geometry.
+/// the icon's 1024 pt design space and shown at `size` points. The icon's layers
+/// (AppIcon.icon) and the launch screen image (Assets `LaunchMark`) are rendered
+/// from this geometry by scripts/render-brand-mark.swift.
 enum LaunchMark {
   static let designSize: CGFloat = 1024
   static let size: CGFloat = 300
   static var scale: CGFloat { size / designSize }
   static let center = CGPoint(x: 512, y: 512)
   static let ringRadius: CGFloat = 348
-  static let lineWidth: CGFloat = 26
-  /// Arrowhead ends, measured from the icon. Each arc ends a quarter turn after it starts.
-  static let blueHead = CGPoint(x: 782, y: 426)
-  static let purpleHead = CGPoint(x: 242, y: 598)
+  static let lineWidth: CGFloat = 35
+  static let lineCap = CGLineCap.round
+  static let lineJoin = CGLineJoin.round
+  /// Arrowhead ends. Each arc ends a quarter turn after it starts, then turns back
+  /// towards the centre at 45°; half a turn takes one head onto the other.
+  static let blueHead = CGPoint(x: 785, y: 437)
+  static let purpleHead = CGPoint(x: 239, y: 587)
   static let jian = CGRect(x: 227, y: 228, width: 287, height: 304)
   static let fan = CGRect(x: 503, y: 475, width: 301, height: 309)
 
