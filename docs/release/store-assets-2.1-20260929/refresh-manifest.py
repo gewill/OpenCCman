@@ -12,6 +12,8 @@ root = Path(__file__).resolve().parent
 path = root / "manifest.json"
 manifest = json.loads(path.read_text())
 source = manifest["candidateCommit"]
+# Assets re-captured from a later source name it here; everything else keeps the candidate.
+overrides = manifest.get("sourceOverrides", {})
 renderer = root.parents[2] / "scripts/store-assets/render-marketing-screenshots.swift"
 manifest["rendererSHA256"] = hashlib.sha256(renderer.read_bytes()).hexdigest()
 assets = []
@@ -37,7 +39,7 @@ for parent in (root / "marketing", root / "raw"):
             item["durationSeconds"] = float(probe["format"]["duration"])
             item["streams"] = probe["streams"]
         if relative != "raw/marketing-copy.json":
-            item["uiSourceCommit"] = source
+            item["uiSourceCommit"] = overrides.get(relative, source)
         assets.append(item)
 
 manifest["assets"] = assets
