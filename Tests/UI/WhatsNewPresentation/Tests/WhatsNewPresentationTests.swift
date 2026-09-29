@@ -50,6 +50,64 @@ final class WhatsNewPresentationTests: XCTestCase {
     XCTAssertFalse(done.waitForExistence(timeout: 2), "Cards must not reopen after dismissal")
   }
 
+  func testClearSourceRequiresConfirmationAndKeepsCancelSafe() {
+    let app = launch("-qa-suppress-review")
+    defer { app.terminate() }
+
+    let clear = app.buttons["source-clear"]
+    XCTAssertFalse(clear.exists, "An empty source has no clear action")
+    app.buttons["Try an example"].tap()
+    capture(app, name: "clear-source-filled-before-confirmation")
+    XCTAssertTrue(clear.waitForExistence(timeout: 5))
+
+    clear.tap()
+    let alert = app.alerts.firstMatch
+    XCTAssertTrue(alert.waitForExistence(timeout: 5))
+    capture(app, name: "clear-source-confirmation")
+    alert.buttons["Cancel"].tap()
+    XCTAssertTrue(clear.exists)
+    XCTAssertTrue((app.textViews["Source"].value as? String)?.contains("鼠标") == true,
+                  "Cancel must preserve the draft")
+
+    clear.tap()
+    XCTAssertTrue(alert.waitForExistence(timeout: 5))
+    alert.buttons["Clear Source"].tap()
+    XCTAssertFalse(clear.exists)
+    XCTAssertFalse(app.buttons["Export TXT"].isEnabled)
+    XCTAssertFalse(app.buttons["Convert"].isEnabled)
+    XCTAssertTrue(app.buttons["Try an example"].exists)
+    capture(app, name: "clear-source-empty-after-confirmation")
+  }
+
+  func testClearSourceVoiceOverOrder() throws {
+    guard #available(iOS 27.0, *) else {
+      throw XCTSkip("VoiceOver speech automation requires iOS 27")
+    }
+    let app = launch("-qa-suppress-review")
+    defer { app.terminate() }
+    app.buttons["Try an example"].tap()
+    XCTAssertTrue(app.buttons["source-clear"].exists)
+
+    let voiceOver = XCUIDevice.shared.voiceOverService
+    let wasEnabled = voiceOver.isEnabled
+    initialVoiceOverEnabled = wasEnabled
+    defer {
+      if !wasEnabled { try? voiceOver.disable() }
+    }
+    if !wasEnabled { try voiceOver.enable() }
+
+    var heard = [try voiceOver.currentSpeech().utterance]
+    for _ in 0..<30 where !heard.last!.contains("Clear Source") {
+      heard.append(try voiceOver.moveForward().utterance)
+    }
+    XCTAssertTrue(heard.last?.contains("Clear Source") == true,
+                  "The clear action must be reachable and spoken: \(heard)")
+    XCTAssertTrue(try voiceOver.moveBackward().utterance.contains("Paste Text"),
+                  "Clear should follow Paste Text in the source header")
+    XCTAssertTrue(try voiceOver.moveForward().utterance.contains("Clear Source"))
+    capture(app, name: "clear-source-voiceover-focus")
+  }
+
   func testEligibleUnreadCardsAppearOnceAcrossRelaunchAndCanBeReopenedFromSettings() {
     let app = XCUIApplication(bundleIdentifier: appID)
     app.launchArguments = ["-AppleLanguages", "(en)", "-qa-unread-whats-new-at-launch",
