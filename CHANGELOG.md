@@ -13,12 +13,41 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 ## [Unreleased]
 
-Changes after the published 2.0 release target `develop`.
+Changes not yet assigned to a published version.
 
-- Internal: prepare Mac Pro file-to-file conversion with bounded UTF-8 streaming,
-  coordinated atomic saves, progress and cancellation. Files never enter the
-  editor. The production entry remains disabled pending the 1 GiB capacity,
-  sandbox, entitlement and minimum-system gates in [#52](https://github.com/gewill/OpenCCman/issues/52).
+## [2.1] - Release candidate
+
+This version is not yet published. The minimum systems remain iOS 15 and
+macOS 12; the homepage allowance remains 12 conversions per day.
+
+### Added
+
+- Mac Pro can convert and export one UTF-8 TXT file larger than 10 MiB without
+  loading its contents into the editor, up to 1 GiB. The existing draft and
+  result remain untouched. The direct-to-file workflow shows progress and can
+  be canceled; files up to 10 MiB retain the existing editable workflow
+  ([#52](https://github.com/gewill/OpenCCman/issues/52)).
+- A free Shortcuts text conversion action accepts one of the four public
+  presets and returns text to the next action. It is available on iOS/iPadOS
+  16+ and macOS 13+, accepts up to 10 MiB of UTF-8 input, and does not consume
+  the homepage daily allowance ([#26](https://github.com/gewill/OpenCCman/issues/26)).
+- An iOS cold-launch transition carries the app mark into the workspace;
+  Reduce Motion uses a short fade, and VoiceOver skips the transition. The
+  first Mac window has a shorter panel entrance
+  ([#220](https://github.com/gewill/OpenCCman/issues/220)).
+- New workspaces start with empty source text and offer an optional example.
+  A separate clear action asks for confirmation before removing the current
+  window's source, result, export snapshot, and imported filename
+  ([#245](https://github.com/gewill/OpenCCman/issues/245),
+  [#246](https://github.com/gewill/OpenCCman/issues/246)).
+
+### Fixed
+
+- The Mac global Convert shortcut now verifies that the focused window,
+  selected text, and editable target have not changed before automatic paste.
+  If the target cannot be verified, the converted result remains available in
+  OpenCCman for manual copying
+  ([#15](https://github.com/gewill/OpenCCman/issues/15)).
 
 ## [2.0]
 
@@ -212,7 +241,8 @@ Source snapshot: `v1.0-macOS`.
 - Settings, language selection, help, open-source information and a lifetime Pro
   purchase option.
 
-[Unreleased]: https://github.com/gewill/OpenCCman/compare/v2.0...develop
+[Unreleased]: https://github.com/gewill/OpenCCman/compare/release/v2.1...develop
+[2.1]: https://github.com/gewill/OpenCCman/compare/v2.0...release/v2.1
 [2.0]: https://github.com/gewill/OpenCCman/compare/cc8c7e83215261d94b272e354bf2b03c522e4c8c...v2.0
 [1.2]: https://github.com/gewill/OpenCCman/compare/v1.1-macOS...cc8c7e83215261d94b272e354bf2b03c522e4c8c
 [1.1]: https://github.com/gewill/OpenCCman/compare/v1.0-macOS...v1.1-macOS
