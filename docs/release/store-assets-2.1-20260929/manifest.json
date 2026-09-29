@@ -5,10 +5,9 @@
   "xcodeCloudBuild": 59,
   "xcodeCloudStatus": "SUCCEEDED, not yet App Store reviewed or released",
   "qaBundleID": "org.gewill.OpenCCman.WhatsNewUITests",
-  "capture": "local unsigned Debug, internal build 30; iPhone 18 Pro Max iOS 27.0, iPad Pro 13-inch (M5) iPadOS 26.5; light, app locale per image",
-  "macRawReusedFrom": "2.0 Xcode Cloud Build 56, source 2f782714103d68b4972bee93e47bda8cafee1959",
+  "capture": "Local unsigned Debug QA from Build 59 source; iPhone 18 Pro Max iOS 27.0 and iPad Pro 13-inch (M5) iPadOS 26.5 Simulator; light, app locale per image",
   "renderer": "scripts/store-assets/render-marketing-screenshots.swift",
-  "rendererSHA256": "6591e98738479f8400e06ce6c5f6590c677b8bfd13a59a00fc5c146118ba0f2f",
+  "rendererSHA256": "9751ca411eb99b6e76705776c353d41299f6351910f908a55b72f5c4fe1207c2",
   "assets": [
     {
       "path": "marketing/ios/en-US/01-converted.png",
@@ -120,8 +119,8 @@
     },
     {
       "path": "marketing/ipad/en-US/01-side-by-side.png",
-      "bytes": 835822,
-      "sha256": "52266175617c790fc1d177d4d65926b74f988a5ede7ff61fb32b117d678f329a",
+      "bytes": 474195,
+      "sha256": "e050a55942cde3c687d4db49aea068973bf005381d62da453711588b1ece9cfd",
       "width": 2064,
       "height": 2752,
       "format": "PNG",
@@ -129,8 +128,26 @@
     },
     {
       "path": "marketing/ipad/en-US/02-stacked.png",
-      "bytes": 795445,
-      "sha256": "1d1c607752835d8a99241179a3729a65782c1e3fde0756cd4fcf85d318c08481",
+      "bytes": 451948,
+      "sha256": "d33d3da3e814bf5ddc4f280c403b65ee54fca5b74006bedd5f3fd4d41f05fbf5",
+      "width": 2064,
+      "height": 2752,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "marketing/ipad/en-US/03-empty.png",
+      "bytes": 461947,
+      "sha256": "2bda9a3ded96118d177aae966db9a07cf8a5cb7157e53045dc5569851945fd46",
+      "width": 2064,
+      "height": 2752,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "marketing/ipad/en-US/04-clear.png",
+      "bytes": 555134,
+      "sha256": "330bb40bf1b772c5cceb14be7c1921c40eb425fff637ad5a4b5186b4c1256654",
       "width": 2064,
       "height": 2752,
       "format": "PNG",
@@ -138,8 +155,8 @@
     },
     {
       "path": "marketing/ipad/zh-Hans/01-side-by-side.png",
-      "bytes": 828610,
-      "sha256": "22778e371910980e9c2b1007566a4f5b8be425a2a0f8d9bb9c6c6a1edc08cc5d",
+      "bytes": 465381,
+      "sha256": "7196c9fe29caec883cb5d5c6fe58e7d4c920b3f21ff5666845d54847c1157299",
       "width": 2064,
       "height": 2752,
       "format": "PNG",
@@ -147,8 +164,26 @@
     },
     {
       "path": "marketing/ipad/zh-Hans/02-stacked.png",
-      "bytes": 796786,
-      "sha256": "6e22201f75fafd31e09b9ddf05ca47cc4ca2e795959ad92aa26b408088415d4c",
+      "bytes": 446277,
+      "sha256": "656d3771a446b23b93f1a260f78e185f32f74f7a7273cc16aded394b97ca37f1",
+      "width": 2064,
+      "height": 2752,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "marketing/ipad/zh-Hans/03-empty.png",
+      "bytes": 441492,
+      "sha256": "4da311e411f0e69e0f8f2cca34fd61b0d50860d71b8d2b661f982b4fe5b5bc4a",
+      "width": 2064,
+      "height": 2752,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "marketing/ipad/zh-Hans/04-clear.png",
+      "bytes": 532835,
+      "sha256": "03b5de2e1ad5e8e764e6172359c81ba83fa0a853eb3d14ce841c59362b66dff2",
       "width": 2064,
       "height": 2752,
       "format": "PNG",
@@ -156,8 +191,8 @@
     },
     {
       "path": "marketing/ipad/zh-Hant/01-side-by-side.png",
-      "bytes": 833411,
-      "sha256": "c13ca5e39b15e728550c2460f1ab33fce02fe7b74c4d7db9863fd15644215486",
+      "bytes": 469172,
+      "sha256": "b8333db002b94904e9c314e7ba279b983754031c6925f0468e5804ae4af11c39",
       "width": 2064,
       "height": 2752,
       "format": "PNG",
@@ -165,8 +200,26 @@
     },
     {
       "path": "marketing/ipad/zh-Hant/02-stacked.png",
-      "bytes": 800603,
-      "sha256": "01c6f3df49c26938f73460979f1dbe5bc879902e8c4dc537c078b45c46cbe4c4",
+      "bytes": 449723,
+      "sha256": "4cec1233542e2208113c71cd91c0084fde94280b3f320e2aff7d8a711d2eac3d",
+      "width": 2064,
+      "height": 2752,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "marketing/ipad/zh-Hant/03-empty.png",
+      "bytes": 449963,
+      "sha256": "925bdd0e8f049ef2e272ea95a024db3904d68cf5f17699cbe7c2012779bc6aa2",
+      "width": 2064,
+      "height": 2752,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "marketing/ipad/zh-Hant/04-clear.png",
+      "bytes": 539299,
+      "sha256": "209db3e0397076cd68dea2f422e7a51252b406c5aaf4faed9150ccf056e275cb",
       "width": 2064,
       "height": 2752,
       "format": "PNG",
@@ -174,30 +227,57 @@
     },
     {
       "path": "marketing/mac/en-US/01-workspace.png",
-      "bytes": 591099,
-      "sha256": "b6e9b90346da7d0735c92b33ffee68d983332e5be019c14ba9336f8c7b274ff6",
+      "bytes": 335506,
+      "sha256": "dd9f2534f13d07240d801de481281f9de0b5db73f2e4db7f95a914decfa9cdb8",
       "width": 2560,
       "height": 1600,
       "format": "PNG",
-      "uiSourceCommit": "2f782714103d68b4972bee93e47bda8cafee1959"
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "marketing/mac/en-US/02-clear.png",
+      "bytes": 355511,
+      "sha256": "334ab6ecb0a3245bda7b4e5a68d6894175f0aa849ff1c8a3acaaaca3daa3115a",
+      "width": 2560,
+      "height": 1600,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
     },
     {
       "path": "marketing/mac/zh-Hans/01-workspace.png",
-      "bytes": 708537,
-      "sha256": "4d3eeb544df9307180b404e8de93740afd6aa618e5d94d13b55ca55cfdf2799b",
+      "bytes": 316969,
+      "sha256": "fe2e2dcda1cb67dacdf107fd850adc610b5ee80715600e258ef715ab8391f071",
       "width": 2560,
       "height": 1600,
       "format": "PNG",
-      "uiSourceCommit": "2f782714103d68b4972bee93e47bda8cafee1959"
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "marketing/mac/zh-Hans/02-clear.png",
+      "bytes": 336742,
+      "sha256": "63c63cd12dbedbfbe6e617fbccd0f66055d7670ee6f1b9aafaab03f6aa662ed6",
+      "width": 2560,
+      "height": 1600,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
     },
     {
       "path": "marketing/mac/zh-Hant/01-workspace.png",
-      "bytes": 711916,
-      "sha256": "0dba8ca11a73b5ee7dfa61a53e0f92a6b4e11f713f03b7770ce9af37c80031f8",
+      "bytes": 336203,
+      "sha256": "c59855534b1278cc31357193a7e6f6d922dcb377e466ea841fba813129572a88",
       "width": 2560,
       "height": 1600,
       "format": "PNG",
-      "uiSourceCommit": "2f782714103d68b4972bee93e47bda8cafee1959"
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "marketing/mac/zh-Hant/02-clear.png",
+      "bytes": 339501,
+      "sha256": "ff206eceadf983870bf687e9adb2521bd583e2adb59f1cff0306578a1bf0d211",
+      "width": 2560,
+      "height": 1600,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
     },
     {
       "path": "marketing/preview/zh-Hans/01-convert-and-clear.mp4",
@@ -207,12 +287,63 @@
       "streams": [
         {
           "codec_name": "h264",
+          "profile": "High",
           "width": 886,
           "height": 1920,
+          "level": 40,
           "avg_frame_rate": "30/1"
         },
         {
           "codec_name": "aac",
+          "profile": "LC",
+          "sample_rate": "48000",
+          "channels": 2,
+          "avg_frame_rate": "0/0"
+        }
+      ],
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "marketing/preview/zh-Hans/02-ipad-workspace.mp4",
+      "bytes": 367173,
+      "sha256": "4a4744674f43232ea8f4e4e315399ab36095f01281c2e372ff1dd183df4a0fe4",
+      "durationSeconds": 22.0,
+      "streams": [
+        {
+          "codec_name": "h264",
+          "profile": "High",
+          "width": 1200,
+          "height": 1600,
+          "level": 40,
+          "avg_frame_rate": "30/1"
+        },
+        {
+          "codec_name": "aac",
+          "profile": "LC",
+          "sample_rate": "48000",
+          "channels": 2,
+          "avg_frame_rate": "0/0"
+        }
+      ],
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "marketing/preview/zh-Hans/03-mac-workspace.mp4",
+      "bytes": 584468,
+      "sha256": "6e08bec1b478ecb3f25fa441b3b3200e7542dde6fe101738b9a16efd9fa4ebaa",
+      "durationSeconds": 24.5,
+      "streams": [
+        {
+          "codec_name": "h264",
+          "profile": "High",
+          "width": 1920,
+          "height": 1080,
+          "level": 40,
+          "avg_frame_rate": "30/1"
+        },
+        {
+          "codec_name": "aac",
+          "profile": "LC",
           "sample_rate": "48000",
           "channels": 2,
           "avg_frame_rate": "0/0"
@@ -347,6 +478,24 @@
       "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
     },
     {
+      "path": "raw/ipad/en-US/03-empty.png",
+      "bytes": 363386,
+      "sha256": "f70874cb952a3303bc947edc4e8c3dde932b9aa21635213cebcc8cd7bc1b7c26",
+      "width": 2064,
+      "height": 2752,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "raw/ipad/en-US/04-clear.png",
+      "bytes": 425891,
+      "sha256": "fb4d9adeb7293571de70efb63fa685be41827705c551e5f4b58ddd3db8f337a6",
+      "width": 2064,
+      "height": 2752,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
       "path": "raw/ipad/zh-Hans/01-side-by-side.png",
       "bytes": 361481,
       "sha256": "4dc063daeebf94ad1b0dcb3119d0e8699328519ac186b05b414042ca32ea093c",
@@ -359,6 +508,24 @@
       "path": "raw/ipad/zh-Hans/02-stacked.png",
       "bytes": 289297,
       "sha256": "ad7b801293d35df178e88d75b992f8f55ca64d486b48792a4bbbd66067666c0d",
+      "width": 2064,
+      "height": 2752,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "raw/ipad/zh-Hans/03-empty.png",
+      "bytes": 365685,
+      "sha256": "ecae86df55c9511f85f5053ee676dd43585b455e361cf4f5c61d2be86ec86854",
+      "width": 2064,
+      "height": 2752,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "raw/ipad/zh-Hans/04-clear.png",
+      "bytes": 418024,
+      "sha256": "0b957c99b07dd5a40ba7430af7ffb45f803c7bc684fc4c24e7135616ff1f1292",
       "width": 2064,
       "height": 2752,
       "format": "PNG",
@@ -383,36 +550,81 @@
       "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
     },
     {
-      "path": "raw/mac/en-US/01-workspace-clean.png",
-      "bytes": 301090,
-      "sha256": "185f9868f49ee1914733712a7f4ee27d428ce2a86defd9e76539ade4914f2b73",
+      "path": "raw/ipad/zh-Hant/03-empty.png",
+      "bytes": 367589,
+      "sha256": "7e63f8460c149778e88656f5ddee999ec4659595c35493765f5c758a9f3c059e",
+      "width": 2064,
+      "height": 2752,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "raw/ipad/zh-Hant/04-clear.png",
+      "bytes": 419222,
+      "sha256": "3ddc44fe3cab3cb4c655b3a73ce9c9c8789892d5bf7a8eec55dee8f261b8af6e",
+      "width": 2064,
+      "height": 2752,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "raw/mac/en-US/01-workspace.png",
+      "bytes": 314444,
+      "sha256": "7f51085cdeae24a4c93df3044d3767f00434ff5026a1e90b8735cf4bfb08f918",
       "width": 2048,
       "height": 1536,
       "format": "PNG",
-      "uiSourceCommit": "2f782714103d68b4972bee93e47bda8cafee1959"
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "raw/mac/en-US/02-clear.png",
+      "bytes": 324037,
+      "sha256": "22c8bcea42fc2fa79cfcde4e541ab02e7b83636486e366acd79d2f9884af20ef",
+      "width": 2048,
+      "height": 1536,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
     },
     {
       "path": "raw/mac/zh-Hans/01-workspace.png",
-      "bytes": 519391,
-      "sha256": "fefd8160a7b3767806f3d445782382bae755d83275ab664d22ad815a0d90758b",
-      "width": 2560,
-      "height": 1600,
+      "bytes": 323265,
+      "sha256": "1a7b67c1120798a3e144f23c7415319b8820e7f42436aed1361ccaa8e6fcd645",
+      "width": 2048,
+      "height": 1536,
       "format": "PNG",
-      "uiSourceCommit": "2f782714103d68b4972bee93e47bda8cafee1959"
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "raw/mac/zh-Hans/02-clear.png",
+      "bytes": 323630,
+      "sha256": "d06c702b20dcd6bccfaa736fe6de829148bd0142a1e3bbe3cb48ab06a165dedf",
+      "width": 2048,
+      "height": 1536,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
     },
     {
       "path": "raw/mac/zh-Hant/01-workspace.png",
-      "bytes": 504009,
-      "sha256": "fd1abd31716f8deb222c6c797da1c2086697f1d8adbc0925653de3b0483f5acf",
-      "width": 2560,
-      "height": 1600,
+      "bytes": 353405,
+      "sha256": "c5c8efb873669ef0c0c8e41ecdad232fdaf5e2f02357d937051ea04e723b5d66",
+      "width": 2048,
+      "height": 1536,
       "format": "PNG",
-      "uiSourceCommit": "2f782714103d68b4972bee93e47bda8cafee1959"
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "raw/mac/zh-Hant/02-clear.png",
+      "bytes": 322470,
+      "sha256": "e15a38d30840e4ec65e3f94784bbe0ffd73499713ed082162b88319426a15bd8",
+      "width": 2048,
+      "height": 1536,
+      "format": "PNG",
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
     },
     {
       "path": "raw/marketing-copy.json",
-      "bytes": 2489,
-      "sha256": "b1939db2d6889154d55bacd39819eccbc06de849584caddb338c3df60e04dc32"
+      "bytes": 3530,
+      "sha256": "f46c3b36be72de44e35d12a1125856d80a2d47f3a6af981794bbaea8f9744dbe"
     },
     {
       "path": "raw/preview/zh-Hans/01-convert-and-clear-recording.mp4",
@@ -422,12 +634,50 @@
       "streams": [
         {
           "codec_name": "h264",
+          "profile": "High",
           "width": 1320,
           "height": 2868,
+          "level": 50,
           "avg_frame_rate": "2416/279"
         }
       ],
       "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "raw/preview/zh-Hans/02-ipad-workspace-recording.mp4",
+      "bytes": 22005065,
+      "sha256": "fdfb164ea97fc684080b028439190828ff0bbb80edf314e605b7d58ca7930b4b",
+      "durationSeconds": 31.091667,
+      "streams": [
+        {
+          "codec_name": "h264",
+          "profile": "High",
+          "width": 2064,
+          "height": 2752,
+          "level": 51,
+          "avg_frame_rate": "3600/287"
+        }
+      ],
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
+    },
+    {
+      "path": "raw/preview/zh-Hans/03-mac-workspace-recording.mov",
+      "bytes": 3548264,
+      "sha256": "2c73e96c356246476124fb33915ad259e8f3a9fb11b0a0e0124c6018d383cef6",
+      "durationSeconds": 28.031667,
+      "streams": [
+        {
+          "codec_name": "h264",
+          "profile": "Main",
+          "width": 2140,
+          "height": 1628,
+          "level": 51,
+          "avg_frame_rate": "831000/16831"
+        }
+      ],
+      "uiSourceCommit": "20d4ff7257e1e79483c7abb51296d10f117479dd"
     }
-  ]
+  ],
+  "macCapture": "Local unsigned Debug QA from Build 59 source on macOS 27, 1024x768 pt window; three locales, example conversion and clear confirmation",
+  "ipadAddendum": "Three-locale XCUITest screenshots of empty workspace and clear confirmation; zh-Hans simulator interaction recording"
 }
