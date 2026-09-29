@@ -27,16 +27,27 @@ for item in manifest["assets"]:
         with Image.open(path) as image:
             assert image.format == "PNG", item["path"]
             assert image.size == (item["width"], item["height"]), item["path"]
+            if item["path"].startswith(("marketing/ipad/", "marketing/mac/")):
+                assert image.mode == "RGB", item["path"]
 
-final = root / "marketing/preview/zh-Hans/01-convert-and-clear.mp4"
-probe = json.loads(subprocess.check_output([
-    "ffprobe", "-v", "error", "-show_entries",
-    "format=duration:stream=codec_name,width,height,avg_frame_rate,sample_rate,channels",
-    "-of", "json", str(final),
-]))
-assert 15 <= float(probe["format"]["duration"]) <= 30
-video = next(stream for stream in probe["streams"] if stream["codec_name"] == "h264")
-audio = next(stream for stream in probe["streams"] if stream["codec_name"] == "aac")
-assert (video["width"], video["height"], video["avg_frame_rate"]) == (886, 1920, "30/1")
-assert audio["channels"] == 2
-print(f"PASS: {len(expected)} source and marketing assets, 21 titled screenshots, one final App Preview")
+expected_previews = {
+    "01-convert-and-clear.mp4": (886, 1920),
+    "02-ipad-workspace.mp4": (1200, 1600),
+    "03-mac-workspace.mp4": (1920, 1080),
+}
+for name, size in expected_previews.items():
+    final = root / "marketing/preview/zh-Hans" / name
+    probe = json.loads(subprocess.check_output([
+        "ffprobe", "-v", "error", "-show_entries",
+        "format=duration:stream=codec_name,profile,level,width,height,avg_frame_rate,sample_rate,channels",
+        "-of", "json", str(final),
+    ]))
+    assert 15 <= float(probe["format"]["duration"]) <= 30, name
+    video = next(stream for stream in probe["streams"] if stream["codec_name"] == "h264")
+    audio = next(stream for stream in probe["streams"] if stream["codec_name"] == "aac")
+    assert (video["width"], video["height"], video["avg_frame_rate"]) == (*size, "30/1"), name
+    assert video["level"] <= 40 and audio["channels"] == 2 and audio["sample_rate"] == "48000", name
+
+assert len(list((root / "marketing").rglob("*.png"))) == 30
+assert len(list((root / "raw").rglob("*.png"))) == 30
+print(f"PASS: {len(expected)} source and marketing assets, 30 titled screenshots, three final App Previews")

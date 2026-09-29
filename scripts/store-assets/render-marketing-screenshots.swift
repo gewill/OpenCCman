@@ -44,8 +44,7 @@ for locale in copy.keys.sorted() {
     guard let slides = copy[locale] else { continue }
     for key in slides.keys.sorted() {
         guard let lines = slides[key], lines.count == 2 else { fatalError("Invalid copy for \(locale)/\(key)") }
-        let sourceName = key == "mac/01-workspace" && locale == "en-US"
-            ? "01-workspace-clean.png" : "\(key.components(separatedBy: "/")[1]).png"
+        let sourceName = "\(key.components(separatedBy: "/")[1]).png"
         let sourceURL = sourceRoot.appendingPathComponent("\(key.components(separatedBy: "/")[0])/\(locale)/\(sourceName)")
         guard let source = NSImage(contentsOf: sourceURL) else { fatalError("Missing \(sourceURL.path)") }
         guard let sourceRep = NSBitmapImageRep(data: try Data(contentsOf: sourceURL)) else { fatalError("Invalid source PNG") }
