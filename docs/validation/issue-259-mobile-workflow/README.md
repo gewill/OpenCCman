@@ -46,3 +46,21 @@
 iPad Pro M4 / iOS 18.6 Simulator / 834×1210pt / 繁中浅色：最大辅助字号的确认面板可滑动到转换与取消按钮，点击可见取消后任务面板消失；已恢复默认字号。随后从系统“我的 iPad”选择 11 MiB TXT，转换并通过系统保存面板导出，输出 SHA 与先前独立整篇参考完全一致、私有任务目录为空、界面回到主页。录屏分为选取/转换/打开保存，以及保存完成两段；第一段首次点击时面板尚在移动，未触发保存，第二段稳定后完成。
 
 因此本地模拟器的 iPad 系统导入/导出、最大字号确认页滚动取消已补齐。iCloud/第三方提供方与物理设备仍在 #260；其他状态的大字号、VoiceOver、实际多窗口、idleTimer/lease 与窄窗口编辑状态仍未完成。
+
+## 真正 App 宿主的资源读回
+
+应用提交 `df3f57594d38a60d2277cbbdb9c720a5bd2752f9` 增加只读 QA 资源追踪：仅 `DEBUG`、专用 Bundle `org.gewill.OpenCCman.WhatsNewUITests` 且显式 `-qa-mobile-file-resource-trace` 时生效，记录事件、App 是否 active、idleTimer 和资源所有权布尔值，不记录正文或文件名；在串行队列写入 QA App 的 tmp/mobile-file-resources-qa.json，正式构建不包含该追踪。正常文件任务仍需原有 `-qa-enable-mobile-large-files`、QA 资格参数。
+
+在真正运行的 iPad iOS 18.6 Simulator App 中，完成 11 MiB 转换、100 MiB 转换中 Home 退后台取消，分别读回 before_begin → after_begin → after_end：
+
+| 时点 | idleTimerDisabled | 持有 idle 覆盖 | 持有后台任务 |
+|---|---|---|---|
+| 开始前 | false | false | false |
+| 开始后 | true | true | true |
+| worker 返回后 | false | false | false |
+
+成功路径结束时 App active；后台取消路径结束时 App 非 active，且未完成私有目录为空。该证据来自实际协调器 beginWork/endWork 调用的 UIKit 适配器，不是无界面 XCTest 注入通知。资源所有权读回结合源码中的 beginBackgroundTask/endBackgroundTask 调用，不是对系统任务登记表的独立查询。精确事件、源码哈希和双端构建日志哈希见 app-resource-lifetime.json。
+
+重现步骤：在隔离 QA Simulator 中以对应参数启动 App，选取测试 TXT，点击转换；成功路径等待 ready，取消路径在转换中按 Home。等实际 worker 结束后读取容器 tmp 中的 JSON，确认三条事件顺序和上述资源状态；取消再核对私有任务目录。使用专用模拟器与自生成语料；不向正式 App 写设置。
+
+本次补齐默认 idle=false 的成功与后台取消资源恢复。原先 idle=true、系统真实 lease 过期、真机锁屏与文件保护尚未计为通过，仍保持后续验收；未修改或启用 VoiceOver。

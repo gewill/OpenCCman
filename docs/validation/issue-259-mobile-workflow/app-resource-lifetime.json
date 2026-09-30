@@ -1,0 +1,78 @@
+{
+  "source_commit": "df3f57594d38a60d2277cbbdb9c720a5bd2752f9",
+  "environment": {
+    "model": "iPad Pro 11-inch M4 Simulator",
+    "os": "iOS 18.6",
+    "bundle": "org.gewill.OpenCCman.WhatsNewUITests",
+    "configuration": "Debug",
+    "signed_device": false
+  },
+  "success_11_MiB": [
+    {
+      "app_active": true,
+      "event": "before_begin",
+      "resources": {
+        "idle_disabled": false,
+        "owns_background_task": false,
+        "owns_idle_override": false
+      }
+    },
+    {
+      "app_active": true,
+      "event": "after_begin",
+      "resources": {
+        "idle_disabled": true,
+        "owns_background_task": true,
+        "owns_idle_override": true
+      }
+    },
+    {
+      "app_active": true,
+      "event": "after_end",
+      "resources": {
+        "idle_disabled": false,
+        "owns_background_task": false,
+        "owns_idle_override": false
+      }
+    }
+  ],
+  "background_cancel_100_MiB": [
+    {
+      "app_active": true,
+      "event": "before_begin",
+      "resources": {
+        "idle_disabled": false,
+        "owns_background_task": false,
+        "owns_idle_override": false
+      }
+    },
+    {
+      "app_active": true,
+      "event": "after_begin",
+      "resources": {
+        "idle_disabled": true,
+        "owns_background_task": true,
+        "owns_idle_override": true
+      }
+    },
+    {
+      "app_active": false,
+      "event": "after_end",
+      "resources": {
+        "idle_disabled": false,
+        "owns_background_task": false,
+        "owns_idle_override": false
+      }
+    }
+  ],
+  "background_cancel_private_jobs_remaining": 0,
+  "source_sha256": {
+    "OpenCCman/Services/MobileFileRuntime.swift": "83ae8998a7c6a0a5a1807d9c2cf3f886f2a560391581fd84b55530e0370eb921",
+    "OpenCCman/Services/MobileFileLifecycle.swift": "2e0d364e108e5e5bc0bb562100174d28a3cbe522d1b4d7863be7009ed159b02a",
+    "OpenCCman/Services/MobileLargeFileCoordinator.swift": "ee0892e5157553cd5a9c3b36d3342527b84c9aee630095e9329a81f7b0c1303a"
+  },
+  "build_log_sha256": {
+    "ios": "7ed4f0914f7ad353a6b9564fa786eff5cecbaca1b237a3e896b75c00779b5e43",
+    "mac": "75ff6db5e8ceb68d7162f632daf1ee258a4bdb0ce46bc9da9e01090255204753"
+  }
+}
