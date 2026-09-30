@@ -108,6 +108,52 @@ final class WhatsNewPresentationTests: XCTestCase {
     XCTAssertTrue(isButton(ready.last!))
   }
 
+  func testMobileFileVoiceOverInvalidUTF8Recovery() throws {
+    guard #available(iOS 27.0, *) else { throw XCTSkip("VoiceOver driver requires iOS 27") }
+    guard let fixture = ProcessInfo.processInfo.environment["OPENCCMAN_MOBILE_INVALID_FIXTURE"] else {
+      throw XCTSkip("Requires generated invalid UTF-8 in the isolated QA app")
+    }
+    let app = XCUIApplication(bundleIdentifier: appID)
+    app.launchArguments = ["-AppleLanguages", "(en)", "-qa-mark-whats-new-read-at-launch",
+      "-qa-suppress-review", "-qa-enable-mobile-large-files", "-qa-mobile-file-pro",
+      "-qa-import-mobile-file", fixture]
+    app.launch()
+    defer { app.terminate() }
+    XCTAssertTrue(app.buttons["mobile-file-convert"].waitForExistence(timeout: 20))
+    app.buttons["mobile-file-convert"].tap()
+    let error = app.staticTexts["mobile-file-error"]
+    XCTAssertTrue(error.waitForExistence(timeout: 60))
+    XCTAssertTrue(error.label.contains("not valid UTF-8"))
+    XCTAssertFalse(app.buttons["mobile-file-save"].exists)
+    let voiceOver = XCUIDevice.shared.voiceOverService
+    initialVoiceOverEnabled = voiceOver.isEnabled
+    defer {
+      if let initialVoiceOverEnabled, voiceOver.isEnabled != initialVoiceOverEnabled {
+        if initialVoiceOverEnabled { try? voiceOver.enable() } else { try? voiceOver.disable() }
+      }
+    }
+    if !voiceOver.isEnabled { try voiceOver.enable() }
+    var speech = [try voiceOver.currentSpeech().utterance]
+    for _ in 0..<32 where !speech.last!.contains("Delete local task") {
+      speech.append(try voiceOver.moveForward().utterance)
+    }
+    let attachment = XCTAttachment(string: speech.joined(separator: "\n"))
+    attachment.name = "mobile-failure-speech"
+    attachment.lifetime = .keepAlways
+    add(attachment)
+    XCTAssertTrue(speech.contains { $0.contains("Could Not Convert File") })
+    XCTAssertTrue(speech.contains { $0.contains("not valid UTF-8") })
+    XCTAssertTrue(speech.contains { $0.contains("Retry recovery") && $0.contains("Button") })
+    XCTAssertTrue(speech.last!.contains("Delete local task") && speech.last!.contains("Button"))
+    capture(app, name: "mobile-failure-voiceover-focus")
+    try voiceOver.disable()
+    app.buttons["Retry recovery"].tap()
+    let errorGone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: error)
+    XCTAssertEqual(XCTWaiter().wait(for: [errorGone], timeout: 10), .completed)
+    app.buttons["Done"].tap()
+    XCTAssertTrue(app.buttons["Convert"].waitForExistence(timeout: 10))
+  }
+
   func testClearSourceRequiresConfirmationAndKeepsCancelSafe() {
     let app = launch("-qa-suppress-review")
     defer { app.terminate() }

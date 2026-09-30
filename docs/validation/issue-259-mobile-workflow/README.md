@@ -110,3 +110,9 @@ iPhone 18 Pro Simulator / iOS 27.0 (24A434)，402×874pt，默认字号、英语
 同一 iPhone 18 Pro / iOS 27.0 / 402×874pt / 默认字号浅色，测试新增 OPENCCMAN_MOBILE_LANGUAGE=en|zh-Hans|zh-Hant，使用实际本地化名称验证朗读与按钮角色。简体、繁体分别执行 1 项通过、0 失败、0 跳过；确认页依序读到转换/取消按钮，结果页读到完成标题、保存/删除按钮。每轮运行前后 VoiceOverTouchEnabled 均为 0，录像均正常结束。两轮分别保存原始 utterance、summary 与视频哈希，见 voiceover-localized-evidence.json 及 voiceover-zh-*.txt/JSON。没有更新应用源代码，也未以 AX 树代替 VoiceOver 输出。
 
 因此确认与 ready 两页的三语阅读导航已有运行证据（英语见前节）。转换中焦点变化、失败/系统选择器、VoiceOver 手势激活及真机仍待验收；不把这些范围一起标为通过。录像无音轨，语音内容引用 XCTest 的实际 utterance。
+
+## 非法 UTF-8 的失败页与重试
+
+同一 iPhone 18 Pro / iOS 27.0 Simulator、402×874pt、英语浅色默认字号。新增 `testMobileFileVoiceOverInvalidUTF8Recovery`，环境 OPENCCMAN_MOBILE_INVALID_FIXTURE 指向专用 QA 容器中 11 MiB ASCII + 末尾 0xFF 的自生成文件。实际转换产生 not valid UTF-8 错误，没有保存入口；VoiceOver 依次读到失败标题、编码错误、Retry recovery Button、Delete local task Button。关闭 VoiceOver 后用普通 XCTest tap 执行重试恢复，错误消失，Done 返回主页。
+
+实际运行 1 通过、0 失败、0 跳过，23.393 秒。输入 SHA 与生成规则一致，原文件保留；私有任务目录为空。结束后 VoiceOverTouchEnabled 读回 0。summary、原始语音与媒体/源码哈希见 voiceover-failure*.json/txt，录像无音轨。不是注入失败状态，不声称覆盖所有错误类型、VoiceOver 手势、中文失败页或真机文件保护。
