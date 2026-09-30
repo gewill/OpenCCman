@@ -195,3 +195,30 @@
 "file_error_temporary_cleanup_failed" = "Conversion stopped, but its temporary file could not be removed.";
 "large_file_cleanup_recovery" = "Remove the remaining temporary conversion folder in Finder:";
 "mac_text_file_hint" = "Import or drop UTF-8 TXT or plain text up to 10 MiB to edit. Pro converts TXT files up to 1 GiB directly to a new file.";
+
+// Mobile direct-to-file workflow (production gated by #260)
+"mobile_file_explanation" = "Convert this TXT directly to a file without loading it into the editor. Up to 100 MiB. Pro is required; homepage conversions are not used.";
+"mobile_file_preparing" = "Preparing file";
+"mobile_file_preparing_detail" = "Preparing a private copy. Keep OpenCCman in the foreground; your current draft stays unchanged.";
+"mobile_file_foreground" = "Keep the app in the foreground. Moving it to the background or locking the device stops this task.";
+"mobile_file_ready" = "Ready to save";
+"mobile_file_ready_detail" = "The complete result is kept on this device until you save or delete it. Cancelling the save panel keeps it available to retry.";
+"mobile_file_interrupted" = "Task stopped";
+"mobile_file_interrupted_detail" = "Your original file and draft are unchanged. Select the file again to restart conversion.";
+"mobile_file_unlock" = "Waiting for unlock";
+"mobile_file_unlock_detail" = "Unlock this device to access the protected task files, then try again.";
+"mobile_file_failed_detail" = "The original file and editor draft are unchanged. Retry recovery or delete the local task files before trying again.";
+"mobile_file_convert" = "Convert file";
+"mobile_file_save" = "Save result…";
+"mobile_file_retry" = "Retry recovery";
+"mobile_file_resume" = "Open file task";
+"mobile_file_delete" = "Delete local task";
+"mobile_file_delete_title" = "Delete this local file task?";
+"mobile_file_delete_message" = "Unsaved conversion results and local task files will be deleted. Your original file and editor draft are kept.";
+"mobile_file_busy" = "Finish or delete the current file task before starting another. If it is open in another window, use that window.";
+"mobile_file_capacity" = "On iPhone and iPad, direct file conversion supports TXT files up to 100 MiB.";
+"mobile_file_space" = "There is not enough free space to prepare or save this file. Free some space and try again.";
+"mobile_file_cleanup_failure" = "Some private task files could not be removed. Retry recovery or delete the local task when the device is unlocked.";
+"mobile_file_invalid_store" = "The saved task could not be verified. Its files have been kept. Retry, or confirm deletion to start a new task.";
+"mobile_file_pro" = "Convert TXT files over 10 MiB and up to 100 MiB directly to a file on iPhone and iPad with Pro.";
+"mobile_text_file_hint" = "Edit UTF-8 text up to 10 MiB. With Pro, select TXT files up to 100 MiB to convert directly to a file. Drag and drop stays limited to 10 MiB.";

@@ -15,6 +15,9 @@ struct RootView: View {
   @State private var isVisible = false
   @State private var windowFrame: CGRect = .zero
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
+  #if os(iOS)
+    @ObservedObject private var mobileFile = MobileFileRuntime.shared.coordinator
+  #endif
   #if os(macOS)
     @ObservedObject private var largeFile = MacLargeFileCoordinator.shared
     @State private var largeFilePresentationIsActive = false
@@ -81,7 +84,32 @@ struct RootView: View {
         .onAppear { largeFilePresentationIsActive = true }
     }
     #endif
+    #if os(iOS)
+    .background(MobileFileSceneReader(owner: viewModel.windowOwnerID).frame(width: 0, height: 0))
+    .sheet(isPresented: Binding(
+      get: { MobileFileRuntime.isEnabled && mobileFile.presentationOwner == viewModel.windowOwnerID },
+      set: { if !$0 { mobileFile.dismissPresentation() } }
+    )) {
+      MobileLargeFileTaskView(coordinator: mobileFile)
+    }
+    .onChange(of: mobileFile.phase) { phase in
+      if scenePhase == .active, phase == .ready || phase == .failed || phase == .waitingForUnlock {
+        _ = mobileFile.claimPresentation(viewModel.windowOwnerID)
+      }
+    }
+    .onChange(of: scenePhase) { phase in
+      if phase == .active, MobileFileRuntime.isEnabled, mobileFile.presentationOwner == nil {
+        _ = mobileFile.claimPresentation(viewModel.windowOwnerID)
+      }
+    }
+    #endif
     .onAppear {
+      #if os(iOS)
+      MobileFileRuntime.shared.activate()
+      #if DEBUG
+      MobileFileRuntime.shared.importQAFileIfRequested(into: viewModel)
+      #endif
+      #endif
       #if DEBUG
         if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
            ProcessInfo.processInfo.arguments.contains("-qa-unread-whats-new-at-launch") {
@@ -200,6 +228,8 @@ struct RootView: View {
     )
     #if os(macOS)
       eligibility.hasLargeFileTask = largeFile.isBusy || largeFilePresentationIsActive
+    #else
+      eligibility.hasLargeFileTask = MobileFileRuntime.isEnabled && (mobileFile.session != nil || mobileFile.presentationOwner != nil)
     #endif
     return eligibility
   }

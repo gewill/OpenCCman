@@ -12,7 +12,6 @@ final class MobileLargeFileCoordinator: ObservableObject {
   }
   struct Session: Identifiable {
     let id: UUID
-    var owner: UUID?
     let filename: String
     let inputBytes: UInt64
     let optionsRawValue: Int
@@ -22,10 +21,12 @@ final class MobileLargeFileCoordinator: ObservableObject {
 
   @Published private(set) var phase: Phase = .recovering
   @Published private(set) var session: Session?
+  @Published private(set) var presentationOwner: UUID?
   @Published private(set) var ready: MobileLargeFileService.Ready?
   @Published private(set) var processedBytes: UInt64 = 0
   @Published private(set) var failure: Error?
   @Published private(set) var exportURL: URL?
+  private(set) var exportAttemptID: UUID?
 
   private let factory: Factory
   private let isQualified: @MainActor () -> Bool
@@ -88,7 +89,8 @@ final class MobileLargeFileCoordinator: ObservableObject {
     guard source.byteCount <= FileConversionPolicy.mobileMaximumBytes else { throw StartError.exceedsCapacity }
     guard isQualified() else { throw StartError.requiresPro }
     self.source = source
-    session = Session(id: UUID(), owner: owner, filename: source.sourceFilename,
+    presentationOwner = owner
+    session = Session(id: UUID(), filename: source.sourceFilename,
                       inputBytes: source.byteCount, optionsRawValue: configuration.options.rawValue)
     processedBytes = 0
     failure = nil
@@ -121,7 +123,7 @@ final class MobileLargeFileCoordinator: ObservableObject {
           })
         // The service decides commit versus cancellation. Do not discard a
         // published result merely because Task.isCancelled became true later.
-        if operationID == id { accept(result, owner: self.session?.owner) }
+        if operationID == id { accept(result, owner: presentationOwner) }
       } catch {
         if operationID == id {
           failure = error is CancellationError ? nil : error
@@ -151,6 +153,7 @@ final class MobileLargeFileCoordinator: ObservableObject {
         await Self.close(source)
         self.source = nil
         self.session = nil
+        self.presentationOwner = nil
         self.phase = .interrupted
         self.task = nil
       }
@@ -158,15 +161,16 @@ final class MobileLargeFileCoordinator: ObservableObject {
   }
 
   func ownerDidClose(_ owner: UUID) {
-    guard session?.owner == owner else { return }
-    session?.owner = nil
+    guard presentationOwner == owner else { return }
+    presentationOwner = nil
     if isWorking || phase == .confirmation { cancel() }
     // Completed output remains recoverable by another window.
   }
 
   func claimPresentation(_ owner: UUID) -> Bool {
-    guard session != nil, session?.owner == nil || session?.owner == owner else { return false }
-    session?.owner = owner
+    guard session != nil || phase == .failed || phase == .waitingForUnlock,
+          presentationOwner == nil || presentationOwner == owner else { return false }
+    presentationOwner = owner
     return true
   }
 
@@ -174,32 +178,66 @@ final class MobileLargeFileCoordinator: ObservableObject {
     guard let ready, let service, task == nil, phase == .ready || phase == .failed else { return }
     failure = nil
     phase = .exporting
+    exportAttemptID = UUID()
     task = Task {
       do { exportURL = try await service.exportURL(for: ready.id) }
-      catch { failure = error; phase = .ready }
+      catch { failure = error; phase = .ready; exportAttemptID = nil }
       task = nil
     }
   }
 
   /// Cancellation keeps the complete result; only confirmed system success
   /// removes it. The caller must pass the ID captured when presenting.
-  func exportFinished(id: UUID, succeeded: Bool) {
-    guard ready?.id == id, phase == .exporting, task == nil else { return }
+  func exportFinished(id: UUID, attemptID: UUID, succeeded: Bool) {
+    guard ready?.id == id, exportAttemptID == attemptID, task == nil else { return }
+    exportAttemptID = nil
     exportURL = nil
     if succeeded { discardResult() } else { phase = .ready }
+  }
+
+  /// SwiftUI dismissal can arrive before the document picker's success delegate.
+  /// Retain the attempt identity so its later authoritative result can win.
+  /// A newer attempt or explicit deletion invalidates this identity.
+  func exportPresentationDismissed(attemptID: UUID) {
+    guard exportAttemptID == attemptID, ready != nil, task == nil else { return }
+    exportURL = nil
+    phase = .ready
   }
 
   func discardResult() {
     guard let ready, let service, task == nil else { return }
     exportURL = nil
+    exportAttemptID = nil
     task = Task {
       do {
         try await service.discard(ready.id)
         self.ready = nil
         session = nil
+        presentationOwner = nil
         failure = nil
         phase = .completed
       } catch { failure = error; phase = .ready }
+      task = nil
+    }
+  }
+
+  func dismissPresentation() {
+    guard task == nil, !isWorking, phase != .confirmation, phase != .exporting else { return }
+    presentationOwner = nil
+  }
+
+  /// Only after the UI confirms deleting private jobs; editor files are outside
+  /// this store. Failed deletion remains an error and can be retried.
+  func resetStoredJobs() {
+    guard task == nil, source == nil, ready == nil, let service else { return }
+    task = Task {
+      do {
+        try await service.discardStoredJobs()
+        session = nil
+        presentationOwner = nil
+        failure = nil
+        phase = .idle
+      } catch { failure = error; phase = .failed }
       task = nil
     }
   }
@@ -208,7 +246,8 @@ final class MobileLargeFileCoordinator: ObservableObject {
 
   private func accept(_ result: MobileLargeFileService.Ready, owner: UUID?) {
     ready = result
-    session = Session(id: result.id, owner: owner, filename: result.exportFilename,
+    presentationOwner = owner
+    session = Session(id: result.id, filename: result.exportFilename,
                       inputBytes: result.inputBytes, optionsRawValue: result.optionsRawValue)
     processedBytes = result.inputBytes
     phase = .ready

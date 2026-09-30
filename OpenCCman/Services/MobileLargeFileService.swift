@@ -117,6 +117,23 @@ final class MobileLargeFileService: @unchecked Sendable {
     }
   }
 
+  /// Explicit destructive recovery, invoked only after user confirmation.
+  /// Same strict namespace and no-follow cleanup rules as automatic recovery.
+  func discardStoredJobs() async throws {
+    try await perform { _ in
+      try self.protection.check()
+      try self.makeDirectory(self.root)
+      for job in try FileManager.default.contentsOfDirectory(at: self.root, includingPropertiesForKeys: nil) {
+        guard job.lastPathComponent.hasPrefix("job-"),
+              UUID(uuidString: String(job.lastPathComponent.dropFirst(4))) != nil else { continue }
+        try self.removeJob(job)
+      }
+      self.ready = nil
+      self.recovered = false
+      try self.recoverOnWorker()
+    }
+  }
+
   private func perform<T: Sendable>(
     _ operation: @escaping @Sendable (StreamingConversionCancellation) throws -> T
   ) async throws -> T {

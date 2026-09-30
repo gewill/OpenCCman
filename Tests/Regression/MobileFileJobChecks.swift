@@ -188,6 +188,10 @@ func checkMobileFileJobs() async throws {
   do { _ = try await service(damagedStore).recover(); preconditionFailure("Corrupt ready output cannot be exported") }
   catch MobileLargeFileService.JobError.invalidJournal {}
   precondition(fm.fileExists(atPath: damaged.url.path), "An invalid journal requires explicit handling, not automatic deletion")
+  let repair = service(damagedStore)
+  try await repair.discardStoredJobs()
+  try requireMobileJob(await repair.recover() == .empty)
+  try requireMobileJob(empty(damagedStore))
   print("PASS: mobile job snapshot, recovery, full hash, nine I/O faults, cancellation/commit races, space, cleanup failures and symlink boundaries")
 }
 

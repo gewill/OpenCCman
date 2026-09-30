@@ -185,12 +185,16 @@ enum TextFileService {
     return text
   }
 
-  static func prepare(_ url: URL) async throws -> PreparedImport {
-    try await load(url, allowLargeFile: true)
+  static func prepare(_ url: URL, allowLargeFile: Bool = true) async throws -> PreparedImport {
+    try await load(url, allowLargeFile: allowLargeFile)
   }
 
   static func prepare(_ provider: NSItemProvider) async throws -> PreparedImport {
-    try await load(provider, allowLargeFile: true)
+    #if os(macOS)
+    return try await load(provider, allowLargeFile: true)
+    #else
+    return try await load(provider, allowLargeFile: false)
+    #endif
   }
 
   private static func load(_ url: URL, allowLargeFile: Bool) async throws -> PreparedImport {
@@ -261,9 +265,7 @@ enum TextFileService {
   private static func prepare(_ source: OpenedTextFile, allowLargeFile: Bool, cancellation: ReadCancellation) throws -> PreparedImport {
     try cancellation.check()
     if source.byteCount > UInt64(maximumBytes) {
-      #if os(macOS)
-        if allowLargeFile { return .largeFile(source) }
-      #endif
+      if allowLargeFile { return .largeFile(source) }
       throw FileError.tooLarge
     }
     let handle = try source.beginReading()
