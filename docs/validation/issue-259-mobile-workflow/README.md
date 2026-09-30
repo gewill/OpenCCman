@@ -116,3 +116,12 @@ iPhone 18 Pro Simulator / iOS 27.0 (24A434)，402×874pt，默认字号、英语
 同一 iPhone 18 Pro / iOS 27.0 Simulator、402×874pt、英语浅色默认字号。新增 `testMobileFileVoiceOverInvalidUTF8Recovery`，环境 OPENCCMAN_MOBILE_INVALID_FIXTURE 指向专用 QA 容器中 11 MiB ASCII + 末尾 0xFF 的自生成文件。实际转换产生 not valid UTF-8 错误，没有保存入口；VoiceOver 依次读到失败标题、编码错误、Retry recovery Button、Delete local task Button。关闭 VoiceOver 后用普通 XCTest tap 执行重试恢复，错误消失，Done 返回主页。
 
 实际运行 1 通过、0 失败、0 跳过，23.393 秒。输入 SHA 与生成规则一致，原文件保留；私有任务目录为空。结束后 VoiceOverTouchEnabled 读回 0。summary、原始语音与媒体/源码哈希见 voiceover-failure*.json/txt，录像无音轨。不是注入失败状态，不声称覆盖所有错误类型、VoiceOver 手势、中文失败页或真机文件保护。
+
+
+## 最大辅助字号：确认、结果与失败页面
+
+2026-10-01，应用源码 `4b36d7a`、测试源码 `df713be`，iPhone 18 Pro Simulator / iOS 27.0 (24A434)，402×874pt，英语浅色。使用 simctl 将 content_size 从 large 改为 accessibility-extra-extra-extra-large，分别运行确认/结果 VoiceOver 测试与实际非法 UTF-8 失败/恢复测试，两项均 1 通过、0 失败、0 跳过。
+
+实际焦点导航触发页面滚动，截图确认转换/取消、保存/删除、错误说明/恢复/删除均可到达；多行删除按钮自然增高。普通 XCTest 在关闭 VoiceOver 后点击转换与恢复，恢复后返回主页；失败测试日志也记录转换按钮滚动到可见范围后计算命中点。本次未实际点击保存或删除，不把可到达等同于其操作验收。原始语音、summary、媒体 SHA 见 maxfont-* 文件。语音长段落可能只返回片段；录像无音轨。
+
+每轮用 finally 恢复原字号，测试自身 defer/tearDown 恢复 VoiceOver；最终独立读回字号 large、VoiceOverTouchEnabled=0。本项不覆盖其他语言最大字号、真机、VoiceOver 手势激活或系统文件面板。本轮只补证据，没有修改应用代码；100 MiB 生产入口继续关闭。

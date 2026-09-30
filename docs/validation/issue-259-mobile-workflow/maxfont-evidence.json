@@ -1,0 +1,70 @@
+{
+  "appSource": "4b36d7a",
+  "testSource": "df713be",
+  "device": "iPhone 18 Pro Simulator iOS 27.0 (24A434)",
+  "windowPoints": [
+    402,
+    874
+  ],
+  "language": "en",
+  "appearance": "light",
+  "contentSizeDuringTest": "accessibility-extra-extra-extra-large",
+  "contentSizeBeforeAndAfter": "large",
+  "voiceOverFinal": false,
+  "runs": [
+    {
+      "case": "en",
+      "state": {
+        "language": "en",
+        "before_voiceover": "0",
+        "after_voiceover": "0",
+        "test_exit": 0
+      },
+      "media": [
+        {
+          "name": "mobile-ready-speech-focus_0_85C88CC7-41FE-49A7-9B70-B5D8CCDD4F69.png",
+          "sha256": "e27558f1a77dde1bb51ffee3e5fa4839c85d099c1dc736829787d39f1ddd3c4c"
+        },
+        {
+          "name": "mobile-ready-speech_0_59C9B9D8-8985-4A61-A31D-AAC5F21DE182.txt",
+          "sha256": "e27418c21e05993f87baa6fd6eba84b3e9fc4137f1ade76b5b0a8fa74fe02e04"
+        },
+        {
+          "name": "mobile-confirmation-speech-focus_0_0FCDD2D5-AD3C-4D36-BEC2-819EE0E26422.png",
+          "sha256": "523c0bfe1cafca77f9b30dd21eeb1e148f48b2187fafc4844640e54213eb7914"
+        },
+        {
+          "name": "mobile-confirmation-speech_0_4ABA1068-C79A-4F46-8F87-7DB97040080B.txt",
+          "sha256": "e21cb5fbebdc91bf316b312d5e3c3c057402719e677688e63fa2f1e2d51e90a7"
+        },
+        {
+          "name": "openccman-259-maxfont-en.mp4",
+          "sha256": "78f2d440602af5791a83b151cd796f45b4e6a76b24cec6a94ac22a23bbbfeeb4"
+        }
+      ]
+    },
+    {
+      "case": "failure",
+      "state": {
+        "language": "en",
+        "before_voiceover": "0",
+        "after_voiceover": "0",
+        "test_exit": 0
+      },
+      "media": [
+        {
+          "name": "mobile-failure-voiceover-focus_0_60E78A2A-0A05-4E7B-BC37-E93C9B167E21.png",
+          "sha256": "56284620010f92c3d9922b3dc76a1c5fcbe1d5a057d116470dae45390423a32d"
+        },
+        {
+          "name": "mobile-failure-speech_0_999F25DB-ED65-4A9B-B5DF-6E7D90FDB123.txt",
+          "sha256": "5838c2de46dde4493c66637deee24e9bf4a1298de9d6519b09bc447e70adcb60"
+        },
+        {
+          "name": "openccman-259-maxfont-failure.mp4",
+          "sha256": "d796a3fb010ba3158d0c580d4371112f4e9a176a9ac0283fa2578f96d3110c05"
+        }
+      ]
+    }
+  ]
+}
