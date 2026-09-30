@@ -25,8 +25,6 @@
   "output_bytes": 11534336,
   "not_verified": [
     "Owner closes during active conversion",
-    "Owner closes with exporter open",
-    "Actual export after takeover",
     "Physical device footprint",
     "VoiceOver reading order"
   ],
@@ -37,10 +35,29 @@
     "two-window-ready.png": "c929b50d2d3907c1aa40364aefbf608c9d8b46d13b8a8556ab086db92a8341f2",
     "owner-closed.png": "2703bc40216cee90eb84aa1c9228c72f1f316e6e8bb22ced6e3f6044bb6e0c93",
     "ready-taken-over.png": "1dc2552a4a23664db8402ba47ac02328a0fb75192c4ccd36143d7f46997ed354",
-    "ipad-two-window-reservation.mp4": "addaab548481eb6c01f160cc8014180b547fd90d261883d1fd702878c1d8f041"
+    "ipad-two-window-reservation.mp4": "addaab548481eb6c01f160cc8014180b547fd90d261883d1fd702878c1d8f041",
+    "export-before-close.png": "bbdb660b26bc7daad43d84da81ea13cab9e392921dc4a4ce087fcf9bc9ceccdb",
+    "export-owner-gone.png": "2703bc40216cee90eb84aa1c9228c72f1f316e6e8bb22ced6e3f6044bb6e0c93",
+    "retry-export-picker.png": "5c62f36b7af7a54f3d19d3040d364285cbc3f5226c2e00f1ed538184654e8ad6",
+    "export-takeover-completed.png": "d6f67284ad7208a397cb2c3d9206da70fea53f7f256ac63f9fb980f0d0a116e6",
+    "export-owner-close.mp4": "20e74d4a13a1778e554e48d70c0107a1ba2f8f8b91e9e3095b21a851f6bf083c"
   },
   "build_logs": {
     "openccman-259-initial-route-build.log": "1b86d4968c84292192d7c775d799a92d54ae43219a53987665a984e6ffbc37d0",
     "openccman-259-route-mac-build.log": "216e454c58cd7e196ee786b7a2b3c311db8429d0ae827b6501100bd6c6c356b3"
+  },
+  "export_owner_close": {
+    "source": "4b36d7a",
+    "steps": [
+      "Open system save picker in owning scene",
+      "Create another scene, destroy owner via UIKit",
+      "Survivor opens retained task",
+      "Retry system save to On My iPad, Keep Both"
+    ],
+    "saved_name": "地区用词测试-converted 2.txt",
+    "bytes": 11534336,
+    "sha256": "bb91fb919f2671d9538af2e97e016b435746eff3ea385169db5d63bcc4947c67",
+    "private_job_directory_empty": true,
+    "limits": "Simulator UIKit scene destruction; not hardware or provider fault validation"
   }
 }
