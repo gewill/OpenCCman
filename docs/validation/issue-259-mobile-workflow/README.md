@@ -104,3 +104,9 @@ iPhone 18 Pro Simulator / iOS 27.0 (24A434)，402×874pt，默认字号、英语
 重现：在专用 iOS 27 Simulator 安装 QA Bundle，生成 11 MiB TXT 到其 Documents；build-for-testing 现有 WhatsNewPresentationTests 工程，在生成的 xctestrun 的 WhatsNewPresentationTests.EnvironmentVariables 加入 OPENCCMAN_MOBILE_FIXTURE（精确容器路径），以 only-testing 运行此方法。缺少变量或系统低于 27 会跳过，跳过不能计为通过。复跑前仅清理本测试生成的待保存任务；不要清理用户数据或正式 App。测试用完整转换引擎，未注入 ready 状态。
 
 同条件补录复跑亦通过（voiceover-recorded-summary.json）；视频为无音频的实际焦点移动录屏，朗读内容来自 XCTest utterance 附件，不宣称录到声音。结束后 `defaults read com.apple.Accessibility VoiceOverTouchEnabled` 读回 0；没有留下开启的 VoiceOver。媒体和测试源码哈希见 voiceover-evidence.json。
+
+### 简体与繁体 VoiceOver 导航
+
+同一 iPhone 18 Pro / iOS 27.0 / 402×874pt / 默认字号浅色，测试新增 OPENCCMAN_MOBILE_LANGUAGE=en|zh-Hans|zh-Hant，使用实际本地化名称验证朗读与按钮角色。简体、繁体分别执行 1 项通过、0 失败、0 跳过；确认页依序读到转换/取消按钮，结果页读到完成标题、保存/删除按钮。每轮运行前后 VoiceOverTouchEnabled 均为 0，录像均正常结束。两轮分别保存原始 utterance、summary 与视频哈希，见 voiceover-localized-evidence.json 及 voiceover-zh-*.txt/JSON。没有更新应用源代码，也未以 AX 树代替 VoiceOver 输出。
+
+因此确认与 ready 两页的三语阅读导航已有运行证据（英语见前节）。转换中焦点变化、失败/系统选择器、VoiceOver 手势激活及真机仍待验收；不把这些范围一起标为通过。录像无音轨，语音内容引用 XCTest 的实际 utterance。

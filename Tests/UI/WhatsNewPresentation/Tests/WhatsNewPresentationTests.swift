@@ -55,8 +55,19 @@ final class WhatsNewPresentationTests: XCTestCase {
     guard let fixture = ProcessInfo.processInfo.environment["OPENCCMAN_MOBILE_FIXTURE"] else {
       throw XCTSkip("Requires a generated TXT in the isolated QA app container")
     }
+    let language = ProcessInfo.processInfo.environment["OPENCCMAN_MOBILE_LANGUAGE"] ?? "en"
+    let labels: (cancel: String, convert: String, ready: String, save: String, delete: String)
+    switch language {
+    case "en": labels = ("Cancel", "Convert file", "Ready to save", "Save result", "Delete local task")
+    case "zh-Hans": labels = ("取消", "转换文件", "转换完成", "保存结果", "删除本地任务")
+    case "zh-Hant": labels = ("取消", "轉換檔案", "轉換完成", "儲存結果", "刪除本機工作")
+    default: XCTFail("Unsupported test language: \(language)"); return
+    }
+    func isButton(_ speech: String) -> Bool {
+      ["button", "按钮", "按鈕"].contains { speech.localizedCaseInsensitiveContains($0) }
+    }
     let app = XCUIApplication(bundleIdentifier: appID)
-    app.launchArguments = ["-AppleLanguages", "(en)", "-qa-mark-whats-new-read-at-launch",
+    app.launchArguments = ["-AppleLanguages", "(\(language))", "-qa-mark-whats-new-read-at-launch",
       "-qa-suppress-review", "-qa-enable-mobile-large-files", "-qa-mobile-file-pro",
       "-qa-import-mobile-file", fixture]
     app.launch()
@@ -83,18 +94,18 @@ final class WhatsNewPresentationTests: XCTestCase {
       capture(app, name: name + "-focus")
       return speech
     }
-    let confirmation = try readThrough("Cancel", name: "mobile-confirmation-speech")
-    XCTAssertTrue(confirmation.contains { $0.localizedCaseInsensitiveContains("Convert file") && $0.localizedCaseInsensitiveContains("button") })
-    XCTAssertTrue(confirmation.last!.localizedCaseInsensitiveContains("button"))
+    let confirmation = try readThrough(labels.cancel, name: "mobile-confirmation-speech")
+    XCTAssertTrue(confirmation.contains { $0.localizedCaseInsensitiveContains(labels.convert) && isButton($0) })
+    XCTAssertTrue(isButton(confirmation.last!))
     // Actions use XCTest with VoiceOver disabled; this test verifies speech/navigation,
     // not VoiceOver gesture activation or the system document picker.
     try voiceOver.disable()
     app.buttons["mobile-file-convert"].tap()
     XCTAssertTrue(app.buttons["mobile-file-save"].waitForExistence(timeout: 60))
-    let ready = try readThrough("Delete local task", name: "mobile-ready-speech")
-    XCTAssertTrue(ready.contains { $0.localizedCaseInsensitiveContains("Ready to save") })
-    XCTAssertTrue(ready.contains { $0.localizedCaseInsensitiveContains("Save result") && $0.localizedCaseInsensitiveContains("button") })
-    XCTAssertTrue(ready.last!.localizedCaseInsensitiveContains("button"))
+    let ready = try readThrough(labels.delete, name: "mobile-ready-speech")
+    XCTAssertTrue(ready.contains { $0.localizedCaseInsensitiveContains(labels.ready) })
+    XCTAssertTrue(ready.contains { $0.localizedCaseInsensitiveContains(labels.save) && isButton($0) })
+    XCTAssertTrue(isButton(ready.last!))
   }
 
   func testClearSourceRequiresConfirmationAndKeepsCancelSafe() {
