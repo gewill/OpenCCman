@@ -87,3 +87,21 @@ python3 scripts/check-mobile-capacity-outputs.py \
 命令为 `benchmark-streaming-files.py --sizes-mib 1024 --corpora single multiline --samples 1`、`probe-streaming-force-kill.py`、`check-core.py`，都指定同一干净的锁定 wrapper checkout。精确来源哈希见 mac-regression-metadata.json 和强退报告；没有修改依赖缓存或正式应用。
 
 强退后的旧 staging 仍会残留，由测试探针核验身份后清理；不能声称生产自动恢复已实现。各探针并发执行，时间和内存仅作诊断，不是配对性能结论。上述是无沙盒服务层回归，不代替签名 Mac 系统文件访问，也不补齐 iOS 真机容量、内存或购买门槛。
+
+
+## 系统保存后的完整文件核验
+
+`verify-mobile-export.py` 只读取明确提供的导出文件，以 256 KiB 块计算完整长度与 SHA-256，对照 oracle 指定 fixture/mode 的唯一结果。不会自动连接设备或扫描用户文件，不读入全文；拒绝符号链接、非普通文件、读取过程中身份/长度/时间变化、错误 wrapper 和配置、重复参考。不覆盖已有报告。退出码 0=字节匹配、1=内容不符（保留失败报告）、2=输入/来源/读取错误。
+
+准备 context JSON：device_model、os、build、app_sha、wrapper_sha、provider、fixture、mode 均为非空字符串。其中 fixture 使用 manifest 的原始名字（例如 100MiB-unicode.txt），mode 使用 oracle 的模式键；导出文件可以由系统重命名。设备信息是操作者填写的来源，工具不会把它当作独立验证过的事实；应另附安装版本、签名、真实系统保存过程证据。不要填设备序列号、账户或文本内容。
+
+```sh
+python3 scripts/test-mobile-export-verifier.py
+python3 scripts/verify-mobile-export.py \
+  --export /absolute/exported-converted.txt \
+  --oracle docs/validation/issue-260-mobile-capacity/oracle.json \
+  --context /absolute/device-run-context.json \
+  --report /absolute/new-export-verification.json
+```
+
+2026-10-01：4 组 CLI 测试通过，覆盖多块 Unicode/NUL/CRLF 正常输出、截断、同长度篡改、错误 wrapper/options、重复参考、拒绝报告覆盖、符号链接及 FIFO。另以 100 MiB ASCII 固定语料对照真实 oracle 做工具自检，完整字节匹配（ASCII 在此配置下不改变）；见 export-verifier-selfcheck.json。这不是从设备导出的结果，也没有新增真机验收通过项。
