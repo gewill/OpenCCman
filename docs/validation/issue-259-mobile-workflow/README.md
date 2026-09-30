@@ -33,7 +33,7 @@
 
 ## 尚未完成
 
-- #259：iPad 系统导入/导出、多窗口任务占用与关闭接管；真实 App idleTimer 原值恢复、后台 lease 配对/过期；最大字号滚动操作、VoiceOver、窄窗口与布局切换时编辑器状态。
+- #259 当前余项：真实后台 lease 过期；其他任务状态的最大字号操作、VoiceOver、窄窗口与布局切换的完整编辑器阅读状态矩阵。iPad 系统导入/导出、任务占用、准备/转换/保存窗口关闭及 ready 接管、idle 原值 false/true 恢复已由下方后续证据补齐（均为 Simulator 范围）。
 - #260：签名 iPhone/iPad 100 MiB 全流程和峰值内存、低内存设备、真实 Files/iCloud/第三方提供方、低空间、锁屏文件保护、异常终止；通过后才评估打开生产开关。
 - #16：最低系统；#14/#71：真实 Pro 资格与购买。
 
@@ -86,3 +86,51 @@ iPad Pro M4 / iOS 18.6 Simulator / 834×1210pt / 繁中浅色：最大辅助字�
 准备阶段关闭另有 PR 附件证据；本项补齐实际转换中的窗口关闭。测试过程中一次检测脚本因大小写不匹配而错过状态，未执行销毁，未计通过。多窗口系统恢复也曾不带启动参数，已读取 NSProcessInfo arguments 确认；通过 UIKit 关闭专用 QA 场景后重新启动并核对参数，才进行本次测试。未修改生产逻辑或依赖。
 
 这里证明 Simulator 生命周期与清理，不证明真机内存/文件保护、原 idle=true 恢复、真实后台期限到期、VoiceOver 或完整编辑器阅读状态矩阵。生产开关仍关闭。
+
+## 原先已经禁止自动锁屏的恢复
+
+2026-10-01，iPad M4 / iOS 18.6 Simulator 专用 QA App，源码 `4b36d7a`。读到初始 idleTimerDisabled=false 后，通过 LLDB 在主线程仅设置 UIKit 该属性为 true，再由正常确认页开始 11 MiB 转换。实际资源追踪 before_begin / after_begin / after_end 中 idle 均为 true；覆盖与后台任务所有权 false → true → false，界面完成到 Ready to save。
+
+转换后的 UIKit 再读回 true，随后恢复测试前的 false 并再次读回 false。没有开关 VoiceOver，没有修改正式 App 偏好。精确事件见 idle-prior-true.json。本项证明原值 true 的成功恢复，加上此前原值 false 的成功与取消路径；不证明真机自动锁屏计时或真实后台 lease 到期。
+
+## VoiceOver 实际阅读顺序（英语）
+
+iPhone 18 Pro Simulator / iOS 27.0 (24A434)，402×874pt，默认字号、英语浅色；应用源码仍为 `4b36d7a`。新增 `testMobileFileVoiceOverConfirmationAndReady`，使用本机 SDK 的 `XCUIDevice.shared.voiceOverService` enable/currentSpeech/moveForward，读取真实 VoiceOver 输出而不是只检查 AX 树。
+
+第一次实际运行 1 项通过、0 失败、0 跳过，34.230 秒。确认页顺序包含标题、文件名、大小、配置、说明、Convert file Button、Cancel Button；待保存页包含 Done Button、Ready to save Heading、文件/配置、说明、Save result… Button、Delete local task Button。原始 utterance 见 voiceover-confirmation.txt、voiceover-ready.txt；summary 记录设备及测试结果。说明长文本返回片段，不能据此宣称整段已完整读完。
+
+测试开始记录原 VoiceOver 状态，defer 与 tearDown 恢复并断言一致。转换动作使用关闭 VoiceOver 后的 XCTest tap，因此不宣称验证 VoiceOver 手势激活；本次也未覆盖中文朗读、转换中的焦点变化、失败状态或系统选择器。
+
+重现：在专用 iOS 27 Simulator 安装 QA Bundle，生成 11 MiB TXT 到其 Documents；build-for-testing 现有 WhatsNewPresentationTests 工程，在生成的 xctestrun 的 WhatsNewPresentationTests.EnvironmentVariables 加入 OPENCCMAN_MOBILE_FIXTURE（精确容器路径），以 only-testing 运行此方法。缺少变量或系统低于 27 会跳过，跳过不能计为通过。复跑前仅清理本测试生成的待保存任务；不要清理用户数据或正式 App。测试用完整转换引擎，未注入 ready 状态。
+
+同条件补录复跑亦通过（voiceover-recorded-summary.json）；视频为无音频的实际焦点移动录屏，朗读内容来自 XCTest utterance 附件，不宣称录到声音。结束后 `defaults read com.apple.Accessibility VoiceOverTouchEnabled` 读回 0；没有留下开启的 VoiceOver。媒体和测试源码哈希见 voiceover-evidence.json。
+
+### 简体与繁体 VoiceOver 导航
+
+同一 iPhone 18 Pro / iOS 27.0 / 402×874pt / 默认字号浅色，测试新增 OPENCCMAN_MOBILE_LANGUAGE=en|zh-Hans|zh-Hant，使用实际本地化名称验证朗读与按钮角色。简体、繁体分别执行 1 项通过、0 失败、0 跳过；确认页依序读到转换/取消按钮，结果页读到完成标题、保存/删除按钮。每轮运行前后 VoiceOverTouchEnabled 均为 0，录像均正常结束。两轮分别保存原始 utterance、summary 与视频哈希，见 voiceover-localized-evidence.json 及 voiceover-zh-*.txt/JSON。没有更新应用源代码，也未以 AX 树代替 VoiceOver 输出。
+
+因此确认与 ready 两页的三语阅读导航已有运行证据（英语见前节）。转换中焦点变化、失败/系统选择器、VoiceOver 手势激活及真机仍待验收；不把这些范围一起标为通过。录像无音轨，语音内容引用 XCTest 的实际 utterance。
+
+## 非法 UTF-8 的失败页与重试
+
+同一 iPhone 18 Pro / iOS 27.0 Simulator、402×874pt、英语浅色默认字号。新增 `testMobileFileVoiceOverInvalidUTF8Recovery`，环境 OPENCCMAN_MOBILE_INVALID_FIXTURE 指向专用 QA 容器中 11 MiB ASCII + 末尾 0xFF 的自生成文件。实际转换产生 not valid UTF-8 错误，没有保存入口；VoiceOver 依次读到失败标题、编码错误、Retry recovery Button、Delete local task Button。关闭 VoiceOver 后用普通 XCTest tap 执行重试恢复，错误消失，Done 返回主页。
+
+实际运行 1 通过、0 失败、0 跳过，23.393 秒。输入 SHA 与生成规则一致，原文件保留；私有任务目录为空。结束后 VoiceOverTouchEnabled 读回 0。summary、原始语音与媒体/源码哈希见 voiceover-failure*.json/txt，录像无音轨。不是注入失败状态，不声称覆盖所有错误类型、VoiceOver 手势、中文失败页或真机文件保护。
+
+
+## 最大辅助字号：确认、结果与失败页面
+
+2026-10-01，应用源码 `4b36d7a`、测试源码 `df713be`，iPhone 18 Pro Simulator / iOS 27.0 (24A434)，402×874pt，英语浅色。使用 simctl 将 content_size 从 large 改为 accessibility-extra-extra-extra-large，分别运行确认/结果 VoiceOver 测试与实际非法 UTF-8 失败/恢复测试，两项均 1 通过、0 失败、0 跳过。
+
+实际焦点导航触发页面滚动，截图确认转换/取消、保存/删除、错误说明/恢复/删除均可到达；多行删除按钮自然增高。普通 XCTest 在关闭 VoiceOver 后点击转换与恢复，恢复后返回主页；失败测试日志也记录转换按钮滚动到可见范围后计算命中点。本次未实际点击保存或删除，不把可到达等同于其操作验收。原始语音、summary、媒体 SHA 见 maxfont-* 文件。语音长段落可能只返回片段；录像无音轨。
+
+每轮用 finally 恢复原字号，测试自身 defer/tearDown 恢复 VoiceOver；最终独立读回字号 large、VoiceOverTouchEnabled=0。本项不覆盖其他语言最大字号、真机、VoiceOver 手势激活或系统文件面板。本轮只补证据，没有修改应用代码；100 MiB 生产入口继续关闭。
+
+
+## 延迟后台到期回调的任务隔离
+
+修复源码 `14a29e9`。旧 expiration 回调进入 `Task { @MainActor }` 队列后，旧 worker 可能已结束并开始新任务；原实现执行 interrupt/end 时没有核对归属，可能取消新任务并结束其后台 lease。现在每次 begin 生成独立 UUID，回到主线程先核对 UUID，interrupt 返回后再次核对，end 使旧 UUID 失效。正常 UIKit 路径保持默认 Resources.live；注入资源只供确定性回归。
+
+新增测试重现“排队旧回调→end→新 begin→让出主线程”，验证新任务不被取消；当前回调仅中止一次、lease 只结束一次，idle 覆盖等 worker end 才恢复。重复 begin/end/expiration 同时覆盖。iOS 27 Simulator 日志显示三项测试均通过，但本次记录时 Xcode 仍在收集诊断，最终 xcresult 状态需另行读回，不把测试日志当完整进程已成功结束。
+
+负向对照仅在临时隔离 package 中去掉两处 UUID 检查，未修改生产工作区：testLifecycleAdapter 失败，xcresult 为 1 failed/0 passed，xctest 崩溃栈定位 checkDelayedExpiration 第 59 行“旧 lease 不得取消新任务”的 precondition。临时源码随后恢复。iOS Simulator arm64 与 macOS arm64/x86_64 完整 Debug 构建通过，工程语法检查通过。来源和日志哈希见 lease-expiration-evidence.json。该结果证明回调竞态修复，不证明系统真实后台时间耗尽、锁屏或物理设备资源验收。
