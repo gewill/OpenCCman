@@ -1,6 +1,6 @@
 # #260 移动端容量证据准备
 
-这不是验收通过报告。生产开关仍为 false，尚未取得签名真机矩阵的证据。当前只交付可复现输入集；不把 Mac、Simulator 或生成成功当作 iOS 100 MiB 容量承诺。
+这不是验收通过报告。生产开关仍为 false，尚未取得签名真机矩阵的证据。当前已交付输入集、独立整篇参考和 84 项移动服务输出比较；不把 Mac、Simulator 或生成成功当作 iOS 100 MiB 容量承诺。
 
 ## 固定输入
 
@@ -72,3 +72,18 @@ python3 scripts/check-mobile-capacity-outputs.py \
 探针初次运行曾因 `/tmp` 与 `/private/tmp` 的 URL 表示差异拒绝恢复结果；输出长度和哈希实际已一致。已改为比较任务 ID、文件名、字节数、选项、清理状态及磁盘 fingerprint（设备号/inode/大小/修改时间/普通文件属性），不要求 URL 字符串相同。没有修改服务代码或参考输出。另以错误预期哈希和错误长度运行真实已编译探针，两者都明确拒绝且不产生通过报告；配置缺项及 options raw 错误在构建前拒绝。
 
 2026-10-01：Mac 宿主真实 MobileLargeFileService 全套 **84/84 项通过**，每项输出与独立整篇参考的长度/SHA 完全相同，Ready 磁盘恢复字段/文件身份一致，删除后目录为空。聚合结果见 service-report.json。未测量 iOS footprint；也没有执行系统提供方保存、签名/购买或真机矩阵，不能据此启用生产入口。
+
+
+## 当前集成代码的 Mac 回归
+
+2026-10-01，候选 `893dd8d`，锁定 wrapper `564b094b2b69f2c1e907fa3d89fe6845469a4e4e`，Mac16,7 / Apple M4 Pro。审计发现移动端接入后 TextFileService 已改变，因此不直接把 #257 的旧记录当作本候选结果；使用当前实际源码重新运行以下检查：
+
+| 检查 | 实际结果 | 记录 |
+| --- | --- | --- |
+| 1 GiB 无换行与多行 | 各一新进程完整输出长度/哈希正确；附加取消保留旧目标、清理临时输出 | mac-1gib-single.json、mac-1gib-multiline.json |
+| 20 MiB 转换中、提交前 SIGKILL | 两边界源文件及旧目标不变；下一进程输出正确 | mac-force-kill.json |
+| 当前完整 core 回归 | 七配置、同文件别名、目标变化/提交竞态、I/O 失败、取消、Mac 协调器和移动作业等 PASS | mac-core-results.txt |
+
+命令为 `benchmark-streaming-files.py --sizes-mib 1024 --corpora single multiline --samples 1`、`probe-streaming-force-kill.py`、`check-core.py`，都指定同一干净的锁定 wrapper checkout。精确来源哈希见 mac-regression-metadata.json 和强退报告；没有修改依赖缓存或正式应用。
+
+强退后的旧 staging 仍会残留，由测试探针核验身份后清理；不能声称生产自动恢复已实现。各探针并发执行，时间和内存仅作诊断，不是配对性能结论。上述是无沙盒服务层回归，不代替签名 Mac 系统文件访问，也不补齐 iOS 真机容量、内存或购买门槛。
