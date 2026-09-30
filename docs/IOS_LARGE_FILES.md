@@ -152,3 +152,7 @@ flowchart TD
 - [临时文件representation生命周期](https://developer.apple.com/documentation/foundation/nsitemprovider/loadfilerepresentation%28fortypeidentifier%3Acompletionhandler%3A%29)
 - [Required Reason API类别及用途](https://developer.apple.com/documentation/bundleresources/app-privacy-configuration/nsprivacyaccessedapitypes/nsprivacyaccessedapitype)
 - [Jetsam事件及设备内存](https://developer.apple.com/documentation/xcode/identifying-high-memory-use-with-jetsam-event-reports)
+
+## #258 服务层落地记录
+
+文件快照、串行作业所有权、原子完成记录与恢复已集中到 `MobileLargeFileService`，避免多个组件分别清理同一作业。具体行为、精确源码测试和未完成的生命周期/设备验收见 [#258 记录](validation/issue-258-mobile-file-jobs/README.md)。#259 负责唯一 App 协调器与 UIKit 适配；服务存在不代表生产入口已开放。

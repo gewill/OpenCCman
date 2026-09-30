@@ -1,0 +1,52 @@
+{
+  "source_sha256": {
+    "OpenCCman/Services/ChineseConversionService.swift": "2f9b951421406dab71bee5e8da9125ba8cac154284e01138b8e062cd64083a0a",
+    "OpenCCman/Services/TextFileService.swift": "f1db99dd0df7584e224fb7837e4fe9771f90aa135af92c565b0e1903563d3f78",
+    "OpenCCman/Services/StreamingConversionPump.swift": "96cda8501965ae2dafae8f6a2c8100b700b0752dd0fc7ed23225458c2373ebee",
+    "OpenCCman/Services/FileConversionPolicy.swift": "75468b0edbdc1d62ee24ceac29b9fcf937ede75c09445d5cfaaede13f99db13b",
+    "OpenCCman/Services/MobileLargeFileService.swift": "e89c963423ed510857182eb099fd391e460fc96fb5122e82d69057767ac0cc28",
+    "Tests/Regression/MobileFileJobChecks.swift": "0ba1172b56266f9b90739347e2b4252a7dac4a51eb9174a01cc3e3ddd217e9e3",
+    "Tests/Regression/MobileFileJobProbe.swift": "9192213869e13df64c597b3657a9ec02113369c47decfcb56a41efb77fefe9d4",
+    "scripts/check-mobile-file-jobs.py": "2d0d6e2fdbd98b40a0ff4a0ae4d2d3cc53cebb5d5e34df7f98662366338f9647"
+  },
+  "wrapper_revision": "564b094b2b69f2c1e907fa3d89fe6845469a4e4e",
+  "kill_probes": [
+    {
+      "stage": "snapshotWrite",
+      "signal": "SIGKILL",
+      "fresh_process_recovery": "recover-empty",
+      "source_unchanged": true,
+      "owned_files_remaining": 0
+    },
+    {
+      "stage": "conversionWrite",
+      "signal": "SIGKILL",
+      "fresh_process_recovery": "recover-empty",
+      "source_unchanged": true,
+      "owned_files_remaining": 0
+    },
+    {
+      "stage": "outputSync",
+      "signal": "SIGKILL",
+      "fresh_process_recovery": "recover-empty",
+      "source_unchanged": true,
+      "owned_files_remaining": 0
+    },
+    {
+      "stage": "afterOutputRename",
+      "signal": "SIGKILL",
+      "fresh_process_recovery": "recover-empty",
+      "source_unchanged": true,
+      "owned_files_remaining": 0
+    },
+    {
+      "stage": "ready",
+      "signal": "SIGKILL",
+      "fresh_process_recovery": "recover-ready",
+      "source_unchanged": true,
+      "owned_files_remaining": 0
+    }
+  ],
+  "ios_destination": "platform=iOS Simulator,id=A7712904-6D78-4ECC-9B58-816C97135336",
+  "scope": "Service tests; no UIKit lifecycle, real provider, protected-device, Pro or device memory acceptance"
+}
