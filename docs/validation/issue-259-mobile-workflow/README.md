@@ -33,7 +33,7 @@
 
 ## 尚未完成
 
-- #259：iPad 系统导入/导出、多窗口任务占用与关闭接管；真实 App idleTimer 原值恢复、后台 lease 配对/过期；最大字号滚动操作、VoiceOver、窄窗口与布局切换时编辑器状态。
+- #259 当前余项：真实后台 lease 过期；其他任务状态的最大字号操作、VoiceOver、窄窗口与布局切换的完整编辑器阅读状态矩阵。iPad 系统导入/导出、任务占用、准备/转换/保存窗口关闭及 ready 接管、idle 原值 false/true 恢复已由下方后续证据补齐（均为 Simulator 范围）。
 - #260：签名 iPhone/iPad 100 MiB 全流程和峰值内存、低内存设备、真实 Files/iCloud/第三方提供方、低空间、锁屏文件保护、异常终止；通过后才评估打开生产开关。
 - #16：最低系统；#14/#71：真实 Pro 资格与购买。
 
@@ -86,3 +86,9 @@ iPad Pro M4 / iOS 18.6 Simulator / 834×1210pt / 繁中浅色：最大辅助字�
 准备阶段关闭另有 PR 附件证据；本项补齐实际转换中的窗口关闭。测试过程中一次检测脚本因大小写不匹配而错过状态，未执行销毁，未计通过。多窗口系统恢复也曾不带启动参数，已读取 NSProcessInfo arguments 确认；通过 UIKit 关闭专用 QA 场景后重新启动并核对参数，才进行本次测试。未修改生产逻辑或依赖。
 
 这里证明 Simulator 生命周期与清理，不证明真机内存/文件保护、原 idle=true 恢复、真实后台期限到期、VoiceOver 或完整编辑器阅读状态矩阵。生产开关仍关闭。
+
+## 原先已经禁止自动锁屏的恢复
+
+2026-10-01，iPad M4 / iOS 18.6 Simulator 专用 QA App，源码 `4b36d7a`。读到初始 idleTimerDisabled=false 后，通过 LLDB 在主线程仅设置 UIKit 该属性为 true，再由正常确认页开始 11 MiB 转换。实际资源追踪 before_begin / after_begin / after_end 中 idle 均为 true；覆盖与后台任务所有权 false → true → false，界面完成到 Ready to save。
+
+转换后的 UIKit 再读回 true，随后恢复测试前的 false 并再次读回 false。没有开关 VoiceOver，没有修改正式 App 偏好。精确事件见 idle-prior-true.json。本项证明原值 true 的成功恢复，加上此前原值 false 的成功与取消路径；不证明真机自动锁屏计时或真实后台 lease 到期。
