@@ -81,6 +81,8 @@ final class MobileLargeFileService: @unchecked Sendable {
   }
 
   func convert(source: URL, options: ChineseConverter.Options,
+               expectedSource: TextFileFingerprint? = nil,
+               snapshotReady: @escaping @Sendable () throws -> Void = {},
                progress: @escaping @Sendable (UInt64, UInt64) -> Void = { _, _ in }) async throws -> Ready {
     let rawOptions = options.rawValue
     return try await perform { cancellation in
@@ -88,7 +90,7 @@ final class MobileLargeFileService: @unchecked Sendable {
       if !self.recovered { try self.recoverOnWorker() }
       guard self.ready == nil else { throw JobError.pendingResult }
       return try self.convertOnWorker(source: source, options: .init(rawValue: rawOptions),
-                                      cancellation: cancellation, progress: progress)
+                                      cancellation: cancellation, expectedSource: expectedSource, snapshotReady: snapshotReady, progress: progress)
     }
   }
 
@@ -133,13 +135,16 @@ final class MobileLargeFileService: @unchecked Sendable {
 
   private func convertOnWorker(source: URL, options: ChineseConverter.Options,
                                cancellation: StreamingConversionCancellation,
+                               expectedSource: TextFileFingerprint?,
+                               snapshotReady: @Sendable () throws -> Void,
                                progress: @Sendable (UInt64, UInt64) -> Void) throws -> Ready {
     let id = UUID()
     let job = directory(id)
     try makeDirectory(job)
     do {
       let snapshot = job.appendingPathComponent("input.txt")
-      let inputBytes = try snapshotSource(source, to: snapshot, cancellation: cancellation)
+      let inputBytes = try snapshotSource(source, to: snapshot, expectedSource: expectedSource, cancellation: cancellation)
+      try snapshotReady()
       try check(cancellation)
       let partial = job.appendingPathComponent("output.partial")
       let input = try openFile(snapshot, writing: false)
@@ -199,7 +204,7 @@ final class MobileLargeFileService: @unchecked Sendable {
   }
 
   private func snapshotSource(_ source: URL, to destination: URL,
-                              cancellation: StreamingConversionCancellation) throws -> UInt64 {
+                              expectedSource: TextFileFingerprint?, cancellation: StreamingConversionCancellation) throws -> UInt64 {
     guard source.isFileURL, source.pathExtension.lowercased() == "txt" else {
       throw TextFileService.FileError.unsupportedFile
     }
@@ -216,6 +221,7 @@ final class MobileLargeFileService: @unchecked Sendable {
         let input = try openFile(url, writing: false)
         defer { try? input.close() }
         let before = try TextFileFingerprint.read(descriptor: input.fileDescriptor)
+        if let expectedSource, before != expectedSource { throw TextFileService.FileError.sourceChanged }
         guard before.isRegular else { throw TextFileService.FileError.unsupportedFile }
         guard before.size <= FileConversionPolicy.mobileMaximumBytes else { throw JobError.inputTooLarge }
         try requireSpace(4 * before.size + 64 * 1024 * 1024)

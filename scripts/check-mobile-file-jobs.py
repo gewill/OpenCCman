@@ -15,9 +15,12 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [f"OpenCCman/Services/{name}.swift" for name in (
     "ChineseConversionService", "TextFileService", "StreamingConversionPump",
-    "FileConversionPolicy", "MobileLargeFileService")]
+    "FileConversionPolicy", "MobileLargeFileService", "MobileLargeFileCoordinator", "MobileFileLifecycle")]
+SOURCES.append("OpenCCman/Model/ConversionConfiguration.swift")
 CHECK = "Tests/Regression/MobileFileJobChecks.swift"
 PROBE = "Tests/Regression/MobileFileJobProbe.swift"
+COORDINATOR_CHECK = "Tests/Regression/MobileCoordinatorChecks.swift"
+LIFECYCLE_CHECK = "Tests/Regression/MobileLifecycleChecks.swift"
 
 
 def run(command, cwd, log):
@@ -51,10 +54,16 @@ def main():
     for name in SOURCES:
         shutil.copy2(ROOT / name, sources / Path(name).name)
     (tests / Path(CHECK).name).write_text("@testable import FileJobs\n" + (ROOT / CHECK).read_text())
+    (tests / Path(COORDINATOR_CHECK).name).write_text("@testable import FileJobs\n" + (ROOT / COORDINATOR_CHECK).read_text())
+    (tests / Path(LIFECYCLE_CHECK).name).write_text("@testable import FileJobs\n" + (ROOT / LIFECYCLE_CHECK).read_text())
     (tests / "FileJobsTests.swift").write_text('''import XCTest
 @testable import FileJobs
 final class FileJobsTests: XCTestCase {
   func testJobs() async throws { try await checkMobileFileJobs() }
+  func testCoordinator() async throws { try await checkMobileCoordinator() }
+  #if os(iOS)
+  func testLifecycleAdapter() async throws { try await checkMobileLifecycle() }
+  #endif
 }
 ''')
     (probe / "Main.swift").write_text("@testable import FileJobs\n" + (ROOT / PROBE).read_text())
@@ -95,12 +104,12 @@ let package = Package(name: "FileJobs", platforms: [.macOS(.v12), .iOS(.v15)],
                                            str(output / "FileJobs.xcresult")], text=True)
         (output / "ios-summary.json").write_text(summary)
         result = json.loads(summary)
-        if result.get("passedTests") != 1 or result.get("failedTests"):
-            raise RuntimeError("Expected one passing job regression suite")
+        if result.get("passedTests") != 3 or result.get("failedTests"):
+            raise RuntimeError("Expected three passing job regression suites")
     if lock.read_bytes() != lock_bytes:
         raise RuntimeError("Application dependencies changed")
     report = {"source_sha256": {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
-                                 for name in SOURCES + [CHECK, PROBE, "scripts/check-mobile-file-jobs.py"]},
+                                 for name in SOURCES + [CHECK, COORDINATOR_CHECK, LIFECYCLE_CHECK, PROBE, "scripts/check-mobile-file-jobs.py"]},
               "wrapper_revision": revision, "kill_probes": rows, "ios_destination": args.destination,
               "scope": "Service tests; no UIKit lifecycle, real provider, protected-device, Pro or device memory acceptance"}
     (output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
