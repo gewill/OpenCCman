@@ -59,6 +59,10 @@ PR 与合并后真实 GitHub Actions 运行结果是线上验收依据。纯迁�
 
 历史验收报告继续保留当时的 `build` 分支事实；新的操作按本指南执行。
 
+## 移动大文件证据工具回归（#260 候选）
+
+本候选在 App Regression 中增加 `test-mobile-capacity-fixtures.py` 与 `test-mobile-export-verifier.py`，检查有界语料生成、UTF-8 边界、导出全文哈希、截断/篡改、错误参考、拒绝覆盖和非普通文件。合并后才作为默认分支工作流能力；这些小样本工具测试不会生成整套 680 MiB 语料，不安装或操作真机，不代表 100 MiB 容量、内存或系统提供方验收。独立整篇 oracle 及完整容量矩阵继续按 #260 手动验证。
+
 ## 控件尺寸回归
 
 `check-control-sizing.sh` 在临时目录按 `Package.resolved` 的精确 SHA 读取 Neumorphic，编译原生 SwiftUI/AppKit 测量程序。覆盖上游 28/30→44 复现、应用 Mac 28/32pt 完整外框、Segment 底座、开关及多行增长；不改依赖缓存。iOS 点击和布局证据见 [三端验收记录](validation/control-sizing/README.md)，此原生 Mac 检查不能代替触屏或 VoiceOver 验收。
