@@ -13,6 +13,14 @@ final class MobileFileLifecycle {
   private var previousIdleDisabled: Bool?
   private var observers: [NSObjectProtocol] = []
 
+  #if DEBUG
+  var qaResourceState: [String: Bool] {
+    ["idle_disabled": UIApplication.shared.isIdleTimerDisabled,
+     "owns_idle_override": previousIdleDisabled != nil,
+     "owns_background_task": backgroundTask != .invalid]
+  }
+  #endif
+
   init(protection: LargeFileProtectionGate,
        interrupt: @escaping @MainActor () -> Void,
        protectedDataReturned: @escaping @MainActor () -> Void) {

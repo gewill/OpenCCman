@@ -46,8 +46,23 @@ final class MobileFileRuntime {
         }
       }
     }, isQualified: { [weak self] in self?.isQualified ?? false },
-       beginWork: { [weak self] in self?.lifecycle.begin() },
-       endWork: { [weak self] in self?.lifecycle.end() })
+       beginWork: { [weak self] in
+         guard let self else { return }
+         #if DEBUG
+         self.recordResourcesForQA("before_begin")
+         #endif
+         self.lifecycle.begin()
+         #if DEBUG
+         self.recordResourcesForQA("after_begin")
+         #endif
+       },
+       endWork: { [weak self] in
+         guard let self else { return }
+         self.lifecycle.end()
+         #if DEBUG
+         self.recordResourcesForQA("after_end")
+         #endif
+       })
   }
 
   func activate() {
@@ -70,6 +85,21 @@ final class MobileFileRuntime {
   func register(scene: UIWindowScene, owner: UUID) { sceneOwners[scene.session.persistentIdentifier] = owner }
 
   #if DEBUG
+  private var qaResourceEvents: [[String: Any]] = []
+  private let qaTraceQueue = DispatchQueue(label: "OpenCCman.mobile-resource-qa")
+
+  /// Explicit opt-in on the isolated QA app only. No filenames or text are
+  /// recorded. Serial writes preserve the order of actual UIKit operations.
+  private func recordResourcesForQA(_ event: String) {
+    guard Self.isQABundle, ProcessInfo.processInfo.arguments.contains("-qa-mobile-file-resource-trace") else { return }
+    qaResourceEvents.append(["event": event, "resources": lifecycle.qaResourceState,
+                             "app_active": UIApplication.shared.applicationState == .active])
+    if qaResourceEvents.count > 96 { qaResourceEvents.removeFirst(qaResourceEvents.count - 96) }
+    guard let data = try? JSONSerialization.data(withJSONObject: qaResourceEvents, options: [.prettyPrinted, .sortedKeys]) else { return }
+    let url = FileManager.default.temporaryDirectory.appendingPathComponent("mobile-file-resources-qa.json")
+    qaTraceQueue.async { try? data.write(to: url, options: .atomic) }
+  }
+
   func importQAFileIfRequested(into model: HomeViewModel) {
     guard Self.isEnabled, Self.isQABundle, !didImportQA else { return }
     let args = ProcessInfo.processInfo.arguments
