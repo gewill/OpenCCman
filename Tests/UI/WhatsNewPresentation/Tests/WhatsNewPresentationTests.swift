@@ -50,6 +50,53 @@ final class WhatsNewPresentationTests: XCTestCase {
     XCTAssertFalse(done.waitForExistence(timeout: 2), "Cards must not reopen after dismissal")
   }
 
+  func testMobileFileVoiceOverConfirmationAndReady() throws {
+    guard #available(iOS 27.0, *) else { throw XCTSkip("VoiceOver driver requires iOS 27") }
+    guard let fixture = ProcessInfo.processInfo.environment["OPENCCMAN_MOBILE_FIXTURE"] else {
+      throw XCTSkip("Requires a generated TXT in the isolated QA app container")
+    }
+    let app = XCUIApplication(bundleIdentifier: appID)
+    app.launchArguments = ["-AppleLanguages", "(en)", "-qa-mark-whats-new-read-at-launch",
+      "-qa-suppress-review", "-qa-enable-mobile-large-files", "-qa-mobile-file-pro",
+      "-qa-import-mobile-file", fixture]
+    app.launch()
+    defer { app.terminate() }
+    XCTAssertTrue(app.buttons["mobile-file-convert"].waitForExistence(timeout: 20))
+    let voiceOver = XCUIDevice.shared.voiceOverService
+    initialVoiceOverEnabled = voiceOver.isEnabled
+    defer {
+      if let initialVoiceOverEnabled, voiceOver.isEnabled != initialVoiceOverEnabled {
+        if initialVoiceOverEnabled { try? voiceOver.enable() } else { try? voiceOver.disable() }
+      }
+    }
+    func readThrough(_ last: String, name: String) throws -> [String] {
+      if !voiceOver.isEnabled { try voiceOver.enable() }
+      var speech = [try voiceOver.currentSpeech().utterance]
+      for _ in 0..<32 where !speech.last!.localizedCaseInsensitiveContains(last) {
+        speech.append(try voiceOver.moveForward().utterance)
+      }
+      let attachment = XCTAttachment(string: speech.joined(separator: "\n"))
+      attachment.name = name
+      attachment.lifetime = .keepAlways
+      add(attachment)
+      XCTAssertTrue(speech.last!.localizedCaseInsensitiveContains(last), "Unreachable: \(speech)")
+      capture(app, name: name + "-focus")
+      return speech
+    }
+    let confirmation = try readThrough("Cancel", name: "mobile-confirmation-speech")
+    XCTAssertTrue(confirmation.contains { $0.localizedCaseInsensitiveContains("Convert file") && $0.localizedCaseInsensitiveContains("button") })
+    XCTAssertTrue(confirmation.last!.localizedCaseInsensitiveContains("button"))
+    // Actions use XCTest with VoiceOver disabled; this test verifies speech/navigation,
+    // not VoiceOver gesture activation or the system document picker.
+    try voiceOver.disable()
+    app.buttons["mobile-file-convert"].tap()
+    XCTAssertTrue(app.buttons["mobile-file-save"].waitForExistence(timeout: 60))
+    let ready = try readThrough("Delete local task", name: "mobile-ready-speech")
+    XCTAssertTrue(ready.contains { $0.localizedCaseInsensitiveContains("Ready to save") })
+    XCTAssertTrue(ready.contains { $0.localizedCaseInsensitiveContains("Save result") && $0.localizedCaseInsensitiveContains("button") })
+    XCTAssertTrue(ready.last!.localizedCaseInsensitiveContains("button"))
+  }
+
   func testClearSourceRequiresConfirmationAndKeepsCancelSafe() {
     let app = launch("-qa-suppress-review")
     defer { app.terminate() }

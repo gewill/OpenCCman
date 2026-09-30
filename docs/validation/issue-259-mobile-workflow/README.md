@@ -92,3 +92,15 @@ iPad Pro M4 / iOS 18.6 Simulator / 834×1210pt / 繁中浅色：最大辅助字�
 2026-10-01，iPad M4 / iOS 18.6 Simulator 专用 QA App，源码 `4b36d7a`。读到初始 idleTimerDisabled=false 后，通过 LLDB 在主线程仅设置 UIKit 该属性为 true，再由正常确认页开始 11 MiB 转换。实际资源追踪 before_begin / after_begin / after_end 中 idle 均为 true；覆盖与后台任务所有权 false → true → false，界面完成到 Ready to save。
 
 转换后的 UIKit 再读回 true，随后恢复测试前的 false 并再次读回 false。没有开关 VoiceOver，没有修改正式 App 偏好。精确事件见 idle-prior-true.json。本项证明原值 true 的成功恢复，加上此前原值 false 的成功与取消路径；不证明真机自动锁屏计时或真实后台 lease 到期。
+
+## VoiceOver 实际阅读顺序（英语）
+
+iPhone 18 Pro Simulator / iOS 27.0 (24A434)，402×874pt，默认字号、英语浅色；应用源码仍为 `4b36d7a`。新增 `testMobileFileVoiceOverConfirmationAndReady`，使用本机 SDK 的 `XCUIDevice.shared.voiceOverService` enable/currentSpeech/moveForward，读取真实 VoiceOver 输出而不是只检查 AX 树。
+
+第一次实际运行 1 项通过、0 失败、0 跳过，34.230 秒。确认页顺序包含标题、文件名、大小、配置、说明、Convert file Button、Cancel Button；待保存页包含 Done Button、Ready to save Heading、文件/配置、说明、Save result… Button、Delete local task Button。原始 utterance 见 voiceover-confirmation.txt、voiceover-ready.txt；summary 记录设备及测试结果。说明长文本返回片段，不能据此宣称整段已完整读完。
+
+测试开始记录原 VoiceOver 状态，defer 与 tearDown 恢复并断言一致。转换动作使用关闭 VoiceOver 后的 XCTest tap，因此不宣称验证 VoiceOver 手势激活；本次也未覆盖中文朗读、转换中的焦点变化、失败状态或系统选择器。
+
+重现：在专用 iOS 27 Simulator 安装 QA Bundle，生成 11 MiB TXT 到其 Documents；build-for-testing 现有 WhatsNewPresentationTests 工程，在生成的 xctestrun 的 WhatsNewPresentationTests.EnvironmentVariables 加入 OPENCCMAN_MOBILE_FIXTURE（精确容器路径），以 only-testing 运行此方法。缺少变量或系统低于 27 会跳过，跳过不能计为通过。复跑前仅清理本测试生成的待保存任务；不要清理用户数据或正式 App。测试用完整转换引擎，未注入 ready 状态。
+
+同条件补录复跑亦通过（voiceover-recorded-summary.json）；视频为无音频的实际焦点移动录屏，朗读内容来自 XCTest utterance 附件，不宣称录到声音。结束后 `defaults read com.apple.Accessibility VoiceOverTouchEnabled` 读回 0；没有留下开启的 VoiceOver。媒体和测试源码哈希见 voiceover-evidence.json。
