@@ -1,0 +1,31 @@
+{
+  "protocol": 2,
+  "app_sha": "893dd8d1d3f228033847fc025d9a7b7a7c94688f",
+  "wrapper_sha": "564b094b2b69f2c1e907fa3d89fe6845469a4e4e",
+  "source_sha256": {
+    "OpenCCman/Services/ChineseConversionService.swift": "2f9b951421406dab71bee5e8da9125ba8cac154284e01138b8e062cd64083a0a",
+    "OpenCCman/Services/TextFileService.swift": "55cee4635927e8ca38256a1bd88ac66aa406897a4c86f73beccad59423c68688",
+    "OpenCCman/Services/StreamingTextFileService.swift": "5db8e167b9511d082f5674bc0b2de02a14c6a6bafdde00c2d313546566922493",
+    "OpenCCman/Services/StreamingConversionPump.swift": "96cda8501965ae2dafae8f6a2c8100b700b0752dd0fc7ed23225458c2373ebee",
+    "OpenCCman/Services/FileConversionPolicy.swift": "75468b0edbdc1d62ee24ceac29b9fcf937ede75c09445d5cfaaede13f99db13b",
+    "Tests/Benchmarks/StreamingFileBenchmark.swift": "277c2a45195890e2c12f694f1ebbe4bb034bd155a640c729cd3d5a94af169b1c"
+  },
+  "opencc_sha": "025f371dc76b598d77384fbdab90c937471844d8",
+  "started_at": "2026-09-30T18:09:52.960094+00:00",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "samples": 1,
+  "sizes_mib": [
+    1024
+  ],
+  "corpora": [
+    "single",
+    "multiline"
+  ],
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "app_worktree_status": "",
+  "wrapper_worktree_status": "",
+  "binary_sha256": "c05692fb055e09e9cedc1af3a400f5d59aa92885f414c09a2c2918c8e69ce6b8",
+  "completed_at": "2026-09-30T18:10:26.423082+00:00",
+  "scope": "Mac unsandboxed service regression. One sample per corpus; concurrent regression processes. Not iOS memory or app performance acceptance.",
+  "core_log_sha256": "5f8e0462987b8e0567902fe7d67dc8f0921dcde4e0f2da4a384eb36f3ecfad1d"
+}
