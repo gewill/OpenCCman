@@ -136,3 +136,10 @@ iPhone 18 Pro Simulator / iOS 27.0 (24A434)，402×874pt，默认字号、英语
 负向对照仅在临时隔离 package 中去掉两处 UUID 检查，未修改生产工作区：testLifecycleAdapter 失败，xcresult 为 1 failed/0 passed，xctest 崩溃栈定位 checkDelayedExpiration 第 59 行“旧 lease 不得取消新任务”的 precondition。临时源码随后恢复。iOS Simulator arm64 与 macOS arm64/x86_64 完整 Debug 构建通过，工程语法检查通过。来源和日志哈希见 lease-expiration-evidence.json。该结果证明回调竞态修复，不证明系统真实后台时间耗尽、锁屏或物理设备资源验收。
 
 最终读回：原始进程正常退出 0，未重跑；`FileJobs.xcresult` 为 Passed，3 passed / 0 failed / 0 skipped，见 lease-expiration-summary.json。上一段记录的诊断收集等待已结束，资源回调注入测试通过；真实系统到期门槛保持未完成。
+
+
+## VoiceOver 坐标双击自动化尝试（未通过）
+
+应用源码 `14a29e9`，iPhone 18 Pro / iOS 27.0 Simulator，英语、默认字号、402×874pt。在实际 VoiceOver currentSpeech/moveForward 到 `Cancel Button` 后，保持 VoiceOver 开启，使用 XCTest coordinate.doubleTap 在页面另一位置尝试激活当前焦点。VoiceOver 仍开启，但取消按钮没有消失；最终 0 passed / 1 failed / 0 skipped，失败点是页面关闭等待超时。测试前后 VoiceOverTouchEnabled=0，已恢复。
+
+这不能确定是应用控件问题还是 XCTest 合成事件未经过 VoiceOver 手势识别，不能据此通过验收或直接判定应用缺陷。已保存精确诊断方法（voiceover-doubletap-probe.swift.txt）、朗读和 summary；不将这个尚未建立有效性的手势驱动加入正常回归套件。下一步需先在系统标准按钮上校准事件投递，或以真实 Device Hub/触屏验证焦点激活，再回到应用；此前普通点击和 VoiceOver 导航通过范围不扩大。没有为了让测试通过而关闭 VoiceOver、改成语义直接激活，或修改应用按钮。
