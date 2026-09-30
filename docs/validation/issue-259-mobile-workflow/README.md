@@ -78,3 +78,11 @@ iPad Pro M4 / iOS 18.6 Simulator / 834×1210pt / 繁中浅色：最大辅助字�
 在 `4b36d7a` 的同一 QA App 中补齐：左窗口打开系统保存面板后，通过 UIKit 销毁其 scene；右窗口接管保留任务，再次打开系统保存面板，保存到“我的 iPad”并选择“保留两者”。新文件 `地区用词测试-converted 2.txt` 为 11,534,336 字节，SHA-256 `bb91fb919f2671d9538af2e97e016b435746eff3ea385169db5d63bcc4947c67`，与独立整篇参考一致；保存后私有任务目录为空。
 
 因此上一节中“保存面板打开时关闭、接管后实际保存”两项已补齐实际模拟器证据。并未人工注入迟到回调，此项由此前协调器测试覆盖；转换中关闭、物理设备、VoiceOver 等尚未完成。录像包含系统保存面板、场景关闭、另一窗口接管与重新保存，见同一 JSON 媒体哈希。
+
+## 转换阶段关闭所属窗口
+
+源码 `4b36d7a`，iPad M4 / iOS 18.6 Simulator，英语浅色默认字号，834×1210pt。自生成 100 MiB 输入进入实际 `Converting File / 5%`，通过 UIKit 销毁所属 scene，另一窗口保持前台。worker 结束后私有任务目录为空；before_begin → after_begin → after_end 读回 idle=false → true → false，后台任务/idle 覆盖所有权最终均 false，App 始终 active。源码未修改，QA 参数只用于入口与资格。录像、截图哈希和资源读回见 converting-owner-close.json。
+
+准备阶段关闭另有 PR 附件证据；本项补齐实际转换中的窗口关闭。测试过程中一次检测脚本因大小写不匹配而错过状态，未执行销毁，未计通过。多窗口系统恢复也曾不带启动参数，已读取 NSProcessInfo arguments 确认；通过 UIKit 关闭专用 QA 场景后重新启动并核对参数，才进行本次测试。未修改生产逻辑或依赖。
+
+这里证明 Simulator 生命周期与清理，不证明真机内存/文件保护、原 idle=true 恢复、真实后台期限到期、VoiceOver 或完整编辑器阅读状态矩阵。生产开关仍关闭。
