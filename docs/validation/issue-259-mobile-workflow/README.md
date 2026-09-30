@@ -134,3 +134,5 @@ iPhone 18 Pro Simulator / iOS 27.0 (24A434)，402×874pt，默认字号、英语
 新增测试重现“排队旧回调→end→新 begin→让出主线程”，验证新任务不被取消；当前回调仅中止一次、lease 只结束一次，idle 覆盖等 worker end 才恢复。重复 begin/end/expiration 同时覆盖。iOS 27 Simulator 日志显示三项测试均通过，但本次记录时 Xcode 仍在收集诊断，最终 xcresult 状态需另行读回，不把测试日志当完整进程已成功结束。
 
 负向对照仅在临时隔离 package 中去掉两处 UUID 检查，未修改生产工作区：testLifecycleAdapter 失败，xcresult 为 1 failed/0 passed，xctest 崩溃栈定位 checkDelayedExpiration 第 59 行“旧 lease 不得取消新任务”的 precondition。临时源码随后恢复。iOS Simulator arm64 与 macOS arm64/x86_64 完整 Debug 构建通过，工程语法检查通过。来源和日志哈希见 lease-expiration-evidence.json。该结果证明回调竞态修复，不证明系统真实后台时间耗尽、锁屏或物理设备资源验收。
+
+最终读回：原始进程正常退出 0，未重跑；`FileJobs.xcresult` 为 Passed，3 passed / 0 failed / 0 skipped，见 lease-expiration-summary.json。上一段记录的诊断收集等待已结束，资源回调注入测试通过；真实系统到期门槛保持未完成。

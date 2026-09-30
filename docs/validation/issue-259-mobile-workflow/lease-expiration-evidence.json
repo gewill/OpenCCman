@@ -15,12 +15,18 @@
       "log_sha256": "efed1fe892c80ade943c8be4fe4acd222acf7f770ee79bcb30b107ee5df98690"
     }
   },
-  "positive_test_log": "Three iOS tests passed; xcodebuild still collecting simctl diagnostics at record time. Final xcresult not yet available.",
+  "positive_test_log": "Final xcodebuild TEST SUCCEEDED and driver exit 0 after diagnostic collection completed.",
   "negative_control": {
     "exit": 65,
     "failed_tests": 1,
     "passed_tests": 0,
     "crash": "precondition failure in checkDelayedExpiration, line 59 of isolated copied test: old callback interrupted new job",
     "production_source_restored": true
+  },
+  "positive_result": {
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "summary_sha256": "a736a7439b96578ec04c8f05053deb499e9b3b9e0131b056cfabc3b1175603b7"
   }
 }
