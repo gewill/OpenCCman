@@ -28,7 +28,7 @@ private final class FileProgressThrottle: @unchecked Sendable {
 @MainActor
 final class MacLargeFileCoordinator: ObservableObject {
   static let shared = MacLargeFileCoordinator()
-  static let maximumBytes: UInt64 = 1024 * 1024 * 1024
+  static let maximumBytes = FileConversionPolicy.macMaximumBytes
   // The 2.1 candidate exposes the validated direct-to-file workflow to Pro.
   nonisolated static let productionEnabled = true
   nonisolated static var isEnabled: Bool {

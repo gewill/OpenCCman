@@ -1,0 +1,13 @@
+Test Case '-[StreamingCoreTests.StreamingCoreTests test100MiBAgainstWholeFileOracle]' started.
+PASS: 100 MiB shared pump, options=2, output=104857597, full SHA256 matched Mac whole-text oracle
+PASS: 100 MiB shared pump, options=1, output=104857597, full SHA256 matched Mac whole-text oracle
+PASS: 100 MiB shared pump, options=33, output=104857597, full SHA256 matched Mac whole-text oracle
+PASS: 100 MiB shared pump, options=65, output=104857597, full SHA256 matched Mac whole-text oracle
+PASS: 100 MiB shared pump, options=1057, output=112230397, full SHA256 matched Mac whole-text oracle
+PASS: 100 MiB shared pump, options=1025, output=112230397, full SHA256 matched Mac whole-text oracle
+PASS: 100 MiB shared pump, options=1089, output=112230397, full SHA256 matched Mac whole-text oracle
+Test Case '-[StreamingCoreTests.StreamingCoreTests test100MiBAgainstWholeFileOracle]' passed (7.602 seconds).
+Test Case '-[StreamingCoreTests.StreamingCoreTests testCrossPlatformSemanticsAndFailures]' started.
+PASS: shared stream pump; seven configurations, split BOM/UTF-8/phrases, IDS/NUL/Unicode, output expansion, byte counts, faults, cancellation and caller-owned handles
+Test Case '-[StreamingCoreTests.StreamingCoreTests testCrossPlatformSemanticsAndFailures]' passed (0.054 seconds).
+** TEST SUCCEEDED **

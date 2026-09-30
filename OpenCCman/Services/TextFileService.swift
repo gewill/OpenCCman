@@ -138,7 +138,7 @@ struct TextFileFingerprint: Equatable, Sendable {
 }
 
 enum TextFileService {
-  static let maximumBytes = 10 * 1024 * 1024
+  static let maximumBytes = FileConversionPolicy.editorMaximumBytes
   private static let queue = DispatchQueue(label: "OpenCCman.text-file", qos: .userInitiated)
 
   struct ImportedText: Sendable {
