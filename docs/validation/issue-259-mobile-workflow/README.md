@@ -125,3 +125,12 @@ iPhone 18 Pro Simulator / iOS 27.0 (24A434)，402×874pt，默认字号、英语
 实际焦点导航触发页面滚动，截图确认转换/取消、保存/删除、错误说明/恢复/删除均可到达；多行删除按钮自然增高。普通 XCTest 在关闭 VoiceOver 后点击转换与恢复，恢复后返回主页；失败测试日志也记录转换按钮滚动到可见范围后计算命中点。本次未实际点击保存或删除，不把可到达等同于其操作验收。原始语音、summary、媒体 SHA 见 maxfont-* 文件。语音长段落可能只返回片段；录像无音轨。
 
 每轮用 finally 恢复原字号，测试自身 defer/tearDown 恢复 VoiceOver；最终独立读回字号 large、VoiceOverTouchEnabled=0。本项不覆盖其他语言最大字号、真机、VoiceOver 手势激活或系统文件面板。本轮只补证据，没有修改应用代码；100 MiB 生产入口继续关闭。
+
+
+## 延迟后台到期回调的任务隔离
+
+修复源码 `14a29e9`。旧 expiration 回调进入 `Task { @MainActor }` 队列后，旧 worker 可能已结束并开始新任务；原实现执行 interrupt/end 时没有核对归属，可能取消新任务并结束其后台 lease。现在每次 begin 生成独立 UUID，回到主线程先核对 UUID，interrupt 返回后再次核对，end 使旧 UUID 失效。正常 UIKit 路径保持默认 Resources.live；注入资源只供确定性回归。
+
+新增测试重现“排队旧回调→end→新 begin→让出主线程”，验证新任务不被取消；当前回调仅中止一次、lease 只结束一次，idle 覆盖等 worker end 才恢复。重复 begin/end/expiration 同时覆盖。iOS 27 Simulator 日志显示三项测试均通过，但本次记录时 Xcode 仍在收集诊断，最终 xcresult 状态需另行读回，不把测试日志当完整进程已成功结束。
+
+负向对照仅在临时隔离 package 中去掉两处 UUID 检查，未修改生产工作区：testLifecycleAdapter 失败，xcresult 为 1 failed/0 passed，xctest 崩溃栈定位 checkDelayedExpiration 第 59 行“旧 lease 不得取消新任务”的 precondition。临时源码随后恢复。iOS Simulator arm64 与 macOS arm64/x86_64 完整 Debug 构建通过，工程语法检查通过。来源和日志哈希见 lease-expiration-evidence.json。该结果证明回调竞态修复，不证明系统真实后台时间耗尽、锁屏或物理设备资源验收。
