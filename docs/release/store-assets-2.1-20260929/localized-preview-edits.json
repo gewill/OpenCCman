@@ -1,0 +1,137 @@
+{
+  "captureDate": "2026-09-30",
+  "appearance": "light",
+  "windowPoints": [
+    1024,
+    768
+  ],
+  "note": "Real localized QA app recordings. Cuts remove launch/automation waiting; no playback acceleration or fabricated UI. Mac settings-to-workspace is a cut between two sessions of the same locale and fixture.",
+  "outputs": [
+    {
+      "output": "marketing/preview/en-US/01-convert-and-clear.mp4",
+      "size": [
+        886,
+        1920
+      ],
+      "segments": [
+        {
+          "input": "raw/preview/en-US/01-convert-and-clear-recording.mp4",
+          "start": 9.5,
+          "duration": 22.1
+        }
+      ]
+    },
+    {
+      "output": "marketing/preview/en-US/02-ipad-workspace.mp4",
+      "size": [
+        1200,
+        1600
+      ],
+      "segments": [
+        {
+          "input": "raw/preview/en-US/02-ipad-workspace-recording.mp4",
+          "start": 9.6,
+          "duration": 25.0
+        }
+      ]
+    },
+    {
+      "output": "marketing/preview/en-US/03-mac-workspace.mp4",
+      "size": [
+        1920,
+        1080
+      ],
+      "segments": [
+        {
+          "input": "raw/preview/en-US/03-mac-workspace-recording.mov",
+          "start": 12,
+          "duration": 6
+        },
+        {
+          "input": "raw/preview/en-US/03-mac-workspace-recording.mov",
+          "start": 21,
+          "duration": 7
+        },
+        {
+          "input": "raw/preview/en-US/03-mac-workspace-recording.mov",
+          "start": 31,
+          "duration": 5
+        },
+        {
+          "input": "raw/preview/en-US/04-mac-layout-recording.mov",
+          "start": 5.5,
+          "duration": 6.5
+        }
+      ],
+      "crop": [
+        2048,
+        1536,
+        112,
+        76
+      ]
+    },
+    {
+      "output": "marketing/preview/zh-Hant/01-convert-and-clear.mp4",
+      "size": [
+        886,
+        1920
+      ],
+      "segments": [
+        {
+          "input": "raw/preview/zh-Hant/01-convert-and-clear-recording.mp4",
+          "start": 5.25,
+          "duration": 22.2
+        }
+      ]
+    },
+    {
+      "output": "marketing/preview/zh-Hant/02-ipad-workspace.mp4",
+      "size": [
+        1200,
+        1600
+      ],
+      "segments": [
+        {
+          "input": "raw/preview/zh-Hant/02-ipad-workspace-recording.mp4",
+          "start": 4.25,
+          "duration": 25.5
+        }
+      ]
+    },
+    {
+      "output": "marketing/preview/zh-Hant/03-mac-workspace.mp4",
+      "size": [
+        1920,
+        1080
+      ],
+      "segments": [
+        {
+          "input": "raw/preview/zh-Hant/03-mac-workspace-recording.mov",
+          "start": 11,
+          "duration": 6
+        },
+        {
+          "input": "raw/preview/zh-Hant/03-mac-workspace-recording.mov",
+          "start": 18,
+          "duration": 7
+        },
+        {
+          "input": "raw/preview/zh-Hant/03-mac-workspace-recording.mov",
+          "start": 27,
+          "duration": 5
+        },
+        {
+          "input": "raw/preview/zh-Hant/04-mac-layout-recording.mov",
+          "start": 4,
+          "duration": 6.5
+        }
+      ],
+      "crop": [
+        2048,
+        1536,
+        112,
+        76
+      ]
+    }
+  ]
+}
