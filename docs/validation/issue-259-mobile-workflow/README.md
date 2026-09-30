@@ -64,3 +64,11 @@ iPad Pro M4 / iOS 18.6 Simulator / 834×1210pt / 繁中浅色：最大辅助字�
 重现步骤：在隔离 QA Simulator 中以对应参数启动 App，选取测试 TXT，点击转换；成功路径等待 ready，取消路径在转换中按 Home。等实际 worker 结束后读取容器 tmp 中的 JSON，确认三条事件顺序和上述资源状态；取消再核对私有任务目录。使用专用模拟器与自生成语料；不向正式 App 写设置。
 
 本次补齐默认 idle=false 的成功与后台取消资源恢复。原先 idle=true、系统真实 lease 过期、真机锁屏与文件保护尚未计为通过，仍保持后续验收；未修改或启用 VoiceOver。
+
+## 实际双窗口：初始路由与结果接管
+
+2026-10-01，在 e04863d 基础上将应用 Router 初始路径明确为 `/home`。iPad 第二个 UIKit 场景原先持续空白；修改后第二窗口可显示主页，避免依赖 `/` 的出现回调再跳转。没有改动路由库或依赖缓存。iOS Simulator arm64、macOS arm64/x86_64 Debug 构建及 project/language/control labels 检查通过。
+
+在英语浅色、834×1210pt 的 iPad M4 / iOS 18.6 Simulator 中，实际创建两个前台 UIWindowScene（504pt/320pt）：左窗持有 11 MiB 确认任务，右窗从系统 Files 导入会提示已有任务；左窗完成转换后，通过 UIKit `requestSceneSessionDestruction` 关闭左窗，右窗出现 Open file task，点击后显示 Ready to save 和可用保存/删除操作。结果仍为 11,534,336 字节，SHA 与独立整篇参考一致。
+
+场景创建/销毁通过 LLDB 附加专用 QA App 调用 UIKit，交互用 AXe 与系统选择器，未直接调用协调器修改状态。录屏、源码哈希及精确范围见 two-window-runtime.json。此项证明真实模拟器场景的 ready 接管，不证明转换中关闭、保存面板打开时关闭、接管后实际保存或物理设备资源行为；这些仍保留待验收。
