@@ -54,3 +54,21 @@ python3 scripts/test-mobile-capacity-oracle.py \
 输出 `oracle.json` 包含输入/输出完整 SHA、字节数、模式、wrapper SHA、参考源码/二进制哈希。只有全部输入与七模式都成功才生成聚合报告；失败时保留 results/ 中已完成的单项，不能当成全矩阵通过。目录不得已存在，避免覆盖旧证据。当前不自动从设备读取任何用户文件；设备导出后的读回比较尚待签名真机流程补齐。
 
 2026-10-01：上述整篇参考已实际运行全套 **84 项**，集合校验确认 12 输入 × 7 模式无重复/遗漏，每项输入长度/哈希与 fixture manifest 一致。完整输出参考见 oracle.json。七模式小样本字节语义、非法编码和 manifest 路径越界拒绝检查通过。这是输出参考生成证据，不是移动端容量或流式正确性验收。
+
+## 移动文件服务与独立参考逐项比较
+
+```sh
+python3 scripts/check-mobile-capacity-outputs.py \
+  --fixtures /tmp/openccman-mobile-fixtures \
+  --oracle /tmp/openccman-mobile-oracle/oracle.json \
+  --opencc-path /absolute/clean/locked/SwiftyOpenCC \
+  --output /tmp/openccman-mobile-service
+```
+
+此探针在 Mac Release 子进程直接运行应用 `MobileLargeFileService` 及共享 pump，不重新实现转换。每项验证输入字节数、完整输出 SHA/字节数、exportURL、从磁盘重新创建 service 恢复 Ready，以及按任务 ID 删除后的空目录。输出是临时私有测试目录；Python 只清理自己创建的临时根。这里的 exportURL 并非 UIDocumentPicker 或实际提供方保存，不等同系统导出验收。通过只说明这些语料在 Mac 宿主的真实移动服务正确，不能代替 iOS 构建、保护、UIKit 或物理设备内存检查。
+
+启动前拒绝 fixture 篡改、oracle 输入或七模式选项不一致、wrapper 不干净/版本不一致、路径越界，以及缺项/重复的配置矩阵。执行失败不生成总 report.json，保留构建日志和已完成的单项结果；所有项通过才产生带源码、二进制、oracle 哈希的聚合报告。参考 JSON 不是签名文件，仍应审查其来源，工具完整性检查不能证明来源可信。
+
+探针初次运行曾因 `/tmp` 与 `/private/tmp` 的 URL 表示差异拒绝恢复结果；输出长度和哈希实际已一致。已改为比较任务 ID、文件名、字节数、选项、清理状态及磁盘 fingerprint（设备号/inode/大小/修改时间/普通文件属性），不要求 URL 字符串相同。没有修改服务代码或参考输出。另以错误预期哈希和错误长度运行真实已编译探针，两者都明确拒绝且不产生通过报告；配置缺项及 options raw 错误在构建前拒绝。
+
+2026-10-01：Mac 宿主真实 MobileLargeFileService 全套 **84/84 项通过**，每项输出与独立整篇参考的长度/SHA 完全相同，Ready 磁盘恢复字段/文件身份一致，删除后目录为空。聚合结果见 service-report.json。未测量 iOS footprint；也没有执行系统提供方保存、签名/购买或真机矩阵，不能据此启用生产入口。
