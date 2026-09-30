@@ -164,6 +164,14 @@ final class MobileLargeFileCoordinator: ObservableObject {
     guard presentationOwner == owner else { return }
     presentationOwner = nil
     if isWorking || phase == .confirmation { cancel() }
+    if phase == .exporting {
+      // The window owns the system picker, not the completed file. Invalidate
+      // its attempt before another window takes over, including preparation
+      // that is still awaiting the file worker.
+      exportAttemptID = nil
+      exportURL = nil
+      phase = .ready
+    }
     // Completed output remains recoverable by another window.
   }
 
@@ -178,10 +186,17 @@ final class MobileLargeFileCoordinator: ObservableObject {
     guard let ready, let service, task == nil, phase == .ready || phase == .failed else { return }
     failure = nil
     phase = .exporting
-    exportAttemptID = UUID()
+    let attempt = UUID()
+    exportAttemptID = attempt
     task = Task {
-      do { exportURL = try await service.exportURL(for: ready.id) }
-      catch { failure = error; phase = .ready; exportAttemptID = nil }
+      do {
+        let url = try await service.exportURL(for: ready.id)
+        if exportAttemptID == attempt { exportURL = url }
+      } catch {
+        if exportAttemptID == attempt {
+          failure = error; phase = .ready; exportAttemptID = nil
+        }
+      }
       task = nil
     }
   }

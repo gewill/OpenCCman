@@ -48,9 +48,31 @@ func checkMobileCoordinator() async throws {
   coordinator.ownerDidClose(owner)
   precondition(coordinator.claimPresentation(otherOwner))
   let ready = coordinator.ready!
+  // Closing the owner during asynchronous export preparation must not later
+  // publish a picker URL into the replacement window.
+  coordinator.prepareExport()
+  let abandonedPreparation = coordinator.exportAttemptID!
+  coordinator.ownerDidClose(otherOwner)
+  precondition(coordinator.claimPresentation(owner))
+  await coordinator.waitUntilSettled()
+  precondition(coordinator.phase == .ready && coordinator.exportURL == nil)
+  precondition(coordinator.exportAttemptID == nil && coordinator.ready?.id == ready.id)
+  coordinator.exportFinished(id: ready.id, attemptID: abandonedPreparation, succeeded: true)
+  precondition(fm.fileExists(atPath: ready.url.path))
+
+  // Closing an already-presented picker also leaves a retryable result. Its
+  // late success must not delete the file used by a new window's attempt.
+  coordinator.prepareExport()
+  await coordinator.waitUntilSettled()
+  let abandonedPicker = coordinator.exportAttemptID!
+  coordinator.ownerDidClose(owner)
+  precondition(coordinator.phase == .ready && coordinator.exportURL == nil)
+  precondition(coordinator.claimPresentation(otherOwner))
   coordinator.prepareExport()
   await coordinator.waitUntilSettled()
   precondition(coordinator.phase == .exporting && coordinator.exportURL == ready.url)
+  coordinator.exportFinished(id: ready.id, attemptID: abandonedPicker, succeeded: true)
+  precondition(coordinator.phase == .exporting && fm.fileExists(atPath: ready.url.path))
   let firstAttempt = coordinator.exportAttemptID!
   coordinator.exportFinished(id: UUID(), attemptID: firstAttempt, succeeded: true)
   precondition(coordinator.ready?.id == ready.id)
