@@ -34,7 +34,7 @@ bash scripts/check-pasteboard.sh
 
 These checks do not replace a signed Xcode Cloud build or device acceptance. The [adaptive workspace validation](docs/validation/adaptive-workspace/README.md), [performance evidence](docs/performance/README.md) and [Build 56 record](docs/validation/build-56/README.md) describe what was tested and what remains open.
 
-The [2.1 Shortcuts action examples](docs/SHORTCUTS.md) describe the text-only automation candidate and its supported systems.
+The [2.1 Shortcuts action examples](docs/SHORTCUTS.md) describe the text-only automation and its supported systems.
 
 The [upstream sync guide](docs/upstream-sync.md) explains the weekly, reviewed SwiftyOpenCC and OpenCC update flow. Engine-specific maintenance is documented in the [SwiftyOpenCC repository](https://github.com/gewill/SwiftyOpenCC/blob/master/docs/upstream-sync.md).
 
