@@ -42,6 +42,7 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
         root / "OpenCCman/Services/StreamingTextFileService.swift",
         root / "OpenCCman/Services/StreamingConversionPump.swift",
         root / "OpenCCman/Services/FileConversionPolicy.swift",
+        root / "OpenCCman/Services/MobileLargeFileService.swift",
         root / "OpenCCman/Services/MacLargeFileCoordinator.swift",
         root / "OpenCCman/Model/ConversionConfiguration.swift",
         root / "OpenCCman/Model/ConvertedTextDocument.swift",
@@ -62,6 +63,7 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
         shutil.copy2(root / "Tests/Regression/WindowNotificationChecks.swift", sources / "WindowNotificationChecks.swift")
         shutil.copy2(root / "Tests/Regression/StreamingFileChecks.swift", sources / "StreamingFileChecks.swift")
         shutil.copy2(root / "Tests/Regression/StreamingPumpChecks.swift", sources / "StreamingPumpChecks.swift")
+        shutil.copy2(root / "Tests/Regression/MobileFileJobChecks.swift", sources / "MobileFileJobChecks.swift")
         shutil.copy2(root / "Tests/Regression/LargeFileCoordinatorChecks.swift", sources / "LargeFileCoordinatorChecks.swift")
     (package / "Package.swift").write_text('''// swift-tools-version: 5.9
 import PackageDescription
