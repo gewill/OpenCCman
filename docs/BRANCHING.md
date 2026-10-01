@@ -63,7 +63,7 @@ git worktree add -b codex/<issue>-<topic> ../openccman-<topic> origin/develop
 - 纯文档变更在本地检查内容、链接和 `git diff --check`，无需额外运行 Xcode 构建或模拟器测试；PR 仍会触发统一 App Regression。
 - 创建 PR 的任务在提交、推送并返回链接后完成；CI 排队时报告状态。只有明确要求等待检查、合并或发布时才继续等待，不反复查询相同状态。
 - `main`、`develop` 已要求通过 PR 更新，保护同样约束管理员，禁止强制推送和删除受保护分支。两者现均要求由 GitHub Actions（app ID 15368）提供的 `App Regression` 成功；`main` 的工作流文件随发布 PR #210 合入，合并后仍需核对精确 `main` SHA 的推送检查。
-- 单人维护不要求额外审批者，不配置机器人绕过；保留 merge commit。`strict=false` 不强制每次更新至最新基线，依赖合并后仍需核对目标、冲突和候选 SHA；发生代码整合时重新验证候选。
+- 单人维护不强制额外审批者，但当前 HEAD 仍须完成审查，不配置机器人绕过；发布按下方 Squash and merge 规则执行。`strict=false` 不强制每次更新至最新基线，依赖合并后仍需核对目标、冲突和候选 SHA；发生代码整合时重新验证候选。
 
 普通任务可使用 squash merge。2026-10-01 起，应用发布遵循维护者新的统一流程：当前 PR HEAD 检查与审核通过后 Squash and merge 到 main；Tag 指向实际 squash 后的 main 提交。部署前在干净的 main 上仅快进同步，确认 HEAD 与 origin/main 相同；构建不得产生未提交的受控文件改动，部署后验证正式地址并记录实际部署 SHA。早期发布与历史迁移的 merge commit 记录保留为历史事实。SwiftyOpenCC 上游同步仍需保留祖先关系，其独立仓库流程不在本轮变更范围内。
 
