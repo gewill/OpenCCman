@@ -1,6 +1,6 @@
 # #260：iPhone X 用户返回文件完整输出核验
 
-日期：2026-10-01。对应 [#260](https://github.com/gewill/OpenCCman/issues/260)，总跟踪 [#256](https://github.com/gewill/OpenCCman/issues/256)。
+日期：2026-10-01。后续补测见 [iPhone 16 Pro TestFlight 实测](IPHONE16-TESTFLIGHT.md)。对应 [#260](https://github.com/gewill/OpenCCman/issues/260)，总跟踪 [#256](https://github.com/gewill/OpenCCman/issues/256)。
 
 ## 结论
 
@@ -28,7 +28,7 @@
 | 实际操作截图／录像 | 本轮未取得；没有用设计稿、Simulator 或 QA 截图代替 |
 | 设备内存、热状态、watchdog／jetsam | 未测量；成功返回文件不能证明这些指标通过 |
 
-待关联的云端候选为 `release/v2.2` 的 `aad2b09931e34dbfab3e8218be22e94cd604fbb6`、TestFlight **2.2 (61)**。这是候选信息，不代表已确认 iPhone X 安装的就是此构建。独立读取到已连接 iPhone 16 Pro 安装 `org.gewill.OpenCCman` **2.2 (61)**，也不能代替 iPhone X 的构建确认。随后截图确认 iPhone 16 Pro 处于锁屏；已请求解锁，目前未进行新的交互验收。
+待关联的云端候选为 `release/v2.2` 的 `aad2b09931e34dbfab3e8218be22e94cd604fbb6`、TestFlight **2.2 (61)**。这是候选信息，不代表已确认 iPhone X 安装的就是此构建。独立读取到已连接 iPhone 16 Pro 安装 `org.gewill.OpenCCman` **2.2 (61)**，也不能代替 iPhone X 的构建确认。初始截图确认其锁屏；随后维护者解锁并配合 Mirroring，已补做实际交互，详见 [独立补测记录](IPHONE16-TESTFLIGHT.md)。此结果不替代 iPhone X 的构建关联。
 
 本机 Xcode 27.0（27A266a）的 `devicectl list devices` 仅列出 iPhone X 的 `iPhone10,3`／ECID 信息，没有可交互设备状态；本次未通过 Xcode 操作这台 iPhone X。Device Hub 原生 UI 自动化读取超时，不把读取失败记为 App 故障。
 
@@ -50,15 +50,15 @@
 | 顺序 | 项目 | 当前状态／取证方式 |
 | --- | --- | --- |
 | 1 | 关联正式候选、输入与保存提供方 | iPhone X 构建与提供方待维护者确认；已有输出全哈希匹配 |
-| 2 | 保存取消 → 保留 Ready → 再次保存 → 完整读回 | TestFlight 实际交互和录像待补；不能仅以已有结果文件推定取消／重试通过 |
-| 3 | Ready 状态退出／重开后恢复；处理中取消、锁屏、后台、强退 | 每种分别记录源文件、结果、临时清理和重新开始行为；完整循环次数按 #260 |
+| 2 | 保存取消 → 保留 Ready → 再次保存 → 完整读回 | iPhone 16 Pro / 2.2 (61) 已完成一轮并完整读回；iPhone X 与其他矩阵仍待补 |
+| 3 | Ready 状态退出／重开后恢复；处理中取消、锁屏、后台、强退 | iPhone 16 Pro 已验证 Ready 进程重启恢复、一次转换中取消和一次后台中止；锁屏／转换中强退、私有临时文件清理与完整循环次数仍待补 |
 | 4 | 20/50/100 MiB × 七配置 × 无换行/ASCII/复杂 Unicode/扩张语料 | #264 有 Mac 独立参考和服务结果；iPhone／iPad 签名候选完整矩阵待补 |
 | 5 | 低内存 iPhone 与 iPad 整 App 资源 | 同条件 100−20 MiB peak physical footprint 增量目标 ≤16 MiB；冷/热/七配置缓存、空白/近10 MiB文稿、每样本三轮，待实际测量 |
-| 6 | 本机、未下载 iCloud、第三方提供方；磁盘满／断连／权限变化 | 签名候选待验收；禁止拿无沙盒服务探针替代 |
+| 6 | 本机、未下载 iCloud、第三方提供方；磁盘满／断连／权限变化 | iPhone 16 Pro 的未下载 iCloud 输入及 iCloud 系统保存已通过；本机／第三方／故障矩阵仍待补，禁止拿无沙盒服务探针替代 |
 | 7 | Mac 1 GiB／同文件／覆盖竞态／取消／强退回归 | 需按最终候选关联已有探针证据与签名 App 差异，残余恢复问题继续 #217 |
 | 8 | 最低系统与真实 Pro | 分别由 #16、#14／#71 承接；缺失证据明确保留，不能标已通过 |
 
-最先人工操作的用例：在当前候选完成 100 MiB 转换后，打开“保存到文件”并取消；确认任务仍可保存；再保存到一个新的测试文件名并返回完整文件核验。测试使用已有生成语料，不覆盖用户文稿。取得版本／提供方信息后再将操作记录关联到正式候选。
+维护者确认目前没有可用的真实 iPad，相关标准保留未完成，不按 Simulator 结果替代。本轮已完成 iPhone 16 Pro 的保存取消／重启恢复／重试保存；待补 iPhone X 构建关联及余下完整矩阵。
 
 ## 容量扩展另行推进
 
