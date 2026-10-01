@@ -1,0 +1,45 @@
+{
+  "baselineCommit": "c7f8b373b7594345e732d8909014719a45a32ad5",
+  "system": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0\nBuildVersion:\t\t26A428",
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "baselineMatchesCandidateStoreKitFiles": true,
+  "sourceFiles": {
+    "Tests/StoreKit/Products.storekit": {
+      "baselineSHA256": "9255b2cbe8ea6fbba40b43126b76400cfea7f97219bf57f1df97fb653b96f554",
+      "candidateSHA256": "9255b2cbe8ea6fbba40b43126b76400cfea7f97219bf57f1df97fb653b96f554"
+    },
+    "Tests/StoreKit/StoreKitHost.swift": {
+      "baselineSHA256": "5dfbdaf760908e0202763087b8968497c3f5ce2a23f4e65bf2c0c281a61ccb71",
+      "candidateSHA256": "5dfbdaf760908e0202763087b8968497c3f5ce2a23f4e65bf2c0c281a61ccb71"
+    },
+    "Tests/StoreKit/StoreKitRegression.xcodeproj/project.pbxproj": {
+      "baselineSHA256": "d283277ffac3fb1a1e54e97b4a5b360c3966303d491e992ceeb9441111e081ad",
+      "candidateSHA256": "d283277ffac3fb1a1e54e97b4a5b360c3966303d491e992ceeb9441111e081ad"
+    },
+    "Tests/StoreKit/StoreKitRegression.xcodeproj/project.xcworkspace/contents.xcworkspacedata": {
+      "baselineSHA256": "7f3b00b5c3fdb45242d7b87e1e5c4e25d1fa8129a16c94295ecc4e8ea2235c5f",
+      "candidateSHA256": "7f3b00b5c3fdb45242d7b87e1e5c4e25d1fa8129a16c94295ecc4e8ea2235c5f"
+    },
+    "Tests/StoreKit/StoreKitRegression.xcodeproj/xcshareddata/xcschemes/StoreKitRegression.xcscheme": {
+      "baselineSHA256": "931140b1845e139243c87ab5a2579e20d42fcc1c9e6373ae92c7b877f4480e5b",
+      "candidateSHA256": "931140b1845e139243c87ab5a2579e20d42fcc1c9e6373ae92c7b877f4480e5b"
+    },
+    "Tests/StoreKit/StoreKitRegressionTests.swift": {
+      "baselineSHA256": "b434cf0cc3baf938aee76f05f41e47f7377b16acc0895f931959d89480038109",
+      "candidateSHA256": "b434cf0cc3baf938aee76f05f41e47f7377b16acc0895f931959d89480038109"
+    },
+    "Tests/StoreKit/project.json": {
+      "baselineSHA256": "835374e06ceafc69bba9ae9679d5ed382414944ead5863975c248cd371b1f1c5",
+      "candidateSHA256": "835374e06ceafc69bba9ae9679d5ed382414944ead5863975c248cd371b1f1c5"
+    }
+  },
+  "baselineTests": {
+    "executed": 2,
+    "failed": 2,
+    "testRefundRemovesVerifiedEntitlement": "StoreKitRegression Code2: entitlement did not become false in5 seconds",
+    "testUserCancellationDoesNotCreateEntitlement": "ASDServerErrorDomain907; purchase throws StoreKitError.unknown"
+  },
+  "baselineLogSHA256": "9a6b3bb163e2e0aee1fbdc3ff7bc74f028f584fd6c7f0ce8e2d1d07e8b66e398",
+  "candidateLogSHA256": "5765329718cfb05a8b46ca9ad5f74e6d86bc6f3044b68a42c9e0bbd8cbd019d7",
+  "conclusion": "Both failures reproduce in unmodified origin/develop isolated Apple-only StoreKit target on this host; candidate large-file implementation is not their source. No assertion was skipped or weakened. Underlying SDK/runtime cause remains unproven."
+}

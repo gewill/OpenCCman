@@ -32,6 +32,7 @@
   @MainActor
   class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, ObservableObject {
     private var statusItem: NSStatusItem?
+    private var terminationTask: Task<Void, Never>?
     private static let readyWindows = NSHashTable<NSWindow>.weakObjects()
     private static let windowReopener = MainWindowReopenController()
     private static var pendingWindowNotification: PendingWindowNotification?
@@ -60,6 +61,16 @@
         object: nil
       )
       #endif
+    }
+
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+      if terminationTask != nil { return .terminateLater }
+      guard MacLargeFileCoordinator.shared.isBusy else { return .terminateNow }
+      terminationTask = Task {
+        await MacLargeFileCoordinator.shared.prepareForTermination()
+        sender.reply(toApplicationShouldTerminate: true)
+      }
+      return .terminateLater
     }
 
     private func setupMenuBar() {

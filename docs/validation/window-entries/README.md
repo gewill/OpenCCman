@@ -1,5 +1,13 @@
 # 全部关窗后的外部入口（#19）
 
+## 2026-09-28：TextEdit 真实 Services 菜单
+
+在 macOS 27 的 TextEdit 中选中测试文字，实际点击系统 Services 菜单里的隔离版 Convert。此前同一 QA 进程在屏主窗口为零；点击后 TextEdit 选区被正确繁化，QA 只重开一扇窗口并显示当次原文与结果。来源、前后截图、交互录像和未覆盖路径见 [TextEdit 菜单复验](2026-09-28-textedit-services/README.md)。此项补足下文 `NSPerformService` 探针未验证的目标 App 菜单操作；最终分发包、其余系统入口和 macOS 12 仍未验收，#19 保持开放。
+
+## 2026-09-28：2.1 候选 Services 复验
+
+基于 `develop` `ab12170` 对应的相同应用源码，在 macOS 27.0 上使用独立签名的 2.1(30) QA 应用再次验证零窗后的两次 Convert、一次 Open。每次调用前同一进程均无在屏主窗口，服务后仅有一扇新主窗口；pasteboard 输出和应用中当次原文／结果均与预期一致。来源、原始 JSONL、截图和交互视频见 [2.1 Services 复验](2026-09-28-v21-qa/README.md)。目标 App 菜单、状态栏、快捷键、Dock、连续请求及最终分发签名包仍需验收，#19 保持开放。
+
 ## 2026-09-24：真实 Services 的零窗回写
 
 基于当前 `develop` `458fcd2` 的隔离、ad-hoc 签名 Debug 应用，在进程存活但无可见窗口时分别调用两次 Convert、一次 Open 服务。三次均在同一 PID 重开一扇主窗口；Convert 的 pasteboard 结果逐字节匹配同版本 OpenCC CLI，应用中可见当次原文与结果；Open 保留原文且结果为空。测试细节、合成语料、原始 JSONL、截图和交互录屏见 [2026-09-24 Services 验证](2026-09-24-services/README.md)。

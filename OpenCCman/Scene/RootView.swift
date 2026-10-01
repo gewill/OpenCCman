@@ -6,14 +6,18 @@ struct RootView: View {
   @EnvironmentObject private var navigator: Navigator
   @StateObject private var viewModel = HomeViewModel()
   @EnvironmentObject private var whatsNew: WhatsNewCoordinator
+  @EnvironmentObject private var launchTransition: LaunchTransitionCoordinator
   @Environment(\.scenePhase) private var scenePhase
   @Environment(\.locale) private var locale
   @StateObject private var whatsNewWindow = WhatsNewWindowState()
   @State private var presentationID = UUID()
   @State private var whatsNewRelease: WhatsNewRelease?
   @State private var isVisible = false
+  @State private var windowFrame: CGRect = .zero
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   #if os(macOS)
+    @ObservedObject private var largeFile = MacLargeFileCoordinator.shared
+    @State private var largeFilePresentationIsActive = false
     @StateObject private var windowSizing = MainWindowSizing()
     @State private var isMainWindow = false
     @State private var windowID: ObjectIdentifier?
@@ -30,8 +34,22 @@ struct RootView: View {
           .environmentObject(viewModel)
           .environmentObject(whatsNewWindow)
       }
+      .environment(\.launchReveal, launchReveal)
     }
     .background(Color.Neumorphic.main)
+    .background(GeometryReader { proxy in
+      // The launch mark is centred in the whole window, like the launch screen.
+      Color.clear.onAppear {
+        windowFrame = proxy.frame(in: .global)
+        startLaunchTransitionIfReady(active: scenePhase == .active)
+        DispatchQueue.main.asyncAfter(deadline: .now() + LaunchMotion.activationTimeout) {
+          startLaunchTransitionIfReady(active: true)
+        }
+      }
+    }.ignoresSafeArea())
+    .overlayPreferenceValue(LaunchHandoffKey.self) { anchors in
+      launchOverlay(anchors)
+    }
     .neumorphicTheme(.openCCman)
     #if os(macOS)
       .environment(\.appTextSize, AppTextSize(rawValue: macTextSizeRaw) ?? .standard)
@@ -50,6 +68,19 @@ struct RootView: View {
           whatsNewWindow.manualRequest = nil
         }
     }
+    #if os(macOS)
+    .sheet(isPresented: Binding(
+      get: { largeFile.session?.owner == viewModel.windowOwnerID },
+      set: { if !$0, !largeFile.isWorking { largeFile.cancel() } }
+    ), onDismiss: {
+      largeFilePresentationIsActive = false
+      presentWhatsNewIfReady()
+    }) {
+      MacLargeFileTaskView(coordinator: largeFile)
+        .environment(\.locale, locale)
+        .onAppear { largeFilePresentationIsActive = true }
+    }
+    #endif
     .onAppear {
       #if DEBUG
         if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
@@ -79,12 +110,16 @@ struct RootView: View {
       presentWhatsNewIfReady()
     }
     .onChange(of: whatsNew.owner) { _ in presentWhatsNewIfReady() }
+    .onChange(of: scenePhase) { startLaunchTransitionIfReady(active: $0 == .active) }
     .onChange(of: whatsNewWindow.manualRequest) { _ in presentWhatsNewIfReady() }
     .onDisappear {
       isVisible = false
       viewModel.cancelConversion()
       whatsNewRelease = nil
       whatsNew.finish(in: presentationID)
+      #if os(macOS)
+        largeFile.ownerDidClose(viewModel.windowOwnerID)
+      #endif
     }
     #if os(macOS)
     .frame(minWidth: MainWindowGeometry.minimumContentSize.width,
@@ -95,11 +130,15 @@ struct RootView: View {
       isMainWindow = window.isMainWindow
       viewModel.window = window
       AppDelegate.registerReadyWindow(window)
+      #if DEBUG
+        viewModel.importLargeFileForQAIfRequested()
+      #endif
     }.allowsHitTesting(false).accessibilityHidden(true))
     .onReceive(NotificationCenter.default.publisher(for: NSWindow.willCloseNotification)) { notification in
       guard isTargetWindow(for: notification) else { return }
       viewModel.cancelConversion()
       viewModel.cancelImport()
+      largeFile.ownerDidClose(viewModel.windowOwnerID)
     }
     .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeMainNotification)) { notification in
       if isTargetWindow(for: notification) {
@@ -147,7 +186,7 @@ struct RootView: View {
     #if os(macOS)
       active = active && isMainWindow
     #endif
-    return WhatsNewEligibility(
+    var eligibility = WhatsNewEligibility(
       isActive: active,
       isHome: navigator.path == "/home",
       isSupportedRoute: navigator.path == "/home" || navigator.path == "/settings",
@@ -156,8 +195,41 @@ struct RootView: View {
       hasFilePanel: whatsNewWindow.showingImporter || whatsNewWindow.showingExporter,
       hasAlert: viewModel.showingProAlert || viewModel.error != nil,
       hasProSheet: whatsNewWindow.proSheetIsActive,
-      hasSettingsSheet: whatsNewWindow.conversionSettingsIsActive
+      hasSettingsSheet: whatsNewWindow.conversionSettingsIsActive,
+      isLaunchTransitionRunning: launchReveal.isActive
     )
+    #if os(macOS)
+      eligibility.hasLargeFileTask = largeFile.isBusy || largeFilePresentationIsActive
+    #endif
+    return eligibility
+  }
+
+  /// Start once the window has a frame and its scene is active: by then the
+  /// first frame is on screen and the system is fading the launch screen out.
+  /// `active` comes from the caller because an `onChange` action belongs to the
+  /// previous render and would still read the old scene phase.
+  private func startLaunchTransitionIfReady(active: Bool) {
+    guard windowFrame != .zero, active else { return }
+    launchTransition.start(window: presentationID)
+  }
+
+  private var launchReveal: LaunchReveal {
+    LaunchReveal(stage: launchTransition.stage(for: presentationID), style: launchTransition.style,
+                 center: CGPoint(x: windowFrame.midX, y: windowFrame.midY),
+                 maxRadius: LaunchMotion.maxRadius(for: windowFrame.size))
+  }
+
+  @ViewBuilder
+  private func launchOverlay(_ anchors: [LaunchHandoffTarget: Anchor<CGRect>]) -> some View {
+    let reveal = launchReveal
+    if reveal.isActive, reveal.style == .unpack || reveal.style == .fade {
+      GeometryReader { proxy in
+        LaunchTransitionOverlay(reveal: reveal, targets: anchors.mapValues { proxy[$0] })
+      }
+      .ignoresSafeArea()
+      .allowsHitTesting(false)
+      .accessibilityHidden(true)
+    }
   }
 
   private func presentWhatsNewIfReady() {
@@ -190,6 +262,7 @@ struct MainView_Previews: PreviewProvider {
     Router {
       RootView()
         .environmentObject(WhatsNewCoordinator(version: "1.3", skipAutomatic: true))
+        .environmentObject(LaunchTransitionCoordinator(arguments: [], reduceMotion: false, voiceOver: false))
     }
   }
 }

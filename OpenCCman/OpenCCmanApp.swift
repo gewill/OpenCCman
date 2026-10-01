@@ -5,6 +5,7 @@
 //  Created by will on 2023/12/15.
 //
 
+import AppIntents
 import SwiftUI
 import SwiftUIRouter
 
@@ -68,6 +69,11 @@ struct OpenCCmanApp: App {
     // Migrate before configuring: the SDK reads the stored language at launch.
     _selectedLocale = State(initialValue: SelectedLocaleKey.computeSelectedLocale())
     IAPManager.shared.configure()
+    #if os(iOS)
+      if #available(iOS 16.0, *) {
+        OpenCCmanAppShortcuts.updateAppShortcutParameters()
+      }
+    #endif
   }
 
   @StateObject private var whatsNew = WhatsNewCoordinator(
@@ -75,10 +81,13 @@ struct OpenCCmanApp: App {
     skipAutomatic: ProcessInfo.processInfo.arguments.contains("-skip-whats-new")
   )
 
+  @StateObject private var launchTransition = LaunchTransitionCoordinator()
+
   var body: some Scene {
     WindowGroup {
       appContent
       .environmentObject(whatsNew)
+      .environmentObject(launchTransition)
       .environment(\.locale, selectedLocale.locale)
       .environment(\.selectedLocale, $selectedLocale)
       .preferredColorScheme(selectedTheme.colorScheme)

@@ -4,15 +4,18 @@ GitHub Actions 负责回归与依赖候选验证，Xcode Cloud 负责正式签�
 
 ## 工作流
 
-下表描述已合入 develop、并由发布 PR #210 带向 main 的工作流。2026-09-26，PR #210 已产生成功的 `App Regression`，main 已配置来源绑定 GitHub Actions（app ID 15368）的必需检查；工作流文件仍待 PR 合并，不能把 PR 检查当成合并后精确 main SHA 的推送检查。
+下表描述已合入 `develop`、并由发布 PR #210 带入 `main` 的工作流。2026-09-28 已读回：`main` 精确合并提交 `c7734f5a6f4ac3f5f9b5786d78ab1c49268364f3` 的推送 `App Regression` 成功（run `36229902055`）；`main` 继续要求来源绑定 GitHub Actions（app ID 15368）的检查。通过回归不等于 App Store 已公开发布，见[上架准备记录](release/launch-2.0-20260928.md)。
 
 | 工作流 / 检查 | 触发条件 | 执行环境与范围 |
 | --- | --- | --- |
-| `App Regression` | 目标为 `main`、`develop`、`codex/**`、`release/**`、`hotfix/**` 的 PR；main/develop/release/hotfix 推送；手动运行 | `macos-15`，20 分钟；工程和 Swift 语法、真实转换/文件/预设、窗口布局、原生控件完整尺寸、编辑器滚动/Introspect、Pro、StoreKit、额度、What’s New、本地化、隔离剪贴板回归及双架构 macOS Debug 验证构建 |
+| `App Regression` | 目标为 `main`、`develop`、`codex/**`、`release/**`、`hotfix/**` 的 PR；main/develop/release/hotfix 推送；手动运行 | `macos-15`，20 分钟；工程和 Swift 语法、真实转换/文件/预设、窗口布局、原生控件完整尺寸、编辑器滚动/Introspect、Pro、StoreKit、额度、What’s New、开屏转场、本地化、隔离剪贴板回归及双架构 macOS Debug 验证构建（在 macOS 15 上不含 App 图标，见下文） |
+| `App icon` | 与 `App Regression` 相同的 PR 与推送 | `macos-26`，10 分钟；`scripts/check-app-icon.sh` 用 actool 为 macOS 12+ 与 iOS 15+ 编译 `AppIcon.icon`，检查浅色、深色、着色分层图标与旧系统回退图；目前不是必需检查 |
 | `Upstream Coordinator Tests` | main/develop/release/hotfix 中修改协调器源码、配置、测试或其 workflow 的 PR/推送；周检；手动运行 | `ubuntu-24.04`，5 分钟；临时 Git 仓库与假 GitHub API 测试，并验证公开 Checks API 的读权限 |
 | 上游检测 → 准备 → 发布 | **仅 `main`** 的周一 09:17（UTC+8）或手动运行 | 检测/发布用 Ubuntu；有候选才用 `macos-15` 验证；写令牌仅位于独立发布 job |
 
 所有 Runner 继续使用 GitHub 托管环境。产品部署下限和依赖 revision 由应用工程管理。当前常规回归已包含完整 macOS 验证构建，并非最初迁移时的纯脚本检查；没有建立模拟器矩阵。
+
+App 图标是 Icon Composer 文件 `OpenCCman/AppIcon.icon`（见 [App 图标](APP_ICON.md)）。Xcode 26.3 的 actool 只能在 macOS 26 及以上的主机上编译它，在 macOS 15 上渲染进程会崩溃（`AssetCatalogAgent-AssetRuntime` 关闭连接）。因此所有构建完整 App 的任务在 checkout 后检查主机版本，低于 26 时通过 `XCODE_XCCONFIG_FILE` 加载 `scripts/without-app-icon.xcconfig`，在不含图标的情况下构建：`App Regression` 的验证构建、iOS Simulator 验证构建、窗口生命周期、编辑器对比、Services 验证与性能基线。这些产物没有 App 图标，其余行为不变；图标本身由 `App icon` 任务在 macOS 26 上检查。普通 PR 仍在 macOS 15 上运行。
 
 `App Regression` 不设置路径过滤，文档 PR 也会产生检查，避免将它设置为 required check 后出现永远等待的情况。协调器检查有路径过滤，不应将它无条件设为所有 PR 必需的检查。应用合并后的 push 检查不可省略：协调器要求目标分支精确 SHA 上已有成功的 `App Regression` 才推广依赖。
 

@@ -4,11 +4,12 @@ struct ProAlertView: View {
   @Environment(\.locale) private var locale
   @Binding var showingProAlert: Bool
   @Binding var showingProScene: Bool
+  var detailKey = "Unlimited calculations"
   var onProDismiss: () -> Void = {}
 
   var body: some View {
     EmptyView()
-      .alertView(title: "Pro only feature", subtitle: ProFeature.unlimitedTestNumbers.rawValue.localizedStringKey, isPresented: $showingProAlert) {
+      .alertView(title: "Pro only feature", subtitle: detailKey.localizedStringKey, isPresented: $showingProAlert) {
         HStack(spacing: 10) {
           Button {
             showingProScene = true

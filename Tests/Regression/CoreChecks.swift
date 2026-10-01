@@ -68,6 +68,65 @@ import OpenCC
     }
     precondition(releasedModel == nil, "Combine subscriptions must not retain the view model")
 
+    let exampleModel = HomeViewModel()
+    precondition(exampleModel.inputText.isEmpty && exampleModel.resultText.isEmpty && exampleModel.exportSnapshot == nil)
+    precondition(exampleModel.canFillExample && coreQuotaCount == 0)
+    exampleModel.fillExampleIfEmpty()
+    precondition(exampleModel.inputText == HomeViewModel.exampleSourceText && coreQuotaCount == 0,
+                 "Trying the example only fills the source and does not reserve quota")
+    exampleModel.inputText = "My own draft"
+    exampleModel.fillExampleIfEmpty()
+    precondition(exampleModel.inputText == "My own draft", "The example cannot overwrite a draft")
+    exampleModel.inputText = ""
+    exampleModel.resultText = "Previous result"
+    exampleModel.fillExampleIfEmpty()
+    precondition(exampleModel.inputText.isEmpty && exampleModel.resultText == "Previous result",
+                 "The example cannot discard a result")
+
+    let clearModel = HomeViewModel()
+    let otherWindow = HomeViewModel()
+    otherWindow.inputText = "Another window's draft"
+    precondition(!clearModel.canClearSource)
+    clearModel.fillExampleIfEmpty()
+    precondition(clearModel.canClearSource)
+    clearModel.clearSource()
+    precondition(clearModel.inputText.isEmpty && !clearModel.canClearSource && coreQuotaCount == 0,
+                 "Clearing an example leaves an empty, uncharged draft")
+    clearModel.replaceSource(String(repeating: "鼠标", count: 100_000), sourceFilename: "pending.txt")
+    clearModel.translate()
+    precondition(clearModel.isLoading)
+    clearModel.clearSource()
+    _ = try await ChineseConversionService.shared.convert("", options: .simplify)
+    await Task.yield()
+    precondition(clearModel.inputText.isEmpty && clearModel.resultText.isEmpty && clearModel.exportSnapshot == nil)
+    precondition(clearModel.sourceFilename == nil && !clearModel.isLoading && coreQuotaCount == 0,
+                 "Clearing a running conversion releases its reservation and ignores late output")
+    precondition(otherWindow.inputText == "Another window's draft", "Clear must affect only its window")
+
+    let pendingImport = FileManager.default.temporaryDirectory.appendingPathComponent("openccman-clear-\(UUID().uuidString).txt")
+    try Data("Imported draft".utf8).write(to: pendingImport)
+    defer { try? FileManager.default.removeItem(at: pendingImport) }
+    clearModel.replaceSource("Draft before import", sourceFilename: "old.txt")
+    clearModel.importFile(pendingImport)
+    precondition(clearModel.isImporting)
+    clearModel.clearSource()
+    precondition(!clearModel.isImporting && clearModel.inputText.isEmpty && clearModel.sourceFilename == nil,
+                 "Clear cancels an import and removes the previous filename")
+
+    do {
+      UserDefaults.standard.set(true, forKey: UserDefaultsKeys.isPro.rawValue)
+      defer { UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.isPro.rawValue) }
+      clearModel.replaceSource("鼠标", sourceFilename: "draft.txt")
+      clearModel.translate()
+      await waitUntilIdle(clearModel)
+      precondition(clearModel.exportSnapshot?.filename == "draft-converted.txt")
+      clearModel.clearSource()
+      precondition(clearModel.inputText.isEmpty && clearModel.resultText.isEmpty && clearModel.sourceFilename == nil)
+      precondition(clearModel.exportSnapshot == nil && clearModel.resultConfiguration == nil,
+                   "Clear removes result provenance and the exportable snapshot")
+      precondition(coreQuotaCount == 0, "Clearing and Pro conversion do not consume free quota")
+    }
+
     let model = HomeViewModel()
     var nonemptyResults = 0
     let observation = model.$resultText.sink { if !$0.isEmpty { nonemptyResults += 1 } }
@@ -117,6 +176,13 @@ import OpenCC
     print("PASS: model release, repeated taps, single publication, cancellation/replacement, empty input and quota guard")
     try await checkPresetsAndFiles()
     try await checkProviders()
+    try await checkStreamingFiles()
+    try await LargeFileCoordinatorChecks.run()
+    if #available(macOS 13.0, *) {
+      try await ShortcutsChecks.run()
+    }
+    precondition(clearModel.inputText.isEmpty && clearModel.resultText.isEmpty && clearModel.exportSnapshot == nil,
+                 "A cancelled import or conversion cannot republish after other checks complete")
   }
 
   @MainActor private static func waitUntilIdle(_ model: HomeViewModel) async {

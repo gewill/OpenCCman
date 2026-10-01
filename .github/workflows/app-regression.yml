@@ -89,6 +89,12 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
+      - name: Leave out the Icon Composer icon below macOS 26
+        run: |
+          # actool compiles AppIcon.icon only on a macOS 26+ host; the App icon job checks it there.
+          if (( $(sw_vers -productVersion | cut -d. -f1) < 26 )); then
+            echo "XCODE_XCCONFIG_FILE=$GITHUB_WORKSPACE/scripts/without-app-icon.xcconfig" >> "$GITHUB_ENV"
+          fi
       - name: Record regression environment and source
         run: |
           sw_vers
@@ -134,6 +140,8 @@ jobs:
         run: bash scripts/check-quota.sh
       - name: Check What’s New presentation and localizations
         run: bash scripts/check-whats-new.sh
+      - name: Check launch transition timing and assets
+        run: bash scripts/check-launch-transition.sh
       - name: Check control labels in the selected app language
         run: bash scripts/check-control-labels.sh
       - name: Check stored app language representation
@@ -164,6 +172,23 @@ jobs:
           name: macos-validation-app
           path: ${{ runner.temp }}/OpenCCman-validation.zip
           retention-days: 7
+
+  app-icon:
+    name: App icon
+    if: github.event_name != 'workflow_dispatch'
+    runs-on: macos-26
+    timeout-minutes: 10
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Compile the Icon Composer icon for iOS and Mac
+        run: |
+          sw_vers
+          xcodebuild -version
+          bash scripts/check-app-icon.sh
 
   window-lifetime-diagnostic:
     name: Native WindowGroup lifetime comparison
@@ -203,6 +228,12 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
+      - name: Leave out the Icon Composer icon below macOS 26
+        run: |
+          # actool compiles AppIcon.icon only on a macOS 26+ host; the App icon job checks it there.
+          if (( $(sw_vers -productVersion | cut -d. -f1) < 26 )); then
+            echo "XCODE_XCCONFIG_FILE=$GITHUB_WORKSPACE/scripts/without-app-icon.xcconfig" >> "$GITHUB_ENV"
+          fi
       - name: Build and package simulator app
         run: |
           sw_vers
@@ -237,6 +268,12 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
+      - name: Leave out the Icon Composer icon below macOS 26
+        run: |
+          # actool compiles AppIcon.icon only on a macOS 26+ host; the App icon job checks it there.
+          if (( $(sw_vers -productVersion | cut -d. -f1) < 26 )); then
+            echo "XCODE_XCCONFIG_FILE=$GITHUB_WORKSPACE/scripts/without-app-icon.xcconfig" >> "$GITHUB_ENV"
+          fi
       - name: Prepare isolated diagnostic source and build Release app
         env:
           AUTOMATIC_LIFECYCLE: ${{ inputs.automatic_window_lifecycle }}
@@ -346,6 +383,12 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
+      - name: Leave out the Icon Composer icon below macOS 26
+        run: |
+          # actool compiles AppIcon.icon only on a macOS 26+ host; the App icon job checks it there.
+          if (( $(sw_vers -productVersion | cut -d. -f1) < 26 )); then
+            echo "XCODE_XCCONFIG_FILE=$GITHUB_WORKSPACE/scripts/without-app-icon.xcconfig" >> "$GITHUB_ENV"
+          fi
       - name: Compare exact baseline and candidate commits
         run: |
           python3 scripts/compare-workspace-editor.py \
@@ -370,6 +413,12 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
+      - name: Leave out the Icon Composer icon below macOS 26
+        run: |
+          # actool compiles AppIcon.icon only on a macOS 26+ host; the App icon job checks it there.
+          if (( $(sw_vers -productVersion | cut -d. -f1) < 26 )); then
+            echo "XCODE_XCCONFIG_FILE=$GITHUB_WORKSPACE/scripts/without-app-icon.xcconfig" >> "$GITHUB_ENV"
+          fi
       - name: Build and archive the validation artifact
         run: |
           mkdir -p "${{ runner.temp }}/services-artifact"
@@ -403,6 +452,12 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           persist-credentials: false
+      - name: Leave out the Icon Composer icon below macOS 26
+        run: |
+          # actool compiles AppIcon.icon only on a macOS 26+ host; the App icon job checks it there.
+          if (( $(sw_vers -productVersion | cut -d. -f1) < 26 )); then
+            echo "XCODE_XCCONFIG_FILE=$GITHUB_WORKSPACE/scripts/without-app-icon.xcconfig" >> "$GITHUB_ENV"
+          fi
       - name: Measure five fresh processes with the locked dependencies
         run: |
           python3 scripts/benchmark-app.py \

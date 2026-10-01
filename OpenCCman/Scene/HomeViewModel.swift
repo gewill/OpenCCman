@@ -14,12 +14,14 @@ import SwiftyUserDefaults
 
 @MainActor
 class HomeViewModel: ObservableObject {
+  static let exampleSourceText = "鼠标里面的硅二极管坏了，导致光标分辨率降低。"
+
   #if os(macOS)
     let sourceReadingState = WorkspaceEditorReadingState()
     let resultReadingState = WorkspaceEditorReadingState()
   #endif
 
-  @Published var inputText: String = "鼠标里面的硅二极管坏了，导致光标分辨率降低。" {
+  @Published var inputText: String = "" {
     didSet {
       guard inputText != oldValue else { return }
       #if os(macOS)
@@ -47,6 +49,7 @@ class HomeViewModel: ObservableObject {
   @AppStorage(UserDefaultsKeys.lastVersionPromptedForReview.rawValue) var lastVersionPromptedForReview: String = ""
 
   @Published var showingProAlert: Bool = false
+  @Published var proAlertDetailKey = "Unlimited calculations"
   @Published var error: Error?
   @Published var isLoading: Bool = false
   @Published private(set) var isImporting = false
@@ -78,7 +81,11 @@ class HomeViewModel: ObservableObject {
     private var didInjectQAUnreadCards = false
   #endif
   #if os(macOS)
+    let windowOwnerID = UUID()
     weak var window: NSWindow?
+    #if DEBUG
+      private var didImportLargeFileForQA = false
+    #endif
 
     private func accepts(_ notification: Notification) -> Bool {
       guard let window else { return false }
@@ -193,6 +200,17 @@ class HomeViewModel: ObservableObject {
 
   var selectedPreset: ConversionConfiguration.Preset? { configuration.preset }
 
+  var canFillExample: Bool {
+    inputText.isEmpty && resultText.isEmpty && exportSnapshot == nil && !isImporting && !isLoading
+  }
+
+  var canClearSource: Bool { !inputText.isEmpty }
+
+  func fillExampleIfEmpty() {
+    guard canFillExample else { return }
+    replaceSource(Self.exampleSourceText)
+  }
+
   func applyPreset(_ preset: ConversionConfiguration.Preset) {
     let configuration = preset.configuration
     targetOptions = configuration.target
@@ -211,6 +229,7 @@ class HomeViewModel: ObservableObject {
           UserDefaults.standard.removeObject(forKey: WhatsNewCoordinator.lastPresentedVersionKey)
         }
       #endif
+      proAlertDetailKey = "Unlimited calculations"
       showingProAlert = true
       return
     }
@@ -298,6 +317,19 @@ class HomeViewModel: ObservableObject {
     exportSnapshot = nil
   }
 
+  func clearSource() {
+    guard canClearSource else { return }
+    // Invalidate both task IDs before replacing the document so a late worker
+    // cannot publish a result or imported draft after confirmation.
+    cancelImport()
+    cancelConversion()
+    inputText = ""
+    sourceFilename = nil
+    resultText = ""
+    resultConfiguration = nil
+    exportSnapshot = nil
+  }
+
   func handleFileFailure(_ error: Error) {
     let cocoaError = error as NSError
     guard !(cocoaError.domain == NSCocoaErrorDomain && cocoaError.code == NSUserCancelledError) else { return }
@@ -305,7 +337,7 @@ class HomeViewModel: ObservableObject {
   }
 
   func importFile(_ url: URL) {
-    startImport { try await TextFileService.read(url) }
+    startImport { try await TextFileService.prepare(url) }
   }
 
   func importDroppedItems(_ providers: [NSItemProvider]) -> Bool {
@@ -313,11 +345,11 @@ class HomeViewModel: ObservableObject {
       error = TextFileService.FileError.multipleItems
       return false
     }
-    startImport { try await TextFileService.read(provider) }
+    startImport { try await TextFileService.prepare(provider) }
     return true
   }
 
-  private func startImport(_ read: @escaping () async throws -> TextFileService.ImportedText) {
+  private func startImport(_ read: @escaping () async throws -> TextFileService.PreparedImport) {
     cancelImport()
     error = nil
     isImporting = true
@@ -334,7 +366,36 @@ class HomeViewModel: ObservableObject {
         let imported = try await read()
         try Task.checkCancellation()
         guard let self, self.importID == identifier else { return }
-        self.replaceSource(imported.text, sourceFilename: imported.sourceFilename)
+        switch imported {
+        case let .text(text):
+          self.replaceSource(text.text, sourceFilename: text.sourceFilename)
+        case let .largeFile(source):
+          #if os(macOS)
+            var retainedByCoordinator = false
+            defer { if !retainedByCoordinator { try? source.close() } }
+            guard MacLargeFileCoordinator.isEnabled else { throw TextFileService.FileError.tooLarge }
+            try MacLargeFileCoordinator.validateSize(source.byteCount)
+            var qualified = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isPro.rawValue)
+            #if DEBUG
+              if MacLargeFileCoordinator.isQABundle,
+                 ProcessInfo.processInfo.arguments.contains("-qa-large-file-pro") {
+                qualified = true
+              }
+            #endif
+            if qualified {
+              try MacLargeFileCoordinator.shared.offer(
+                source, configuration: self.configuration, qualified: qualified,
+                owner: self.windowOwnerID, window: self.window)
+              retainedByCoordinator = true
+            } else {
+              self.proAlertDetailKey = "pro_large_file_conversion"
+              self.showingProAlert = true
+            }
+          #endif
+          self.isImporting = false
+          self.importTask = nil
+          self.importID = nil
+        }
       } catch {
         guard !Task.isCancelled, let self, self.importID == identifier else { return }
         self.error = error
@@ -351,6 +412,23 @@ class HomeViewModel: ObservableObject {
     importID = nil
     isImporting = false
   }
+
+  #if os(macOS) && DEBUG
+    /// Exact isolated QA bundle only; no production preferences or entitlement writes.
+    func importLargeFileForQAIfRequested() {
+      guard !didImportLargeFileForQA, MacLargeFileCoordinator.isQABundle else { return }
+      let arguments = ProcessInfo.processInfo.arguments
+      guard let index = arguments.firstIndex(of: "-qa-import-large-file"),
+            arguments.indices.contains(index + 1) else { return }
+      didImportLargeFileForQA = true
+      if arguments.contains("-qa-large-file-existing-result") {
+        resultText = "鼠標裡面的矽二極體壞了，導致游標解析度降低。"
+        resultConfiguration = configuration
+        exportSnapshot = ExportSnapshot(text: resultText, filename: "draft-converted.txt")
+      }
+      importFile(URL(fileURLWithPath: arguments[index + 1]))
+    }
+  #endif
 
   deinit {
     conversionTask?.cancel()

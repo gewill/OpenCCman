@@ -65,6 +65,7 @@ struct ConversionInspector: View {
       .disabled(viewModel.targetOptions == .simplified)
     }
     .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
+    .launchSettle(order: 0)
   }
 }
 
@@ -73,16 +74,25 @@ struct SourcePane: View {
   @EnvironmentObject private var whatsNewWindow: WhatsNewWindowState
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @State private var isDropTargeted = false
+  @State private var showingClearConfirmation = false
+  @FocusState private var sourceEditorFocused: Bool
   var editorHeight: CGFloat = 200
   var paneHeight: CGFloat?
   @State private var headerHeight: CGFloat = 0
   var showsConversionAction = true
 
+  private var fileImportHint: LocalizedStringKey {
+    #if os(macOS)
+      if MacLargeFileCoordinator.isEnabled { return "mac_text_file_hint" }
+    #endif
+    return "text_file_hint"
+  }
+
   var body: some View {
     VStack(alignment: .leading, spacing: Constant.padding) {
       VStack(alignment: .leading, spacing: Constant.padding) {
         HStack {
-          Text("Source").appFont(.headline)
+          Text("Source").appFont(.headline).launchHandoffTarget(.source)
           Button {
             guard let string = getClipboardString(),
                   string.isEmpty == false
@@ -96,7 +106,19 @@ struct SourcePane: View {
           .appNeumorphicButtonStyle(Circle(), kind: .icon)
           .accessibilityLabel(Text("Paste Text"))
 
-          Spacer()
+          if viewModel.canClearSource {
+            Button {
+              showingClearConfirmation = true
+            } label: {
+              Image(systemName: "trash")
+            }
+            .appNeumorphicButtonStyle(Circle(), kind: .icon)
+            .accessibilityLabel(Text("source_clear_action"))
+            .accessibilityIdentifier("source-clear")
+            .help("source_clear_action")
+          }
+
+          Spacer(minLength: 0)
           if showsConversionAction && !dynamicTypeSize.isAccessibilitySize {
             ConversionAction()
           }
@@ -127,7 +149,7 @@ struct SourcePane: View {
         if let filename = viewModel.sourceFilename {
           Text(filename).appFont(.caption).lineLimit(1).truncationMode(.middle)
         }
-        Text("text_file_hint")
+        Text(fileImportHint)
           .appFont(.caption)
           .foregroundColor(.secondary)
           .frame(maxWidth: .infinity, alignment: .leading)
@@ -144,18 +166,47 @@ struct SourcePane: View {
           }
       }
       .readSize { headerHeight = $0.height }
-      sourceEditor
-        .accessibilityLabel(Text("Source"))
-        .disabled(viewModel.isImporting)
-        .frame(maxWidth: .infinity)
-        .frame(height: paneHeight.map { max(180, $0 - headerHeight - 60) } ?? editorHeight)
-        .padding(Constant.padding)
-        .background(
-          RoundedRectangle(cornerRadius: 10)
-            .stroke(Color.secondary, lineWidth: 1)
-        )
+      ZStack(alignment: .topLeading) {
+        sourceEditor
+          .accessibilityLabel(Text("Source"))
+          .accessibilityHint(viewModel.inputText.isEmpty ? Text("source_empty_prompt") : Text(""))
+          .disabled(viewModel.isImporting)
+          .focused($sourceEditorFocused)
+        if viewModel.inputText.isEmpty && !viewModel.isImporting {
+          VStack(alignment: .leading, spacing: 8) {
+            Text("source_empty_prompt")
+              .appFont(.body)
+              .foregroundColor(.secondary)
+              .fixedSize(horizontal: false, vertical: true)
+              .allowsHitTesting(false)
+            if viewModel.canFillExample {
+              Button("source_fill_example") { viewModel.fillExampleIfEmpty() }
+                .appNeumorphicButtonStyle(Capsule())
+            }
+          }
+          .padding(8)
+        }
+      }
+      .frame(maxWidth: .infinity)
+      .frame(height: paneHeight.map { max(180, $0 - headerHeight - 60) } ?? editorHeight)
+      .padding(Constant.padding)
+      .background(
+        RoundedRectangle(cornerRadius: 10)
+          .stroke(Color.secondary, lineWidth: 1)
+      )
     }
     .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
+    .launchSettle(order: 1)
+    .alert("source_clear_title", isPresented: $showingClearConfirmation) {
+      Button("Cancel", role: .cancel) {}
+        .keyboardShortcut(.cancelAction)
+      Button("source_clear_action", role: .destructive) {
+        viewModel.clearSource()
+        sourceEditorFocused = true
+      }
+    } message: {
+      Text("source_clear_message")
+    }
   }
 
   @ViewBuilder private var sourceEditor: some View {
@@ -179,7 +230,7 @@ struct ResultPane: View {
     VStack(alignment: .leading, spacing: Constant.padding) {
       VStack(alignment: .leading, spacing: Constant.padding) {
         HStack {
-          Text("Result").appFont(.headline)
+          Text("Result").appFont(.headline).launchHandoffTarget(.result)
           Button(action: {
             copyToClipboard(text: viewModel.resultText)
           }, label: {
@@ -221,6 +272,7 @@ struct ResultPane: View {
         )
     }
     .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
+    .launchSettle(order: 2)
   }
 
   @ViewBuilder private var resultEditor: some View {
@@ -236,6 +288,10 @@ struct ResultPane: View {
 struct ConversionAction: View {
   @EnvironmentObject private var viewModel: HomeViewModel
   var body: some View {
+    Group { action }.launchSettle(pop: true, order: 1)
+  }
+
+  @ViewBuilder private var action: some View {
     if viewModel.isLoading {
       Button { viewModel.cancelConversion() } label: {
         Text("Cancel")

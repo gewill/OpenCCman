@@ -2,6 +2,8 @@
 
 OpenCCman 正式构建和分发使用 Xcode Cloud。执行构建、修改 workflow 或更新 TestFlight 信息前，应先核对本文。配置再次核对日期：2026-09-17；以下 App 和 workflow ID 来自 App Store Connect 实际查询。当前 2.0 Build 56 的准确运行、产物和提审状态见 [发布候选记录](validation/build-56/README.md)，历史章节保留当时事实。
 
+2026-09-28 发布状态：两端 2.0(56) 已手动发布，ASC 均为 `READY_FOR_DISTRIBUTION`；终身 Pro 美国基准价已读回 US$5.99，三语网站及 GitHub Release 均已公开。美国、英国、台湾店面的 Apple Lookup API 已返回 2.0；实际购买页仍待复测，操作及剩余验收见[上架记录](release/launch-2.0-20260928.md)。
+
 ## App 与 workflow
 
 | 项目 | 当前值 |

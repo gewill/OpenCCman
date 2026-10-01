@@ -1,0 +1,23 @@
+name: OpenCCman21VoiceOverProbe
+options:
+  deploymentTarget:
+    iOS: '27.0'
+settings:
+  base:
+    GENERATE_INFOPLIST_FILE: YES
+    CODE_SIGNING_ALLOWED: NO
+    SWIFT_VERSION: '5.0'
+targets:
+  OpenCCman21VoiceOverProbe:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [Tests]
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: org.gewill.OpenCCman.Issue20VoiceOverProbe20260928
+schemes:
+  OpenCCman21VoiceOverProbe:
+    build:
+      targets:
+        OpenCCman21VoiceOverProbe: [test]
+    test:
+      targets: [OpenCCman21VoiceOverProbe]

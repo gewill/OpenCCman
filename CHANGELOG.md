@@ -13,7 +13,46 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 ## [Unreleased]
 
-Changes after the published 2.0 release target `develop`.
+Changes after the 2.1 release target `develop`.
+
+## [2.1] - 2026-10-01
+
+Version 2.1 was built by Xcode Cloud as Build 60, from source
+`da526f03f5f9d49df3edfbc4ef9c5c37c49d36fe`. Both platforms were approved
+and manually released on 2026-10-01; storefront propagation can take time.
+See the [release record](docs/release/launch-2.1-20261001.md).
+The application still supports iOS/iPadOS 15 and macOS 12.
+
+### Added
+
+- Enable Pro on Mac to convert one UTF-8 TXT file larger than 10 MiB and up to
+  1 GiB directly to a user-selected output, with progress and cancellation.
+  The file body does not enter the editor or replace the current draft/result.
+  The ordinary editor workflow and iPhone/iPad file limit remain 10 MiB;
+  batch conversion is not supported ([#52](https://github.com/gewill/OpenCCman/issues/52),
+  [#226](https://github.com/gewill/OpenCCman/pull/226)).
+- Add the free Convert Chinese Text action to Shortcuts on iOS/iPadOS 16 and
+  macOS 13 or later. It returns converted text using one of four presets,
+  accepts at most 10 MiB of UTF-8 text, and does not change an open workspace
+  or consume the homepage daily allowance ([#26](https://github.com/gewill/OpenCCman/issues/26)).
+- Add confirmed one-tap Clear Source. Confirmation removes the current source,
+  result and export snapshot, cancels stale work, and retains conversion
+  configuration and daily usage ([#246](https://github.com/gewill/OpenCCman/issues/246)).
+
+### Changed
+
+- New workspaces start with empty source text. The previous sample is available
+  through an explicit example action ([#245](https://github.com/gewill/OpenCCman/issues/245)).
+- Update the app icon and launch mark, including system-supported dark, clear
+  and tinted icon appearances. The brief launch transition respects Reduce
+  Motion and is skipped with VoiceOver ([#251](https://github.com/gewill/OpenCCman/issues/251)).
+
+### Fixed
+
+- Before global-shortcut replacement, recheck the selected text and editable
+  target. If the target cannot be confirmed, retain the converted result in
+  OpenCCman for manual copying instead of replacing a changed selection
+  ([replacement guard](https://github.com/gewill/OpenCCman/commit/2c6e631)).
 
 ## [2.0]
 
