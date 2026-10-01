@@ -65,13 +65,13 @@ git worktree add -b codex/<issue>-<topic> ../openccman-<topic> origin/develop
 - `main`、`develop` 已要求通过 PR 更新，保护同样约束管理员，禁止强制推送和删除受保护分支。两者现均要求由 GitHub Actions（app ID 15368）提供的 `App Regression` 成功；`main` 的工作流文件随发布 PR #210 合入，合并后仍需核对精确 `main` SHA 的推送检查。
 - 单人维护不要求额外审批者，不配置机器人绕过；保留 merge commit。`strict=false` 不强制每次更新至最新基线，依赖合并后仍需核对目标、冲突和候选 SHA；发生代码整合时重新验证候选。
 
-普通任务可使用 squash merge。发布、热修复及历史迁移采用 merge commit，保留分支祖先关系。SwiftyOpenCC 上游同步 PR 也必须保留 merge commit；不要将应用任务的 squash 策略套到 wrapper 同步上。
+普通任务可使用 squash merge。2026-10-01 起，应用发布遵循维护者新的统一流程：当前 PR HEAD 检查与审核通过后 Squash and merge 到 main；Tag 指向实际 squash 后的 main 提交。部署前在干净的 main 上仅快进同步，确认 HEAD 与 origin/main 相同；构建不得产生未提交的受控文件改动，部署后验证正式地址并记录实际部署 SHA。早期发布与历史迁移的 merge commit 记录保留为历史事实。SwiftyOpenCC 上游同步仍需保留祖先关系，其独立仓库流程不在本轮变更范围内。
 
 ## 发布和热修复
 
 1. 从已集成的 `develop` 创建 `release/v<version>`，冻结功能，仅处理版本信息、发布文案、签名配置和阻断问题。
 2. 确认需要云端验收包后，从明确的发布候选 SHA 创建临时 `build/<version>-<YYYYMMDD>` 分支。记录候选 SHA、Xcode Cloud 构建号及 TestFlight 验收结果。
-3. 验收通过后，通过 PR 将发布分支合入 `main`，在对应发布提交创建 `v<version>` Tag，再通过 PR 将发布期修复同步回 `develop`。
+3. 验收通过后，通过检查与审核后 Squash and merge 将发布分支合入 `main`，在实际 squash 提交创建 `v<version>` Tag，再通过 PR 将发布期修复同步回 `develop`。
 4. 如需从 `main` 重新打包，明确选定提交后另建打包分支；合并发布 PR 本身不应触发 `build` 前缀规则。
 5. 确认产物和版本记录后清理临时分支。若候选期间又有代码修改，必须重新验证最终候选。
 

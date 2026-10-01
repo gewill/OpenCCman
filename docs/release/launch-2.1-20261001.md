@@ -9,7 +9,7 @@ The user authorized App Store publication, GitHub Tag/Release and website change
 
 Before mutation, both states were PENDING_DEVELOPER_RELEASE and review submissions COMPLETE. Sequential `asc versions release --version-id … --confirm` calls succeeded; fresh review status reads returned the states above. The first US public Lookup read still returned 2.0, so release acceptance must not be mistaken for all storefronts having propagated.
 
-The publication branch starts at develop `9daa9c77eea9d9fb6b0952b63772d4f68baf3bfd`. Its application, project and ci_scripts trees are identical to Build 60 source; later commits contain store media and documentation only. The release PR targets main with a merge commit; v2.1 must identify that merged release commit. Release documentation is synchronized back to develop through a PR. No new build branch, Cloud run, dependency or price change is part of this publication.
+The publication branch starts at develop `9daa9c77eea9d9fb6b0952b63772d4f68baf3bfd`. Its application, project and ci_scripts trees are identical to Build 60 source; later commits contain store media and documentation only. Under the user’s updated publication rule, the release PR targets main with Squash and merge; v2.1 must identify the resulting main squash commit, never the feature-branch HEAD. Release documentation is synchronized back to develop through a PR. No new build branch, Cloud run, dependency or price change is part of this publication.
 
 ## Product scope
 
