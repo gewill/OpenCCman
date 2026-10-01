@@ -83,3 +83,12 @@ iOS 15, physical-device, or signed TestFlight behavior. The QA bundle has a
 different bundle ID from the store
 app, so its RevenueCat Pro sheet can show unavailable products; only sheet
 presentation and dismissal are validated here, not purchase configuration.
+
+## Experimental mobile capacity
+
+`testMobileExperimentalCapacityFlow` requires explicit fixture/mode environment
+variables and otherwise skips. The isolated runner and evidence for the 1 GiB
+candidate are in [#268 validation](../../../docs/validation/issue-268-mobile-gib/README.md).
+It verifies per-file confirmation, cancellation, confirmation after relaunch,
+and completion using the real QA App; it does not automate the system file picker
+or replace signed-device, provider, purchase, or memory acceptance.

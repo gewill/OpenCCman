@@ -8,6 +8,15 @@ final class MobileFileRuntime {
   static let shared = MobileFileRuntime()
   // Enabled for the v2.2 TestFlight acceptance candidate; public release remains gated on #260.
   nonisolated static let productionEnabled = true
+  // #268 remains a separate candidate until its signed-device acceptance. The
+  // 100 MiB release gate must not silently enable the experimental capacity.
+  nonisolated static let experimentalCapacityEnabled = false
+  nonisolated static var isExperimentalCapacityEnabled: Bool {
+    #if DEBUG
+    if isQABundle, ProcessInfo.processInfo.arguments.contains("-qa-mobile-file-experimental-capacity") { return true }
+    #endif
+    return experimentalCapacityEnabled
+  }
   nonisolated static var isEnabled: Bool {
     #if DEBUG
     if isQABundle, ProcessInfo.processInfo.arguments.contains("-qa-enable-mobile-large-files") { return true }
@@ -46,6 +55,7 @@ final class MobileFileRuntime {
         }
       }
     }, isQualified: { [weak self] in self?.isQualified ?? false },
+       allowsExperimentalCapacity: { Self.isExperimentalCapacityEnabled },
        beginWork: { [weak self] in
          guard let self else { return }
          #if DEBUG

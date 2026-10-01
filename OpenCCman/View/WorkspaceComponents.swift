@@ -85,7 +85,9 @@ struct SourcePane: View {
     #if os(macOS)
       if MacLargeFileCoordinator.isEnabled { return "mac_text_file_hint" }
     #else
-      if MobileFileRuntime.isEnabled { return "mobile_text_file_hint" }
+      if MobileFileRuntime.isEnabled {
+        return MobileFileRuntime.isExperimentalCapacityEnabled ? "mobile_text_file_experimental_hint" : "mobile_text_file_hint"
+      }
     #endif
     return "text_file_hint"
   }
