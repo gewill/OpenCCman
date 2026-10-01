@@ -1,0 +1,284 @@
+{
+  "scope": "Simulator UI with local fixture and QA Pro; no device memory/performance/provider/purchase acceptance",
+  "oracle": "one whole-text ChineseConverter.convert from pinned SwiftyOpenCC on host; not the app stream/pump",
+  "runs": [
+    {
+      "label": "baseline-en-7E765B46",
+      "source_commit": "fbd03f79b18a1d8b35c248914e8490cc2d931da5",
+      "mode": "baseline",
+      "language": "en",
+      "input_bytes": 1073741824,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "test_wall_seconds": 7.84823212500487,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "7E765B46-E677-402A-91F2-5714BCBE6229",
+            "deviceName": "OpenCCman 268 iPhone",
+            "modelName": "iPhone 16 Pro",
+            "osBuildNumber": "22G86",
+            "osVersion": "18.6",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ]
+    },
+    {
+      "label": "baseline-zh-Hans-DD688D7F",
+      "source_commit": "fbd03f79b18a1d8b35c248914e8490cc2d931da5",
+      "mode": "baseline",
+      "language": "zh-Hans",
+      "input_bytes": 268435456,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "test_wall_seconds": 7.829780250001932,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "DD688D7F-5F64-491E-AE3D-E6C9F8686395",
+            "deviceName": "OpenCCman 268 iPad",
+            "modelName": "iPad Pro 13-inch (M4)",
+            "osBuildNumber": "22G86",
+            "osVersion": "18.6",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ]
+    },
+    {
+      "label": "final-en-1g",
+      "source_commit": "0bd20fff08b29b1226005440cafa5fe720b053f6",
+      "mode": "candidate",
+      "language": "en",
+      "input_bytes": 1073741824,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "test_wall_seconds": 88.87975979200564,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "7E765B46-E677-402A-91F2-5714BCBE6229",
+            "deviceName": "OpenCCman 268 iPhone",
+            "modelName": "iPhone 16 Pro",
+            "osBuildNumber": "22G86",
+            "osVersion": "18.6",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "source_unchanged": true,
+      "output_check": {
+        "actual": {
+          "input_bytes": 1073741824,
+          "input_sha256": "515e7a83c7f50403ea34984b35dda7205991a5e650eb0f18d38d6f4642d2d37f",
+          "output_bytes": 1073741824,
+          "output_sha256": "41f27c1de6eb4b2dca16513612c7eeaa878b3516a57df1e58316e599bc1fa399"
+        },
+        "oracle": {
+          "input_bytes": 1073741824,
+          "input_sha256": "515e7a83c7f50403ea34984b35dda7205991a5e650eb0f18d38d6f4642d2d37f",
+          "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+          "mode": "traditional",
+          "options_raw": 1,
+          "output_bytes": 1073741824,
+          "output_sha256": "41f27c1de6eb4b2dca16513612c7eeaa878b3516a57df1e58316e599bc1fa399"
+        },
+        "journal": {
+          "schema": 2,
+          "inputBytes": 1073741824,
+          "id": "01795D49-40F0-4FF0-AFBB-16696DF4596B",
+          "optionsRawValue": 1,
+          "sha256": "41f27c1de6eb4b2dca16513612c7eeaa878b3516a57df1e58316e599bc1fa399",
+          "capacity": "experimental",
+          "outputBytes": 1073741824,
+          "filename": "OpenCCman-1073741824-bytes-converted.txt"
+        },
+        "matches": true
+      }
+    },
+    {
+      "label": "candidate-zh-Hans-DD688D7F",
+      "source_commit": "0bd20fff08b29b1226005440cafa5fe720b053f6",
+      "mode": "candidate",
+      "language": "zh-Hans",
+      "input_bytes": 268435456,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "test_wall_seconds": 35.1620077080006,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "DD688D7F-5F64-491E-AE3D-E6C9F8686395",
+            "deviceName": "OpenCCman 268 iPad",
+            "modelName": "iPad Pro 13-inch (M4)",
+            "osBuildNumber": "22G86",
+            "osVersion": "18.6",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "output_check": {
+        "actual": {
+          "input_bytes": 268435456,
+          "input_sha256": "c68fcd39a8d813c7da971273745e1d3295bbedba789bb2d65c99c906a748255d",
+          "output_bytes": 268435456,
+          "output_sha256": "778da2126d86a79edfb89fe672a89ec48a407c72af30f5f2dbc1d907eb0c2ae1"
+        },
+        "oracle": {
+          "input_bytes": 268435456,
+          "input_sha256": "c68fcd39a8d813c7da971273745e1d3295bbedba789bb2d65c99c906a748255d",
+          "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+          "mode": "traditional",
+          "options_raw": 1,
+          "output_bytes": 268435456,
+          "output_sha256": "778da2126d86a79edfb89fe672a89ec48a407c72af30f5f2dbc1d907eb0c2ae1"
+        },
+        "journal": {
+          "inputBytes": 268435456,
+          "filename": "OpenCCman-268435456-bytes-converted.txt",
+          "optionsRawValue": 1,
+          "outputBytes": 268435456,
+          "id": "5A797C39-7ECE-42DE-825F-8CD640AABE41",
+          "schema": 2,
+          "capacity": "experimental",
+          "sha256": "778da2126d86a79edfb89fe672a89ec48a407c72af30f5f2dbc1d907eb0c2ae1"
+        },
+        "matches": true
+      }
+    },
+    {
+      "label": "candidate-zh-Hant-7E765B46",
+      "source_commit": "0bd20fff08b29b1226005440cafa5fe720b053f6",
+      "mode": "candidate",
+      "language": "zh-Hant",
+      "input_bytes": 536870912,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "test_wall_seconds": 52.752703042002395,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "7E765B46-E677-402A-91F2-5714BCBE6229",
+            "deviceName": "OpenCCman 268 iPhone",
+            "modelName": "iPhone 16 Pro",
+            "osBuildNumber": "22G86",
+            "osVersion": "18.6",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "output_check": {
+        "actual": {
+          "input_bytes": 536870912,
+          "input_sha256": "49dad26eb3190b9f1d1913fe13bcc3fe448671065ebd0696f746b22885c21e8a",
+          "output_bytes": 536870912,
+          "output_sha256": "8d683ba472107d66a659fc6d79e2cf9fce14a2b9be69b930b087c9beeb1b7ea4"
+        },
+        "oracle": {
+          "input_bytes": 536870912,
+          "input_sha256": "49dad26eb3190b9f1d1913fe13bcc3fe448671065ebd0696f746b22885c21e8a",
+          "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+          "mode": "traditional",
+          "options_raw": 1,
+          "output_bytes": 536870912,
+          "output_sha256": "8d683ba472107d66a659fc6d79e2cf9fce14a2b9be69b930b087c9beeb1b7ea4"
+        },
+        "journal": {
+          "optionsRawValue": 1,
+          "schema": 2,
+          "inputBytes": 536870912,
+          "filename": "OpenCCman-536870912-bytes-converted.txt",
+          "sha256": "8d683ba472107d66a659fc6d79e2cf9fce14a2b9be69b930b087c9beeb1b7ea4",
+          "capacity": "experimental",
+          "id": "EA916A2A-960F-418B-9505-3028F9BDE05B",
+          "outputBytes": 536870912
+        },
+        "matches": true
+      }
+    },
+    {
+      "label": "final-disabled",
+      "source_commit": "0bd20fff08b29b1226005440cafa5fe720b053f6",
+      "mode": "disabled",
+      "language": "zh-Hans",
+      "input_bytes": 104857601,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "test_wall_seconds": 6.085175832995446,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "DD688D7F-5F64-491E-AE3D-E6C9F8686395",
+            "deviceName": "OpenCCman 268 iPad",
+            "modelName": "iPad Pro 13-inch (M4)",
+            "osBuildNumber": "22G86",
+            "osVersion": "18.6",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "source_unchanged": true
+    }
+  ]
+}
