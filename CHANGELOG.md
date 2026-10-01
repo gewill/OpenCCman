@@ -13,10 +13,14 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 ## [Unreleased]
 
-Changes after the published 2.0 release target `develop`.
+Changes after the 2.1 release target `develop`.
 
-The 2.1 candidate was built by Xcode Cloud as Build 60, from source
-`da526f03f5f9d49df3edfbc4ef9c5c37c49d36fe`. It is not yet a public release.
+## [2.1] - 2026-10-01
+
+Version 2.1 was built by Xcode Cloud as Build 60, from source
+`da526f03f5f9d49df3edfbc4ef9c5c37c49d36fe`. Both platforms were approved
+and manually released on 2026-10-01; storefront propagation can take time.
+See the [release record](docs/release/launch-2.1-20261001.md).
 The application still supports iOS/iPadOS 15 and macOS 12.
 
 ### Added
