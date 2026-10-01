@@ -399,10 +399,8 @@ class HomeViewModel: ObservableObject {
             var retainedByCoordinator = false
             defer { if !retainedByCoordinator { try? source.close() } }
             guard MobileFileRuntime.isEnabled else { throw TextFileService.FileError.tooLarge }
-            guard source.byteCount <= FileConversionPolicy.mobileMaximumBytes else {
-              throw MobileLargeFileCoordinator.StartError.exceedsCapacity
-            }
             let runtime = MobileFileRuntime.shared
+            try runtime.coordinator.validateSize(source.byteCount)
             if runtime.isQualified {
               try runtime.coordinator.offer(source, configuration: self.configuration, owner: self.windowOwnerID)
               retainedByCoordinator = true

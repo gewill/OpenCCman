@@ -29,6 +29,7 @@ final class MobileLargeFileService: @unchecked Sendable {
     let inputBytes: UInt64
     let outputBytes: UInt64
     let optionsRawValue: Int
+    let capacity: MobileFileCapacity
     let cleanupPending: Bool
   }
   enum Recovery: Equatable, Sendable { case empty, ready(Ready), protectedDataUnavailable }
@@ -38,7 +39,7 @@ final class MobileLargeFileService: @unchecked Sendable {
   }
   enum JobError: Error {
     case protectedDataUnavailable, pendingResult, invalidStore, invalidJournal, staleJob
-    case insufficientSpace, inputTooLarge
+    case insufficientSpace, inputTooLarge, experimentalInputTooLarge
   }
   struct CleanupError: Error { let primary: Error; let cleanup: Error }
   struct Hooks: Sendable {
@@ -81,6 +82,7 @@ final class MobileLargeFileService: @unchecked Sendable {
   }
 
   func convert(source: URL, options: ChineseConverter.Options,
+               capacity: MobileFileCapacity = .standard,
                expectedSource: TextFileFingerprint? = nil,
                snapshotReady: @escaping @Sendable () throws -> Void = {},
                progress: @escaping @Sendable (UInt64, UInt64) -> Void = { _, _ in }) async throws -> Ready {
@@ -90,7 +92,8 @@ final class MobileLargeFileService: @unchecked Sendable {
       if !self.recovered { try self.recoverOnWorker() }
       guard self.ready == nil else { throw JobError.pendingResult }
       return try self.convertOnWorker(source: source, options: .init(rawValue: rawOptions),
-                                      cancellation: cancellation, expectedSource: expectedSource, snapshotReady: snapshotReady, progress: progress)
+                                      capacity: capacity, cancellation: cancellation,
+                                      expectedSource: expectedSource, snapshotReady: snapshotReady, progress: progress)
     }
   }
 
@@ -99,7 +102,7 @@ final class MobileLargeFileService: @unchecked Sendable {
     try await perform { _ in
       try self.protection.check()
       guard let ready = self.ready, ready.id == id else { throw JobError.staleJob }
-      try self.requireSpace(ready.outputBytes + 64 * 1024 * 1024)
+      try self.requireWriteSpace(ready.outputBytes)
       guard let fingerprint = try TextFileFingerprint.read(url: ready.url, followSymlink: false),
             fingerprint.isRegular, fingerprint.size == ready.outputBytes else { throw JobError.invalidJournal }
       return ready.url
@@ -151,6 +154,7 @@ final class MobileLargeFileService: @unchecked Sendable {
   }
 
   private func convertOnWorker(source: URL, options: ChineseConverter.Options,
+                               capacity: MobileFileCapacity,
                                cancellation: StreamingConversionCancellation,
                                expectedSource: TextFileFingerprint?,
                                snapshotReady: @Sendable () throws -> Void,
@@ -160,7 +164,8 @@ final class MobileLargeFileService: @unchecked Sendable {
     try makeDirectory(job)
     do {
       let snapshot = job.appendingPathComponent("input.txt")
-      let inputBytes = try snapshotSource(source, to: snapshot, expectedSource: expectedSource, cancellation: cancellation)
+      let inputBytes = try snapshotSource(source, to: snapshot, capacity: capacity,
+                                          expectedSource: expectedSource, cancellation: cancellation)
       try snapshotReady()
       try check(cancellation)
       let partial = job.appendingPathComponent("output.partial")
@@ -168,11 +173,13 @@ final class MobileLargeFileService: @unchecked Sendable {
       defer { try? input.close() }
       let output = try openFile(partial, writing: true)
       defer { try? output.close() }
+      let storage = MobileFileStorageMonitor { try self.requireWriteSpace($0) }
       let counts = try StreamingConversionPump.run(
         input: input, output: output, expectedInputBytes: inputBytes, options: options,
         cancellation: cancellation, progress: progress,
         hooks: .init(beforeRead: { try self.check(cancellation); try self.hooks.boundary(.conversionRead) },
-                     beforeWrite: { try self.check(cancellation); try self.hooks.boundary(.conversionWrite) }))
+                     beforeWrite: { try self.check(cancellation); try self.hooks.boundary(.conversionWrite) },
+                     beforeOutputWrite: { try storage.willWrite($0) }))
       try check(cancellation)
       try hooks.boundary(.outputSync)
       try output.synchronize()
@@ -181,8 +188,9 @@ final class MobileLargeFileService: @unchecked Sendable {
       let checksum = try digest(partial, cancellation: cancellation)
       let filename = Self.exportFilename(source.lastPathComponent)
       let resultURL = job.appendingPathComponent(filename)
-      let journal = Journal(schema: 1, id: id, filename: filename, inputBytes: inputBytes,
-                            outputBytes: counts.outputBytes, optionsRawValue: options.rawValue, sha256: checksum)
+      let journal = Journal(schema: capacity == .standard ? 1 : 2, id: id, filename: filename, inputBytes: inputBytes,
+                            outputBytes: counts.outputBytes, optionsRawValue: options.rawValue,
+                            sha256: checksum, capacity: capacity == .standard ? nil : capacity)
       let journalPartial = job.appendingPathComponent("ready.partial")
       let journalHandle = try openFile(journalPartial, writing: true)
       defer { try? journalHandle.close() }
@@ -206,7 +214,8 @@ final class MobileLargeFileService: @unchecked Sendable {
       do { try hooks.boundary(.inputCleanup); try unlinkFile(snapshot) }
       catch { cleanupPending = true; recovered = false }
       let result = Ready(id: id, url: resultURL, exportFilename: filename,
-                         inputBytes: inputBytes, outputBytes: counts.outputBytes, optionsRawValue: options.rawValue, cleanupPending: cleanupPending)
+                         inputBytes: inputBytes, outputBytes: counts.outputBytes, optionsRawValue: options.rawValue,
+                         capacity: capacity, cleanupPending: cleanupPending)
       ready = result
       return result
     } catch {
@@ -221,6 +230,7 @@ final class MobileLargeFileService: @unchecked Sendable {
   }
 
   private func snapshotSource(_ source: URL, to destination: URL,
+                              capacity: MobileFileCapacity,
                               expectedSource: TextFileFingerprint?, cancellation: StreamingConversionCancellation) throws -> UInt64 {
     guard source.isFileURL, source.pathExtension.lowercased() == "txt" else {
       throw TextFileService.FileError.unsupportedFile
@@ -240,10 +250,13 @@ final class MobileLargeFileService: @unchecked Sendable {
         let before = try TextFileFingerprint.read(descriptor: input.fileDescriptor)
         if let expectedSource, before != expectedSource { throw TextFileService.FileError.sourceChanged }
         guard before.isRegular else { throw TextFileService.FileError.unsupportedFile }
-        guard before.size <= FileConversionPolicy.mobileMaximumBytes else { throw JobError.inputTooLarge }
+        guard before.size <= capacity.maximumInputBytes else {
+          throw capacity == .experimental ? JobError.experimentalInputTooLarge : JobError.inputTooLarge
+        }
         try requireSpace(4 * before.size + 64 * 1024 * 1024)
         let output = try openFile(destination, writing: true)
         defer { try? output.close() }
+        let storage = MobileFileStorageMonitor { try self.requireWriteSpace($0) }
         var count: UInt64 = 0
         while true {
           let read = try autoreleasepool { () throws -> Bool in
@@ -254,6 +267,7 @@ final class MobileLargeFileService: @unchecked Sendable {
             guard count <= before.size else { throw TextFileService.FileError.sourceChanged }
             try check(cancellation)
             try hooks.boundary(.snapshotWrite)
+            try storage.willWrite(data.count)
             try output.write(contentsOf: data)
             return true
           }
@@ -283,6 +297,16 @@ final class MobileLargeFileService: @unchecked Sendable {
     let outputBytes: UInt64
     let optionsRawValue: Int
     let sha256: String
+    let capacity: MobileFileCapacity?
+
+    // Legacy journals had no capacity field and can only describe <=100 MiB.
+    // Experimental journals explicitly record their per-job authorization.
+    // Standard results retain schema 1 so the previous app can still restore them.
+    var acceptedCapacity: MobileFileCapacity? {
+      if schema == 1, capacity == nil { return .standard }
+      if schema == 2 { return capacity }
+      return nil
+    }
   }
 
   private func recoverOnWorker() throws {
@@ -305,8 +329,9 @@ final class MobileLargeFileService: @unchecked Sendable {
       // I/O errors (including lock/protection) never mean corrupt data to delete.
       let data = try Data(contentsOf: journalURL)
       guard let journal = try? JSONDecoder().decode(Journal.self, from: data),
-            journal.schema == 1, journal.id == id,
-            journal.inputBytes <= FileConversionPolicy.mobileMaximumBytes,
+            let capacity = journal.acceptedCapacity, journal.id == id,
+            journal.inputBytes <= capacity.maximumInputBytes,
+            journal.outputBytes <= UInt64(Int64.max) - Self.storageReserveBytes,
             journal.optionsRawValue >= 0, journal.optionsRawValue & ~Self.optionMask == 0,
             journal.filename == (journal.filename as NSString).lastPathComponent,
             journal.filename.hasSuffix("-converted.txt"), journal.sha256.count == 64 else { throw JobError.invalidJournal }
@@ -318,7 +343,8 @@ final class MobileLargeFileService: @unchecked Sendable {
       guard found == nil else { throw JobError.pendingResult }
       try unlinkFile(job.appendingPathComponent("input.txt"))
       found = Ready(id: id, url: resultURL, exportFilename: journal.filename,
-                    inputBytes: journal.inputBytes, outputBytes: journal.outputBytes, optionsRawValue: journal.optionsRawValue, cleanupPending: false)
+                    inputBytes: journal.inputBytes, outputBytes: journal.outputBytes, optionsRawValue: journal.optionsRawValue,
+                    capacity: capacity, cleanupPending: false)
     }
     ready = found
     recovered = true
@@ -344,6 +370,12 @@ final class MobileLargeFileService: @unchecked Sendable {
     if let available = try hooks.availableBytes(root), available >= 0, UInt64(available) < bytes {
       throw JobError.insufficientSpace
     }
+  }
+  private static let storageReserveBytes: UInt64 = 64 * 1024 * 1024
+  private func requireWriteSpace(_ bytes: UInt64) throws {
+    let required = bytes.addingReportingOverflow(Self.storageReserveBytes)
+    guard !required.overflow else { throw JobError.insufficientSpace }
+    try requireSpace(required.partialValue)
   }
   private func makeDirectory(_ url: URL) throws {
     if try TextFileFingerprint.read(url: url, followSymlink: false) == nil {
@@ -413,5 +445,22 @@ final class MobileLargeFileService: @unchecked Sendable {
     }
     for child in children { try unlinkFile(child) }
     guard rmdir(job.path) == 0 else { throw TextFileFingerprint.posixError() }
+  }
+}
+
+/// Worker-confined. Recheck available disk space at most every 4 MiB of writes
+/// (and before any larger single write), without querying the volume for every
+/// 256 KiB buffer. This is advisory: actual write/sync errors stay authoritative.
+private final class MobileFileStorageMonitor: @unchecked Sendable {
+  private var remaining = 0
+  private let interval = 4 * 1024 * 1024
+  private let check: (UInt64) throws -> Void
+  init(check: @escaping (UInt64) throws -> Void) { self.check = check }
+  func willWrite(_ bytes: Int) throws {
+    if bytes >= remaining {
+      try check(UInt64(max(bytes, interval)))
+      remaining = interval
+    }
+    remaining -= min(bytes, interval)
   }
 }

@@ -38,6 +38,57 @@ final class WhatsNewPresentationTests: XCTestCase {
     add(attachment)
   }
 
+  func testMobileExperimentalCapacityFlow() throws {
+    let environment = ProcessInfo.processInfo.environment
+    guard let fixture = environment["OPENCCMAN_MOBILE_FIXTURE"],
+          let mode = environment["OPENCCMAN_MOBILE_CAPACITY_UI"] else {
+      throw XCTSkip("Requires an isolated QA fixture and explicit baseline/candidate mode")
+    }
+    let language = environment["OPENCCMAN_MOBILE_LANGUAGE"] ?? "en"
+    let confirmLabel = ["en": "Try conversion", "zh-Hans": "尝试转换", "zh-Hant": "嘗試轉換"][language]!
+    let cancelLabel = language == "en" ? "Cancel" : "取消"
+    let app = XCUIApplication(bundleIdentifier: appID)
+    app.launchArguments = ["-AppleLanguages", "(\(language))", "-qa-mark-whats-new-read-at-launch",
+      "-qa-suppress-review", "-qa-enable-mobile-large-files", "-qa-mobile-file-pro",
+      "-qa-import-mobile-file", fixture]
+    if mode == "candidate" { app.launchArguments += ["-qa-mobile-file-experimental-capacity"] }
+    app.launch()
+    defer { app.terminate() }
+    if mode != "candidate" {
+      XCTAssertTrue(app.alerts.firstMatch.waitForExistence(timeout: 20))
+      XCTAssertTrue(app.alerts.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "100 MiB")).firstMatch.exists)
+      XCTAssertFalse(app.buttons["mobile-file-convert"].exists)
+      capture(app, name: "capacity-before-100mib-rejection")
+      return
+    }
+
+    let convert = app.buttons["mobile-file-convert"]
+    XCTAssertTrue(convert.waitForExistence(timeout: 20))
+    capture(app, name: "capacity-after-offer")
+    convert.tap()
+    let alert = app.alerts.firstMatch
+    XCTAssertTrue(alert.waitForExistence(timeout: 10))
+    XCTAssertTrue(alert.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "1 GiB")).firstMatch.exists)
+    XCTAssertTrue(alert.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", (fixture as NSString).lastPathComponent)).firstMatch.exists)
+    capture(app, name: "capacity-per-file-warning")
+    alert.buttons[cancelLabel].tap()
+    let dismissed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: convert)
+    XCTAssertEqual(XCTWaiter().wait(for: [dismissed], timeout: 15), .completed)
+    XCTAssertFalse(app.buttons["mobile-file-save"].exists)
+    capture(app, name: "capacity-cancelled-without-result")
+
+    app.terminate()
+    app.launch()
+    XCTAssertTrue(convert.waitForExistence(timeout: 20))
+    convert.tap()
+    XCTAssertTrue(alert.waitForExistence(timeout: 10), "Cancelling/relaunching must not persist consent")
+    capture(app, name: "capacity-warning-again-after-relaunch")
+    alert.buttons[confirmLabel].tap()
+    XCTAssertTrue(app.buttons["mobile-file-save"].waitForExistence(timeout: 120))
+    XCTAssertFalse(alert.exists)
+    capture(app, name: "capacity-confirmed-ready")
+  }
+
   private func expectCardsOnce(_ app: XCUIApplication) {
     let done = app.buttons["whats-new-done"]
     XCTAssertTrue(done.waitForExistence(timeout: 15))
