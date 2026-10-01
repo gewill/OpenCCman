@@ -84,6 +84,8 @@ struct SourcePane: View {
   private var fileImportHint: LocalizedStringKey {
     #if os(macOS)
       if MacLargeFileCoordinator.isEnabled { return "mac_text_file_hint" }
+    #else
+      if MobileFileRuntime.isEnabled { return "mobile_text_file_hint" }
     #endif
     return "text_file_hint"
   }

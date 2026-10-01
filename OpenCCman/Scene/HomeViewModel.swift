@@ -80,8 +80,8 @@ class HomeViewModel: ObservableObject {
   #if DEBUG
     private var didInjectQAUnreadCards = false
   #endif
+  let windowOwnerID = UUID()
   #if os(macOS)
-    let windowOwnerID = UUID()
     weak var window: NSWindow?
     #if DEBUG
       private var didImportLargeFileForQA = false
@@ -337,7 +337,11 @@ class HomeViewModel: ObservableObject {
   }
 
   func importFile(_ url: URL) {
+    #if os(iOS)
+    startImport { try await TextFileService.prepare(url, allowLargeFile: MobileFileRuntime.isEnabled) }
+    #else
     startImport { try await TextFileService.prepare(url) }
+    #endif
   }
 
   func importDroppedItems(_ providers: [NSItemProvider]) -> Bool {
@@ -389,6 +393,21 @@ class HomeViewModel: ObservableObject {
               retainedByCoordinator = true
             } else {
               self.proAlertDetailKey = "pro_large_file_conversion"
+              self.showingProAlert = true
+            }
+          #else
+            var retainedByCoordinator = false
+            defer { if !retainedByCoordinator { try? source.close() } }
+            guard MobileFileRuntime.isEnabled else { throw TextFileService.FileError.tooLarge }
+            guard source.byteCount <= FileConversionPolicy.mobileMaximumBytes else {
+              throw MobileLargeFileCoordinator.StartError.exceedsCapacity
+            }
+            let runtime = MobileFileRuntime.shared
+            if runtime.isQualified {
+              try runtime.coordinator.offer(source, configuration: self.configuration, owner: self.windowOwnerID)
+              retainedByCoordinator = true
+            } else {
+              self.proAlertDetailKey = "mobile_file_pro"
               self.showingProAlert = true
             }
           #endif

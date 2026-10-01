@@ -1,0 +1,39 @@
+// Diagnostic attempt only. Not a verified gesture driver.
+  func testMobileFileVoiceOverDoubleTapCancel() throws {
+    guard #available(iOS 27.0, *) else { throw XCTSkip("VoiceOver driver requires iOS 27") }
+    guard let fixture = ProcessInfo.processInfo.environment["OPENCCMAN_MOBILE_FIXTURE"] else {
+      throw XCTSkip("Requires a generated TXT in the isolated QA container")
+    }
+    let app = launch("-qa-suppress-review", "-qa-enable-mobile-large-files", "-qa-mobile-file-pro",
+                     "-qa-import-mobile-file", fixture)
+    defer { app.terminate() }
+    XCTAssertTrue(app.buttons["mobile-file-cancel"].waitForExistence(timeout: 20))
+    let voiceOver = XCUIDevice.shared.voiceOverService
+    initialVoiceOverEnabled = voiceOver.isEnabled
+    defer {
+      if let initialVoiceOverEnabled, voiceOver.isEnabled != initialVoiceOverEnabled {
+        if initialVoiceOverEnabled { try? voiceOver.enable() } else { try? voiceOver.disable() }
+      }
+    }
+    if !voiceOver.isEnabled { try voiceOver.enable() }
+    var speech = [try voiceOver.currentSpeech().utterance]
+    for _ in 0..<32 where speech.last! != "Cancel Button" {
+      speech.append(try voiceOver.moveForward().utterance)
+    }
+    XCTAssertEqual(speech.last, "Cancel Button")
+    let attachment = XCTAttachment(string: speech.joined(separator: "\n"))
+    attachment.name = "mobile-cancel-double-tap-speech"
+    attachment.lifetime = .keepAlways
+    add(attachment)
+    capture(app, name: "mobile-cancel-focused-before-double-tap")
+    // A physical double tap away from the Cancel button must activate the
+    // current VoiceOver focus. Keep VoiceOver enabled through the assertion.
+    app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.25)).doubleTap()
+    XCTAssertTrue(voiceOver.isEnabled)
+    let dismissed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"),
+                                               object: app.buttons["mobile-file-cancel"])
+    XCTAssertEqual(XCTWaiter().wait(for: [dismissed], timeout: 10), .completed)
+    XCTAssertTrue(app.buttons["Convert"].waitForExistence(timeout: 10))
+    capture(app, name: "mobile-cancel-returned-home-with-voiceover")
+  }
+

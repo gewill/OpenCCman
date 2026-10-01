@@ -1,0 +1,32 @@
+{
+  "source_commit": "14a29e9",
+  "scope": "Injected expiration callbacks on actual UIKit adapter; NOT real OS expiration",
+  "source_sha256": {
+    "OpenCCman/Services/MobileFileLifecycle.swift": "f5ced3417e06809c466a558afd7fdd86ea25344086f75ac806fb1fb56d77646e",
+    "Tests/Regression/MobileLifecycleChecks.swift": "2039eb44dae1c2b9bc1bd88f640d4f3affe5bf19188a6e08f3616dffef038b5e"
+  },
+  "builds": {
+    "ios": {
+      "result": "BUILD SUCCEEDED",
+      "log_sha256": "bb64489189442b214910f0a54320b5c72eb2cc905f2080bbe6d7b3ccf8463575"
+    },
+    "mac": {
+      "result": "BUILD SUCCEEDED",
+      "log_sha256": "efed1fe892c80ade943c8be4fe4acd222acf7f770ee79bcb30b107ee5df98690"
+    }
+  },
+  "positive_test_log": "Final xcodebuild TEST SUCCEEDED and driver exit 0 after diagnostic collection completed.",
+  "negative_control": {
+    "exit": 65,
+    "failed_tests": 1,
+    "passed_tests": 0,
+    "crash": "precondition failure in checkDelayedExpiration, line 59 of isolated copied test: old callback interrupted new job",
+    "production_source_restored": true
+  },
+  "positive_result": {
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "summary_sha256": "a736a7439b96578ec04c8f05053deb499e9b3b9e0131b056cfabc3b1175603b7"
+  }
+}

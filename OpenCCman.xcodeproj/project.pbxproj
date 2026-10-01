@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C25900000000000000000009 /* MobileLargeFileTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2590000000000000000000A /* MobileLargeFileTaskView.swift */; };
+		C25900000000000000000007 /* MobileFileRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25900000000000000000008 /* MobileFileRuntime.swift */; };
+		C25900000000000000000005 /* MobileFileExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25900000000000000000006 /* MobileFileExporter.swift */; };
+		C25900000000000000000003 /* MobileFileLifecycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25900000000000000000004 /* MobileFileLifecycle.swift */; };
+		C25900000000000000000001 /* MobileLargeFileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25900000000000000000002 /* MobileLargeFileCoordinator.swift */; };
 		C25800000000000000000001 /* MobileLargeFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25800000000000000000002 /* MobileLargeFileService.swift */; };
 		C25700000000000000000001 /* StreamingConversionPump.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25700000000000000000002 /* StreamingConversionPump.swift */; };
 		C25700000000000000000003 /* FileConversionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25700000000000000000004 /* FileConversionPolicy.swift */; };
@@ -102,6 +107,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C2590000000000000000000A /* MobileLargeFileTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileLargeFileTaskView.swift; sourceTree = "<group>"; };
+		C25900000000000000000008 /* MobileFileRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileFileRuntime.swift; sourceTree = "<group>"; };
+		C25900000000000000000006 /* MobileFileExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileFileExporter.swift; sourceTree = "<group>"; };
+		C25900000000000000000004 /* MobileFileLifecycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileFileLifecycle.swift; sourceTree = "<group>"; };
+		C25900000000000000000002 /* MobileLargeFileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileLargeFileCoordinator.swift; sourceTree = "<group>"; };
 		C25800000000000000000002 /* MobileLargeFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileLargeFileService.swift; sourceTree = "<group>"; };
 		C25700000000000000000002 /* StreamingConversionPump.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingConversionPump.swift; sourceTree = "<group>"; };
 		C25700000000000000000004 /* FileConversionPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileConversionPolicy.swift; sourceTree = "<group>"; };
@@ -230,6 +240,9 @@
 				C25700000000000000000002 /* StreamingConversionPump.swift */,
 				C25700000000000000000004 /* FileConversionPolicy.swift */,
 				C25800000000000000000002 /* MobileLargeFileService.swift */,
+				C25900000000000000000002 /* MobileLargeFileCoordinator.swift */,
+				C25900000000000000000004 /* MobileFileLifecycle.swift */,
+				C25900000000000000000008 /* MobileFileRuntime.swift */,
 				09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */,
 			);
 			path = Services;
@@ -292,6 +305,8 @@
 			children = (
 				2A4205A262DA48E58C8D9555 /* WorkspaceTextEditor.swift */,
 				C05200000000000000000032 /* MacLargeFileTaskView.swift */,
+				C25900000000000000000006 /* MobileFileExporter.swift */,
+				C2590000000000000000000A /* MobileLargeFileTaskView.swift */,
 				C494425751394D56B5BA5763 /* WorkspaceScrollKeeper.swift */,
 				86E1C019E1BA49108005622A /* PhoneWorkspace.swift */,
 				83F3D574C245439A9F95C6B1 /* WorkspaceSurface.swift */,
@@ -518,6 +533,11 @@
 				C25700000000000000000001 /* StreamingConversionPump.swift in Sources */,
 				C25700000000000000000003 /* FileConversionPolicy.swift in Sources */,
 				C25800000000000000000001 /* MobileLargeFileService.swift in Sources */,
+				C25900000000000000000001 /* MobileLargeFileCoordinator.swift in Sources */,
+				C25900000000000000000005 /* MobileFileExporter.swift in Sources */,
+				C25900000000000000000009 /* MobileLargeFileTaskView.swift in Sources */,
+				C25900000000000000000003 /* MobileFileLifecycle.swift in Sources */,
+				C25900000000000000000007 /* MobileFileRuntime.swift in Sources */,
 				CC0912202600000000000031 /* ConvertedTextDocument.swift in Sources */,
 				CC0912202600000000000021 /* ConversionConfiguration.swift in Sources */,
 				BE2C6D522B2D7ED000FC4112 /* ImageExtensions.swift in Sources */,

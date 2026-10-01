@@ -1,0 +1,37 @@
+// Diagnostic comparison only.
+  func testSystemPickerVoiceOverDoubleTapCancel() throws {
+    guard #available(iOS 27.0, *) else { throw XCTSkip("VoiceOver driver requires iOS 27") }
+    let app = launch("-qa-suppress-review")
+    defer { app.terminate() }
+    app.buttons["Import TXT"].tap()
+    let cancel = app.buttons["Cancel"].firstMatch
+    XCTAssertTrue(cancel.waitForExistence(timeout: 20))
+    let voiceOver = XCUIDevice.shared.voiceOverService
+    initialVoiceOverEnabled = voiceOver.isEnabled
+    defer {
+      if let initialVoiceOverEnabled, voiceOver.isEnabled != initialVoiceOverEnabled {
+        if initialVoiceOverEnabled { try? voiceOver.enable() } else { try? voiceOver.disable() }
+      }
+    }
+    if !voiceOver.isEnabled { try voiceOver.enable() }
+    var speech = [try voiceOver.currentSpeech().utterance]
+    for _ in 0..<32 where speech.last! != "Cancel Button" {
+      speech.append(try voiceOver.moveForward().utterance)
+    }
+    XCTAssertEqual(speech.last, "Cancel Button")
+    let attachment = XCTAttachment(string: speech.joined(separator: "\n"))
+    attachment.name = "system-picker-cancel-double-tap-speech"
+    attachment.lifetime = .keepAlways
+    add(attachment)
+    capture(app, name: "system-picker-cancel-focused-before-double-tap")
+    // A physical double tap away from the Cancel button must activate the
+    // current VoiceOver focus. Keep VoiceOver enabled through the assertion.
+    app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.25)).doubleTap()
+    XCTAssertTrue(voiceOver.isEnabled)
+    let dismissed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"),
+                                               object: cancel)
+    XCTAssertEqual(XCTWaiter().wait(for: [dismissed], timeout: 10), .completed)
+    XCTAssertTrue(app.buttons["Convert"].waitForExistence(timeout: 10))
+    capture(app, name: "system-picker-cancel-returned-home-with-voiceover")
+  }
+

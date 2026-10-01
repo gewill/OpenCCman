@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-01",
+  "source_base": "e04863dc9211fb085f952dd1a19cb77a948cdeaf",
+  "source_change": "OpenCCmanApp Router(initialPath: /home)",
+  "source_sha256": "746cffad07bdb8b38191f7fefd1d7953f1f2e7c1b05d13eae8206b89fb8d12b7",
+  "platform": "iPad Pro 11-inch M4 Simulator / iOS 18.6",
+  "appearance": "English, light, default large text",
+  "display_points": [
+    834,
+    1210
+  ],
+  "split_window_widths_points": [
+    504,
+    320
+  ],
+  "method": "AXe screenshots/taps, simctl recording; LLDB on QA App requested UIKit scene creation/destruction. No coordinator mutation.",
+  "verified": [
+    "Second visible scene renders home with explicit initial route",
+    "Second window import is rejected while first holds confirmation",
+    "First window completes 11 MiB task",
+    "Destroying owner UIWindowScene leaves complete result and surviving window exposes Open file task",
+    "Surviving window opens Ready to save with enabled save/delete actions"
+  ],
+  "output_sha256": "bb91fb919f2671d9538af2e97e016b435746eff3ea385169db5d63bcc4947c67",
+  "output_bytes": 11534336,
+  "not_verified": [
+    "Owner closes during active conversion",
+    "Physical device footprint",
+    "VoiceOver reading order"
+  ],
+  "media": {
+    "two-scenes-stable.png": "b5705a5c93da39be70a3575c064b9a214179175ccdc3ccde9b9cf4e95aa37e8f",
+    "two-scenes-route-fixed.png": "142313d7ebe742aadac70bb530ee6655ec400c100da95c0fa00ab127c4287654",
+    "two-window-busy.png": "3e39fd039f0c2814a83d1ba83c3ddccd96f777ce3f17e8ec46972f0a79d8916b",
+    "two-window-ready.png": "c929b50d2d3907c1aa40364aefbf608c9d8b46d13b8a8556ab086db92a8341f2",
+    "owner-closed.png": "2703bc40216cee90eb84aa1c9228c72f1f316e6e8bb22ced6e3f6044bb6e0c93",
+    "ready-taken-over.png": "1dc2552a4a23664db8402ba47ac02328a0fb75192c4ccd36143d7f46997ed354",
+    "ipad-two-window-reservation.mp4": "addaab548481eb6c01f160cc8014180b547fd90d261883d1fd702878c1d8f041",
+    "export-before-close.png": "bbdb660b26bc7daad43d84da81ea13cab9e392921dc4a4ce087fcf9bc9ceccdb",
+    "export-owner-gone.png": "2703bc40216cee90eb84aa1c9228c72f1f316e6e8bb22ced6e3f6044bb6e0c93",
+    "retry-export-picker.png": "5c62f36b7af7a54f3d19d3040d364285cbc3f5226c2e00f1ed538184654e8ad6",
+    "export-takeover-completed.png": "d6f67284ad7208a397cb2c3d9206da70fea53f7f256ac63f9fb980f0d0a116e6",
+    "export-owner-close.mp4": "20e74d4a13a1778e554e48d70c0107a1ba2f8f8b91e9e3095b21a851f6bf083c"
+  },
+  "build_logs": {
+    "openccman-259-initial-route-build.log": "1b86d4968c84292192d7c775d799a92d54ae43219a53987665a984e6ffbc37d0",
+    "openccman-259-route-mac-build.log": "216e454c58cd7e196ee786b7a2b3c311db8429d0ae827b6501100bd6c6c356b3"
+  },
+  "export_owner_close": {
+    "source": "4b36d7a",
+    "steps": [
+      "Open system save picker in owning scene",
+      "Create another scene, destroy owner via UIKit",
+      "Survivor opens retained task",
+      "Retry system save to On My iPad, Keep Both"
+    ],
+    "saved_name": "地区用词测试-converted 2.txt",
+    "bytes": 11534336,
+    "sha256": "bb91fb919f2671d9538af2e97e016b435746eff3ea385169db5d63bcc4947c67",
+    "private_job_directory_empty": true,
+    "limits": "Simulator UIKit scene destruction; not hardware or provider fault validation"
+  }
+}

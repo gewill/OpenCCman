@@ -267,3 +267,30 @@
 "file_error_temporary_cleanup_failed" = "轉換已停止，但未能清理暫存檔案。";
 "large_file_cleanup_recovery" = "請在 Finder 中刪除殘留的暫存轉換檔案夾：";
 "mac_text_file_hint" = "匯入或拖入不超過 10 MiB 的 UTF-8 TXT 或純文字以編輯。Pro 可將最大 1 GiB 的 TXT 直接轉換為新檔案。";
+
+// Mobile direct-to-file workflow (production gated by #260)
+"mobile_file_explanation" = "直接將 TXT 轉換為檔案，不載入編輯器。支援最大 100 MiB，需要 Pro，不扣首頁轉換次數。";
+"mobile_file_preparing" = "正在準備檔案";
+"mobile_file_preparing_detail" = "正在準備私有副本。請讓 OpenCCman 保持前景，目前稿件不會改變。";
+"mobile_file_foreground" = "請保持 App 在前景；切入背景或鎖定螢幕會中止此工作。";
+"mobile_file_ready" = "轉換完成，待儲存";
+"mobile_file_ready_detail" = "完整結果保留在本機，直到儲存或刪除。取消儲存面板後仍可重試。";
+"mobile_file_interrupted" = "工作已中止";
+"mobile_file_interrupted_detail" = "原檔案和稿件未改變。請重新選取檔案以再次轉換。";
+"mobile_file_unlock" = "等待裝置解鎖";
+"mobile_file_unlock_detail" = "請解鎖裝置，再重試存取受保護的工作檔案。";
+"mobile_file_failed_detail" = "原檔案和編輯器稿件未改變。可重試復原，或刪除本機工作檔案後重新開始。";
+"mobile_file_convert" = "轉換檔案";
+"mobile_file_save" = "儲存結果⋯";
+"mobile_file_retry" = "重試復原";
+"mobile_file_resume" = "開啟檔案工作";
+"mobile_file_delete" = "刪除本機工作";
+"mobile_file_delete_title" = "刪除本機檔案工作？";
+"mobile_file_delete_message" = "將刪除尚未儲存的轉換結果及本機工作檔案。原檔案和編輯器稿件會保留。";
+"mobile_file_busy" = "請先完成或刪除目前的檔案工作。如果工作已在另一個視窗開啟，請在該視窗操作。";
+"mobile_file_capacity" = "iPhone 和 iPad 的直接檔案轉換支援最大 100 MiB 的 TXT。";
+"mobile_file_space" = "可用空間不足，無法準備或儲存此檔案。請釋放空間後重試。";
+"mobile_file_cleanup_failure" = "部分私有工作檔案未能清理。請在裝置解鎖後重試復原或刪除本機工作。";
+"mobile_file_invalid_store" = "無法驗證已儲存的工作，檔案已保留。請重試，或確認刪除後開始新工作。";
+"mobile_file_pro" = "Pro 可在 iPhone 和 iPad 上將超過 10 MiB、最大 100 MiB 的 TXT 直接轉換為檔案。";
+"mobile_text_file_hint" = "編輯最大 10 MiB 的 UTF-8 文字。Pro 可選取最大 100 MiB 的 TXT 直接轉換為檔案；拖放仍限 10 MiB。";

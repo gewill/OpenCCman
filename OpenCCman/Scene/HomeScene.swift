@@ -7,6 +7,9 @@ import UniformTypeIdentifiers
 struct HomeScene: View {
   @EnvironmentObject private var viewModel: HomeViewModel
   @EnvironmentObject private var whatsNewWindow: WhatsNewWindowState
+  #if os(iOS)
+  @ObservedObject private var mobileFile = MobileFileRuntime.shared.coordinator
+  #endif
   @State private var exportDocument: ConvertedTextDocument?
   @State private var exportFilename = "OpenCCman-converted.txt"
 
@@ -25,6 +28,17 @@ struct HomeScene: View {
       #endif
     }
     .frame(minWidth: 300)
+    #if os(iOS)
+    .safeAreaInset(edge: .bottom) {
+      if MobileFileRuntime.isEnabled, mobileFile.presentationOwner == nil,
+         mobileFile.ready != nil || mobileFile.phase == .failed || mobileFile.phase == .waitingForUnlock {
+        Button("mobile_file_resume") { _ = mobileFile.claimPresentation(viewModel.windowOwnerID) }
+          .appNeumorphicButtonStyle(Capsule())
+          .accessibilityIdentifier("mobile-file-resume")
+          .padding(.horizontal).padding(.bottom, 8)
+      }
+    }
+    #endif
     .overlay {
       if viewModel.showingProAlert {
         // Keep pointer and touch input in the custom modal without replacing the editors.
@@ -60,8 +74,17 @@ struct HomeScene: View {
         }
       }
     )) {
-      Alert(title: Text("Error"), message: Text(viewModel.error?.localizedDescription ?? ""))
+      Alert(title: Text("Error"), message: Text(fileErrorDescription))
     }
+  }
+
+  private var fileErrorDescription: String {
+    guard let error = viewModel.error else { return "" }
+    #if os(iOS)
+    return MobileFileError.description(error)
+    #else
+    return error.localizedDescription
+    #endif
   }
 
   private func exportResult() {

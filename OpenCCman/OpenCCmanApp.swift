@@ -140,7 +140,7 @@ struct OpenCCmanApp: App {
   }
 
   private var routes: some View {
-      Router {
+      Router(initialPath: "/home") {
         RootView()
           .onAppear {
             checkPro()

@@ -10,6 +10,7 @@ import OpenCC
     }
     try await checkStreamingPump()
     try await checkMobileFileJobs()
+    try await checkMobileCoordinator()
     await checkWindowNotifications()
     let fixtures = [
       "", "\n\n前段\n\n后段\n\n", "\r\n鼠标\r\n\r\n台湾\r\n",
