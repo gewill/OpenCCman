@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "verified_at_utc": "2026-10-01T06:33:04.659635+00:00",
+  "operator_report": {
+    "device_model": "iPhone X",
+    "os": "iOS 16.7.15",
+    "preset": "OpenCC Traditional",
+    "approx_100_mib_conversion_seconds": 3,
+    "timing_method": "not recorded; operator estimate",
+    "app_version_build": null,
+    "app_source_sha": null,
+    "provider": null,
+    "source": "user supplied output files and device/OS/preset statements",
+    "pending": "Confirm installed build and selected source/save provider; no instrumented device run in this verification"
+  },
+  "reference": {
+    "wrapper_sha": "564b094b2b69f2c1e907fa3d89fe6845469a4e4e",
+    "wrapper_clean": true,
+    "source_sha256": "4e5111bbbc0bbc03e6d7f50eb58e9bda1b40bdc7721697c737663d985f72495a",
+    "binary_sha256": "121b16c988c8e5de8e5a87f3ff7cd6630d8bf81c970d09b9d311c9468eda4d16",
+    "method": "Mac Release executable; one whole-file ChineseConverter.convert per input; not application streaming pipeline; full output SHA-256 and byte count compared"
+  },
+  "scope": "Correctness of three supplied output files in one conversion mode; not full issue #260 acceptance or device performance measurement",
+  "results": [
+    {
+      "fixture": "openccman-boundary-10MiB-plus-1byte.txt",
+      "export_file": "openccman-boundary-10MiB-plus-1byte-converted.txt",
+      "mode": "traditional",
+      "options_raw": 1,
+      "source": {
+        "bytes": 10485761,
+        "sha256": "8902dab55cbe39cd34f813d5f8eff68815b7f8374ac74a5e69645d687a690fc4",
+        "valid_utf8": true,
+        "bom": false,
+        "lf_count": 198782,
+        "crlf_count": 49694
+      },
+      "actual": {
+        "bytes": 10485761,
+        "sha256": "11225af00bc4ae3cb6c763c7da66325c5df659663ae38661c44b55da2d517634",
+        "valid_utf8": true,
+        "bom": false,
+        "lf_count": 198782,
+        "crlf_count": 49694
+      },
+      "oracle": {
+        "input_bytes": 10485761,
+        "input_sha256": "8902dab55cbe39cd34f813d5f8eff68815b7f8374ac74a5e69645d687a690fc4",
+        "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+        "mode": "traditional",
+        "options_raw": 1,
+        "output_bytes": 10485761,
+        "output_sha256": "11225af00bc4ae3cb6c763c7da66325c5df659663ae38661c44b55da2d517634"
+      },
+      "full_output_matches_reference": true
+    },
+    {
+      "fixture": "openccman-test-50MiB.txt",
+      "export_file": "openccman-test-50MiB-converted.txt",
+      "mode": "traditional",
+      "options_raw": 1,
+      "source": {
+        "bytes": 52428800,
+        "sha256": "b57c157ff1bd575455eff07dbe89210466d30c6ef3b3ec36154a349d7d926f17",
+        "valid_utf8": true,
+        "bom": false,
+        "lf_count": 993914,
+        "crlf_count": 248477
+      },
+      "actual": {
+        "bytes": 52428800,
+        "sha256": "d2ec075e0adcaa760586f81e6453bafb5d39427f5d63b9706f72b01ba3aff5ea",
+        "valid_utf8": true,
+        "bom": false,
+        "lf_count": 993914,
+        "crlf_count": 248477
+      },
+      "oracle": {
+        "input_bytes": 52428800,
+        "input_sha256": "b57c157ff1bd575455eff07dbe89210466d30c6ef3b3ec36154a349d7d926f17",
+        "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+        "mode": "traditional",
+        "options_raw": 1,
+        "output_bytes": 52428800,
+        "output_sha256": "d2ec075e0adcaa760586f81e6453bafb5d39427f5d63b9706f72b01ba3aff5ea"
+      },
+      "full_output_matches_reference": true
+    },
+    {
+      "fixture": "openccman-stress-100MiB.txt",
+      "export_file": "openccman-stress-100MiB-converted.txt",
+      "mode": "traditional",
+      "options_raw": 1,
+      "source": {
+        "bytes": 104857600,
+        "sha256": "07eb067a9cf31914799b0528e11d7fe7af0fac4715524ae8a462f4eecd57daa4",
+        "valid_utf8": true,
+        "bom": false,
+        "lf_count": 1987822,
+        "crlf_count": 496954
+      },
+      "actual": {
+        "bytes": 104857600,
+        "sha256": "f93543cbc7db3afd13cde3fb84adbbe9c1b43193a0c90bbac33a37b73d8ffa67",
+        "valid_utf8": true,
+        "bom": false,
+        "lf_count": 1987822,
+        "crlf_count": 496954
+      },
+      "oracle": {
+        "input_bytes": 104857600,
+        "input_sha256": "07eb067a9cf31914799b0528e11d7fe7af0fac4715524ae8a462f4eecd57daa4",
+        "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+        "mode": "traditional",
+        "options_raw": 1,
+        "output_bytes": 104857600,
+        "output_sha256": "f93543cbc7db3afd13cde3fb84adbbe9c1b43193a0c90bbac33a37b73d8ffa67"
+      },
+      "full_output_matches_reference": true
+    }
+  ],
+  "passed": true
+}
