@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C25700000000000000000001 /* StreamingConversionPump.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25700000000000000000002 /* StreamingConversionPump.swift */; };
+		C25700000000000000000003 /* FileConversionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25700000000000000000004 /* FileConversionPolicy.swift */; };
 		C05200000000000000000031 /* MacLargeFileTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05200000000000000000032 /* MacLargeFileTaskView.swift */; };
 		C05200000000000000000021 /* MacLargeFileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05200000000000000000022 /* MacLargeFileCoordinator.swift */; };
 		C05200000000000000000011 /* StreamingTextFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05200000000000000000012 /* StreamingTextFileService.swift */; };
@@ -99,6 +101,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C25700000000000000000002 /* StreamingConversionPump.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingConversionPump.swift; sourceTree = "<group>"; };
+		C25700000000000000000004 /* FileConversionPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileConversionPolicy.swift; sourceTree = "<group>"; };
 		C05200000000000000000032 /* MacLargeFileTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacLargeFileTaskView.swift; sourceTree = "<group>"; };
 		C05200000000000000000022 /* MacLargeFileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacLargeFileCoordinator.swift; sourceTree = "<group>"; };
 		C05200000000000000000012 /* StreamingTextFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingTextFileService.swift; sourceTree = "<group>"; };
@@ -221,6 +225,8 @@
 				CC0912202600000000000042 /* TextFileService.swift */,
 				C05200000000000000000022 /* MacLargeFileCoordinator.swift */,
 				C05200000000000000000012 /* StreamingTextFileService.swift */,
+				C25700000000000000000002 /* StreamingConversionPump.swift */,
+				C25700000000000000000004 /* FileConversionPolicy.swift */,
 				09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */,
 			);
 			path = Services;
@@ -506,6 +512,8 @@
 				C05200000000000000000031 /* MacLargeFileTaskView.swift in Sources */,
 				C05200000000000000000021 /* MacLargeFileCoordinator.swift in Sources */,
 				C05200000000000000000011 /* StreamingTextFileService.swift in Sources */,
+				C25700000000000000000001 /* StreamingConversionPump.swift in Sources */,
+				C25700000000000000000003 /* FileConversionPolicy.swift in Sources */,
 				CC0912202600000000000031 /* ConvertedTextDocument.swift in Sources */,
 				CC0912202600000000000021 /* ConversionConfiguration.swift in Sources */,
 				BE2C6D522B2D7ED000FC4112 /* ImageExtensions.swift in Sources */,

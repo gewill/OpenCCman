@@ -1,0 +1,34 @@
+{
+  "actual_sha256" : "f68df36ea3802b9885122e7581f7d646aef4f7a9b7b2fd5f3f37589624efe6ad",
+  "cancellation" : {
+    "existing_destination_preserved" : true,
+    "note" : "Additional conversion in the same process, cancelled after the first written block; timing ends when the async service returns after cleanup. Excluded from successful-conversion memory samples and process high-water.",
+    "request_to_cleanup_completion_ms" : 0.34145900000000001,
+    "requested_after_input_bytes" : 262144,
+    "temporary_output_removed" : true
+  },
+  "configuration" : "s2t",
+  "conversion_and_commit_ms" : 9780.0481249999993,
+  "conversion_memory" : {
+    "baseline_physical_footprint_bytes" : 29000448,
+    "baseline_rss_bytes" : 37666816,
+    "failed_samples" : 0,
+    "peak_physical_footprint_bytes" : 40584200,
+    "peak_rss_bytes" : 67387392,
+    "sample_interval_ms" : 10,
+    "samples" : 979
+  },
+  "corpus" : "single",
+  "cpu_model" : "Apple M4 Pro",
+  "equal" : true,
+  "expected_sha256" : "f68df36ea3802b9885122e7581f7d646aef4f7a9b7b2fd5f3f37589624efe6ad",
+  "hardware" : "Mac16,7",
+  "input_bytes" : 1073741824,
+  "input_sha256" : "99dda00adbb073122da8cab3e463d8bd37c39e6c92094cb79bd6d9c9e7b6923c",
+  "note" : "Fresh process, preloaded converter used to prepare oracle, local filesystem, unsandboxed service harness with a small staging-registry write for crash cleanup. Conversion samples exclude fixture generation, output verification, and the extra cancellation run. Process RSS includes preparation\/verification but is captured before cancellation. No UI or minimum-system acceptance.",
+  "os" : "Version 27.0.1 (Build 26A434)",
+  "output_bytes" : 1073741824,
+  "physical_memory_bytes" : 51539607552,
+  "process_max_rss_bytes" : 67387392,
+  "protocol" : 2
+}
