@@ -49,10 +49,14 @@ def main():
     parser.add_argument("--sizes-mib", nargs="+", type=int, default=[10, 20, 50, 100, 1024])
     parser.add_argument("--corpora", nargs="+", choices=["single", "multiline", "unmatched"], default=["single", "multiline"])
     parser.add_argument("--samples", type=int, default=3)
+    parser.add_argument("--configurations", nargs="+", default=["s2t"],
+                        choices=["s2t", "t2s", "s2tw", "s2hk", "s2twp", "s2t-tw-idiom", "s2hk-tw-idiom"])
+    parser.add_argument("--experimental", action="store_true", help="Allow development-only capacity probes up to 8192 MiB")
     parser.add_argument("--timeout", type=int, default=300)
     args = parser.parse_args()
-    if args.samples < 1 or any(size <= 0 or size > 1024 for size in args.sizes_mib):
-        parser.error("Require positive samples and file sizes up to 1024 MiB")
+    maximum = 8192 if args.experimental else 1024
+    if args.samples < 1 or any(size <= 0 or size > maximum for size in args.sizes_mib):
+        parser.error(f"Require positive samples and file sizes up to {maximum} MiB")
     args.output.mkdir(parents=True, exist_ok=False)
     package = args.output / "package"
     sources = package / "Sources/StreamingFileBenchmark"
@@ -69,12 +73,13 @@ def main():
         raise SystemExit("Local wrapper revision must match Package.resolved")
     wrapper_files = [p for folder in ["Sources", "Tests"] for p in (args.opencc_path / folder).rglob("*") if p.is_file()]
     metadata = {
-        "protocol": 2, "app_sha": subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip(),
+        "protocol": 3, "app_sha": subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip(),
         "wrapper_sha": revision, "source_sha256": hashes,
         "opencc_sha": subprocess.check_output(["git", "-C", str(args.opencc_path), "rev-parse", "HEAD:OpenCC"], text=True).strip(),
         "started_at": datetime.now(timezone.utc).isoformat(),
         "wrapper_source_sha256": {str(p.relative_to(args.opencc_path)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(wrapper_files)},
         "platform": platform.platform(), "samples": args.samples, "sizes_mib": args.sizes_mib, "corpora": args.corpora,
+        "configurations": args.configurations, "experimental": args.experimental,
         "xcode": subprocess.check_output(["xcodebuild", "-version"], text=True).strip(),
         "app_worktree_status": subprocess.check_output(["git", "-C", str(ROOT), "status", "--short"], text=True),
         "wrapper_worktree_status": subprocess.check_output(["git", "-C", str(args.opencc_path), "status", "--short"], text=True),
@@ -95,13 +100,14 @@ let package = Package(name: "StreamingFileBenchmark", platforms: [.macOS(.v12)],
     fixtures.mkdir()
     for size in args.sizes_mib:
         for corpus in args.corpora:
-            for sample in range(1, args.samples + 1):
-                name = f"{size:04d}mib-{corpus}-{sample:02d}"
+            for configuration, sample in ((c, s) for c in args.configurations for s in range(1, args.samples + 1)):
+                name = f"{size:04d}mib-{corpus}-{configuration}-{sample:02d}"
                 # Python owns precisely this generated fixture directory. Its
                 # context cleans input/output on timeout or a crashed child too.
                 with tempfile.TemporaryDirectory(prefix=name + "-", dir=fixtures) as directory:
                     try:
-                        subprocess.run([str(binary), str(size * 1024 * 1024), corpus, directory, str(args.output / f"{name}.json")], check=True, timeout=args.timeout)
+                        subprocess.run([str(binary), str(size * 1024 * 1024), corpus, directory,
+                                        str(args.output / f"{name}.json"), configuration], check=True, timeout=args.timeout)
                     finally:
                         # itemReplacementDirectory may live outside fixtures on
                         # the same volume; clean only this child's recorded IDs.

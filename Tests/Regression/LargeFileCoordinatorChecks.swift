@@ -43,7 +43,7 @@ enum LargeFileCoordinatorChecks {
     let owner = UUID()
     let worker = Worker()
     var reportedErrors: [NSError] = []
-    let coordinator = MacLargeFileCoordinator(enabled: true, reportError: { reportedErrors.append($0 as NSError) }) { source, destination, _, progress in
+    let coordinator = MacLargeFileCoordinator(enabled: true, qualified: { true }, reportError: { reportedErrors.append($0 as NSError) }) { source, destination, _, _, progress in
       try await worker.run(source: source, destination: destination, progress: progress)
     }
     let source = try OpenedTextFile(url: input)
@@ -81,7 +81,7 @@ enum LargeFileCoordinatorChecks {
     // Atomic commit can win a cancellation race. The UI must display the saved
     // file, not overwrite a successful result with a synthetic cancellation.
     let committingWorker = Worker(commitWins: true)
-    let committing = MacLargeFileCoordinator(enabled: true, operation: { source, destination, _, progress in
+    let committing = MacLargeFileCoordinator(enabled: true, qualified: { true }, operation: { source, destination, _, _, progress in
       try await committingWorker.run(source: source, destination: destination, progress: progress)
     })
     try committing.offer(OpenedTextFile(url: input), configuration: configuration,
@@ -96,7 +96,7 @@ enum LargeFileCoordinatorChecks {
     committing.cancel()
     precondition(!committing.isBusy)
 
-    let failing = MacLargeFileCoordinator(enabled: true, operation: { _, _, _, _ in
+    let failing = MacLargeFileCoordinator(enabled: true, qualified: { true }, operation: { _, _, _, _, _ in
       throw TextFileService.FileError.invalidUTF8
     })
     try failing.offer(OpenedTextFile(url: input), configuration: configuration,
@@ -111,7 +111,7 @@ enum LargeFileCoordinatorChecks {
       primaryError: CancellationError(), cleanupError: CocoaError(.fileWriteNoPermission),
       temporaryDirectory: directory.appendingPathComponent("private-conversion"))
     let cleanupWorker = Worker(failure: cleanupFailure)
-    let cleanup = MacLargeFileCoordinator(enabled: true, reportError: { reportedErrors.append($0 as NSError) }) { source, destination, _, progress in
+    let cleanup = MacLargeFileCoordinator(enabled: true, qualified: { true }, reportError: { reportedErrors.append($0 as NSError) }) { source, destination, _, _, progress in
       try await cleanupWorker.run(source: source, destination: destination, progress: progress)
     }
     try cleanup.offer(OpenedTextFile(url: input), configuration: configuration,
@@ -126,7 +126,7 @@ enum LargeFileCoordinatorChecks {
                  "Show the private recovery path to the user, rather than in a public log")
 
     let terminatingWorker = Worker()
-    let terminating = MacLargeFileCoordinator(enabled: true, reportError: { reportedErrors.append($0 as NSError) }) { source, destination, _, progress in
+    let terminating = MacLargeFileCoordinator(enabled: true, qualified: { true }, reportError: { reportedErrors.append($0 as NSError) }) { source, destination, _, _, progress in
       try await terminatingWorker.run(source: source, destination: destination, progress: progress)
     }
     try terminating.offer(OpenedTextFile(url: input), configuration: configuration,
@@ -186,7 +186,80 @@ enum LargeFileCoordinatorChecks {
                  "Production must reject files above the 1 GiB direct-export limit")
     precondition(!model.showingProAlert, "Files above the supported capacity must not open the paywall")
     precondition(model.inputText == "Original draft" && model.resultText == "Original result")
+    try await checkExperimental(directory, configuration: configuration)
     print("PASS: one Mac file task across windows; 1 GiB capacity; entitlement/configuration snapshot; owner close and quit cleanup; recovery report; commit race and failure state")
+  }
+
+  @MainActor private static func checkExperimental(_ directory: URL, configuration: ConversionConfiguration) async throws {
+    let input = directory.appendingPathComponent("experimental.txt")
+    let output = directory.appendingPathComponent("experimental-out.txt")
+    FileManager.default.createFile(atPath: input.path, contents: nil)
+    let writer = try FileHandle(forWritingTo: input)
+    defer { try? writer.close() }
+    var gate = true
+    var pro = true
+    let worker = Worker(commitWins: true)
+    let coordinator = MacLargeFileCoordinator(enabled: true, experimentalEnabled: { gate }, qualified: { pro }, operation: {
+      source, destination, _, capacity, progress in
+      precondition(capacity == .experimental)
+      return try await worker.run(source: source, destination: destination, progress: progress)
+    })
+    for size: UInt64 in [2 * 1024 * 1024 * 1024, 4 * 1024 * 1024 * 1024 + 1, FileConversionPolicy.macExperimentalMaximumBytes] {
+      try writer.truncate(atOffset: size)
+      try coordinator.offer(OpenedTextFile(url: input), configuration: configuration, qualified: true, owner: UUID(), window: nil)
+      precondition(coordinator.session?.byteCount == size)
+      coordinator.chooseDestination()
+      precondition(coordinator.phase == .capacityConfirmation)
+      coordinator.start(destination: output)
+      precondition(coordinator.phase == .capacityConfirmation, "Cannot bypass the per-file confirmation")
+      let neverStarted = await worker.started
+      precondition(!neverStarted)
+      coordinator.cancel()
+      precondition(!coordinator.isBusy)
+    }
+    try writer.truncate(atOffset: FileConversionPolicy.macExperimentalMaximumBytes + 1)
+    let oversized = try OpenedTextFile(url: input)
+    defer { try? oversized.close() }
+    do {
+      try coordinator.offer(oversized, configuration: configuration, qualified: false, owner: UUID(), window: nil)
+      preconditionFailure("8 GiB+1 must be rejected before Pro")
+    } catch MacLargeFileCoordinator.StartError.exceedsExperimentalCapacity {}
+    try writer.truncate(atOffset: 4 * 1024 * 1024 * 1024 + 1)
+    func offer() throws {
+      try coordinator.offer(OpenedTextFile(url: input), configuration: configuration, qualified: true, owner: UUID(), window: nil)
+      coordinator.chooseDestination()
+      precondition(coordinator.phase == .capacityConfirmation)
+    }
+    try offer()
+    let stale = coordinator.session!.id
+    coordinator.cancel()
+    try offer()
+    coordinator.confirmExperimentalCapacity(for: stale)
+    precondition(coordinator.phase == .capacityConfirmation, "Old confirmation cannot authorize the newly selected file")
+    gate = false
+    coordinator.confirmExperimentalCapacity(for: coordinator.session!.id)
+    precondition(coordinator.phase == .failed)
+    coordinator.cancel()
+    gate = true
+    try offer()
+    coordinator.confirmExperimentalCapacity(for: coordinator.session!.id)
+    pro = false
+    coordinator.start(destination: output)
+    precondition(coordinator.phase == .failed, "Recheck Pro after confirming and choosing a destination")
+    coordinator.cancel()
+    pro = true
+    try offer()
+    coordinator.confirmExperimentalCapacity(for: coordinator.session!.id)
+    coordinator.start(destination: output)
+    await waitForWorker(worker)
+    await waitUntil { coordinator.processedBytes == 4 * 1024 * 1024 * 1024 + 1 }
+    await worker.finishCleanup()
+    await waitUntil { coordinator.phase == .completed }
+    precondition(coordinator.progress == 1 && coordinator.outputBytes == 4 * 1024 * 1024 * 1024 + 1)
+    coordinator.cancel()
+    precondition(MacFileCapacity.estimatedStorageBytes(for: UInt64.max) == nil)
+    precondition(MacFileCapacity.estimatedStorageBytes(for: FileConversionPolicy.macExperimentalMaximumBytes) == 16 * 1024 * 1024 * 1024 + 64 * 1024 * 1024)
+    print("PASS: Mac experimental 2/4/8 GiB metadata, +1 rejection, per-file consent, stale responses, gate/Pro recheck and >32-bit progress; metadata and state tests only")
   }
 
   private static func waitForWorker(_ worker: Worker) async {

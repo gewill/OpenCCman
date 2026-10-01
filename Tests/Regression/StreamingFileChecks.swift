@@ -165,7 +165,98 @@ func checkStreamingFiles() async throws {
     try requireFileBytes(output, preserved)
     precondition(temporaryDirectories.allRemoved, "Cancellation must await replacement-directory cleanup")
   }
+  try await checkMacCapacityAndStorage(directory)
   print("PASS: bounded file streaming, seven configurations, BOM/NUL/Unicode, real provider lifetime, aliases, invalid UTF-8, I/O faults, changed files and cancellation before commit")
+}
+
+private func checkMacCapacityAndStorage(_ directory: URL) async throws {
+  let source = directory.appendingPathComponent("capacity-source.txt")
+  let output = directory.appendingPathComponent("capacity-output.txt")
+  let preserved = Data("existing destination".utf8)
+  try preserved.write(to: output)
+  FileManager.default.createFile(atPath: source.path, contents: nil)
+  let handle = try FileHandle(forWritingTo: source)
+  defer { try? handle.close() }
+  enum Stop: Error { case read }
+  for size: UInt64 in [FileConversionPolicy.macMaximumBytes, 2 * 1024 * 1024 * 1024,
+                      4 * 1024 * 1024 * 1024 + 1, FileConversionPolicy.macExperimentalMaximumBytes] {
+    try handle.truncate(atOffset: size)
+    let directories = FileTemporaryRecorder()
+    do {
+      _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
+        options: .traditionalize, capacity: size > FileConversionPolicy.macMaximumBytes ? .experimental : .standard,
+        hooks: .init(temporaryDirectoryCreated: { directories.append($0) }, beforeRead: { throw Stop.read }, availableBytes: { _ in Int64.max }))
+      preconditionFailure("Stop the sparse metadata probe before reading")
+    } catch Stop.read {}
+    precondition(directories.allRemoved)
+    try requireFileBytes(output, preserved)
+  }
+  for capacity in [MacFileCapacity.standard, .experimental] {
+    try handle.truncate(atOffset: capacity.maximumInputBytes + 1)
+    do {
+      _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
+        options: .traditionalize, capacity: capacity,
+        hooks: .init(beforeRead: { preconditionFailure("Over-limit input must not be read") }))
+      preconditionFailure("Service cannot bypass the selected capacity")
+    } catch let error as StreamingTextFileService.FileError {
+      precondition(error == (capacity == .standard ? .capacity : .experimentalCapacity))
+    }
+    try requireFileBytes(output, preserved)
+  }
+  try handle.truncate(atOffset: FileConversionPolicy.macExperimentalMaximumBytes)
+  let changed = try OpenedTextFile(url: source)
+  try handle.truncate(atOffset: FileConversionPolicy.macExperimentalMaximumBytes + 1)
+  do {
+    _ = try await StreamingTextFileService.convert(source: changed, destination: output,
+      options: .traditionalize, capacity: .experimental)
+    preconditionFailure("Growth after confirmation must be rejected")
+  } catch TextFileService.FileError.sourceChanged {}
+  try requireFileBytes(output, preserved)
+  try handle.close()
+
+  try Data(repeating: 0x61, count: 6 * 1024 * 1024).write(to: source)
+  for checksBeforeFailure in [0, 2] {
+    let space = MacSpaceBudget(checksBeforeFailure)
+    let directories = FileTemporaryRecorder()
+    do {
+      _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
+        options: .traditionalize, hooks: .init(temporaryDirectoryCreated: { directories.append($0) },
+          availableBytes: { _ in space.query() }))
+      preconditionFailure("Preflight and mid-conversion space loss must fail")
+    } catch StreamingTextFileService.FileError.insufficientSpace {}
+    precondition(space.count == checksBeforeFailure + 1)
+    precondition(directories.allRemoved)
+    try requireFileBytes(output, preserved)
+  }
+  // The default query itself must refresh; fault injection alone cannot prove it.
+  let query = StreamingTextFileService.Hooks().availableBytes
+  let cacheDirectory = directory.appendingPathComponent("capacity-query").standardizedFileURL
+  let queue = DispatchQueue(label: "OpenCCman.mac-capacity-test")
+  try queue.sync {
+    try FileManager.default.createDirectory(at: cacheDirectory, withIntermediateDirectories: false)
+    _ = try query(cacheDirectory)
+    try FileManager.default.removeItem(at: cacheDirectory)
+  }
+  try queue.sync {
+    do {
+      _ = try query(cacheDirectory)
+      throw NSError(domain: "OpenCCman.MacCapacityCache", code: 1)
+    } catch let error as NSError where error.domain == NSCocoaErrorDomain && error.code == CocoaError.fileReadNoSuchFile.rawValue {}
+  }
+  print("PASS: Mac service standard/experimental limits, 2/4/8 GiB metadata, growth rejection, output preservation, fresh capacity and injected preflight/mid-write space loss")
+}
+
+private final class MacSpaceBudget: @unchecked Sendable {
+  private let lock = NSLock()
+  private let allowed: Int
+  private var calls = 0
+  init(_ allowed: Int) { self.allowed = allowed }
+  func query() -> Int64 {
+    lock.lock(); defer { lock.unlock() }
+    calls += 1
+    return calls <= allowed ? Int64.max : 0
+  }
+  var count: Int { lock.lock(); defer { lock.unlock() }; return calls }
 }
 
 private func requireFileBytes(_ url: URL, _ expected: Data) throws {
