@@ -15,6 +15,15 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 Changes after the 2.1 release target `develop`.
 
+### Added
+
+- Add a disabled development candidate for experimental iPhone/iPad TXT
+  conversion above 100 MiB and up to 1 GiB, with confirmation for every file,
+  storage checks during processing, and recoverable completed results. This
+  does not enable the feature in production; both the 100 MiB acceptance and
+  the separate signed-device capacity matrix remain required
+  ([#268](https://github.com/gewill/OpenCCman/issues/268)).
+
 ## [2.1] - 2026-10-01
 
 Version 2.1 was built by Xcode Cloud as Build 60, from source
