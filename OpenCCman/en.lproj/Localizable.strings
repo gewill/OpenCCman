@@ -222,3 +222,22 @@
 "mobile_file_invalid_store" = "The saved task could not be verified. Its files have been kept. Retry, or confirm deletion to start a new task.";
 "mobile_file_pro" = "Convert TXT files over 10 MiB and up to 100 MiB directly to a file on iPhone and iPad with Pro.";
 "mobile_text_file_hint" = "Edit UTF-8 text up to 10 MiB. With Pro, select TXT files up to 100 MiB to convert directly to a file. Drag and drop stays limited to 10 MiB.";
+
+/* Per-file experimental mobile capacity; production remains gated. */
+"mobile_file_experimental_pro" = "Pro: try files over 100 MiB, up to 1 GiB. Experimental; confirm each task. May fail.";
+"mobile_file_experimental_title" = "Try this larger file?";
+"mobile_file_experimental_continue" = "Try conversion";
+"mobile_file_experimental_explanation" = "This file exceeds the standard 100 MiB limit. You can try files up to 1 GiB after confirming each task. Conversion may fail or the system may stop the app. Pro is required; the original file and editor draft stay unchanged.";
+"mobile_file_experimental_message" = "%@ (%@) exceeds 100 MiB. Trying up to 1 GiB is experimental and may fail because of memory, storage, or file-provider limits. Keep OpenCCman in the foreground and the device unlocked. The original file and editor draft will not be changed. Continue with this file?";
+"mobile_file_experimental_capacity" = "The experimental file limit on iPhone and iPad is 1 GiB (1,073,741,824 bytes). Select a smaller TXT file.";
+"mobile_text_file_experimental_hint" = "Edit UTF-8 TXT up to 10 MiB. Pro: convert larger files directly, with confirmation for experimental attempts over 100 MiB and up to 1 GiB. Keep the app open; drag and drop stays limited to 10 MiB.";
+"mobile_file_experimental_help" = "Files over 100 MiB and up to 1 GiB require confirmation for each conversion attempt. Success is not guaranteed. Keep the app in the foreground and the device unlocked. Allow space for the source snapshot, converted output, and system export; a storage precheck is only an estimate. Cancelled or interrupted conversions do not produce a savable result. A completed result stays on this device until you save or delete it; cancelling the save panel lets you try saving again. The original file and editor draft are unchanged.";
+
+/* Experimental Mac capacity remains disabled pending validation. */
+"mac_file_experimental_title" = "Try this larger file?";
+"mac_file_experimental_continue" = "Try conversion";
+"mac_file_experimental_explanation" = "This file exceeds the standard 1 GiB limit. Try up to 8 GiB after confirming each task. Conversion may fail, including on volumes with smaller file limits. Keep the app open; your original file and workspace stay unchanged. Storage needs may exceed the estimate.";
+"mac_file_storage_estimate" = "Estimated free space on the destination volume:";
+"mac_file_experimental_capacity" = "This file exceeds the experimental 8 GiB limit. Choose a smaller TXT file.";
+"mac_file_insufficient_space" = "Not enough space on the destination volume. Free some space or choose another destination, then import the file again.";
+"mac_file_experimental_pro" = "Pro: try files over 1 GiB, up to 8 GiB. Experimental; confirm each task. May fail.";

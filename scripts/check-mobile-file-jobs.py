@@ -34,6 +34,8 @@ def main():
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--opencc-path", required=True, type=Path)
     parser.add_argument("--destination", help="Optional explicit iOS Simulator Xcode destination")
+    parser.add_argument("--check-capacity-refresh", action="store_true",
+                        help="Opt-in local real-disk probe: same service before/after a 256 MiB allocation")
     args = parser.parse_args()
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
@@ -80,6 +82,9 @@ let package = Package(name: "FileJobs", platforms: [.macOS(.v12), .iOS(.v15)],
     source.write_bytes("鼠标\0汉字\r\n".encode())
     original = source.read_bytes()
     executable = package / ".build/release/JobProbe"
+    if args.check_capacity_refresh:
+        run([str(executable), "capacity-refresh", str(output / "capacity-probe"),
+             str(output / "capacity-refresh.json")], package, output / "capacity-refresh.log")
     rows = []
     for stage in ("snapshotWrite", "conversionWrite", "outputSync", "afterOutputRename", "ready"):
         job_root = output / ("kill-" + stage)
@@ -111,6 +116,7 @@ let package = Package(name: "FileJobs", platforms: [.macOS(.v12), .iOS(.v15)],
     report = {"source_sha256": {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
                                  for name in SOURCES + [CHECK, COORDINATOR_CHECK, LIFECYCLE_CHECK, PROBE, "scripts/check-mobile-file-jobs.py"]},
               "wrapper_revision": revision, "kill_probes": rows, "ios_destination": args.destination,
+              "real_capacity_probe": args.check_capacity_refresh,
               "scope": "Service tests; no UIKit lifecycle, real provider, protected-device, Pro or device memory acceptance"}
     (output / "report.json").write_text(json.dumps(report, indent=2) + "\n")
     print(f"PASS: mobile job regression and five fresh-process SIGKILL recoveries; {output}")

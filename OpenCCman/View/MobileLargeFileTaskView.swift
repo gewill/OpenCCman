@@ -44,7 +44,7 @@ struct MobileLargeFileTaskView: View {
       .navigationTitle(Text("large_file_title"))
       .navigationBarTitleDisplayMode(.inline)
       .toolbar {
-        if !coordinator.isWorking && coordinator.phase != .confirmation && coordinator.phase != .exporting {
+        if !coordinator.isWorking && !coordinator.isAwaitingConfirmation && coordinator.phase != .exporting {
           ToolbarItem(placement: .confirmationAction) {
             Button("Done") { coordinator.dismissPresentation() }
           }
@@ -53,7 +53,7 @@ struct MobileLargeFileTaskView: View {
     }
     .navigationViewStyle(.stack)
     .neumorphicTheme(.openCCman)
-    .interactiveDismissDisabled(coordinator.isWorking || coordinator.phase == .confirmation || coordinator.phase == .exporting)
+    .interactiveDismissDisabled(coordinator.isWorking || coordinator.isAwaitingConfirmation || coordinator.phase == .exporting)
     .accessibilityIdentifier("mobile-file-task")
     .confirmationDialog("mobile_file_delete_title", isPresented: $confirmDelete, titleVisibility: .visible) {
       Button("mobile_file_delete", role: .destructive) {
@@ -61,6 +61,21 @@ struct MobileLargeFileTaskView: View {
       }
       Button("Cancel", role: .cancel) {}
     } message: { Text("mobile_file_delete_message") }
+    .alert("mobile_file_experimental_title", isPresented: Binding(
+      get: { coordinator.phase == .capacityConfirmation },
+      // The explicit actions own the transition. SwiftUI can write false before
+      // running an action; it must not silently authorize or cancel a new job.
+      set: { _ in }), presenting: coordinator.session) { session in
+        Button("mobile_file_experimental_continue") {
+          do { try coordinator.confirmCapacityAttempt(sessionID: session.id) }
+          catch { actionError = MobileFileError.description(error) }
+        }.accessibilityIdentifier("mobile-file-confirm-capacity")
+        Button("Cancel", role: .cancel) { coordinator.cancel() }
+          .accessibilityIdentifier("mobile-file-cancel-capacity")
+      } message: { session in
+        Text(String(format: NSLocalizedString("mobile_file_experimental_message", comment: "Per-file capacity warning"),
+                    session.filename, ByteCountFormatter.string(fromByteCount: Int64(session.inputBytes), countStyle: .file)))
+      }
     .onChange(of: coordinator.exportURL) { url in
       guard let url, let ready = coordinator.ready, let attempt = coordinator.exportAttemptID else { return }
       exportID = attempt
@@ -79,8 +94,9 @@ struct MobileLargeFileTaskView: View {
 
   @ViewBuilder private var phaseContent: some View {
     switch coordinator.phase {
-    case .confirmation:
-      Text("mobile_file_explanation").foregroundStyle(.secondary)
+    case .confirmation, .capacityConfirmation:
+      Text(coordinator.requiresCapacityConfirmation ? "mobile_file_experimental_explanation" : "mobile_file_explanation")
+        .foregroundStyle(.secondary)
     case .recovering, .preparing:
       ProgressView().accessibilityLabel(Text(title.localizedStringKey))
       Text("mobile_file_preparing_detail").foregroundStyle(.secondary)
@@ -112,8 +128,9 @@ struct MobileLargeFileTaskView: View {
   @ViewBuilder private var actions: some View {
     VStack(spacing: 12) {
       switch coordinator.phase {
-      case .confirmation:
+      case .confirmation, .capacityConfirmation:
         Button {
+          actionError = nil
           do { try coordinator.start() } catch { actionError = MobileFileError.description(error) }
         } label: { Text("mobile_file_convert").frame(maxWidth: .infinity) }
           .appNeumorphicButtonStyle(Capsule(), kind: .primary, role: .accent)
@@ -192,6 +209,8 @@ enum MobileFileError {
     case MobileLargeFileCoordinator.StartError.requiresPro: key = "mobile_file_pro"
     case MobileLargeFileCoordinator.StartError.exceedsCapacity, MobileLargeFileService.JobError.inputTooLarge:
       key = "mobile_file_capacity"
+    case MobileLargeFileCoordinator.StartError.exceedsExperimentalCapacity, MobileLargeFileService.JobError.experimentalInputTooLarge:
+      key = "mobile_file_experimental_capacity"
     case MobileLargeFileService.JobError.insufficientSpace: key = "mobile_file_space"
     case MobileLargeFileService.JobError.protectedDataUnavailable: key = "mobile_file_unlock_detail"
     case is MobileLargeFileService.CleanupError: key = "mobile_file_cleanup_failure"

@@ -47,6 +47,15 @@ struct HelpScene: View {
             Text("help_intro".localizedStringKey)
               .appFont(.body)
 
+            #if os(iOS)
+            if MobileFileRuntime.isEnabled && MobileFileRuntime.isExperimentalCapacityEnabled {
+              VStack(alignment: .leading, spacing: 8) {
+                Text("large_file_title").appFont(.headline, weight: .semibold)
+                Text("mobile_file_experimental_help").appFont(.body)
+              }
+            }
+            #endif
+
             // Features section
             VStack(alignment: .leading, spacing: 8) {
               Text("help_features_title".localizedStringKey)

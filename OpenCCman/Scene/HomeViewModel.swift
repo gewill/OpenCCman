@@ -379,35 +379,28 @@ class HomeViewModel: ObservableObject {
             defer { if !retainedByCoordinator { try? source.close() } }
             guard MacLargeFileCoordinator.isEnabled else { throw TextFileService.FileError.tooLarge }
             try MacLargeFileCoordinator.validateSize(source.byteCount)
-            var qualified = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isPro.rawValue)
-            #if DEBUG
-              if MacLargeFileCoordinator.isQABundle,
-                 ProcessInfo.processInfo.arguments.contains("-qa-large-file-pro") {
-                qualified = true
-              }
-            #endif
-            if qualified {
+            if MacLargeFileCoordinator.isQualified {
               try MacLargeFileCoordinator.shared.offer(
-                source, configuration: self.configuration, qualified: qualified,
+                source, configuration: self.configuration, qualified: true,
                 owner: self.windowOwnerID, window: self.window)
               retainedByCoordinator = true
             } else {
-              self.proAlertDetailKey = "pro_large_file_conversion"
+              self.proAlertDetailKey = source.byteCount > FileConversionPolicy.macMaximumBytes
+                ? "mac_file_experimental_pro" : "pro_large_file_conversion"
               self.showingProAlert = true
             }
           #else
             var retainedByCoordinator = false
             defer { if !retainedByCoordinator { try? source.close() } }
             guard MobileFileRuntime.isEnabled else { throw TextFileService.FileError.tooLarge }
-            guard source.byteCount <= FileConversionPolicy.mobileMaximumBytes else {
-              throw MobileLargeFileCoordinator.StartError.exceedsCapacity
-            }
             let runtime = MobileFileRuntime.shared
+            try runtime.coordinator.validateSize(source.byteCount)
             if runtime.isQualified {
               try runtime.coordinator.offer(source, configuration: self.configuration, owner: self.windowOwnerID)
               retainedByCoordinator = true
             } else {
-              self.proAlertDetailKey = "mobile_file_pro"
+              self.proAlertDetailKey = source.byteCount > FileConversionPolicy.mobileMaximumBytes
+                ? "mobile_file_experimental_pro" : "mobile_file_pro"
               self.showingProAlert = true
             }
           #endif
