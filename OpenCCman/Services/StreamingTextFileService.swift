@@ -39,7 +39,8 @@ enum StreamingTextFileService {
   }
 
   /// Fault injection at real I/O boundaries for regression checks. Production
-  /// uses the empty defaults; hooks cannot bypass validation or atomic commit.
+  /// uses real capacity queries and otherwise empty defaults; hooks cannot
+  /// bypass input validation or atomic commit.
   struct Hooks: Sendable {
     var temporaryDirectoryCreated: @Sendable (URL) -> Void = { _ in }
     var beforeRead: @Sendable () throws -> Void = {}
@@ -49,9 +50,21 @@ enum StreamingTextFileService {
     var availableBytes: @Sendable (URL) throws -> Int64? = {
       var url = $0
       url.removeAllCachedResourceValues()
-      return try url.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])
-        .volumeAvailableCapacityForImportantUsage
+      let values = try url.resourceValues(forKeys: [
+        .volumeAvailableCapacityForImportantUsageKey, .volumeAvailableCapacityKey
+      ])
+      return availableCapacity(importantUsage: values.volumeAvailableCapacityForImportantUsage,
+                               ordinary: values.volumeAvailableCapacity)
     }
+  }
+
+  /// A nonpositive important-usage estimate can be unavailable on a volume.
+  /// Consult ordinary free space before treating it as full. An explicit zero
+  /// from that fallback remains authoritative; absent/invalid values are unknown.
+  static func availableCapacity(importantUsage: Int64?, ordinary: Int?) -> Int64? {
+    if let importantUsage, importantUsage > 0 { return importantUsage }
+    guard let ordinary, ordinary >= 0 else { return nil }
+    return Int64(ordinary)
   }
 
   static func convert(
@@ -113,11 +126,16 @@ enum StreamingTextFileService {
     hooks.temporaryDirectoryCreated(replacementDirectory)
     let temporaryURL = replacementDirectory.appendingPathComponent(UUID().uuidString + ".txt")
     do {
-      guard let estimated = MacFileCapacity.estimatedStorageBytes(for: source.byteCount) else {
-        throw FileError.insufficientSpace
-      }
       let storage = StorageMonitor(directory: replacementDirectory, query: hooks.availableBytes)
-      try storage.require(estimated)
+      // Keep the conservative full-job estimate out of the established 1 GiB
+      // path. Same-volume atomic rename does not require a second output copy.
+      // Both policies still check available space as output is written.
+      if capacity == .experimental {
+        guard let estimated = MacFileCapacity.estimatedStorageBytes(for: source.byteCount) else {
+          throw FileError.insufficientSpace
+        }
+        try storage.require(estimated)
+      }
       let output = try openOutput(at: temporaryURL)
       defer { try? output.close() }
       let result = try StreamingConversionPump.run(

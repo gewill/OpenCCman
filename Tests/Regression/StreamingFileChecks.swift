@@ -170,6 +170,16 @@ func checkStreamingFiles() async throws {
 }
 
 private func checkMacCapacityAndStorage(_ directory: URL) async throws {
+  // A zero important-usage estimate alone must not reject a writable volume.
+  // Conversely, explicit zero ordinary free space must not bypass protection.
+  let capacityCases: [(Int64?, Int?, Int64?)] = [
+    (100, 50, 100), (0, 50, 50), (nil, 50, 50), (-1, 50, 50),
+    (0, 0, 0), (nil, 0, 0), (nil, nil, nil), (0, nil, nil),
+    (0, -1, nil), (Int64.max, 0, Int64.max)
+  ]
+  for (important, ordinary, expected) in capacityCases {
+    precondition(StreamingTextFileService.availableCapacity(importantUsage: important, ordinary: ordinary) == expected)
+  }
   let source = directory.appendingPathComponent("capacity-source.txt")
   let output = directory.appendingPathComponent("capacity-output.txt")
   let preserved = Data("existing destination".utf8)
@@ -203,6 +213,25 @@ private func checkMacCapacityAndStorage(_ directory: URL) async throws {
     }
     try requireFileBytes(output, preserved)
   }
+  // The review's exact 1 GiB input / 1.5 GiB available case. This is a sparse
+  // metadata probe stopped before reading, not a complete-file performance run.
+  try handle.truncate(atOffset: FileConversionPolicy.macMaximumBytes)
+  for capacity in [MacFileCapacity.standard, .experimental] {
+    let directories = FileTemporaryRecorder()
+    do {
+      _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
+        options: .traditionalize, capacity: capacity,
+        hooks: .init(temporaryDirectoryCreated: { directories.append($0) }, beforeRead: { throw Stop.read },
+          availableBytes: { _ in 1_610_612_736 }))
+      preconditionFailure("Capacity probe must stop before conversion")
+    } catch Stop.read {
+      precondition(capacity == .standard, "Standard task must reach reading without the doubled estimate")
+    } catch StreamingTextFileService.FileError.insufficientSpace {
+      precondition(capacity == .experimental, "Only experimental tasks require the doubled estimate")
+    }
+    precondition(directories.allRemoved)
+    try requireFileBytes(output, preserved)
+  }
   try handle.truncate(atOffset: FileConversionPolicy.macExperimentalMaximumBytes)
   let changed = try OpenedTextFile(url: source)
   try handle.truncate(atOffset: FileConversionPolicy.macExperimentalMaximumBytes + 1)
@@ -214,17 +243,59 @@ private func checkMacCapacityAndStorage(_ directory: URL) async throws {
   try requireFileBytes(output, preserved)
   try handle.close()
 
-  try Data(repeating: 0x61, count: 6 * 1024 * 1024).write(to: source)
-  for checksBeforeFailure in [0, 2] {
-    let space = MacSpaceBudget(checksBeforeFailure)
+  let payload = Data(repeating: 0x61, count: 6 * 1024 * 1024)
+  try payload.write(to: source)
+  // Complete a real file with only 1.5x input + reserve in the injected budget.
+  // The query models a false zero from important usage and positive free space.
+  let constrainedSpace = StreamingTextFileService.availableCapacity(importantUsage: 0, ordinary: 73 * 1024 * 1024)
+  let result = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
+    options: .traditionalize, hooks: .init(availableBytes: { _ in constrainedSpace }))
+  precondition(result.outputBytes == UInt64(payload.count))
+  try requireFileBytes(output, payload)
+  for capacity in [MacFileCapacity.standard, .experimental] {
+    // Unknown estimates still allow I/O, including all ordinary error handling.
+    _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
+      options: .traditionalize, capacity: capacity, hooks: .init(availableBytes: { _ in nil }))
+    try requireFileBytes(output, payload)
+  }
+  try preserved.write(to: output)
+  let rejectedSpaces: [(MacFileCapacity, Int64?)] = [
+    (.experimental, constrainedSpace),
+    (.standard, StreamingTextFileService.availableCapacity(importantUsage: 0, ordinary: 0)),
+    (.experimental, StreamingTextFileService.availableCapacity(importantUsage: 0, ordinary: 0))
+  ]
+  for (capacity, space) in rejectedSpaces {
     let directories = FileTemporaryRecorder()
     do {
       _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
-        options: .traditionalize, hooks: .init(temporaryDirectoryCreated: { directories.append($0) },
-          availableBytes: { _ in space.query() }))
-      preconditionFailure("Preflight and mid-conversion space loss must fail")
+        options: .traditionalize, capacity: capacity,
+        hooks: .init(temporaryDirectoryCreated: { directories.append($0) }, availableBytes: { _ in space }))
+      preconditionFailure("Experimental preflight and known-full volumes must fail")
     } catch StreamingTextFileService.FileError.insufficientSpace {}
-    precondition(space.count == checksBeforeFailure + 1)
+    precondition(directories.allRemoved)
+    try requireFileBytes(output, preserved)
+  }
+  for capacity in [MacFileCapacity.standard, .experimental] {
+    for checksBeforeFailure in [0, capacity == .standard ? 1 : 2] {
+      let space = MacSpaceBudget(checksBeforeFailure)
+      let directories = FileTemporaryRecorder()
+      do {
+        _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
+          options: .traditionalize, capacity: capacity,
+          hooks: .init(temporaryDirectoryCreated: { directories.append($0) }, availableBytes: { _ in space.query() }))
+        preconditionFailure("Initial and mid-conversion space loss must fail")
+      } catch StreamingTextFileService.FileError.insufficientSpace {}
+      precondition(space.count == checksBeforeFailure + 1)
+      precondition(directories.allRemoved)
+      try requireFileBytes(output, preserved)
+    }
+    let directories = FileTemporaryRecorder()
+    do {
+      _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
+        options: .traditionalize, capacity: capacity,
+        hooks: .init(temporaryDirectoryCreated: { directories.append($0) }, availableBytes: { _ in throw POSIXError(.EACCES) }))
+      preconditionFailure("Capacity query errors must not be hidden as unknown space")
+    } catch let error as POSIXError { precondition(error.code == .EACCES) }
     precondition(directories.allRemoved)
     try requireFileBytes(output, preserved)
   }
@@ -244,6 +315,7 @@ private func checkMacCapacityAndStorage(_ directory: URL) async throws {
     } catch let error as NSError where error.domain == NSCocoaErrorDomain && error.code == CocoaError.fileReadNoSuchFile.rawValue {}
   }
   print("PASS: Mac service standard/experimental limits, 2/4/8 GiB metadata, growth rejection, output preservation, fresh capacity and injected preflight/mid-write space loss")
+  print("PASS: Mac capacity fallback, known-full/unknown/error handling, standard constrained-space conversion and experimental-only full-job preflight")
 }
 
 private final class MacSpaceBudget: @unchecked Sendable {

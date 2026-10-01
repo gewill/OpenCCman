@@ -19,7 +19,8 @@ enum MacFileCapacity: Sendable {
     self == .standard ? FileConversionPolicy.macMaximumBytes : FileConversionPolicy.macExperimentalMaximumBytes
   }
 
-  /// An estimate for staging plus a possible provider copy, not an output cap.
+  /// Conservative experimental-task estimate, not an output cap or a
+  /// requirement for the standard path's same-volume atomic rename.
   static func estimatedStorageBytes(for inputBytes: UInt64) -> UInt64? {
     let (doubled, overflow) = inputBytes.multipliedReportingOverflow(by: 2)
     let (required, reserveOverflow) = doubled.addingReportingOverflow(64 * 1024 * 1024)
