@@ -9,8 +9,8 @@ import OpenCC
   static func main() async throws {
     let args = CommandLine.arguments
     guard args.count == 6, let byteCount = UInt64(args[1]), byteCount >= 3,
-          ["single", "multiline", "unmatched"].contains(args[2]) else {
-      fatalError("Usage: StreamingFileBenchmark <bytes> <single|multiline|unmatched> <directory> <report.json> <configuration>")
+          ["single", "multiline", "unmatched", "expansion"].contains(args[2]) else {
+      fatalError("Usage: StreamingFileBenchmark <bytes> <single|multiline|unmatched|expansion> <directory> <report.json> <configuration>")
     }
     let configurations: [String: ChineseConverter.Options] = [
       "s2t": .traditionalize, "t2s": .simplify, "s2tw": [.traditionalize, .twStandard],
@@ -32,8 +32,9 @@ import OpenCC
     }
     let converter = try ChineseConversionService.converter(options: options)
     let separator = args[2] == "multiline" ? "\r\n\n" : "|ASCII-boundary|"
+    let expansion = args[2] == "expansion" ? "显存顯存 内存 互联网 " : ""
     let tile = args[2] == "unmatched" ? String(repeating: "a", count: 64 * 1024) :
-      String(repeating: "头发干杯鼠标数据库服务器 汉字😀e\u{301}⿰木木\0👨‍👩‍👧‍👦\u{9FBC}" + separator, count: 1024)
+      String(repeating: expansion + "头发干杯鼠标数据库服务器 汉字😀e\u{301}⿰木木\0👨‍👩‍👧‍👦\u{9FBC}" + separator, count: 1024)
     let convertedTile = converter.convert(tile)
     precondition(converter.convert(tile + tile) == convertedTile + convertedTile,
                  "The benchmark oracle requires independent tile boundaries")
@@ -68,6 +69,9 @@ import OpenCC
     inputHash.update(data: tail)
     expectedHash.update(data: convertedTail)
     expectedBytes += UInt64(convertedTail.count)
+    if args[2] == "expansion" {
+      precondition(expectedBytes > byteCount, "Expansion corpus must actually increase the full output size")
+    }
 
     let source = try OpenedTextFile(url: input)
     let samples = MemorySamples()

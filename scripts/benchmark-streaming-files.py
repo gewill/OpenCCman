@@ -47,7 +47,7 @@ def main():
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--opencc-path", required=True, type=Path)
     parser.add_argument("--sizes-mib", nargs="+", type=int, default=[10, 20, 50, 100, 1024])
-    parser.add_argument("--corpora", nargs="+", choices=["single", "multiline", "unmatched"], default=["single", "multiline"])
+    parser.add_argument("--corpora", nargs="+", choices=["single", "multiline", "unmatched", "expansion"], default=["single", "multiline"])
     parser.add_argument("--samples", type=int, default=3)
     parser.add_argument("--configurations", nargs="+", default=["s2t"],
                         choices=["s2t", "t2s", "s2tw", "s2hk", "s2twp", "s2t-tw-idiom", "s2hk-tw-idiom"])
@@ -57,6 +57,8 @@ def main():
     maximum = 8192 if args.experimental else 1024
     if args.samples < 1 or any(size <= 0 or size > maximum for size in args.sizes_mib):
         parser.error(f"Require positive samples and file sizes up to {maximum} MiB")
+    if "expansion" in args.corpora and not set(args.configurations) <= {"s2twp", "s2t-tw-idiom", "s2hk-tw-idiom"}:
+        parser.error("The expansion corpus requires a Taiwan-idiom configuration")
     args.output.mkdir(parents=True, exist_ok=False)
     package = args.output / "package"
     sources = package / "Sources/StreamingFileBenchmark"
