@@ -6,8 +6,8 @@ import UIKit
 @MainActor
 final class MobileFileRuntime {
   static let shared = MobileFileRuntime()
-  // #260 owns production enablement after signed device acceptance.
-  nonisolated static let productionEnabled = false
+  // Enabled for the v2.2 TestFlight acceptance candidate; public release remains gated on #260.
+  nonisolated static let productionEnabled = true
   nonisolated static var isEnabled: Bool {
     #if DEBUG
     if isQABundle, ProcessInfo.processInfo.arguments.contains("-qa-enable-mobile-large-files") { return true }
