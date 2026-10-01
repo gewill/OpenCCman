@@ -258,7 +258,8 @@ enum LargeFileCoordinatorChecks {
     precondition(coordinator.progress == 1 && coordinator.outputBytes == 4 * 1024 * 1024 * 1024 + 1)
     coordinator.cancel()
     precondition(MacFileCapacity.estimatedStorageBytes(for: UInt64.max) == nil)
-    precondition(MacFileCapacity.estimatedStorageBytes(for: FileConversionPolicy.macExperimentalMaximumBytes) == 16 * 1024 * 1024 * 1024 + 64 * 1024 * 1024)
+    let expectedStorage: UInt64 = 17_246_978_048 // 16 GiB plus 64 MiB.
+    precondition(MacFileCapacity.estimatedStorageBytes(for: FileConversionPolicy.macExperimentalMaximumBytes) == expectedStorage)
     print("PASS: Mac experimental 2/4/8 GiB metadata, +1 rejection, per-file consent, stale responses, gate/Pro recheck and >32-bit progress; metadata and state tests only")
   }
 
