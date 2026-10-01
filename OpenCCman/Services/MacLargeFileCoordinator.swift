@@ -31,6 +31,19 @@ final class MacLargeFileCoordinator: ObservableObject {
   static let maximumBytes = FileConversionPolicy.macMaximumBytes
   // The 2.1 candidate exposes the validated direct-to-file workflow to Pro.
   nonisolated static let productionEnabled = true
+  nonisolated static let experimentalCapacityEnabled = false
+  nonisolated static var isExperimentalCapacityEnabled: Bool {
+    #if DEBUG
+      if isQABundle, ProcessInfo.processInfo.arguments.contains("-qa-mac-file-experimental-capacity") { return true }
+    #endif
+    return experimentalCapacityEnabled
+  }
+  static var isQualified: Bool {
+    #if DEBUG
+      if isQABundle, ProcessInfo.processInfo.arguments.contains("-qa-large-file-pro") { return true }
+    #endif
+    return UserDefaults.standard.bool(forKey: UserDefaultsKeys.isPro.rawValue)
+  }
   nonisolated static var isEnabled: Bool {
     #if DEBUG
       if isQABundle, ProcessInfo.processInfo.arguments.contains("-qa-enable-large-file-conversion") { return true }
@@ -46,27 +59,30 @@ final class MacLargeFileCoordinator: ObservableObject {
     let exportFilename: String
     let configuration: ConversionConfiguration
     let qualifiedAtStart: Bool
+    let capacity: MacFileCapacity
   }
 
   enum Phase: Equatable {
-    case confirmation, choosingDestination, converting, cancelling, completed, failed
+    case confirmation, capacityConfirmation, choosingDestination, converting, cancelling, completed, failed
   }
 
   enum StartError: LocalizedError, Equatable {
-    case busy, requiresPro, exceedsCapacity
+    case busy, requiresPro, exceedsCapacity, exceedsExperimentalCapacity, experimentalPro
     var errorDescription: String? {
       let key: String
       switch self {
       case .busy: key = "large_file_busy"
       case .requiresPro: key = "pro_large_file_conversion"
       case .exceedsCapacity: key = "large_file_capacity"
+      case .exceedsExperimentalCapacity: key = "mac_file_experimental_capacity"
+      case .experimentalPro: key = "mac_file_experimental_pro"
       }
       return NSLocalizedString(key, comment: "")
     }
   }
 
   typealias Operation = @Sendable (
-    OpenedTextFile, URL, ChineseConverter.Options,
+    OpenedTextFile, URL, ChineseConverter.Options, MacFileCapacity,
     @escaping @Sendable (UInt64, UInt64) -> Void
   ) async throws -> StreamingTextFileService.Result
 
@@ -80,6 +96,9 @@ final class MacLargeFileCoordinator: ObservableObject {
   private let operation: Operation
   private let reportError: @MainActor (Error) -> Void
   private let enabled: Bool
+  private let experimentalEnabled: @MainActor () -> Bool
+  private let qualified: @MainActor () -> Bool
+  private var consentSessionID: UUID?
   private var source: OpenedTextFile?
   private var conversionTask: Task<Void, Never>?
   private var savePanel: NSSavePanel?
@@ -87,14 +106,18 @@ final class MacLargeFileCoordinator: ObservableObject {
   private var ownerClosed = false
 
   init(enabled: Bool = MacLargeFileCoordinator.isEnabled,
+       experimentalEnabled: @escaping @MainActor () -> Bool = { MacLargeFileCoordinator.isExperimentalCapacityEnabled },
+       qualified: @escaping @MainActor () -> Bool = { MacLargeFileCoordinator.isQualified },
        reportError: @escaping @MainActor (Error) -> Void = { NSApp.presentError($0) },
-       operation: @escaping Operation = { source, destination, options, progress in
+       operation: @escaping Operation = { source, destination, options, capacity, progress in
     try await StreamingTextFileService.convert(
-      source: source, destination: destination, options: options, progress: progress)
+      source: source, destination: destination, options: options, capacity: capacity, progress: progress)
   }) {
     self.operation = operation
     self.reportError = reportError
     self.enabled = enabled
+    self.experimentalEnabled = experimentalEnabled
+    self.qualified = qualified
   }
 
   var isBusy: Bool { session != nil }
@@ -113,7 +136,7 @@ final class MacLargeFileCoordinator: ObservableObject {
       try? source.close()
       throw TextFileService.FileError.tooLarge
     }
-    try Self.validateSize(source.byteCount)
+    try Self.validateSize(source.byteCount, experimentalEnabled: experimentalEnabled())
     guard session == nil else { throw StartError.busy }
     guard qualified else { throw StartError.requiresPro }
     self.source = source
@@ -123,18 +146,61 @@ final class MacLargeFileCoordinator: ObservableObject {
     outputBytes = 0
     destination = nil
     failureDescription = nil
+    consentSessionID = nil
     phase = .confirmation
     session = Session(id: UUID(), owner: owner, sourceFilename: source.sourceFilename,
                       byteCount: source.byteCount, exportFilename: source.exportFilename,
-                      configuration: configuration, qualifiedAtStart: qualified)
+                      configuration: configuration, qualifiedAtStart: qualified,
+                      capacity: source.byteCount > Self.maximumBytes ? .experimental : .standard)
   }
 
-  static func validateSize(_ byteCount: UInt64) throws {
-    guard byteCount <= maximumBytes else { throw StartError.exceedsCapacity }
+  static func validateSize(_ byteCount: UInt64, experimentalEnabled: Bool = isExperimentalCapacityEnabled) throws {
+    if experimentalEnabled {
+      guard byteCount <= FileConversionPolicy.macExperimentalMaximumBytes else { throw StartError.exceedsExperimentalCapacity }
+    } else {
+      guard byteCount <= maximumBytes else { throw StartError.exceedsCapacity }
+    }
   }
 
   func chooseDestination() {
-    guard let session, phase == .confirmation, let window = ownerWindow else { return }
+    guard let session, phase == .confirmation else { return }
+    guard validateAuthorization() else { return }
+    if session.capacity == .experimental {
+      phase = .capacityConfirmation
+    } else {
+      presentDestinationPanel()
+    }
+  }
+
+  func confirmExperimentalCapacity(for sessionID: UUID) {
+    guard session?.id == sessionID, phase == .capacityConfirmation else { return }
+    guard validateAuthorization() else { return }
+    consentSessionID = sessionID
+    phase = .confirmation
+    presentDestinationPanel()
+  }
+
+  /// Authorization is scoped to this file and checked again after the save panel.
+  private func validateAuthorization() -> Bool {
+    guard let session else { return false }
+    do {
+      try Self.validateSize(session.byteCount, experimentalEnabled: experimentalEnabled())
+      guard qualified() else {
+        throw session.capacity == .experimental ? StartError.experimentalPro : StartError.requiresPro
+      }
+      return true
+    } catch {
+      try? source?.close()
+      source = nil
+      consentSessionID = nil
+      failureDescription = error.localizedDescription
+      phase = .failed
+      return false
+    }
+  }
+
+  private func presentDestinationPanel() {
+    guard let session, let window = ownerWindow else { return }
     let panel = NSSavePanel()
     panel.allowedContentTypes = [.plainText]
     panel.canCreateDirectories = true
@@ -152,6 +218,7 @@ final class MacLargeFileCoordinator: ObservableObject {
         } else if response == .OK, let destination = panel.url {
           self.start(destination: destination)
         } else {
+          self.consentSessionID = nil
           self.phase = .confirmation
         }
       }
@@ -162,6 +229,8 @@ final class MacLargeFileCoordinator: ObservableObject {
   func start(destination: URL) {
     guard let session, let source,
           phase == .confirmation || phase == .choosingDestination else { return }
+    guard session.capacity == .standard || consentSessionID == session.id else { return }
+    guard validateAuthorization() else { return }
     self.destination = destination
     phase = .converting
     let operation = self.operation
@@ -174,7 +243,7 @@ final class MacLargeFileCoordinator: ObservableObject {
             try await Task.sleep(nanoseconds: 3_000_000_000)
           }
         #endif
-        let result = try await operation(source, destination, session.configuration.options) { [weak self] input, total in
+        let result = try await operation(source, destination, session.configuration.options, session.capacity) { [weak self] input, total in
           guard throttle.shouldDeliver(processed: input, total: total) else { return }
           Task { @MainActor in
             guard let self, self.session?.id == session.id, self.phase == .converting else { return }
@@ -223,7 +292,7 @@ final class MacLargeFileCoordinator: ObservableObject {
       break // Keep the global reservation until the file worker has cleaned up.
     case .choosingDestination:
       savePanel?.cancel(nil)
-    case .confirmation, .completed, .failed:
+    case .confirmation, .capacityConfirmation, .completed, .failed:
       clear()
     }
   }
@@ -268,6 +337,7 @@ final class MacLargeFileCoordinator: ObservableObject {
     savePanel = nil
     ownerWindow = nil
     session = nil
+    consentSessionID = nil
   }
 
   #if DEBUG

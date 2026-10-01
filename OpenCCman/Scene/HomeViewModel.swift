@@ -379,20 +379,14 @@ class HomeViewModel: ObservableObject {
             defer { if !retainedByCoordinator { try? source.close() } }
             guard MacLargeFileCoordinator.isEnabled else { throw TextFileService.FileError.tooLarge }
             try MacLargeFileCoordinator.validateSize(source.byteCount)
-            var qualified = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isPro.rawValue)
-            #if DEBUG
-              if MacLargeFileCoordinator.isQABundle,
-                 ProcessInfo.processInfo.arguments.contains("-qa-large-file-pro") {
-                qualified = true
-              }
-            #endif
-            if qualified {
+            if MacLargeFileCoordinator.isQualified {
               try MacLargeFileCoordinator.shared.offer(
-                source, configuration: self.configuration, qualified: qualified,
+                source, configuration: self.configuration, qualified: true,
                 owner: self.windowOwnerID, window: self.window)
               retainedByCoordinator = true
             } else {
-              self.proAlertDetailKey = "pro_large_file_conversion"
+              self.proAlertDetailKey = source.byteCount > FileConversionPolicy.macMaximumBytes
+                ? "mac_file_experimental_pro" : "pro_large_file_conversion"
               self.showingProAlert = true
             }
           #else

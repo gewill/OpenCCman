@@ -304,3 +304,12 @@
 "mobile_file_experimental_capacity" = "iPhone 和 iPad 的實驗性檔案上限為 1 GiB（1,073,741,824 位元組）。請選擇更小的 TXT 檔案。";
 "mobile_text_file_experimental_hint" = "UTF-8 TXT 在 10 MiB 內可編輯。Pro 可直接轉換大檔案；超過 100 MiB 至 1 GiB 需每次確認實驗性嘗試，並保持 App 開啟。拖放仍限 10 MiB。";
 "mobile_file_experimental_help" = "超過 100 MiB、最大 1 GiB 的檔案，每次嘗試轉換前都需要確認，不保證成功。請保持 App 在前景、裝置不鎖定，並為輸入快照、轉換結果和系統匯出預留儲存空間；空間預先檢查只是估算。取消或中斷的轉換不會提供半成品儲存入口。完整結果會保留在本機，直到儲存成功或主動刪除；取消儲存面板後可以重試。原始檔案和編輯器中的文稿保持不變。";
+
+/* Experimental Mac capacity remains disabled pending validation. */
+"mac_file_experimental_title" = "嘗試轉換這個大檔案？";
+"mac_file_experimental_continue" = "嘗試轉換";
+"mac_file_experimental_explanation" = "此檔案超過一般 1 GiB 上限。每次確認後可嘗試最大 8 GiB 的檔案，但轉換可能失敗，目的地磁碟也可能有更低的單一檔案限制。請保持 App 開啟；原始檔案和工作區不變。實際儲存需求可能超過估算。";
+"mac_file_storage_estimate" = "目的地磁碟預計需可用空間：";
+"mac_file_experimental_capacity" = "此檔案超過實驗性 8 GiB 上限，請選取較小的 TXT 檔案。";
+"mac_file_insufficient_space" = "目的地磁碟可用空間不足。請釋放空間或選取其他目標位置，再重新匯入檔案。";
+"mac_file_experimental_pro" = "Pro 實驗功能：轉換超過 1 GiB、最大 8 GiB 的檔案。每次確認，不保證成功。";
