@@ -57,4 +57,3 @@ https://github.com/user-attachments/assets/82135eab-5b61-47ac-9303-7afe2dbec5d7
 验证：macOS universal / iOS Simulator 完整构建通过；核心回归通过；native 移动任务 2 case、iOS Release 3 case、5 个新进程 SIGKILL 恢复通过；实验开关关闭时仍拒绝 100 MiB+1。
 
 尚待：#260、低内存 iPhone / 真实 iPad 签名候选、全部七配置容量/语料矩阵、真实提供方/空间不足/锁屏后台/导出、VoiceOver 与最低系统。Issue 保持开放。
-
