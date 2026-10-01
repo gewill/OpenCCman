@@ -46,7 +46,11 @@ final class MobileLargeFileService: @unchecked Sendable {
     var boundary: @Sendable (Stage) throws -> Void = { _ in }
     // Nil means unavailable, not zero; actual writes remain authoritative.
     var availableBytes: @Sendable (URL) throws -> Int64? = {
-      try $0.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])
+      // The serial worker has no run-loop cache eviction. Reusing root without
+      // clearing its resource cache returns the first task's capacity forever.
+      var url = $0
+      url.removeAllCachedResourceValues()
+      return try url.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])
         .volumeAvailableCapacityForImportantUsage
     }
   }
@@ -304,7 +308,7 @@ final class MobileLargeFileService: @unchecked Sendable {
     // Standard results retain schema 1 so the previous app can still restore them.
     var acceptedCapacity: MobileFileCapacity? {
       if schema == 1, capacity == nil { return .standard }
-      if schema == 2 { return capacity }
+      if schema == 2, capacity == .experimental { return .experimental }
       return nil
     }
   }

@@ -405,7 +405,8 @@ class HomeViewModel: ObservableObject {
               try runtime.coordinator.offer(source, configuration: self.configuration, owner: self.windowOwnerID)
               retainedByCoordinator = true
             } else {
-              self.proAlertDetailKey = "mobile_file_pro"
+              self.proAlertDetailKey = source.byteCount > FileConversionPolicy.mobileMaximumBytes
+                ? "mobile_file_experimental_pro" : "mobile_file_pro"
               self.showingProAlert = true
             }
           #endif

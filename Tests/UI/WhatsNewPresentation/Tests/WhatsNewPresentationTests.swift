@@ -89,6 +89,29 @@ final class WhatsNewPresentationTests: XCTestCase {
     capture(app, name: "capacity-confirmed-ready")
   }
 
+  func testMobileNonProCapacityMessage() throws {
+    let environment = ProcessInfo.processInfo.environment
+    guard let fixture = environment["OPENCCMAN_MOBILE_FIXTURE"],
+          let expected = environment["OPENCCMAN_MOBILE_PRO_EXPECTED_TEXT"] else {
+      throw XCTSkip("Requires an isolated non-Pro fixture and expected localized message")
+    }
+    let language = environment["OPENCCMAN_MOBILE_LANGUAGE"] ?? "en"
+    let app = XCUIApplication(bundleIdentifier: appID)
+    app.launchArguments = ["-AppleLanguages", "(\(language))", "-isPro", "NO",
+      "-qa-mark-whats-new-read-at-launch", "-qa-suppress-review",
+      "-qa-enable-mobile-large-files", "-qa-import-mobile-file", fixture]
+    if environment["OPENCCMAN_MOBILE_EXPERIMENTAL"] == "1" {
+      app.launchArguments += ["-qa-mobile-file-experimental-capacity"]
+    }
+    app.launch()
+    defer { app.terminate() }
+    let message = app.staticTexts.matching(NSPredicate(format: "label == %@", expected)).firstMatch
+    XCTAssertTrue(message.waitForExistence(timeout: 20))
+    XCTAssertFalse(app.buttons["mobile-file-convert"].exists)
+    XCTAssertFalse(app.buttons["mobile-file-save"].exists)
+    capture(app, name: "non-pro-capacity-message-\(language)")
+  }
+
   private func expectCardsOnce(_ app: XCUIApplication) {
     let done = app.buttons["whats-new-done"]
     XCTAssertTrue(done.waitForExistence(timeout: 15))
