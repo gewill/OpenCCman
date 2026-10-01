@@ -1,0 +1,62 @@
+## red-default.log
+Test Suite 'Selected tests' started at 2026-10-01 18:15:13.537.
+Test Suite 'FileJobsTests.xctest' started at 2026-10-01 18:15:13.538.
+Test Suite 'FileJobsTests' started at 2026-10-01 18:15:13.538.
+/private/tmp/openccman-271-fix/red-jobs/package/Tests/FileJobsTests/MobileFileJobChecks.swift:313: error: -[FileJobsTests.FileJobsTests testJobs] : failed: caught error: "Error Domain=OpenCCman.CapacityCacheRegression Code=1 "Default query returned cached capacity after its directory disappeared" UserInfo={NSLocalizedDescription=Default query returned cached capacity after its directory disappeared}"
+Test Suite 'FileJobsTests' failed at 2026-10-01 18:15:14.045.
+	 Executed 1 test, with 1 failure (1 unexpected) in 0.507 (0.507) seconds
+Test Suite 'FileJobsTests.xctest' failed at 2026-10-01 18:15:14.045.
+	 Executed 1 test, with 1 failure (1 unexpected) in 0.507 (0.507) seconds
+Test Suite 'Selected tests' failed at 2026-10-01 18:15:14.045.
+	 Executed 1 test, with 1 failure (1 unexpected) in 0.507 (0.508) seconds
+
+## verified-jobs/native.log
+Test Suite 'All tests' started at 2026-10-01 18:15:23.011.
+Test Suite 'FileJobsTests.xctest' started at 2026-10-01 18:15:23.012.
+Test Suite 'FileJobsTests' started at 2026-10-01 18:15:23.012.
+Test Suite 'FileJobsTests' passed at 2026-10-01 18:15:28.034.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 5.022 (5.022) seconds
+Test Suite 'FileJobsTests.xctest' passed at 2026-10-01 18:15:28.034.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 5.022 (5.022) seconds
+Test Suite 'All tests' passed at 2026-10-01 18:15:28.034.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 5.022 (5.023) seconds
+PASS: per-session experimental confirmation, closed gate, no job before consent, cancel/scene release, stale response, Pro/gate recheck and source growth
+PASS: mobile coordinator Pro recheck, single reservation, frozen configuration, resource pairing, owner transfer, stale export callbacks, save cancellation/retry and source identity
+PASS: default capacity query detects a removed directory across worker blocks, then succeeds after recreation
+PASS: mobile 100 MiB/256 MiB/512 MiB/1 GiB admission, 1 GiB+1 rejection, full 100 MiB+1 oracle/recovery/export, mid-write space loss and legacy/corrupt journals
+PASS: mobile job snapshot, recovery, full hash, nine I/O faults, cancellation/commit races, space, cleanup failures and symlink boundaries
+
+## verified-jobs/capacity-refresh.log
+PASS: same service default capacity refreshed at export and next-task preflight after real 256 MiB write
+
+## core.log
+PASS: shared stream pump; seven configurations, split BOM/UTF-8/phrases, IDS/NUL/Unicode, output expansion, byte counts, faults, cancellation and caller-owned handles
+PASS: default capacity query detects a removed directory across worker blocks, then succeeds after recreation
+PASS: mobile 100 MiB/256 MiB/512 MiB/1 GiB admission, 1 GiB+1 rejection, full 100 MiB+1 oracle/recovery/export, mid-write space loss and legacy/corrupt journals
+PASS: mobile job snapshot, recovery, full hash, nine I/O faults, cancellation/commit races, space, cleanup failures and symlink boundaries
+PASS: per-session experimental confirmation, closed gate, no job before consent, cancel/scene release, stale response, Pro/gate recheck and source growth
+PASS: mobile coordinator Pro recheck, single reservation, frozen configuration, resource pairing, owner transfer, stale export callbacks, save cancellation/retry and source identity
+PASS: real model notification subscribers; two explicit window targets; unbound rejection; exact Unicode/NUL/CRLF; export replacement; malformed payload; unchanged quota
+PASS: 7 option combinations × 11 fixtures; fixed NUL contracts, phrase boundaries, whitespace, Unicode and converter reuse
+PASS: model release, repeated taps, single publication, cancellation/replacement, empty input and quota guard
+PASS: presets, UTF-8/BOM/Unicode/NUL files, size limit, invalid input, cancellation and import replacement
+PASS: real NSURL/NSString providers and cancellation without a provider callback
+PASS: bounded file streaming, seven configurations, BOM/NUL/Unicode, real provider lifetime, aliases, invalid UTF-8, I/O faults, changed files and cancellation before commit
+PASS: one Mac file task across windows; 1 GiB capacity; entitlement/configuration snapshot; owner close and quit cleanup; recovery report; commit race and failure state
+PASS: free Shortcuts action runs at the exhausted homepage quota, matches four presets, preserves Unicode/NUL/newlines, accepts exactly 10 MiB and rejects over-limit UTF-8 text
+
+## project-final.log
+PASS: parsed 78 Swift sources and 6 localization files
+
+## language-final.log
+PASS: BCP-47 tags, AppleLanguages writes and removal, legacy selection fallback and tag matching
+PASS: a language injected by launch argument is read as an explicit choice and outranks stored ones
+
+## labels-final.log
+PASS: released control labels resolve English, Simplified/Traditional Chinese, underscore locales, live locale changes and missing-key fallback
+
+## ios-build-final.log
+** BUILD SUCCEEDED **
+
+## mac-build-final.log
+** BUILD SUCCEEDED **

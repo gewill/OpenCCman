@@ -9,7 +9,8 @@
 
 实现源码提交：`0bd20fff08b29b1226005440cafa5fe720b053f6`。
 对比基线：`fbd03f79b18a1d8b35c248914e8490cc2d931da5`。
-逐文件 SHA-256 见 [source.json](source.json)；后续文档提交不改变应用源码。
+初次交付的逐文件 SHA-256 见 [source.json](source.json)。评审后修复默认容量查询缓存、非 Pro 文案和
+journal 格式校验，最新源码与补充证据见 [评审修复记录](review-fix/README.md)；下方初次交付日志保留其原来源 SHA。
 SwiftyOpenCC 固定 `564b094b2b69f2c1e907fa3d89fe6845469a4e4e`，未修改依赖或缓存。
 
 ## 实现边界
