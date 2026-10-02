@@ -161,17 +161,28 @@ struct AppNeumorphicSwitchStyle: ToggleStyle {
     let height = AppControlMetrics.height
     let inset = AppControlMetrics.shadowInset
     let surfaceHeight = height - 2 * inset
-    let width = surfaceHeight * 5 / 3 + 2 * inset
+    let ratio = surfaceHeight / 45
+    let width = 75 * ratio + 2 * inset
     return Button {
       withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.2)) { configuration.isOn.toggle() }
     } label: {
-      ZStack(alignment: configuration.isOn ? .trailing : .leading) {
-        Capsule().fill(configuration.isOn ? Color.accentColor : theme.darkShadowColor.opacity(0.3))
-          .softInnerShadow(Capsule(), darkShadow: theme.darkShadowColor,
-                           lightShadow: theme.lightShadowColor, radius: inset / 2)
+      // Match iPerfman's themed switch layers, inside our complete control bounds.
+      ZStack {
+        Capsule().fill(theme.mainColor)
+          .softOuterShadow(darkShadow: theme.darkShadowColor, lightShadow: theme.lightShadowColor,
+                           offset: inset / 2, radius: inset / 2)
+          .frame(width: 75 * ratio, height: 45 * ratio)
+        Capsule().fill(configuration.isOn ? theme.accentColor : theme.mainColor)
+          .softInnerShadow(Capsule(),
+                           darkShadow: configuration.isOn ? theme.accentColor : theme.darkShadowColor,
+                           lightShadow: configuration.isOn ? theme.accentColor : theme.lightShadowColor,
+                           spread: 0.35, radius: 3 * ratio)
+          .frame(width: 70 * ratio, height: 40 * ratio)
         Circle().fill(theme.mainColor)
-          .frame(width: surfaceHeight - 4, height: surfaceHeight - 4)
-          .padding(2)
+          .softOuterShadow(darkShadow: theme.darkShadowColor, lightShadow: theme.lightShadowColor,
+                           offset: 2 * ratio, radius: ratio)
+          .frame(width: 30 * ratio, height: 30 * ratio)
+          .offset(x: configuration.isOn ? 15 * ratio : -15 * ratio)
       }
       .padding(inset)
       .frame(width: width, height: height)
