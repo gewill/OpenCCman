@@ -18,7 +18,7 @@ struct SettingsScene: View {
   #endif
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   #if os(macOS)
-    @AppStorage(UserDefaultsKeys.showMenuBarIcon.rawValue) var showMenuBarIcon: Bool = false
+    @AppStorage(UserDefaultsKeys.showMenuBarIcon.rawValue) var showMenuBarIcon: Bool = true
     @AppStorage(UserDefaultsKeys.macTextSize.rawValue) private var macTextSizeRaw = AppTextSize.standard.rawValue
   #endif
 
@@ -121,6 +121,8 @@ struct SettingsScene: View {
               Text("Show Menu Bar Icon".localizedStringKey)
               Spacer()
               Toggle("Show Menu Bar Icon", isOn: $showMenuBarIcon)
+                .labelsHidden()
+                .accessibilityIdentifier("show-menu-bar-icon")
                 .toggleStyle(AppNeumorphicSwitchStyle())
                 .accessibilityLabel(Text("Show Menu Bar Icon"))
             }
