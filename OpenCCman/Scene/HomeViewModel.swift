@@ -231,6 +231,13 @@ class HomeViewModel: ObservableObject {
       #endif
       proAlertDetailKey = "Unlimited calculations"
       showingProAlert = true
+      #if DEBUG
+        if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
+           ProcessInfo.processInfo.arguments.contains("-qa-error-with-pro-alert") {
+          error = NSError(domain: "OpenCCmanQA", code: 284,
+                          userInfo: [NSLocalizedDescriptionKey: "QA pending file error"])
+        }
+      #endif
       return
     }
 

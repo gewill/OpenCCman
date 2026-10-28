@@ -24,10 +24,13 @@ struct SettingsScene: View {
 
   var body: some View {
     VStack {
+      #if os(macOS)
       navi
+      #endif
       list
     }
     .background(Color.Neumorphic.main)
+    .appNavigation("Settings")
   }
 
   var navi: some View {
