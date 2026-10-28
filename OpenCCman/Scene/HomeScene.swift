@@ -70,36 +70,60 @@ struct HomeScene: View {
       }
       exportDocument = nil
     }
-    .alert(isPresented: Binding(
-      get: {
-        #if os(iOS)
-        viewModel.showingProAlert || viewModel.error != nil
-        #else
-        viewModel.error != nil
-        #endif
-      },
-      set: {
-        if !$0 {
-          #if os(iOS)
-          viewModel.showingProAlert = false
-          #endif
-          viewModel.error = nil
-        }
+    #if os(iOS)
+    .alert(item: alertPresentation) { alert in
+      switch alert {
+      case let .pro(detail):
+        return Alert(title: Text("Pro only feature"), message: Text(detail.localizedStringKey),
+                     primaryButton: .default(Text("Pro")) { whatsNewWindow.showingProSheet = true },
+                     secondaryButton: .cancel())
+      case let .failure(message):
+        return Alert(title: Text("Error"), message: Text(message))
       }
-    )) {
-      #if os(iOS)
-      if viewModel.showingProAlert {
-        Alert(title: Text("Pro only feature"), message: Text(viewModel.proAlertDetailKey.localizedStringKey),
-              primaryButton: .default(Text("Pro")) { whatsNewWindow.showingProSheet = true },
-              secondaryButton: .cancel())
-      } else {
-        Alert(title: Text("Error"), message: Text(fileErrorDescription))
-      }
-      #else
+    }
+    #else
+    .alert(isPresented: Binding(get: { viewModel.error != nil }, set: { if !$0 { viewModel.error = nil } })) {
       Alert(title: Text("Error"), message: Text(fileErrorDescription))
-      #endif
+    }
+    #endif
+  }
+
+  #if os(iOS)
+  private enum HomeAlert: Identifiable {
+    case pro(String)
+    case failure(String)
+
+    var id: String {
+      switch self {
+      case .pro: return "pro"
+      case .failure: return "error"
+      }
     }
   }
+
+  private var alertPresentation: Binding<HomeAlert?> {
+    let displayed: HomeAlert?
+    if whatsNewWindow.proSheetIsActive {
+      displayed = nil
+    } else if viewModel.showingProAlert {
+      displayed = .pro(viewModel.proAlertDetailKey)
+    } else if viewModel.error != nil {
+      displayed = .failure(fileErrorDescription)
+    } else {
+      displayed = nil
+    }
+    return Binding(get: { displayed }, set: { next in
+      guard next == nil else { return }
+      // Consume the snapshot actually presented, not whichever flag is now set.
+      // A pending error survives Pro cancellation and waits for its sheet to close.
+      switch displayed {
+      case .pro: viewModel.showingProAlert = false
+      case .failure: viewModel.error = nil
+      case nil: break
+      }
+    })
+  }
+  #endif
 
   private var fileErrorDescription: String {
     guard let error = viewModel.error else { return "" }

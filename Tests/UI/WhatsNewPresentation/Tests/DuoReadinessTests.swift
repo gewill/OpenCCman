@@ -7,11 +7,13 @@ final class DuoReadinessTests: XCTestCase {
 
   override func setUpWithError() throws { continueAfterFailure = false }
 
-  private func launch(language: String = "en", exhausted: Bool = false) -> XCUIApplication {
+  private func launch(language: String = "en", exhausted: Bool = false,
+                      pendingError: Bool = false) -> XCUIApplication {
     let app = XCUIApplication(bundleIdentifier: appID)
     app.launchArguments = ["-AppleLanguages", "(\(language))", "-isPro", "NO",
       "-qa-mark-whats-new-read-at-launch", "-qa-suppress-review", "-qa-duo-trace"]
     if exhausted { app.launchArguments.append("-qa-exhaust-quota") }
+    if pendingError { app.launchArguments.append("-qa-error-with-pro-alert") }
     app.launch()
     XCTAssertTrue(app.buttons["workspace-convert"].waitForExistence(timeout: 20))
     return app
@@ -110,6 +112,39 @@ final class DuoReadinessTests: XCTestCase {
     let result = app.textViews["workspace-result-editor"]
     wait(result, predicate: NSPredicate(format: "value CONTAINS %@", "漢字"))
     capture(app, "keyboard-dismissed-result")
+  }
+
+  func testProCancellationPreservesPendingError() { checkPendingError(opensPro: false) }
+  func testProSheetDefersPendingErrorUntilReturn() { checkPendingError(opensPro: true) }
+
+  private func checkPendingError(opensPro: Bool) {
+    // Deliberately seed the two independent states; this is a conflict fixture,
+    // not evidence that the timing occurs in a natural file-import flow.
+    let app = launch(exhausted: true, pendingError: true)
+    defer { app.terminate() }
+    app.buttons["source-fill-example"].tap()
+    let original = app.textViews["workspace-source-editor"].value as? String
+    app.buttons["workspace-convert"].tap()
+    let proAlert = app.alerts["Pro only feature"]
+    XCTAssertTrue(proAlert.waitForExistence(timeout: 10))
+    capture(app, "pending-error-pro-alert")
+    if opensPro {
+      proAlert.buttons["Pro"].tap()
+      let close = app.buttons["pro-sheet-close"]
+      XCTAssertTrue(close.waitForExistence(timeout: 15))
+      XCTAssertFalse(app.alerts["Error"].exists, "The pending error must not compete with the Pro sheet")
+      close.tap()
+    } else {
+      proAlert.buttons["Cancel"].tap()
+    }
+    let errorAlert = app.alerts["Error"]
+    let exists = errorAlert.waitForExistence(timeout: 10)
+    capture(app, opensPro ? "pending-error-after-pro-sheet" : "pending-error-after-pro-cancel")
+    XCTAssertTrue(exists, "Dismissing Pro must not consume an error that was never shown")
+    XCTAssertTrue(errorAlert.staticTexts["QA pending file error"].exists)
+    errorAlert.buttons["OK"].tap()
+    XCTAssertFalse(app.alerts.firstMatch.exists)
+    XCTAssertEqual(app.textViews["workspace-source-editor"].value as? String, original)
   }
 
   func testHostResizeKeepsNativeDocument() throws {
