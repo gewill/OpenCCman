@@ -13,6 +13,9 @@ struct WorkspaceSurface: View {
   @AppStorage(UserDefaultsKeys.isPro.rawValue) private var isPro = false
   private var preferences = WorkspacePreferences()
   @State private var previousAxis: WorkspaceLayoutResolution.Axis?
+  #if os(iOS)
+  @State private var keyboardVisible = false
+  #endif
   var platform: WorkspaceLayoutResolution.Platform = .mac
   var export: () -> Void
 
@@ -40,7 +43,7 @@ struct WorkspaceSurface: View {
                 get: { preferences.value }, set: { preferences.value = $0 }
               ),
               availableHeight: max(400, geometry.size.height - 110), export: export)
-              if !isPro {
+              if showsRecommendations {
                 MyAppView()
               }
             }
@@ -52,6 +55,10 @@ struct WorkspaceSurface: View {
       .padding(12)
       .onAppear { previousAxis = resolution.axis }
       .onChange(of: resolution.axis) { previousAxis = $0 }
+      #if os(iOS)
+      .background(WorkspaceDiagnostics(axis: resolution.axis, modelID: viewModel.windowOwnerID,
+                                       layoutSize: geometry.size, layoutInsets: geometry.safeAreaInsets))
+      #endif
     }
     .sheet(isPresented: $windowState.showingConversionSettings, onDismiss: {
       windowState.conversionSettingsIsActive = false
@@ -61,6 +68,76 @@ struct WorkspaceSurface: View {
         .environmentObject(viewModel)
         .environmentObject(windowState)
     }
+    #if os(iOS)
+    .background(WorkspaceKeyboardProbe(isVisible: $keyboardVisible).frame(width: 0, height: 0))
+    .toolbar {
+      ToolbarItem(placement: .primaryAction) {
+        if viewModel.isLoading {
+          Button { viewModel.cancelConversion() } label: {
+            Label("Cancel", systemImage: "stop.fill")
+          }
+          .accessibilityIdentifier("workspace-convert")
+        } else {
+          Button {
+            UIApplication.shared.endEditing()
+            viewModel.translate()
+          } label: {
+            Label("Convert", systemImage: "arrow.triangle.2.circlepath")
+          }
+          .disabled(viewModel.isImporting || viewModel.inputText.isEmpty)
+          .keyboardShortcut("t")
+          .accessibilityIdentifier("workspace-convert")
+        }
+      }
+      ToolbarItem {
+        Button {
+          UIApplication.shared.endEditing()
+          windowState.showingConversionSettings = true
+        } label: {
+          Label("workspace_settings", systemImage: "slider.horizontal.3")
+        }
+        .accessibilityIdentifier("workspace-conversion-settings")
+      }
+      ToolbarItem {
+        Menu {
+          Menu {
+            Button { preferences.value.axis = .horizontal } label: {
+              Label("workspace_horizontal", systemImage: "rectangle.split.2x1")
+            }
+            Button { preferences.value.axis = .vertical } label: {
+              Label("workspace_vertical", systemImage: "rectangle.split.1x2")
+            }
+          } label: { Label("workspace_layout", systemImage: "rectangle.split.2x1") }
+          Menu {
+            Button("workspace_equal") { resetRatio() }
+            Button("workspace_source_larger") { adjustRatio(by: 0.05, axis: previousAxis ?? .vertical) }
+            Button("workspace_result_larger") { adjustRatio(by: -0.05, axis: previousAxis ?? .vertical) }
+          } label: { Label("workspace_pane_sizes", systemImage: "arrow.left.and.right") }
+          Toggle(isOn: Binding(
+            get: { preferences.value.inspector != .hidden },
+            set: { preferences.value.inspector = $0 ? .shown : .hidden }
+          )) {
+            Label("workspace_settings_sidebar", systemImage: "sidebar.left")
+          }
+          Divider()
+          Button { navigator.navigate("/help") } label: { Label("Help", systemImage: "questionmark.circle") }
+          Button { navigator.navigate("/pro") } label: { Label("Pro", systemImage: "star") }
+            .keyboardShortcut("p")
+          Button { navigator.navigate("/settings") } label: { Label("Settings", systemImage: "gearshape") }
+            .keyboardShortcut(",")
+        } label: { Label("workspace_more", systemImage: "ellipsis.circle") }
+        .accessibilityIdentifier("workspace-more")
+      }
+      ToolbarItemGroup(placement: .keyboard) {
+        Spacer()
+        Button { UIApplication.shared.endEditing() } label: {
+          Label("workspace_dismiss_keyboard", systemImage: "keyboard.chevron.compact.down")
+        }
+        .accessibilityIdentifier("workspace-dismiss-keyboard")
+      }
+    }
+    .appNavigation("OpenCCman", showsBack: false)
+    #endif
     #if os(macOS)
     .onReceive(NotificationCenter.default.publisher(for: .workspaceCommand)) { notification in
       guard let target = notification.object as? NSWindow, target === viewModel.window,
@@ -88,20 +165,32 @@ struct WorkspaceSurface: View {
     #endif
   }
 
+  private var showsRecommendations: Bool {
+    #if os(iOS)
+    !isPro && !keyboardVisible
+    #else
+    !isPro
+    #endif
+  }
+
   private func controls(resolution: WorkspaceLayoutResolution) -> some View {
     VStack(alignment: .leading, spacing: 8) {
       #if os(iOS)
-        HStack {
-          Text("OpenCCman").appFont(.headline)
-          Spacer()
-          Menu {
-            Button("Help") { navigator.navigate("/help") }
-            Button("Pro") { navigator.navigate("/pro") }.keyboardShortcut("p")
-            Button("Settings") { navigator.navigate("/settings") }.keyboardShortcut(",")
-          } label: { Image(systemName: "ellipsis.circle").font(.system(size: AppControlMetrics.iconSize)).frame(width: AppControlMetrics.height, height: AppControlMetrics.height) }
-            .accessibilityLabel(Text("workspace_more"))
+        if resolution.inspectorWidth == 0 {
+          Button {
+            UIApplication.shared.endEditing()
+            windowState.showingConversionSettings = true
+          } label: {
+            VStack(alignment: .leading, spacing: 6) {
+              Label("workspace_settings", systemImage: "slider.horizontal.3").appFont(.headline)
+              Text((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey)
+                .appFont(.subheadline).fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+          }
+          .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 12))
         }
-      #endif
+      #else
       if sizeCategory.isAccessibilityCategory || resolution.editorWidth < 460 {
         VStack(alignment: .leading, spacing: 8) {
           Button("workspace_settings") { windowState.showingConversionSettings = true }
@@ -141,6 +230,13 @@ struct WorkspaceSurface: View {
       }
       .appFont(.caption)
       .frame(minHeight: AppControlMetrics.height)
+      #endif
+      #if os(iOS)
+      if resolution.isTemporaryVertical {
+        Text("workspace_temporary_vertical").appFont(.caption).foregroundColor(.secondary)
+          .fixedSize(horizontal: false, vertical: true)
+      }
+      #endif
     }
   }
 
@@ -290,6 +386,7 @@ struct ConversionSettingsSheet: View {
   @Environment(\.sizeCategory) private var sizeCategory
   var body: some View {
     VStack(spacing: 0) {
+      #if os(macOS)
       Group {
         if sizeCategory.isAccessibilityCategory {
           VStack(alignment: .leading, spacing: 8) {
@@ -305,19 +402,31 @@ struct ConversionSettingsSheet: View {
           }
         }
       }.padding()
+      #endif
       ScrollView { ConversionInspector(showsPresetList: true).padding() }
     }
     .background(Color.Neumorphic.main)
     #if os(macOS)
       .frame(minWidth: 320, idealWidth: 380, minHeight: 400, idealHeight: 550)
+    #else
+      .toolbar {
+        ToolbarItem(placement: .confirmationAction) { doneButton }
+      }
+      .appNavigation("workspace_settings", showsBack: false)
     #endif
   }
 
   private var doneButton: some View {
     Button { windowState.showingConversionSettings = false } label: {
+      #if os(iOS)
+      Label("Done", systemImage: "checkmark")
+      #else
       Text("Done")
+      #endif
     }
+    #if os(macOS)
     .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 8))
+    #endif
   }
 }
 

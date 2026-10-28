@@ -7,9 +7,12 @@ struct HelpScene: View {
 
   var body: some View {
     VStack(alignment: .center, spacing: 0) {
+      #if os(macOS)
       navi
+      #endif
       list
     }.background(Color.Neumorphic.main)
+      .appNavigation("Help")
   }
 
   var navi: some View {
@@ -117,7 +120,9 @@ struct HelpScene: View {
       }
       .padding(Constant.padding)
       .foregroundColor(Color.Neumorphic.secondary)
+      #if os(macOS)
       .ignoresSafeArea(edges: .bottom)
+      #endif
     }
   }
 }

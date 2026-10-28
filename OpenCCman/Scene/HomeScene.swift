@@ -20,11 +20,7 @@ struct HomeScene: View {
       #if os(macOS)
         WorkspaceSurface(export: exportResult)
       #else
-        if UserInterfaceIdiom.current == .pad {
-          WorkspaceSurface(platform: .pad, export: exportResult)
-        } else {
-          PhoneWorkspace(export: exportResult)
-        }
+        WorkspaceSurface(platform: .mobile, export: exportResult)
       #endif
     }
     .frame(minWidth: 300)
@@ -39,6 +35,7 @@ struct HomeScene: View {
       }
     }
     #endif
+    #if os(macOS)
     .overlay {
       if viewModel.showingProAlert {
         // Keep pointer and touch input in the custom modal without replacing the editors.
@@ -52,6 +49,13 @@ struct HomeScene: View {
                           detailKey: viewModel.proAlertDetailKey) {
       whatsNewWindow.proSheetIsActive = false
     })
+    #else
+    .sheet(isPresented: $whatsNewWindow.showingProSheet, onDismiss: {
+      whatsNewWindow.proSheetIsActive = false
+    }) {
+      ProScene(isPresented: true)
+    }
+    #endif
     .fileImporter(isPresented: $whatsNewWindow.showingImporter, allowedContentTypes: [.plainText]) { result in
       switch result {
       case let .success(url): viewModel.importFile(url)
@@ -67,14 +71,33 @@ struct HomeScene: View {
       exportDocument = nil
     }
     .alert(isPresented: Binding(
-      get: { viewModel.error != nil },
+      get: {
+        #if os(iOS)
+        viewModel.showingProAlert || viewModel.error != nil
+        #else
+        viewModel.error != nil
+        #endif
+      },
       set: {
         if !$0 {
+          #if os(iOS)
+          viewModel.showingProAlert = false
+          #endif
           viewModel.error = nil
         }
       }
     )) {
+      #if os(iOS)
+      if viewModel.showingProAlert {
+        Alert(title: Text("Pro only feature"), message: Text(viewModel.proAlertDetailKey.localizedStringKey),
+              primaryButton: .default(Text("Pro")) { whatsNewWindow.showingProSheet = true },
+              secondaryButton: .cancel())
+      } else {
+        Alert(title: Text("Error"), message: Text(fileErrorDescription))
+      }
+      #else
       Alert(title: Text("Error"), message: Text(fileErrorDescription))
+      #endif
     }
   }
 
