@@ -163,3 +163,12 @@ VoiceOver 体验未验证。本轮没有触发 Xcode Cloud、分发或部署。
 
 三台本任务专用模拟器已逐一确认 Shutdown；其他项目已启动的模拟器保留。
 Mac 隔离 QA 恢复 100% 后退出；录制、测试及临时本地视频查看服务结束，未退出共享 Device Hub。
+
+## 远端精选证据
+
+- [#280 两组前后截图、最小 Mac 窗口与命令录像](https://github.com/gewill/OpenCCman/issues/280#issuecomment-6493781373)。
+- [#282 真实半折叠、移动文件保存取消及状态结果](https://github.com/gewill/OpenCCman/issues/282#issuecomment-6493817858)。
+
+附件已回读确认正文无本机媒体路径；复用既有 URL，不重复上传。gh 对带空格路径的首轮正文引用未替换，
+但附件已保存；按远端实际 URL 修正同一评论并去除重复附录，保留初次响应及后续回读。
+上传副本 SHA-256、大小和 URL 在 JSON 索引，不把本机路径当作远端证据。
