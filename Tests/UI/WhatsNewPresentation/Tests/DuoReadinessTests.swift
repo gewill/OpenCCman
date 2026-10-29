@@ -113,6 +113,84 @@ final class DuoReadinessTests: XCTestCase {
     XCTAssertEqual(source.value as? String, original)
   }
 
+  func testHostResizeWithConversionSettingsKeepsDocument() throws {
+    let environment = ProcessInfo.processInfo.environment
+    guard environment["OPENCCMAN_DUO_EXTERNAL_RESIZE"] == "1" else {
+      throw XCTSkip("Requires host-driven real resize; run scripts/check-duo-settings-resize.py")
+    }
+    let language = environment["OPENCCMAN_DUO_LANGUAGE"] ?? "en"
+    XCTAssertTrue(["en", "zh-Hans", "zh-Hant"].contains(language))
+    let recordingReady = FileManager.default.temporaryDirectory.appendingPathComponent("duo-settings-recording-ready")
+    try? FileManager.default.removeItem(at: recordingReady)
+    defer { try? FileManager.default.removeItem(at: recordingReady) }
+    let app = launch(language: language)
+    defer { app.terminate() }
+    let (original, converted) = convertExample(app)
+    let closeTitle = language == "en" ? "Done" : "完成"
+    let close = app.buttons[closeTitle]
+    func report(_ stage: String) {
+      print("SETTINGS_RESIZE \(stage) app=\(app.frame) window=\(app.windows.firstMatch.frame) close=\(close.frame) enabled=\(close.isEnabled) hittable=\(close.isHittable)")
+    }
+    let externalPointer = environment["OPENCCMAN_DUO_DEVICE_HUB_POINTER"] == "1"
+    func checkDocument(_ stage: String) {
+      wait(close, predicate: NSPredicate(format: "exists == false"), timeout: externalPointer ? 120 : 15)
+      XCTAssertTrue(app.buttons["workspace-convert"].waitForExistence(timeout: 10))
+      XCTAssertEqual(app.textViews["workspace-source-editor"].value as? String, original)
+      XCTAssertEqual(app.textViews["workspace-result-editor"].value as? String, converted)
+      capture(app, "\(language)-settings-\(stage)-dismissed")
+    }
+    app.buttons["workspace-conversion-settings"].tap()
+    XCTAssertTrue(close.waitForExistence(timeout: 10))
+    XCTAssertLessThan(app.frame.width, 500, "Start on the closed portrait display")
+    report("initial")
+    capture(app, "\(language)-settings-initial")
+    print("OPENCCMAN_DUO_READY_FOR_RESIZE")
+    let wide = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+      abs(app.frame.width - 950) < 1 && abs(app.frame.height - 669) < 1
+    }, object: nil)
+    XCTAssertEqual(XCTWaiter().wait(for: [wide], timeout: 30), .completed)
+    report("wide")
+    print("OPENCCMAN_DUO_READY_FOR_WIDE_CAPTURE")
+    if environment["OPENCCMAN_DUO_RECORDING"] == "1" {
+      let ready = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+        FileManager.default.fileExists(atPath: recordingReady.path)
+      }, object: nil)
+      XCTAssertEqual(XCTWaiter().wait(for: [ready], timeout: 20), .completed)
+    }
+    capture(app, "\(language)-settings-wide")
+    XCTAssertEqual(app.buttons.matching(identifier: closeTitle).count, 1)
+    XCTAssertTrue(close.isEnabled)
+    // Device Hub pointer input is an explicit assisted acceptance mode. XCTest
+    // still verifies dismissal and exact document values; no app state is injected.
+    if externalPointer {
+      print("OPENCCMAN_DUO_AWAIT_WIDE_CLOSE")
+    } else {
+      close.tap()
+    }
+    checkDocument("wide")
+    if externalPointer {
+      print("OPENCCMAN_DUO_AWAIT_REOPEN")
+    } else {
+      app.buttons["workspace-conversion-settings"].tap()
+    }
+    XCTAssertTrue(close.waitForExistence(timeout: externalPointer ? 120 : 10))
+    print("OPENCCMAN_DUO_READY_FOR_COMPACT")
+    let compact = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+      abs(app.frame.width - 400) < 1 && abs(app.frame.height - 750) < 1
+    }, object: nil)
+    XCTAssertEqual(XCTWaiter().wait(for: [compact], timeout: 30), .completed)
+    report("compact")
+    capture(app, "\(language)-settings-compact")
+    XCTAssertEqual(app.buttons.matching(identifier: closeTitle).count, 1)
+    XCTAssertTrue(close.isEnabled)
+    if externalPointer {
+      print("OPENCCMAN_DUO_AWAIT_COMPACT_CLOSE")
+    } else {
+      close.tap()
+    }
+    checkDocument("compact")
+  }
+
   func testKeyboardDismissalAndConversion() {
     let app = launch()
     defer { app.terminate() }
