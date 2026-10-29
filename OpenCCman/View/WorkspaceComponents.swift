@@ -156,6 +156,7 @@ struct SourcePane: View {
         Text(fileImportHint)
           .appFont(.caption)
           .foregroundColor(.secondary)
+          .fixedSize(horizontal: false, vertical: true)
           .frame(maxWidth: .infinity, alignment: .leading)
           .padding(10)
           .contentShape(Rectangle())

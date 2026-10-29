@@ -154,8 +154,8 @@ struct WorkspaceSurface: View {
       ToolbarItem {
         Menu {
           Button("Help") { navigator.navigate("/help") }
-          Button("Pro") { navigator.navigate("/pro") }.keyboardShortcut("p")
-          Button("Settings") { navigator.navigate("/settings") }.keyboardShortcut(",")
+          Button("Pro") { navigator.navigate("/pro") }
+          Button("Settings") { navigator.navigate("/settings") }
         } label: { Label("workspace_more", systemImage: "ellipsis.circle") }
       }
       ToolbarItem { Button { windowState.showingConversionSettings = true } label: {
