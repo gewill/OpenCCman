@@ -5,6 +5,10 @@
 
 后续进展见 [本机验收与窄窗修复](local-acceptance-2026-10-29.md)。
 
+最新补验见[输入、阅读与任务连续性](input-task-followup-2026-10-29.md)：
+#288 合并后 CI、真实拼音 marked text／非零选区／中段阅读、普通转换计次、
+移动文件取消／后台／锁屏／错误恢复、Customer Center 和 Mac 零窗口入口；#280 / #282 继续开放。
+
 关联 #277–#282；这是首个开发候选，不是这些 Issues 的关闭记录。依据
 [指南固定版本](https://github.com/gewill/dev-standards/blob/3089d379d421566db7b367665cad196224466cf7/iphone_duo_readiness_guide.md)。
 日常分支从 develop `b8eca56b019d8718a41603b057c3b9f0839c1941` 创建，PR 回 develop。
