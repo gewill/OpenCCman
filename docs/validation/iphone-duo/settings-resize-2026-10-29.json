@@ -1,0 +1,416 @@
+{
+  "date": "2026-10-29",
+  "base_commit": "a872469edfd352e82891477d1f78c2805d32372d",
+  "tested_source_state": {
+    "commit": "a872469edfd352e82891477d1f78c2805d32372d",
+    "diff_sha256": "6e5cf01a683454bd544e90dc5153d50a2d3314366a085ac0287cb22e62c9e4aa",
+    "untracked": {
+      "docs/validation/iphone-duo/settings-resize-2026-10-29.md": "9b265033b618056123816e822f0a8304b91b285287765df1abd0b92655388b6a",
+      "scripts/check-duo-settings-resize.py": "b51e090a435e7bb268b16e7ef2a86c36bb217c23b91dbf05cdadb7673621090b"
+    }
+  },
+  "input_driver": "Device Hub pointer (assisted)",
+  "device": "4CAD3041-0744-41A6-8B4E-F934CA9F0778",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-1",
+  "xcode": "Xcode 27.1\nBuild version 27A9275",
+  "developer_dir": "/Applications/Xcode-27.1.0.app/Contents/Developer",
+  "app_executable_sha256": "31b4512f5d393e9e1348f996ab56dd3710fbeea21984e0cf75696fcf5be5b30e",
+  "app_build_source": {
+    "commit": "83db406f2d715e39095cec77228fdf0c003b45bf",
+    "status": " M OpenCCman/Scene/HomeScene.swift\n M OpenCCman/Scene/HomeViewModel.swift\n M Tests/UI/WhatsNewPresentation/Tests/DuoReadinessTests.swift\n",
+    "diff_sha256": "f0324b766d5193160c0009fb1028f07927dde66d9dd1162a787d64c4a4e4a2ba",
+    "untracked_sha256": {},
+    "package_resolved_sha256": "ddbb87a4ecb8ef2299d5b739c5c0e41e8ef8bc0a66db0e02873e6ee2cf694f6c"
+  },
+  "test_binary_sha256": "45bd20000989aa574f3bf5759a0dcd694e374bb69a3530b79df6cbc90a287432",
+  "test_source_sha256": "c634781feb71e82fd8c52df7ab45edf6ed60220ba71b01a76db72fc1101ad5a1",
+  "host_source_sha256": "b51e090a435e7bb268b16e7ef2a86c36bb217c23b91dbf05cdadb7673621090b",
+  "cases": [
+    {
+      "language": "en",
+      "content_size": "large",
+      "status": "passed",
+      "test_seconds": 99.779,
+      "skipped": false,
+      "report_sha256": "6a3e25bf7e78e3bbdbc03a37c8b768030634786b30fd2a0c0cbc0f8a5e19821d",
+      "native_log_sha256": "22b75f404feff1e0ba4355191ca60d489d50b7bda9b69e455d8c968b10158055",
+      "continuity": {
+        "sizes": [
+          [
+            400,
+            750
+          ],
+          [
+            466,
+            678
+          ],
+          [
+            950,
+            669
+          ]
+        ],
+        "editor_pairs": [
+          [
+            "ObjectIdentifier(0x0000000105ee1800)",
+            "ObjectIdentifier(0x0000000105ee2400)"
+          ]
+        ],
+        "models": [
+          "018DDF9C-7D75-42F5-9E41-AA05C4F11EB0"
+        ],
+        "scenes": [
+          "CBA8F365-49F6-49F4-93CC-82F05B293EE4"
+        ],
+        "character_counts": [
+          [
+            22,
+            22
+          ]
+        ],
+        "trace_sha256": "68df533cfd66b7f5f14e3da6ab92e4ad83eb6e75a21527ae126bbddcef969078"
+      },
+      "measurements": [
+        "SETTINGS_RESIZE initial app=(0.0, 0.0, 466.0, 678.0) window=(0.0, 0.0, 466.0, 678.0) close=(399.0, 179.0, 38.0, 38.0) enabled=true hittable=true",
+        "SETTINGS_RESIZE wide app=(0.0, 0.0, 950.0, 669.0) window=(0.0, 0.0, 316.6666666666667, 223.0) close=(248.5, 13.333333333333334, 12.0, 11.999999999999998) enabled=true hittable=false",
+        "SETTINGS_RESIZE compact app=(0.0, 0.0, 400.0, 750.0) window=(0.0, 0.0, 133.33333333333334, 250.0) close=(112.0, 13.333333333333334, 12.0, 11.999999999999998) enabled=true hittable=false"
+      ],
+      "actual_state_sha256": {
+        "wide": "44e370d610601f885cf2d6c2588a1c7a38034067be9b0795e2e4ce65735398b9",
+        "compact": "31dfb64f846131282f1fd314be77acf82c8e64ca187e204ff7eb5f0979910c55"
+      }
+    },
+    {
+      "language": "en",
+      "content_size": "extra-extra-extra-large",
+      "status": "passed",
+      "test_seconds": 90.962,
+      "skipped": false,
+      "report_sha256": "6d8cf0b5d8be2aacfe7efe22f7c7259430a2557780c68fa1670775a4f070e900",
+      "native_log_sha256": "b8f5aa054535eee1a6713159938f1c8561d5f2f48b7dbb7a178905a7ccac5510",
+      "continuity": {
+        "sizes": [
+          [
+            400,
+            750
+          ],
+          [
+            466,
+            678
+          ],
+          [
+            950,
+            669
+          ]
+        ],
+        "editor_pairs": [
+          [
+            "ObjectIdentifier(0x00000001016dd800)",
+            "ObjectIdentifier(0x00000001016de400)"
+          ]
+        ],
+        "models": [
+          "156B7151-ED56-49C5-94CC-A8094B3FC481"
+        ],
+        "scenes": [
+          "CBA8F365-49F6-49F4-93CC-82F05B293EE4"
+        ],
+        "character_counts": [
+          [
+            22,
+            22
+          ]
+        ],
+        "trace_sha256": "84d5ed45f80a0ce4051882a1da7caab5e3d8558b742feecc36c585b791a80094"
+      },
+      "measurements": [
+        "SETTINGS_RESIZE initial app=(0.0, 0.0, 466.0, 678.0) window=(0.0, 0.0, 466.0, 678.0) close=(399.0, 179.0, 38.0, 38.0) enabled=true hittable=true",
+        "SETTINGS_RESIZE wide app=(0.0, 0.0, 950.0, 669.0) window=(0.0, 0.0, 316.6666666666667, 223.0) close=(248.5, 13.333333333333334, 12.0, 11.999999999999998) enabled=true hittable=false",
+        "SETTINGS_RESIZE compact app=(0.0, 0.0, 400.0, 750.0) window=(0.0, 0.0, 133.33333333333334, 250.0) close=(112.0, 13.333333333333334, 12.0, 11.999999999999998) enabled=true hittable=false"
+      ],
+      "actual_state_sha256": {
+        "wide": "d732bf481fa1b4844fda211f7b920103bb537328b558af39bd69b959f5a09454",
+        "compact": "c82b02a7902aae1541e71a84d5504375816bd01f245d3aeffc9ac6291b57908c"
+      }
+    },
+    {
+      "language": "zh-Hans",
+      "content_size": "large",
+      "status": "passed",
+      "test_seconds": 104.528,
+      "skipped": false,
+      "report_sha256": "1db01132ef11f821d113b890508d6e5988a73ed365ca94f9a31b31eb5b1eeba8",
+      "native_log_sha256": "5e290ab2345e21b46d87ff1d51e39246ad4862682b6589970a4d71c4b7c142d0",
+      "continuity": {
+        "sizes": [
+          [
+            400,
+            750
+          ],
+          [
+            466,
+            678
+          ],
+          [
+            950,
+            669
+          ]
+        ],
+        "editor_pairs": [
+          [
+            "ObjectIdentifier(0x0000000101afd800)",
+            "ObjectIdentifier(0x0000000101afe400)"
+          ]
+        ],
+        "models": [
+          "AFF981DC-F340-407B-815D-1778ADED5C2D"
+        ],
+        "scenes": [
+          "CBA8F365-49F6-49F4-93CC-82F05B293EE4"
+        ],
+        "character_counts": [
+          [
+            22,
+            22
+          ]
+        ],
+        "trace_sha256": "3c1e55e92f512b388cab94231f19939f58dfb9f126ccfd8434a16cc2369a2220"
+      },
+      "measurements": [
+        "SETTINGS_RESIZE initial app=(0.0, 0.0, 466.0, 678.0) window=(0.0, 0.0, 466.0, 678.0) close=(399.0, 179.0, 38.0, 38.0) enabled=true hittable=true",
+        "SETTINGS_RESIZE wide app=(0.0, 0.0, 950.0, 669.0) window=(0.0, 0.0, 316.6666666666667, 223.0) close=(248.5, 13.333333333333334, 12.0, 11.999999999999998) enabled=true hittable=false",
+        "SETTINGS_RESIZE compact app=(0.0, 0.0, 400.0, 750.0) window=(0.0, 0.0, 133.33333333333334, 250.0) close=(112.0, 13.333333333333334, 12.0, 11.999999999999998) enabled=true hittable=false"
+      ],
+      "actual_state_sha256": {
+        "wide": "ed208ad9dff88784e40675a3046ca5295e8ca0f3a4276a1990ddd1d17207f4ce",
+        "compact": "8c962aba0271b405f8cf74fa69c530a54fdc5a4e3e4e60bdb0204feb3f9c7012"
+      }
+    },
+    {
+      "language": "zh-Hans",
+      "content_size": "extra-extra-extra-large",
+      "status": "passed",
+      "test_seconds": 97.207,
+      "skipped": false,
+      "report_sha256": "001611d5945729fd23072c20704c655cbacf1fbb84996a43d577ecfd0d325522",
+      "native_log_sha256": "2715f63ff5de0e87b2d34623cfaaf134d62576530c1ccdc6ab7053d9727e7a99",
+      "continuity": {
+        "sizes": [
+          [
+            400,
+            750
+          ],
+          [
+            466,
+            678
+          ],
+          [
+            950,
+            669
+          ]
+        ],
+        "editor_pairs": [
+          [
+            "ObjectIdentifier(0x0000000101af1800)",
+            "ObjectIdentifier(0x0000000101af2400)"
+          ]
+        ],
+        "models": [
+          "D9AA13EC-C7C3-487F-B34F-97DCF4BEF0AF"
+        ],
+        "scenes": [
+          "CBA8F365-49F6-49F4-93CC-82F05B293EE4"
+        ],
+        "character_counts": [
+          [
+            22,
+            22
+          ]
+        ],
+        "trace_sha256": "28772c0da98e89968127e64e53883f82f7cdb8ecbd574a781a75c2ad86af06c0"
+      },
+      "measurements": [
+        "SETTINGS_RESIZE initial app=(0.0, 0.0, 466.0, 678.0) window=(0.0, 0.0, 466.0, 678.0) close=(399.0, 179.0, 38.0, 38.0) enabled=true hittable=true",
+        "SETTINGS_RESIZE wide app=(0.0, 0.0, 950.0, 669.0) window=(0.0, 0.0, 316.6666666666667, 223.0) close=(248.5, 13.333333333333334, 12.0, 11.999999999999998) enabled=true hittable=false",
+        "SETTINGS_RESIZE compact app=(0.0, 0.0, 400.0, 750.0) window=(0.0, 0.0, 133.33333333333334, 250.0) close=(112.0, 13.333333333333334, 12.0, 11.999999999999998) enabled=true hittable=false"
+      ],
+      "actual_state_sha256": {
+        "wide": "23ea520b4902735e3816117787b9c47ce1e7c743029d14fbd3c2ce8490b3cd44",
+        "compact": "7471f536053b6f5ee10c613f6fd44f8ecb57c5e77987e8245e030093059bc064"
+      }
+    },
+    {
+      "language": "zh-Hant",
+      "content_size": "large",
+      "status": "passed",
+      "test_seconds": 104.748,
+      "skipped": false,
+      "report_sha256": "c075a142bff5d0c78b17d521ab3201de19c6d8dfd44597206bd92e2e95bf4073",
+      "native_log_sha256": "e5caa3f5e9cd7c7d0aa7462033d22a3604a4569992e6e9e3350dd5395b704ee7",
+      "continuity": {
+        "sizes": [
+          [
+            400,
+            750
+          ],
+          [
+            466,
+            678
+          ],
+          [
+            950,
+            669
+          ]
+        ],
+        "editor_pairs": [
+          [
+            "ObjectIdentifier(0x00000001056e1800)",
+            "ObjectIdentifier(0x00000001056e2400)"
+          ]
+        ],
+        "models": [
+          "6B4768FD-F3E6-4487-BF1E-A5C2EC52AB9A"
+        ],
+        "scenes": [
+          "CBA8F365-49F6-49F4-93CC-82F05B293EE4"
+        ],
+        "character_counts": [
+          [
+            22,
+            22
+          ]
+        ],
+        "trace_sha256": "c1f8e1e3e83ace0dd9105d67edaba604d0d2d31f094da3d190a70db38f983394"
+      },
+      "measurements": [
+        "SETTINGS_RESIZE initial app=(0.0, 0.0, 466.0, 678.0) window=(0.0, 0.0, 466.0, 678.0) close=(399.0, 179.0, 38.0, 38.0) enabled=true hittable=true",
+        "SETTINGS_RESIZE wide app=(0.0, 0.0, 950.0, 669.0) window=(0.0, 0.0, 316.6666666666667, 223.0) close=(248.5, 13.333333333333334, 12.0, 11.999999999999998) enabled=true hittable=false",
+        "SETTINGS_RESIZE compact app=(0.0, 0.0, 400.0, 750.0) window=(0.0, 0.0, 133.33333333333334, 250.0) close=(112.0, 13.333333333333334, 12.0, 11.999999999999998) enabled=true hittable=false"
+      ],
+      "actual_state_sha256": {
+        "wide": "924528e740f747a4b7fe0ce7efb0f5e0b8ede8d69e81f500ea26e8ca10bddd2c",
+        "compact": "6372252f8bd74552304e99276fbd9ffc0e8a1c42e9eb696be5a379f34ce8c6f9"
+      }
+    },
+    {
+      "language": "zh-Hant",
+      "content_size": "extra-extra-extra-large",
+      "status": "passed",
+      "test_seconds": 88.259,
+      "skipped": false,
+      "report_sha256": "ebc830986f1366068d2c732623fc384ed4ad191193c917ea7185c5ec063cc2fe",
+      "native_log_sha256": "5c059d32c6cc2dfb57d4304f1614f2543ada6f54ac37c955805dbf3c305c6ee0",
+      "continuity": {
+        "sizes": [
+          [
+            400,
+            750
+          ],
+          [
+            466,
+            678
+          ],
+          [
+            950,
+            669
+          ]
+        ],
+        "editor_pairs": [
+          [
+            "ObjectIdentifier(0x00000001012dd800)",
+            "ObjectIdentifier(0x00000001012de400)"
+          ]
+        ],
+        "models": [
+          "C70A6BAE-26A9-4C87-AF9F-A7F18D4B7114"
+        ],
+        "scenes": [
+          "CBA8F365-49F6-49F4-93CC-82F05B293EE4"
+        ],
+        "character_counts": [
+          [
+            22,
+            22
+          ]
+        ],
+        "trace_sha256": "84fa801ac190b35bb6021d9e779e559f2a6399a5d712a66e1f69d3385ea40e11"
+      },
+      "measurements": [
+        "SETTINGS_RESIZE initial app=(0.0, 0.0, 466.0, 678.0) window=(0.0, 0.0, 466.0, 678.0) close=(399.0, 179.0, 38.0, 38.0) enabled=true hittable=true",
+        "SETTINGS_RESIZE wide app=(0.0, 0.0, 950.0, 669.0) window=(0.0, 0.0, 316.6666666666667, 223.0) close=(248.5, 13.333333333333334, 12.0, 11.999999999999998) enabled=true hittable=false",
+        "SETTINGS_RESIZE compact app=(0.0, 0.0, 400.0, 750.0) window=(0.0, 0.0, 133.33333333333334, 250.0) close=(112.0, 13.333333333333334, 12.0, 11.999999999999998) enabled=true hittable=false"
+      ],
+      "actual_state_sha256": {
+        "wide": "fd78bf42cb0dacbbcfcdcf11d92105a8d0e8746377fcc98bc7f90fe7ef5e4de6",
+        "compact": "5650e65197dca2861898ec16f64457a668cd1188605b20464a199e177b685300"
+      }
+    }
+  ],
+  "product_code_changed": false,
+  "limitations": [
+    "assisted Device Hub input, not headless tap success",
+    "settings dismissal and exact document continuity only",
+    "no final signed build or physical Duo acceptance",
+    "other Issue 282 scenarios remain open",
+    "VoiceOver experience not verified"
+  ],
+  "evidence": {
+    "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6485853163",
+    "assets": [
+      {
+        "file": "wide.webp",
+        "sha256": "c25cff61ab961ea8fd800d75434e11e9677ca4fe0a47927eafda14acad6391da",
+        "url": "https://github.com/user-attachments/assets/282509c1-726f-44cb-9635-b0b8edaeb901"
+      },
+      {
+        "file": "wide-dismissed.webp",
+        "sha256": "18d555b751fc340658b5ec783c2d230c7bcbc0c3ea8e9900999b1d461c915d42",
+        "url": "https://github.com/user-attachments/assets/a40069a3-a3d4-4e39-bb07-a9ed4f473a54"
+      },
+      {
+        "file": "en-compact.webp",
+        "sha256": "78df3a28e20e6dfe8a87379e0d81d8d1521b6bf7b765db1242b69f06a17c2b93",
+        "url": "https://github.com/user-attachments/assets/5f43e7ee-6928-4ab5-9615-bc17ce5cfede"
+      },
+      {
+        "file": "zh-Hans-compact.webp",
+        "sha256": "5b38ce76c471dc8ce31f2d2d911f2c40352875c6d39625564f978d8f555f8729",
+        "url": "https://github.com/user-attachments/assets/f0d51fa4-83de-4f09-9271-08e60542672b"
+      },
+      {
+        "file": "zh-Hant-compact.webp",
+        "sha256": "5c6c2b66bfdecd467d95ab0bee16fcbea01b72759e9c41aada1c4e06f731419e",
+        "url": "https://github.com/user-attachments/assets/842b5b5b-be09-4f72-8d3b-5bb429adfd81"
+      },
+      {
+        "file": "settings-pointer-trimmed.mp4",
+        "sha256": "ca763dd2aaaa54e4ba8fe726913a1a28b367ed2410924e2250602257cac83451",
+        "url": "https://github.com/user-attachments/assets/6a852a25-b7db-429f-9cc0-e03ec2c9ea88"
+      }
+    ],
+    "remote_readback": {
+      "images": 5,
+      "video_player": true,
+      "local_paths": false
+    },
+    "video": {
+      "duration_seconds": 36.122,
+      "source_segments_seconds": [
+        [
+          12,
+          26
+        ],
+        [
+          42,
+          58
+        ],
+        [
+          77,
+          85
+        ]
+      ],
+      "speed_changed": false,
+      "playback": "QuickTime reached end; decoded contact sheets checked including dismissal frames",
+      "scope": "actions and result, not timing or smoothness"
+    }
+  }
+}
