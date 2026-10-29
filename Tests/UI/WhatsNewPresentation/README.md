@@ -92,3 +92,32 @@ candidate are in [#268 validation](../../../docs/validation/issue-268-mobile-gib
 It verifies per-file confirmation, cancellation, confirmation after relaunch,
 and completion using the real QA App; it does not automate the system file picker
 or replace signed-device, provider, purchase, or memory acceptance.
+
+## Duo Pro alert localization
+
+`DuoReadinessTests` includes the English, Simplified Chinese and Traditional
+Chinese Pro alert cases. Each exhausts only the isolated QA quota, fills the
+example, cancels the system alert, opens it again, opens Pro, closes the sheet
+and checks that the source is unchanged. Product availability and purchasing are
+outside these assertions. The button labels are intentionally language-specific:
+`Pro`, `会员`, and `會員`.
+
+After installing the 27.1 QA artifact through the
+[Duo build entry](../../../docs/CI.md#iphone-duo-的本地-271-构建入口), run the standalone
+UI project with these selections (same project/scheme/destination and isolated
+DerivedData parameters as the [Duo reproduction instructions](../../../docs/validation/iphone-duo/README.md#复跑)):
+
+```bash
+-only-testing:WhatsNewPresentationTests/DuoReadinessTests/testSystemProAlertCancelsAndOpensClosableSheet
+-only-testing:WhatsNewPresentationTests/DuoReadinessTests/testSimplifiedProAlertCancelsAndOpensClosableSheet
+-only-testing:WhatsNewPresentationTests/DuoReadinessTests/testTraditionalProAlertCancelsAndOpensClosableSheet
+```
+
+Use default `large` and `extra-extra-extra-large`, restore the prior size, and
+record the actual starting pose and window dimensions. This is the system XXXL,
+not an accessibility size. The capture helper keeps all active simulator screens
+with explicit display indexes, since app-scoped capture can return a black frame
+on Duo; select the visible QA screen after inspection. The frame log and test
+success do not prove readability or a real fold transition. Do not use a black
+attachment as visual evidence. Results and remaining gaps are recorded in the
+[2026-10-29 acceptance follow-up](../../../docs/validation/iphone-duo/acceptance-followup-2026-10-29.md).

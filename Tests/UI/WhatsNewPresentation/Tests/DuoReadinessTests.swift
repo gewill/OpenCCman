@@ -20,10 +20,16 @@ final class DuoReadinessTests: XCTestCase {
   }
 
   private func capture(_ app: XCUIApplication, _ name: String) {
-    let image = XCTAttachment(screenshot: app.screenshot())
-    image.name = name
-    image.lifetime = .keepAlways
-    add(image)
+    print("OPENCCMAN_DUO_CAPTURE \(name): app=\(app.frame), window=\(app.windows.firstMatch.frame)")
+    // App-scoped capture can select Duo's inactive inner display while closed.
+    // Keep every active simulator display, without assuming a fixed screen index.
+    // This suite runs only against the isolated QA app on a dedicated device.
+    for (index, screen) in XCUIScreen.screens.enumerated() {
+      let image = XCTAttachment(screenshot: screen.screenshot())
+      image.name = "\(name)-display-\(index)"
+      image.lifetime = .keepAlways
+      add(image)
+    }
   }
 
   private func wait(_ element: XCUIElement, predicate: NSPredicate, timeout: TimeInterval = 15) {
@@ -72,24 +78,36 @@ final class DuoReadinessTests: XCTestCase {
   }
 
   func testSystemProAlertCancelsAndOpensClosableSheet() {
-    let app = launch(exhausted: true)
+    checkProAlert(language: "en", cancel: "Cancel", pro: "Pro")
+  }
+
+  func testSimplifiedProAlertCancelsAndOpensClosableSheet() {
+    checkProAlert(language: "zh-Hans", cancel: "取消", pro: "会员")
+  }
+
+  func testTraditionalProAlertCancelsAndOpensClosableSheet() {
+    checkProAlert(language: "zh-Hant", cancel: "取消", pro: "會員")
+  }
+
+  private func checkProAlert(language: String, cancel: String, pro: String) {
+    let app = launch(language: language, exhausted: true)
     defer { app.terminate() }
     app.buttons["source-fill-example"].tap()
     let source = app.textViews["workspace-source-editor"]
     let original = source.value as? String
     app.buttons["workspace-convert"].tap()
     let alert = app.alerts.firstMatch
-    capture(app, "after-exhausted-convert")
     XCTAssertTrue(alert.waitForExistence(timeout: 10))
-    capture(app, "system-pro-alert")
-    alert.buttons["Cancel"].tap()
+    capture(app, "\(language)-system-pro-alert")
+    alert.buttons[cancel].tap()
+    wait(alert, predicate: NSPredicate(format: "exists == false"))
     XCTAssertEqual(source.value as? String, original)
     app.buttons["workspace-convert"].tap()
     XCTAssertTrue(alert.waitForExistence(timeout: 10))
-    alert.buttons["Pro"].tap()
+    alert.buttons[pro].tap()
     let close = app.buttons["pro-sheet-close"]
     XCTAssertTrue(close.waitForExistence(timeout: 15))
-    capture(app, "pro-sheet-with-system-close")
+    capture(app, "\(language)-pro-sheet-with-system-close")
     close.tap()
     XCTAssertTrue(app.buttons["workspace-convert"].waitForExistence(timeout: 10))
     XCTAssertEqual(source.value as? String, original)
