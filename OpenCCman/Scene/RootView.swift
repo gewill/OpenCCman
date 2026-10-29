@@ -181,8 +181,12 @@ struct RootView: View {
       }
     }
     .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenSettingsFromMenu"))) { notification in
-      guard isTargetWindow(for: notification) else { return }
+      guard isTargetWindow(for: notification), navigator.path != "/settings" else { return }
       navigator.navigate("/settings")
+    }
+    .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenProFromMenu"))) { notification in
+      guard isTargetWindow(for: notification), navigator.path != "/pro" else { return }
+      navigator.navigate("/pro")
     }
     .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenHelpFromMenu"))) { notification in
       guard isTargetWindow(for: notification) else { return }

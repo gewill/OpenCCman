@@ -270,4 +270,127 @@ final class DuoReadinessTests: XCTestCase {
     XCTAssertEqual(result.value as? String, converted)
     capture(app, "native-compact-resize")
   }
+
+  // Additional local acceptance stays on the installed, source-verified QA binary.
+  func testEnglishMoreRoutesKeepDocument() { checkMoreRoutes(language: "en", settings: "Settings", pro: "Pro") }
+  func testSimplifiedMoreRoutesKeepDocument() { checkMoreRoutes(language: "zh-Hans", settings: "设置", pro: "会员") }
+  func testTraditionalMoreRoutesKeepDocument() { checkMoreRoutes(language: "zh-Hant", settings: "設定", pro: "會員") }
+
+  private func checkMoreRoutes(language: String, settings: String, pro: String) {
+    let app = launch(language: language)
+    defer { app.terminate() }
+    let (original, converted) = convertExample(app)
+    app.buttons["workspace-more"].tap()
+    capture(app, "\(language)-actual-more-menu")
+    XCTAssertTrue(app.buttons[settings].waitForExistence(timeout: 5))
+    app.buttons[settings].tap()
+    // Current 2.1 has no configured release cards. Test the actual route instead.
+    XCTAssertFalse(app.buttons["whats-new-settings"].exists)
+    let customer = app.buttons["customer-center-settings"]
+    XCTAssertTrue(customer.waitForExistence(timeout: 10)); customer.tap()
+    let dismiss = app.buttons["circled_close_button"]
+    XCTAssertTrue(dismiss.waitForExistence(timeout: 20))
+    capture(app, "\(language)-customer-center-no-transaction")
+    dismiss.tap()
+    wait(dismiss, predicate: NSPredicate(format: "exists == false"))
+    XCTAssertTrue(customer.waitForExistence(timeout: 10))
+    let back = app.buttons["navigation-back"]
+    XCTAssertTrue(back.waitForExistence(timeout: 10))
+    back.tap()
+    app.buttons["workspace-more"].tap()
+    XCTAssertTrue(app.buttons[pro].waitForExistence(timeout: 5))
+    app.buttons[pro].tap()
+    let closePro = app.buttons["pro-sheet-close"]
+    XCTAssertTrue(closePro.waitForExistence(timeout: 10))
+    let restore = app.buttons[language == "en" ? "Restore" : language == "zh-Hans" ? "恢复购买" : "恢復購買"]
+    XCTAssertTrue(restore.waitForExistence(timeout: 10))
+    if !restore.isEnabled { capture(app, "\(language)-pro-route-loading-restore-disabled") }
+    wait(restore, predicate: NSPredicate(format: "enabled == true"), timeout: 30)
+    XCTAssertTrue(restore.isEnabled) // Reachability only; no restore or purchase.
+    capture(app, "\(language)-pro-route-restore-control")
+    closePro.tap()
+    wait(closePro, predicate: NSPredicate(format: "exists == false"))
+    XCTAssertTrue(app.buttons["workspace-more"].waitForExistence(timeout: 10))
+    XCTAssertEqual(app.textViews["workspace-source-editor"].value as? String, original)
+    XCTAssertEqual(app.textViews["workspace-result-editor"].value as? String, converted)
+  }
+
+  func testVersionWithoutReleaseDoesNotPresentCards() {
+    let app = XCUIApplication(bundleIdentifier: appID)
+    defer { app.terminate() }
+    app.launchArguments = ["-AppleLanguages", "(en)", "-qa-unread-whats-new-at-launch",
+      "-qa-assume-active-for-whats-new", "-qa-suppress-review", "-qa-duo-trace"]
+    app.launch()
+    XCTAssertTrue(app.buttons["workspace-convert"].waitForExistence(timeout: 20))
+    XCTAssertFalse(app.buttons["whats-new-done"].waitForExistence(timeout: 3))
+    app.buttons["workspace-more"].tap(); app.buttons["Settings"].tap()
+    XCTAssertTrue(app.staticTexts["2.1(30)"].waitForExistence(timeout: 10))
+    XCTAssertFalse(app.buttons["whats-new-settings"].exists)
+    capture(app, "version-without-release-has-no-empty-replay")
+  }
+
+  func testHostResizeWithProRouteKeepsDocument() throws { try checkOverlayResize("pro") }
+  func testHostResizeWithImporterKeepsDocument() throws { try checkOverlayResize("import") }
+  func testHostResizeWithExporterKeepsDocument() throws { try checkOverlayResize("export") }
+
+  private func checkOverlayResize(_ overlay: String) throws {
+    guard ProcessInfo.processInfo.environment["OPENCCMAN_DUO_OVERLAY_RESIZE"] == "1" else {
+      throw XCTSkip("Requires a host controller that ends its own resize session before dismissal")
+    }
+    let app = launch()
+    defer { app.terminate() }
+    let (original, converted) = convertExample(app)
+    let initial = app.frame
+    switch overlay {
+    case "pro":
+      app.buttons["workspace-more"].tap(); app.buttons["Pro"].tap()
+      XCTAssertTrue(app.buttons["Restore"].waitForExistence(timeout: 10))
+    case "import":
+      app.buttons["Import TXT"].tap()
+      XCTAssertTrue(app.buttons["Cancel"].firstMatch.waitForExistence(timeout: 15))
+    default:
+      let export = app.buttons["Export TXT"]
+      for _ in 0..<3 where !export.isHittable { app.swipeUp() }
+      XCTAssertTrue(export.isHittable); export.tap()
+      XCTAssertTrue(app.otherElements["Browse View (Picker)"].waitForExistence(timeout: 15))
+    }
+    capture(app, "\(overlay)-before-real-resize")
+    print("OPENCCMAN_OVERLAY_READY \(overlay)")
+    let wide = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+      abs(app.frame.width - 950) < 1 && abs(app.frame.height - 669) < 1
+    }, object: nil)
+    XCTAssertEqual(XCTWaiter().wait(for: [wide], timeout: 30), .completed)
+    capture(app, "\(overlay)-wide-real-resize")
+    print("OPENCCMAN_OVERLAY_WIDE \(overlay)")
+    let compact = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+      abs(app.frame.width - 400) < 1 && abs(app.frame.height - 750) < 1
+    }, object: nil)
+    XCTAssertEqual(XCTWaiter().wait(for: [compact], timeout: 30), .completed)
+    capture(app, "\(overlay)-compact-real-resize")
+    print("OPENCCMAN_OVERLAY_COMPACT \(overlay)")
+    let restored = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+      abs(app.frame.width - initial.width) < 1 && abs(app.frame.height - initial.height) < 1
+    }, object: nil)
+    XCTAssertEqual(XCTWaiter().wait(for: [restored], timeout: 30), .completed)
+    // Ending the host session is explicit. This does not claim that XCTest can
+    // hit controls on the Resizable display (whose reported frames are scaled).
+    switch overlay {
+    case "pro":
+      let close = app.buttons["pro-sheet-close"]; close.tap()
+      wait(close, predicate: NSPredicate(format: "exists == false"))
+    case "import":
+      let cancel = app.buttons["Cancel"].firstMatch; cancel.tap()
+      wait(cancel, predicate: NSPredicate(format: "exists == false"))
+    default:
+      let picker = app.otherElements["Browse View (Picker)"]
+      let cancel = app.buttons["Cancel"].firstMatch
+      XCTAssertTrue(cancel.waitForExistence(timeout: 5)); cancel.tap()
+      wait(picker, predicate: NSPredicate(format: "exists == false"))
+    }
+    XCTAssertTrue(app.buttons["workspace-convert"].waitForExistence(timeout: 10))
+    XCTAssertEqual(app.textViews["workspace-source-editor"].value as? String, original)
+    XCTAssertEqual(app.textViews["workspace-result-editor"].value as? String, converted)
+    capture(app, "\(overlay)-dismissed-original-document")
+    print("OPENCCMAN_OVERLAY_VERIFIED \(overlay)")
+  }
 }

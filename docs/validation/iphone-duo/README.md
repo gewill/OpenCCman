@@ -3,6 +3,8 @@
 2026-10-29 的 [分阶段验收补充](acceptance-followup-2026-10-29.md)记录 #278 单独关闭、
 窄外屏三语 Pro 补验与设置缩放未通过的结果；下文保留首个候选的历史范围。
 
+后续进展见 [本机验收与窄窗修复](local-acceptance-2026-10-29.md)。
+
 关联 #277–#282；这是首个开发候选，不是这些 Issues 的关闭记录。依据
 [指南固定版本](https://github.com/gewill/dev-standards/blob/3089d379d421566db7b367665cad196224466cf7/iphone_duo_readiness_guide.md)。
 日常分支从 develop `b8eca56b019d8718a41603b057c3b9f0839c1941` 创建，PR 回 develop。
