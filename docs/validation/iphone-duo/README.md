@@ -9,6 +9,10 @@
 #288 合并后 CI、真实拼音 marked text／非零选区／中段阅读、普通转换计次、
 移动文件取消／后台／锁屏／错误恢复、Customer Center 和 Mac 零窗口入口；#280 / #282 继续开放。
 
+2026-10-29—30 的[原生姿态与真实文件保存补验](pose-file-followup-2026-10-30.md)
+记录 #289 审核／合并后 CI、实际开合与激活 division、转换中受控闭合、非空稿件及真实 provider 保存；
+同时保留导入时机不足和可调显示失败，不扩大为完整矩阵通过。
+
 关联 #277–#282；这是首个开发候选，不是这些 Issues 的关闭记录。依据
 [指南固定版本](https://github.com/gewill/dev-standards/blob/3089d379d421566db7b367665cad196224466cf7/iphone_duo_readiness_guide.md)。
 日常分支从 develop `b8eca56b019d8718a41603b057c3b9f0839c1941` 创建，PR 回 develop。
