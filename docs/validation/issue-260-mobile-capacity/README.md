@@ -1,6 +1,7 @@
 # #260 移动端容量证据准备
 
-这不是验收通过报告。生产开关仍为 false，尚未取得签名真机矩阵的证据。当前已交付输入集、独立整篇参考和 84 项移动服务输出比较；不把 Mac、Simulator 或生成成功当作 iOS 100 MiB 容量承诺。
+> **2026-10-30 审计说明：**下文 2026-10-01 的 12 输入、84 oracle、84 服务及 Mac 回归均为历史记录。`service-report.json` 的来源是 `52def28102d209803152c296fbfd568100f55b40`，不能作为本次候选源码已通过的证明；三份服务源码随后已改变。本次整理、修复与重验见 [2026-10-30 审计](audit-2026-10-30/README.md)。原始 JSON 保留其实际 SHA，未改写历史结果。
+这不是验收通过报告。生产开关仍为 false，尚未取得签名真机矩阵的证据。2026-10-01 已交付输入集、独立整篇参考和 84 项移动服务输出比较；不把 Mac、Simulator 或生成成功当作 iOS 100 MiB 容量承诺。
 
 ## 固定输入
 
@@ -32,7 +33,7 @@ manifest 记录精确字节数、输入 SHA-256、种子字节、生成器 SHA-2
 - 十轮完成/取消恢复循环；输入与输出完整哈希；私有目录清理；锁屏、后台、强退；Files/iCloud/第三方提供方与低空间/权限变化；系统保存取消/重试/同名。
 - #16 承接最低 iOS 15，#14/#71 承接真实 Pro；#260 仍负责真机容量与启用，不提前关闭。
 
-本机 Xcode 27.0（27A266a）`xctrace list templates` 已列出 Activity Monitor、Allocations 等模板，仅证明工具可用，尚未证明这些模板在目标真机上导出 physical footprint 的字段、采样频率和开销。先保存原始 trace 并核实字段，再实现自动比较；不得将 allocations live bytes、RSS 或 Mac `ru_maxrss` 冒充整 App physical footprint。设备确认前不安装到用户预留给其他项目的 iPhone。
+2026-10-01 本机 Xcode 27.0（27A266a）`xctrace list templates` 已列出 Activity Monitor、Allocations 等模板，仅证明工具可用，尚未证明这些模板在目标真机上导出 physical footprint 的字段、采样频率和开销。先保存原始 trace 并核实字段，再实现自动比较；不得将 allocations live bytes、RSS 或 Mac `ru_maxrss` 冒充整 App physical footprint。这是当时环境记录，不说明当前设备占用；本轮未查询或操作设备。
 
 帮助、容量提示和 CHANGELOG 的正式承诺只在 #260 门槛通过后更新；本 PR 不启用生产入口、不触发 Xcode Cloud、不修改购买和依赖。
 
@@ -67,14 +68,14 @@ python3 scripts/check-mobile-capacity-outputs.py \
 
 此探针在 Mac Release 子进程直接运行应用 `MobileLargeFileService` 及共享 pump，不重新实现转换。每项验证输入字节数、完整输出 SHA/字节数、exportURL、从磁盘重新创建 service 恢复 Ready，以及按任务 ID 删除后的空目录。输出是临时私有测试目录；Python 只清理自己创建的临时根。这里的 exportURL 并非 UIDocumentPicker 或实际提供方保存，不等同系统导出验收。通过只说明这些语料在 Mac 宿主的真实移动服务正确，不能代替 iOS 构建、保护、UIKit 或物理设备内存检查。
 
-启动前拒绝 fixture 篡改、oracle 输入或七模式选项不一致、wrapper 不干净/版本不一致、路径越界，以及缺项/重复的配置矩阵。执行失败不生成总 report.json，保留构建日志和已完成的单项结果；所有项通过才产生带源码、二进制、oracle 哈希的聚合报告。参考 JSON 不是签名文件，仍应审查其来源，工具完整性检查不能证明来源可信。
+启动前拒绝空/重复 fixture 清单、fixture 篡改、oracle 输入或七模式选项不一致、wrapper 不干净/版本不一致、路径越界，以及缺项/重复的配置矩阵。执行失败不生成总 report.json，保留构建日志和已完成的单项结果；所有项通过才产生带源码、二进制、oracle 哈希的聚合报告。参考 JSON 不是签名文件，仍应审查其来源，工具完整性检查不能证明来源可信。
 
-探针初次运行曾因 `/tmp` 与 `/private/tmp` 的 URL 表示差异拒绝恢复结果；输出长度和哈希实际已一致。已改为比较任务 ID、文件名、字节数、选项、清理状态及磁盘 fingerprint（设备号/inode/大小/修改时间/普通文件属性），不要求 URL 字符串相同。没有修改服务代码或参考输出。另以错误预期哈希和错误长度运行真实已编译探针，两者都明确拒绝且不产生通过报告；配置缺项及 options raw 错误在构建前拒绝。
+探针初次运行曾因 `/tmp` 与 `/private/tmp` 的 URL 表示差异拒绝恢复结果；输出长度和哈希实际已一致。已改为比较任务 ID、文件名、字节数、选项、清理状态及磁盘 fingerprint（设备号/inode/大小/修改时间/普通文件属性），不要求 URL 字符串相同。没有修改服务代码或参考输出。另以错误预期哈希和错误长度运行真实已编译探针，两者都明确拒绝且不产生通过报告；配置缺项及 options raw 错误在构建前拒绝。2026-10-30 新增独立预检测试，覆盖空清单、重复文件/模式、缺模式、错误选项、篡改与路径越界；正常小矩阵可进入构建，实际服务另行运行。
 
 2026-10-01：Mac 宿主真实 MobileLargeFileService 全套 **84/84 项通过**，每项输出与独立整篇参考的长度/SHA 完全相同，Ready 磁盘恢复字段/文件身份一致，删除后目录为空。聚合结果见 service-report.json。未测量 iOS footprint；也没有执行系统提供方保存、签名/购买或真机矩阵，不能据此启用生产入口。
 
 
-## 当前集成代码的 Mac 回归
+## 2026-10-01 当时集成代码的 Mac 回归
 
 2026-10-01，候选 `893dd8d`，锁定 wrapper `564b094b2b69f2c1e907fa3d89fe6845469a4e4e`，Mac16,7 / Apple M4 Pro。审计发现移动端接入后 TextFileService 已改变，因此不直接把 #257 的旧记录当作本候选结果；使用当前实际源码重新运行以下检查：
 
