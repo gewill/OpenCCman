@@ -20,11 +20,7 @@ struct HomeScene: View {
       #if os(macOS)
         WorkspaceSurface(export: exportResult)
       #else
-        if UserInterfaceIdiom.current == .pad {
-          WorkspaceSurface(platform: .pad, export: exportResult)
-        } else {
-          PhoneWorkspace(export: exportResult)
-        }
+        WorkspaceSurface(platform: .mobile, export: exportResult)
       #endif
     }
     .frame(minWidth: 300)
@@ -39,6 +35,7 @@ struct HomeScene: View {
       }
     }
     #endif
+    #if os(macOS)
     .overlay {
       if viewModel.showingProAlert {
         // Keep pointer and touch input in the custom modal without replacing the editors.
@@ -52,6 +49,13 @@ struct HomeScene: View {
                           detailKey: viewModel.proAlertDetailKey) {
       whatsNewWindow.proSheetIsActive = false
     })
+    #else
+    .sheet(isPresented: $whatsNewWindow.showingProSheet, onDismiss: {
+      whatsNewWindow.proSheetIsActive = false
+    }) {
+      ProScene(isPresented: true)
+    }
+    #endif
     .fileImporter(isPresented: $whatsNewWindow.showingImporter, allowedContentTypes: [.plainText]) { result in
       switch result {
       case let .success(url): viewModel.importFile(url)
@@ -66,17 +70,60 @@ struct HomeScene: View {
       }
       exportDocument = nil
     }
-    .alert(isPresented: Binding(
-      get: { viewModel.error != nil },
-      set: {
-        if !$0 {
-          viewModel.error = nil
-        }
+    #if os(iOS)
+    .alert(item: alertPresentation) { alert in
+      switch alert {
+      case let .pro(detail):
+        return Alert(title: Text("Pro only feature"), message: Text(detail.localizedStringKey),
+                     primaryButton: .default(Text("Pro")) { whatsNewWindow.showingProSheet = true },
+                     secondaryButton: .cancel())
+      case let .failure(message):
+        return Alert(title: Text("Error"), message: Text(message))
       }
-    )) {
+    }
+    #else
+    .alert(isPresented: Binding(get: { viewModel.error != nil }, set: { if !$0 { viewModel.error = nil } })) {
       Alert(title: Text("Error"), message: Text(fileErrorDescription))
     }
+    #endif
   }
+
+  #if os(iOS)
+  private enum HomeAlert: Identifiable {
+    case pro(String)
+    case failure(String)
+
+    var id: String {
+      switch self {
+      case .pro: return "pro"
+      case .failure: return "error"
+      }
+    }
+  }
+
+  private var alertPresentation: Binding<HomeAlert?> {
+    let displayed: HomeAlert?
+    if whatsNewWindow.proSheetIsActive {
+      displayed = nil
+    } else if viewModel.showingProAlert {
+      displayed = .pro(viewModel.proAlertDetailKey)
+    } else if viewModel.error != nil {
+      displayed = .failure(fileErrorDescription)
+    } else {
+      displayed = nil
+    }
+    return Binding(get: { displayed }, set: { next in
+      guard next == nil else { return }
+      // Consume the snapshot actually presented, not whichever flag is now set.
+      // A pending error survives Pro cancellation and waits for its sheet to close.
+      switch displayed {
+      case .pro: viewModel.showingProAlert = false
+      case .failure: viewModel.error = nil
+      case nil: break
+      }
+    })
+  }
+  #endif
 
   private var fileErrorDescription: String {
     guard let error = viewModel.error else { return "" }

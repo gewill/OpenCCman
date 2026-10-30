@@ -1,0 +1,57 @@
+{
+  "source_sha256": {
+    "OpenCCman/Services/ChineseConversionService.swift": "2f9b951421406dab71bee5e8da9125ba8cac154284e01138b8e062cd64083a0a",
+    "OpenCCman/Services/TextFileService.swift": "55cee4635927e8ca38256a1bd88ac66aa406897a4c86f73beccad59423c68688",
+    "OpenCCman/Services/StreamingConversionPump.swift": "684d340695d74f8764733ccec22dd5e27886ed5da80643f206e234829417a62a",
+    "OpenCCman/Services/FileConversionPolicy.swift": "6ba3052fa9466d7e914b43d40f42d32bf16c1bb02826f4aeedd7f4bef6a3ff7e",
+    "OpenCCman/Services/MobileLargeFileService.swift": "160551c592acf8873dbf494ba44288be3b878c9f033618cb8e141aff01d3b7f5",
+    "OpenCCman/Services/MobileLargeFileCoordinator.swift": "1a1b12345b51001cc34a383923057d370bb1650bd5f77ab2d70d5950e0e86e11",
+    "OpenCCman/Services/MobileFileLifecycle.swift": "f5ced3417e06809c466a558afd7fdd86ea25344086f75ac806fb1fb56d77646e",
+    "OpenCCman/Model/ConversionConfiguration.swift": "2287fbaf31e4b682c4fa21fe06748dd12088bcb61926f675f0ef31bf799bbefc",
+    "Tests/Regression/MobileFileJobChecks.swift": "e788e3e9efc83ed85dc31191f8e4b7b7e27b74f986741bbd5fc80e62a260a611",
+    "Tests/Regression/MobileCoordinatorChecks.swift": "82adb77fb6fc3a2628105d217fdaec58d049e388257559130af7933883451e1c",
+    "Tests/Regression/MobileLifecycleChecks.swift": "2039eb44dae1c2b9bc1bd88f640d4f3affe5bf19188a6e08f3616dffef038b5e",
+    "Tests/Regression/MobileFileJobProbe.swift": "9192213869e13df64c597b3657a9ec02113369c47decfcb56a41efb77fefe9d4",
+    "scripts/check-mobile-file-jobs.py": "d6ace7804c4a8e8a2a00838d3490a3e1853a639e1d36c23787ba64ed3d6807d6"
+  },
+  "wrapper_revision": "564b094b2b69f2c1e907fa3d89fe6845469a4e4e",
+  "kill_probes": [
+    {
+      "stage": "snapshotWrite",
+      "signal": "SIGKILL",
+      "fresh_process_recovery": "recover-empty",
+      "source_unchanged": true,
+      "owned_files_remaining": 0
+    },
+    {
+      "stage": "conversionWrite",
+      "signal": "SIGKILL",
+      "fresh_process_recovery": "recover-empty",
+      "source_unchanged": true,
+      "owned_files_remaining": 0
+    },
+    {
+      "stage": "outputSync",
+      "signal": "SIGKILL",
+      "fresh_process_recovery": "recover-empty",
+      "source_unchanged": true,
+      "owned_files_remaining": 0
+    },
+    {
+      "stage": "afterOutputRename",
+      "signal": "SIGKILL",
+      "fresh_process_recovery": "recover-empty",
+      "source_unchanged": true,
+      "owned_files_remaining": 0
+    },
+    {
+      "stage": "ready",
+      "signal": "SIGKILL",
+      "fresh_process_recovery": "recover-ready",
+      "source_unchanged": true,
+      "owned_files_remaining": 0
+    }
+  ],
+  "ios_destination": "platform=iOS Simulator,id=DD688D7F-5F64-491E-AE3D-E6C9F8686395",
+  "scope": "Service tests; no UIKit lifecycle, real provider, protected-device, Pro or device memory acceptance"
+}

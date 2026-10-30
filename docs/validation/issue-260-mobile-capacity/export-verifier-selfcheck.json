@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "passed": true,
+  "scope": "Full exported-byte comparison only; device context is operator supplied, not independently verified",
+  "context": {
+    "device_model": "Mac host fixture self-check; NOT device export",
+    "os": "macOS",
+    "build": "tool-only",
+    "app_sha": "e33adc5",
+    "wrapper_sha": "564b094b2b69f2c1e907fa3d89fe6845469a4e4e",
+    "provider": "generated fixture; no provider",
+    "fixture": "100MiB-ascii.txt",
+    "mode": "traditional"
+  },
+  "oracle_sha256": "b78e7e32ce4a6bc3e8558637ab61bf8141bf1f0a1d33836a1a1891f445e328c0",
+  "reference": {
+    "fixture": "100MiB-ascii.txt",
+    "input_bytes": 104857600,
+    "input_sha256": "7327e70a6de5f1dbbf5dabd5eac9ea031733a6de78d09c521e1a3b45b8db9c8a",
+    "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+    "mode": "traditional",
+    "options_raw": 1,
+    "output_bytes": 104857600,
+    "output_sha256": "7327e70a6de5f1dbbf5dabd5eac9ea031733a6de78d09c521e1a3b45b8db9c8a"
+  },
+  "actual": {
+    "bytes": 104857600,
+    "sha256": "7327e70a6de5f1dbbf5dabd5eac9ea031733a6de78d09c521e1a3b45b8db9c8a"
+  }
+}

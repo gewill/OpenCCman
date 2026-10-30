@@ -20,6 +20,9 @@ enum StreamingTextFileService {
     case sameFile = "file_error_same_destination"
     case invalidDestination = "file_error_destination"
     case destinationChanged = "file_error_destination_changed"
+    case capacity = "large_file_capacity"
+    case experimentalCapacity = "mac_file_experimental_capacity"
+    case insufficientSpace = "mac_file_insufficient_space"
 
     var errorDescription: String? { NSLocalizedString(rawValue, comment: "File conversion error") }
   }
@@ -36,19 +39,39 @@ enum StreamingTextFileService {
   }
 
   /// Fault injection at real I/O boundaries for regression checks. Production
-  /// uses the empty defaults; hooks cannot bypass validation or atomic commit.
+  /// uses real capacity queries and otherwise empty defaults; hooks cannot
+  /// bypass input validation or atomic commit.
   struct Hooks: Sendable {
     var temporaryDirectoryCreated: @Sendable (URL) -> Void = { _ in }
     var beforeRead: @Sendable () throws -> Void = {}
     var beforeWrite: @Sendable () throws -> Void = {}
     var beforeCommit: @Sendable () throws -> Void = {}
     var beforeCleanup: @Sendable () throws -> Void = {}
+    var availableBytes: @Sendable (URL) throws -> Int64? = {
+      var url = $0
+      url.removeAllCachedResourceValues()
+      let values = try url.resourceValues(forKeys: [
+        .volumeAvailableCapacityForImportantUsageKey, .volumeAvailableCapacityKey
+      ])
+      return availableCapacity(importantUsage: values.volumeAvailableCapacityForImportantUsage,
+                               ordinary: values.volumeAvailableCapacity)
+    }
+  }
+
+  /// A nonpositive important-usage estimate can be unavailable on a volume.
+  /// Consult ordinary free space before treating it as full. An explicit zero
+  /// from that fallback remains authoritative; absent/invalid values are unknown.
+  static func availableCapacity(importantUsage: Int64?, ordinary: Int?) -> Int64? {
+    if let importantUsage, importantUsage > 0 { return importantUsage }
+    guard let ordinary, ordinary >= 0 else { return nil }
+    return Int64(ordinary)
   }
 
   static func convert(
     source: OpenedTextFile,
     destination: URL,
     options: ChineseConverter.Options,
+    capacity: MacFileCapacity = .standard,
     progress: @escaping @Sendable (UInt64, UInt64) -> Void = { _, _ in },
     hooks: Hooks = Hooks()
   ) async throws -> Result {
@@ -61,7 +84,7 @@ enum StreamingTextFileService {
           // The coordinator can now safely release the single-task slot.
           do {
             let result = try run(source: source, destination: destination, options: ChineseConverter.Options(rawValue: optionsRawValue),
-                                 progress: progress, cancellation: cancellation, hooks: hooks)
+                                 capacity: capacity, progress: progress, cancellation: cancellation, hooks: hooks)
             continuation.resume(returning: result)
           } catch ConversionError.invalidUTF8 {
             continuation.resume(throwing: TextFileService.FileError.invalidUTF8)
@@ -75,12 +98,16 @@ enum StreamingTextFileService {
     source: OpenedTextFile,
     destination: URL,
     options: ChineseConverter.Options,
+    capacity: MacFileCapacity,
     progress: @Sendable (UInt64, UInt64) -> Void,
     cancellation: StreamingConversionCancellation,
     hooks: Hooks
   ) throws -> Result {
     defer { try? source.close() }
     try cancellation.check()
+    guard source.byteCount <= capacity.maximumInputBytes else {
+      throw capacity == .standard ? FileError.capacity : FileError.experimentalCapacity
+    }
     guard destination.isFileURL else { throw FileError.invalidDestination }
     let destinationScoped = destination.startAccessingSecurityScopedResource()
     defer { if destinationScoped { destination.stopAccessingSecurityScopedResource() } }
@@ -99,12 +126,23 @@ enum StreamingTextFileService {
     hooks.temporaryDirectoryCreated(replacementDirectory)
     let temporaryURL = replacementDirectory.appendingPathComponent(UUID().uuidString + ".txt")
     do {
+      let storage = StorageMonitor(directory: replacementDirectory, query: hooks.availableBytes)
+      // Keep the conservative full-job estimate out of the established 1 GiB
+      // path. Same-volume atomic rename does not require a second output copy.
+      // Both policies still check available space as output is written.
+      if capacity == .experimental {
+        guard let estimated = MacFileCapacity.estimatedStorageBytes(for: source.byteCount) else {
+          throw FileError.insufficientSpace
+        }
+        try storage.require(estimated)
+      }
       let output = try openOutput(at: temporaryURL)
       defer { try? output.close() }
       let result = try StreamingConversionPump.run(
         input: input, output: output, expectedInputBytes: source.byteCount,
         options: options, cancellation: cancellation, progress: progress,
-        hooks: .init(beforeRead: hooks.beforeRead, beforeWrite: hooks.beforeWrite))
+        hooks: .init(beforeRead: hooks.beforeRead, beforeWrite: hooks.beforeWrite,
+                     beforeOutputWrite: { try storage.beforeWrite($0) }))
       try source.verifyUnchanged(input)
       // Detect synchronization/close failures before making the output visible.
       try output.synchronize()
@@ -169,6 +207,34 @@ enum StreamingTextFileService {
     }
     guard descriptor >= 0 else { throw TextFileFingerprint.posixError() }
     return FileHandle(fileDescriptor: descriptor, closeOnDealloc: true)
+  }
+
+  /// Confined to the file worker. Query the destination volume, not the source
+  /// or app-container volume; neither a nil estimate nor an early pass promises
+  /// that later writes will succeed.
+  private final class StorageMonitor: @unchecked Sendable {
+    let directory: URL
+    let query: @Sendable (URL) throws -> Int64?
+    private var remaining: UInt64 = 0
+    init(directory: URL, query: @escaping @Sendable (URL) throws -> Int64?) {
+      self.directory = directory
+      self.query = query
+    }
+    func require(_ bytes: UInt64) throws {
+      if let available = try query(directory), available < 0 || UInt64(available) < bytes {
+        throw FileError.insufficientSpace
+      }
+    }
+    func beforeWrite(_ count: Int) throws {
+      let count = UInt64(count)
+      if count >= remaining {
+        let (required, overflow) = count.addingReportingOverflow(64 * 1024 * 1024)
+        guard !overflow else { throw FileError.insufficientSpace }
+        try require(required)
+        remaining = 4 * 1024 * 1024
+      }
+      remaining -= min(remaining, count)
+    }
   }
 
   private static func atomicCommit(_ temporary: URL, to destination: URL, replacing: Bool) throws {

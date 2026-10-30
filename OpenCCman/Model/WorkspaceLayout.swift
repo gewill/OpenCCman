@@ -17,7 +17,7 @@ struct WorkspaceLayoutPreference: Equatable {
 
 struct WorkspaceLayoutResolution: Equatable {
   enum Axis: String { case horizontal, vertical }
-  enum Platform { case mac, pad, phone }
+  enum Platform { case mac, mobile }
   static let enterHorizontal = 760.0
   static let retainHorizontal = 720.0
   let dividerSize: Double
@@ -30,7 +30,9 @@ struct WorkspaceLayoutResolution: Equatable {
                       platform: Platform, accessibility: Bool,
                       previousAxis: Axis? = nil) -> Self {
     let available = width.isFinite ? max(0, width) : 0
-    let supportsColumns = platform != .phone && !accessibility
+    // Platform determines interaction metrics, never whether an iPhone window
+    // is allowed to use the space currently available to it.
+    let supportsColumns = !accessibility
     let sidebarBudget = platform == .mac ? 264.0 : 248.0
     let wantsInspector = preference.inspector == .shown
       || (preference.inspector == .automatic && available >= 1100)

@@ -6,10 +6,10 @@ import os
 
 struct ProScene: View {
   @Environment(\.sizeCategory) private var sizeCategory
-  @State var packages: [RevenueCat.Package] = []
+  @State private var packages: [RevenueCat.Package] = []
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
-  @State var isLoading: Bool = false
-  @State var errorMessage: String = ""
+  @State private var isLoading: Bool = false
+  @State private var errorMessage: String = ""
   @State private var errorMessageID = UUID()
   var isPresented: Bool = false
 
@@ -17,10 +17,18 @@ struct ProScene: View {
 
   var body: some View {
     VStack {
+      #if os(macOS)
       self.navi
+      #endif
       self.list
     }
     .appFont(.body)
+    #if os(iOS)
+    .toolbar {
+      ToolbarItem(placement: .primaryAction) { restoreButton }
+    }
+    .appNavigation("Pro", isPresented: isPresented, closeIdentifier: "pro-sheet-close")
+    #endif
   }
 
   var navi: some View {
@@ -47,7 +55,13 @@ struct ProScene: View {
         .accessibilityIdentifier("pro-sheet-close")
       Spacer()
 
-      Button {
+      restoreButton
+    }
+    .padding(.horizontal, Constant.padding)
+  }
+
+  private var restoreButton: some View {
+    Button {
         self.isLoading = true
         self.errorMessage = ""
         Purchases.shared.restorePurchases { customerInfo, error in
@@ -56,12 +70,16 @@ struct ProScene: View {
           IAPManager.shared.applyCustomerInfo(customerInfo, error: error)
         }
       } label: {
+        #if os(iOS)
+        Label("Restore", systemImage: "arrow.clockwise")
+        #else
         Text("Restore")
+        #endif
       }
+      #if os(macOS)
       .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 12))
+      #endif
       .disabled(self.isLoading)
-    }
-    .padding(.horizontal, Constant.padding)
   }
 
   var list: some View {

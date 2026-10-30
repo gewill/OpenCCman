@@ -7,6 +7,7 @@ func checkMobileFileJobs() async throws {
   let directory = fm.temporaryDirectory.appendingPathComponent("mobile-jobs-\(UUID().uuidString)")
   try fm.createDirectory(at: directory, withIntermediateDirectories: true)
   defer { try? fm.removeItem(at: directory) }
+  try checkMobileCapacityCache(directory)
   let source = directory.appendingPathComponent("稿件.txt")
   let text = "头发干杯显存鼠标\0👨‍👩‍👧‍👦e\u{301}\r\n\n"
   let bytes = Data([0xef, 0xbb, 0xbf]) + Data(text.utf8)
@@ -192,7 +193,139 @@ func checkMobileFileJobs() async throws {
   try await repair.discardStoredJobs()
   try requireMobileJob(await repair.recover() == .empty)
   try requireMobileJob(empty(damagedStore))
+  try await checkMobileExperimentalJobs()
   print("PASS: mobile job snapshot, recovery, full hash, nine I/O faults, cancellation/commit races, space, cleanup failures and symlink boundaries")
+}
+
+private func checkMobileExperimentalJobs() async throws {
+  let fm = FileManager.default
+  let directory = fm.temporaryDirectory.appendingPathComponent("mobile-experimental-\(UUID())")
+  try fm.createDirectory(at: directory, withIntermediateDirectories: true)
+  defer { try? fm.removeItem(at: directory) }
+  let source = directory.appendingPathComponent("capacity.txt")
+  fm.createFile(atPath: source.path, contents: Data("头发鼠标\0\r\n".utf8))
+  let handle = try FileHandle(forWritingTo: source)
+  defer { try? handle.close() }
+  func store(_ root: URL, hooks: MobileLargeFileService.Hooks = .init()) -> MobileLargeFileService {
+    .init(root: root, protection: .init(available: true), hooks: hooks)
+  }
+  enum Probe: Error { case reachedRead }
+  // Sparse files test routing before expensive copying. These are boundary
+  // checks, not evidence that a full 1 GiB conversion succeeded.
+  let sizes: [UInt64] = [FileConversionPolicy.mobileMaximumBytes, FileConversionPolicy.mobileMaximumBytes + 1,
+                        256 * 1024 * 1024, 512 * 1024 * 1024, FileConversionPolicy.mobileExperimentalMaximumBytes]
+  for size in sizes {
+    try handle.truncate(atOffset: size)
+    let root = directory.appendingPathComponent(UUID().uuidString)
+    let service = store(root, hooks: .init(boundary: { if $0 == .snapshotRead { throw Probe.reachedRead } },
+                                          availableBytes: { _ in Int64.max }))
+    do { _ = try await service.convert(source: source, options: .traditionalize, capacity: .experimental); preconditionFailure("Read probe must stop") }
+    catch Probe.reachedRead {}
+    try requireMobileJob(fm.contentsOfDirectory(atPath: root.path).isEmpty)
+    try requireMobileJob(TextFileFingerprint.read(url: source)?.size == size)
+  }
+  try handle.truncate(atOffset: FileConversionPolicy.mobileExperimentalMaximumBytes + 1)
+  let tooLarge = directory.appendingPathComponent("too-large")
+  do {
+    _ = try await store(tooLarge, hooks: .init(boundary: { if $0 == .snapshotRead { preconditionFailure("Must reject before reading") } }))
+      .convert(source: source, options: .traditionalize, capacity: .experimental)
+    preconditionFailure("The experimental upper bound is finite")
+  } catch MobileLargeFileService.JobError.experimentalInputTooLarge {}
+  try requireMobileJob(fm.contentsOfDirectory(atPath: tooLarge.path).isEmpty)
+
+  // Real just-over-standard conversion, persisted policy, recovery, and export.
+  try handle.truncate(atOffset: FileConversionPolicy.mobileMaximumBytes + 1)
+  let root = directory.appendingPathComponent("roundtrip")
+  let instance = store(root)
+  let ready = try await instance.convert(source: source, options: .traditionalize, capacity: .experimental)
+  precondition(ready.capacity == .experimental)
+  let original = try String(contentsOf: source, encoding: .utf8)
+  let oracle = Data(try ChineseConversionService.convertSynchronously(original, options: .traditionalize).utf8)
+  try requireMobileJob(Data(contentsOf: ready.url) == oracle, "Compare the entire output with independent whole-text conversion")
+  let restored = store(root)
+  try requireMobileJob(await restored.recover() == .ready(ready))
+  try requireMobileJob(await restored.exportURL(for: ready.id) == ready.url)
+  try await restored.discard(ready.id)
+  try requireMobileJob(fm.contentsOfDirectory(atPath: root.path).isEmpty)
+
+  // Space may disappear after a successful preflight. The write-stage monitor
+  // observes it, reports failure, and removes only this task's temporary files.
+  try Data("头发\0👨‍👩‍👧‍👦\r\n".utf8).write(to: source)
+  for stage in [MobileLargeFileService.Stage.snapshotWrite, .conversionWrite] {
+    let root = directory.appendingPathComponent(UUID().uuidString)
+    let budget = MobileSpaceProbe()
+    do {
+      _ = try await store(root, hooks: .init(boundary: { if $0 == stage { budget.exhaust() } },
+                                           availableBytes: { _ in budget.read() }))
+        .convert(source: source, options: .traditionalize, capacity: .experimental)
+      preconditionFailure("Disk space lost during work must be detected")
+    } catch MobileLargeFileService.JobError.insufficientSpace {}
+    try requireMobileJob(fm.contentsOfDirectory(atPath: root.path).isEmpty)
+  }
+
+  // Legacy results still restore, but a missing/unknown policy never grants a
+  // larger allowance, and corrupt output lengths cannot overflow export math.
+  let journalRoot = directory.appendingPathComponent("journal")
+  let smallReady = try await store(journalRoot).convert(source: source, options: .traditionalize)
+  let journalURL = smallReady.url.deletingLastPathComponent().appendingPathComponent("ready.json")
+  let legacy = try JSONSerialization.jsonObject(with: Data(contentsOf: journalURL)) as! [String: Any]
+  precondition(legacy["schema"] as? Int == 1 && legacy["capacity"] == nil, "Standard results remain backward-readable")
+  try JSONSerialization.data(withJSONObject: legacy).write(to: journalURL)
+  try requireMobileJob(await store(journalRoot).recover() == .ready(smallReady))
+  let experimentalRoot = directory.appendingPathComponent("experimental-journal")
+  let experimentalReady = try await store(experimentalRoot).convert(source: source, options: .traditionalize, capacity: .experimental)
+  let experimentalJournalURL = experimentalReady.url.deletingLastPathComponent().appendingPathComponent("ready.json")
+  let valid = try JSONSerialization.jsonObject(with: Data(contentsOf: experimentalJournalURL)) as! [String: Any]
+  precondition(valid["schema"] as? Int == 2 && valid["capacity"] as? String == "experimental")
+  try requireMobileJob(await store(experimentalRoot).recover() == .ready(experimentalReady))
+  var invalids: [[String: Any]] = []
+  var missing = valid; missing.removeValue(forKey: "capacity"); invalids.append(missing)
+  var unknown = valid; unknown["capacity"] = "unlimited"; invalids.append(unknown)
+  var unwrittenStandard = valid; unwrittenStandard["capacity"] = "standard"; invalids.append(unwrittenStandard)
+  var unwrittenLegacy = valid; unwrittenLegacy["schema"] = 1; invalids.append(unwrittenLegacy)
+  var oversizedLegacy = legacy; oversizedLegacy["inputBytes"] = FileConversionPolicy.mobileMaximumBytes + 1; invalids.append(oversizedLegacy)
+  var oversizedExperimental = valid; oversizedExperimental["capacity"] = "experimental"; oversizedExperimental["inputBytes"] = FileConversionPolicy.mobileExperimentalMaximumBytes + 1; invalids.append(oversizedExperimental)
+  var overflow = valid; overflow["outputBytes"] = UInt64.max; invalids.append(overflow)
+  for invalid in invalids {
+    let destination = invalid["id"] as? String == smallReady.id.uuidString ? journalURL : experimentalJournalURL
+    try JSONSerialization.data(withJSONObject: invalid).write(to: destination)
+    do { _ = try await store(destination.deletingLastPathComponent().deletingLastPathComponent()).recover(); preconditionFailure("Invalid capacity journal must be rejected") }
+    catch MobileLargeFileService.JobError.invalidJournal {}
+    precondition(fm.fileExists(atPath: smallReady.url.path), "Recovery must not delete an unverified complete result")
+    precondition(fm.fileExists(atPath: experimentalReady.url.path), "Recovery must preserve experimental results too")
+  }
+  print("PASS: mobile 100 MiB/256 MiB/512 MiB/1 GiB admission, 1 GiB+1 rejection, full 100 MiB+1 oracle/recovery/export, mid-write space loss and legacy/corrupt journals")
+}
+
+/// Exercise the real default query against a removed directory. This models
+/// storage becoming unavailable without depending on volatile free-space values.
+private func checkMobileCapacityCache(_ directory: URL) throws {
+  let query = MobileLargeFileService.Hooks().availableBytes
+  let queue = DispatchQueue(label: "OpenCCman.capacity-cache-test")
+  let url = directory.appendingPathComponent("capacity-cache").standardizedFileURL
+  for _ in 0..<2 {
+    try queue.sync {
+      try FileManager.default.createDirectory(at: url, withIntermediateDirectories: false)
+      _ = try query(url)
+      try FileManager.default.removeItem(at: url)
+    }
+    try queue.sync {
+      do {
+        _ = try query(url)
+        throw NSError(domain: "OpenCCman.CapacityCacheRegression", code: 1,
+          userInfo: [NSLocalizedDescriptionKey: "Default query returned cached capacity after its directory disappeared"])
+      } catch let error as NSError where error.domain == NSCocoaErrorDomain
+          && error.code == CocoaError.fileReadNoSuchFile.rawValue {}
+    }
+  }
+  print("PASS: default capacity query detects a removed directory across worker blocks, then succeeds after recreation")
+}
+
+private final class MobileSpaceProbe: @unchecked Sendable {
+  private let lock = NSLock()
+  private var available: Int64 = Int64.max
+  func exhaust() { lock.lock(); available = 0; lock.unlock() }
+  func read() -> Int64 { lock.lock(); defer { lock.unlock() }; return available }
 }
 
 private final class MobileJobBarrier: @unchecked Sendable {

@@ -1,0 +1,13 @@
+PASS: shared stream pump; seven configurations, split BOM/UTF-8/phrases, IDS/NUL/Unicode, output expansion, byte counts, faults, cancellation and caller-owned handles
+PASS: mobile 100 MiB/256 MiB/512 MiB/1 GiB admission, 1 GiB+1 rejection, full 100 MiB+1 oracle/recovery/export, mid-write space loss and legacy/corrupt journals
+PASS: mobile job snapshot, recovery, full hash, nine I/O faults, cancellation/commit races, space, cleanup failures and symlink boundaries
+PASS: per-session experimental confirmation, closed gate, no job before consent, cancel/scene release, stale response, Pro/gate recheck and source growth
+PASS: mobile coordinator Pro recheck, single reservation, frozen configuration, resource pairing, owner transfer, stale export callbacks, save cancellation/retry and source identity
+PASS: real model notification subscribers; two explicit window targets; unbound rejection; exact Unicode/NUL/CRLF; export replacement; malformed payload; unchanged quota
+PASS: 7 option combinations × 11 fixtures; fixed NUL contracts, phrase boundaries, whitespace, Unicode and converter reuse
+PASS: model release, repeated taps, single publication, cancellation/replacement, empty input and quota guard
+PASS: presets, UTF-8/BOM/Unicode/NUL files, size limit, invalid input, cancellation and import replacement
+PASS: real NSURL/NSString providers and cancellation without a provider callback
+PASS: bounded file streaming, seven configurations, BOM/NUL/Unicode, real provider lifetime, aliases, invalid UTF-8, I/O faults, changed files and cancellation before commit
+PASS: one Mac file task across windows; 1 GiB capacity; entitlement/configuration snapshot; owner close and quit cleanup; recovery report; commit race and failure state
+PASS: free Shortcuts action runs at the exhausted homepage quota, matches four presets, preserves Unicode/NUL/newlines, accepts exactly 10 MiB and rejects over-limit UTF-8 text

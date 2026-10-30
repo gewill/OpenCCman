@@ -1,0 +1,17 @@
+{
+  "complete_file_cases": 23,
+  "input_bytes_processed": 62287511552,
+  "all_complete_hashes_match": true,
+  "all_cancellation_probes_preserve_destination_and_remove_staging": true,
+  "capacity_gib": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "maximum_sampled_service_footprint_bytes": 60654576,
+  "maximum_cancellation_cleanup_ms": 0.536542,
+  "wrapper_sha": "564b094b2b69f2c1e907fa3d89fe6845469a4e4e",
+  "opencc_sha": "025f371dc76b598d77384fbdab90c937471844d8",
+  "note": "Selected 23-case coverage, not every configuration at every capacity; one sample each. Seven modes x two corpora at 1 GiB, s2t stairs at 2/4/8 GiB, mixed HK/TW at 8 GiB, plus 10 MiB and 8 GiB expansion. Production experimental gate remains off."
+}

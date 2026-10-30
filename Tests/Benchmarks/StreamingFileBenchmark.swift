@@ -8,10 +8,17 @@ import OpenCC
 @main enum StreamingFileBenchmark {
   static func main() async throws {
     let args = CommandLine.arguments
-    guard args.count == 5, let byteCount = UInt64(args[1]), byteCount > 0,
-          ["single", "multiline", "unmatched"].contains(args[2]) else {
-      fatalError("Usage: StreamingFileBenchmark <bytes> <single|multiline|unmatched> <directory> <report.json>")
+    guard args.count == 6, let byteCount = UInt64(args[1]), byteCount >= 3,
+          ["single", "multiline", "unmatched", "expansion"].contains(args[2]) else {
+      fatalError("Usage: StreamingFileBenchmark <bytes> <single|multiline|unmatched|expansion> <directory> <report.json> <configuration>")
     }
+    let configurations: [String: ChineseConverter.Options] = [
+      "s2t": .traditionalize, "t2s": .simplify, "s2tw": [.traditionalize, .twStandard],
+      "s2hk": [.traditionalize, .hkStandard], "s2twp": [.traditionalize, .twStandard, .twIdiom],
+      "s2t-tw-idiom": [.traditionalize, .twIdiom], "s2hk-tw-idiom": [.traditionalize, .hkStandard, .twIdiom]]
+    guard let options = configurations[args[5]] else { fatalError("Unknown configuration") }
+    let capacity: MacFileCapacity = byteCount > FileConversionPolicy.macMaximumBytes ? .experimental : .standard
+    precondition(byteCount <= capacity.maximumInputBytes)
     let directory = URL(fileURLWithPath: args[3], isDirectory: true)
     try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
     let input = directory.appendingPathComponent("source.txt")
@@ -23,10 +30,11 @@ import OpenCC
       // it on child crash/timeout, when a Swift defer cannot run.
       for url in [input, output, cancellationOutput] { try? FileManager.default.removeItem(at: url) }
     }
-    let converter = try ChineseConversionService.converter(options: .traditionalize)
+    let converter = try ChineseConversionService.converter(options: options)
     let separator = args[2] == "multiline" ? "\r\n\n" : "|ASCII-boundary|"
+    let expansion = args[2] == "expansion" ? "显存顯存 内存 互联网 " : ""
     let tile = args[2] == "unmatched" ? String(repeating: "a", count: 64 * 1024) :
-      String(repeating: "头发干杯鼠标数据库服务器 汉字😀e\u{301}⿰木木" + separator, count: 1024)
+      String(repeating: expansion + "头发干杯鼠标数据库服务器 汉字😀e\u{301}⿰木木\0👨‍👩‍👧‍👦\u{9FBC}" + separator, count: 1024)
     let convertedTile = converter.convert(tile)
     precondition(converter.convert(tile + tile) == convertedTile + convertedTile,
                  "The benchmark oracle requires independent tile boundaries")
@@ -38,7 +46,10 @@ import OpenCC
     guard FileManager.default.createFile(atPath: input.path, contents: nil) else { throw CocoaError(.fileWriteUnknown) }
     let writer = try FileHandle(forWritingTo: input)
     defer { try? writer.close() }
-    var remaining = byteCount
+    let bom = Data([0xEF, 0xBB, 0xBF])
+    try writer.write(contentsOf: bom)
+    inputHash.update(data: bom)
+    var remaining = byteCount - UInt64(bom.count)
     while remaining >= UInt64(bytes.count) {
       try autoreleasepool {
         try writer.write(contentsOf: bytes)
@@ -58,6 +69,9 @@ import OpenCC
     inputHash.update(data: tail)
     expectedHash.update(data: convertedTail)
     expectedBytes += UInt64(convertedTail.count)
+    if args[2] == "expansion" {
+      precondition(expectedBytes > byteCount, "Expansion corpus must actually increase the full output size")
+    }
 
     let source = try OpenedTextFile(url: input)
     let samples = MemorySamples()
@@ -65,7 +79,7 @@ import OpenCC
     defer { _ = samples.stop() }
     let start = DispatchTime.now().uptimeNanoseconds
     let result = try await StreamingTextFileService.convert(
-      source: source, destination: output, options: .traditionalize,
+      source: source, destination: output, options: options, capacity: capacity,
       hooks: .init(temporaryDirectoryCreated: { staging.record($0) }))
     let duration = Double(DispatchTime.now().uptimeNanoseconds - start) / 1_000_000
     // Serial stop drains any active sampler and prevents further records. Hash
@@ -90,9 +104,11 @@ import OpenCC
     // Capture process high-water before the extra cancellation run. It includes
     // oracle preparation and output verification, unlike conversion_memory.
     let processMaxRSS = usage.ru_maxrss
-    let cancellation = try await measureCancellation(input: input, destination: cancellationOutput, staging: staging)
+    let cancellation = try await measureCancellation(input: input, destination: cancellationOutput, staging: staging,
+                                                     options: options, capacity: capacity)
     let report: [String: Any] = [
-      "protocol": 2, "configuration": "s2t", "corpus": args[2], "input_bytes": byteCount,
+      "protocol": 3, "configuration": args[5], "options_raw_value": options.rawValue,
+      "corpus": args[2], "input_bytes": byteCount, "has_bom": true,
       "output_bytes": result.outputBytes, "input_sha256": hex(inputHash.finalize()),
       "expected_sha256": expected, "actual_sha256": actual, "equal": true,
       "conversion_and_commit_ms": duration, "process_max_rss_bytes": processMaxRSS,
@@ -104,10 +120,11 @@ import OpenCC
     ]
     try JSONSerialization.data(withJSONObject: report, options: [.prettyPrinted, .sortedKeys])
       .write(to: URL(fileURLWithPath: args[4]), options: .atomic)
-    print("PASS: \(args[2]) \(byteCount) bytes, full hash equal, \(Int(duration)) ms, cancellation cleanup verified")
+    print("PASS: \(args[5]) \(args[2]) \(byteCount) bytes, full hash equal, \(Int(duration)) ms, cancellation cleanup verified")
   }
 
-  private static func measureCancellation(input: URL, destination: URL, staging: StagingRegistry) async throws -> [String: Any] {
+  private static func measureCancellation(input: URL, destination: URL, staging: StagingRegistry,
+                                          options: ChineseConverter.Options, capacity: MacFileCapacity) async throws -> [String: Any] {
     let preserved = Data("Keep this existing destination unchanged.\n".utf8)
     try preserved.write(to: destination)
     let probe = CancellationProbe()
@@ -115,7 +132,7 @@ import OpenCC
     let task = Task {
       await probe.waitUntilInstalled()
       return try await StreamingTextFileService.convert(
-        source: source, destination: destination, options: .traditionalize,
+        source: source, destination: destination, options: options, capacity: capacity,
         progress: { processed, _ in
           // This callback follows a successful conversion/write of the block.
           if processed > 0 { probe.cancelAfterWrittenBlock(processedBytes: processed) }

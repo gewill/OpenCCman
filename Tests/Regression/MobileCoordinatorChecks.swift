@@ -101,5 +101,89 @@ func checkMobileCoordinator() async throws {
   guard coordinator.failure as? TextFileService.FileError == .sourceChanged else {
     preconditionFailure("The confirmed source change must be reported")
   }
+  try await checkMobileCapacityConfirmation()
   print("PASS: mobile coordinator Pro recheck, single reservation, frozen configuration, resource pairing, owner transfer, stale export callbacks, save cancellation/retry and source identity")
 }
+
+@MainActor
+private func checkMobileCapacityConfirmation() async throws {
+  let fm = FileManager.default
+  let root = fm.temporaryDirectory.appendingPathComponent("mobile-capacity-confirmation-\(UUID())")
+  try fm.createDirectory(at: root, withIntermediateDirectories: true)
+  defer { try? fm.removeItem(at: root) }
+  let input = root.appendingPathComponent("large.txt")
+  fm.createFile(atPath: input.path, contents: nil)
+  let handle = try FileHandle(forWritingTo: input)
+  defer { try? handle.close() }
+  try handle.truncate(atOffset: FileConversionPolicy.mobileMaximumBytes + 1)
+  let jobs = root.appendingPathComponent("jobs")
+  let service = MobileLargeFileService(root: jobs, protection: .init(available: true))
+  var enabled = false
+  var qualified = true
+  var began = 0
+  var ended = 0
+  let coordinator = MobileLargeFileCoordinator(factory: { service }, isQualified: { qualified },
+    allowsExperimentalCapacity: { enabled }, beginWork: { began += 1 }, endWork: { ended += 1 })
+  coordinator.recover()
+  await coordinator.waitUntilSettled()
+  let owner = UUID()
+  let source = try OpenedTextFile(url: input)
+  do { try coordinator.offer(source, configuration: ConversionConfiguration.Preset.traditional.configuration, owner: owner); preconditionFailure("Experimental gate defaults closed") }
+  catch MobileLargeFileCoordinator.StartError.exceedsCapacity {}
+  enabled = true
+  try coordinator.offer(source, configuration: ConversionConfiguration.Preset.traditional.configuration, owner: owner)
+  let cancelledID = coordinator.session!.id
+  try coordinator.start()
+  precondition(coordinator.phase == .capacityConfirmation && coordinator.isAwaitingConfirmation)
+  precondition(began == 0)
+  try requireMobileCapacity(fm.contentsOfDirectory(atPath: jobs.path).isEmpty)
+  try coordinator.start()
+  try coordinator.confirmCapacityAttempt(sessionID: UUID())
+  precondition(began == 0, "Repeated start and stale confirmation cannot bypass the warning")
+  coordinator.cancel()
+  await coordinator.waitUntilSettled()
+  precondition(coordinator.session == nil && coordinator.presentationOwner == nil)
+  do { _ = try source.beginReading(); preconditionFailure("Cancelling confirmation releases the opened input") }
+  catch TextFileService.FileError.sourceUnavailable {}
+  try requireMobileCapacity(fm.contentsOfDirectory(atPath: jobs.path).isEmpty)
+
+  let next = try OpenedTextFile(url: input)
+  try coordinator.offer(next, configuration: ConversionConfiguration.Preset.traditional.configuration, owner: owner)
+  try coordinator.start()
+  try coordinator.confirmCapacityAttempt(sessionID: cancelledID)
+  precondition(coordinator.phase == .capacityConfirmation && began == 0)
+  qualified = false
+  do { try coordinator.confirmCapacityAttempt(sessionID: coordinator.session!.id); preconditionFailure("Pro is rechecked after warning") }
+  catch MobileLargeFileCoordinator.StartError.requiresPro {}
+  precondition(coordinator.phase == .confirmation && began == 0)
+  qualified = true
+  try coordinator.start()
+  enabled = false
+  do { try coordinator.confirmCapacityAttempt(sessionID: coordinator.session!.id); preconditionFailure("Gate is rechecked") }
+  catch MobileLargeFileCoordinator.StartError.exceedsCapacity {}
+  enabled = true
+  try coordinator.start()
+  coordinator.ownerDidClose(owner)
+  await coordinator.waitUntilSettled()
+  precondition(coordinator.session == nil && began == 0, "Closing the warning's scene releases its source without a job")
+
+  // Confirmed metadata is still checked by the worker; growing a file cannot
+  // turn consent for this identity into permission for a newer source.
+  let changing = try OpenedTextFile(url: input)
+  try coordinator.offer(changing, configuration: ConversionConfiguration.Preset.traditional.configuration, owner: owner)
+  try coordinator.start()
+  let confirmedID = coordinator.session!.id
+  try handle.truncate(atOffset: FileConversionPolicy.mobileMaximumBytes + 2)
+  try coordinator.confirmCapacityAttempt(sessionID: confirmedID)
+  try coordinator.confirmCapacityAttempt(sessionID: confirmedID)
+  await coordinator.waitUntilSettled()
+  precondition(coordinator.phase == .failed && began == 1 && ended == 1)
+  precondition(coordinator.failure as? TextFileService.FileError == .sourceChanged)
+  try requireMobileCapacity(fm.contentsOfDirectory(atPath: jobs.path).isEmpty)
+  try coordinator.validateSize(FileConversionPolicy.mobileExperimentalMaximumBytes)
+  do { try coordinator.validateSize(FileConversionPolicy.mobileExperimentalMaximumBytes + 1); preconditionFailure("1 GiB + 1 is rejected") }
+  catch MobileLargeFileCoordinator.StartError.exceedsExperimentalCapacity {}
+  print("PASS: per-session experimental confirmation, closed gate, no job before consent, cancel/scene release, stale response, Pro/gate recheck and source growth")
+}
+
+private func requireMobileCapacity(_ value: Bool) { precondition(value) }

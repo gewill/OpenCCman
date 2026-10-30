@@ -7,7 +7,7 @@ import OpenCC
 @MainActor
 final class MobileLargeFileCoordinator: ObservableObject {
   enum Phase: Equatable {
-    case recovering, idle, confirmation, preparing, converting, cancelling
+    case recovering, idle, confirmation, capacityConfirmation, preparing, converting, cancelling
     case interrupted, ready, exporting, completed, failed, waitingForUnlock
   }
   struct Session: Identifiable {
@@ -16,7 +16,7 @@ final class MobileLargeFileCoordinator: ObservableObject {
     let inputBytes: UInt64
     let optionsRawValue: Int
   }
-  enum StartError: Error { case busy, requiresPro, exceedsCapacity, notLargeFile }
+  enum StartError: Error { case busy, requiresPro, exceedsCapacity, exceedsExperimentalCapacity, notLargeFile }
   typealias Factory = @Sendable () async throws -> MobileLargeFileService
 
   @Published private(set) var phase: Phase = .recovering
@@ -30,6 +30,7 @@ final class MobileLargeFileCoordinator: ObservableObject {
 
   private let factory: Factory
   private let isQualified: @MainActor () -> Bool
+  private let allowsExperimentalCapacity: @MainActor () -> Bool
   private let beginWork: @MainActor () -> Void
   private let endWork: @MainActor () -> Void
   private var service: MobileLargeFileService?
@@ -40,15 +41,29 @@ final class MobileLargeFileCoordinator: ObservableObject {
 
   init(factory: @escaping Factory,
        isQualified: @escaping @MainActor () -> Bool,
+       allowsExperimentalCapacity: @escaping @MainActor () -> Bool = { false },
        beginWork: @escaping @MainActor () -> Void = {},
        endWork: @escaping @MainActor () -> Void = {}) {
     self.factory = factory
     self.isQualified = isQualified
+    self.allowsExperimentalCapacity = allowsExperimentalCapacity
     self.beginWork = beginWork
     self.endWork = endWork
   }
 
   var isWorking: Bool { phase == .preparing || phase == .converting || phase == .cancelling }
+  var isAwaitingConfirmation: Bool { phase == .confirmation || phase == .capacityConfirmation }
+  var requiresCapacityConfirmation: Bool {
+    (session?.inputBytes ?? 0) > FileConversionPolicy.mobileMaximumBytes
+  }
+
+  func validateSize(_ bytes: UInt64) throws {
+    if allowsExperimentalCapacity() {
+      guard bytes <= FileConversionPolicy.mobileExperimentalMaximumBytes else { throw StartError.exceedsExperimentalCapacity }
+    } else {
+      guard bytes <= FileConversionPolicy.mobileMaximumBytes else { throw StartError.exceedsCapacity }
+    }
+  }
   var progress: Double {
     guard let total = session?.inputBytes, total > 0 else { return 0 }
     return ready == nil ? min(0.99, Double(processedBytes) / Double(total)) : 1
@@ -86,7 +101,7 @@ final class MobileLargeFileCoordinator: ObservableObject {
     guard task == nil, ready == nil, self.source == nil, service != nil,
           phase == .idle || phase == .completed || phase == .interrupted || phase == .failed else { throw StartError.busy }
     guard source.byteCount > UInt64(FileConversionPolicy.editorMaximumBytes) else { throw StartError.notLargeFile }
-    guard source.byteCount <= FileConversionPolicy.mobileMaximumBytes else { throw StartError.exceedsCapacity }
+    try validateSize(source.byteCount)
     guard isQualified() else { throw StartError.requiresPro }
     self.source = source
     presentationOwner = owner
@@ -98,9 +113,30 @@ final class MobileLargeFileCoordinator: ObservableObject {
   }
 
   func start() throws {
+    guard phase == .confirmation, let session, task == nil else { return }
+    try validateSize(session.inputBytes)
+    guard isQualified() else { throw StartError.requiresPro }
+    if requiresCapacityConfirmation {
+      phase = .capacityConfirmation
+      return
+    }
+    try beginConversion(capacity: .standard)
+  }
+
+  /// The alert captures this session ID. A delayed response cannot authorize a
+  /// newer file; every new offer must go through both steps again.
+  func confirmCapacityAttempt(sessionID: UUID) throws {
+    guard phase == .capacityConfirmation, session?.id == sessionID, task == nil else { return }
+    phase = .confirmation
+    guard allowsExperimentalCapacity() else { throw StartError.exceedsCapacity }
+    try beginConversion(capacity: .experimental)
+  }
+
+  private func beginConversion(capacity: MobileFileCapacity) throws {
     guard phase == .confirmation, let source, let session, let service, task == nil else { return }
     // Qualification is frozen only when actual work starts, not when offered.
     guard isQualified() else { throw StartError.requiresPro }
+    try validateSize(session.inputBytes)
     let id = UUID()
     operationID = id
     phase = .preparing
@@ -110,6 +146,7 @@ final class MobileLargeFileCoordinator: ObservableObject {
       do {
         let result = try await service.convert(
           source: source.sourceURL, options: .init(rawValue: session.optionsRawValue),
+          capacity: capacity,
           expectedSource: source.fingerprint,
           snapshotReady: { try source.close() },
           progress: { [weak self] processed, _ in
@@ -147,7 +184,7 @@ final class MobileLargeFileCoordinator: ObservableObject {
       // Task.cancel may acquire the service commit lock. Dispatch it off the
       // main thread, including background-expiration callbacks.
       if let task { DispatchQueue.global(qos: .userInitiated).async { task.cancel() } }
-    } else if phase == .confirmation, let source {
+    } else if isAwaitingConfirmation, let source {
       phase = .cancelling
       task = Task {
         await Self.close(source)
@@ -163,7 +200,7 @@ final class MobileLargeFileCoordinator: ObservableObject {
   func ownerDidClose(_ owner: UUID) {
     guard presentationOwner == owner else { return }
     presentationOwner = nil
-    if isWorking || phase == .confirmation { cancel() }
+    if isWorking || isAwaitingConfirmation { cancel() }
     if phase == .exporting {
       // The window owns the system picker, not the completed file. Invalidate
       // its attempt before another window takes over, including preparation
@@ -237,7 +274,7 @@ final class MobileLargeFileCoordinator: ObservableObject {
   }
 
   func dismissPresentation() {
-    guard task == nil, !isWorking, phase != .confirmation, phase != .exporting else { return }
+    guard task == nil, !isWorking, !isAwaitingConfirmation, phase != .exporting else { return }
     presentationOwner = nil
   }
 
