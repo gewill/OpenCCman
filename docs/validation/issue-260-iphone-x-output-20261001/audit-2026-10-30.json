@@ -298,5 +298,14 @@
     "Spotlight exact published video filename"
   ],
   "search_limit": "Not found in these scoped searches; this does not establish deletion or absence everywhere.",
-  "media_scope": "Existing public compressed videos and stills; hashes, video metadata, seven selected decoded frame matches; no full continuous-video replay or new device action."
+  "media_scope": "Existing public compressed videos and stills; hashes, video metadata, seven selected decoded frame matches; no full continuous-video replay or new device action.",
+  "static_candidate_gate_comparison": {
+    "candidate_source": "aad2b09931e34dbfab3e8218be22e94cd604fbb6",
+    "candidate_runtime_sha256": "c0722b701b07db133acad609b1de62b5da51876fefc1c980d012c012b14fbcfa",
+    "candidate_productionEnabled": true,
+    "develop_source": "04cd8ff39fd38253000cd810e44f6d5ea1b0d615",
+    "develop_runtime_sha256": "8ca5d05dfecc683e53dd5eab61f699a6df1c5e4b0316141e3068d912370bc0de",
+    "develop_productionEnabled": false,
+    "scope": "Static source comparison only; does not establish installed build identity or authorize release."
+  }
 }
