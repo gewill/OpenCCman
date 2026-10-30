@@ -46,10 +46,13 @@ def main():
     if sha(fixture_root / 'manifest.json') != oracle['fixture_manifest_sha256']:
         p.error('Oracle belongs to another fixture manifest')
     names = [r['file'] for r in manifest['fixtures']]
+    if not names or any(not isinstance(name, str) or not name for name in names) or len(set(names)) != len(names):
+        p.error('Require nonempty unique fixture names')
     modes = {'simplified': 2, 'traditional': 1, 'traditional-taiwan-idiom': 1025,
              'taiwan': 33, 'taiwan-idiom': 1057, 'hong-kong': 65, 'hong-kong-taiwan-idiom': 1089}
     rows = oracle['rows']
-    if len(rows) != len(names) * 7 or {(r['fixture'], r['mode']) for r in rows} != {(f, m) for f in names for m in modes}:
+    pairs = [(r['fixture'], r['mode']) for r in rows]
+    if len(pairs) != len(set(pairs)) or set(pairs) != {(f, m) for f in names for m in modes}:
         p.error('Require exactly seven modes for every fixture')
     for f in manifest['fixtures']:
         path = fixture_root / f['file']
@@ -80,7 +83,9 @@ let package = Package(name: "Probe", platforms: [.macOS(.v12)],
     report = {'host': 'macOS service-only, NOT signed iOS acceptance', 'wrapper_sha': pin,
               'app_sha': subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip(),
               'source_sha256': {s: sha(ROOT / s) for s in SOURCES}, 'oracle_sha256': sha(a.oracle),
-              'binary_sha256': sha(binary), 'rows': []}
+              'binary_sha256': sha(binary), 'runner_sha256': sha(Path(__file__)),
+              'worktree_status': subprocess.check_output(['git', '-C', str(ROOT), 'status', '--porcelain'], text=True),
+              'rows': []}
     results = output / 'results'
     results.mkdir()
     for i, row in enumerate(rows):

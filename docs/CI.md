@@ -61,7 +61,7 @@ PR 与合并后真实 GitHub Actions 运行结果是线上验收依据。纯迁�
 
 ## 移动大文件证据工具回归（#260 候选）
 
-本候选在 App Regression 中增加 `test-mobile-capacity-fixtures.py` 与 `test-mobile-export-verifier.py`，检查有界语料生成、UTF-8 边界、导出全文哈希、截断/篡改、错误参考、拒绝覆盖和非普通文件。合并后才作为默认分支工作流能力；这些小样本工具测试不会生成整套 680 MiB 语料，不安装或操作真机，不代表 100 MiB 容量、内存或系统提供方验收。独立整篇 oracle 及完整容量矩阵继续按 #260 手动验证。
+本候选在 App Regression 中增加 `test-mobile-capacity-fixtures.py`、`test-mobile-capacity-preflight.py` 与 `test-mobile-export-verifier.py`，检查有界语料生成、UTF-8 边界、导出全文哈希、截断/篡改、错误参考、空集/重复/缺项矩阵的编译前拒绝、拒绝覆盖和非普通文件。合并后才作为默认分支工作流能力；这些小样本工具测试不会生成整套 680 MiB 语料，不安装或操作真机，不代表 100 MiB 容量、内存或系统提供方验收。独立整篇 oracle 及完整容量矩阵继续按 #260 手动验证。
 
 ## 控件尺寸回归
 
