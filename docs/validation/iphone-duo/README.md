@@ -13,6 +13,10 @@
 记录 #289 审核／合并后 CI、实际开合与激活 division、转换中受控闭合、非空稿件及真实 provider 保存；
 同时保留导入时机不足和可调显示失败，不扩大为完整矩阵通过。
 
+2026-10-30 的 [Mac 窄窗菜单补验](mac-menu-followup-2026-10-30.md)补充 #270 合并后 CI、
+Mac 150% 分栏菜单实际动作及稿件保持，并记录本轮 Duo 启动环境与 QA 快捷键权限缺口；
+[剩余验收盘点](../remaining-acceptance-2026-10-30.md)保留 46 个 Issues 的分组与边界。
+
 关联 #277–#282；这是首个开发候选，不是这些 Issues 的关闭记录。依据
 [指南固定版本](https://github.com/gewill/dev-standards/blob/3089d379d421566db7b367665cad196224466cf7/iphone_duo_readiness_guide.md)。
 日常分支从 develop `b8eca56b019d8718a41603b057c3b9f0839c1941` 创建，PR 回 develop。
