@@ -17,6 +17,10 @@
 Mac 150% 分栏菜单实际动作及稿件保持，并记录本轮 Duo 启动环境与 QA 快捷键权限缺口；
 [剩余验收盘点](../remaining-acceptance-2026-10-30.md)保留 46 个 Issues 的分组与边界。
 
+同日后续的 [runtime 恢复与路由返回间距修复](route-return-followup-2026-10-30.md)记录
+#291 合并后 CI、用户重启后恢复 Duo、英语半折叠菜单补验，以及 Help 返回时额外间距的实测修复；
+保留未完成矩阵与真机/签名包门槛。
+
 关联 #277–#282；这是首个开发候选，不是这些 Issues 的关闭记录。依据
 [指南固定版本](https://github.com/gewill/dev-standards/blob/3089d379d421566db7b367665cad196224466cf7/iphone_duo_readiness_guide.md)。
 日常分支从 develop `b8eca56b019d8718a41603b057c3b9f0839c1941` 创建，PR 回 develop。

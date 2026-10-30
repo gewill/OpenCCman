@@ -306,6 +306,7 @@ struct WorkspacePanes: View {
     ZStack(alignment: .topLeading) {
       SourcePane(editorHeight: sourceEditorHeight, paneHeight: horizontal ? availableHeight : nil, showsConversionAction: false)
         .frame(width: sourceWidth)
+        .fixedSize(horizontal: false, vertical: true)
         .workspaceFocusSection()
         .accessibilityElement(children: .contain)
         .accessibilitySortPriority(3)
@@ -316,6 +317,7 @@ struct WorkspacePanes: View {
         }
       ResultPane(editorHeight: resultEditorHeight, paneHeight: horizontal ? availableHeight : nil, export: export)
         .frame(width: resultWidth)
+        .fixedSize(horizontal: false, vertical: true)
         .workspaceFocusSection()
         .accessibilityElement(children: .contain)
         .accessibilitySortPriority(1)

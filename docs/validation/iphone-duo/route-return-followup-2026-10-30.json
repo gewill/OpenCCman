@@ -1,0 +1,2977 @@
+{
+  "date": "2026-10-30",
+  "issues": [
+    279,
+    280,
+    282
+  ],
+  "base_commit": "fd9454a300a40a981b35d9404290d9739aed87d9",
+  "product_diff_sha256": "a47354cb3ae1a611e3fda218703226643dbad528425f15b28febd3b4a40fc88b",
+  "product_file_sha256": "beb72790ae6cb2888ee1536dd04000e820b419363b8fe5b1cb08c837dd7da542",
+  "build": {
+    "source": {
+      "commit": "fd9454a300a40a981b35d9404290d9739aed87d9",
+      "status": " M OpenCCman/View/WorkspaceSurface.swift\n",
+      "diff_sha256": "a47354cb3ae1a611e3fda218703226643dbad528425f15b28febd3b4a40fc88b",
+      "untracked_sha256": {},
+      "package_resolved_sha256": "ddbb87a4ecb8ef2299d5b739c5c0e41e8ef8bc0a66db0e02873e6ee2cf694f6c"
+    },
+    "developer_dir": "/Applications/Xcode.app/Contents/Developer",
+    "configuration": "Debug",
+    "artifacts": {
+      "ios": {
+        "command": [
+          "xcodebuild",
+          "-project",
+          "OpenCCman.xcodeproj",
+          "-scheme",
+          "OpenCCman",
+          "-configuration",
+          "Debug",
+          "-destination",
+          "generic/platform=iOS Simulator",
+          "-derivedDataPath",
+          "/Users/rxwill/Library/Caches/Codex/OpenCCman-duo/pane-intrinsic-fix/ios",
+          "-disableAutomaticPackageResolution",
+          "-onlyUsePackageVersionsFromResolvedFile",
+          "CODE_SIGNING_ALLOWED=NO",
+          "ARCHS=arm64",
+          "ONLY_ACTIVE_ARCH=NO",
+          "PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.WhatsNewUITests",
+          "OTHER_SWIFT_FLAGS=$(inherited) -D OPENCCMAN_DUO_SDK",
+          "build"
+        ],
+        "app": "/Users/rxwill/Library/Caches/Codex/OpenCCman-duo/pane-intrinsic-fix/ios/Build/Products/Debug-iphonesimulator/OpenCCman.app",
+        "plist": {
+          "CFBundleIdentifier": "org.gewill.OpenCCman.WhatsNewUITests",
+          "CFBundleShortVersionString": "2.1",
+          "CFBundleVersion": "30",
+          "DTCompiler": "com.apple.compilers.llvm.clang.1_0",
+          "DTPlatformBuild": "24A94232",
+          "DTPlatformName": "iphonesimulator",
+          "DTPlatformVersion": "27.1",
+          "DTSDKBuild": "24A94232",
+          "DTSDKName": "iphonesimulator27.1",
+          "DTXcode": "2710",
+          "DTXcodeBuild": "27A9275",
+          "MinimumOSVersion": "15.0",
+          "UIApplicationSceneManifest": {
+            "UIApplicationSupportsMultipleScenes": true,
+            "UISceneConfigurations": {}
+          },
+          "UIApplicationSupportsIndirectInputEvents": true,
+          "UIDeviceFamily": [
+            1,
+            2
+          ],
+          "UILaunchScreen": {
+            "UIColorName": "LaunchBackground",
+            "UIImageName": "LaunchMark"
+          },
+          "UIStatusBarStyle": "UIStatusBarStyleDefault",
+          "UISupportedInterfaceOrientations~ipad": [
+            "UIInterfaceOrientationPortrait",
+            "UIInterfaceOrientationPortraitUpsideDown",
+            "UIInterfaceOrientationLandscapeLeft",
+            "UIInterfaceOrientationLandscapeRight"
+          ],
+          "UISupportedInterfaceOrientations~iphone": [
+            "UIInterfaceOrientationPortrait",
+            "UIInterfaceOrientationLandscapeLeft",
+            "UIInterfaceOrientationLandscapeRight"
+          ]
+        },
+        "binary_sdks": [
+          "27.1"
+        ],
+        "executable_sha256": "567c342cf084e03506cd36d86b4a0c6947ce247318c29e339dc85c79029432de",
+        "info_plist_sha256": "e7950891c95f08c6ebbe2c72df625bbe3ad88fad557e5c492d2effc6998a837d"
+      },
+      "mac": {
+        "command": [
+          "xcodebuild",
+          "-project",
+          "OpenCCman.xcodeproj",
+          "-scheme",
+          "OpenCCman",
+          "-configuration",
+          "Debug",
+          "-destination",
+          "platform=macOS",
+          "-derivedDataPath",
+          "/Users/rxwill/Library/Caches/Codex/OpenCCman-duo/pane-intrinsic-fix/mac",
+          "-disableAutomaticPackageResolution",
+          "-onlyUsePackageVersionsFromResolvedFile",
+          "CODE_SIGNING_ALLOWED=NO",
+          "ARCHS=arm64 x86_64",
+          "ONLY_ACTIVE_ARCH=NO",
+          "PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.WhatsNewUITests",
+          "build"
+        ],
+        "app": "/Users/rxwill/Library/Caches/Codex/OpenCCman-duo/pane-intrinsic-fix/mac/Build/Products/Debug/OpenCCman.app",
+        "plist": {
+          "CFBundleIdentifier": "org.gewill.OpenCCman.WhatsNewUITests",
+          "CFBundleShortVersionString": "2.1",
+          "CFBundleVersion": "30",
+          "DTCompiler": "com.apple.compilers.llvm.clang.1_0",
+          "DTPlatformBuild": "26A425",
+          "DTPlatformName": "macosx",
+          "DTPlatformVersion": "27.0",
+          "DTSDKBuild": "26A425",
+          "DTSDKName": "macosx27.0",
+          "DTXcode": "2710",
+          "DTXcodeBuild": "27A9275",
+          "LSMinimumSystemVersion": "12.0",
+          "UIApplicationSupportsIndirectInputEvents": false,
+          "UILaunchScreen": {
+            "UIColorName": "LaunchBackground",
+            "UIImageName": "LaunchMark"
+          },
+          "UIStatusBarStyle": "",
+          "UISupportedInterfaceOrientations~ipad": [
+            "UIInterfaceOrientationPortrait",
+            "UIInterfaceOrientationPortraitUpsideDown",
+            "UIInterfaceOrientationLandscapeLeft",
+            "UIInterfaceOrientationLandscapeRight"
+          ],
+          "UISupportedInterfaceOrientations~iphone": [
+            "UIInterfaceOrientationPortrait",
+            "UIInterfaceOrientationLandscapeLeft",
+            "UIInterfaceOrientationLandscapeRight"
+          ]
+        },
+        "binary_sdks": [
+          "27.0",
+          "27.0"
+        ],
+        "executable_sha256": "6b00276cef8ee50a73ba47e6bb9204a8f213432e64f04fc092710651b4d370c6",
+        "info_plist_sha256": "473f4f01df3af8140153e967f32ada8d381fc099145265b688beeeca86bb4a3d"
+      }
+    },
+    "status": "passed",
+    "xcode": "Xcode 27.1\nBuild version 27A9275",
+    "system": "ProductName:\t\tmacOS\nProductVersion:\t\t27.2\nBuildVersion:\t\t26B123"
+  },
+  "runtime_toolchain": {
+    "xcode": "27.2 (27B52)",
+    "developer_dir": "/Applications/Xcode-27.2.0.app/Contents/Developer",
+    "runtime": "iOS 27.1 (24A94425)",
+    "simulator": "4CAD3041-0744-41A6-8B4E-F934CA9F0778",
+    "sim_use": "0.16.0",
+    "axe": "1.8.0"
+  },
+  "binary_sha256": {
+    "baseline_ios_dylib": "f69b7bbea0700611e338f4bf5ee3116b07508c6d9e9967905abd1b063ba7534e",
+    "fixed_ios_dylib": "a28c756e35b1e7e54b8160e3e50ca77b6531518340d516cb45c424a04d7e2bd3",
+    "fixed_mac_dylib": "ce8a4be6a94640d9c142a68904e6a2a962fde8b9168c22f8e7c5c61349a14478"
+  },
+  "assertions": {
+    "passed": true,
+    "cases": {
+      "before-fix-stacked": {
+        "source": {
+          "y": 352.66666666666663,
+          "height": 180,
+          "x": 40,
+          "width": 787
+        },
+        "result": {
+          "x": 40,
+          "y": 680.6666666666665,
+          "height": 180,
+          "width": 787
+        },
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+      },
+      "before-return-back": {
+        "source": {
+          "width": 787,
+          "height": 180,
+          "y": 352.66666666666663,
+          "x": 40
+        },
+        "result": {
+          "y": 1800.9999999999998,
+          "width": 787,
+          "height": 180,
+          "x": 40
+        },
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+      },
+      "fix-stacked": {
+        "source": {
+          "y": 352.66666666666663,
+          "height": 180,
+          "width": 787,
+          "x": 40
+        },
+        "result": {
+          "y": 680.6666666666665,
+          "height": 180,
+          "width": 787,
+          "x": 40
+        },
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+      },
+      "fix-return-back": {
+        "source": {
+          "x": 40,
+          "y": 352.66666666666663,
+          "width": 787,
+          "height": 180
+        },
+        "result": {
+          "x": 40,
+          "y": 680.6666666666665,
+          "width": 787,
+          "height": 180
+        },
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+      },
+      "fix-xxxl-help-back": {
+        "source": {
+          "width": 787,
+          "y": 377.3333333333333,
+          "x": 40,
+          "height": 179.99999999999994
+        },
+        "result": {
+          "y": 705.3333333333333,
+          "width": 787,
+          "x": 40,
+          "height": 180
+        },
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+      },
+      "fix-xxxl-larger-source": {
+        "source": {
+          "width": 787,
+          "y": 377.3333333333333,
+          "height": 197.99999999999994,
+          "x": 40
+        },
+        "result": {
+          "width": 787,
+          "height": 180,
+          "y": 723.3333333333333,
+          "x": 40
+        },
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+      },
+      "fix-xxxl-larger-result": {
+        "source": {
+          "height": 179.99999999999994,
+          "y": 377.3333333333333,
+          "x": 40,
+          "width": 787
+        },
+        "result": {
+          "height": 180,
+          "y": 705.3333333333333,
+          "x": 40,
+          "width": 787
+        },
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+      },
+      "fix-xxxl-pro-back": {
+        "source": {
+          "y": 377.3333333333333,
+          "width": 787,
+          "height": 179.99999999999994,
+          "x": 40
+        },
+        "result": {
+          "y": 705.3333333333333,
+          "width": 787,
+          "x": 40,
+          "height": 180
+        },
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+      },
+      "fix-xxxl-settings-back": {
+        "source": {
+          "y": 377.3333333333333,
+          "width": 787,
+          "x": 40,
+          "height": 179.99999999999994
+        },
+        "result": {
+          "width": 787,
+          "x": 40,
+          "y": 705.3333333333333,
+          "height": 180
+        },
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+      },
+      "fix-xxxl-closed-back": {
+        "source": {
+          "height": 180,
+          "x": 40,
+          "y": 453,
+          "width": 302
+        },
+        "result": {
+          "width": 302,
+          "height": 180,
+          "y": 780.9999999999999,
+          "x": 40
+        },
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+      },
+      "fix-reopen-landscape": {
+        "source": {
+          "x": 40,
+          "height": 203.66666666666669,
+          "y": 400.3333333333333,
+          "width": 347.66666666666663
+        },
+        "result": {
+          "height": 339,
+          "x": 479.66666666666663,
+          "width": 347.66666666666663,
+          "y": 265
+        },
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+      },
+      "clean-return-back": {
+        "source": {
+          "x": 40,
+          "width": 787,
+          "height": 180,
+          "y": 352.66666666666663
+        },
+        "result": {
+          "y": 680.6666666666665,
+          "height": 180,
+          "width": 787,
+          "x": 40
+        },
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+      },
+      "clean-return-scrolled": {
+        "source": {
+          "y": 0,
+          "x": 40,
+          "width": 787,
+          "height": 95.33333333333331
+        },
+        "result": {
+          "height": 180,
+          "width": 787,
+          "x": 40,
+          "y": 243.33333333333326
+        },
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+      }
+    }
+  },
+  "local_checks": {
+    "exit_code": 0,
+    "commands": [
+      "bash scripts/check-workspace.sh",
+      "bash scripts/check-workspace-editor.sh",
+      "bash scripts/check-project.sh",
+      "python3 scripts/check-app-language.py",
+      "bash scripts/check-control-labels.sh",
+      "git diff --check"
+    ],
+    "scope": "Existing regression commands passed; native editor checks do not prove Duo UI layout."
+  },
+  "uploads": [
+    {
+      "file": "after-return-clean.mp4",
+      "path": "/Users/rxwill/.codex/ui-evidence/OpenCCman/282-return-gap/fd9454a/after-return-clean.mp4",
+      "sha256": "d6e3d792aa27720a2f8859230636b23fe4e6ed6f39b67280158898635ec9d6ed",
+      "bytes": 219728,
+      "url": "https://github.com/user-attachments/assets/7f7399d5-16e6-47c0-bd3d-1b660ca045cf",
+      "remote_sha256": "d6e3d792aa27720a2f8859230636b23fe4e6ed6f39b67280158898635ec9d6ed",
+      "remote_bytes": 219728
+    },
+    {
+      "file": "before-gap-scroll.png",
+      "path": "/Users/rxwill/.codex/ui-evidence/OpenCCman/282-return-gap/fd9454a/before-gap-scroll.png",
+      "sha256": "04435f1fe179778c9cc14272e92368e1839b5e51406461cf9131bc54760c2b0c",
+      "bytes": 239072,
+      "url": "https://github.com/user-attachments/assets/fc624e96-ac13-47ea-a356-1bd17cb46b55",
+      "remote_sha256": "04435f1fe179778c9cc14272e92368e1839b5e51406461cf9131bc54760c2b0c",
+      "remote_bytes": 239072
+    },
+    {
+      "file": "before-return-gap.mp4",
+      "path": "/Users/rxwill/.codex/ui-evidence/OpenCCman/282-return-gap/fd9454a/before-return-gap.mp4",
+      "sha256": "3ac7d7c75d839b6f4320afb1d2b4cdf8d20dec5ee9f1a3d791cd85eb4174e769",
+      "bytes": 204715,
+      "url": "https://github.com/user-attachments/assets/4117a867-8c35-4857-b21e-f5ba9c9451a0",
+      "remote_sha256": "3ac7d7c75d839b6f4320afb1d2b4cdf8d20dec5ee9f1a3d791cd85eb4174e769",
+      "remote_bytes": 204715
+    },
+    {
+      "file": "clean-return-scrolled.png",
+      "path": "/Users/rxwill/.codex/ui-evidence/OpenCCman/282-return-gap/fd9454a/clean-return-scrolled.png",
+      "sha256": "31dfa90fb32071acc80e3d01b7a31baaa54699eb2412aca6089c6b0be25aa901",
+      "bytes": 466735,
+      "url": "https://github.com/user-attachments/assets/13e7dca9-fc17-4025-98b4-3b0d128c0ff4",
+      "remote_sha256": "31dfa90fb32071acc80e3d01b7a31baaa54699eb2412aca6089c6b0be25aa901",
+      "remote_bytes": 466735
+    }
+  ],
+  "cleanup": {
+    "own_simulator": "Shutdown",
+    "other_devices": "Preserved booted BuZhan Duo and iOS 26.5 iPhone 17 Pro",
+    "mac_qa": "Exited",
+    "content_size": "large",
+    "pose": "closed / portrait",
+    "global_xcode": "27.2 observed after user reboot; agent did not change it"
+  },
+  "unverified": [
+    "Full three-language matrix",
+    "Left/right split and actual system overflow",
+    "All native poses and directions",
+    "Import in progress, Preparing/Cancelling and protected data",
+    "Final signed distribution and real device",
+    "Purchases/Restore/Customer Center business",
+    "VoiceOver experience"
+  ],
+  "raw_evidence": [
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/actions.jsonl",
+      "bytes": 17787550,
+      "sha256": "b391d4849d9b2ad83e9c4070d1a4706d97810d543bf64fbb5aca24a868dd8ae5"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/after-return-clean.mp4",
+      "bytes": 1620701,
+      "sha256": "55bf6462df5667e8e5313bdfa9f9a1955c6756f8f43866d66d1b606e965e2072"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/after-return-gap-frame8.png",
+      "bytes": 71590,
+      "sha256": "445d1db90d966b7c9db18af8c4917da483786e34f01d61c5ec61b4728c2602ad"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/after-return-gap.mp4",
+      "bytes": 3704630,
+      "sha256": "84a91cc9ba4bc9776c13bcb173dc4c71ec373e4b18c3349c04a35e8313b05fc2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/assertions.json",
+      "bytes": 6085,
+      "sha256": "bed17406b25b184984c906ef85638854dfad6e24440a78228d2820a56d272428"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/baseline-converted-ax.json",
+      "bytes": 133689,
+      "sha256": "6333c1340c644a2f938a243219386f43b05149fe6b890d7d69b8e3bb664434a3"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/baseline-converted-tap.json",
+      "bytes": 309,
+      "sha256": "d0c3811933571c23adfbde00a3b907a1380608070468dca88d1acc7192f90beb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/baseline-converted-trace.jsonl",
+      "bytes": 7175,
+      "sha256": "5595c39ecd868e205ee2a4f2b7f86efa5ceff251419d539a225b78e8e3f3643f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-landscape-ax.json",
+      "bytes": 196966,
+      "sha256": "9aea7150f4dda3a431bb26e8bfe83ecf4a243ad4f5aa0cbf945987e01a431f09"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-landscape-rotate.json",
+      "bytes": 667,
+      "sha256": "218854a4703086a52d97934c49a4abbb9244c0434e44fc28ae9750ed97ef0525"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-landscape-trace.jsonl",
+      "bytes": 26794,
+      "sha256": "5919897fc7c2fac9f3fa741853110251dd5209c67c2255acfe890bc5dc294ab2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-layout-ax.json",
+      "bytes": 161392,
+      "sha256": "c1518bb617e09a4d8e3ee5d84507247ffbd2cdcfd8cb8be59786eb550809a1bc"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-layout-tap.json",
+      "bytes": 308,
+      "sha256": "46ce5267e0800ee15e21674eaf638adc021e3e5243bc7313db7ac921b944e78c"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-layout-trace.jsonl",
+      "bytes": 27629,
+      "sha256": "78c2b4fa1cd593d05e484a7cde8b6e2b30b4ec7c3a62e0fc7013c83acdcf5727"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-more-ax.json",
+      "bytes": 256981,
+      "sha256": "a41fc3e8e6927bcf5ab457687c70a99638389f4862631218ffd2ac3335e3679d"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-more-layout-ax.json",
+      "bytes": 171207,
+      "sha256": "9f202966f8fb7ac40f00b4d23659d675c6bce03378148d16f643dd1336a23709"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-more-layout-tap.json",
+      "bytes": 306,
+      "sha256": "4d5f79b102aeb6f0fecf46f5db28474f7993ababefcca6eb964673bb9e6c5cde"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-more-layout-trace.jsonl",
+      "bytes": 27629,
+      "sha256": "78c2b4fa1cd593d05e484a7cde8b6e2b30b4ec7c3a62e0fc7013c83acdcf5727"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-more-tap.json",
+      "bytes": 306,
+      "sha256": "8478b944ec92fb1ca210620f60dc94129b1ce3acc78411b48971f627bf646c6a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-more-trace.jsonl",
+      "bytes": 26794,
+      "sha256": "5919897fc7c2fac9f3fa741853110251dd5209c67c2255acfe890bc5dc294ab2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-sidebar-off-ax.json",
+      "bytes": 155935,
+      "sha256": "56167e06590b49c42b44d135e04cead8491e273675f371051fdb446e9aafc2cd"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-sidebar-off-tap.json",
+      "bytes": 312,
+      "sha256": "af9d0fc1ee265ed4a847ee338aaef662a626fd97b014944b7997120ccfd9f743"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-sidebar-off-trace.jsonl",
+      "bytes": 27629,
+      "sha256": "78c2b4fa1cd593d05e484a7cde8b6e2b30b4ec7c3a62e0fc7013c83acdcf5727"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-stacked-ax.json",
+      "bytes": 155423,
+      "sha256": "64deaccf0589204f6cc3d9cb2d36e43da057d326297f8b0cd50178f23cd02b84"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-stacked-tap.json",
+      "bytes": 302,
+      "sha256": "81fba6439d1bd62bb8765d925bd6ce2879e529a4f94ea8aee77fa4c2eea04a49"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-fix-stacked-trace.jsonl",
+      "bytes": 28462,
+      "sha256": "f796ab5a83bf0690c6d43fd8f5a2108ac3410e8fa4fcd5cb263bd5e74e37921f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-gap-scroll-ax.json",
+      "bytes": 133313,
+      "sha256": "76b0c7eaa2e72599e41309fe0d919b36694328f0e89a5a0ddefe6e5b02e02a7b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-gap-scroll-trace.jsonl",
+      "bytes": 30685,
+      "sha256": "8c0772fbf21c07cfca25a225b9be026eb140cb09d283fcae9425103069cb06c6"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-gap-scroll.png",
+      "bytes": 239072,
+      "sha256": "04435f1fe179778c9cc14272e92368e1839b5e51406461cf9131bc54760c2b0c"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-return-back-ax.json",
+      "bytes": 133249,
+      "sha256": "b6d7cc3c2df3e6910ae7c8d112b72416371ec32f4d48eb88f8af816b92a0db1e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-return-back-tap.json",
+      "bytes": 335,
+      "sha256": "b6a98a39417a66dd11c4b45932d26e57819c7ab57952015850b78a7a1e8486d0"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-return-back-trace.jsonl",
+      "bytes": 30685,
+      "sha256": "8c0772fbf21c07cfca25a225b9be026eb140cb09d283fcae9425103069cb06c6"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-return-gap-frame8.png",
+      "bytes": 72246,
+      "sha256": "5a3d3a65608997bf88616200f3a872c92bf9d0db63dd9d49dca2b6d49997eced"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-return-gap.mp4",
+      "bytes": 1809389,
+      "sha256": "2ac1c5d2078108be2404c6cea91e2ce5e14c2f0b4f39af85ef0dbd1cb65ac411"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-return-help-ax.json",
+      "bytes": 60027,
+      "sha256": "e754b2fcd76d0f535d9e355bfcbda1121b51f37587b995a7988f62686c43de3e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-return-help-tap.json",
+      "bytes": 299,
+      "sha256": "494b7b91cc104a227502646538edb19ee84933a32028974ace7d92dc00d8d06b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-return-help-trace.jsonl",
+      "bytes": 28462,
+      "sha256": "f796ab5a83bf0690c6d43fd8f5a2108ac3410e8fa4fcd5cb263bd5e74e37921f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-return-more-ax.json",
+      "bytes": 183645,
+      "sha256": "0509e79f3c7f00ce66c6e78d86beb37fb33304986368fc85252d68bc08b668f3"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-return-more-tap.json",
+      "bytes": 306,
+      "sha256": "392d0e823eded3237f37449bfdeddc899c24c528cbd91ecd521798dfd1912406"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/before-return-more-trace.jsonl",
+      "bytes": 28462,
+      "sha256": "f796ab5a83bf0690c6d43fd8f5a2108ac3410e8fa4fcd5cb263bd5e74e37921f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-half-ax.json",
+      "bytes": 133327,
+      "sha256": "3ae9af08d6db77454393ad23ade1b4505a8bee552ed27107d6c52e5f98b2e5b2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-half-fold.json",
+      "bytes": 575,
+      "sha256": "8ccbd39974cabcb6022ef451f79b1feb5d0e16064b95befa670498b42ae3a2a3"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-half-trace.jsonl",
+      "bytes": 21538,
+      "sha256": "eb40f5e9452d87d90b25259124a15ad8b412ab9b2b6d5c2a28216f8017e9bc09"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-hide-inspector-ax.json",
+      "bytes": 130056,
+      "sha256": "3801c88f99a92f28de92df9a15315187d6a8c06fd215aac85db17c4797f788f2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-hide-inspector-more-ax.json",
+      "bytes": 254742,
+      "sha256": "73899f7108889fd04ab807040c1458330f61dd215c5da929b1d9a9690d116db0"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-hide-inspector-more-tap.json",
+      "bytes": 306,
+      "sha256": "b3174e51a310f02f926060cec8624b68bddab2ee5bcdaa98adb5cd0c2ed115bb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-hide-inspector-more-trace.jsonl",
+      "bytes": 20766,
+      "sha256": "64221cdfb2da5e98a569606b89fddcc0fe92dac099bbd5573b392666f6bde53a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-hide-inspector-tap.json",
+      "bytes": 312,
+      "sha256": "e94660d5d1ac024d73c2b0d00c0afa0ba61b98c4f81776f2205ccb887bec10ed"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-hide-inspector-trace.jsonl",
+      "bytes": 20766,
+      "sha256": "64221cdfb2da5e98a569606b89fddcc0fe92dac099bbd5573b392666f6bde53a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-layout-ax.json",
+      "bytes": 223437,
+      "sha256": "6ff25ee34a6e6c2369533092ba476bf374a6037597aaebee513e87a185a2267e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-layout-more-ax.json",
+      "bytes": 256959,
+      "sha256": "490afcc26d60f4f661bda7af7b97ca81e31f53d5bbcabccedff1ee20fb9094a3"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-layout-more-tap.json",
+      "bytes": 306,
+      "sha256": "b206e06c93d071c6af0481385bdd894ca9ca833dc53172333b33978b865b8250"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-layout-more-trace.jsonl",
+      "bytes": 20766,
+      "sha256": "64221cdfb2da5e98a569606b89fddcc0fe92dac099bbd5573b392666f6bde53a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-layout-tap.json",
+      "bytes": 308,
+      "sha256": "3d17a5c3e7ddc18c2f9b4550b2ce430e4391972b386e6685f7089544fbffd0d4"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-layout-trace.jsonl",
+      "bytes": 20766,
+      "sha256": "64221cdfb2da5e98a569606b89fddcc0fe92dac099bbd5573b392666f6bde53a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-more-ax.json",
+      "bytes": 192492,
+      "sha256": "bef08f7b9716c9bbea3fe5a8f3fdb4208d017f38f640bf6c9df8529d94da2749"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-more-tap.json",
+      "bytes": 306,
+      "sha256": "babd038025797f9f4500987a58bc68387e05c256083d32955dcf392b048921dd"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-more-trace.jsonl",
+      "bytes": 19991,
+      "sha256": "6521ec614e1558362ac364ba4a9b5fdc93537230e187f7c348f20767ae232f85"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-return-back-ax.json",
+      "bytes": 133199,
+      "sha256": "241a205abf893a239a113f604468aae84c573044e2205271a7fc9246b36961f9"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-return-back-tap.json",
+      "bytes": 335,
+      "sha256": "3f6b2a5722fb07e38ae5e1ebfaffab9a16c2f47ee85c0ab86a5f1f631095174c"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-return-back-trace.jsonl",
+      "bytes": 23761,
+      "sha256": "16df47236a9230cf8e93585ca3f6edb17c6a61d4d56b7ebc49ef33c841c524dc"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-return-help-ax.json",
+      "bytes": 60027,
+      "sha256": "7cba89c3e0b3d928c8e13da7d0502b893fa2135bf9942c831fa9545edb7c893c"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-return-help-tap.json",
+      "bytes": 299,
+      "sha256": "072482649314cd7884d29a0d835a9d9eb2b11e9dd458f1fa316fadea74a9632e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-return-help-trace.jsonl",
+      "bytes": 21538,
+      "sha256": "eb40f5e9452d87d90b25259124a15ad8b412ab9b2b6d5c2a28216f8017e9bc09"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-return-more-ax.json",
+      "bytes": 191874,
+      "sha256": "497869bd459867e59db081c16a3e3e16aa7656bacd23a6974c96af5c31e505d2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-return-more-tap.json",
+      "bytes": 306,
+      "sha256": "b6b9fb0a26741b7a1445ac495bce2ce161056b03bee9f065e37f7dfa55cc1898"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-return-more-trace.jsonl",
+      "bytes": 21538,
+      "sha256": "eb40f5e9452d87d90b25259124a15ad8b412ab9b2b6d5c2a28216f8017e9bc09"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-return-scrolled-ax.json",
+      "bytes": 133291,
+      "sha256": "0f18823a3841654ea598f50ff660650f7448352fa52da58cff219f47d8203e9a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-return-scrolled-trace.jsonl",
+      "bytes": 23761,
+      "sha256": "16df47236a9230cf8e93585ca3f6edb17c6a61d4d56b7ebc49ef33c841c524dc"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-return-scrolled.png",
+      "bytes": 466735,
+      "sha256": "31dfa90fb32071acc80e3d01b7a31baaa54699eb2412aca6089c6b0be25aa901"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-sidebar-off-ax.json",
+      "bytes": 193855,
+      "sha256": "452f4d81c5bed26ee25dcca27ae858113662d12b38f535c4b30e2eb19de7e229"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-sidebar-off-tap.json",
+      "bytes": 312,
+      "sha256": "123ac162f93356bf9a91cfccf1f1bdc2f3a4aca8c42664ea072741f66588a219"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-sidebar-off-trace.jsonl",
+      "bytes": 20766,
+      "sha256": "64221cdfb2da5e98a569606b89fddcc0fe92dac099bbd5573b392666f6bde53a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-stacked-ax.json",
+      "bytes": 191638,
+      "sha256": "f9ceaa6d475051d935c0ce0e2896708e518a95e6a4815cd25ccbfadc3f835306"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-stacked-tap.json",
+      "bytes": 302,
+      "sha256": "c6998e0ef6a10ce6d27aaacee5128a48a2c187c35f46260dd890c4da4e18e761"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/clean-stacked-trace.jsonl",
+      "bytes": 20766,
+      "sha256": "64221cdfb2da5e98a569606b89fddcc0fe92dac099bbd5573b392666f6bde53a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/cleanup-closed-ax.json",
+      "bytes": 132929,
+      "sha256": "70d54035f76c89010778d539d91ad58a222df971c10ccab5d4f24b82817f0058"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/cleanup-closed-fold.json",
+      "bytes": 561,
+      "sha256": "5516cb538ba95f21ddfcf3932852b66b71a7e8f22080fa778f159dafb5b90248"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/cleanup-closed-trace.jsonl",
+      "bytes": 27586,
+      "sha256": "407b42d838d4eadf16e1d1b87bd307c69562fb82afdcbe24f1ab71d15a60f519"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/cleanup-portrait-ax.json",
+      "bytes": 132967,
+      "sha256": "c372b838efede30b45d5584d0aab58716c04d734bb12cc258e6f3da63021c9b4"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/cleanup-portrait-rotate.json",
+      "bytes": 627,
+      "sha256": "5610d8afac8ef39140340a340cf110d615bada7a2f0bc75238d96d800213ebe3"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/cleanup-portrait-trace.jsonl",
+      "bytes": 27586,
+      "sha256": "407b42d838d4eadf16e1d1b87bd307c69562fb82afdcbe24f1ab71d15a60f519"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/cleanup.json",
+      "bytes": 618,
+      "sha256": "8235bdb74ef9030ec55a95c8838c279f553628be3c8ea4a8b2fdbc2e247085e2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/converted-ax.json",
+      "bytes": 134871,
+      "sha256": "d38297725417e865ec2cee83b09b23c920d02ba409d450e3a202678eb2544b93"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/converted-tap.json",
+      "bytes": 339,
+      "sha256": "9e13648f48bdcaec5550c73b41b3e79c29c52cd6bce7b2baf88e48ce7bd23468"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/converted-trace.jsonl",
+      "bytes": 1503,
+      "sha256": "2d52c53dbbd0a8e0f2813e91a3b385c94650d1ea186c794c24b0f6be4b4fab59"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-half-menu.mp4",
+      "bytes": 7621318,
+      "sha256": "52c8f5adb1833c0a6dd3fbd0a23deee0365ff2835f2a8f8423ea4718ab2e31d2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-help-ax.json",
+      "bytes": 60027,
+      "sha256": "d6a3b21b22e575b3e8b07e32028edf383ba7ca4e72b472a43612b3a353dfaa71"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-help-back-ax.json",
+      "bytes": 133249,
+      "sha256": "9e0a73451b239bfda88bc67045151d7c7cf2f16eac3a6fedea03cce4f3c32e4a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-help-back-tap.json",
+      "bytes": 335,
+      "sha256": "3745627d9024d99b2d94372eab4498f9ca326f408171849e279b9b05a3ea922f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-help-back-trace.jsonl",
+      "bytes": 11066,
+      "sha256": "876ddf7fbc862fe28dfd372ccd9ba9488d385527801ba4063b6bc0402569a05a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-help-tap.json",
+      "bytes": 299,
+      "sha256": "cc4472bb7d59b12775c996d398a32794942789c576a93ad9224b5a56719680f6"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-help-trace.jsonl",
+      "bytes": 8843,
+      "sha256": "c8dea0ef6e97c07031c591a71f3422d6e2e4967652021db4ea693b06d8da4425"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-larger-source-ax.json",
+      "bytes": 130124,
+      "sha256": "37b28aa448421e9b305fc4afe8e7a457ea6969c7fd3f818e44c2c9f30e7db5d8"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-larger-source-tap.json",
+      "bytes": 311,
+      "sha256": "d41d7464736ce98498b06312310fafe7cf6b24032a97ca5f451b23d96a0dfd78"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-larger-source-trace.jsonl",
+      "bytes": 8843,
+      "sha256": "c8dea0ef6e97c07031c591a71f3422d6e2e4967652021db4ea693b06d8da4425"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-help-ax.json",
+      "bytes": 192010,
+      "sha256": "29e456f9d033116924873b55334b3e2a8bb35809a08f2863fc1c30e8281c98ca"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-help-tap.json",
+      "bytes": 306,
+      "sha256": "ab89ac6bc96d858c852d3579c9e60c1d5ac6037d994c16ee58a0edb658d7f28d"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-help-trace.jsonl",
+      "bytes": 8843,
+      "sha256": "c8dea0ef6e97c07031c591a71f3422d6e2e4967652021db4ea693b06d8da4425"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-pane-ax.json",
+      "bytes": 193228,
+      "sha256": "2fdf5fc8d729811b33a95ce70c7ddec6d74193e84d865df6a0c5c21676b88c89"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-pane-tap.json",
+      "bytes": 306,
+      "sha256": "4f91bbecae05f82cb455ee85c748e87604b212b0cd28b8af1b6115fdb008ba6a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-pane-trace.jsonl",
+      "bytes": 8843,
+      "sha256": "c8dea0ef6e97c07031c591a71f3422d6e2e4967652021db4ea693b06d8da4425"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-pro-ax.json",
+      "bytes": 191864,
+      "sha256": "af6186459288d249212d6ad88bb0c24e10fbfe391db032088b0d540039c325ba"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-pro-tap.json",
+      "bytes": 306,
+      "sha256": "89e141a55817dfcb4af2ca20fa2c4084bd443ebde6e7a5edc1020585b0afd105"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-pro-trace.jsonl",
+      "bytes": 11066,
+      "sha256": "876ddf7fbc862fe28dfd372ccd9ba9488d385527801ba4063b6bc0402569a05a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-settings-ax.json",
+      "bytes": 191864,
+      "sha256": "7497e4374b4f8180e0050b31b92452f878182ff3408533cf345fd4dfa20f8b11"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-settings-tap.json",
+      "bytes": 306,
+      "sha256": "53e0c1d94b55a81164c970f95a0d1689368762306440956a4efabc8b87185a54"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-settings-trace.jsonl",
+      "bytes": 13289,
+      "sha256": "7f587a3930db8c394e1eb7dc0b476c930ad036b83880ac76f0889a5565c0f8fb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-sidebar-ax.json",
+      "bytes": 193228,
+      "sha256": "399ea92b4c0cfbbd5ceb0fd1a53f6237f7ffc4b35f231b5ccdb8c3fd42fa68f4"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-sidebar-tap.json",
+      "bytes": 306,
+      "sha256": "a9919362220e9bbfd639bff51ce3ac5e1fe1d0a76620c0ed658da26c00a8e879"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-more-sidebar-trace.jsonl",
+      "bytes": 8843,
+      "sha256": "c8dea0ef6e97c07031c591a71f3422d6e2e4967652021db4ea693b06d8da4425"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-pane-sub-ax.json",
+      "bytes": 159348,
+      "sha256": "da6ecce8cef41684dcf576a7fda009872b6e96dc3c9772b6852f42b57268ebea"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-pane-sub-tap.json",
+      "bytes": 305,
+      "sha256": "84434823987391aa638e917e731f4e5c8b2c67f33c741a301e1cb76c590b0776"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-pane-sub-trace.jsonl",
+      "bytes": 8843,
+      "sha256": "c8dea0ef6e97c07031c591a71f3422d6e2e4967652021db4ea693b06d8da4425"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-pro-ax.json",
+      "bytes": 84031,
+      "sha256": "2fba49db368458bf3236cfdc176bf842f5e49c599232b3f1c6581c1a285359f9"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-pro-back-ax.json",
+      "bytes": 133249,
+      "sha256": "f84c7e8118cf3e83a077f36e03f89f5d53348a23c728d89fce45f0b5bc9f97f4"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-pro-back-tap.json",
+      "bytes": 335,
+      "sha256": "a97ad5310ada7c46f817e947bc079ffbe68800b1e341175f115e26228fc502e4"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-pro-back-trace.jsonl",
+      "bytes": 13289,
+      "sha256": "7f587a3930db8c394e1eb7dc0b476c930ad036b83880ac76f0889a5565c0f8fb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-pro-tap.json",
+      "bytes": 298,
+      "sha256": "90cb1048df6feb1fd96c2db66045139ed47562387a39bb6515df9ebf02430341"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-pro-trace.jsonl",
+      "bytes": 11066,
+      "sha256": "876ddf7fbc862fe28dfd372ccd9ba9488d385527801ba4063b6bc0402569a05a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-returned.png",
+      "bytes": 415166,
+      "sha256": "04877122a2852449de3155fd583d2522935a26c427f992bdec60b39e644de836"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-settings-ax.json",
+      "bytes": 128302,
+      "sha256": "7cdcf35dcf207537524e224f42927a257965a8194ee84d1f8e46bd8260426aa6"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-settings-back-ax.json",
+      "bytes": 133249,
+      "sha256": "d03bb7dd76571aeeb634b92afe85f7c86304730e9c67b0a20e30ca6d92ff985b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-settings-back-tap.json",
+      "bytes": 335,
+      "sha256": "5badefbcb85fb20cf51b4d78364d9d3fc60e8f0f7d74bb029c3d2ea79b462b36"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-settings-back-trace.jsonl",
+      "bytes": 15512,
+      "sha256": "a8e057fbeda89473670bb35380374ccc6a924ae011970a55d709b9ad8c2d5c2a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-settings-tap.json",
+      "bytes": 303,
+      "sha256": "f39cbeee451029372f652016cca5813986e053a00fcb5b6301ca8b39cf3b92be"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-settings-trace.jsonl",
+      "bytes": 13289,
+      "sha256": "7f587a3930db8c394e1eb7dc0b476c930ad036b83880ac76f0889a5565c0f8fb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-sidebar-off-ax.json",
+      "bytes": 130124,
+      "sha256": "30783069663865a5b0d9f491d63e3def4f1027e03d96f99938afe37bcb545ec0"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-sidebar-off-tap.json",
+      "bytes": 312,
+      "sha256": "d2f7a3a4182952601400ba817b1cf5d4fb2ea93228323cbdc3c76d8010f408fd"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-sidebar-off-trace.jsonl",
+      "bytes": 8843,
+      "sha256": "c8dea0ef6e97c07031c591a71f3422d6e2e4967652021db4ea693b06d8da4425"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-stacked-ax.json",
+      "bytes": 130124,
+      "sha256": "542a0a7692da5147996086665ff06e2b0e59d56a3056dea0d6710291030fbdc9"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-stacked-tap.json",
+      "bytes": 302,
+      "sha256": "c18dcb4e65d4361d5baf937c00f6db35887abf99080fb9e8fd55648452bad61f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/default-stacked-trace.jsonl",
+      "bytes": 8843,
+      "sha256": "c8dea0ef6e97c07031c591a71f3422d6e2e4967652021db4ea693b06d8da4425"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/devices-after-cleanup.json",
+      "bytes": 32988,
+      "sha256": "76c0df35aa3223d9a464ad583cbf03377eb5d6e9b9a4c0778d04f519fe90e7e8"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/devices-before-cleanup.json",
+      "bytes": 32986,
+      "sha256": "2334f85cbdc43cab5dc109019c341a67d651f65453a740d2b7eb9365d84bb6ad"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fill-sim-use-ax.json",
+      "bytes": 133941,
+      "sha256": "31460580eafa1ff8b8197b4a39f32b32b67d334dfe6f7e54008111530469bab7"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fill-sim-use-trace.jsonl",
+      "bytes": 5507,
+      "sha256": "e7f4da4cc6faa048e5bce726071262c8201f340dc03e29675c45180762002059"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fill-simulator-ax.json",
+      "bytes": 135965,
+      "sha256": "2196c575f4d378710158f3143722c0d1440172ae53e18818c5fef97785cc225f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fill-simulator-trace.jsonl",
+      "bytes": 4659,
+      "sha256": "436fd0ff46daaecabb4fc29077aa8af2cb992470fe571303b114322a913d398e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/filled-ax.json",
+      "bytes": 134871,
+      "sha256": "bcf482d774d7313f835affc95411afacc3333821223690d1ba3a561779b066ae"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/filled-tap.json",
+      "bytes": 354,
+      "sha256": "4f604b175a49d4e8bd7a33537b18cd1247c25cc5a3ac4538d0756d4c4b3b1673"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/filled-trace.jsonl",
+      "bytes": 1503,
+      "sha256": "2d52c53dbbd0a8e0f2813e91a3b385c94650d1ea186c794c24b0f6be4b4fab59"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/first-app.png",
+      "bytes": 391285,
+      "sha256": "993851e9f98ac3a19d76814ae364595b65f99216d8e1690e2d969c86657acadb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-build/ios-build.log",
+      "bytes": 1509762,
+      "sha256": "cf808d3a312b74ff30d4622f0cc07013c2e90ebeb610c4b50185a8ab7e177e7f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-build/ios-mach-o.log",
+      "bytes": 286,
+      "sha256": "400ca4eeb462fba9fa8a71b8ecc423027cefee4e2afc50dd1481843848026bd3"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-build/ios-sdk.log",
+      "bytes": 5,
+      "sha256": "27d73d70ecb0bcfc37d60b534a2298ae2c6e9ee26ed5154f558f11640d11d0b9"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-build/ios-settings.json",
+      "bytes": 43377,
+      "sha256": "19c594085102e4080a773af6d5bce4670cf79a572f48e5b62b005ff072428b47"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-build/mac-build.log",
+      "bytes": 2630477,
+      "sha256": "4e6157add061f1e91f539c25c5c8163c4637da92f7d3193e1773f623a6574c54"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-build/mac-mach-o.log",
+      "bytes": 599,
+      "sha256": "42c058b293bd4791cf295a3bd9981b4b981fc783ed2a99ca4fcb27d97de0830d"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-build/mac-sdk.log",
+      "bytes": 5,
+      "sha256": "7b01c549928398a045692f24bcac7803b348524cdd76f21265b02984b2ba556a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-build/mac-settings.json",
+      "bytes": 44149,
+      "sha256": "2d0396751461e16d3c2dcfdd599c53de2db21e2cee424f579af0f0fb0be1ae15"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-build/report.json",
+      "bytes": 5370,
+      "sha256": "d17d3231fc7b2f0e31ca9f7febcb5d728a0ebbb0401cab431a6b62b92e5d327c"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-build/system.log",
+      "bytes": 64,
+      "sha256": "e5da02eb465e88c7c63b21a4b6156f58f079a4995f790b3b61c5d4ad6ac5258b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-build/xcode-version.log",
+      "bytes": 33,
+      "sha256": "ee3fe26035862d2b9653c1a570be3eca4ee5be2815f0ce99ff2d8ffa3399e4c8"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-converted-ax.json",
+      "bytes": 131700,
+      "sha256": "77153b6db952a9c0460b48aec5978ff30a350f1f043d2978a04ecf86cbd7cccb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-converted-tap.json",
+      "bytes": 309,
+      "sha256": "feef0beb961ec692f89b05292af441d1eb0c918d89dcc5f3fdaf828598d27389"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-converted-trace.jsonl",
+      "bytes": 4965,
+      "sha256": "4f9fb03f80d726de3cd64b63cbcd3258cb208aad03050d0b102b58a3ba55ce49"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-filled-ax.json",
+      "bytes": 133903,
+      "sha256": "d48ef2a23d44ad6657ba3ec3cc3df0871e7db44814ff1a0660456b9b611eb423"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-filled-tap.json",
+      "bytes": 471,
+      "sha256": "911bbe6b86657454d9a53b83ee39651e17ca59dd2b80bd3c533f270d303afdbc"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-filled-trace.jsonl",
+      "bytes": 3299,
+      "sha256": "de646ef963eb8d368d9fae8a2ff3a80aa5f8d62f203fcf1c8be04573dbccbc16"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-gap-scroll-ax.json",
+      "bytes": 133329,
+      "sha256": "cc3ea0a911e1890265ea24235633b5d3e06aa99e695ddbeec189a6eb604d8e46"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-gap-scroll-trace.jsonl",
+      "bytes": 7960,
+      "sha256": "7aca95e88cba9fabd21815294c455963b08784fcad3b159faa6a9951607a3fbe"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-gap-scroll.png",
+      "bytes": 433205,
+      "sha256": "873ea734069d1ead10debe191a5cb804b6ce77aab78b80677fa29fa50471fd38"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-initial-ax.json",
+      "bytes": 135565,
+      "sha256": "ee70a0106fd1f4ac528b22f62295b5d6131cdb0aec039fe386ba7d63574866c6"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-initial-trace.jsonl",
+      "bytes": 2452,
+      "sha256": "8187e1119b5f57205c4170af1770d0908d621dfdc8debf16b97694c6a7ce52d6"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-layout-ax.json",
+      "bytes": 160158,
+      "sha256": "f0ca562258e9d33a7e9e4c51e0ab4578949dc880ad97ddcccac4df56738118f3"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-layout-tap.json",
+      "bytes": 308,
+      "sha256": "bb6e3816ab2c3aee067a0e8656a2aaab61bdc6a80d635b1164668f14f25c9725"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-layout-trace.jsonl",
+      "bytes": 4965,
+      "sha256": "4f9fb03f80d726de3cd64b63cbcd3258cb208aad03050d0b102b58a3ba55ce49"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-more-layout-ax.json",
+      "bytes": 183181,
+      "sha256": "1c06e76a8903153d1d355ccc92197d7ec07e591d4540da4540b9b09be9714af3"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-more-layout-tap.json",
+      "bytes": 306,
+      "sha256": "a4e1f92a3345141e69e845f7c5927c5904d990305a1b19b765f6826afc1b68c6"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-more-layout-trace.jsonl",
+      "bytes": 4965,
+      "sha256": "4f9fb03f80d726de3cd64b63cbcd3258cb208aad03050d0b102b58a3ba55ce49"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-reopen-ax.json",
+      "bytes": 133093,
+      "sha256": "011a9d37f60c1108cd5658a8feb736c74a30f8df974e96cdc3b049b91276c44e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-reopen-fold.json",
+      "bytes": 575,
+      "sha256": "4511c354754adf1524c0e8c2ce17f961888dc0e29298c54aab9b40485399f7b2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-reopen-landscape-ax.json",
+      "bytes": 133101,
+      "sha256": "a44f40a11d800df8e5ca52755c6d5d19b505ca27772a88697d04a99562d80303"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-reopen-landscape-rotate.json",
+      "bytes": 667,
+      "sha256": "8fd0ece9b89d79bea73974e314c7d2a4ab043bcc5b02c497e2bea76aaab47b32"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-reopen-landscape-trace.jsonl",
+      "bytes": 19991,
+      "sha256": "6521ec614e1558362ac364ba4a9b5fdc93537230e187f7c348f20767ae232f85"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-reopen-trace.jsonl",
+      "bytes": 19991,
+      "sha256": "6521ec614e1558362ac364ba4a9b5fdc93537230e187f7c348f20767ae232f85"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-return-back-ax.json",
+      "bytes": 133199,
+      "sha256": "d679d43fab9fc170836a67eae0361b44b47aa921e786a832bf2aeef51a5f97fe"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-return-back-tap.json",
+      "bytes": 335,
+      "sha256": "af493c50cdd2fb1b18e32f17f0f9d0009e3eb5ae4016ee7919ad568eab318eb8"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-return-back-trace.jsonl",
+      "bytes": 7960,
+      "sha256": "7aca95e88cba9fabd21815294c455963b08784fcad3b159faa6a9951607a3fbe"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-return-help-ax.json",
+      "bytes": 60027,
+      "sha256": "f290078c32b8ee800b541d98a1f986b052e118bcbf6faccb266e610ddea93346"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-return-help-tap.json",
+      "bytes": 299,
+      "sha256": "95db3ce8c6d16d7f9f81cd8e654b04838369a3e775f855c79bc51ea6c8d4984b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-return-help-trace.jsonl",
+      "bytes": 5737,
+      "sha256": "b1eb9d9f087d42b0a574df4bbcc2b7874722067100179ca1000deec820054c31"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-return-more-ax.json",
+      "bytes": 193230,
+      "sha256": "95e5d761ce44e85e90b0b2c8cb54aa99a0013edb58c396a5f598ccc02cfaff87"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-return-more-tap.json",
+      "bytes": 306,
+      "sha256": "7a23e68df972e3a60b732bf1714205451b0f5c0133c084771256a4ff96b29fb3"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-return-more-trace.jsonl",
+      "bytes": 5737,
+      "sha256": "b1eb9d9f087d42b0a574df4bbcc2b7874722067100179ca1000deec820054c31"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-scroll-result-ax.json",
+      "bytes": 133245,
+      "sha256": "b9de56592fa70827d37097371ac93d6ca69de4c19b3c83ac830a575849c2366e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-scroll-result-trace.jsonl",
+      "bytes": 7960,
+      "sha256": "7aca95e88cba9fabd21815294c455963b08784fcad3b159faa6a9951607a3fbe"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-scroll-result.png",
+      "bytes": 440592,
+      "sha256": "1116d7b61a389c5eab1655aca3e9d5a0d66d3c2baba3e6f0dffff0f18e385ad9"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-stacked-ax.json",
+      "bytes": 130088,
+      "sha256": "211c56a17d88734742c3c1bde309df0c1b55970c278842aef764314e70c191a1"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-stacked-tap.json",
+      "bytes": 302,
+      "sha256": "d93630b005609dbe5e474a3b76feeead76cbed25241060912fa3eb0316808c1a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-stacked-trace.jsonl",
+      "bytes": 5737,
+      "sha256": "b1eb9d9f087d42b0a574df4bbcc2b7874722067100179ca1000deec820054c31"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-closed-back-ax.json",
+      "bytes": 134796,
+      "sha256": "bb90c93eeb34007771bd0ded57a43dfe13f970c77bb6f0148c1f6480561698fe"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-closed-back-tap.json",
+      "bytes": 336,
+      "sha256": "76e7ecd77e32bcbd24533bb8dc06005b3fddd79a3af369cdab30ab1f2ac14276"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-closed-back-trace.jsonl",
+      "bytes": 16840,
+      "sha256": "9cf5283243b7557a9841f26bcb1827e9594f1ae85c4994d4f1c3c821ea7a2daf"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-closed-back.png",
+      "bytes": 106111,
+      "sha256": "141a7750de1ff11dbcd0337a796abd316f8853861a0b42f6c6ddce3cde6d896f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-equal-ax.json",
+      "bytes": 129706,
+      "sha256": "43be5acf6515fd5cff5fe0c91513012682ad665606c43d3e0594dd5f818c3004"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-equal-tap.json",
+      "bytes": 320,
+      "sha256": "82c4014acf3c2e187de83dd407c8b5f00099180cdb5d7db70d461b2aad117508"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-equal-trace.jsonl",
+      "bytes": 7960,
+      "sha256": "7aca95e88cba9fabd21815294c455963b08784fcad3b159faa6a9951607a3fbe"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-help-ax.json",
+      "bytes": 59899,
+      "sha256": "aab349d98b20e0d080fad08efb434636ce96ed1afb5a19cda52fa133da40c9ce"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-help-back-ax.json",
+      "bytes": 132995,
+      "sha256": "d6fddc32bcdf93e1bc2f620179acae6940d7e36e66829f0bc00bd7ec84521980"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-help-back-tap.json",
+      "bytes": 336,
+      "sha256": "ea47aef1ea6ac10fac1a6d5e1e9ea711c7681abab63582088cc7807e907784a4"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-help-back-trace.jsonl",
+      "bytes": 10183,
+      "sha256": "3505c16bfee47a62b4d1679592d869213b483c6d17922789735fe0fadffc5ca5"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-help-tap.json",
+      "bytes": 314,
+      "sha256": "9bb14195252d1aa636dce03d9742041ef5508a3f52dc37af9ada5366ad2e5a8f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-help-trace.jsonl",
+      "bytes": 7960,
+      "sha256": "7aca95e88cba9fabd21815294c455963b08784fcad3b159faa6a9951607a3fbe"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-larger-result-ax.json",
+      "bytes": 129730,
+      "sha256": "251d1b4738e95f65773a09798813235b3c0ee38d059c67e205237a3c7eff1273"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-larger-result-more-ax.json",
+      "bytes": 193178,
+      "sha256": "c7943cc96f180fae2edd6b2153f6ff02b3a93dbbf73a2b0b9c42ac0750843211"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-larger-result-more-tap.json",
+      "bytes": 306,
+      "sha256": "c45589fc310364dc09584f411e6c01b3d2d181d8ff69ad308b99c22d1d8ebb58"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-larger-result-more-trace.jsonl",
+      "bytes": 10183,
+      "sha256": "3505c16bfee47a62b4d1679592d869213b483c6d17922789735fe0fadffc5ca5"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-larger-result-pane-ax.json",
+      "bytes": 160256,
+      "sha256": "1c49a51d427a180f5d9c4f9af009a3d396bd026538de1943bedba77eea4ebecc"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-larger-result-pane-tap.json",
+      "bytes": 320,
+      "sha256": "c82acba6c3483a73f0950577415e0e4aeb06bfa7ab8d26f162e93d739b2aa53b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-larger-result-pane-trace.jsonl",
+      "bytes": 10183,
+      "sha256": "3505c16bfee47a62b4d1679592d869213b483c6d17922789735fe0fadffc5ca5"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-larger-result-tap.json",
+      "bytes": 323,
+      "sha256": "d865e8c5ae49a3a50061224d767361c8b719112880217605a66ac07b827f21dc"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-larger-result-trace.jsonl",
+      "bytes": 10183,
+      "sha256": "3505c16bfee47a62b4d1679592d869213b483c6d17922789735fe0fadffc5ca5"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-larger-source-ax.json",
+      "bytes": 129730,
+      "sha256": "7e6904735626cc3fec5844ed2652b83b7937515724a165be8dfe587e7deb90a2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-larger-source-tap.json",
+      "bytes": 322,
+      "sha256": "73b77585687d9f7f552a1093c94e938b819e46b83bcaf585562f3056eba238cd"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-larger-source-trace.jsonl",
+      "bytes": 10183,
+      "sha256": "3505c16bfee47a62b4d1679592d869213b483c6d17922789735fe0fadffc5ca5"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-layout-more-ax.json",
+      "bytes": 181043,
+      "sha256": "7d1f4f287dca4a1bd4378696603bec2ad166dd06f799ddd5b5c0998ea49df691"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-layout-more-tap.json",
+      "bytes": 306,
+      "sha256": "bd33a0a63b69a2ec641ad2c261d1751ecd8b36ab4fcb0c829e6b0700dcb3545a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-layout-more-trace.jsonl",
+      "bytes": 14629,
+      "sha256": "fa2bb0785f658055a430c25dbf70baef0c8cacc508034b0709d35b43236ad064"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-layout-open-ax.json",
+      "bytes": 159688,
+      "sha256": "fd292049404ad570e8eeb6cb992e89fbfaa60ea656536b580df314a58ce57af7"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-layout-open-tap.json",
+      "bytes": 323,
+      "sha256": "a7cee23bf771a1adf3540decbc13ff4c4789ae15a2ea7242837e58fc733050ce"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-layout-open-trace.jsonl",
+      "bytes": 14629,
+      "sha256": "fa2bb0785f658055a430c25dbf70baef0c8cacc508034b0709d35b43236ad064"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-menu.mp4",
+      "bytes": 12985769,
+      "sha256": "8ce42f145fda6351de93e054eaf09a25c628ff4d732b269c9322677c008ea46b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-more-help-ax.json",
+      "bytes": 193154,
+      "sha256": "c271a4492c117a7fb45cc2f7c2d8a237a80fb120a343d13c9678afd9bf463a9c"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-more-help-tap.json",
+      "bytes": 306,
+      "sha256": "4e908d420d60e17ce7b8dbc2adee2def72b94c56e7ca1b4a67e3be447cdb87f0"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-more-help-trace.jsonl",
+      "bytes": 7960,
+      "sha256": "7aca95e88cba9fabd21815294c455963b08784fcad3b159faa6a9951607a3fbe"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-more-pane-ax.json",
+      "bytes": 193156,
+      "sha256": "1d685202e116ac4c4d42c198089bfbd85c58fc089b2ee6dbc7e89bb3c4d938de"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-more-pane-tap.json",
+      "bytes": 306,
+      "sha256": "0769db8ee4be64b590fd62f8e2340a98a4035e700ee240828dd1da1b00abcef6"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-more-pane-trace.jsonl",
+      "bytes": 7960,
+      "sha256": "7aca95e88cba9fabd21815294c455963b08784fcad3b159faa6a9951607a3fbe"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pane-ax.json",
+      "bytes": 160234,
+      "sha256": "51988473725c014b9d611906450da2319d79a261cd6bbaf257fbf113d968c9c3"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pane-more-ax.json",
+      "bytes": 193178,
+      "sha256": "7afcc64a056456d9f8bcec170fbf924e8a0ed02acd55f8ef5513965f6d84f167"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pane-more-tap.json",
+      "bytes": 306,
+      "sha256": "39a51e16e9b20ba2c2c5a0e8fb20e1e997531724117d4cbb3c0319c781a763c0"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pane-more-trace.jsonl",
+      "bytes": 10183,
+      "sha256": "3505c16bfee47a62b4d1679592d869213b483c6d17922789735fe0fadffc5ca5"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pane-open-ax.json",
+      "bytes": 160256,
+      "sha256": "401049d776400d0e0988142d7e2a6e21e25a2894f3fbd8275cadb60b0abaf51a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pane-open-tap.json",
+      "bytes": 320,
+      "sha256": "f913af08eb110b049eeed43c847206b81f45d84103e8b0508fb664d203bdeeda"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pane-open-trace.jsonl",
+      "bytes": 10183,
+      "sha256": "3505c16bfee47a62b4d1679592d869213b483c6d17922789735fe0fadffc5ca5"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pane-tap.json",
+      "bytes": 320,
+      "sha256": "b2cad97f2c394bb2648b773008b42e3d5358a23d3f27291b55f1a022a14b5e6b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pane-trace.jsonl",
+      "bytes": 7960,
+      "sha256": "7aca95e88cba9fabd21815294c455963b08784fcad3b159faa6a9951607a3fbe"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pro-ax.json",
+      "bytes": 84047,
+      "sha256": "28700f9703412fc22d47681265c810c06d0a7c1217cca2f8dd7afd67016c140f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pro-back-ax.json",
+      "bytes": 132995,
+      "sha256": "5c6549fcdf9741f404e30cd630c71f0f9294c1d0b032f2b89500647955247272"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pro-back-tap.json",
+      "bytes": 336,
+      "sha256": "0f52958dbb97c56c76f190f888cc8e84c96d0ddb2f031a4a56bd3aca2aabda05"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pro-back-trace.jsonl",
+      "bytes": 12406,
+      "sha256": "e14e5430683f1d68728624d958c80edc32055880f966b65f0dfad34b33554462"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pro-more-ax.json",
+      "bytes": 193178,
+      "sha256": "ba4bfd90672afb393a1653b84e966b11026c565239fa5aef0200c38cb15c93b4"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pro-more-tap.json",
+      "bytes": 306,
+      "sha256": "0894675ff8cffd8d76cde19ceeab6b7be4fe841bdae352dfb95ac8ff37af0768"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pro-more-trace.jsonl",
+      "bytes": 10183,
+      "sha256": "3505c16bfee47a62b4d1679592d869213b483c6d17922789735fe0fadffc5ca5"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pro-tap.json",
+      "bytes": 298,
+      "sha256": "c192ff50f82a558aa59eb343acb4aef05980a5aa37e5c8d86f180e4ad907e725"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-pro-trace.jsonl",
+      "bytes": 10183,
+      "sha256": "3505c16bfee47a62b4d1679592d869213b483c6d17922789735fe0fadffc5ca5"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-route-more-ax.json",
+      "bytes": 191578,
+      "sha256": "2427d272ead9103f0015b21adced340076c8af22f21b669ff5f7794ecb5fee55"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-route-more-tap.json",
+      "bytes": 306,
+      "sha256": "b5a02fd6b74e23f8a0e301684cb3690c91d8c553ed87e555bf6196d764b2794f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-route-more-trace.jsonl",
+      "bytes": 15403,
+      "sha256": "b2592d1b7d2aa6eab8ca93cd8d057ad9b62447dd2eced4e2e03ec4a21e3519fb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-route-settings-ax.json",
+      "bytes": 127716,
+      "sha256": "820e14b05386ccfb9099bfa24d2c6c390bed45f0485643b5a8fd59715e141ce9"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-route-settings-tap.json",
+      "bytes": 318,
+      "sha256": "ce6ed725dc7c2ed505958ba31da8473584d4868072673b2a645b9b3a61c363f7"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-route-settings-trace.jsonl",
+      "bytes": 15403,
+      "sha256": "b2592d1b7d2aa6eab8ca93cd8d057ad9b62447dd2eced4e2e03ec4a21e3519fb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-settings-ax.json",
+      "bytes": 127716,
+      "sha256": "ef2fded98d049b6ca9e4eab4d5488240c54ad872ad7652bd65fb20f62979a71b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-settings-back-ax.json",
+      "bytes": 132995,
+      "sha256": "a186161c8a1ffda49f1f7cb7e8b23812d1e66580ccbd3941019b9827d4fff8c9"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-settings-back-tap.json",
+      "bytes": 336,
+      "sha256": "c5dd266f95c9a997d9be79252995f0b7235636ace157afe6a4e9655065928bf1"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-settings-back-trace.jsonl",
+      "bytes": 14629,
+      "sha256": "fa2bb0785f658055a430c25dbf70baef0c8cacc508034b0709d35b43236ad064"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-settings-closed-ax.json",
+      "bytes": 116617,
+      "sha256": "de833d8f674c72714c8a386df7cc9d8b9d97bf30903732766bf1568ce5e6b64d"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-settings-closed-fold.json",
+      "bytes": 561,
+      "sha256": "d15b4192c4879b896f4d8e1d091cc3a809e216096b48cc708df6005eb636df74"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-settings-closed-trace.jsonl",
+      "bytes": 15403,
+      "sha256": "b2592d1b7d2aa6eab8ca93cd8d057ad9b62447dd2eced4e2e03ec4a21e3519fb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-settings-closed.png",
+      "bytes": 106111,
+      "sha256": "141a7750de1ff11dbcd0337a796abd316f8853861a0b42f6c6ddce3cde6d896f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-settings-more-ax.json",
+      "bytes": 193172,
+      "sha256": "70eb679a48072499b3f05fe020e8a6e3fdeccdee2a42e33d78416dc0f5932db2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-settings-more-tap.json",
+      "bytes": 306,
+      "sha256": "ca68298330598df5815f869590bbac23127ecae876ea5ec2ef98597ad5fe53d2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-settings-more-trace.jsonl",
+      "bytes": 12406,
+      "sha256": "e14e5430683f1d68728624d958c80edc32055880f966b65f0dfad34b33554462"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-settings-tap.json",
+      "bytes": 317,
+      "sha256": "2070d9213be7667ee442981ca2d0e67e8f5db734f83893bcbfdd4e7c4811a180"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-settings-trace.jsonl",
+      "bytes": 12406,
+      "sha256": "e14e5430683f1d68728624d958c80edc32055880f966b65f0dfad34b33554462"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-side-by-side-ax.json",
+      "bytes": 129736,
+      "sha256": "868a1e49a670dcbb47ab0e45e6783dc5c9c6bb6a47df5c9533b3c9ed4ca0d2c8"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-side-by-side-tap.json",
+      "bytes": 322,
+      "sha256": "edf14da934fd345fcdb6bb8f7bae800ffb6ea8f8df303185a60471d075d43b87"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-side-by-side-trace.jsonl",
+      "bytes": 15403,
+      "sha256": "b2592d1b7d2aa6eab8ca93cd8d057ad9b62447dd2eced4e2e03ec4a21e3519fb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-sidebar-more-ax.json",
+      "bytes": 182651,
+      "sha256": "1b0bd93a306bb9a1b89c84be1aecc8fe37c9b99696327f7d33d30fd89711820b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-sidebar-more-tap.json",
+      "bytes": 306,
+      "sha256": "f7eb83922d727cc4eff8db13942e4dc87d37897eabda293f328ff0503d31d392"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-sidebar-more-trace.jsonl",
+      "bytes": 14629,
+      "sha256": "fa2bb0785f658055a430c25dbf70baef0c8cacc508034b0709d35b43236ad064"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-sidebar-on-ax.json",
+      "bytes": 129732,
+      "sha256": "596a45851dea2a40fc13d27b0b047587cc4407c33d4276878bc9e2bfcbb76bae"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-sidebar-on-tap.json",
+      "bytes": 327,
+      "sha256": "017fee58bcaa337f3ce6eb85d2a56a441f26b1505b4bb81f02b02bd3b120bb92"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/fix-xxxl-sidebar-on-trace.jsonl",
+      "bytes": 14629,
+      "sha256": "fa2bb0785f658055a430c25dbf70baef0c8cacc508034b0709d35b43236ad064"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/foreground-ax.json",
+      "bytes": 134909,
+      "sha256": "c0e618e445aa9bac491da867f58d85da39ce5a6c7d712c77b0fa68fb62dc07b6"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/foreground-tap.json",
+      "bytes": 330,
+      "sha256": "272de3c9b227695aba04493b44c11d8b4b783c9b212e05f5517ff1b337fefa7b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/foreground-trace.jsonl",
+      "bytes": 1503,
+      "sha256": "2d52c53dbbd0a8e0f2813e91a3b385c94650d1ea186c794c24b0f6be4b4fab59"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/half-landscape-ax.json",
+      "bytes": 131768,
+      "sha256": "da12a28a7bba02d8f47ce6317547c6c0c56b45466c0d2e6558d7bf51f6542b02"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/half-landscape-fold.json",
+      "bytes": 575,
+      "sha256": "e044777f51896c8e5410fadb66069d1b385eac25abc54e89b885ea8611ae6d10"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/half-landscape-trace.jsonl",
+      "bytes": 8010,
+      "sha256": "010f65b30d1db3acad7e8bad1619ef2022d634e6be4d28b9b1a40432cc06cc6e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/initial-ax.json",
+      "bytes": 358903,
+      "sha256": "f5ea688cb0eca5c94e5730398f2e4c96bcf7b2aabd09cc89649ed230e36b1caf"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/initial-trace.jsonl",
+      "bytes": 81001,
+      "sha256": "c4ca5233591926d75428078fafc3d19456f01a1d735f67c4d01a205f39f9c199"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/install-launch.json",
+      "bytes": 739,
+      "sha256": "40b5351d82332899e174471f55ab603ac27e21608e0141e1106300ed606226c9"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/issue282-body.md",
+      "bytes": 2985,
+      "sha256": "82b61eb6f3d7c96e7b0d0737cbc076a7ec6aeabd28d5503d9581fa0ed95dd409"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/issue282-upload-result.json",
+      "bytes": 831,
+      "sha256": "9fde7917c87413b351f00affe0c2478baa3a0e6ad796ae440b0353b45488933b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/layout-submenu-ax.json",
+      "bytes": 160188,
+      "sha256": "7a2e57e32a32d133b2523b158f056159b7382db94f0a27524d77e006486d95ea"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/layout-submenu-tap.json",
+      "bytes": 308,
+      "sha256": "ce1710981cba2e9d21aaafe345e3b405081e147c65afc4bbb49819023607659b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/layout-submenu-trace.jsonl",
+      "bytes": 8010,
+      "sha256": "010f65b30d1db3acad7e8bad1619ef2022d634e6be4d28b9b1a40432cc06cc6e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/mac-150-ax.txt",
+      "bytes": 2820,
+      "sha256": "aec7b2fa35344b2384eacaefbd7dbc787b45c3834e8a93c42474e36c99e72031"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/mac-150-result-ax.txt",
+      "bytes": 2816,
+      "sha256": "8d625b11c14be02ee1a0cb36225c2d8f70188bc811ffade673c1000b0c7503ad"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/mac-150-result-readable.png",
+      "bytes": 63558,
+      "sha256": "8c4a4f9ef3bd0107d6e011194a2508d4e1a446ff07ec219fa6419c6344eea624"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/mac-150-result.png",
+      "bytes": 43736,
+      "sha256": "df3cf40536820b3b8303e27d92c5396f1ee7d53b8ba3829461ed49b710dc1004"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/mac-150.png",
+      "bytes": 58998,
+      "sha256": "952aef54d3384acf95b961186cb196567deab4ce200d577868a17d838b7e7fde"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/mac-default-ax.txt",
+      "bytes": 2476,
+      "sha256": "e01c13f17d128bd19ba78934b5ceadd4dbe6efcc996ad8aeb94d8ced3107b802"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/mac-default.png",
+      "bytes": 48666,
+      "sha256": "2712698a356a8951b365e958febc8af93fe3326397e95271c70a18e27cc9281a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/mac-restored-100-ax.txt",
+      "bytes": 2675,
+      "sha256": "93b2d32e0a7321f5c5f5726dbde39fd5444886262badff4ec49420a944b161eb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/mac-restored-source-ax.txt",
+      "bytes": 2319,
+      "sha256": "2218d6517676b3bfdeddd8229d23723f4f9508252038af89261272e54a57a779"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/more-default-half.png",
+      "bytes": 635451,
+      "sha256": "381a15848434cbda88196aeffd1289603b40f02ad0b0f8182f7b8e3918877a81"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/more-half-ax.json",
+      "bytes": 183279,
+      "sha256": "1ee7d46dc84a76ffe6ed477df0ce74b596d394f314a8f810217ab66ba700363a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/more-half-tap.json",
+      "bytes": 306,
+      "sha256": "1c8ca3921add2dfaf0e1e95b5e48d753e6d1c7cde5ae4c91fa330b1cc172224e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/more-half-trace.jsonl",
+      "bytes": 8010,
+      "sha256": "010f65b30d1db3acad7e8bad1619ef2022d634e6be4d28b9b1a40432cc06cc6e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/more-xxxl-half.png",
+      "bytes": 523457,
+      "sha256": "655d7d1e8146027c230fcbb5dfe040b22a757d94236d8af46af9a721ae0983f2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/opened-ax.json",
+      "bytes": 136003,
+      "sha256": "e271a27db41c38ef969d7bad9d00bbe7f2226fe5f5d084728947096947811822"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/opened-fold.json",
+      "bytes": 575,
+      "sha256": "266484524cdcc30b8be6f649f319a20234acb12699ab05535519ddd9446da2f7"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/opened-trace.jsonl",
+      "bytes": 4659,
+      "sha256": "436fd0ff46daaecabb4fc29077aa8af2cb992470fe571303b114322a913d398e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/preferences-after-default.json",
+      "bytes": 381,
+      "sha256": "55157426df476828e91df8217f7fd8e42989c53014418327f2ec04980f86f049"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/qa-app-manifest.json",
+      "bytes": 17817,
+      "sha256": "2d2bfd5aff8050afe11a3be5705310a58e69c11974146d48e21202a864fb771a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/qa.py",
+      "bytes": 2023,
+      "sha256": "2fd045a41f5cd3037b7076b58dc4f55639af7c342bef06a0eedcdb5ab85ccbde"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/share/after-return-clean.mp4",
+      "bytes": 219728,
+      "sha256": "d6e3d792aa27720a2f8859230636b23fe4e6ed6f39b67280158898635ec9d6ed"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/share/before-gap-scroll.png",
+      "bytes": 239072,
+      "sha256": "04435f1fe179778c9cc14272e92368e1839b5e51406461cf9131bc54760c2b0c"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/share/before-return-gap.mp4",
+      "bytes": 204715,
+      "sha256": "3ac7d7c75d839b6f4320afb1d2b4cdf8d20dec5ee9f1a3d791cd85eb4174e769"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/share/clean-return-scrolled.png",
+      "bytes": 466735,
+      "sha256": "31dfa90fb32071acc80e3d01b7a31baaa54699eb2412aca6089c6b0be25aa901"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/share-manifest.json",
+      "bytes": 1016,
+      "sha256": "db3ed760f75791087289bad6482f1902bb7f46b8182a39531c38b3073caf8d55"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/share-playback-after-ax.txt",
+      "bytes": 2411,
+      "sha256": "e2a7f86225a2f255acd44f0f417c385e84614ed2a3b8d963a09ad3559149f758"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-equal-ax.json",
+      "bytes": 155301,
+      "sha256": "5faaac11f9682cc19f9b9bc5d927623dbebd0eed691d3a86788de1d910153f41"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-equal-tap.json",
+      "bytes": 321,
+      "sha256": "cb186a17fb5ebfad24f7f1e7eed345bea6c2c5199d89126987f43dcad35f6575"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-equal-trace.jsonl",
+      "bytes": 16286,
+      "sha256": "43ce284119e9983f510b27e3d8de46f280d90bc2e80fa67657853f976e9e7197"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-half-menu.mp4",
+      "bytes": 13304134,
+      "sha256": "4fb3d39b0461aa3fb8826867839fb415426c73be741ea22feffae2f672fcf6f7"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-help-ax.json",
+      "bytes": 59899,
+      "sha256": "9c48150cd16555c8b93cf955116946ff991f5aec2781df63b8a0dcbee43335eb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-help-back-ax.json",
+      "bytes": 196866,
+      "sha256": "5ca93e11a33c9c01a790d64684cb02c51b9ea2fcf34f7ca71baa5b0d92781b8b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-help-back-tap.json",
+      "bytes": 336,
+      "sha256": "7c588eb6dfabbbc076b6554e6d93a50fc1edbe501dc573dd6a6df43425dcea25"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-help-back-trace.jsonl",
+      "bytes": 19245,
+      "sha256": "9cd9b0f059988f42cac02ba097f600f7dbe913942792171dddfe74a992118177"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-help-tap.json",
+      "bytes": 314,
+      "sha256": "91b89c2e458604df00e28325a441ab6df2e7b69694874c37eaa1cff23ae046b7"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-help-trace.jsonl",
+      "bytes": 17045,
+      "sha256": "1c0953ed4c970874baec29b7d29f6a8da000d884f8ca2219fb7cbb57b9ee686d"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-horizontal-ax.json",
+      "bytes": 133215,
+      "sha256": "05443cf6f78c69a90fc09d82930288a77eef94321c9a55bc46a45585e871694b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-horizontal-tap.json",
+      "bytes": 322,
+      "sha256": "a62f8ad643efefacb35680ba8d2c13941eae1d2d77e5c1ce0fa617daffa46448"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-horizontal-trace.jsonl",
+      "bytes": 16286,
+      "sha256": "43ce284119e9983f510b27e3d8de46f280d90bc2e80fa67657853f976e9e7197"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-layout-ax.json",
+      "bytes": 159740,
+      "sha256": "0053a8af8bd9b805595580144356ab1c2d69329615ef2e3d9ce25f64d54ef892"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-layout-tap.json",
+      "bytes": 323,
+      "sha256": "104bd87acfbd49998df55dd7fd5e04f9e75f1c8c985f0eafcc2f76d12cfa3104"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-layout-trace.jsonl",
+      "bytes": 15512,
+      "sha256": "a8e057fbeda89473670bb35380374ccc6a924ae011970a55d709b9ad8c2d5c2a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-ax.json",
+      "bytes": 181095,
+      "sha256": "12c26676f688a58dd4410ba11c57a2ba9864560d298cf1d4bf09c72d04d5704f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-help-ax.json",
+      "bytes": 257149,
+      "sha256": "faa672d1da3e0b6e8663fdcec2a60a45b7c756d32ac84c8ee80cecdeb79784a9"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-help-tap.json",
+      "bytes": 306,
+      "sha256": "c9428dd0230e27de8443929ff37e82b66b57b510e616187245e6d670b3d1d11f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-help-trace.jsonl",
+      "bytes": 17045,
+      "sha256": "1c0953ed4c970874baec29b7d29f6a8da000d884f8ca2219fb7cbb57b9ee686d"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-pane-ax.json",
+      "bytes": 170535,
+      "sha256": "a964511a289a45bebdfa01ee99ed2537f2db4db0a12e568a013b724c63d678ed"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-pane-tap.json",
+      "bytes": 306,
+      "sha256": "245355ca6ca3bf1709f66225f20f97a426ee467e7341b15e0a9c242ccf4f1c69"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-pane-trace.jsonl",
+      "bytes": 16286,
+      "sha256": "43ce284119e9983f510b27e3d8de46f280d90bc2e80fa67657853f976e9e7197"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-pro-ax.json",
+      "bytes": 257043,
+      "sha256": "bdc9a75fbd355d0d6b98317696cb8f2f3ebae705499f9039440a103ac5b85286"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-pro-tap.json",
+      "bytes": 306,
+      "sha256": "1556447d2d67bd1161a97b65fa0a6496d656f1ebcf1a21c530e4c38c8fe35719"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-pro-trace.jsonl",
+      "bytes": 19245,
+      "sha256": "9cd9b0f059988f42cac02ba097f600f7dbe913942792171dddfe74a992118177"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-settings-ax.json",
+      "bytes": 257043,
+      "sha256": "b6ab00881d0fce55f17524bb9f0f7389e16809ec0ab4a7e3e147e03caaa5ae76"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-settings-tap.json",
+      "bytes": 306,
+      "sha256": "49cf5591e5658c8281ab76b380ec07ed39d2739f949f2735577e723386ca669d"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-settings-trace.jsonl",
+      "bytes": 21445,
+      "sha256": "f364369ba7333b155994be3fd2f277d7bd01b144f146721e46d9e715177a538e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-sidebar-ax.json",
+      "bytes": 170537,
+      "sha256": "44ac1bf3479f09b4a9672894c077a8fe69b16010e58d9c70f4295c73fe656945"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-sidebar-tap.json",
+      "bytes": 306,
+      "sha256": "402e6320d1032c2a76f08d8315dcc35612e08766de50fb3dab1e516c073f6f19"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-sidebar-trace.jsonl",
+      "bytes": 16286,
+      "sha256": "43ce284119e9983f510b27e3d8de46f280d90bc2e80fa67657853f976e9e7197"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-tap.json",
+      "bytes": 306,
+      "sha256": "b6b83c7ea362d2719150d9ca4da4997acaf329f0716d3e07559431202ba2bbfa"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-more-trace.jsonl",
+      "bytes": 15512,
+      "sha256": "a8e057fbeda89473670bb35380374ccc6a924ae011970a55d709b9ad8c2d5c2a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-pane-ax.json",
+      "bytes": 160468,
+      "sha256": "c338f693df8301e700591ac5141dd7b4edf0d1b2c56fc458ccfc6f9e2fa4ae99"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-pane-tap.json",
+      "bytes": 305,
+      "sha256": "b90866b590a2adcf4c4c4f32dd149311dac02e06c0650bc430195cc5f5c1dccc"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-pane-trace.jsonl",
+      "bytes": 16286,
+      "sha256": "43ce284119e9983f510b27e3d8de46f280d90bc2e80fa67657853f976e9e7197"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-pro-ax.json",
+      "bytes": 84047,
+      "sha256": "60c706139a19b10b7174c96e1fffb94036258efced41af3cfbee7846778d6640"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-pro-back-ax.json",
+      "bytes": 196866,
+      "sha256": "194f9c5ea76fe8ed3dc3e697fc9db174df530a73aa2ee806849276aee3084800"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-pro-back-tap.json",
+      "bytes": 336,
+      "sha256": "ab4ab0189677f7bcc2fec9447317247b15a39e0037ba034a96b25ec863be0c5f"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-pro-back-trace.jsonl",
+      "bytes": 21445,
+      "sha256": "f364369ba7333b155994be3fd2f277d7bd01b144f146721e46d9e715177a538e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-pro-tap.json",
+      "bytes": 298,
+      "sha256": "d53dc872c6d27c0de8ae672a0e6d1bd39ffb5bec92a3108c92230c0c09d032f2"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-pro-trace.jsonl",
+      "bytes": 19245,
+      "sha256": "9cd9b0f059988f42cac02ba097f600f7dbe913942792171dddfe74a992118177"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-return-portrait.png",
+      "bytes": 808770,
+      "sha256": "e9d096e4cb5a7f0ed1500114adf35820b3598d798a35c93f99e0fc7893903e7d"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-settings-ax.json",
+      "bytes": 127716,
+      "sha256": "8659607b6ea6e36b41c836641adca4071d57e365eac1e42730e18bec19c25ddb"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-settings-back-ax.json",
+      "bytes": 169905,
+      "sha256": "b4f147585af6028bf98287733533b13ad6899cc72c00bad376d38d7a83680a1b"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-settings-back-tap.json",
+      "bytes": 336,
+      "sha256": "b4b88464c76b4755e204c49859809c83ec6e9be7617fdf0c0a9f4a2130031905"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-settings-back-trace.jsonl",
+      "bytes": 24521,
+      "sha256": "0fe0a769a42f28a8104d47caa99369663965f81e92a0d00f2d6b02d9b3e89825"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-settings-portrait-ax.json",
+      "bytes": 116709,
+      "sha256": "32a8bfde81923233012ee1da27d0c4cf230ba96c7943219b3902d6fc5193d936"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-settings-portrait-rotate.json",
+      "bytes": 630,
+      "sha256": "94617173eed430f0677fb054f4bff750929bfff9abfae467735e49f5422779ba"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-settings-portrait-trace.jsonl",
+      "bytes": 21445,
+      "sha256": "f364369ba7333b155994be3fd2f277d7bd01b144f146721e46d9e715177a538e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-settings-tap.json",
+      "bytes": 317,
+      "sha256": "32fa188162d77300649df95c0c81cae55dc8406b0dec38f3bcac89d1199bc337"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-settings-trace.jsonl",
+      "bytes": 21445,
+      "sha256": "f364369ba7333b155994be3fd2f277d7bd01b144f146721e46d9e715177a538e"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-sidebar-on-ax.json",
+      "bytes": 219066,
+      "sha256": "5da31480540783a22571bb716672fd04dba7013457f07267a46d7e813c4ac96d"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-sidebar-on-tap.json",
+      "bytes": 327,
+      "sha256": "d04320030a110baac4260a7870a729e5bb2d34690f573a2740424d1540fa1c1a"
+    },
+    {
+      "group": "acceptance",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-duo-menu-followup/fd9454a/20261030/xxxl-sidebar-on-trace.jsonl",
+      "bytes": 17045,
+      "sha256": "1c0953ed4c970874baec29b7d29f6a8da000d884f8ca2219fb7cbb57b9ee686d"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/boot-272-after-add.json",
+      "bytes": 471,
+      "sha256": "03eb566e27910d77b34573c90ab3fe59ef04e883a6d5b9b54274329b4d562e2a"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/boot-272.json",
+      "bytes": 517,
+      "sha256": "d0de3ddf2c8c3e935211a82c43e68f5f60b79e557b2f5a90ac57c20b461d348c"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/boot-after-invalid-removal.json",
+      "bytes": 368,
+      "sha256": "50585c514186aeb0401cf896816f8650e7ef9833ab22dff0086e7a6f9af70ed8"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/boot-after-scan.json",
+      "bytes": 297,
+      "sha256": "c61c956a4204ecfddedf74084bb8b3c6b71f8cc17dc4c99a7566b54d7351ebeb"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/boot-after-unmount.json",
+      "bytes": 399,
+      "sha256": "2efa8ec7bdefa485bea53b9ceb310a596c75b3007121a9bf22ef38b027c52a55"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/device-plist-before.json",
+      "bytes": 357,
+      "sha256": "903306e801c6f80fe849266e6b4b9e04c930a7da2320805b51b8941d716329d8"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/device-types-272.json",
+      "bytes": 64378,
+      "sha256": "fef71683cc2e1ead91a2e2327816cee4c462885024ea91d787ea3a834f25e773"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/devices-after-reboot.json",
+      "bytes": 33698,
+      "sha256": "9e2935d78cecdda1dd5a0d88ca03c910aa94df1b452e9b3af7799a3d1e779803"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/devices-after-removal.json",
+      "bytes": 33698,
+      "sha256": "b9daff3705072224caefbb23d928cabd4ab7fcf43b6ca12fc1f1b69e83a9fbc7"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/devices-before.json",
+      "bytes": 32393,
+      "sha256": "94d78f2990614a9bc918037b9acff7e9d4555d0fc1e89d19f171d12326ef2d2a"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/devices-now.json",
+      "bytes": 33698,
+      "sha256": "84bde7be57078da64d5564edd7cd81a92015ab44b228f9e16e67b6e61cb99e64"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/download-ios272.log",
+      "bytes": 988,
+      "sha256": "e1f1d3020d751fc58d383f2b6d95f72a10b0df72356bd306dbff4288339bcd0b"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/dyld-cache-update.json",
+      "bytes": 324,
+      "sha256": "9bd7a8575daa51f30a78c4024898ddd761a04ede16a556efbaf6bcbd1111c44a"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/explicit-profiles-boot.json",
+      "bytes": 519,
+      "sha256": "77b2aa62bf0fcdeb892cb3e3c8dade0bfe2742957d376d0136126790965073cc"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/explicit-profiles-list.json",
+      "bytes": 94467,
+      "sha256": "ac39290f8a241a6c5adbbf6c2c5c9de5611ea6c54dab2467ac9199e07e81dcf2"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/fresh-device-create.json",
+      "bytes": 840,
+      "sha256": "de1376cf80c6b224c6fa08c52a75e89fa7d37e55e6d340ae13391d0447fba389"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/global-developer.txt",
+      "bytes": 50,
+      "sha256": "ec37a0a14406a71972b2cb3e8af4c9ec6ccde9f43b29c72566b29a0aede0439f"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/image-info.plist",
+      "bytes": 6378,
+      "sha256": "be37f700fc1cd3bbb8136553d0b7e6c902518f18ff3a52d1c9b9bbdea2fbd901"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/images-after-reboot.json",
+      "bytes": 9866,
+      "sha256": "9fe9e0bd0c85b4612ffa0514524fafe798ed853e39fb543577802fdc4c1b8a3c"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/images-after-removal.json",
+      "bytes": 8439,
+      "sha256": "aca2d18363e5ce6f74dec9f3ebb887e4c854701e3f89e5468850c80d7664c96f"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/images-before-invalid-removal.json",
+      "bytes": 9096,
+      "sha256": "dd66606c3906e9b12f166d42a198d6f249746b6deab6ed8f5b6164ec61e284c7"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/images-immediately-before-removal.json",
+      "bytes": 9096,
+      "sha256": "dd66606c3906e9b12f166d42a198d6f249746b6deab6ed8f5b6164ec61e284c7"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/images-now.json",
+      "bytes": 9496,
+      "sha256": "c11b07e9bb2acfdd48da6febe9055100cdb1f0ffbebb7fdf2b2e643a43cd76a5"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/merge-291.json",
+      "bytes": 168,
+      "sha256": "29d866fc809994229088aed0a22713819099f66c90bb22a734d78d3179143724"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/own-boot-after-reboot.json",
+      "bytes": 52,
+      "sha256": "260f689cc9d4459f74dc76c0a8005f7ef9b47b353a6e2ab33cf24573d6ca5525"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/own-bootstatus-after-reboot.log",
+      "bytes": 432,
+      "sha256": "83397aab6e8e25869ae625dceff1988c2d5361ff26616fcf287283a2460717e4"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/profiles-after-add.json",
+      "bytes": 83441,
+      "sha256": "84633937c04fc45bf8437476de04a745e1fb9608dfda6113e297e9715982c598"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/profiles-after-reboot.json",
+      "bytes": 86292,
+      "sha256": "2784a8cc07a5d1337a260f27931402e5bdf23a22fb476a2d44bc1bb520447a98"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/remove-invalid-registration.json",
+      "bytes": 243,
+      "sha256": "6a8b7cefc2d3fc3fb376d09bf3fcd2ff3ae2cd886ade1e4eec519d286f13ec7f"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/remove-old-dry-run.json",
+      "bytes": 136,
+      "sha256": "9cc80c0866b96ebc1f461d01f1279dccfd6188c4bc550c7f0f2c78e9f7aacddc"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/rescan.json",
+      "bytes": 136,
+      "sha256": "01f1ec6525da645f3741900569244b1040ca62433ef8a2615ac45e27c3d7b543"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/runtime-add-command.json",
+      "bytes": 427,
+      "sha256": "7d68e5705d4fa760ad7551f10ace3559a9f0d51ccf9d598493eb0a55753a9333"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/runtime-add-result.json",
+      "bytes": 21,
+      "sha256": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/runtime-add.log",
+      "bytes": 71,
+      "sha256": "d46a04835dedc3404f98d989179bcc57c9d425003831b5f3df07ca4b8d80c54c"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/runtime-bundle-info.json",
+      "bytes": 837,
+      "sha256": "310459020acea817c92b8a96783fd221bd735b0f0c3681a4c10c97fb4075d4df"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/runtime-codesign-before.log",
+      "bytes": 175,
+      "sha256": "56410baf2630d72fcf12dee85f641cd42f0ceb432c1b698ce8abd5b0d16ef59c"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/runtime-help.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/runtime-images-272-before.json",
+      "bytes": 8293,
+      "sha256": "6884388c3f646c8d2cdd6ac79b28c83b17a74f2f32422c4e393dac5398b32d1b"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/runtime-images-after-add.json",
+      "bytes": 9383,
+      "sha256": "68e512e5cffe765fa66eed98f30a6a352cf30325af250a93c100e7bf85b7358e"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/runtime-profile-details.json",
+      "bytes": 3376,
+      "sha256": "e674c9d6abe606e57ad6b112d092ebf1ad864f1012497774dd2dfe370fe4004a"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/runtime-service.log",
+      "bytes": 44,
+      "sha256": "9f56fca152030dba9e8ee76dee4fc8967ab667507b5878f0f9ab819d55b6b9a6"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/runtime-verify-before.log",
+      "bytes": 79,
+      "sha256": "cc912063c4489d948b8c3f1ea78c4876b8479c3054a4b26852a56d098573d97c"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/runtime-verify-old-again.json",
+      "bytes": 133,
+      "sha256": "88b37125766f4f58ee734b4f096bfd9c792fa1e2a73192177308a6cfd5a43f8b"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/scan-and-mount.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/unmount-old.json",
+      "bytes": 234,
+      "sha256": "6074f2e334a12f14f18f7eda6d6e04972700a8fa2b604263cce7ed067f21e90c"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/xcode-27_2-release-notes.md",
+      "bytes": 7778,
+      "sha256": "dfca14a3f276af6a6380c36bd47ad94e8ffe862bfcf4ca1761c5a4b3a15e1c57"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/xcode272.txt",
+      "bytes": 31,
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+    },
+    {
+      "group": "runtime",
+      "path": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-runtime-recovery/20261030-xcode272/xcodebuild-272-help.txt",
+      "bytes": 24922,
+      "sha256": "064a5601e8bcf52832de994a2e0e7764208f6bb5ecb03b4139724d8a505366da"
+    }
+  ],
+  "remote_comment": {
+    "id": 6517181441,
+    "url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6517181441",
+    "images": 2,
+    "videos": 2,
+    "local_paths_remaining": false
+  }
+}
