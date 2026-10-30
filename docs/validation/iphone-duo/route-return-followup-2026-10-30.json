@@ -434,7 +434,7 @@
     "mac_qa": "Exited",
     "content_size": "large",
     "pose": "closed / portrait",
-    "global_xcode": "27.2 observed after user reboot; agent did not change it"
+    "global_xcode": "Earlier xcode-select capture inherited DEVELOPER_DIR; it does not establish a global change. Later readback without override is /Applications/Xcode.app/Contents/Developer; agent never changed global selection."
   },
   "unverified": [
     "Full three-language matrix",
