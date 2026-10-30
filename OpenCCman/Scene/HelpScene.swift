@@ -7,9 +7,12 @@ struct HelpScene: View {
 
   var body: some View {
     VStack(alignment: .center, spacing: 0) {
+      #if os(macOS)
       navi
+      #endif
       list
     }.background(Color.Neumorphic.main)
+      .appNavigation("Help")
   }
 
   var navi: some View {
@@ -46,6 +49,15 @@ struct HelpScene: View {
             // Introduction
             Text("help_intro".localizedStringKey)
               .appFont(.body)
+
+            #if os(iOS)
+            if MobileFileRuntime.isEnabled && MobileFileRuntime.isExperimentalCapacityEnabled {
+              VStack(alignment: .leading, spacing: 8) {
+                Text("large_file_title").appFont(.headline, weight: .semibold)
+                Text("mobile_file_experimental_help").appFont(.body)
+              }
+            }
+            #endif
 
             // Features section
             VStack(alignment: .leading, spacing: 8) {
@@ -108,7 +120,9 @@ struct HelpScene: View {
       }
       .padding(Constant.padding)
       .foregroundColor(Color.Neumorphic.secondary)
+      #if os(macOS)
       .ignoresSafeArea(edges: .bottom)
+      #endif
     }
   }
 }

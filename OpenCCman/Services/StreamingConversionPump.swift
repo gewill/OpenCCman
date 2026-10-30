@@ -16,6 +16,7 @@ enum StreamingConversionPump {
   struct Hooks: Sendable {
     var beforeRead: @Sendable () throws -> Void = {}
     var beforeWrite: @Sendable () throws -> Void = {}
+    var beforeOutputWrite: @Sendable (Int) throws -> Void = { _ in }
   }
 
   static func run(
@@ -42,6 +43,7 @@ enum StreamingConversionPump {
       try cancellation.check()
       guard !bytes.isEmpty else { return }
       try hooks.beforeWrite()
+      try hooks.beforeOutputWrite(bytes.count)
       try output.write(contentsOf: bytes)
       outputBytes += UInt64(bytes.count)
     }

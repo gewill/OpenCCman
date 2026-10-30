@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-28",
+  "base": "83db406f2d715e39095cec77228fdf0c003b45bf",
+  "candidate_source": {
+    "commit": "83db406f2d715e39095cec77228fdf0c003b45bf",
+    "status": " M OpenCCman/Scene/HomeScene.swift\n M OpenCCman/Scene/HomeViewModel.swift\n M Tests/UI/WhatsNewPresentation/Tests/DuoReadinessTests.swift\n",
+    "diff_sha256": "f0324b766d5193160c0009fb1028f07927dde66d9dd1162a787d64c4a4e4a2ba",
+    "untracked_sha256": {},
+    "package_resolved_sha256": "ddbb87a4ecb8ef2299d5b739c5c0e41e8ef8bc0a66db0e02873e6ee2cf694f6c"
+  },
+  "source_sha256": {
+    "OpenCCman/Scene/HomeScene.swift": "eb862101a2216106da06aab02b513ba140c65e215cf1d148273e48fb2e2ff7ef",
+    "OpenCCman/Scene/HomeViewModel.swift": "b00d13e46c7ada3200d8fbf8adaebddd8db70aad21401d5803d02ffd9d476939",
+    "Tests/UI/WhatsNewPresentation/Tests/DuoReadinessTests.swift": "3df96a2cf31085c4337f9a7bd5bb649bc1c4c08f6725d268dc2263607a3203b7"
+  },
+  "before_source": {
+    "commit": "83db406f2d715e39095cec77228fdf0c003b45bf",
+    "status": " M OpenCCman/Scene/HomeViewModel.swift\n M Tests/UI/WhatsNewPresentation/Tests/DuoReadinessTests.swift\n",
+    "diff_sha256": "d72e2ba9561d2a1d8bdb4eb1a6b1c12a9b22d48377917ffdc1e1bd03fa8ebebd",
+    "untracked_sha256": {},
+    "package_resolved_sha256": "ddbb87a4ecb8ef2299d5b739c5c0e41e8ef8bc0a66db0e02873e6ee2cf694f6c"
+  },
+  "before_home_scene_sha256": "d575ce9a1598a46a87a7bf1903caf0e7cbfab58037f3e50e9ed5c70a7e1db377",
+  "xcode": "Xcode 27.1\nBuild version 27A9275",
+  "runtime": "iOS 27.1 (24A94425)",
+  "device": "OpenCCman Duo QA 277 / D4FE3CC7-4DBF-4333-84A7-FEA788DBD897",
+  "build_status": "passed",
+  "artifacts": {
+    "ios": {
+      "binary_sdks": [
+        "27.1"
+      ],
+      "executable_sha256": "31b4512f5d393e9e1348f996ab56dd3710fbeea21984e0cf75696fcf5be5b30e",
+      "info_plist_sha256": "e7950891c95f08c6ebbe2c72df625bbe3ad88fad557e5c492d2effc6998a837d",
+      "deployment_floor": "15.0"
+    },
+    "mac": {
+      "binary_sdks": [
+        "27.0",
+        "27.0"
+      ],
+      "executable_sha256": "3f7676b264f462f8fcc142e2390864633d4a256478b907f5a9ec38f75c77716a",
+      "info_plist_sha256": "473f4f01df3af8140153e967f32ada8d381fc099145265b688beeeca86bb4a3d",
+      "deployment_floor": "12.0"
+    }
+  },
+  "tests": {
+    "before-cancel": {
+      "summary": "Executed 1 test, with 1 failure (0 unexpected) in 22.116 (22.122) seconds",
+      "native_log_sha256": "37904e87fe7b9e2ffbbd350dbdee09683efd612f5d9fe0740ab9a1ef203cd312",
+      "cases": [
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testProCancellationPreservesPendingError]' failed (22.116 seconds)."
+      ]
+    },
+    "after-targeted": {
+      "summary": "Executed 3 tests, with 0 failures (0 unexpected) in 39.369 (39.375) seconds",
+      "native_log_sha256": "2cce3b37a9cf24e09fd81ede9a86b8bf32c59a6d2dae54fc706fa5ef1fab21bb",
+      "cases": [
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testProCancellationPreservesPendingError]' passed (11.409 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testProSheetDefersPendingErrorUntilReturn]' passed (13.203 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testSystemProAlertCancelsAndOpensClosableSheet]' passed (14.756 seconds)."
+      ]
+    },
+    "after-xxxl": {
+      "summary": "Executed 3 tests, with 0 failures (0 unexpected) in 43.352 (43.372) seconds",
+      "native_log_sha256": "06979fb271c8044b5abdb7f637efc025484bc6501fc6ccfc3439fda3f4925ae6",
+      "cases": [
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testProCancellationPreservesPendingError]' passed (13.102 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testProSheetDefersPendingErrorUntilReturn]' passed (14.769 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testSystemProAlertCancelsAndOpensClosableSheet]' passed (15.481 seconds)."
+      ]
+    },
+    "after-recorded": {
+      "purpose": "Supplementary recording replay; not an additional acceptance matrix",
+      "summary": "Executed 2 tests, with 0 failures (0 unexpected) in 24.754 (24.758) seconds",
+      "native_log_sha256": "408b7b95e997d37bc763f9e068231bbf6a8521e459ed7ad958a1a5c5cc497124"
+    }
+  }
+}

@@ -1,0 +1,1972 @@
+{
+  "schema": 1,
+  "date_range": "2026-10-29/2026-10-30 Asia/Taipei",
+  "started_at": "2026-10-29T23:22:06.004127+08:00",
+  "finished_at": "2026-10-30T00:09:03.470722+08:00",
+  "source_commit": "bccf2614d591dfebd09dc25c2e96405bc29476e3",
+  "source_state": "clean during acceptance; documentation generated afterward; no app/test/project changes",
+  "issues": [
+    280,
+    282
+  ],
+  "issues_closed": false,
+  "merged_pr": {
+    "number": 289,
+    "reviewed_head": "10e0d7ab54d9ed9ef0a5e613f97a920142e75c7e",
+    "squash": "bccf2614d591dfebd09dc25c2e96405bc29476e3",
+    "tree_equals_reviewed_head": true,
+    "single_parent": true,
+    "standards_findings": 0,
+    "spec_findings": 0,
+    "external_github_approved_review": false,
+    "push_ci": {
+      "conclusion": "success",
+      "headSha": "bccf2614d591dfebd09dc25c2e96405bc29476e3",
+      "status": "completed",
+      "url": "https://github.com/gewill/OpenCCman/actions/runs/40900726929"
+    }
+  },
+  "source_trees": {
+    "OpenCCman": "af9547d9113cd733fdb287cd22830784c5087a90",
+    "Tests": "b978c0955ae4a494e25d2eb35c5b79adcab440b1",
+    "OpenCCman.xcodeproj": "44b0dad8d0d71e3912dea0f65eb1fe4a6e2ac495"
+  },
+  "source_hashes": {
+    "OpenCCman/OpenCCmanApp.swift": "5aab18d632029b7d3da0bef761d3a94e0c07a12f2b02e009e0923f71c8014947",
+    "OpenCCman/Scene/RootView.swift": "2c5721a1a67afe31da21ac87706036aca8df0b7dc1f4d3ad1667415b352d5625",
+    "OpenCCman/View/WorkspaceComponents.swift": "d0b39bbd0922ee62182e70c50eca5a947f5c70174c8d231471ce5544110b5b26",
+    "OpenCCman/View/WorkspaceSurface.swift": "4e06b47585dfff9921d666414e7b0522866c4205f40319be1fcb12140a241fe2",
+    "OpenCCman/en.lproj/Localizable.strings": "14b0bcdf18e7d81d9c225ddab46a6874ed49b90e2a3b157c06f55b1ca31d203d",
+    "Tests/UI/WhatsNewPresentation/Tests/DuoReadinessTests.swift": "7c25ec4f19368ca58565c380c5efe8a66d6fce53596738ce7fd568baa52f57d5"
+  },
+  "runtime": {
+    "configuration": "Debug",
+    "version": "2.1(30)",
+    "bundle_id": "org.gewill.OpenCCman.WhatsNewUITests",
+    "xcode": "Xcode 27.1\nBuild version 27A9275\n",
+    "developer_dir": "/Applications/Xcode.app/Contents/Developer",
+    "devicectl": "651.13.5\n",
+    "simulator": "4CAD3041-0744-41A6-8B4E-F934CA9F0778",
+    "runtime": "iOS 27.1",
+    "language": "English",
+    "font": "large",
+    "dylib_sha256": "f69b7bbea0700611e338f4bf5ee3116b07508c6d9e9967905abd1b063ba7534e",
+    "build_reference": "input-task-followup-2026-10-29.json",
+    "signed_distribution": false,
+    "app_rebuilt_this_turn": false
+  },
+  "qa_artifact_variant": {
+    "phase_a_pid": 49579,
+    "phase_a_source": "original frozen package",
+    "phase_b_pid": 55132,
+    "changed_files": [
+      "Info.plist"
+    ],
+    "plist_changes": {
+      "UIFileSharingEnabled": {
+        "before": null,
+        "after": true
+      },
+      "LSSupportsOpeningDocumentsInPlace": {
+        "before": null,
+        "after": true
+      }
+    },
+    "dylib_unchanged": true,
+    "basis": "existing scripts/check-whats-new-ui.sh QA-only document-sharing precondition",
+    "container_reassigned_on_reinstall": true,
+    "original_bundle_restored": true,
+    "production_package_file_sharing_acceptance": false
+  },
+  "native_pose_acceptance": {
+    "status": "passed scoped simulator GUI pose operations",
+    "snapshots": [
+      {
+        "snapshot": "pose-closed",
+        "ui_window": {
+          "y": 0,
+          "x": 0,
+          "width": 466,
+          "height": 678
+        },
+        "text": {
+          "source": {
+            "utf16": 22,
+            "sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220"
+          },
+          "result": {
+            "utf16": 22,
+            "sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+          }
+        },
+        "workspace_trace": {
+          "axis": "vertical",
+          "busy": false,
+          "container": [
+            382,
+            562
+          ],
+          "division": [],
+          "editors": [
+            {
+              "characters": 22,
+              "editable": true,
+              "focused": false,
+              "frame": [
+                40,
+                384.66666666666663,
+                302,
+                180
+              ],
+              "identity": "ObjectIdentifier(0x00000001032b8c00)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                22,
+                0
+              ]
+            },
+            {
+              "characters": 22,
+              "editable": false,
+              "focused": false,
+              "frame": [
+                40,
+                712.6666666666665,
+                302,
+                180
+              ],
+              "identity": "ObjectIdentifier(0x00000001032b9800)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                22,
+                0
+              ]
+            }
+          ],
+          "input_characters": 22,
+          "model": "AA579983-E324-4D83-8DA4-253D0EFA8136",
+          "pro_alert": false,
+          "probe_origin": [
+            0,
+            82
+          ],
+          "probe_size": [
+            382,
+            562
+          ],
+          "quota_exhausted": false,
+          "result_characters": 22,
+          "safe_area": [
+            82,
+            0,
+            34,
+            84
+          ],
+          "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+          "window": [
+            466,
+            678
+          ]
+        }
+      },
+      {
+        "snapshot": "pose-open",
+        "ui_window": {
+          "height": 951,
+          "x": 0,
+          "width": 669,
+          "y": 0
+        },
+        "text": {
+          "source": {
+            "utf16": 22,
+            "sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220"
+          },
+          "result": {
+            "utf16": 22,
+            "sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+          }
+        },
+        "workspace_trace": {
+          "axis": "horizontal",
+          "busy": false,
+          "container": [
+            867,
+            553
+          ],
+          "division": [
+            {
+              "active": false,
+              "frame": [
+                455.5,
+                -82,
+                40,
+                669
+              ]
+            }
+          ],
+          "editors": [
+            {
+              "characters": 22,
+              "editable": true,
+              "focused": false,
+              "frame": [
+                40,
+                384.66666666666663,
+                347.66666666666663,
+                204.66666666666666
+              ],
+              "identity": "ObjectIdentifier(0x00000001032b8c00)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                22,
+                0
+              ]
+            },
+            {
+              "characters": 22,
+              "editable": false,
+              "focused": false,
+              "frame": [
+                479.66666666666663,
+                250.33333333333331,
+                347.66666666666663,
+                339
+              ],
+              "identity": "ObjectIdentifier(0x00000001032b9800)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                22,
+                0
+              ]
+            }
+          ],
+          "input_characters": 22,
+          "model": "AA579983-E324-4D83-8DA4-253D0EFA8136",
+          "pro_alert": false,
+          "probe_origin": [
+            0,
+            82
+          ],
+          "probe_size": [
+            867,
+            553
+          ],
+          "quota_exhausted": false,
+          "result_characters": 22,
+          "safe_area": [
+            82,
+            0,
+            34,
+            84
+          ],
+          "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+          "window": [
+            951,
+            669
+          ]
+        }
+      },
+      {
+        "snapshot": "pose-partial",
+        "ui_window": {
+          "height": 951,
+          "x": 0,
+          "y": 0,
+          "width": 669
+        },
+        "text": {
+          "source": {
+            "utf16": 22,
+            "sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220"
+          },
+          "result": {
+            "utf16": 22,
+            "sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+          }
+        },
+        "workspace_trace": {
+          "axis": "horizontal",
+          "busy": false,
+          "container": [
+            867,
+            553
+          ],
+          "division": [
+            {
+              "active": true,
+              "frame": [
+                455.5,
+                -82,
+                40,
+                669
+              ]
+            }
+          ],
+          "editors": [
+            {
+              "characters": 22,
+              "editable": true,
+              "focused": false,
+              "frame": [
+                40,
+                384.66666666666663,
+                347.66666666666663,
+                204.66666666666666
+              ],
+              "identity": "ObjectIdentifier(0x00000001032b8c00)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                22,
+                0
+              ]
+            },
+            {
+              "characters": 22,
+              "editable": false,
+              "focused": false,
+              "frame": [
+                479.66666666666663,
+                250.33333333333331,
+                347.66666666666663,
+                339
+              ],
+              "identity": "ObjectIdentifier(0x00000001032b9800)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                22,
+                0
+              ]
+            }
+          ],
+          "input_characters": 22,
+          "model": "AA579983-E324-4D83-8DA4-253D0EFA8136",
+          "pro_alert": false,
+          "probe_origin": [
+            0,
+            82
+          ],
+          "probe_size": [
+            867,
+            553
+          ],
+          "quota_exhausted": false,
+          "result_characters": 22,
+          "safe_area": [
+            82,
+            0,
+            34,
+            84
+          ],
+          "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+          "window": [
+            951,
+            669
+          ]
+        }
+      },
+      {
+        "snapshot": "pose-partial-rotated",
+        "ui_window": {
+          "x": 0,
+          "y": 0,
+          "height": 951,
+          "width": 669
+        },
+        "text": {
+          "source": {
+            "utf16": 22,
+            "sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220"
+          },
+          "result": {
+            "utf16": 22,
+            "sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+          }
+        },
+        "workspace_trace": {
+          "axis": "vertical",
+          "busy": false,
+          "container": [
+            669,
+            835
+          ],
+          "division": [
+            {
+              "active": true,
+              "frame": [
+                0,
+                373.5,
+                669,
+                40
+              ]
+            }
+          ],
+          "editors": [
+            {
+              "characters": 22,
+              "editable": true,
+              "focused": false,
+              "frame": [
+                40,
+                368.66666666666663,
+                589,
+                192.66666666666666
+              ],
+              "identity": "ObjectIdentifier(0x00000001032b8c00)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                22,
+                0
+              ]
+            },
+            {
+              "characters": 22,
+              "editable": false,
+              "focused": false,
+              "frame": [
+                40,
+                709.3333333333333,
+                589,
+                192.66666666666666
+              ],
+              "identity": "ObjectIdentifier(0x00000001032b9800)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                22,
+                0
+              ]
+            }
+          ],
+          "input_characters": 22,
+          "model": "AA579983-E324-4D83-8DA4-253D0EFA8136",
+          "pro_alert": false,
+          "probe_origin": [
+            0,
+            82
+          ],
+          "probe_size": [
+            669,
+            835
+          ],
+          "quota_exhausted": false,
+          "result_characters": 22,
+          "safe_area": [
+            82,
+            0,
+            34,
+            0
+          ],
+          "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+          "window": [
+            669,
+            951
+          ]
+        }
+      },
+      {
+        "snapshot": "pose-closed-return",
+        "ui_window": {
+          "height": 466,
+          "width": 678,
+          "x": 0,
+          "y": 0
+        },
+        "text": {
+          "source": {
+            "utf16": 22,
+            "sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220"
+          },
+          "result": {
+            "utf16": 22,
+            "sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+          }
+        },
+        "workspace_trace": {
+          "axis": "vertical",
+          "busy": false,
+          "container": [
+            594,
+            350
+          ],
+          "division": [],
+          "editors": [
+            {
+              "characters": 22,
+              "editable": true,
+              "focused": false,
+              "frame": [
+                40,
+                368.66666666666663,
+                514,
+                180
+              ],
+              "identity": "ObjectIdentifier(0x0000000113391800)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                22,
+                0
+              ]
+            },
+            {
+              "characters": 22,
+              "editable": false,
+              "focused": false,
+              "frame": [
+                40,
+                2697,
+                514,
+                180
+              ],
+              "identity": "ObjectIdentifier(0x0000000113392400)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                22,
+                0
+              ]
+            }
+          ],
+          "input_characters": 22,
+          "model": "AA579983-E324-4D83-8DA4-253D0EFA8136",
+          "pro_alert": false,
+          "probe_origin": [
+            0,
+            82
+          ],
+          "probe_size": [
+            594,
+            350
+          ],
+          "quota_exhausted": false,
+          "result_characters": 22,
+          "safe_area": [
+            82,
+            0,
+            34,
+            84
+          ],
+          "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+          "window": [
+            678,
+            466
+          ]
+        }
+      }
+    ],
+    "before_settings_editor_identity_preserved": true,
+    "settings_route_data_preserved": true,
+    "settings_route_editor_identity_preservation_claimed": false,
+    "settings_after_close_ui_window": {
+      "x": 0,
+      "y": 0,
+      "width": 678,
+      "height": 466
+    },
+    "active_division_vertical": [
+      {
+        "active": true,
+        "frame": [
+          455.5,
+          -82,
+          40,
+          669
+        ]
+      }
+    ],
+    "active_division_horizontal": [
+      {
+        "active": true,
+        "frame": [
+          0,
+          373.5,
+          669,
+          40
+        ]
+      }
+    ],
+    "coverage": "English/default; actual Open/Partially Open/Rotate/Closed controls, More/Settings/Back subset; no left/right OS split, full action matrix or hardware claim",
+    "continuous_dual_display_video": false
+  },
+  "ordinary_import": {
+    "status": "partial; in-flight fold/resize not demonstrated",
+    "initial_trial": {
+      "status": "observed",
+      "qa_delay_seconds": 2,
+      "native_importing": {
+        "frame": {
+          "x": 0,
+          "height": 951,
+          "width": 669,
+          "y": 0
+        },
+        "import_disabled": true,
+        "inline_cancel": true,
+        "source": "鼠标里面的硅二极管坏了，导致光标分辨率降低。",
+        "export_enabled": [
+          true
+        ]
+      },
+      "wide": {
+        "frame": {
+          "height": 951,
+          "x": 0,
+          "width": 669,
+          "y": 0
+        },
+        "import_disabled": true,
+        "inline_cancel": true,
+        "source": "鼠标里面的硅二极管坏了，导致光标分辨率降低。",
+        "export_enabled": [
+          true
+        ]
+      },
+      "compact": {
+        "frame": {
+          "height": 669,
+          "y": 0,
+          "width": 950,
+          "x": 0
+        },
+        "import_disabled": false,
+        "inline_cancel": false,
+        "source": "导入中的汉字与软件。🌏\n保留换行和末尾。",
+        "export_enabled": [
+          false
+        ]
+      },
+      "finished": {
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 950,
+          "height": 669
+        },
+        "import_disabled": false,
+        "inline_cancel": false,
+        "source": "导入中的汉字与软件。🌏\n保留换行和末尾。",
+        "export_enabled": [
+          false
+        ]
+      },
+      "both_sizes_during_import": false
+    },
+    "actual_native_fold_trial": {
+      "status": "observed",
+      "snapshots": [
+        {
+          "monotonic": 34580.958015958,
+          "window": {
+            "width": 669,
+            "x": 0,
+            "height": 951,
+            "y": 0
+          },
+          "importing": false,
+          "source": "导入中的汉字与软件。🌏\n保留换行和末尾。",
+          "result": "導入中的漢字與軟件。🌏\n保留換行和末尾。",
+          "labels": [
+            "Import TXT",
+            "Import TXT",
+            "Export TXT",
+            "Cancel"
+          ],
+          "export_enabled": [
+            true
+          ]
+        },
+        {
+          "monotonic": 34581.847976208,
+          "window": {
+            "width": 669,
+            "y": 0,
+            "x": 0,
+            "height": 951
+          },
+          "importing": false,
+          "source": "导入中的汉字与软件。🌏\n保留换行和末尾。",
+          "result": "導入中的漢字與軟件。🌏\n保留換行和末尾。",
+          "labels": [
+            "Import TXT",
+            "Import TXT",
+            "Export TXT",
+            "Cancel"
+          ],
+          "export_enabled": [
+            true
+          ]
+        },
+        {
+          "monotonic": 34582.737693458,
+          "window": {
+            "height": 951,
+            "width": 669,
+            "x": 0,
+            "y": 0
+          },
+          "importing": false,
+          "source": "导入中的汉字与软件。🌏\n保留换行和末尾。",
+          "result": "導入中的漢字與軟件。🌏\n保留換行和末尾。",
+          "labels": [
+            "Import TXT",
+            "Import TXT",
+            "Export TXT",
+            "Cancel"
+          ],
+          "export_enabled": [
+            true
+          ]
+        },
+        {
+          "monotonic": 34583.632879166,
+          "window": {
+            "width": 669,
+            "x": 0,
+            "height": 951,
+            "y": 0
+          },
+          "importing": false,
+          "source": "导入中的汉字与软件。🌏\n保留换行和末尾。",
+          "result": "導入中的漢字與軟件。🌏\n保留換行和末尾。",
+          "labels": [
+            "Import TXT",
+            "Import TXT",
+            "Export TXT",
+            "Cancel"
+          ],
+          "export_enabled": [
+            true
+          ]
+        },
+        {
+          "monotonic": 34584.53067325,
+          "window": {
+            "y": 0,
+            "height": 951,
+            "x": 0,
+            "width": 669
+          },
+          "importing": false,
+          "source": "导入中的汉字与软件。🌏\n保留换行和末尾。",
+          "result": "導入中的漢字與軟件。🌏\n保留換行和末尾。",
+          "labels": [
+            "Import TXT",
+            "Import TXT",
+            "Export TXT",
+            "Cancel"
+          ],
+          "export_enabled": [
+            true
+          ]
+        },
+        {
+          "monotonic": 34585.420662833,
+          "window": {
+            "x": 0,
+            "height": 951,
+            "width": 669,
+            "y": 0
+          },
+          "importing": false,
+          "source": "导入中的汉字与软件。🌏\n保留换行和末尾。",
+          "result": "導入中的漢字與軟件。🌏\n保留換行和末尾。",
+          "labels": [
+            "Import TXT",
+            "Import TXT",
+            "Export TXT",
+            "Cancel"
+          ],
+          "export_enabled": [
+            true
+          ]
+        },
+        {
+          "monotonic": 34586.47635725,
+          "window": {
+            "x": 0,
+            "width": 678,
+            "height": 466,
+            "y": 0
+          },
+          "importing": false,
+          "source": "导入中的汉字与软件。🌏\n保留换行和末尾。",
+          "result": "導入中的漢字與軟件。🌏\n保留換行和末尾。",
+          "labels": [
+            "Import TXT",
+            "Import TXT",
+            "Export TXT",
+            "Cancel"
+          ],
+          "export_enabled": [
+            true
+          ]
+        },
+        {
+          "monotonic": 34587.639084666,
+          "window": {
+            "width": 678,
+            "x": 0,
+            "y": 0,
+            "height": 466
+          },
+          "importing": true,
+          "source": "导入中的汉字与软件。🌏\n保留换行和末尾。",
+          "result": "導入中的漢字與軟件。🌏\n保留換行和末尾。",
+          "labels": [
+            "Import TXT",
+            "Import TXT",
+            "Import TXT",
+            "Cancel",
+            "Export TXT"
+          ],
+          "export_enabled": [
+            true
+          ]
+        },
+        {
+          "monotonic": 34588.533191625,
+          "window": {
+            "x": 0,
+            "y": 0,
+            "width": 678,
+            "height": 466
+          },
+          "importing": true,
+          "source": "导入中的汉字与软件。🌏\n保留换行和末尾。",
+          "result": "導入中的漢字與軟件。🌏\n保留換行和末尾。",
+          "labels": [
+            "Import TXT",
+            "Import TXT",
+            "Import TXT",
+            "Cancel",
+            "Export TXT"
+          ],
+          "export_enabled": [
+            true
+          ]
+        },
+        {
+          "monotonic": 34589.417474833,
+          "window": {
+            "height": 466,
+            "y": 0,
+            "width": 678,
+            "x": 0
+          },
+          "importing": false,
+          "source": "导入中的汉字与软件。🌏\n保留换行和末尾。",
+          "result": null,
+          "labels": [
+            "Import TXT",
+            "Import TXT",
+            "Export TXT"
+          ],
+          "export_enabled": [
+            false
+          ]
+        }
+      ],
+      "qa_delay_seconds": 2,
+      "busy_windows": [
+        [
+          678,
+          466
+        ],
+        [
+          678,
+          466
+        ]
+      ]
+    },
+    "adjudication": [
+      "first resize snapshots did not reach both requested sizes before import ended",
+      "native fold occurred before importing callback started; observed importing only at 678x466",
+      "actual Files selection, imported content and clearing result/export are established; no claim of importing during fold"
+    ],
+    "qa_delay_seconds": 2
+  },
+  "file_provider_save": {
+    "ordinary": {
+      "filename": "duo-import-save-20261029-converted.txt",
+      "bytes": 59,
+      "sha256": "74cab6b6498ae3440df0e75251286bb830416294bfb511196341514bd494e09e",
+      "full_text_equals_expected": true,
+      "actual_system_Save_clicked": true,
+      "provider": "On My iPhone / OpenCCman QA Documents",
+      "overwrite": false
+    },
+    "mobile64": {
+      "provider": "On My iPhone / OpenCCman QA Documents",
+      "saved_filename": "duo-followup-64mib-converted.txt",
+      "saved_bytes": 67108877,
+      "saved_sha256": "0db3774607c8a773d848ddae3cffc85f779adc4306443b5c2c41e170de10b072",
+      "full_output_hash_matches_expected": true,
+      "source_unchanged": true,
+      "remaining_task_store_files": [],
+      "ordinary_conversion_quota_before": {
+        "2026-10-29": 5
+      },
+      "ordinary_conversion_quota_after": {
+        "2026-10-29": 5
+      },
+      "actual_system_Save_clicked": true
+    },
+    "controlled99": {
+      "saved_bytes": 103809021,
+      "saved_filename": "duo-followup-lock-99mib-converted.txt",
+      "saved_sha256": "a710af359be8cf04aa4cf5ca4bc23865a4e6e2c6bdf2813d66f68ecb08f48602",
+      "source_unchanged": true,
+      "remaining_task_store_files": [],
+      "ordinary_quota": {
+        "2026-10-29": 5
+      },
+      "actual_Save": true,
+      "controlled_before_fold_contains_converting": true,
+      "controlled_after_fold_contains_converting": true,
+      "after_fold_progress": "50%",
+      "records": [
+        {
+          "app_active": true,
+          "event": "before_begin",
+          "resources": {
+            "idle_disabled": false,
+            "owns_background_task": false,
+            "owns_idle_override": false
+          }
+        },
+        {
+          "app_active": true,
+          "event": "after_begin",
+          "resources": {
+            "idle_disabled": true,
+            "owns_background_task": true,
+            "owns_idle_override": true
+          }
+        },
+        {
+          "app_active": true,
+          "event": "after_end",
+          "resources": {
+            "idle_disabled": false,
+            "owns_background_task": false,
+            "owns_idle_override": false
+          }
+        },
+        {
+          "app_active": true,
+          "event": "before_begin",
+          "resources": {
+            "idle_disabled": false,
+            "owns_background_task": false,
+            "owns_idle_override": false
+          }
+        },
+        {
+          "app_active": true,
+          "event": "after_begin",
+          "resources": {
+            "idle_disabled": true,
+            "owns_background_task": true,
+            "owns_idle_override": true
+          }
+        },
+        {
+          "app_active": true,
+          "event": "after_end",
+          "resources": {
+            "idle_disabled": false,
+            "owns_background_task": false,
+            "owns_idle_override": false
+          }
+        }
+      ]
+    }
+  },
+  "mobile_file_continuity": {
+    "production_enabled": false,
+    "experimental_capacity_enabled": false,
+    "qa_flags": [
+      "-qa-enable-mobile-large-files",
+      "-qa-mobile-file-pro",
+      "-qa-mobile-file-resource-trace"
+    ],
+    "home_text_snapshots": [
+      {
+        "snapshot": "export-before",
+        "ui_window": {
+          "x": 0,
+          "y": 0,
+          "width": 669,
+          "height": 951
+        },
+        "text": {
+          "source": {
+            "utf16": 21,
+            "sha256": "6ec2d6c447a1099aa2f16a97b8483c416e265f39d23be74431fd4801be382bc5"
+          },
+          "result": {
+            "utf16": 21,
+            "sha256": "74cab6b6498ae3440df0e75251286bb830416294bfb511196341514bd494e09e"
+          }
+        },
+        "workspace_trace": {
+          "axis": "vertical",
+          "busy": false,
+          "container": [
+            669,
+            835
+          ],
+          "division": [
+            {
+              "active": false,
+              "frame": [
+                0,
+                373.5,
+                669,
+                40
+              ]
+            }
+          ],
+          "editors": [
+            {
+              "characters": 21,
+              "editable": true,
+              "focused": false,
+              "frame": [
+                40,
+                395,
+                589,
+                192.66666666666666
+              ],
+              "identity": "ObjectIdentifier(0x0000000105ec0c00)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                21,
+                0
+              ]
+            },
+            {
+              "characters": 21,
+              "editable": false,
+              "focused": false,
+              "frame": [
+                40,
+                735.6666666666665,
+                589,
+                192.66666666666666
+              ],
+              "identity": "ObjectIdentifier(0x0000000105ec1800)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                21,
+                0
+              ]
+            }
+          ],
+          "input_characters": 21,
+          "model": "034046D1-838E-4516-8030-2848366AAEB2",
+          "pro_alert": false,
+          "probe_origin": [
+            0,
+            82
+          ],
+          "probe_size": [
+            669,
+            835
+          ],
+          "quota_exhausted": false,
+          "result_characters": 21,
+          "safe_area": [
+            82,
+            0,
+            34,
+            0
+          ],
+          "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+          "window": [
+            669,
+            951
+          ]
+        }
+      },
+      {
+        "snapshot": "mobile-draft-confirm",
+        "ui_window": {
+          "width": 669,
+          "height": 951,
+          "y": 0,
+          "x": 0
+        },
+        "text": {
+          "source": {
+            "utf16": 21,
+            "sha256": "6ec2d6c447a1099aa2f16a97b8483c416e265f39d23be74431fd4801be382bc5"
+          },
+          "result": {
+            "utf16": 21,
+            "sha256": "74cab6b6498ae3440df0e75251286bb830416294bfb511196341514bd494e09e"
+          }
+        },
+        "workspace_trace": {
+          "axis": "vertical",
+          "busy": false,
+          "container": [
+            669,
+            835
+          ],
+          "division": [
+            {
+              "active": false,
+              "frame": [
+                0,
+                373.5,
+                669,
+                40
+              ]
+            }
+          ],
+          "editors": [
+            {
+              "characters": 21,
+              "editable": true,
+              "focused": false,
+              "frame": [
+                40,
+                395,
+                589,
+                192.66666666666666
+              ],
+              "identity": "ObjectIdentifier(0x0000000105ec0c00)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                21,
+                0
+              ]
+            },
+            {
+              "characters": 21,
+              "editable": false,
+              "focused": false,
+              "frame": [
+                40,
+                735.6666666666665,
+                589,
+                192.66666666666666
+              ],
+              "identity": "ObjectIdentifier(0x0000000105ec1800)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                21,
+                0
+              ]
+            }
+          ],
+          "input_characters": 21,
+          "model": "034046D1-838E-4516-8030-2848366AAEB2",
+          "pro_alert": false,
+          "probe_origin": [
+            0,
+            82
+          ],
+          "probe_size": [
+            669,
+            835
+          ],
+          "quota_exhausted": false,
+          "result_characters": 21,
+          "safe_area": [
+            82,
+            0,
+            34,
+            0
+          ],
+          "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+          "window": [
+            669,
+            951
+          ]
+        }
+      },
+      {
+        "snapshot": "mobile-draft-ready-closed",
+        "ui_window": {
+          "width": 678,
+          "y": 0,
+          "x": 0,
+          "height": 466
+        },
+        "text": {
+          "source": {
+            "utf16": 21,
+            "sha256": "6ec2d6c447a1099aa2f16a97b8483c416e265f39d23be74431fd4801be382bc5"
+          },
+          "result": {
+            "utf16": 21,
+            "sha256": "74cab6b6498ae3440df0e75251286bb830416294bfb511196341514bd494e09e"
+          }
+        },
+        "workspace_trace": {
+          "axis": "vertical",
+          "busy": false,
+          "container": [
+            594,
+            350
+          ],
+          "division": [],
+          "editors": [
+            {
+              "characters": 21,
+              "editable": true,
+              "focused": false,
+              "frame": [
+                124,
+                395,
+                514,
+                180
+              ],
+              "identity": "ObjectIdentifier(0x0000000105ec0c00)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                21,
+                0
+              ]
+            },
+            {
+              "characters": 21,
+              "editable": false,
+              "focused": false,
+              "frame": [
+                124,
+                723,
+                514,
+                180
+              ],
+              "identity": "ObjectIdentifier(0x0000000105ec1800)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                21,
+                0
+              ]
+            }
+          ],
+          "input_characters": 21,
+          "model": "034046D1-838E-4516-8030-2848366AAEB2",
+          "pro_alert": false,
+          "probe_origin": [
+            84,
+            82
+          ],
+          "probe_size": [
+            594,
+            350
+          ],
+          "quota_exhausted": false,
+          "result_characters": 21,
+          "safe_area": [
+            82,
+            84,
+            34,
+            0
+          ],
+          "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+          "window": [
+            678,
+            466
+          ]
+        }
+      },
+      {
+        "snapshot": "mobile-provider-saved",
+        "ui_window": {
+          "x": 0,
+          "y": 0,
+          "width": 669,
+          "height": 951
+        },
+        "text": {
+          "source": {
+            "utf16": 21,
+            "sha256": "6ec2d6c447a1099aa2f16a97b8483c416e265f39d23be74431fd4801be382bc5"
+          },
+          "result": {
+            "utf16": 21,
+            "sha256": "74cab6b6498ae3440df0e75251286bb830416294bfb511196341514bd494e09e"
+          }
+        },
+        "workspace_trace": {
+          "axis": "vertical",
+          "busy": false,
+          "container": [
+            669,
+            835
+          ],
+          "division": [
+            {
+              "active": false,
+              "frame": [
+                0,
+                373.5,
+                669,
+                40
+              ]
+            }
+          ],
+          "editors": [
+            {
+              "characters": 21,
+              "editable": true,
+              "focused": false,
+              "frame": [
+                40,
+                395,
+                589,
+                192.66666666666666
+              ],
+              "identity": "ObjectIdentifier(0x0000000105ec0c00)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                21,
+                0
+              ]
+            },
+            {
+              "characters": 21,
+              "editable": false,
+              "focused": false,
+              "frame": [
+                40,
+                735.6666666666665,
+                589,
+                192.66666666666666
+              ],
+              "identity": "ObjectIdentifier(0x0000000105ec1800)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                21,
+                0
+              ]
+            }
+          ],
+          "input_characters": 21,
+          "model": "034046D1-838E-4516-8030-2848366AAEB2",
+          "pro_alert": false,
+          "probe_origin": [
+            0,
+            82
+          ],
+          "probe_size": [
+            669,
+            835
+          ],
+          "quota_exhausted": false,
+          "result_characters": 21,
+          "safe_area": [
+            82,
+            0,
+            34,
+            0
+          ],
+          "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+          "window": [
+            669,
+            951
+          ]
+        }
+      },
+      {
+        "snapshot": "controlled-final-home",
+        "ui_window": {
+          "width": 669,
+          "y": 0,
+          "x": 0,
+          "height": 951
+        },
+        "text": {
+          "source": {
+            "utf16": 21,
+            "sha256": "6ec2d6c447a1099aa2f16a97b8483c416e265f39d23be74431fd4801be382bc5"
+          },
+          "result": {
+            "utf16": 21,
+            "sha256": "74cab6b6498ae3440df0e75251286bb830416294bfb511196341514bd494e09e"
+          }
+        },
+        "workspace_trace": {
+          "axis": "horizontal",
+          "busy": false,
+          "container": [
+            867,
+            553
+          ],
+          "division": [
+            {
+              "active": false,
+              "frame": [
+                455.5,
+                -82,
+                40,
+                669
+              ]
+            }
+          ],
+          "editors": [
+            {
+              "characters": 21,
+              "editable": true,
+              "focused": false,
+              "frame": [
+                40,
+                411,
+                347.66666666666663,
+                180
+              ],
+              "identity": "ObjectIdentifier(0x0000000105ec0c00)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                21,
+                0
+              ]
+            },
+            {
+              "characters": 21,
+              "editable": false,
+              "focused": false,
+              "frame": [
+                479.66666666666663,
+                250.33333333333331,
+                347.66666666666663,
+                339
+              ],
+              "identity": "ObjectIdentifier(0x0000000105ec1800)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                21,
+                0
+              ]
+            }
+          ],
+          "input_characters": 21,
+          "model": "034046D1-838E-4516-8030-2848366AAEB2",
+          "pro_alert": false,
+          "probe_origin": [
+            0,
+            82
+          ],
+          "probe_size": [
+            867,
+            553
+          ],
+          "quota_exhausted": false,
+          "result_characters": 21,
+          "safe_area": [
+            82,
+            0,
+            34,
+            84
+          ],
+          "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+          "window": [
+            951,
+            669
+          ]
+        }
+      },
+      {
+        "snapshot": "final-closed",
+        "ui_window": {
+          "width": 678,
+          "x": 0,
+          "y": 0,
+          "height": 466
+        },
+        "text": {
+          "source": {
+            "utf16": 21,
+            "sha256": "6ec2d6c447a1099aa2f16a97b8483c416e265f39d23be74431fd4801be382bc5"
+          },
+          "result": {
+            "utf16": 21,
+            "sha256": "74cab6b6498ae3440df0e75251286bb830416294bfb511196341514bd494e09e"
+          }
+        },
+        "workspace_trace": {
+          "axis": "vertical",
+          "busy": false,
+          "container": [
+            594,
+            350
+          ],
+          "division": [],
+          "editors": [
+            {
+              "characters": 21,
+              "editable": true,
+              "focused": false,
+              "frame": [
+                124,
+                395,
+                514,
+                180
+              ],
+              "identity": "ObjectIdentifier(0x0000000105ec0c00)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                21,
+                0
+              ]
+            },
+            {
+              "characters": 21,
+              "editable": false,
+              "focused": false,
+              "frame": [
+                124,
+                723,
+                514,
+                180
+              ],
+              "identity": "ObjectIdentifier(0x0000000105ec1800)",
+              "marked": false,
+              "offset": [
+                0,
+                0
+              ],
+              "selection": [
+                21,
+                0
+              ]
+            }
+          ],
+          "input_characters": 21,
+          "model": "034046D1-838E-4516-8030-2848366AAEB2",
+          "pro_alert": false,
+          "probe_origin": [
+            84,
+            82
+          ],
+          "probe_size": [
+            594,
+            350
+          ],
+          "quota_exhausted": false,
+          "result_characters": 21,
+          "safe_area": [
+            82,
+            84,
+            34,
+            0
+          ],
+          "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+          "window": [
+            678,
+            466
+          ]
+        }
+      }
+    ],
+    "same_text_before_after_all_listed_snapshots": true,
+    "64_mib_adjudication": "video shows Ready before Closed; only ready-state fold counted",
+    "controlled99": {
+      "before_fold_status": [
+        "71 heading Description: Converting File, Secondary Actions: Cancel",
+        "125 element Description: File conversion progress, Value: 4%, Secondary Actions: Cancel"
+      ],
+      "after_fold_status": [
+        "128 heading Description: Converting File, Secondary Actions: Cancel",
+        "133 element Description: File conversion progress, Value: 50%, Secondary Actions: Cancel"
+      ],
+      "after_fold_progress": 50,
+      "procedure": "one CUA call: click Convert, read Converting, immediately click Closed, read Converting 50%; no conversion delay hook",
+      "ready_journal": {
+        "schema": 1,
+        "optionsRawValue": 1,
+        "inputBytes": 103809021,
+        "id": "9D6CEB6A-EFDA-4563-8A56-F67C256F4FA5",
+        "filename": "duo-followup-lock-99mib-converted.txt",
+        "outputBytes": 103809021,
+        "sha256": "a710af359be8cf04aa4cf5ca4bc23865a4e6e2c6bdf2813d66f68ecb08f48602"
+      },
+      "result": "same job completed, source/result preserved, all work resources released, actual provider save and full output hash verified",
+      "captured_window_after_fold": {
+        "x": 0,
+        "y": 0,
+        "width": 678,
+        "height": 466
+      },
+      "video_boundary": "inner display recording goes black while inactive; no continuous two-display video"
+    },
+    "fixtures": {
+      "64_mib": {
+        "filename": "duo-followup-64mib.txt",
+        "bytes": 67108877,
+        "sha256": "97f26e91e074f77d0040a3ee3dd71da836b1dbffb9a2213ad90fdda31a629a0e",
+        "expected_output_sha256": "0db3774607c8a773d848ddae3cffc85f779adc4306443b5c2c41e170de10b072"
+      },
+      "99_mib": {
+        "name": "duo-followup-lock-99mib.txt",
+        "bytes": 103809021,
+        "source_sha256": "097c6a1d477bb84e8cc764c322cc1d933fe6d10db7b905d7f8b53b48a64d52c5",
+        "expected_output_sha256": "a710af359be8cf04aa4cf5ca4bc23865a4e6e2c6bdf2813d66f68ecb08f48602"
+      }
+    }
+  },
+  "failures_and_boundaries": [
+    "simctl bootstatus reported Data Migration Failed; target booted and App ran, not a clean bootstatus pass",
+    "one read-only native LLDB attempt timed out after 25 seconds; no snapshot used",
+    "AXe More tap returned sent but did not establish menu; actual GUI pointer used",
+    "CLI start after a stopped resize session reported 24001 no foreground app; same PID reactivated",
+    "mixed GUI/CLI size changes produced black capture and mismatched GUI/native dimensions; cause unresolved, not attributed to App and not counted passed",
+    "some inactive display recorders did not produce media; native recording does not cover continuous screen transfer",
+    "ordinary import timing trials and 64 MiB fold timing downgraded as described above"
+  ],
+  "remaining": [
+    "complete pose/direction/language/default-XXXL/action matrix; OS left/right split view; complete overflow and active-division critical action coverage",
+    "ordinary import demonstrably in flight across geometry changes; other stale-result/export combinations",
+    "mobile Preparing/Cancelling during fold/resize; protected-data unavailable/unlock recovery; other signed-provider configurations",
+    "cold-start transition and positive unread Whats New (current 2.1 contains no cards)",
+    "final signed package and Duo hardware; minimum OS #16, transactions #14/#71, production/capacity #260/#268; VoiceOver experience"
+  ],
+  "cleanup": {
+    "finished_at": "2026-10-30T00:09:03.470722+08:00",
+    "device": "4CAD3041-0744-41A6-8B4E-F934CA9F0778",
+    "final_state": "Shutdown",
+    "original_qa_bundle_restored": true,
+    "restored_manifest_files": 141,
+    "runtime_dylib_sha256": "f69b7bbea0700611e338f4bf5ee3116b07508c6d9e9967905abd1b063ba7534e",
+    "content_size": "large",
+    "resize_mode": "off before shutdown",
+    "shared_DeviceHub": "preserved",
+    "saved_outputs_copied_to_evidence": true,
+    "initial_other_booted": [
+      "834B95AE-438F-4D77-B189-F489C1F50346"
+    ],
+    "other_booted_at_cleanup": [],
+    "shutdown_scope": "only task UDID was shut down; cause of other devices state changes not observed"
+  },
+  "evidence_files": {
+    "pose-partial-ui.json": "c6a71ac6fa970b5b117cc40046b9b926f4a5fc4b2c4ef8997b9c037fa9cefcc7",
+    "import-fold-08-ui.json": "1a825ec7c4a95de3ce6b3071fb0096c46ab008546c1911eb0fb074d13c5441ce",
+    "mobile-draft-confirm-ui.json": "c247b11d0edb018f9442826c187d2cf6a2033484cdff59514df7a04e085fb79a",
+    "import-success-wide-ui.json": "8f57fb58b9291b0ce3ff7f514c589ed871a2c2edbb8e75e7b9fccdfcd7ee59e4",
+    "import-fold-01-ui.json": "b26c6ffa0968949f56227a65beec9cf216b76908bc0544f2de1dc16ab15d537a",
+    "controlled-after-fold-ui.json": "983b28fb8e074dc077fdc676c518917bdbffff235dec979669e508dfdbaf13c5",
+    "pose-closed-return-ui.json": "bdd62725fdc030ef1c0ec2486761cc2cd7ce6363fb5c3913e6362cc0a630ccb9",
+    "import-fold-00-ui.json": "877fc3722225b251129d157066b7fa833a4377818c01339053c4c983d56c9f49",
+    "import-fold-09-ui.json": "403ee01c9d5402ed6c35bd9b6a5227b6a07cc0166598aabd668bf109272a86bd",
+    "import-success-compact-ui.json": "8df991daf00fcefef39ef326355eeeff9a55fa248745516c0b2cba857148b440",
+    "import-success-finished-ui.json": "83c11707711d2935a9926280412353a47b3324cde76ae6173d79a7c11f84de61",
+    "final-closed-ui.json": "02a668e1e0096d6cd917c17ba1c931bbbf51520306f36e59f3ef8df67b9e075b",
+    "import-fold-02-ui.json": "7918cf701fe65b0477800b33bdfb9458f9dfd8ac415bf161e00032642ab10505",
+    "initial-ui.json": "ec81c3de227580e0bd92e1d9504b8f003830fe5416952aea8694874a8dfce0bb",
+    "pose-partial-menu-ui.json": "28febe35b03c88c4c161780062a94d03de7babc9981e6620a59206c7187dd1ed",
+    "import-success-native-importing-ui.json": "9f2e5447ad10ba2cc04f6c6d73711227774995a52e09b5f3a727e3162b9b73c2",
+    "import-post-convert-attempt-ui.json": "27d75e67dca8e20f331ba0b7cb2886ebded9814ede1097e17cdb9dcb4e551c4b",
+    "pose-settings-closed-ui.json": "e2719fc776570040f0f12d7be249cd24486b7cb7cab06fbcf4b007eb93c79a5e",
+    "export-before-ui.json": "653a66a5c629b0bcc3e14302b73bafa4a29bd8fb1185f38c0ae7099f8dc61426",
+    "import-fold-03-ui.json": "74d1947bca01c6b06fab391dd8c300ca910991438a796e9187289ee33c60aed0",
+    "import-fold-06-ui.json": "1d7e897bc13c54bdcf4097498696fe87765ce156decd043bb376381b2715369c",
+    "final-before-controlled-ui.json": "bd2de1f34d01e3f16e507b0a34f277636959aa6c70d270cd58dcbb804e746cb3",
+    "mobile-provider-saved-ui.json": "5754fc89603ae3fde9fd4236ebdc2d33fd31735c752b3b75a42d6b21dc11f826",
+    "picker-wide-diagnostic-ui.json": "2fa0cfef41851b19e41e1a0739d5d2581e7e63e3f093fb8f7b916376d146b984",
+    "pose-partial-rotated-ui.json": "db093721f8b3bd7a7dc5956e443e0474a81ec509383c357f4093b66739f94c3f",
+    "pose-closed-ui.json": "2577179a6a685c78e1cf0b9ae3c4a9c4453031c6b72b38606a68355d39201457",
+    "import-browser-ui.json": "154d3ed50c3aa456efa12a239ef1c0a89972f7b38b5e7b200688eddc5f5aebb9",
+    "import-fold-07-ui.json": "424d6eb9808d3ce864bc338e702d59dddaeb51a2302b33f447eba731f217dc35",
+    "controlled-final-home-ui.json": "5d7a7290db6c0a1668a898ec6804497d4cdb9262d587a8c7baf1918a264e4f94",
+    "pre-import-example-ui.json": "95f4adeddd67678ffd3d07b3ce081a681a1c385fae087805a3fe259cddbcdb55",
+    "export-after-ui.json": "69be2190409eb85cf9b02cc3872842d5a1f71811e905c475d783763628573a67",
+    "import-before-ui.json": "0b8512259a6bc307993e4d4d50b8804e40cad6e484f22589c9b4c25ed415d71f",
+    "import-fold-05-ui.json": "7dc162bbab176082bc7eb06799fd257ebfd04dd9be88dd78d2492593700aaaad",
+    "mobile-draft-ready-closed-ui.json": "ca2f9348c1ddddf38e68fee7c6800e36e1c4c9fc4d6a9636bf87e21538fad2a2",
+    "import-fold-04-ui.json": "39b900aa2ec031dfae8d378f371184da3cf00196c49331fd5510faa95647a810",
+    "import-success-poll-ui.json": "9f2e5447ad10ba2cc04f6c6d73711227774995a52e09b5f3a727e3162b9b73c2",
+    "pose-open-ui.json": "cb2069f3b0e77b9fcd8f6dfb5b9914e5b05bfbd61bf8b9f0451fac26abc05293",
+    "import-success-return-ui.json": "0fbdc5ed560c463dc81ff44c022d48093eeb2de3965eccf3e83cae478d66b9c8",
+    "mobile-provider-saved-trace.json": "f3b58e779021808e1760d546450f0464e0d2af1748b4e3042b94084de6a3a977",
+    "mobile-draft-confirm-trace.json": "f3b58e779021808e1760d546450f0464e0d2af1748b4e3042b94084de6a3a977",
+    "pose-closed-before-trace.json": "2925c0ed00133f0fce342609afebd80cc143e9e4c553c9b6d1ace6e61ec4ebf2",
+    "pose-partial-rotated-trace.json": "fdaf9c456d464f1aba3df0763ece51455bd3b7380644d69c92cda361f9f68f67",
+    "pose-open-trace.json": "0686ddbf800ddfccf2202d68b813af7b71a14eb58122ae776131b33b9bbad597",
+    "pose-settings-closed-trace.json": "fdaf9c456d464f1aba3df0763ece51455bd3b7380644d69c92cda361f9f68f67",
+    "import-success-return-trace.json": "c98f6e8b84e4287893543359ce47b8b9bea0fa3c4cd194c2fbfb4c422df79bb5",
+    "picker-wide-diagnostic-trace.json": "3826b25daecb8c4e4ce7477a351fc67ab8904379a172c6ba943d9ca42fcef0c5",
+    "pose-closed-trace.json": "2925c0ed00133f0fce342609afebd80cc143e9e4c553c9b6d1ace6e61ec4ebf2",
+    "final-closed-trace.json": "e94daf69408a7d66a45064a13023abf5b75a8223e7bfa8b64c2a92a39d3bc8d9",
+    "final-before-controlled-trace.json": "e94daf69408a7d66a45064a13023abf5b75a8223e7bfa8b64c2a92a39d3bc8d9",
+    "mobile-draft-ready-closed-trace.json": "e94daf69408a7d66a45064a13023abf5b75a8223e7bfa8b64c2a92a39d3bc8d9",
+    "pose-partial-trace.json": "a9972aa8986ce7aa5c6bb314ac2795debce90f1ab7bae8469dc0013cd032b2ff",
+    "import-post-convert-attempt-trace.json": "c98f6e8b84e4287893543359ce47b8b9bea0fa3c4cd194c2fbfb4c422df79bb5",
+    "controlled-after-fold-trace.json": "e94daf69408a7d66a45064a13023abf5b75a8223e7bfa8b64c2a92a39d3bc8d9",
+    "controlled-final-home-trace.json": "5dd1d4bf0156e5d33d01ce5765df43a54404927a2de485bb786b8634ab42fe12",
+    "export-after-trace.json": "f3b58e779021808e1760d546450f0464e0d2af1748b4e3042b94084de6a3a977",
+    "export-before-trace.json": "f3b58e779021808e1760d546450f0464e0d2af1748b4e3042b94084de6a3a977",
+    "import-before-trace.json": "3f6361e353cd33ce85f434662b90f60abb5b8925d5eae2b48df423d146c36a02",
+    "pose-closed-return-trace.json": "6dc428b2f4984a43d617a210febe7f457c4cbfef04b69dab4574ca4bb333eb30",
+    "import-success-results.json": "756d8209ba325967f8b7127added13d651f055f2dacdc3ec948c5551a35b9fa4",
+    "controlled-business-results.json": "b70d3d1727288d8f446b057a6a08d62723d2919d8a206264a31412a183aaa2fb",
+    "import-fold-results.json": "7805a51d26ebfde989ec8c32c5d7ed9bb769d81ca25ab984b71ab25630457f44",
+    "mobile-provider-save-results.json": "98ec794b71d91f9ee82946996f2bbfaeeacb25b6b3d6bf48f119cdbb83cbaa51",
+    "ordinary-save-results.json": "b34d315fb4a34c03d2ce1110cd11db8a91855fd6165639aefa98260da632c5d7",
+    "mobile-draft-ready-proof.json": "57d0d538d36328d6e0decab16127ad18a8a66e2f7263499122d2cbda6d12d30e",
+    "mobile-draft-resources.json": "dace081d52796a6616d9ec76bebbc920b656fe4052630dd010fd9acce70d2c4d",
+    "mobile-provider-completed.ax.txt": "5244d6cb23ff7f3c479338e1d4bfe78c21ff461c344cd5d66a485988450b8d75",
+    "export-open-before.ax.txt": "e9a3ce26764764cd6147af3afc25de3f8be195bcfa50c9e04c3dc7a74b26d65f",
+    "export-saved.ax.txt": "938a7a0e8e5c0715d09323e79682fc0941419d0f5e43514e3a42999949daebde",
+    "import-fold-end.ax.txt": "eef1d57d019d975996dc6e0141d8b53a7e3c3348768b53b38b97b79dfba12ac8",
+    "controlled-after-fold.ax.txt": "7be1e550f418ea8596330460b543c2d2571a369b9c5fb3974cd05c282a43571d",
+    "pose-settings-closed.ax.txt": "cd02a1bdd0ffd8adb38c50bc03b90dc1ce27e9bf7cbd9b57072a284d604fd840",
+    "mobile-draft-fold.ax.txt": "259f9251ed504566334763c386871a831a237564746af6929658640060ba35af",
+    "mobile-provider-saved.ax.txt": "e946fedb2813708020d758f9970c888fe4f66548a4dbbe42bc69a81fb28b1e47",
+    "pose-partial-settings.ax.txt": "5478261b158d9f793b102f447c1de3d3930d6873c689a349fe3d8c9b65e9cf2e",
+    "mobile-draft-ready-open.ax.txt": "9985c34041e592353b4cbc16dbd3d9ceb2140018cb3f2ae1ac3ce70c3dedcef2",
+    "final-closed.ax.txt": "8b234bfbce09b737d3e6c6aa5dd1f33ac3aa1295ea435202d2bc8f41f479a9c5",
+    "controlled-provider-saved.ax.txt": "3310273532d9a6746e49b2247c6992b2c2f7adc46a02582d4c249a51f482e4cd",
+    "pose-partial-more.ax.txt": "e33ff3a2d4c15b5b1d4408022698aa99d11f6c5e8307714bf89a8782a409055e",
+    "mobile-draft-start.ax.txt": "b7286a22aab3c526dfdeff8b02df98ab014d7e7e2a8a3001df7374d2e59e90e1",
+    "pose-settings-return.ax.txt": "e475f4bb7e40573f632457b370eecd8ea7553f41d635c75aedf5ff4e1bea7963",
+    "mobile-draft-confirm.ax.txt": "ce8a9271d2e3905f4cd544121bf48a8bfe23d513cb6bfd2b7631ebe4549b434b",
+    "pose-partial-rotated.ax.txt": "cba50b03696322e4782b3dea524f5f81036422f6873d693a8e1a85f766a0db1d",
+    "controlled-before-fold.ax.txt": "cc0e0c6939af3e9c811729ede34e6db306991cbcf329ba2f1ca4b490cc283746",
+    "poses-outer-original.mp4": "28607cec9aa31f5b303c02b69b49a7b01ae7390ef37de7abecbf6e21b77aac68",
+    "import-fold-outer-original.mp4": "61aff9c6180d47befabd7cb23235e327fb113468b7a5bdea733bc0bbaee0dbc8",
+    "mobile-provider-save-original.mp4": "8cbe5281c5839a194985c1e7896815cc768368acc73e21818711b7aab886fa65",
+    "mobile-draft-inner-original.mp4": "682b70fbc5bd2f08ac967d8de14e62cac8acc24bd7945f231d9b06e53799f990",
+    "controlled-inner-original.mp4": "0978fea82be9ec58459a7f98e795e6782fd4202eec5ba85664584dbfd4e6dbf9",
+    "import-success-native-original.mp4": "73d59fae42beac9b95164a6dba45d070ff3e35643112fbebb9e24d8aa87e6f5a",
+    "export-native-original.mp4": "472fa5fe8e5b0b5381a9a44455dfd5db8b7b752d56f408b20b8b3b8b556157fc",
+    "export-selected-media.py": "d991f0384ae93c016ca97f64842ed6ab54b383521a8a0003d07fcb191f8d41ef",
+    "observe-import-fold.py": "b3447e1ecd65f39c267e8383e2edf73b75bc3a6032465d226c7da50620bc487d",
+    "native-state.py": "7ff6e13319559c0bad35e81a4cda95a3ee1282acf0c7438225fb1baf41750713",
+    "start-resize.py": "59d5c04d5375064dbc6ec7574e837ab1c3eb011b28622c5880e7591f3013412c",
+    "import-observer.py": "6be3f1e1265411e40d1e54afc41e3e5b8cd4e0add615ecf1461ba067a3d234b5",
+    "capture.py": "05ba5ee457c63e6dbb39cb8ebb7bbcd14f9ca2e176c1fcb82d2616f031f8dd98",
+    "record.py": "bc8b47bc2e1aaad71dc63bc0d338942db1a989d7748f5396ed3b18eaae59a74b",
+    "build-summary.py": "75f288315a6c66a3fbc526a42ce100a39d8703ed3f426b7146dbb35ae0c4325a"
+  },
+  "saved_output_artifacts": [
+    {
+      "file": "saved-files/duo-followup-64mib-converted.txt",
+      "bytes": 67108877,
+      "sha256": "0db3774607c8a773d848ddae3cffc85f779adc4306443b5c2c41e170de10b072"
+    },
+    {
+      "file": "saved-files/duo-followup-lock-99mib-converted.txt",
+      "bytes": 103809021,
+      "sha256": "a710af359be8cf04aa4cf5ca4bc23865a4e6e2c6bdf2813d66f68ecb08f48602"
+    },
+    {
+      "file": "saved-files/duo-import-save-20261029-converted.txt",
+      "bytes": 59,
+      "sha256": "74cab6b6498ae3440df0e75251286bb830416294bfb511196341514bd494e09e"
+    }
+  ],
+  "media_playback": {
+    "all_four_clips_played_to_end": true,
+    "no_decode_error": true,
+    "no_audio": true,
+    "pose_clip_view_rotation": "90 degrees clockwise; original retained",
+    "cross_display_video": "incomplete; inactive-display black frames retained and noted"
+  },
+  "media": [
+    {
+      "file": "pose-open.webp",
+      "original": "pose-open.png",
+      "bytes": 39644,
+      "sha256": "dd1be7ea52e1f381661b0bf9dd26d478a4385085cef4cee5b6e40c0f5a3b394d",
+      "original_sha256": "37571b8718b0149853d86fbc8005a1e990299b9a1cd9a3b440d1f044507a6c87",
+      "url": "https://github.com/user-attachments/assets/e9ef9e9f-ae3f-49a5-84ab-af08bc2452cc",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6502246435",
+      "body_readback_verified": true
+    },
+    {
+      "file": "pose-partial-rotated.webp",
+      "original": "pose-partial-rotated.png",
+      "bytes": 39934,
+      "sha256": "cc1abfc52b061f3daf0df01e193b8824a6d1b9c9f046b29df7b253e3d8ae0fa4",
+      "original_sha256": "73c7329c0ca242cd3e926abbf9419ef9150faf2b3720da3426d92192ac521e3d",
+      "url": "https://github.com/user-attachments/assets/9951f7ed-3d5d-4988-91bc-822dc9e6c4b4",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6502246435",
+      "body_readback_verified": true
+    },
+    {
+      "file": "pose-settings-closed.webp",
+      "original": "pose-settings-closed.png",
+      "bytes": 19180,
+      "sha256": "706554f64ce82ced86dcd2c7c5b87717966eb7a246901333e472faffbe8c1976",
+      "original_sha256": "c5021225d77f770ff8b4171f63969be80f034eafb19a2b3f651fd80e8e36e907",
+      "url": "https://github.com/user-attachments/assets/8d10679f-5953-4d80-804b-76141b1c7c43",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6502246435",
+      "body_readback_verified": true
+    },
+    {
+      "file": "pose-return.mp4",
+      "original": "poses-outer-original.mp4",
+      "bytes": 266362,
+      "sha256": "9fd5fe9ac6c326883e083298d0c6951846d648749570e2420431f1537dc552d7",
+      "original_sha256": "28607cec9aa31f5b303c02b69b49a7b01ae7390ef37de7abecbf6e21b77aac68",
+      "start_seconds": 202,
+      "duration_seconds": 34,
+      "view_rotation": "90 degrees clockwise for readability",
+      "url": "https://github.com/user-attachments/assets/15dc567c-ed90-4ae4-8511-eb47d8c2a6f5",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6502246435",
+      "body_readback_verified": true
+    },
+    {
+      "file": "export-after.webp",
+      "original": "export-after.png",
+      "bytes": 40300,
+      "sha256": "84ff61f42e83cad05f781f29243ad218f28fb2e31aa5e477fbc42e1c386d5ac8",
+      "original_sha256": "0afd0279c77e9cbb475f1c5b46b49f54242287c5edef08e2393652bddb165a06",
+      "url": "https://github.com/user-attachments/assets/c8433074-3f53-4d2b-ae54-46b5c62aa9db",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6502276286",
+      "body_readback_verified": true
+    },
+    {
+      "file": "controlled-after-fold.webp",
+      "original": "controlled-after-fold.png",
+      "bytes": 42102,
+      "sha256": "69ef1b8dc33bfc7385ba6e4dfdb05a18c951578401febf2c8c7376e69f9d20bd",
+      "original_sha256": "ba1ceb2002ab5b88b31df7fd53d0ff826cef6c6fdfa2f1f37475fe6fabce4e04",
+      "url": "https://github.com/user-attachments/assets/630b122c-3311-4124-ad71-14f5d8c2ef55",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6502276286",
+      "body_readback_verified": true
+    },
+    {
+      "file": "controlled-final-home.webp",
+      "original": "controlled-final-home.png",
+      "bytes": 39958,
+      "sha256": "250bcd5b2d45e448e611cf829e8dc3128a94c4a909e9495a306ecb9123af18f3",
+      "original_sha256": "86df67d62a7bc72df373e6cf11b2c1deb8089c2754ea927565e80e51ce0b2f27",
+      "url": "https://github.com/user-attachments/assets/8cd103c9-a1fd-46c7-9f9e-616e6a8c09f2",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6502276286",
+      "body_readback_verified": true
+    },
+    {
+      "file": "ordinary-save.mp4",
+      "original": "export-native-original.mp4",
+      "bytes": 122533,
+      "sha256": "312a73e15031e08e82f6efdd6488c6440e1fd930d6bcd6dca47d3b5ed29b3e60",
+      "original_sha256": "472fa5fe8e5b0b5381a9a44455dfd5db8b7b752d56f408b20b8b3b8b556157fc",
+      "start_seconds": 36,
+      "duration_seconds": 15.9,
+      "view_rotation": null,
+      "url": "https://github.com/user-attachments/assets/3b68e4bc-2531-49c3-97f2-1e92ec9a05a7",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6502276286",
+      "body_readback_verified": true
+    },
+    {
+      "file": "controlled-start-fold.mp4",
+      "original": "controlled-inner-original.mp4",
+      "bytes": 92748,
+      "sha256": "1a5d567935ead2b6edc03c1f07d284ae9b006415ec1dfb180752f42c7edd07ef",
+      "original_sha256": "0978fea82be9ec58459a7f98e795e6782fd4202eec5ba85664584dbfd4e6dbf9",
+      "start_seconds": 23,
+      "duration_seconds": 16,
+      "view_rotation": null,
+      "url": "https://github.com/user-attachments/assets/bac5f914-3e34-4c38-ae4f-35a51d18df38",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6502276286",
+      "body_readback_verified": true
+    },
+    {
+      "file": "controlled-ready-save.mp4",
+      "original": "controlled-inner-original.mp4",
+      "bytes": 560484,
+      "sha256": "ac48277be467601960fdc10669086d8d3922dbc9c3cdb77a7b0f129d8d237396",
+      "original_sha256": "0978fea82be9ec58459a7f98e795e6782fd4202eec5ba85664584dbfd4e6dbf9",
+      "start_seconds": 139.7,
+      "duration_seconds": 50,
+      "view_rotation": null,
+      "url": "https://github.com/user-attachments/assets/334b26af-2be8-491d-a784-85fa54c598cd",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6502276286",
+      "body_readback_verified": true
+    }
+  ],
+  "remote_render": {
+    "session": "current authenticated GitHub browser",
+    "images_loaded": 6,
+    "videos_ready_state": 4,
+    "anonymous_access_verified": false
+  }
+}

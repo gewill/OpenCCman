@@ -116,15 +116,17 @@ struct RootView: View {
           UserDefaults.standard.removeObject(forKey: WhatsNewCoordinator.lastPresentedVersionKey)
         }
         if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
-           ProcessInfo.processInfo.arguments.contains("-qa-mark-whats-new-read-at-launch"),
-           let release = whatsNew.release {
-          UserDefaults.standard.set(release.version, forKey: WhatsNewCoordinator.lastPresentedVersionKey)
-          UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastVersionPromptedForReview.rawValue)
-          if ProcessInfo.processInfo.arguments.contains("-qa-suppress-review") {
-            UserDefaults.standard.set(release.version, forKey: UserDefaultsKeys.lastVersionPromptedForReview.rawValue)
-          }
+           ProcessInfo.processInfo.arguments.contains("-qa-mark-whats-new-read-at-launch") {
+          // Quota fixtures must not depend on asynchronous release-note loading.
           TestNumbersPerDayManager.setQuotaForQA(
             exhausted: ProcessInfo.processInfo.arguments.contains("-qa-exhaust-quota"))
+          if let release = whatsNew.release {
+            UserDefaults.standard.set(release.version, forKey: WhatsNewCoordinator.lastPresentedVersionKey)
+            UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastVersionPromptedForReview.rawValue)
+            if ProcessInfo.processInfo.arguments.contains("-qa-suppress-review") {
+              UserDefaults.standard.set(release.version, forKey: UserDefaultsKeys.lastVersionPromptedForReview.rawValue)
+            }
+          }
         }
       #endif
       isVisible = true
@@ -179,8 +181,12 @@ struct RootView: View {
       }
     }
     .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenSettingsFromMenu"))) { notification in
-      guard isTargetWindow(for: notification) else { return }
+      guard isTargetWindow(for: notification), navigator.path != "/settings" else { return }
       navigator.navigate("/settings")
+    }
+    .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenProFromMenu"))) { notification in
+      guard isTargetWindow(for: notification), navigator.path != "/pro" else { return }
+      navigator.navigate("/pro")
     }
     .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenHelpFromMenu"))) { notification in
       guard isTargetWindow(for: notification) else { return }

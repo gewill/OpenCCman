@@ -82,6 +82,44 @@ PR 与合并后真实 GitHub Actions 运行结果是线上验收依据。纯迁�
 
 ## Xcode 27 与 RevenueCat 编译诊断
 
+### iPhone Duo 的本地 27.1 构建入口
+
+`scripts/build-duo-validation.py` 使用显式选择的 Xcode 27.1+，顺序构建 arm64
+iOS Simulator 和 arm64/x86_64 macOS QA 应用。它不替换必需的 App Regression，
+不更改 Xcode Cloud，也不触发分发。当前 GitHub 工作流仍为 Xcode 26.3；没有
+将本地通过写成 CI 已覆盖 27.1。
+
+```bash
+python3 Tests/Regression/DuoBuildChecks.py
+python3 scripts/build-duo-validation.py \
+  --developer-dir /Applications/Xcode-27.1.0.app/Contents/Developer \
+  --output "$HOME/Library/Application Support/Codex/ui-evidence/OpenCCman/277-duo/<source-sha>/<new-run>" \
+  --derived-data "$HOME/Library/Caches/Codex/OpenCCman-duo/<candidate>"
+```
+
+可用 `--platform ios|mac` 定向运行，`--configuration Release` 构建 Release，或
+以 `--build-wrapper /absolute/path/to/axbuild` 使用已验证的构建诊断工具。
+证据和 DerivedData 必须在仓库外，证据目录不可覆盖已有结果。脚本在调用
+Xcode 前检查正在运行的 xcodebuild，发现其他构建则停止，不杀进程。
+
+`report.json` 绑定 source SHA、工作区 diff／未跟踪文件哈希及依赖锁哈希，并
+保存有效 build settings、原生命令、系统／工具链、生成 plist 和二进制哈希。
+校验依据是产物的 DTSDKName、Mach-O SDK、最低系统、iPhone/iPad 设备族、
+scene manifest、LaunchScreen、indirect input 与方向，不以源 plist 代替生成结果。
+iOS SDK 至少为 27.1；macOS SDK 与所选 Xcode 实际附带版本核对（本机 Xcode
+27.1 附带 macOS 27.0 SDK），不要求两个平台的 SDK 小版本相同。最低系统仍为
+iOS 15／macOS 12。脚本失败返回非零；
+检查具体日志和 report 的失败原因，不反复覆盖旧证据。
+
+QA Bundle ID 为 `org.gewill.OpenCCman.WhatsNewUITests`，不会替换正式安装。
+该入口仅对已确认的 iOS 27.1+ SDK 添加 `OPENCCMAN_DUO_SDK` 编译条件；Debug QA
+包再显式传 `-qa-duo-trace` 才输出容器／safe area／真实 division reserved region、
+scene／模型及原生编辑器身份、选区、焦点和滚动位置。日志不含稿件文字；Release、
+正式 Bundle ID 和没有该参数的运行均不输出。常规 Xcode 26.3／27.0 构建不引用
+27.1 专属类型，运行时的 27.1 probe 也有 availability 检查。
+构建通过不证明 Duo 姿态、输入、真机、签名包、购买或最低系统运行通过；
+这些结果分别记录在 #277–#282 及既有验收 Issues。
+
 [#107 的隔离复现与工具链策略](validation/toolchain-compatibility/README.md)记录 Swift 6.4 下初始化器冲突及 RevenueCat 5.78.0 的官方修复。当前 App Regression 继续使用 Xcode 26.3；本诊断不更改应用依赖、最低系统或 Xcode Cloud。独立源文件类型检查不能替代完整升级验收。
 
 

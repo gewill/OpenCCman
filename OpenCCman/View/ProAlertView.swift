@@ -1,3 +1,4 @@
+#if os(macOS)
 import SwiftUI
 
 struct ProAlertView: View {
@@ -36,9 +37,9 @@ struct ProAlertView: View {
       .appFont(.body)
   }
 }
-
 struct ProOverlayView_Previews: PreviewProvider {
   static var previews: some View {
     ProAlertView(showingProAlert: .constant(true), showingProScene: .constant(false))
   }
 }
+#endif

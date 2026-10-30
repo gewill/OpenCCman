@@ -1,0 +1,245 @@
+{
+  "date": "2026-10-29",
+  "source_commit": "9d6a414b5e746f8bc176646ae42e17b112543715",
+  "product_build_inputs_unchanged_from": "bccc0df9f7f59b5d172d3396c1ee8f2aea13047c",
+  "app_executable_sha256": "31b4512f5d393e9e1348f996ab56dd3710fbeea21984e0cf75696fcf5be5b30e",
+  "app_info_plist_sha256": "e7950891c95f08c6ebbe2c72df625bbe3ad88fad557e5c492d2effc6998a837d",
+  "xcode": "27.1 (27A9275)",
+  "developer_dir": "/Applications/Xcode.app/Contents/Developer",
+  "previous_developer_dir": "/Applications/Xcode-27.1.0.app/Contents/Developer (renamed during interruption)",
+  "runtime": "iOS 27.1 (24A94425)",
+  "device": {
+    "udid": "4CAD3041-0744-41A6-8B4E-F934CA9F0778",
+    "name": "OpenCCman 282 Settings QA 20261029",
+    "resume_initial_state": "Shutdown",
+    "final_state": "Shutdown"
+  },
+  "language": "en",
+  "content_size": "extra-extra-extra-large",
+  "window_points": [
+    400,
+    750
+  ],
+  "gui_corner_radius": 18,
+  "display_uuid": "E5B1911F-26FD-4F55-B9A7-8CCDAE2C921A",
+  "manual_acceptance": {
+    "status": "passed for scoped manual/assisted checks",
+    "scroll_driver": "Human gesture in Device Hub, explicitly confirmed in chat",
+    "scroll_view_identity": "0x10e7af000",
+    "frame_points": [
+      384,
+      730
+    ],
+    "content_size_points": [
+      384,
+      728.6666666666666
+    ],
+    "adjusted_content_insets": [
+      70,
+      0,
+      20,
+      0
+    ],
+    "offset_y_before": -70,
+    "offset_y_after": 18.666666666666668,
+    "scroll_enabled": true,
+    "pan_enabled": true,
+    "user_confirmation": "已滚动，底部完整可见",
+    "click_driver": "Device Hub pointer via CUA",
+    "selected_regions": [
+      "Not convert",
+      "Taiwan Idiom"
+    ],
+    "reopened": {
+      "ui_summary": "Custom",
+      "saved_region": "Taiwan Idiom",
+      "bottom_selected_highlight_rechecked": false
+    },
+    "restored_region": "Not convert",
+    "return_verified": "No Done element; workspace-source-editor present",
+    "document_fixture": "Empty source/result in the independent manual run; nonempty document continuity was not revalidated here"
+  },
+  "evidence_sha256": {
+    "scroll-inspection-v3.log": "cb65fbc1c498e2427586364a25ae91f7b07c8137f5068257a3543ef600c34053",
+    "manual-scrolled-inspection.log": "8d548718f5e6d861fddb6ac8b1f3b84fdcfa58e711246829a3971860893e2e79",
+    "manual-scrolled.png": "640596de200d4edce3c38c791b2132cd5f3d0bb813897dcd37a41efcd1053fe3",
+    "none-selected.json": "9645786a9251634e958ed3402ac6cabe22238dcc78083823b09993151732ca59",
+    "none-selected.png": "002a8cc9b43f35f3d59abe3317e63681791b811395ac5fe486db60aa66641e62",
+    "taiwan-selected.json": "60935b3fabb8e91591e95ad6db983038d454a6dad56b1453bbeddbebf52ed3d2",
+    "taiwan-selected.png": "cb09e930853f831cb7ba308a92717b00687e305c7c17de483421652786b845b5",
+    "reopened-value.json": "ce77896b7d590ebb4147146451e06643a2942b63a6cebc904d14e7c43a4d7cb4",
+    "reopened-axe.json": "2f0e7b6706763e02c195c6b5f232db8aa056da826a64e37ef3008bdba44a2abc",
+    "final-region.json": "ad9119ddc88248aea479d2f8676b4a351f77a1dcb91ff125a8e1839284292af7",
+    "final-workspace-ui.json": "8ec5353f047c1854cafd494f1c6a19059fe521c16f4ed7052a110c960891a6f5",
+    "final-workspace.png": "50ea98ff0675f9f8b5769da7142ce86b530a5e4358293107396288347ebc1f32",
+    "manual-selection-original.mp4": "e39b08c7b149101744f47df2a03b4927cbbbd225978f2411845a200475c81895",
+    "cleanup.json": "3c2fa342273dd8d868a45c572d09f48c4226fda220a5e00be668f25480c4f2c9",
+    "unaccepted-experiments.patch": "1eb7d66264252bc05d8dea8e897e5e1c239d00e0bba5c78d8a5e0011c6483cb6"
+  },
+  "experimental_runs": [
+    {
+      "name": "20261029-gui-1",
+      "status": "failed",
+      "error": "RuntimeError: The selected case did not pass; skipped is not success",
+      "report_sha256": "352d137a16c423f854ef4acabec5e5becdd4031b6ecc7d8139ecaa99cc33be83",
+      "source_state": {
+        "commit": "9d6a414b5e746f8bc176646ae42e17b112543715",
+        "diff_sha256": "1eb7d66264252bc05d8dea8e897e5e1c239d00e0bba5c78d8a5e0011c6483cb6",
+        "untracked": {}
+      }
+    },
+    {
+      "name": "20261029-resume-gui-2",
+      "status": "failed",
+      "error": "RuntimeError: The selected case did not pass; skipped is not success",
+      "report_sha256": "4e6ce76b9ec6933a4dc919d64c908ac56bd61319e94e71e2ff11de3ed1fc85a0",
+      "source_state": {
+        "commit": "9d6a414b5e746f8bc176646ae42e17b112543715",
+        "diff_sha256": "1eb7d66264252bc05d8dea8e897e5e1c239d00e0bba5c78d8a5e0011c6483cb6",
+        "untracked": {}
+      }
+    },
+    {
+      "name": "20261029-scroll-1",
+      "status": "failed",
+      "error": "RuntimeError: Resolve existing Xcode builds before continuing: 73308 xcodebuild\n",
+      "report_sha256": "bd760c78500d8c91b5782f8f6bf8b0632b419e5a48f4e796bc5f11941d5b1a3c",
+      "source_state": {
+        "commit": "9d6a414b5e746f8bc176646ae42e17b112543715",
+        "diff_sha256": "9c21b83a410a5959331a5a505e9f162b7b9edbc023483a48fefa9d9da50ca5c3",
+        "untracked": {}
+      }
+    },
+    {
+      "name": "20261029-scroll-2",
+      "status": "failed",
+      "error": "RuntimeError: The selected case did not pass; skipped is not success",
+      "report_sha256": "6c5874d6facb08f18a8d1dc2b4a7ebc6c5766f6b8f5fb4c33b32ab2d935d2e5e",
+      "source_state": {
+        "commit": "9d6a414b5e746f8bc176646ae42e17b112543715",
+        "diff_sha256": "9c21b83a410a5959331a5a505e9f162b7b9edbc023483a48fefa9d9da50ca5c3",
+        "untracked": {}
+      }
+    },
+    {
+      "name": "20261029-scroll-3",
+      "status": "failed",
+      "error": "RuntimeError: The selected case did not pass; skipped is not success",
+      "report_sha256": "f9bd6c8d61a00b43af2b2a9d9e700b4f0ccce30d4f26e44f9c26b4811f13351d",
+      "source_state": {
+        "commit": "9d6a414b5e746f8bc176646ae42e17b112543715",
+        "diff_sha256": "9c21b83a410a5959331a5a505e9f162b7b9edbc023483a48fefa9d9da50ca5c3",
+        "untracked": {}
+      }
+    },
+    {
+      "name": "20261029-scroll-4",
+      "status": "failed",
+      "error": "KeyboardInterrupt: ",
+      "report_sha256": "1c04c20f98f24e7fce502d0f856875919a312e04db6890e29623a662ec801282",
+      "source_state": {
+        "commit": "9d6a414b5e746f8bc176646ae42e17b112543715",
+        "diff_sha256": "bf037f319561ecbc5ec98f85e377c205716f951442bb581925854e4bd3056dfb",
+        "untracked": {}
+      }
+    }
+  ],
+  "experiment_code_published": false,
+  "product_code_changed": false,
+  "video_scope": "Only post-scroll selection, close, reopen, restoration; original human scroll was not recorded",
+  "limitations": [
+    "No automatic scroll pass; failed tests remain failed",
+    "No renewed nonempty document or conversion-correctness acceptance",
+    "Reopen verified Custom UI and persisted region; no second scroll to inspect bottom highlight",
+    "No physical Duo or final signed build acceptance",
+    "Other Issue 280/282 criteria remain open",
+    "VoiceOver experience not verified"
+  ],
+  "remote_evidence": {
+    "comment_url": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6490710550",
+    "assets": [
+      {
+        "file": "bottom-options.webp",
+        "sha256": "7b05b792ca98caa0613ed38e55b8e167bd0bc059cf41fc5f7ee35d446f15c9cf",
+        "url": "https://github.com/user-attachments/assets/5a72bce8-9a3e-41dc-85d6-bdaed64b5502"
+      },
+      {
+        "file": "returned-workspace.webp",
+        "sha256": "4e139a5dc2ded823fb790268ce97ad98b0afd82507a5a4dc33270ebbd3874388",
+        "url": "https://github.com/user-attachments/assets/0e8d7195-4b89-4761-9ccb-b8747a9e8b92"
+      },
+      {
+        "file": "bottom-selection-cfr.mp4",
+        "sha256": "2ccbf48b9ee78cbada1777313bb42f79596c573049eb23ea91ed10a219bb252e",
+        "url": "https://github.com/user-attachments/assets/0bda2fce-2fe0-47ee-b0b5-5a382bc2f78e"
+      }
+    ],
+    "readback": {
+      "images": 2,
+      "video_player": true,
+      "local_paths": false
+    },
+    "anonymous_head": [
+      {
+        "file": "bottom-options.webp",
+        "error": "HTTP Error 403: Forbidden"
+      },
+      {
+        "file": "returned-workspace.webp",
+        "error": "HTTP Error 403: Forbidden"
+      },
+      {
+        "file": "bottom-selection-cfr.mp4",
+        "error": "HTTP Error 403: Forbidden"
+      }
+    ],
+    "video": {
+      "duration_seconds": 46,
+      "fps": 15,
+      "full_playback_reached_end": true,
+      "selected_segments_seconds": [
+        [
+          35,
+          42
+        ],
+        [
+          90,
+          99
+        ],
+        [
+          121,
+          130
+        ],
+        [
+          161,
+          170
+        ],
+        [
+          262,
+          274
+        ]
+      ],
+      "human_scroll_included": false
+    },
+    "anonymous_get_probe": [
+      {
+        "file": "bottom-options.webp",
+        "status": 206,
+        "content_type": "image/webp",
+        "bytes_read": 1
+      },
+      {
+        "file": "returned-workspace.webp",
+        "status": 206,
+        "content_type": "image/webp",
+        "bytes_read": 1
+      },
+      {
+        "file": "bottom-selection-cfr.mp4",
+        "status": 206,
+        "content_type": "video/mp4",
+        "bytes_read": 1
+      }
+    ]
+  }
+}

@@ -211,6 +211,7 @@
       statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
       if let button = statusItem?.button {
+        button.setAccessibilityIdentifier("openccman-status-item")
         button.image = NSImage(named: "StatusBarIcon")
         button.image?.isTemplate = true
         button.toolTip = "OpenCCman - Chinese Text Converter"

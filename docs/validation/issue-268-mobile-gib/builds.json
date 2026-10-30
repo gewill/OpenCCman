@@ -1,0 +1,24 @@
+{
+  "xcode": "27.0 (27A266a)",
+  "source_commit": "0bd20fff08b29b1226005440cafa5fe720b053f6",
+  "ios_simulator": {
+    "result": "BUILD SUCCEEDED",
+    "configuration": "Debug",
+    "architectures": [
+      "arm64"
+    ],
+    "qa_bundle": "org.gewill.OpenCCman.WhatsNewUITests",
+    "signing": false
+  },
+  "macos": {
+    "result": "BUILD SUCCEEDED",
+    "configuration": "Debug",
+    "architectures": [
+      "arm64",
+      "x86_64"
+    ],
+    "qa_bundle": "org.gewill.OpenCCman.PRValidation",
+    "signing": false
+  },
+  "dependencies_changed": false
+}
