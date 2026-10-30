@@ -1,0 +1,302 @@
+{
+  "date": "2026-10-30",
+  "original_evidence_commit": "e7e681cec243f48b625522ad47e106f02a54cef8",
+  "integration_base": "04cd8ff39fd38253000cd810e44f6d5ea1b0d615",
+  "document_audit_commit_before_annotations": "5c4881793789a06b0453859c26b245726fe26c5f",
+  "original_document_sha256": {
+    "docs/validation/issue-260-iphone-x-output-20261001/IPHONE16-TESTFLIGHT.md": "561ee5c7ba509bd9d2d1e8d2396b876b40887788131f3694830ddfa5935fd1d7",
+    "docs/validation/issue-260-iphone-x-output-20261001/README.md": "2a7acb97e08479b9c614056d4699b28b0289ecd5656778813d2ed83712a95874",
+    "docs/validation/issue-260-iphone-x-output-20261001/input-manifest.json": "270ad9967d8c3f12f7cba646b2f78d8c6e8fcc6707421f6442de49331745a0a5",
+    "docs/validation/issue-260-iphone-x-output-20261001/iphone16-export-verification.json": "9475a2aa2b0a9784fa68ec01d4d33360de2e6eca4eb31bb2579dc221d163438d",
+    "docs/validation/issue-260-iphone-x-output-20261001/iphone16-taiwan-idiom-oracle.json": "7c6b23cc03294d57aca46cd7a766bf6f7db74d809392b269c198178d1619c5d3",
+    "docs/validation/issue-260-iphone-x-output-20261001/iphone16-testflight-results.json": "fac14b1bb2b00cc14bd24d8c24c945e5a7bf70d313e8503a7ade4d7432d23b67",
+    "docs/validation/issue-260-iphone-x-output-20261001/media-manifest.json": "1cc8c9d39d98409c65f667502976012d6607d037996c99509b0201281e98a110",
+    "docs/validation/issue-260-iphone-x-output-20261001/oracle-rebuild.log": "61354a6628ec364ed30aecf5c0c71ed28d3fa23ce14760201b7196078795eebc",
+    "docs/validation/issue-260-iphone-x-output-20261001/oracle-source.swift.txt": "4e5111bbbc0bbc03e6d7f50eb58e9bda1b40bdc7721697c737663d985f72495a",
+    "docs/validation/issue-260-iphone-x-output-20261001/output-verification.json": "ef115fe0c3ffc65d9eb94578b22b65abbde5332e068da55293499d83fecf0865",
+    "docs/validation/issue-260-iphone-x-output-20261001/testflight-activity-capability.log": "44a42ec6b41098cd1ec45b5a7826684a358cb000f76e354b92b3f0ea16f62ed4",
+    "docs/validation/issue-260-iphone-x-output-20261001/testflight-activity-name.log": "dc470fae0efd7b6de4a0a76e946a5806f0a556e3113aa5221f1f96617d47e7be"
+  },
+  "crosschecks": {
+    "iphone_x_rows": 3,
+    "iphone16_export_rows": 1,
+    "manifest_report_oracle_lengths_hashes_modes_internally_consistent": true,
+    "archived_oracle_source_matches_merged_264": true,
+    "candidate_wrapper_lock_matches_archived_reference": true,
+    "all_11_urls_in_original_issue_comment": true
+  },
+  "attachments": [
+    {
+      "name": "iphone16-cloud-save-redacted.mp4",
+      "url": "https://github.com/user-attachments/assets/111807d2-eea6-48bf-91a8-cc97931ad79c",
+      "expected_sha256": "36d1726c7b77c1ab9c7667d6f7819600b58c0ed098cac47b81a9d57f012cd627",
+      "kind": "video",
+      "http_status": 200,
+      "bytes": 1291898,
+      "sha256": "36d1726c7b77c1ab9c7667d6f7819600b58c0ed098cac47b81a9d57f012cd627",
+      "content_type": "video/mp4",
+      "hash_match": true
+    },
+    {
+      "name": "mirror-save-cancel-ready.png",
+      "url": "https://github.com/user-attachments/assets/ba34775c-cc16-496a-9709-02176fc00bcb",
+      "expected_sha256": "9444680ac6d908c87edb124eda6a2a74deeea0537778bee0146aa95d57df5a1b",
+      "kind": "still",
+      "http_status": 200,
+      "bytes": 181080,
+      "sha256": "9444680ac6d908c87edb124eda6a2a74deeea0537778bee0146aa95d57df5a1b",
+      "content_type": "image/png",
+      "hash_match": true
+    },
+    {
+      "name": "mirror-restart-ready.png",
+      "url": "https://github.com/user-attachments/assets/9625f395-1fce-4bef-bbe4-9c731c39b02a",
+      "expected_sha256": "20761ebcf540d8b92abad42bd018a4acd1ca1bd573fbfae5457b00224129b43b",
+      "kind": "still",
+      "http_status": 200,
+      "bytes": 170062,
+      "sha256": "20761ebcf540d8b92abad42bd018a4acd1ca1bd573fbfae5457b00224129b43b",
+      "content_type": "image/png",
+      "hash_match": true
+    },
+    {
+      "name": "iphone16-background-stop-redacted.mp4",
+      "url": "https://github.com/user-attachments/assets/05819ff2-da26-4b6f-bab4-f4263e1a5bfb",
+      "expected_sha256": "98648dcc0cc09edabe62ea6be4880d30c0f153466a7b40b266afc843e19340b3",
+      "kind": "video",
+      "http_status": 200,
+      "bytes": 471475,
+      "sha256": "98648dcc0cc09edabe62ea6be4880d30c0f153466a7b40b266afc843e19340b3",
+      "content_type": "video/mp4",
+      "hash_match": true
+    },
+    {
+      "name": "mirror-background-converting.png",
+      "url": "https://github.com/user-attachments/assets/2b1035a3-6f70-4c45-b818-3964f476134e",
+      "expected_sha256": "434169f93c75d2cd1ae0501a3967c3c16397aa663a6c467758b731a741a18911",
+      "kind": "still",
+      "http_status": 200,
+      "bytes": 128198,
+      "sha256": "434169f93c75d2cd1ae0501a3967c3c16397aa663a6c467758b731a741a18911",
+      "content_type": "image/png",
+      "hash_match": true
+    },
+    {
+      "name": "mirror-background-stopped.png",
+      "url": "https://github.com/user-attachments/assets/b68b4af9-fa65-46de-bda9-ac9a4e1ed8e8",
+      "expected_sha256": "62746a95d5fe9823d8b5b5639379afc068bf246a7735c475260e86ed2e660a44",
+      "kind": "still",
+      "http_status": 200,
+      "bytes": 133168,
+      "sha256": "62746a95d5fe9823d8b5b5639379afc068bf246a7735c475260e86ed2e660a44",
+      "content_type": "image/png",
+      "hash_match": true
+    },
+    {
+      "name": "iphone16-cancel-quick.mp4",
+      "url": "https://github.com/user-attachments/assets/15ea2ec9-609b-4fdf-b624-ef4e19dbec00",
+      "expected_sha256": "b1e026c1e87dd67bbb9bf7b092b49b5dcbbcc664cfcfbc24fb61c298e13edab5",
+      "kind": "video",
+      "http_status": 200,
+      "bytes": 261317,
+      "sha256": "b1e026c1e87dd67bbb9bf7b092b49b5dcbbcc664cfcfbc24fb61c298e13edab5",
+      "content_type": "video/mp4",
+      "hash_match": true
+    },
+    {
+      "name": "mirror-cancel-converting.png",
+      "url": "https://github.com/user-attachments/assets/33ee8ea4-2aa9-483e-a9a3-27a0be0ecf65",
+      "expected_sha256": "64f8f1a09a7457187306e0534449152ebc45b7f3be98559593eaebc8a8e0863c",
+      "kind": "still",
+      "http_status": 200,
+      "bytes": 127947,
+      "sha256": "64f8f1a09a7457187306e0534449152ebc45b7f3be98559593eaebc8a8e0863c",
+      "content_type": "image/png",
+      "hash_match": true
+    },
+    {
+      "name": "mirror-conversion-cancelled.png",
+      "url": "https://github.com/user-attachments/assets/79f8d54c-8d02-4e2a-97ce-8183eeda9624",
+      "expected_sha256": "79070e41783ef58eb84c8a445406d2ce1580d51b9bc5c50417494e9a300c8826",
+      "kind": "still",
+      "http_status": 200,
+      "bytes": 126842,
+      "sha256": "79070e41783ef58eb84c8a445406d2ce1580d51b9bc5c50417494e9a300c8826",
+      "content_type": "image/png",
+      "hash_match": true
+    },
+    {
+      "name": "iphone16-boundary-cancel.mp4",
+      "url": "https://github.com/user-attachments/assets/30b6c216-5705-44e9-aa4d-56f89974dcae",
+      "expected_sha256": "91c5520b57749be034556051c7c927f236d6a9f7e61d4c915208d4da936042ca",
+      "kind": "video",
+      "http_status": 200,
+      "bytes": 1611963,
+      "sha256": "91c5520b57749be034556051c7c927f236d6a9f7e61d4c915208d4da936042ca",
+      "content_type": "video/mp4",
+      "hash_match": true
+    },
+    {
+      "name": "mirror-over-limit-rejected.png",
+      "url": "https://github.com/user-attachments/assets/acc52db0-5ce5-4938-840c-502c620360dc",
+      "expected_sha256": "963aae3290bc288094c74ad519f1736a4541a55bb20982467b40a9fcf5850f25",
+      "kind": "still",
+      "http_status": 200,
+      "bytes": 174943,
+      "sha256": "963aae3290bc288094c74ad519f1736a4541a55bb20982467b40a9fcf5850f25",
+      "content_type": "image/png",
+      "hash_match": true
+    }
+  ],
+  "video_frames": {
+    "date": "2026-10-30",
+    "method": "ffprobe exact metadata and ffmpeg RGB frame SHA-256 at the declared still timestamps",
+    "ffprobe_version": "ffprobe version 9.0.2 Copyright (c) 2007-2026 the FFmpeg developers",
+    "results": [
+      {
+        "file": "iphone16-cloud-save-redacted.mp4",
+        "metadata_match": true,
+        "media": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "codec_name": "h264",
+              "width": 692,
+              "height": 1420,
+              "r_frame_rate": "24/1"
+            }
+          ],
+          "format": {
+            "duration": "180.041667",
+            "size": "1291898"
+          }
+        },
+        "stills": [
+          {
+            "file": "mirror-save-cancel-ready.png",
+            "seconds": 75,
+            "decoded_rgb_sha256": "1c12e87319e80f3433be2aae31109a3dcf0c3ce0a33217726befec21f7731163",
+            "matches_video_frame": true
+          },
+          {
+            "file": "mirror-restart-ready.png",
+            "seconds": 125,
+            "decoded_rgb_sha256": "f5c6cc764c3e5da7281c5cca063cfe8cf5db9b6b537800931c7b54c2c9063505",
+            "matches_video_frame": true
+          }
+        ]
+      },
+      {
+        "file": "iphone16-background-stop-redacted.mp4",
+        "metadata_match": true,
+        "media": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "codec_name": "h264",
+              "width": 824,
+              "height": 1552,
+              "r_frame_rate": "24/1"
+            }
+          ],
+          "format": {
+            "duration": "60.000000",
+            "size": "471475"
+          }
+        },
+        "stills": [
+          {
+            "file": "mirror-background-converting.png",
+            "seconds": 29.5,
+            "decoded_rgb_sha256": "c689f63b014492cb0a1d95560dcf2dfea914b7360f2e8287c72d9c530f7e1dd8",
+            "matches_video_frame": true
+          },
+          {
+            "file": "mirror-background-stopped.png",
+            "seconds": 59.5,
+            "decoded_rgb_sha256": "496b8100747dc1a085b4581c2df16626ff0ed20000afa3a88562c2cfbfc08e0b",
+            "matches_video_frame": true
+          }
+        ]
+      },
+      {
+        "file": "iphone16-cancel-quick.mp4",
+        "metadata_match": true,
+        "media": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "codec_name": "h264",
+              "width": 824,
+              "height": 1552,
+              "r_frame_rate": "24/1"
+            }
+          ],
+          "format": {
+            "duration": "60.000000",
+            "size": "261317"
+          }
+        },
+        "stills": [
+          {
+            "file": "mirror-cancel-converting.png",
+            "seconds": 11.7,
+            "decoded_rgb_sha256": "72074ef9677a12eff2dba56d1e487628f2b5b51a187d7cec30bc6321373ebf45",
+            "matches_video_frame": true
+          },
+          {
+            "file": "mirror-conversion-cancelled.png",
+            "seconds": 15,
+            "decoded_rgb_sha256": "2d004dd691972d1d4f204f513539e014069f024d8e31506a6ceff579de6465c7",
+            "matches_video_frame": true
+          }
+        ]
+      },
+      {
+        "file": "iphone16-boundary-cancel.mp4",
+        "metadata_match": true,
+        "media": {
+          "programs": [],
+          "stream_groups": [],
+          "streams": [
+            {
+              "codec_name": "h264",
+              "width": 824,
+              "height": 1552,
+              "r_frame_rate": "24/1"
+            }
+          ],
+          "format": {
+            "duration": "180.041667",
+            "size": "1611963"
+          }
+        },
+        "stills": [
+          {
+            "file": "mirror-over-limit-rejected.png",
+            "seconds": 40,
+            "decoded_rgb_sha256": "ec7494fd4c51124eab017793ee57e921ae125771b3649c0411cccf11cc1e81e6",
+            "matches_video_frame": true
+          }
+        ]
+      }
+    ],
+    "scope": "Published media integrity and selected frames only; not a new device run or full continuous-video review"
+  },
+  "not_revalidated": {
+    "original_txt_inputs_and_four_export_files": true,
+    "private_original_recordings": true,
+    "installed_version_or_signed_build_source_binding": true,
+    "current_device_availability": true,
+    "new_device_ui_or_memory_or_provider_acceptance": true
+  },
+  "original_search_scope": [
+    "Existing Codex OpenCCman ui-evidence roots and Downloads by exact task filenames",
+    "Spotlight exact published video filename"
+  ],
+  "search_limit": "Not found in these scoped searches; this does not establish deletion or absence everywhere.",
+  "media_scope": "Existing public compressed videos and stills; hashes, video metadata, seven selected decoded frame matches; no full continuous-video replay or new device action."
+}

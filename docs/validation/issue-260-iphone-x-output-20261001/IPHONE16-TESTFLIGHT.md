@@ -1,5 +1,7 @@
 # #260：iPhone 16 Pro / TestFlight 2.2 (61) 补测
 
+> **历史归档（2026-10-01）：**下文“通过”“当前”“待补”均指当时样本与状态，不代表当前构建、设备可用性或发布验收。本轮没有重跑设备流程；原始 TXT/导出文件和私密录像未在定向检索位置找到，不能重新核验原件。11 个公开附件的哈希、元数据及提帧已复核；详见 [2026-10-30 审计范围与限制](AUDIT-2026-10-30.md)。
+
 2026-10-01。完整数据见 [iphone16-testflight-results.json](iphone16-testflight-results.json)。本轮验证若干正式候选路径，**不代表 #260 全部通过**。
 
 ## 环境与取证
@@ -46,8 +48,8 @@
 - 没有测量设备 physical footprint／内存峰值、热状态，也未读取完整 jetsam/watchdog 诊断。交互成功不能替代这些指标。
 - `xctrace Activity Monitor` 按 PID 2125 报 `Cannot find process for provided pid`，按 OpenCCman 名称同样无法选择；同时 `devicectl` 仍读到该运行进程。因此本轮没有生成有效内存 trace。日志：[按 PID](testflight-activity-capability.log)、[按名称](testflight-activity-name.log)。不将工具选择失败诊断为 App 崩溃，不改变正式包的签名或调试权限。
 - 所有配置／语料／20/50/100 MiB、近 10 MiB 编辑器共存、冷/热/缓存、锁屏、处理中强退、第三方提供方／空间不足等余项仍按 #260 原标准补齐。Mac 签名候选回归与最低系统不由这次 iPhone 运行替代。
-- 维护者确认**目前没有可用真实 iPad**：保留环境阻塞，未豁免 iPad 标准；iPhone X 实际 build 仍待确认。
+- 维护者在 2026-10-01 确认**当时没有可用真实 iPad**：保留环境阻塞，未豁免 iPad 标准；iPhone X 实际 build 仍待确认。
 
 ## 状态
 
-本次没有改 App 源码、容量限制、依赖、系统偏好或购买状态。#260 继续开放；后续扩容分别由 [#268](https://github.com/gewill/OpenCCman/issues/268)、[#269](https://github.com/gewill/OpenCCman/issues/269) 跟踪，均在当前验收完成后独立推进。
+本次没有改 App 源码、容量限制、依赖、系统偏好或购买状态。#260 继续开放；后续扩容分别由 [#268](https://github.com/gewill/OpenCCman/issues/268)、[#269](https://github.com/gewill/OpenCCman/issues/269) 跟踪，当时约定在 #260 验收完成后独立推进；本轮不据此判断其当前开发状态。
