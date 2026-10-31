@@ -5,6 +5,16 @@ import SwiftUI
 enum WorkspaceTextEditorChecks {
   @MainActor static func main() {
     _ = NSApplication.shared
+    if #available(macOS 12.0, *) {
+      // Private benchmark variants must retain the native subclass while
+      // opting into TextKit 2; a disabled decoration must not force fallback.
+      let modernEditor = WorkspaceDiffTextView(usingTextLayoutManager: true)
+      modernEditor.string = "中文 👩🏽‍💻"
+      modernEditor.updateDecoration(nil)
+      precondition(modernEditor.textLayoutManager != nil)
+      precondition(modernEditor.string == "中文 👩🏽‍💻")
+      print("PASS: diff editor retains explicit TextKit 2 construction with differences disabled")
+    }
     var source = "中文\u{0} 👩🏽‍💻 e\u{301}\r\n\r\nsecond line"
     let binding = Binding(get: { source }, set: { source = $0 })
     let coordinator = WorkspaceTextEditorCoordinator(text: binding)

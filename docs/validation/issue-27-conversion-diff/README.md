@@ -128,3 +128,5 @@ iPad 自动化曾失败：27.0 不支持 devicectl appResize，安装的 27.1/27
 2026-11-01 读回 HEAD `63cba61` 的 [App Regression](https://github.com/gewill/OpenCCman/actions/runs/41245607052) 失败，原因是既有性能工具测试把原生编辑器构造类名写死为 `NSTextView`。本功能使用其子类 `WorkspaceDiffTextView`，而基准变体仅移除滚动观察器的行为没有改变。更新构造断言并明确验证 `NSTextView` 继承，保留“恢复观察器后源码逐字相同”断言；未改 App 实现或削减验证条件。
 
 实际执行 `python3 -m unittest discover -s Tests/Benchmarks -p 'test_*.py'`：111 项，全部 OK；`git diff --check` 通过。此修复是测试适配，不能用本地结果代替后续当前 HEAD 的 CI 与审核门槛。
+
+双路审查随后发现 `prepare_textkit2_no_anchor` 也以旧类名作为注入锚点，影响三个既有 `--textkit2-*` 私有诊断入口。已同时更新匹配与输出，保留 `WorkspaceDiffTextView` 子类，仅切换其 TextKit 构造；新增三个变体的准备阶段检查，核对无旧布局构造、正确 keeper 以及归档 single-target 内容。完整 Python 工具检查增至 112 项，全部 OK。原生 `check-workspace-editor.sh` 也通过，新增实际断言 `WorkspaceDiffTextView(usingTextLayoutManager: true)` 在差异关闭时保留 TextKit 2 与正文。未重跑整套私有性能矩阵，不据准备检查宣称其性能已复验。
