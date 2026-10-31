@@ -13,10 +13,13 @@ struct FeedbackScene: View {
 
   var body: some View {
     VStack(alignment: .leading) {
+      #if os(macOS)
       navi
+      #endif
       list
     }
     .appFont(.body)
+    .appNavigation("Feedback")
   }
 
   var navi: some View {

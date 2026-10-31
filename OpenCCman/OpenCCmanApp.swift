@@ -95,6 +95,18 @@ struct OpenCCmanApp: App {
     #if os(macOS)
     .windowStyle(.titleBar)
     .commands {
+      CommandGroup(replacing: .appSettings) {
+        Button("Settings") {
+          AppDelegate.postWindowNotification(name: Notification.Name("OpenSettingsFromMenu"))
+        }
+        .keyboardShortcut(",")
+      }
+      CommandGroup(after: .appSettings) {
+        Button("Pro") {
+          AppDelegate.postWindowNotification(name: Notification.Name("OpenProFromMenu"))
+        }
+        .keyboardShortcut("p")
+      }
       #if DEBUG
         CommandMenu("Debug") {
           Button("Control sizing gallery") { showingSizingGallery.toggle() }
@@ -140,7 +152,7 @@ struct OpenCCmanApp: App {
   }
 
   private var routes: some View {
-      Router {
+      Router(initialPath: "/home") {
         RootView()
           .onAppear {
             checkPro()

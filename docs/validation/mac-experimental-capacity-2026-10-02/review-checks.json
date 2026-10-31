@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-02",
+  "parent_commit": "01f601a668f348b7fbf850c1409d7c96df4df520",
+  "source_sha256": {
+    "OpenCCman/Services/StreamingTextFileService.swift": "b5807d630b5e4bf02ef672c4e7727c7bdfffeaa64ad7b23142146cc6eab53086",
+    "OpenCCman/Services/FileConversionPolicy.swift": "6139ccde89e925b3bb7432ed4c08eb15784d00c4cc9c014a868f65562febc479",
+    "Tests/Regression/StreamingFileChecks.swift": "51606d2098b628390125ecd9c33a9c09269e6fda09d20737f3471429c50fb113"
+  },
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "checks": {
+    "core": {
+      "result": "PASS",
+      "output": [
+        "PASS: shared stream pump; seven configurations, split BOM/UTF-8/phrases, IDS/NUL/Unicode, output expansion, byte counts, faults, cancellation and caller-owned handles",
+        "PASS: default capacity query detects a removed directory across worker blocks, then succeeds after recreation",
+        "PASS: mobile 100 MiB/256 MiB/512 MiB/1 GiB admission, 1 GiB+1 rejection, full 100 MiB+1 oracle/recovery/export, mid-write space loss and legacy/corrupt journals",
+        "PASS: mobile job snapshot, recovery, full hash, nine I/O faults, cancellation/commit races, space, cleanup failures and symlink boundaries",
+        "PASS: per-session experimental confirmation, closed gate, no job before consent, cancel/scene release, stale response, Pro/gate recheck and source growth",
+        "PASS: mobile coordinator Pro recheck, single reservation, frozen configuration, resource pairing, owner transfer, stale export callbacks, save cancellation/retry and source identity",
+        "PASS: real model notification subscribers; two explicit window targets; unbound rejection; exact Unicode/NUL/CRLF; export replacement; malformed payload; unchanged quota",
+        "PASS: 7 option combinations × 11 fixtures; fixed NUL contracts, phrase boundaries, whitespace, Unicode and converter reuse",
+        "PASS: model release, repeated taps, single publication, cancellation/replacement, empty input and quota guard",
+        "PASS: presets, UTF-8/BOM/Unicode/NUL files, size limit, invalid input, cancellation and import replacement",
+        "PASS: real NSURL/NSString providers and cancellation without a provider callback",
+        "PASS: Mac service standard/experimental limits, 2/4/8 GiB metadata, growth rejection, output preservation, fresh capacity and injected preflight/mid-write space loss",
+        "PASS: Mac capacity fallback, known-full/unknown/error handling, standard constrained-space conversion and experimental-only full-job preflight",
+        "PASS: bounded file streaming, seven configurations, BOM/NUL/Unicode, real provider lifetime, aliases, invalid UTF-8, I/O faults, changed files and cancellation before commit",
+        "PASS: Mac experimental 2/4/8 GiB metadata, +1 rejection, per-file consent, stale responses, gate/Pro recheck and >32-bit progress; metadata and state tests only",
+        "PASS: one Mac file task across windows; 1 GiB capacity; entitlement/configuration snapshot; owner close and quit cleanup; recovery report; commit race and failure state",
+        "PASS: free Shortcuts action runs at the exhausted homepage quota, matches four presets, preserves Unicode/NUL/newlines, accepts exactly 10 MiB and rejects over-limit UTF-8 text"
+      ]
+    },
+    "project": {
+      "result": "PASS",
+      "output": [
+        "PASS: parsed 78 Swift sources and 6 localization files"
+      ]
+    },
+    "language": {
+      "result": "PASS",
+      "output": [
+        "PASS: BCP-47 tags, AppleLanguages writes and removal, legacy selection fallback and tag matching",
+        "PASS: a language injected by launch argument is read as an explicit choice and outranks stored ones"
+      ]
+    },
+    "labels": {
+      "result": "PASS",
+      "output": [
+        "PASS: released control labels resolve English, Simplified/Traditional Chinese, underscore locales, live locale changes and missing-key fallback"
+      ]
+    },
+    "build_mac": {
+      "result": "PASS",
+      "configuration": "Debug",
+      "signed": false,
+      "architectures": [
+        "arm64",
+        "x86_64"
+      ]
+    },
+    "build_ios": {
+      "result": "PASS",
+      "configuration": "Debug",
+      "signed": false,
+      "architectures": [
+        "arm64"
+      ]
+    }
+  },
+  "limits": "Capacity and space values are injected regression cases. No USB/SMB or distribution-signed acceptance is claimed. Production experimental gate stays off."
+}

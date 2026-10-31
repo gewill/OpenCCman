@@ -1,0 +1,95 @@
+{
+  "source_commit": "044480cfaf356363af642d06a4ddf80d68187209",
+  "baseline_commit": "802e9eea55c9c420c9e005d77446e6844b944447",
+  "device": "iPhone 16 Pro Simulator",
+  "os": "iOS 18.6 (22G86)",
+  "points": [
+    402,
+    874
+  ],
+  "pixels": [
+    1206,
+    2622
+  ],
+  "appearance": "light",
+  "text_size": "default",
+  "tests": [
+    {
+      "phase": "before",
+      "language": "en",
+      "input_bytes": 104857601,
+      "expected_text": "Convert TXT files over 10 MiB and up to 100 MiB directly to a file on iPhone and iPad with Pro.",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "screenshot_sha256": "00354d027d25e5f4e27d68ff36d8531873383ca9c018946518d63ce11e92a073"
+    },
+    {
+      "phase": "before",
+      "language": "zh-Hans",
+      "input_bytes": 104857601,
+      "expected_text": "Pro 可在 iPhone 和 iPad 上将超过 10 MiB、最大 100 MiB 的 TXT 直接转换为文件。",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "screenshot_sha256": "b70ebd8077c756470af8087e2e4673a8f5591f5e27dde05f2e8be17acc8458ac"
+    },
+    {
+      "phase": "before",
+      "language": "zh-Hant",
+      "input_bytes": 104857601,
+      "expected_text": "Pro 可在 iPhone 和 iPad 上將超過 10 MiB、最大 100 MiB 的 TXT 直接轉換為檔案。",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "screenshot_sha256": "4b111b0569e4ba6ad3f8545777f28e7443aaf18ed3bfee12aba2639f3c6cefee"
+    },
+    {
+      "phase": "after",
+      "language": "en",
+      "input_bytes": 104857601,
+      "expected_text": "Pro: try files over 100 MiB, up to 1 GiB. Experimental; confirm each task. May fail.",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "screenshot_sha256": "ccf75cc130aba51f90fe3704925cfa88b8103dab340c6f8a6fdca7a70abbba1b"
+    },
+    {
+      "phase": "after",
+      "language": "zh-Hans",
+      "input_bytes": 104857601,
+      "expected_text": "Pro 实验功能：转换超过 100 MiB、最大 1 GiB 的文件。每次确认，不保证成功。",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "screenshot_sha256": "93bc42c87d366d863a9516550095c00fabe776d8904601790cb8ceea0f5d07ad"
+    },
+    {
+      "phase": "after",
+      "language": "zh-Hant",
+      "input_bytes": 104857601,
+      "expected_text": "Pro 實驗功能：轉換超過 100 MiB、最大 1 GiB 的檔案。每次確認，不保證成功。",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "screenshot_sha256": "1123024641a7760342401672e7517625ad16a2bbef80cf7727b9f2ea0313ab79"
+    },
+    {
+      "phase": "standard",
+      "language": "en",
+      "input_bytes": 10485761,
+      "expected_text": "Convert TXT files over 10 MiB and up to 100 MiB directly to a file on iPhone and iPad with Pro.",
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "screenshot_sha256": "71489f3a47560960a9a36d601c808be7022449bf155d8659aee5993eb1ef10ac"
+    }
+  ]
+}

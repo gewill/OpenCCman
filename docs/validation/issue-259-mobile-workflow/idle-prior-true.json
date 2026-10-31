@@ -1,0 +1,45 @@
+{
+  "source": "4b36d7a4171ad7fd4a4ba3e89bf5946e25e4b587",
+  "platform": "iPad Pro M4 iOS18.6 Simulator / actual QA App",
+  "input_bytes": 11534336,
+  "method": "LLDB UIKit idleTimerDisabled set YES before actual conversion; normal UI starts task; QA trace reads real lifecycle operations",
+  "events": [
+    {
+      "app_active": true,
+      "event": "before_begin",
+      "resources": {
+        "idle_disabled": true,
+        "owns_background_task": false,
+        "owns_idle_override": false
+      }
+    },
+    {
+      "app_active": true,
+      "event": "after_begin",
+      "resources": {
+        "idle_disabled": true,
+        "owns_background_task": true,
+        "owns_idle_override": true
+      }
+    },
+    {
+      "app_active": true,
+      "event": "after_end",
+      "resources": {
+        "idle_disabled": true,
+        "owns_background_task": false,
+        "owns_idle_override": false
+      }
+    }
+  ],
+  "final_ui": "Ready to save",
+  "original_idle": false,
+  "test_initial_idle": true,
+  "after_work_idle": true,
+  "restored_after_test_idle": false,
+  "restore_log_sha256": "ac9466d5bc64e458af10119d8aab9d4fe4c59842c1947d64279587d2f99e725c",
+  "limits": [
+    "Not a physical auto-lock timing test",
+    "Not actual background lease expiration"
+  ]
+}

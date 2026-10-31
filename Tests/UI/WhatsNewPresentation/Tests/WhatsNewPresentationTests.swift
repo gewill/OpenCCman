@@ -38,6 +38,80 @@ final class WhatsNewPresentationTests: XCTestCase {
     add(attachment)
   }
 
+  func testMobileExperimentalCapacityFlow() throws {
+    let environment = ProcessInfo.processInfo.environment
+    guard let fixture = environment["OPENCCMAN_MOBILE_FIXTURE"],
+          let mode = environment["OPENCCMAN_MOBILE_CAPACITY_UI"] else {
+      throw XCTSkip("Requires an isolated QA fixture and explicit baseline/candidate mode")
+    }
+    let language = environment["OPENCCMAN_MOBILE_LANGUAGE"] ?? "en"
+    let confirmLabel = ["en": "Try conversion", "zh-Hans": "尝试转换", "zh-Hant": "嘗試轉換"][language]!
+    let cancelLabel = language == "en" ? "Cancel" : "取消"
+    let app = XCUIApplication(bundleIdentifier: appID)
+    app.launchArguments = ["-AppleLanguages", "(\(language))", "-qa-mark-whats-new-read-at-launch",
+      "-qa-suppress-review", "-qa-enable-mobile-large-files", "-qa-mobile-file-pro",
+      "-qa-import-mobile-file", fixture]
+    if mode == "candidate" { app.launchArguments += ["-qa-mobile-file-experimental-capacity"] }
+    app.launch()
+    defer { app.terminate() }
+    if mode != "candidate" {
+      XCTAssertTrue(app.alerts.firstMatch.waitForExistence(timeout: 20))
+      XCTAssertTrue(app.alerts.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "100 MiB")).firstMatch.exists)
+      XCTAssertFalse(app.buttons["mobile-file-convert"].exists)
+      capture(app, name: "capacity-before-100mib-rejection")
+      return
+    }
+
+    let convert = app.buttons["mobile-file-convert"]
+    XCTAssertTrue(convert.waitForExistence(timeout: 20))
+    capture(app, name: "capacity-after-offer")
+    convert.tap()
+    let alert = app.alerts.firstMatch
+    XCTAssertTrue(alert.waitForExistence(timeout: 10))
+    XCTAssertTrue(alert.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", "1 GiB")).firstMatch.exists)
+    XCTAssertTrue(alert.staticTexts.containing(NSPredicate(format: "label CONTAINS %@", (fixture as NSString).lastPathComponent)).firstMatch.exists)
+    capture(app, name: "capacity-per-file-warning")
+    alert.buttons[cancelLabel].tap()
+    let dismissed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: convert)
+    XCTAssertEqual(XCTWaiter().wait(for: [dismissed], timeout: 15), .completed)
+    XCTAssertFalse(app.buttons["mobile-file-save"].exists)
+    capture(app, name: "capacity-cancelled-without-result")
+
+    app.terminate()
+    app.launch()
+    XCTAssertTrue(convert.waitForExistence(timeout: 20))
+    convert.tap()
+    XCTAssertTrue(alert.waitForExistence(timeout: 10), "Cancelling/relaunching must not persist consent")
+    capture(app, name: "capacity-warning-again-after-relaunch")
+    alert.buttons[confirmLabel].tap()
+    XCTAssertTrue(app.buttons["mobile-file-save"].waitForExistence(timeout: 120))
+    XCTAssertFalse(alert.exists)
+    capture(app, name: "capacity-confirmed-ready")
+  }
+
+  func testMobileNonProCapacityMessage() throws {
+    let environment = ProcessInfo.processInfo.environment
+    guard let fixture = environment["OPENCCMAN_MOBILE_FIXTURE"],
+          let expected = environment["OPENCCMAN_MOBILE_PRO_EXPECTED_TEXT"] else {
+      throw XCTSkip("Requires an isolated non-Pro fixture and expected localized message")
+    }
+    let language = environment["OPENCCMAN_MOBILE_LANGUAGE"] ?? "en"
+    let app = XCUIApplication(bundleIdentifier: appID)
+    app.launchArguments = ["-AppleLanguages", "(\(language))", "-isPro", "NO",
+      "-qa-mark-whats-new-read-at-launch", "-qa-suppress-review",
+      "-qa-enable-mobile-large-files", "-qa-import-mobile-file", fixture]
+    if environment["OPENCCMAN_MOBILE_EXPERIMENTAL"] == "1" {
+      app.launchArguments += ["-qa-mobile-file-experimental-capacity"]
+    }
+    app.launch()
+    defer { app.terminate() }
+    let message = app.staticTexts.matching(NSPredicate(format: "label == %@", expected)).firstMatch
+    XCTAssertTrue(message.waitForExistence(timeout: 20))
+    XCTAssertFalse(app.buttons["mobile-file-convert"].exists)
+    XCTAssertFalse(app.buttons["mobile-file-save"].exists)
+    capture(app, name: "non-pro-capacity-message-\(language)")
+  }
+
   private func expectCardsOnce(_ app: XCUIApplication) {
     let done = app.buttons["whats-new-done"]
     XCTAssertTrue(done.waitForExistence(timeout: 15))
@@ -48,6 +122,110 @@ final class WhatsNewPresentationTests: XCTestCase {
     let gone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: done)
     XCTAssertEqual(XCTWaiter().wait(for: [gone], timeout: 10), .completed)
     XCTAssertFalse(done.waitForExistence(timeout: 2), "Cards must not reopen after dismissal")
+  }
+
+  func testMobileFileVoiceOverConfirmationAndReady() throws {
+    guard #available(iOS 27.0, *) else { throw XCTSkip("VoiceOver driver requires iOS 27") }
+    guard let fixture = ProcessInfo.processInfo.environment["OPENCCMAN_MOBILE_FIXTURE"] else {
+      throw XCTSkip("Requires a generated TXT in the isolated QA app container")
+    }
+    let language = ProcessInfo.processInfo.environment["OPENCCMAN_MOBILE_LANGUAGE"] ?? "en"
+    let labels: (cancel: String, convert: String, ready: String, save: String, delete: String)
+    switch language {
+    case "en": labels = ("Cancel", "Convert file", "Ready to save", "Save result", "Delete local task")
+    case "zh-Hans": labels = ("取消", "转换文件", "转换完成", "保存结果", "删除本地任务")
+    case "zh-Hant": labels = ("取消", "轉換檔案", "轉換完成", "儲存結果", "刪除本機工作")
+    default: XCTFail("Unsupported test language: \(language)"); return
+    }
+    func isButton(_ speech: String) -> Bool {
+      ["button", "按钮", "按鈕"].contains { speech.localizedCaseInsensitiveContains($0) }
+    }
+    let app = XCUIApplication(bundleIdentifier: appID)
+    app.launchArguments = ["-AppleLanguages", "(\(language))", "-qa-mark-whats-new-read-at-launch",
+      "-qa-suppress-review", "-qa-enable-mobile-large-files", "-qa-mobile-file-pro",
+      "-qa-import-mobile-file", fixture]
+    app.launch()
+    defer { app.terminate() }
+    XCTAssertTrue(app.buttons["mobile-file-convert"].waitForExistence(timeout: 20))
+    let voiceOver = XCUIDevice.shared.voiceOverService
+    initialVoiceOverEnabled = voiceOver.isEnabled
+    defer {
+      if let initialVoiceOverEnabled, voiceOver.isEnabled != initialVoiceOverEnabled {
+        if initialVoiceOverEnabled { try? voiceOver.enable() } else { try? voiceOver.disable() }
+      }
+    }
+    func readThrough(_ last: String, name: String) throws -> [String] {
+      if !voiceOver.isEnabled { try voiceOver.enable() }
+      var speech = [try voiceOver.currentSpeech().utterance]
+      for _ in 0..<32 where !speech.last!.localizedCaseInsensitiveContains(last) {
+        speech.append(try voiceOver.moveForward().utterance)
+      }
+      let attachment = XCTAttachment(string: speech.joined(separator: "\n"))
+      attachment.name = name
+      attachment.lifetime = .keepAlways
+      add(attachment)
+      XCTAssertTrue(speech.last!.localizedCaseInsensitiveContains(last), "Unreachable: \(speech)")
+      capture(app, name: name + "-focus")
+      return speech
+    }
+    let confirmation = try readThrough(labels.cancel, name: "mobile-confirmation-speech")
+    XCTAssertTrue(confirmation.contains { $0.localizedCaseInsensitiveContains(labels.convert) && isButton($0) })
+    XCTAssertTrue(isButton(confirmation.last!))
+    // Actions use XCTest with VoiceOver disabled; this test verifies speech/navigation,
+    // not VoiceOver gesture activation or the system document picker.
+    try voiceOver.disable()
+    app.buttons["mobile-file-convert"].tap()
+    XCTAssertTrue(app.buttons["mobile-file-save"].waitForExistence(timeout: 60))
+    let ready = try readThrough(labels.delete, name: "mobile-ready-speech")
+    XCTAssertTrue(ready.contains { $0.localizedCaseInsensitiveContains(labels.ready) })
+    XCTAssertTrue(ready.contains { $0.localizedCaseInsensitiveContains(labels.save) && isButton($0) })
+    XCTAssertTrue(isButton(ready.last!))
+  }
+
+  func testMobileFileVoiceOverInvalidUTF8Recovery() throws {
+    guard #available(iOS 27.0, *) else { throw XCTSkip("VoiceOver driver requires iOS 27") }
+    guard let fixture = ProcessInfo.processInfo.environment["OPENCCMAN_MOBILE_INVALID_FIXTURE"] else {
+      throw XCTSkip("Requires generated invalid UTF-8 in the isolated QA app")
+    }
+    let app = XCUIApplication(bundleIdentifier: appID)
+    app.launchArguments = ["-AppleLanguages", "(en)", "-qa-mark-whats-new-read-at-launch",
+      "-qa-suppress-review", "-qa-enable-mobile-large-files", "-qa-mobile-file-pro",
+      "-qa-import-mobile-file", fixture]
+    app.launch()
+    defer { app.terminate() }
+    XCTAssertTrue(app.buttons["mobile-file-convert"].waitForExistence(timeout: 20))
+    app.buttons["mobile-file-convert"].tap()
+    let error = app.staticTexts["mobile-file-error"]
+    XCTAssertTrue(error.waitForExistence(timeout: 60))
+    XCTAssertTrue(error.label.contains("not valid UTF-8"))
+    XCTAssertFalse(app.buttons["mobile-file-save"].exists)
+    let voiceOver = XCUIDevice.shared.voiceOverService
+    initialVoiceOverEnabled = voiceOver.isEnabled
+    defer {
+      if let initialVoiceOverEnabled, voiceOver.isEnabled != initialVoiceOverEnabled {
+        if initialVoiceOverEnabled { try? voiceOver.enable() } else { try? voiceOver.disable() }
+      }
+    }
+    if !voiceOver.isEnabled { try voiceOver.enable() }
+    var speech = [try voiceOver.currentSpeech().utterance]
+    for _ in 0..<32 where !speech.last!.contains("Delete local task") {
+      speech.append(try voiceOver.moveForward().utterance)
+    }
+    let attachment = XCTAttachment(string: speech.joined(separator: "\n"))
+    attachment.name = "mobile-failure-speech"
+    attachment.lifetime = .keepAlways
+    add(attachment)
+    XCTAssertTrue(speech.contains { $0.contains("Could Not Convert File") })
+    XCTAssertTrue(speech.contains { $0.contains("not valid UTF-8") })
+    XCTAssertTrue(speech.contains { $0.contains("Retry recovery") && $0.contains("Button") })
+    XCTAssertTrue(speech.last!.contains("Delete local task") && speech.last!.contains("Button"))
+    capture(app, name: "mobile-failure-voiceover-focus")
+    try voiceOver.disable()
+    app.buttons["Retry recovery"].tap()
+    let errorGone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: error)
+    XCTAssertEqual(XCTWaiter().wait(for: [errorGone], timeout: 10), .completed)
+    app.buttons["Done"].tap()
+    XCTAssertTrue(app.buttons["Convert"].waitForExistence(timeout: 10))
   }
 
   func testClearSourceRequiresConfirmationAndKeepsCancelSafe() {

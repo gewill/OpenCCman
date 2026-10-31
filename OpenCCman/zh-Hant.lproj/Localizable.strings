@@ -1,6 +1,8 @@
 // MARK: - Common
 "OK" = "好的";
 "Done" = "完成";
+"Back" = "返回";
+"workspace_settings_sidebar" = "空間足夠時顯示轉換側欄";
 "Not found" = "未找到";
 
 // MARK: - Setttings
@@ -267,3 +269,49 @@
 "file_error_temporary_cleanup_failed" = "轉換已停止，但未能清理暫存檔案。";
 "large_file_cleanup_recovery" = "請在 Finder 中刪除殘留的暫存轉換檔案夾：";
 "mac_text_file_hint" = "匯入或拖入不超過 10 MiB 的 UTF-8 TXT 或純文字以編輯。Pro 可將最大 1 GiB 的 TXT 直接轉換為新檔案。";
+
+// Mobile direct-to-file workflow (production gated by #260)
+"mobile_file_explanation" = "直接將 TXT 轉換為檔案，不載入編輯器。支援最大 100 MiB，需要 Pro，不扣首頁轉換次數。";
+"mobile_file_preparing" = "正在準備檔案";
+"mobile_file_preparing_detail" = "正在準備私有副本。請讓 OpenCCman 保持前景，目前稿件不會改變。";
+"mobile_file_foreground" = "請保持 App 在前景；切入背景或鎖定螢幕會中止此工作。";
+"mobile_file_ready" = "轉換完成，待儲存";
+"mobile_file_ready_detail" = "完整結果保留在本機，直到儲存或刪除。取消儲存面板後仍可重試。";
+"mobile_file_interrupted" = "工作已中止";
+"mobile_file_interrupted_detail" = "原檔案和稿件未改變。請重新選取檔案以再次轉換。";
+"mobile_file_unlock" = "等待裝置解鎖";
+"mobile_file_unlock_detail" = "請解鎖裝置，再重試存取受保護的工作檔案。";
+"mobile_file_failed_detail" = "原檔案和編輯器稿件未改變。可重試復原，或刪除本機工作檔案後重新開始。";
+"mobile_file_convert" = "轉換檔案";
+"mobile_file_save" = "儲存結果⋯";
+"mobile_file_retry" = "重試復原";
+"mobile_file_resume" = "開啟檔案工作";
+"mobile_file_delete" = "刪除本機工作";
+"mobile_file_delete_title" = "刪除本機檔案工作？";
+"mobile_file_delete_message" = "將刪除尚未儲存的轉換結果及本機工作檔案。原檔案和編輯器稿件會保留。";
+"mobile_file_busy" = "請先完成或刪除目前的檔案工作。如果工作已在另一個視窗開啟，請在該視窗操作。";
+"mobile_file_capacity" = "iPhone 和 iPad 的直接檔案轉換支援最大 100 MiB 的 TXT。";
+"mobile_file_space" = "可用空間不足，無法準備或儲存此檔案。請釋放空間後重試。";
+"mobile_file_cleanup_failure" = "部分私有工作檔案未能清理。請在裝置解鎖後重試復原或刪除本機工作。";
+"mobile_file_invalid_store" = "無法驗證已儲存的工作，檔案已保留。請重試，或確認刪除後開始新工作。";
+"mobile_file_pro" = "Pro 可在 iPhone 和 iPad 上將超過 10 MiB、最大 100 MiB 的 TXT 直接轉換為檔案。";
+"mobile_text_file_hint" = "編輯最大 10 MiB 的 UTF-8 文字。Pro 可選取最大 100 MiB 的 TXT 直接轉換為檔案；拖放仍限 10 MiB。";
+
+/* Per-file experimental mobile capacity; production remains gated. */
+"mobile_file_experimental_pro" = "Pro 實驗功能：轉換超過 100 MiB、最大 1 GiB 的檔案。每次確認，不保證成功。";
+"mobile_file_experimental_title" = "嘗試轉換這個大檔案？";
+"mobile_file_experimental_continue" = "嘗試轉換";
+"mobile_file_experimental_explanation" = "此檔案超過一般 100 MiB 上限。每次確認後可嘗試最大 1 GiB 的檔案，但轉換可能失敗，系統也可能終止 App。需要 Pro；原始檔案和編輯器中的文稿保持不變。";
+"mobile_file_experimental_message" = "%@（%@）超過 100 MiB。最大 1 GiB 的轉換屬於實驗性嘗試，可能因記憶體、儲存空間或檔案提供者限制而失敗。請保持 OpenCCman 在前景執行，裝置不要鎖定。原始檔案和編輯器中的文稿不會被修改。要繼續嘗試此檔案嗎？";
+"mobile_file_experimental_capacity" = "iPhone 和 iPad 的實驗性檔案上限為 1 GiB（1,073,741,824 位元組）。請選擇更小的 TXT 檔案。";
+"mobile_text_file_experimental_hint" = "UTF-8 TXT 在 10 MiB 內可編輯。Pro 可直接轉換大檔案；超過 100 MiB 至 1 GiB 需每次確認實驗性嘗試，並保持 App 開啟。拖放仍限 10 MiB。";
+"mobile_file_experimental_help" = "超過 100 MiB、最大 1 GiB 的檔案，每次嘗試轉換前都需要確認，不保證成功。請保持 App 在前景、裝置不鎖定，並為輸入快照、轉換結果和系統匯出預留儲存空間；空間預先檢查只是估算。取消或中斷的轉換不會提供半成品儲存入口。完整結果會保留在本機，直到儲存成功或主動刪除；取消儲存面板後可以重試。原始檔案和編輯器中的文稿保持不變。";
+
+/* Experimental Mac capacity remains disabled pending validation. */
+"mac_file_experimental_title" = "嘗試轉換這個大檔案？";
+"mac_file_experimental_continue" = "嘗試轉換";
+"mac_file_experimental_explanation" = "此檔案超過一般 1 GiB 上限。每次確認後可嘗試最大 8 GiB 的檔案，但轉換可能失敗，目的地磁碟也可能有更低的單一檔案限制。請保持 App 開啟；原始檔案和工作區不變。實際儲存需求可能超過估算。";
+"mac_file_storage_estimate" = "目的地磁碟預計需可用空間：";
+"mac_file_experimental_capacity" = "此檔案超過實驗性 8 GiB 上限，請選取較小的 TXT 檔案。";
+"mac_file_insufficient_space" = "目的地磁碟可用空間不足。請釋放空間或選取其他目標位置，再重新匯入檔案。";
+"mac_file_experimental_pro" = "Pro 實驗功能：轉換超過 1 GiB、最大 8 GiB 的檔案。每次確認，不保證成功。";

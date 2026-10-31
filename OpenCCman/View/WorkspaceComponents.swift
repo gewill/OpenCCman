@@ -84,6 +84,10 @@ struct SourcePane: View {
   private var fileImportHint: LocalizedStringKey {
     #if os(macOS)
       if MacLargeFileCoordinator.isEnabled { return "mac_text_file_hint" }
+    #else
+      if MobileFileRuntime.isEnabled {
+        return MobileFileRuntime.isExperimentalCapacityEnabled ? "mobile_text_file_experimental_hint" : "mobile_text_file_hint"
+      }
     #endif
     return "text_file_hint"
   }
@@ -152,6 +156,7 @@ struct SourcePane: View {
         Text(fileImportHint)
           .appFont(.caption)
           .foregroundColor(.secondary)
+          .fixedSize(horizontal: false, vertical: true)
           .frame(maxWidth: .infinity, alignment: .leading)
           .padding(10)
           .contentShape(Rectangle())
@@ -168,6 +173,7 @@ struct SourcePane: View {
       .readSize { headerHeight = $0.height }
       ZStack(alignment: .topLeading) {
         sourceEditor
+          .accessibilityIdentifier("workspace-source-editor")
           .accessibilityLabel(Text("Source"))
           .accessibilityHint(viewModel.inputText.isEmpty ? Text("source_empty_prompt") : Text(""))
           .disabled(viewModel.isImporting)
@@ -182,6 +188,7 @@ struct SourcePane: View {
             if viewModel.canFillExample {
               Button("source_fill_example") { viewModel.fillExampleIfEmpty() }
                 .appNeumorphicButtonStyle(Capsule())
+                .accessibilityIdentifier("source-fill-example")
             }
           }
           .padding(8)
@@ -262,6 +269,7 @@ struct ResultPane: View {
       }
       .readSize { headerHeight = $0.height }
       resultEditor
+        .accessibilityIdentifier("workspace-result-editor")
         .accessibilityLabel(Text("Result"))
         .frame(maxWidth: .infinity, alignment: .topLeading)
         .frame(height: paneHeight.map { max(180, $0 - headerHeight - 60) } ?? editorHeight)

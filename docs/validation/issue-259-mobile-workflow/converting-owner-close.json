@@ -1,0 +1,52 @@
+{
+  "source": "4b36d7a4171ad7fd4a4ba3e89bf5946e25e4b587",
+  "platform": "iPad Pro M4 iOS18.6 Simulator",
+  "appearance": "English light default font",
+  "display_points": [
+    834,
+    1210
+  ],
+  "observed_before_destruction": "Converting File, 5%",
+  "input_bytes": 104857600,
+  "action": "UIKit requestSceneSessionDestruction on owning scene via LLDB; other scene remains foreground",
+  "resources": [
+    {
+      "app_active": true,
+      "event": "before_begin",
+      "resources": {
+        "idle_disabled": false,
+        "owns_background_task": false,
+        "owns_idle_override": false
+      }
+    },
+    {
+      "app_active": true,
+      "event": "after_begin",
+      "resources": {
+        "idle_disabled": true,
+        "owns_background_task": true,
+        "owns_idle_override": true
+      }
+    },
+    {
+      "app_active": true,
+      "event": "after_end",
+      "resources": {
+        "idle_disabled": false,
+        "owns_background_task": false,
+        "owns_idle_override": false
+      }
+    }
+  ],
+  "private_job_directory_empty": true,
+  "media": {
+    "converting-v5-before.png": "9920341c7fee4e2018fd37e91ac9a451c879c7b1ccf139d720f7caa738590658",
+    "converting-v5-after.png": "38c293331d4f58d8d395afc5c6302145bf034245bbe5b466ac3e749f225c4b9c",
+    "converting-v5-owner-close.mp4": "4cfbe1536907fa0d7dd36d1677b204a373c5c52c76b92a30593376faccd550e6"
+  },
+  "limits": [
+    "Simulator only; not physical memory acceptance",
+    "No latency measurement under debugger",
+    "Previously idle=true and actual lease expiry still outstanding"
+  ]
+}

@@ -52,13 +52,16 @@ struct MacLargeFileTaskView: View {
         case .confirmation:
           Button("Cancel") { coordinator.cancel() }
             .keyboardShortcut(.cancelAction)
+            .accessibilityIdentifier("mac-file-cancel")
           Button("large_file_choose_destination") { coordinator.chooseDestination() }
             .keyboardShortcut(.defaultAction)
-        case .choosingDestination:
+            .accessibilityIdentifier("mac-file-choose-destination")
+        case .capacityConfirmation, .choosingDestination:
           EmptyView()
         case .converting:
           Button("Cancel") { coordinator.cancel() }
             .keyboardShortcut(.cancelAction)
+            .accessibilityIdentifier("mac-file-cancel")
         case .cancelling:
           Button("large_file_cancelling") {}.disabled(true)
         case .completed:
@@ -78,12 +81,26 @@ struct MacLargeFileTaskView: View {
     .fixedSize(horizontal: false, vertical: true)
     .interactiveDismissDisabled(coordinator.isWorking)
     .accessibilityIdentifier("large-file-task")
+    .alert("mac_file_experimental_title", isPresented: Binding(
+      get: { coordinator.phase == .capacityConfirmation }, set: { _ in }),
+      presenting: coordinator.session) { session in
+        Button("Cancel", role: .cancel) { coordinator.cancel() }
+        Button("mac_file_experimental_continue") { coordinator.confirmExperimentalCapacity(for: session.id) }
+      } message: { session in
+        Text("mac_file_experimental_explanation")
+          + Text("\n\n" + session.sourceFilename + " — "
+            + ByteCountFormatter.string(fromByteCount: Int64(session.byteCount), countStyle: .file)
+            + "\n")
+          + Text("mac_file_storage_estimate")
+          + Text(" " + ByteCountFormatter.string(fromByteCount:
+            Int64(MacFileCapacity.estimatedStorageBytes(for: session.byteCount) ?? 0), countStyle: .file))
+      }
   }
 
   @ViewBuilder
   private var phaseContent: some View {
     switch coordinator.phase {
-    case .confirmation, .choosingDestination:
+    case .confirmation, .capacityConfirmation, .choosingDestination:
       Text("large_file_explanation")
         .foregroundStyle(.secondary)
         .fixedSize(horizontal: false, vertical: true)
@@ -126,7 +143,7 @@ struct MacLargeFileTaskView: View {
 
   private var title: String {
     switch coordinator.phase {
-    case .confirmation, .choosingDestination: return "large_file_title"
+    case .confirmation, .capacityConfirmation, .choosingDestination: return "large_file_title"
     case .converting: return "large_file_converting"
     case .cancelling: return "large_file_cancelling"
     case .completed: return "large_file_complete"

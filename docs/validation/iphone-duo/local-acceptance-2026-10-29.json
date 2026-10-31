@@ -1,0 +1,243 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "issues": [
+    280,
+    282
+  ],
+  "issues_closed": false,
+  "base_commit": "f6f06e4c85f8f4351bf7081602bd1af11e297076",
+  "merged_pr": {
+    "number": 287,
+    "head": "3524d9a6f6e46aee0cb1395336415881f584176b",
+    "squash": "f6f06e4c85f8f4351bf7081602bd1af11e297076",
+    "push_ci": "https://github.com/gewill/OpenCCman/actions/runs/40837625119",
+    "formal_external_approval": false
+  },
+  "source_state": "dirty candidate compiled; app and test source unchanged after delivery build; documentation updated later",
+  "source_sha256": {
+    "OpenCCman/OpenCCmanApp.swift": "5aab18d632029b7d3da0bef761d3a94e0c07a12f2b02e009e0923f71c8014947",
+    "OpenCCman/Scene/RootView.swift": "2c5721a1a67afe31da21ac87706036aca8df0b7dc1f4d3ad1667415b352d5625",
+    "OpenCCman/View/WorkspaceComponents.swift": "d0b39bbd0922ee62182e70c50eca5a947f5c70174c8d231471ce5544110b5b26",
+    "OpenCCman/View/WorkspaceSurface.swift": "4e06b47585dfff9921d666414e7b0522866c4205f40319be1fcb12140a241fe2",
+    "OpenCCman/en.lproj/Localizable.strings": "14b0bcdf18e7d81d9c225ddab46a6874ed49b90e2a3b157c06f55b1ca31d203d",
+    "Tests/UI/WhatsNewPresentation/Tests/DuoReadinessTests.swift": "7c25ec4f19368ca58565c380c5efe8a66d6fce53596738ce7fd568baa52f57d5"
+  },
+  "package_resolved_sha256": "ddbb87a4ecb8ef2299d5b739c5c0e41e8ef8bc0a66db0e02873e6ee2cf694f6c",
+  "environment": {
+    "developer_dir": "/Applications/Xcode.app/Contents/Developer",
+    "xcode": "Xcode 27.1\nBuild version 27A9275",
+    "configuration": "Debug",
+    "bundle_id": "org.gewill.OpenCCman.WhatsNewUITests",
+    "device_ids": [
+      "4CAD3041-0744-41A6-8B4E-F934CA9F0778",
+      "42C71610-575F-482E-A329-7637CD51D10F",
+      "737A20AC-4B6E-4B43-9C2D-0306F6266B6C"
+    ]
+  },
+  "runtime_images": {
+    "ios": {
+      "OpenCCman": "31b4512f5d393e9e1348f996ab56dd3710fbeea21984e0cf75696fcf5be5b30e",
+      "OpenCCman.debug.dylib": "f69b7bbea0700611e338f4bf5ee3116b07508c6d9e9967905abd1b063ba7534e",
+      "__preview.dylib": "e12c76e8f1e554affb0f7e016183dac0d1be2a548b519384252e4628b9f872e9"
+    },
+    "mac": {
+      "Contents/MacOS/OpenCCman": "3f7676b264f462f8fcc142e2390864633d4a256478b907f5a9ec38f75c77716a",
+      "Contents/MacOS/OpenCCman.debug.dylib": "9f226919e7e888996cc2c0f0b34bf94c720d048006f5979dd303e101cbd0da9e",
+      "Contents/MacOS/__preview.dylib": "ddaa06a7728085b55406b98552dee23b2b51c1d1a281c253686e504b39d39007"
+    }
+  },
+  "test_results": [
+    {
+      "epoch": "final English caption, before Mac-only commands",
+      "group": "3 devices x 2 fonts x (3 languages + no cards)",
+      "passed": 24,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "epoch": "delivery",
+      "group": "Duo English More routes, default and XXXL",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "epoch": "hint-fixed candidate; later caption and Mac commands do not change overlay implementation",
+      "group": "3 host overlays x 2 fonts",
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "mobile": {
+    "input_bytes": 11534347,
+    "input_sha256": "1f3ea34ddb19a123035e27206ff66acf45548b6c1ef335a777b17a50ce13cece",
+    "output_sha256": "505727b79638105f950a70a8881ee6d42119362ae70a6a5f71dc5b1ce81d23e0",
+    "job_id": "5E6305D5-7789-4EB2-ADD1-00522A166F95",
+    "primary_report_status": "failed: exporter Cancel locator expected Button; previous functional assertions passed",
+    "followup_status": "passed: actual Group Cancel, same journal retained",
+    "cleanup": {
+      "ready_journals_remaining": 0,
+      "original_fixture_preserved": true
+    },
+    "delivery_ios_bundle_equivalence": {
+      "shortcut_build_to_delivery_ios_identical": false,
+      "changed_files": [
+        "Metadata.appintents/extract.actionsdata"
+      ]
+    }
+  },
+  "mac": {
+    "minimum_window_points": [
+      300,
+      412
+    ],
+    "minimum_window_pixels": [
+      600,
+      824
+    ],
+    "fonts": [
+      100,
+      150
+    ],
+    "restored_font": 100,
+    "commands_verified": [
+      "Command-comma",
+      "Command-p"
+    ],
+    "repeat_command_preserves_scroll": true,
+    "settings_two_window_targeting": true,
+    "two_window_epoch": "Settings-only shortcut build; final Pro single-window retested",
+    "export_bytes": 66,
+    "export_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc"
+  },
+  "evidence_directory_relative_to_codex_ui_evidence": "OpenCCman/282-local/f6f06e4",
+  "evidence_reports_sha256": {
+    "delivery-build/report.json": "eefcd87b7501d1c18e5acb946e82f6cb7fdd9821e343a9d65bb5c6d87d95a4c7",
+    "delivery-runtime-images.json": "4fab7166f9b872f8e7ae45e7f9e32dae0d3a3fbb0c214f261fe1bf595dbe27b4",
+    "delivery-bundle-manifests.json": "b68c86185a2f13c46cf5cdad37a3e23d87d98db08690c673adaaea5044025927",
+    "ios-bundle-equivalence.json": "ef76f4c690595cfd31f17c6dd27a3767b13cb25276ded9a6c16a965c213fd16a",
+    "final-queue-summary.json": "645282522feb37fa997a10c1d544dec86574cd3c5af3382ef07b242632a40230",
+    "delivery-smoke-summary.json": "5142a296245029a0ff50266b73760d9d3d36be2162c86dab06d08d71f4528885",
+    "mobile-functional/report.json": "5b37c85c11b0dc009783b83ba37b6487228385f59612619c3321d00940bd4a6d",
+    "mobile-save-followup/report.json": "52cc861b843fa5ac3886e3d5055a561b355cf7aa98ff720712268e74ec375a3f",
+    "mobile-cleanup.json": "7dfe2366f0ee1fa928f1ee2571b90df11b78f3d1e4a3a4cffaaa9272ad68ca04",
+    "routes-final-ipad-large/report.json": "df5db1908feab4ecaf18e7ff01e839510804bb0578ad3176f90a21cb1df9c845",
+    "routes-final-ipad-xxxl/report.json": "76d714d493119f0c7193c75e562bb6cbc1c7414242ce0c3da4d6c7d3340dfa9a",
+    "routes-final-phone-large/report.json": "08353398c5ca5569f23274e6c4acb9d470397a5346a0542101e99ec4dfc33795",
+    "routes-final-phone-xxxl/report.json": "bcc4fc110516d5c04618eb42309433aa70ee1f52954258661423a492528d5639",
+    "routes-final-duo-large/report.json": "aa489656fba37d3fb74b37d93cdff770fae9964c20ac2a9ed1a079f23d036b2b",
+    "routes-final-duo-xxxl/report.json": "83d2762795128ea99ad524a657a62262744d11cdd2f5f9bcf7bd62fb3543e02c",
+    "delivery-duo-large/report.json": "f20d2710617dae72d09d5bcdd9781324313ac3fee92c17c83fb3f64276e2f500",
+    "delivery-duo-xxxl/report.json": "891772e4fb9391fd486c8e6931ac2b463a45de0701bdc9c200d699eb08b08885",
+    "host-large-v3/report.json": "47c3ab68c095871aeaac8c0fb2ff6d90568bfeca6cf37aff9fc24f7b942b058c",
+    "host-xxxl/report.json": "8a6df6db4e298a062fc2fefe25c88810bf4f7300537405618b9448ad6ec0bd5c"
+  },
+  "unverified": [
+    "left/right split view",
+    "full pose x language x font action matrix",
+    "marked text IME",
+    "nonzero selection and middle-result scroll during Duo handoff",
+    "ordinary in-flight conversion/import",
+    "mobile Preparing/Cancelling/failure retry",
+    "in-flight background/lock",
+    "positive 2.1 release cards and launch handoff",
+    "Duo hardware and final signed distribution",
+    "minimum OS tracked by #16",
+    "transactions tracked by #14/#71",
+    "VoiceOver experience"
+  ],
+  "distribution_or_deployment": false,
+  "cleanup": {
+    "date": "2026-10-29T18:04:26.514098+08:00",
+    "before": {
+      "4CAD3041-0744-41A6-8B4E-F934CA9F0778": "Booted",
+      "42C71610-575F-482E-A329-7637CD51D10F": "Shutdown",
+      "737A20AC-4B6E-4B43-9C2D-0306F6266B6C": "Shutdown"
+    },
+    "xcodebuild": "",
+    "after": {
+      "4CAD3041-0744-41A6-8B4E-F934CA9F0778": "Shutdown",
+      "42C71610-575F-482E-A329-7637CD51D10F": "Shutdown",
+      "737A20AC-4B6E-4B43-9C2D-0306F6266B6C": "Shutdown"
+    },
+    "other_booted_preserved": [
+      "834B95AE-438F-4D77-B189-F489C1F50346"
+    ]
+  },
+  "assets": [
+    {
+      "name": "mac-hint-before.webp",
+      "sha256": "9d2b6f65b7eaaa13415ccdd88ce7240a1c4b9018ba434a4cb82fb02cd00c0716",
+      "bytes": 44992,
+      "url": "https://github.com/user-attachments/assets/25b8ef03-43ca-4bc8-b664-9ff83bcffb61",
+      "comment": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6493781373"
+    },
+    {
+      "name": "mac-hint-after.webp",
+      "sha256": "e7062f16f065ae7321b5addb4dcf2d08591eae76f865f6f5f417fa3643946201",
+      "bytes": 46350,
+      "url": "https://github.com/user-attachments/assets/f00d9b68-c325-4d76-8ba1-d6f09f46d8f7",
+      "comment": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6493781373"
+    },
+    {
+      "name": "sidebar-menu-before.webp",
+      "sha256": "726568060c74617769085d2b17f8af84ced78013ebc844c767fe0f54c2cfecb9",
+      "bytes": 35872,
+      "url": "https://github.com/user-attachments/assets/d2d75c2b-6725-4fb8-b339-2987ed1a4d8d",
+      "comment": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6493781373"
+    },
+    {
+      "name": "sidebar-menu-after.webp",
+      "sha256": "9c33c21119a7c1b0d3a0de29003211dd35c3039a1c0b496899d0243ee8efb2de",
+      "bytes": 35808,
+      "url": "https://github.com/user-attachments/assets/cb01978f-542a-4dde-99e6-f299aba42db8",
+      "comment": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6493781373"
+    },
+    {
+      "name": "mac-min-150.webp",
+      "sha256": "506dab6f44cb09ab855b6894e044234aa75208350625caafa6caa00a065cc416",
+      "bytes": 25544,
+      "url": "https://github.com/user-attachments/assets/1c948a79-ef4a-42fb-928d-4ba1f80d9f6f",
+      "comment": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6493781373"
+    },
+    {
+      "name": "mac-commands.small.mp4",
+      "sha256": "44586eb1f7bf8191908251a821064f757aac79d5371b4ce64beb6d192a5f0a55",
+      "bytes": 269916,
+      "url": "https://github.com/user-attachments/assets/049dd9f0-7e96-4b9e-82a6-7e7cfb2518ae",
+      "comment": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6493781373"
+    },
+    {
+      "name": "duo-half-horizontal.webp",
+      "sha256": "d1079c108c4917ab3b088342a0445d5b48962249b7d52ba3d4b59e0c5abe5d4c",
+      "bytes": 36984,
+      "url": "https://github.com/user-attachments/assets/13576ce4-e638-440b-a552-dc3b836f0ef4",
+      "comment": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6493817858"
+    },
+    {
+      "name": "duo-half-vertical.webp",
+      "sha256": "e81acba7eeec177bc04aa44c799e0ba780235631c7704eb1f14063a21fe286e4",
+      "bytes": 37118,
+      "url": "https://github.com/user-attachments/assets/94a3deee-f76f-44c4-8456-83bf6a938e70",
+      "comment": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6493817858"
+    },
+    {
+      "name": "mobile-ready-after-cancel.webp",
+      "sha256": "137313e6a203d889a3ece98404af43f35d88c232748350244c00c93d0e25d59e",
+      "bytes": 45046,
+      "url": "https://github.com/user-attachments/assets/eb163141-20e0-48cb-a54a-d3b85afa2f2c",
+      "comment": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6493817858"
+    },
+    {
+      "name": "mobile-exporter-compact.webp",
+      "sha256": "38d08528893d69d4354733ba0c04396fa344bd597b0a747da231630856790eef",
+      "bytes": 15432,
+      "url": "https://github.com/user-attachments/assets/ee03d078-6966-4155-ae3b-fafd0043892a",
+      "comment": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6493817858"
+    }
+  ],
+  "source_commit": "9b0e5d9bd738524fdfc2edb92f578295769dc600",
+  "source_commit_note": "Application and test source; subsequent commit only adds remote evidence references"
+}

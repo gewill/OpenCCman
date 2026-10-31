@@ -1,0 +1,416 @@
+{
+  "date": "2026-10-28",
+  "base": "b8eca56b019d8718a41603b057c3b9f0839c1941",
+  "candidate_build_06_source": {
+    "commit": "b8eca56b019d8718a41603b057c3b9f0839c1941",
+    "status": " M OpenCCman.xcodeproj/project.pbxproj\n M OpenCCman/Model/WorkspaceLayout.swift\n M OpenCCman/Scene/ChangeColorSchemeScene.swift\n M OpenCCman/Scene/ChangeLanguageScene.swift\n M OpenCCman/Scene/FeedbackScene.swift\n M OpenCCman/Scene/HelpScene.swift\n M OpenCCman/Scene/HomeScene.swift\n M OpenCCman/Scene/OpenSourceScene.swift\n M OpenCCman/Scene/ProScene.swift\n M OpenCCman/Scene/RootView.swift\n M OpenCCman/Scene/SettingsScene.swift\n M OpenCCman/View/BackButton.swift\n M OpenCCman/View/MobileLargeFileTaskView.swift\n D OpenCCman/View/PhoneWorkspace.swift\n M OpenCCman/View/ProAlertView.swift\n M OpenCCman/View/WorkspaceComponents.swift\n M OpenCCman/View/WorkspaceSurface.swift\n M OpenCCman/en.lproj/Localizable.strings\n M OpenCCman/zh-Hans.lproj/Localizable.strings\n M OpenCCman/zh-Hant.lproj/Localizable.strings\n M Tests/Regression/WorkspaceChecks.swift\n M Tests/UI/WhatsNewPresentation/WhatsNewPresentation.xcodeproj/project.pbxproj\n M docs/CI.md\n?? OpenCCman/View/WorkspaceKeyboardProbe.swift\n?? Tests/Regression/DuoBuildChecks.py\n?? Tests/UI/WhatsNewPresentation/Tests/DuoReadinessTests.swift\n?? scripts/build-duo-validation.py\n",
+    "diff_sha256": "ce46dc6400a09e16073d901b6d13bf4578a8199f2590d2c9e6f214c06312b40c",
+    "untracked_sha256": {
+      "OpenCCman/View/WorkspaceKeyboardProbe.swift": "d920e8ab4f46f455bbd0c5c2efb5912e2fec10929127ee2c9a4a78d7e3fadfd4",
+      "Tests/Regression/DuoBuildChecks.py": "0ac432c290dffd8ff48edcca715a8181b7d39676718ad9ffaa4fddeff316d7ab",
+      "Tests/UI/WhatsNewPresentation/Tests/DuoReadinessTests.swift": "2ed513a3db9f197bf0966360ce6507970e50baf950f191ae82681cf4f74f0414",
+      "scripts/build-duo-validation.py": "92ec41937c83c54076a450e82d091225b9543eaae956124626829dbae353411e"
+    },
+    "package_resolved_sha256": "ddbb87a4ecb8ef2299d5b739c5c0e41e8ef8bc0a66db0e02873e6ee2cf694f6c"
+  },
+  "xcode": "Xcode 27.1\nBuild version 27A9275",
+  "host": "ProductName:\t\tmacOS\nProductVersion:\t\t27.2\nBuildVersion:\t\t26B123",
+  "status": "passed",
+  "changed_source_sha256": {
+    "OpenCCman.xcodeproj/project.pbxproj": "4d817b10d2df5c1c8c8ff86f7011fb48da16517a2451eb9f613e56e8a06fc447",
+    "OpenCCman/Model/WorkspaceLayout.swift": "d740c2e1ca2c4b9679c0f49b5449cf31eeb941ccbba8fbd5e049852be86df66a",
+    "OpenCCman/Scene/ChangeColorSchemeScene.swift": "7117cf34bca6ed27761d452a88dc1b1677994f3382a38710f45f5a0e37953df8",
+    "OpenCCman/Scene/ChangeLanguageScene.swift": "fa777f944444984f22ac01cfcd7f9ceac5b4c2515a605bd2d2cdd44d2ae6194b",
+    "OpenCCman/Scene/FeedbackScene.swift": "1a02e5a60c89e97897ee92d72c1c7450e04c662b71907f0db1519d218288fab0",
+    "OpenCCman/Scene/HelpScene.swift": "3aae64be12c573f7070559aeeaaef0a70c2d2026b5a441d5af3a3a8d92a3a3ba",
+    "OpenCCman/Scene/HomeScene.swift": "d575ce9a1598a46a87a7bf1903caf0e7cbfab58037f3e50e9ed5c70a7e1db377",
+    "OpenCCman/Scene/OpenSourceScene.swift": "4975468032dbebc46d75c333a1c84c97cb463e2f57f8b2eef2c505c1686387f8",
+    "OpenCCman/Scene/ProScene.swift": "8d3995505ac9a122536019c1feecc32306c4d069868dc33d54862b9f00e83fbd",
+    "OpenCCman/Scene/RootView.swift": "03065222bae59cc11d0f26dbb41555ab09500f32fd58cbd1f3728a4ff37690ba",
+    "OpenCCman/Scene/SettingsScene.swift": "75c0dcc109ef23e0cf2e6752bc10778caf9de04a6c77c63ad187682b56e0757f",
+    "OpenCCman/View/BackButton.swift": "a157e7eea76640270945e4bb90d6a1079f5773681b7750058dfd92d5ba3fe0c0",
+    "OpenCCman/View/MobileLargeFileTaskView.swift": "fb17ed0103bbfbd536f8a401e32b3f7e99e457df4fec6db891e93d97d3f5dd4a",
+    "OpenCCman/View/PhoneWorkspace.swift": null,
+    "OpenCCman/View/ProAlertView.swift": "5f2b37573e712b85b8c94c08cc10e67773da8473a50ed1ea8eec260efa027eda",
+    "OpenCCman/View/WorkspaceComponents.swift": "4bb8cc3bd37e89038926ea61c5d9d1009a159d1a756f8a65c08a55e3f3dea0ec",
+    "OpenCCman/View/WorkspaceKeyboardProbe.swift": "d920e8ab4f46f455bbd0c5c2efb5912e2fec10929127ee2c9a4a78d7e3fadfd4",
+    "OpenCCman/View/WorkspaceSurface.swift": "20e5eb9309f7e6df2876ccd2ab446861e1607f729866152de3e11048461ade89",
+    "OpenCCman/en.lproj/Localizable.strings": "b41123adf6a04694ca20960ebc6a98bb1aad1026cca4e4860762cf14992c6e2c",
+    "OpenCCman/zh-Hans.lproj/Localizable.strings": "37c9ef29347eb85df90ab0f1fec05d081e3f0f59a04010093d2a5dd905ffee11",
+    "OpenCCman/zh-Hant.lproj/Localizable.strings": "62ad117bd9ae1a2c9283e8bc517d6299f40f545bb87ce09a976e3ce83088a250",
+    "Tests/Regression/DuoBuildChecks.py": "0ac432c290dffd8ff48edcca715a8181b7d39676718ad9ffaa4fddeff316d7ab",
+    "Tests/Regression/WorkspaceChecks.swift": "be98597a8872ec2dd27d5b6a563662b7cd7c26e588b6ac1148181060e90d4162",
+    "Tests/UI/WhatsNewPresentation/Tests/DuoReadinessTests.swift": "2ed513a3db9f197bf0966360ce6507970e50baf950f191ae82681cf4f74f0414",
+    "Tests/UI/WhatsNewPresentation/WhatsNewPresentation.xcodeproj/project.pbxproj": "9e26b63114046f6d34b9d9cec5aaade9acfc79bd20f05072a597dc8770358e24",
+    "scripts/build-duo-validation.py": "92ec41937c83c54076a450e82d091225b9543eaae956124626829dbae353411e"
+  },
+  "artifacts": {
+    "ios": {
+      "plist": {
+        "CFBundleIdentifier": "org.gewill.OpenCCman.WhatsNewUITests",
+        "CFBundleShortVersionString": "2.1",
+        "CFBundleVersion": "30",
+        "DTCompiler": "com.apple.compilers.llvm.clang.1_0",
+        "DTPlatformBuild": "24A94232",
+        "DTPlatformName": "iphonesimulator",
+        "DTPlatformVersion": "27.1",
+        "DTSDKBuild": "24A94232",
+        "DTSDKName": "iphonesimulator27.1",
+        "DTXcode": "2710",
+        "DTXcodeBuild": "27A9275",
+        "MinimumOSVersion": "15.0",
+        "UIApplicationSceneManifest": {
+          "UIApplicationSupportsMultipleScenes": true,
+          "UISceneConfigurations": {}
+        },
+        "UIApplicationSupportsIndirectInputEvents": true,
+        "UIDeviceFamily": [
+          1,
+          2
+        ],
+        "UILaunchScreen": {
+          "UIColorName": "LaunchBackground",
+          "UIImageName": "LaunchMark"
+        },
+        "UIStatusBarStyle": "UIStatusBarStyleDefault",
+        "UISupportedInterfaceOrientations~ipad": [
+          "UIInterfaceOrientationPortrait",
+          "UIInterfaceOrientationPortraitUpsideDown",
+          "UIInterfaceOrientationLandscapeLeft",
+          "UIInterfaceOrientationLandscapeRight"
+        ],
+        "UISupportedInterfaceOrientations~iphone": [
+          "UIInterfaceOrientationPortrait",
+          "UIInterfaceOrientationLandscapeLeft",
+          "UIInterfaceOrientationLandscapeRight"
+        ]
+      },
+      "binary_sdks": [
+        "27.1"
+      ],
+      "executable_sha256": "31b4512f5d393e9e1348f996ab56dd3710fbeea21984e0cf75696fcf5be5b30e",
+      "info_plist_sha256": "e7950891c95f08c6ebbe2c72df625bbe3ad88fad557e5c492d2effc6998a837d"
+    },
+    "mac": {
+      "plist": {
+        "CFBundleIdentifier": "org.gewill.OpenCCman.WhatsNewUITests",
+        "CFBundleShortVersionString": "2.1",
+        "CFBundleVersion": "30",
+        "DTCompiler": "com.apple.compilers.llvm.clang.1_0",
+        "DTPlatformBuild": "26A425",
+        "DTPlatformName": "macosx",
+        "DTPlatformVersion": "27.0",
+        "DTSDKBuild": "26A425",
+        "DTSDKName": "macosx27.0",
+        "DTXcode": "2710",
+        "DTXcodeBuild": "27A9275",
+        "LSMinimumSystemVersion": "12.0",
+        "UIApplicationSupportsIndirectInputEvents": false,
+        "UILaunchScreen": {
+          "UIColorName": "LaunchBackground",
+          "UIImageName": "LaunchMark"
+        },
+        "UIStatusBarStyle": "",
+        "UISupportedInterfaceOrientations~ipad": [
+          "UIInterfaceOrientationPortrait",
+          "UIInterfaceOrientationPortraitUpsideDown",
+          "UIInterfaceOrientationLandscapeLeft",
+          "UIInterfaceOrientationLandscapeRight"
+        ],
+        "UISupportedInterfaceOrientations~iphone": [
+          "UIInterfaceOrientationPortrait",
+          "UIInterfaceOrientationLandscapeLeft",
+          "UIInterfaceOrientationLandscapeRight"
+        ]
+      },
+      "binary_sdks": [
+        "27.0",
+        "27.0"
+      ],
+      "executable_sha256": "3f7676b264f462f8fcc142e2390864633d4a256478b907f5a9ec38f75c77716a",
+      "info_plist_sha256": "473f4f01df3af8140153e967f32ada8d381fc099145265b688beeeca86bb4a3d"
+    }
+  },
+  "ui": {
+    "duo-core-final": {
+      "build_log_sha256": "3d2d5a1858b98a618f7a7b80b0b87b001e23c6e6af0de37171be393341881394",
+      "summary": "Executed 6 tests, with 1 test skipped and 0 failures (0 unexpected) in 91.242 (91.251) seconds",
+      "cases": [
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testEnglishNavigationAndSettingsKeepDocument]' passed (21.815 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testHostResizeKeepsNativeDocument]' skipped (0.045 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testKeyboardDismissalAndConversion]' passed (12.165 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testSimplifiedNavigationAndSettingsKeepDocument]' passed (21.227 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testSystemProAlertCancelsAndOpensClosableSheet]' passed (14.855 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testTraditionalNavigationAndSettingsKeepDocument]' passed (21.135 seconds)."
+      ],
+      "candidate": "candidate-build-05"
+    },
+    "duo-xxxl-final": {
+      "build_log_sha256": "526fc54df0da6cb02f3594a3bc141618b5291279416aa030ef5bb5733955d3ee",
+      "summary": "Executed 6 tests, with 1 test skipped and 0 failures (0 unexpected) in 91.500 (91.514) seconds",
+      "cases": [
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testEnglishNavigationAndSettingsKeepDocument]' passed (21.746 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testHostResizeKeepsNativeDocument]' skipped (0.052 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testKeyboardDismissalAndConversion]' passed (12.186 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testSimplifiedNavigationAndSettingsKeepDocument]' passed (21.286 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testSystemProAlertCancelsAndOpensClosableSheet]' passed (15.015 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testTraditionalNavigationAndSettingsKeepDocument]' passed (21.214 seconds)."
+      ],
+      "candidate": "candidate-build-06"
+    },
+    "duo-host-resize": {
+      "build_log_sha256": "f3065d780b4c4d090134efdd45bfea43041fe89a2f3536def9b86f66d0cb8532",
+      "summary": "Executed 1 test, with 0 failures (0 unexpected) in 15.744 (15.749) seconds",
+      "cases": [
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testHostResizeKeepsNativeDocument]' passed (15.744 seconds)."
+      ],
+      "candidate": "candidate-build-06"
+    }
+  },
+  "continuity_trace_sha256": "a9b80c17c218cdca48f89a57f244b3c57c83d6d62c4b4f8516215e90fb877c0a",
+  "continuity_samples": [
+    {
+      "axis": "vertical",
+      "busy": false,
+      "container": [
+        382,
+        292
+      ],
+      "division": [],
+      "editors": [
+        {
+          "characters": 22,
+          "editable": true,
+          "focused": true,
+          "frame": [
+            40,
+            368.66666666666663,
+            302,
+            180
+          ],
+          "identity": "ObjectIdentifier(0x00000001042d1800)",
+          "marked": false,
+          "offset": [
+            0,
+            0
+          ],
+          "selection": [
+            0,
+            0
+          ]
+        },
+        {
+          "characters": 22,
+          "editable": false,
+          "focused": false,
+          "frame": [
+            40,
+            680.6666666666665,
+            302,
+            180
+          ],
+          "identity": "ObjectIdentifier(0x00000001042d2400)",
+          "marked": false,
+          "offset": [
+            0,
+            0
+          ],
+          "selection": [
+            22,
+            0
+          ]
+        }
+      ],
+      "input_characters": 22,
+      "model": "36AE734A-0CC9-484F-BC78-10E1A6AA65E8",
+      "pro_alert": false,
+      "probe_origin": [
+        0,
+        82
+      ],
+      "probe_size": [
+        382,
+        292
+      ],
+      "quota_exhausted": false,
+      "result_characters": 22,
+      "safe_area": [
+        82,
+        0,
+        304,
+        84
+      ],
+      "scene": "9B63200F-4041-4C42-A4C9-11F6C79499D4",
+      "window": [
+        466,
+        678
+      ]
+    },
+    {
+      "axis": "horizontal",
+      "busy": false,
+      "container": [
+        950,
+        274
+      ],
+      "division": [],
+      "editors": [
+        {
+          "characters": 22,
+          "editable": true,
+          "focused": true,
+          "frame": [
+            40,
+            250.66666666666663,
+            389,
+            193.66666666666666
+          ],
+          "identity": "ObjectIdentifier(0x00000001042d1800)",
+          "marked": false,
+          "offset": [
+            0,
+            0
+          ],
+          "selection": [
+            0,
+            0
+          ]
+        },
+        {
+          "characters": 22,
+          "editable": false,
+          "focused": false,
+          "frame": [
+            521,
+            148.33333333333331,
+            389,
+            296
+          ],
+          "identity": "ObjectIdentifier(0x00000001042d2400)",
+          "marked": false,
+          "offset": [
+            0,
+            0
+          ],
+          "selection": [
+            22,
+            0
+          ]
+        }
+      ],
+      "input_characters": 22,
+      "model": "36AE734A-0CC9-484F-BC78-10E1A6AA65E8",
+      "pro_alert": false,
+      "probe_origin": [
+        0,
+        92
+      ],
+      "probe_size": [
+        950,
+        274
+      ],
+      "quota_exhausted": false,
+      "result_characters": 22,
+      "safe_area": [
+        92,
+        0,
+        303,
+        0
+      ],
+      "scene": "9B63200F-4041-4C42-A4C9-11F6C79499D4",
+      "window": [
+        950,
+        669
+      ]
+    },
+    {
+      "axis": "vertical",
+      "busy": false,
+      "container": [
+        400,
+        364
+      ],
+      "division": [],
+      "editors": [
+        {
+          "characters": 22,
+          "editable": true,
+          "focused": true,
+          "frame": [
+            40,
+            245.33333333333331,
+            320,
+            180
+          ],
+          "identity": "ObjectIdentifier(0x00000001042d1800)",
+          "marked": false,
+          "offset": [
+            0,
+            0
+          ],
+          "selection": [
+            0,
+            0
+          ]
+        },
+        {
+          "characters": 22,
+          "editable": false,
+          "focused": false,
+          "frame": [
+            40,
+            573.3333333333333,
+            320,
+            180
+          ],
+          "identity": "ObjectIdentifier(0x00000001042d2400)",
+          "marked": false,
+          "offset": [
+            0,
+            0
+          ],
+          "selection": [
+            22,
+            0
+          ]
+        }
+      ],
+      "input_characters": 22,
+      "model": "36AE734A-0CC9-484F-BC78-10E1A6AA65E8",
+      "pro_alert": false,
+      "probe_origin": [
+        0,
+        74
+      ],
+      "probe_size": [
+        400,
+        364
+      ],
+      "quota_exhausted": false,
+      "result_characters": 22,
+      "safe_area": [
+        74,
+        0,
+        312,
+        0
+      ],
+      "scene": "9B63200F-4041-4C42-A4C9-11F6C79499D4",
+      "window": [
+        400,
+        750
+      ]
+    }
+  ],
+  "default_ui_candidate_build_05_source": {
+    "commit": "b8eca56b019d8718a41603b057c3b9f0839c1941",
+    "status": " M OpenCCman.xcodeproj/project.pbxproj\n M OpenCCman/Model/WorkspaceLayout.swift\n M OpenCCman/Scene/ChangeColorSchemeScene.swift\n M OpenCCman/Scene/ChangeLanguageScene.swift\n M OpenCCman/Scene/FeedbackScene.swift\n M OpenCCman/Scene/HelpScene.swift\n M OpenCCman/Scene/HomeScene.swift\n M OpenCCman/Scene/OpenSourceScene.swift\n M OpenCCman/Scene/ProScene.swift\n M OpenCCman/Scene/RootView.swift\n M OpenCCman/Scene/SettingsScene.swift\n M OpenCCman/View/BackButton.swift\n M OpenCCman/View/MobileLargeFileTaskView.swift\n D OpenCCman/View/PhoneWorkspace.swift\n M OpenCCman/View/ProAlertView.swift\n M OpenCCman/View/WorkspaceComponents.swift\n M OpenCCman/View/WorkspaceSurface.swift\n M OpenCCman/en.lproj/Localizable.strings\n M OpenCCman/zh-Hans.lproj/Localizable.strings\n M OpenCCman/zh-Hant.lproj/Localizable.strings\n M Tests/Regression/WorkspaceChecks.swift\n M Tests/UI/WhatsNewPresentation/WhatsNewPresentation.xcodeproj/project.pbxproj\n M docs/CI.md\n?? OpenCCman/View/WorkspaceKeyboardProbe.swift\n?? Tests/Regression/DuoBuildChecks.py\n?? Tests/UI/WhatsNewPresentation/Tests/DuoReadinessTests.swift\n?? scripts/build-duo-validation.py\n",
+    "diff_sha256": "7b947f84b9ac82a58671b0d3933c10a93717b5c02a68d53702d4c5aa833e0bbb",
+    "untracked_sha256": {
+      "OpenCCman/View/WorkspaceKeyboardProbe.swift": "d920e8ab4f46f455bbd0c5c2efb5912e2fec10929127ee2c9a4a78d7e3fadfd4",
+      "Tests/Regression/DuoBuildChecks.py": "0ac432c290dffd8ff48edcca715a8181b7d39676718ad9ffaa4fddeff316d7ab",
+      "Tests/UI/WhatsNewPresentation/Tests/DuoReadinessTests.swift": "2ed513a3db9f197bf0966360ce6507970e50baf950f191ae82681cf4f74f0414",
+      "scripts/build-duo-validation.py": "92ec41937c83c54076a450e82d091225b9543eaae956124626829dbae353411e"
+    },
+    "package_resolved_sha256": "ddbb87a4ecb8ef2299d5b739c5c0e41e8ef8bc0a66db0e02873e6ee2cf694f6c"
+  }
+}

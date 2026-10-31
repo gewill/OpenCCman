@@ -1,0 +1,20 @@
+{
+  "macOS arm64/x86_64": {
+    "result": "BUILD SUCCEEDED",
+    "configuration": "Debug",
+    "signed": false,
+    "raw_log_sha256": "014ef9ccfb32a3545967c205f10727925fe52875e6c6c11246d6fdc216c7cea0",
+    "binary_sha256": "ace06bdb772c124e2ecbac1c7922890c519dd400572abb90a8d85fbd9d47fb8d",
+    "build_versions": "/tmp/openccman-257-validation.jMM71p/app-derived/Build/Products/Debug/OpenCCman.app/Contents/MacOS/OpenCCman (architecture x86_64):\nLoad command 10\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 12.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1\n/tmp/openccman-257-validation.jMM71p/app-derived/Build/Products/Debug/OpenCCman.app/Contents/MacOS/OpenCCman (architecture arm64):\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 12.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1"
+  },
+  "iOS Simulator arm64": {
+    "result": "BUILD SUCCEEDED",
+    "configuration": "Debug",
+    "signed": false,
+    "raw_log_sha256": "dc7ef63efe31f468d5ff46a95a6efdd301be9835d9a1805a4ec3be01efe3263d",
+    "binary_sha256": "b65c5db671661cf13fee3da155dfd3870391dff218ed41a698d56588f47383ae",
+    "build_versions": "/tmp/openccman-257-validation.jMM71p/app-derived/Build/Products/Debug-iphonesimulator/OpenCCman.app/OpenCCman:\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform IOSSIMULATOR\n    minos 15.0\n      sdk 27.0\n   ntools 1\n     tool LD\n  version 27037.1"
+  },
+  "toolchain": "Xcode 27.0\nBuild version 27A266a",
+  "lockfile_unchanged": true
+}

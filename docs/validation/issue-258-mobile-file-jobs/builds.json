@@ -1,0 +1,64 @@
+{
+  "macOS arm64/x86_64": {
+    "result": "BUILD SUCCEEDED",
+    "configuration": "Debug",
+    "signed": false,
+    "log_sha256": "22ddd1d5ef552b5683ac94f12d87516ab206ad07fd83c07ba3e88bab8cd23379",
+    "privacy_manifest": {
+      "NSPrivacyCollectedDataTypes": [],
+      "NSPrivacyAccessedAPITypes": [
+        {
+          "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryDiskSpace",
+          "NSPrivacyAccessedAPITypeReasons": [
+            "E174.1"
+          ]
+        },
+        {
+          "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryFileTimestamp",
+          "NSPrivacyAccessedAPITypeReasons": [
+            "C617.1",
+            "3B52.1"
+          ]
+        },
+        {
+          "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults",
+          "NSPrivacyAccessedAPITypeReasons": [
+            "CA92.1"
+          ]
+        }
+      ]
+    }
+  },
+  "iOS Simulator arm64": {
+    "result": "BUILD SUCCEEDED",
+    "configuration": "Debug",
+    "signed": false,
+    "log_sha256": "e1f61122933f052c0d74951db3f684e561fa3d87ff58b6dd7de40e408a760932",
+    "privacy_manifest": {
+      "NSPrivacyCollectedDataTypes": [],
+      "NSPrivacyAccessedAPITypes": [
+        {
+          "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryDiskSpace",
+          "NSPrivacyAccessedAPITypeReasons": [
+            "E174.1"
+          ]
+        },
+        {
+          "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryFileTimestamp",
+          "NSPrivacyAccessedAPITypeReasons": [
+            "C617.1",
+            "3B52.1"
+          ]
+        },
+        {
+          "NSPrivacyAccessedAPIType": "NSPrivacyAccessedAPICategoryUserDefaults",
+          "NSPrivacyAccessedAPITypeReasons": [
+            "CA92.1"
+          ]
+        }
+      ]
+    }
+  },
+  "toolchain": "Xcode 27.0\nBuild version 27A266a",
+  "lockfile_unchanged": true
+}

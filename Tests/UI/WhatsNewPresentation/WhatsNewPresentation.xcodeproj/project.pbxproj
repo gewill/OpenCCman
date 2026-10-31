@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		9829DB5B2101B325CC63AC05 /* WhatsNewPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1DF57427838093D7C4DEC3 /* WhatsNewPresentationTests.swift */; };
+		B0ED64AE4DF84E543B77113D /* DuoReadinessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47577C365E77D924EC3D127F /* DuoReadinessTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		47577C365E77D924EC3D127F /* DuoReadinessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuoReadinessTests.swift; sourceTree = "<group>"; };
 		A38A99474D6BA8C5F558DE93 /* WhatsNewPresentationTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = WhatsNewPresentationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE1DF57427838093D7C4DEC3 /* WhatsNewPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewPresentationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -19,6 +21,7 @@
 		42F17A13362E5E173EA9A5FD /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				47577C365E77D924EC3D127F /* DuoReadinessTests.swift */,
 				AE1DF57427838093D7C4DEC3 /* WhatsNewPresentationTests.swift */,
 			);
 			path = Tests;
@@ -95,6 +98,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0ED64AE4DF84E543B77113D /* DuoReadinessTests.swift in Sources */,
 				9829DB5B2101B325CC63AC05 /* WhatsNewPresentationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -26,6 +26,8 @@ SOURCES = [
     "OpenCCman/Services/ChineseConversionService.swift",
     "OpenCCman/Services/TextFileService.swift",
     "OpenCCman/Services/StreamingTextFileService.swift",
+    "OpenCCman/Services/StreamingConversionPump.swift",
+    "OpenCCman/Services/FileConversionPolicy.swift",
     "Tests/Benchmarks/StreamingForceKillProbe.swift",
 ]
 SIZE = 20 * 1024 * 1024

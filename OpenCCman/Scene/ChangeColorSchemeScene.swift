@@ -11,10 +11,13 @@ struct ChangeColorSchemeScene: View {
       Color("mainColor")
         .ignoresSafeArea()
       VStack(spacing: Constant.padding) {
+        #if os(macOS)
         navi
+        #endif
         list
       }
     }
+    .appNavigation("Appearance")
   }
 
   var navi: some View {

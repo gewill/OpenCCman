@@ -15,6 +15,9 @@ struct RootView: View {
   @State private var isVisible = false
   @State private var windowFrame: CGRect = .zero
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
+  #if os(iOS)
+    @ObservedObject private var mobileFile = MobileFileRuntime.shared.coordinator
+  #endif
   #if os(macOS)
     @ObservedObject private var largeFile = MacLargeFileCoordinator.shared
     @State private var largeFilePresentationIsActive = false
@@ -81,22 +84,49 @@ struct RootView: View {
         .onAppear { largeFilePresentationIsActive = true }
     }
     #endif
+    #if os(iOS)
+    .background(MobileFileSceneReader(owner: viewModel.windowOwnerID).frame(width: 0, height: 0))
+    .sheet(isPresented: Binding(
+      get: { MobileFileRuntime.isEnabled && mobileFile.presentationOwner == viewModel.windowOwnerID },
+      set: { if !$0 { mobileFile.dismissPresentation() } }
+    )) {
+      MobileLargeFileTaskView(coordinator: mobileFile)
+    }
+    .onChange(of: mobileFile.phase) { phase in
+      if scenePhase == .active, phase == .ready || phase == .failed || phase == .waitingForUnlock {
+        _ = mobileFile.claimPresentation(viewModel.windowOwnerID)
+      }
+    }
+    .onChange(of: scenePhase) { phase in
+      if phase == .active, MobileFileRuntime.isEnabled, mobileFile.presentationOwner == nil {
+        _ = mobileFile.claimPresentation(viewModel.windowOwnerID)
+      }
+    }
+    #endif
     .onAppear {
+      #if os(iOS)
+      MobileFileRuntime.shared.activate()
+      #if DEBUG
+      MobileFileRuntime.shared.importQAFileIfRequested(into: viewModel)
+      #endif
+      #endif
       #if DEBUG
         if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
            ProcessInfo.processInfo.arguments.contains("-qa-unread-whats-new-at-launch") {
           UserDefaults.standard.removeObject(forKey: WhatsNewCoordinator.lastPresentedVersionKey)
         }
         if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
-           ProcessInfo.processInfo.arguments.contains("-qa-mark-whats-new-read-at-launch"),
-           let release = whatsNew.release {
-          UserDefaults.standard.set(release.version, forKey: WhatsNewCoordinator.lastPresentedVersionKey)
-          UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastVersionPromptedForReview.rawValue)
-          if ProcessInfo.processInfo.arguments.contains("-qa-suppress-review") {
-            UserDefaults.standard.set(release.version, forKey: UserDefaultsKeys.lastVersionPromptedForReview.rawValue)
-          }
+           ProcessInfo.processInfo.arguments.contains("-qa-mark-whats-new-read-at-launch") {
+          // Quota fixtures must not depend on asynchronous release-note loading.
           TestNumbersPerDayManager.setQuotaForQA(
             exhausted: ProcessInfo.processInfo.arguments.contains("-qa-exhaust-quota"))
+          if let release = whatsNew.release {
+            UserDefaults.standard.set(release.version, forKey: WhatsNewCoordinator.lastPresentedVersionKey)
+            UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.lastVersionPromptedForReview.rawValue)
+            if ProcessInfo.processInfo.arguments.contains("-qa-suppress-review") {
+              UserDefaults.standard.set(release.version, forKey: UserDefaultsKeys.lastVersionPromptedForReview.rawValue)
+            }
+          }
         }
       #endif
       isVisible = true
@@ -151,8 +181,12 @@ struct RootView: View {
       }
     }
     .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenSettingsFromMenu"))) { notification in
-      guard isTargetWindow(for: notification) else { return }
+      guard isTargetWindow(for: notification), navigator.path != "/settings" else { return }
       navigator.navigate("/settings")
+    }
+    .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenProFromMenu"))) { notification in
+      guard isTargetWindow(for: notification), navigator.path != "/pro" else { return }
+      navigator.navigate("/pro")
     }
     .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenHelpFromMenu"))) { notification in
       guard isTargetWindow(for: notification) else { return }
@@ -200,6 +234,8 @@ struct RootView: View {
     )
     #if os(macOS)
       eligibility.hasLargeFileTask = largeFile.isBusy || largeFilePresentationIsActive
+    #else
+      eligibility.hasLargeFileTask = MobileFileRuntime.isEnabled && (mobileFile.session != nil || mobileFile.presentationOwner != nil)
     #endif
     return eligibility
   }

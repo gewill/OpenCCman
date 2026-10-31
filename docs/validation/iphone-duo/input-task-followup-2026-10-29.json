@@ -1,0 +1,1464 @@
+{
+  "schema": 1,
+  "date": "2026-10-29",
+  "issues": [
+    280,
+    282
+  ],
+  "issues_closed": false,
+  "source_commit": "3a3855c2d298ed91db66afe5ac15a1f0dacfeb92",
+  "source_state_during_acceptance": "clean; app/test sources unchanged; cached prior dirty candidate matched current source hashes",
+  "merged_pr": {
+    "number": 288,
+    "push_ci": {
+      "conclusion": "success",
+      "headSha": "3a3855c2d298ed91db66afe5ac15a1f0dacfeb92",
+      "status": "completed",
+      "url": "https://github.com/gewill/OpenCCman/actions/runs/40862993653"
+    }
+  },
+  "source_hashes": {
+    "OpenCCman/OpenCCmanApp.swift": "5aab18d632029b7d3da0bef761d3a94e0c07a12f2b02e009e0923f71c8014947",
+    "OpenCCman/Scene/RootView.swift": "2c5721a1a67afe31da21ac87706036aca8df0b7dc1f4d3ad1667415b352d5625",
+    "OpenCCman/View/WorkspaceComponents.swift": "d0b39bbd0922ee62182e70c50eca5a947f5c70174c8d231471ce5544110b5b26",
+    "OpenCCman/View/WorkspaceSurface.swift": "4e06b47585dfff9921d666414e7b0522866c4205f40319be1fcb12140a241fe2",
+    "OpenCCman/en.lproj/Localizable.strings": "14b0bcdf18e7d81d9c225ddab46a6874ed49b90e2a3b157c06f55b1ca31d203d",
+    "Tests/UI/WhatsNewPresentation/Tests/DuoReadinessTests.swift": "7c25ec4f19368ca58565c380c5efe8a66d6fce53596738ce7fd568baa52f57d5"
+  },
+  "package_resolved_sha256": "ddbb87a4ecb8ef2299d5b739c5c0e41e8ef8bc0a66db0e02873e6ee2cf694f6c",
+  "build": {
+    "configuration": "Debug",
+    "bundle_id": "org.gewill.OpenCCman.WhatsNewUITests",
+    "version": "2.1(30)",
+    "xcode": "27.1 (27A9275)",
+    "developer_dir": "/Applications/Xcode.app/Contents/Developer",
+    "ios_runtime": "27.1",
+    "reused_build_record": "local-acceptance-2026-10-29.json",
+    "ios_dylib_sha256": "f69b7bbea0700611e338f4bf5ee3116b07508c6d9e9967905abd1b063ba7534e",
+    "mac_dylib_sha256": "9f226919e7e888996cc2c0f0b34bf94c720d048006f5979dd303e101cbd0da9e",
+    "ios_installed_bundle_files": 141,
+    "ios_installed_bundle_different_files": [],
+    "signed_distribution_acceptance": false
+  },
+  "environment": {
+    "device": "4CAD3041-0744-41A6-8B4E-F934CA9F0778",
+    "language": "English",
+    "font": "large except Customer Center also XXXL",
+    "devicectl": "651.13.5",
+    "axe": "1.8.0; physical taps"
+  },
+  "input_reading": {
+    "selection": [
+      {
+        "snapshot": "selection2-before",
+        "editors": [
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 0}",
+            "editable": true,
+            "selection": [
+              6,
+              3
+            ],
+            "frame": "NSRect: {{0, 0}, {302, 180}}",
+            "content": "NSSize: {302, 44}",
+            "window": "NSRect: {{0, 0}, {466, 678}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30000",
+            "focused": true,
+            "characters": 24,
+            "sha256": "a7c5190204e17f461ce564e2871bb8ec536afcce70a1a924142f909cb42d934f"
+          },
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 0}",
+            "editable": false,
+            "selection": [
+              24,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {302, 180}}",
+            "content": "NSSize: {302, 44}",
+            "window": "NSRect: {{0, 0}, {466, 678}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30c00",
+            "focused": false,
+            "characters": 24,
+            "sha256": "a039b7d5456aed515063976c48995d242439af91e052aa3f6a6760096225df0f"
+          }
+        ]
+      },
+      {
+        "snapshot": "selection2-wide",
+        "editors": [
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 0}",
+            "editable": true,
+            "selection": [
+              6,
+              3
+            ],
+            "frame": "NSRect: {{0, 0}, {389, 193.66666666666666}}",
+            "content": "NSSize: {389, 44}",
+            "window": "NSRect: {{0, 0}, {950, 669}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30000",
+            "focused": true,
+            "characters": 24,
+            "sha256": "a7c5190204e17f461ce564e2871bb8ec536afcce70a1a924142f909cb42d934f"
+          },
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 0}",
+            "editable": false,
+            "selection": [
+              24,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {389, 296}}",
+            "content": "NSSize: {389, 44}",
+            "window": "NSRect: {{0, 0}, {950, 669}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30c00",
+            "focused": false,
+            "characters": 24,
+            "sha256": "a039b7d5456aed515063976c48995d242439af91e052aa3f6a6760096225df0f"
+          }
+        ]
+      },
+      {
+        "snapshot": "selection2-compact",
+        "editors": [
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 0}",
+            "editable": true,
+            "selection": [
+              6,
+              3
+            ],
+            "frame": "NSRect: {{0, 0}, {320, 180}}",
+            "content": "NSSize: {320, 44}",
+            "window": "NSRect: {{0, 0}, {400, 750}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30000",
+            "focused": true,
+            "characters": 24,
+            "sha256": "a7c5190204e17f461ce564e2871bb8ec536afcce70a1a924142f909cb42d934f"
+          },
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 0}",
+            "editable": false,
+            "selection": [
+              24,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {320, 180}}",
+            "content": "NSSize: {320, 44}",
+            "window": "NSRect: {{0, 0}, {400, 750}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30c00",
+            "focused": false,
+            "characters": 24,
+            "sha256": "a039b7d5456aed515063976c48995d242439af91e052aa3f6a6760096225df0f"
+          }
+        ]
+      },
+      {
+        "snapshot": "selection2-native-return",
+        "editors": [
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 0}",
+            "editable": true,
+            "selection": [
+              6,
+              3
+            ],
+            "frame": "NSRect: {{0, 0}, {302, 180}}",
+            "content": "NSSize: {302, 44}",
+            "window": "NSRect: {{0, 0}, {466, 678}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30000",
+            "focused": true,
+            "characters": 24,
+            "sha256": "a7c5190204e17f461ce564e2871bb8ec536afcce70a1a924142f909cb42d934f"
+          },
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 0}",
+            "editable": false,
+            "selection": [
+              24,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {302, 180}}",
+            "content": "NSSize: {302, 44}",
+            "window": "NSRect: {{0, 0}, {466, 678}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30c00",
+            "focused": false,
+            "characters": 24,
+            "sha256": "a039b7d5456aed515063976c48995d242439af91e052aa3f6a6760096225df0f"
+          }
+        ]
+      }
+    ],
+    "ime": [
+      {
+        "snapshot": "ime-marked-before",
+        "editors": [
+          {
+            "marked": true,
+            "offset": "NSPoint: {0, 0}",
+            "editable": true,
+            "selection": [
+              28,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {302, 180}}",
+            "content": "NSSize: {302, 44}",
+            "window": "NSRect: {{0, 0}, {466, 678}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30000",
+            "focused": true,
+            "characters": 28,
+            "sha256": "27a0538c7e1895dcb6efba5a68b835cc5d87392d73b831791c00c898c442d268"
+          },
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 0}",
+            "editable": false,
+            "selection": [
+              0,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {302, 180}}",
+            "content": "NSSize: {302, 22}",
+            "window": "NSRect: {{0, 0}, {466, 678}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30c00",
+            "focused": false,
+            "characters": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ]
+      },
+      {
+        "snapshot": "ime-v2-wide",
+        "editors": [
+          {
+            "marked": true,
+            "offset": "NSPoint: {0, 0}",
+            "editable": true,
+            "selection": [
+              28,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {389, 193.66666666666666}}",
+            "content": "NSSize: {389, 44}",
+            "window": "NSRect: {{0, 0}, {950, 669}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30000",
+            "focused": true,
+            "characters": 28,
+            "sha256": "27a0538c7e1895dcb6efba5a68b835cc5d87392d73b831791c00c898c442d268"
+          },
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 0}",
+            "editable": false,
+            "selection": [
+              0,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {389, 269.66666666666663}}",
+            "content": "NSSize: {389, 22}",
+            "window": "NSRect: {{0, 0}, {950, 669}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30c00",
+            "focused": false,
+            "characters": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ]
+      },
+      {
+        "snapshot": "ime-v2-compact",
+        "editors": [
+          {
+            "marked": true,
+            "offset": "NSPoint: {0, 0}",
+            "editable": true,
+            "selection": [
+              28,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {320, 180}}",
+            "content": "NSSize: {320, 44}",
+            "window": "NSRect: {{0, 0}, {400, 750}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30000",
+            "focused": true,
+            "characters": 28,
+            "sha256": "27a0538c7e1895dcb6efba5a68b835cc5d87392d73b831791c00c898c442d268"
+          },
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 0}",
+            "editable": false,
+            "selection": [
+              0,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {320, 180}}",
+            "content": "NSSize: {320, 22}",
+            "window": "NSRect: {{0, 0}, {400, 750}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30c00",
+            "focused": false,
+            "characters": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ]
+      },
+      {
+        "snapshot": "ime-v2-intermediate",
+        "editors": [
+          {
+            "marked": true,
+            "offset": "NSPoint: {0, 0}",
+            "editable": true,
+            "selection": [
+              28,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {640, 180}}",
+            "content": "NSSize: {640, 22}",
+            "window": "NSRect: {{0, 0}, {720, 540}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30000",
+            "focused": true,
+            "characters": 28,
+            "sha256": "27a0538c7e1895dcb6efba5a68b835cc5d87392d73b831791c00c898c442d268"
+          },
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 0}",
+            "editable": false,
+            "selection": [
+              0,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {640, 180}}",
+            "content": "NSSize: {640, 22}",
+            "window": "NSRect: {{0, 0}, {720, 540}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30c00",
+            "focused": false,
+            "characters": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ]
+      },
+      {
+        "snapshot": "ime-final-native-return",
+        "editors": [
+          {
+            "marked": true,
+            "offset": "NSPoint: {0, 0}",
+            "editable": true,
+            "selection": [
+              28,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {302, 180}}",
+            "content": "NSSize: {302, 44}",
+            "window": "NSRect: {{0, 0}, {466, 678}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30000",
+            "focused": true,
+            "characters": 28,
+            "sha256": "27a0538c7e1895dcb6efba5a68b835cc5d87392d73b831791c00c898c442d268"
+          },
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 0}",
+            "editable": false,
+            "selection": [
+              0,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {302, 180}}",
+            "content": "NSSize: {302, 22}",
+            "window": "NSRect: {{0, 0}, {466, 678}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30c00",
+            "focused": false,
+            "characters": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ]
+      }
+    ],
+    "reading": [
+      {
+        "snapshot": "reading-middle-before",
+        "editors": [
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 2381.3333333333335}",
+            "editable": true,
+            "selection": [
+              2879,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {389, 258.66666666666663}}",
+            "content": "NSSize: {389, 2640}",
+            "window": "NSRect: {{0, 0}, {950, 669}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30000",
+            "focused": false,
+            "characters": 2879,
+            "sha256": "fa13bfd882daef304178792597814fae2c14fd89280cefdf7285e0c929bd069f"
+          },
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 1444}",
+            "editable": false,
+            "selection": [
+              2879,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {389, 361}}",
+            "content": "NSSize: {389, 2640}",
+            "window": "NSRect: {{0, 0}, {950, 669}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30c00",
+            "focused": false,
+            "characters": 2879,
+            "sha256": "eedebd84fe551968c64de365f69ad84e848893d80c19ee59f41fd5a0aa88e44f"
+          }
+        ]
+      },
+      {
+        "snapshot": "reading-middle-compact",
+        "editors": [
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 2724}",
+            "editable": true,
+            "selection": [
+              2879,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {320, 180}}",
+            "content": "NSSize: {320, 3058}",
+            "window": "NSRect: {{0, 0}, {400, 750}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30000",
+            "focused": false,
+            "characters": 2879,
+            "sha256": "fa13bfd882daef304178792597814fae2c14fd89280cefdf7285e0c929bd069f"
+          },
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 1598}",
+            "editable": false,
+            "selection": [
+              2879,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {320, 180}}",
+            "content": "NSSize: {320, 2948}",
+            "window": "NSRect: {{0, 0}, {400, 750}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30c00",
+            "focused": false,
+            "characters": 2879,
+            "sha256": "eedebd84fe551968c64de365f69ad84e848893d80c19ee59f41fd5a0aa88e44f"
+          }
+        ]
+      },
+      {
+        "snapshot": "reading-middle-wide-return",
+        "editors": [
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 2381.3333333333335}",
+            "editable": true,
+            "selection": [
+              2879,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {389, 258.66666666666663}}",
+            "content": "NSSize: {389, 2640}",
+            "window": "NSRect: {{0, 0}, {950, 669}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30000",
+            "focused": false,
+            "characters": 2879,
+            "sha256": "fa13bfd882daef304178792597814fae2c14fd89280cefdf7285e0c929bd069f"
+          },
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 1444}",
+            "editable": false,
+            "selection": [
+              2879,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {389, 361}}",
+            "content": "NSSize: {389, 2640}",
+            "window": "NSRect: {{0, 0}, {950, 669}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30c00",
+            "focused": false,
+            "characters": 2879,
+            "sha256": "eedebd84fe551968c64de365f69ad84e848893d80c19ee59f41fd5a0aa88e44f"
+          }
+        ]
+      },
+      {
+        "snapshot": "reading-native-return",
+        "editors": [
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 2724}",
+            "editable": true,
+            "selection": [
+              2879,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {302, 180}}",
+            "content": "NSSize: {302, 3058}",
+            "window": "NSRect: {{0, 0}, {466, 678}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30000",
+            "focused": false,
+            "characters": 2879,
+            "sha256": "fa13bfd882daef304178792597814fae2c14fd89280cefdf7285e0c929bd069f"
+          },
+          {
+            "marked": false,
+            "offset": "NSPoint: {0, 1598}",
+            "editable": false,
+            "selection": [
+              2879,
+              0
+            ],
+            "frame": "NSRect: {{0, 0}, {302, 180}}",
+            "content": "NSSize: {302, 2948}",
+            "window": "NSRect: {{0, 0}, {466, 678}}",
+            "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+            "identity": "0x101b30c00",
+            "focused": false,
+            "characters": 2879,
+            "sha256": "eedebd84fe551968c64de365f69ad84e848893d80c19ee59f41fd5a0aa88e44f"
+          }
+        ]
+      }
+    ]
+  },
+  "ordinary_conversion": {
+    "status": "passed scoped QA delay",
+    "layout": {
+      "first_busy": {
+        "axis": "vertical",
+        "busy": true,
+        "container": [
+          382,
+          562
+        ],
+        "division": [],
+        "editors": [
+          {
+            "characters": 22,
+            "editable": true,
+            "focused": false,
+            "frame": [
+              40,
+              368.66666666666663,
+              302,
+              180
+            ],
+            "identity": "ObjectIdentifier(0x0000000101ec0c00)",
+            "marked": false,
+            "offset": [
+              0,
+              0
+            ],
+            "selection": [
+              22,
+              0
+            ]
+          },
+          {
+            "characters": 0,
+            "editable": false,
+            "focused": false,
+            "frame": [
+              40,
+              696.6666666666665,
+              302,
+              180
+            ],
+            "identity": "ObjectIdentifier(0x0000000101ec1800)",
+            "marked": false,
+            "offset": [
+              0,
+              0
+            ],
+            "selection": [
+              0,
+              0
+            ]
+          }
+        ],
+        "input_characters": 22,
+        "model": "00C3AF2D-7A71-413F-9297-DDF3BA432B78",
+        "pro_alert": false,
+        "probe_origin": [
+          0,
+          82
+        ],
+        "probe_size": [
+          382,
+          562
+        ],
+        "quota_exhausted": false,
+        "result_characters": 0,
+        "safe_area": [
+          82,
+          0,
+          34,
+          84
+        ],
+        "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+        "window": [
+          466,
+          678
+        ]
+      },
+      "busy_windows": [
+        [
+          466,
+          678
+        ],
+        [
+          950,
+          669
+        ],
+        [
+          950,
+          669
+        ],
+        [
+          950,
+          669
+        ],
+        [
+          950,
+          669
+        ],
+        [
+          400,
+          750
+        ],
+        [
+          400,
+          750
+        ]
+      ],
+      "final": {
+        "axis": "vertical",
+        "busy": false,
+        "container": [
+          400,
+          656
+        ],
+        "division": [],
+        "editors": [
+          {
+            "characters": 22,
+            "editable": true,
+            "focused": false,
+            "frame": [
+              40,
+              360.66666666666663,
+              320,
+              180
+            ],
+            "identity": "ObjectIdentifier(0x0000000101ec0c00)",
+            "marked": false,
+            "offset": [
+              0,
+              0
+            ],
+            "selection": [
+              22,
+              0
+            ]
+          },
+          {
+            "characters": 22,
+            "editable": false,
+            "focused": false,
+            "frame": [
+              40,
+              688.6666666666665,
+              320,
+              180
+            ],
+            "identity": "ObjectIdentifier(0x0000000101ec1800)",
+            "marked": false,
+            "offset": [
+              0,
+              0
+            ],
+            "selection": [
+              22,
+              0
+            ]
+          }
+        ],
+        "input_characters": 22,
+        "model": "00C3AF2D-7A71-413F-9297-DDF3BA432B78",
+        "pro_alert": false,
+        "probe_origin": [
+          0,
+          74
+        ],
+        "probe_size": [
+          400,
+          656
+        ],
+        "quota_exhausted": false,
+        "result_characters": 22,
+        "safe_area": [
+          74,
+          0,
+          20,
+          0
+        ],
+        "scene": "CBA8F365-49F6-49F4-93CC-82F05B293EE4",
+        "window": [
+          400,
+          750
+        ]
+      },
+      "status": "passed"
+    },
+    "business": {
+      "quota": {
+        "2026-10-29": 1
+      },
+      "isPro": false,
+      "busy_transitions": [
+        false,
+        true,
+        false
+      ],
+      "native_source_chars": 22,
+      "native_result_chars": 22,
+      "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+      "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc",
+      "existing_qa_delay_seconds": 2,
+      "performance_result": false
+    }
+  },
+  "mobile": {
+    "production_enabled": false,
+    "experimental_capacity_enabled": false,
+    "home_draft": "empty; nonempty continuity not tested",
+    "cancel": {
+      "resources": [
+        {
+          "app_active": true,
+          "event": "before_begin",
+          "resources": {
+            "idle_disabled": false,
+            "owns_background_task": false,
+            "owns_idle_override": false
+          }
+        },
+        {
+          "app_active": true,
+          "event": "after_begin",
+          "resources": {
+            "idle_disabled": true,
+            "owns_background_task": true,
+            "owns_idle_override": true
+          }
+        },
+        {
+          "app_active": true,
+          "event": "after_end",
+          "resources": {
+            "idle_disabled": false,
+            "owns_background_task": false,
+            "owns_idle_override": false
+          }
+        }
+      ],
+      "remaining_store_files": [],
+      "source_unchanged": true
+    },
+    "background": {
+      "resource_events": [
+        {
+          "app_active": true,
+          "event": "before_begin",
+          "resources": {
+            "idle_disabled": false,
+            "owns_background_task": false,
+            "owns_idle_override": false
+          }
+        },
+        {
+          "app_active": true,
+          "event": "after_begin",
+          "resources": {
+            "idle_disabled": true,
+            "owns_background_task": true,
+            "owns_idle_override": true
+          }
+        },
+        {
+          "app_active": false,
+          "event": "after_end",
+          "resources": {
+            "idle_disabled": false,
+            "owns_background_task": false,
+            "owns_idle_override": false
+          }
+        }
+      ],
+      "terminal": "Task stopped after actual Device Hub Home and reopening",
+      "exact_store_snapshot_at_terminal": "not collected; not inferred from later cases"
+    },
+    "lock": {
+      "resource_events": [
+        {
+          "app_active": true,
+          "event": "before_begin",
+          "resources": {
+            "idle_disabled": false,
+            "owns_background_task": false,
+            "owns_idle_override": false
+          }
+        },
+        {
+          "app_active": true,
+          "event": "after_begin",
+          "resources": {
+            "idle_disabled": true,
+            "owns_background_task": true,
+            "owns_idle_override": true
+          }
+        },
+        {
+          "app_active": false,
+          "event": "after_end",
+          "resources": {
+            "idle_disabled": false,
+            "owns_background_task": false,
+            "owns_idle_override": false
+          }
+        }
+      ],
+      "source_unchanged": true,
+      "ready_journals": [],
+      "remaining_store_files": [],
+      "protected_data_unavailable_notification_observed": false,
+      "passcode_prompt_observed": false,
+      "passcode_configuration": "not queried",
+      "coredevice_unlock_after_swipe": "not confirmed; resize remained blocked until owned simulator reboot"
+    },
+    "invalid_utf8": {
+      "resources": [
+        {
+          "app_active": true,
+          "event": "before_begin",
+          "resources": {
+            "idle_disabled": false,
+            "owns_background_task": false,
+            "owns_idle_override": false
+          }
+        },
+        {
+          "app_active": true,
+          "event": "after_begin",
+          "resources": {
+            "idle_disabled": true,
+            "owns_background_task": true,
+            "owns_idle_override": true
+          }
+        },
+        {
+          "app_active": true,
+          "event": "after_end",
+          "resources": {
+            "idle_disabled": false,
+            "owns_background_task": false,
+            "owns_idle_override": false
+          }
+        }
+      ],
+      "input_sha256": "3dc53f0fe4e8d265d8abb3121d140e2c2b9b27a4ae194bd706f76b128638fb22",
+      "input_expected_sha256": "3dc53f0fe4e8d265d8abb3121d140e2c2b9b27a4ae194bd706f76b128638fb22",
+      "remaining_store_files": [],
+      "retry_recovery_begins_no_new_conversion": true,
+      "resize_status": "failed: CoreDevice said device locked; no active resize session; not counted passed",
+      "subsequent_reboot_resize": "950x669 -> 400x750 -> native 466x678; failed terminal UI retained; actual Retry recovery and Done",
+      "retry_is_conversion": false
+    },
+    "fixtures": [
+      {
+        "bytes": 67108877,
+        "sha256": "97f26e91e074f77d0040a3ee3dd71da836b1dbffb9a2213ad90fdda31a629a0e",
+        "recipe": "repeat UTF-8 汉字转换🌏 + newline (17 bytes)"
+      },
+      {
+        "bytes": 103809021,
+        "sha256": "097c6a1d477bb84e8cc764c322cc1d933fe6d10db7b905d7f8b53b48a64d52c5",
+        "purpose": "lock observation time; not capacity benchmark"
+      },
+      {
+        "bytes": 67108878,
+        "sha256": "3dc53f0fe4e8d265d8abb3121d140e2c2b9b27a4ae194bd706f76b128638fb22",
+        "recipe": "first legal fixture plus FF byte"
+      }
+    ]
+  },
+  "customer_center": {
+    "default": {
+      "sizes": [
+        {
+          "name": "wide",
+          "frame": {
+            "width": 950,
+            "height": 669,
+            "y": 0,
+            "x": 0
+          },
+          "dismiss_present": true,
+          "empty_subscription_state": true
+        },
+        {
+          "name": "compact",
+          "frame": {
+            "y": 0,
+            "height": 750,
+            "x": 0,
+            "width": 400
+          },
+          "dismiss_present": true,
+          "empty_subscription_state": true
+        }
+      ],
+      "native_return_window": "NSRect: {{0, 0}, {466, 678}}",
+      "source_characters": 22,
+      "result_characters": 22,
+      "source_preserved": true,
+      "result_preserved": true,
+      "native_snapshot_sha256": "019dbb3ded40adf1775d40a9a926dc6ed3bb71e106ec47f2f81aca7e61e7f694",
+      "actual_dismiss_and_back": true,
+      "purchase_restore_copy_triggered": false,
+      "editor_instances_recreated_by_route": true
+    },
+    "xxxl": {
+      "sizes": [
+        {
+          "name": "wide",
+          "frame": {
+            "x": 0,
+            "y": 0,
+            "height": 669,
+            "width": 950
+          },
+          "dismiss_present": true,
+          "empty_subscription_state": true
+        },
+        {
+          "name": "compact",
+          "frame": {
+            "y": 0,
+            "width": 400,
+            "height": 750,
+            "x": 0
+          },
+          "dismiss_present": true,
+          "empty_subscription_state": true
+        }
+      ],
+      "native_return_window": "NSRect: {{0, 0}, {466, 678}}",
+      "source_characters": 22,
+      "result_characters": 22,
+      "source_preserved": true,
+      "result_preserved": true,
+      "native_snapshot_sha256": "8a054c283e7cc36f0028dbd6442759dcacc097ae9d621c79fb36470736c9bdcd",
+      "actual_dismiss_and_back": true,
+      "purchase_restore_copy_triggered": false,
+      "editor_instances_recreated_by_route": true
+    }
+  },
+  "mac_zero_window": {
+    "settings": {
+      "before": {
+        "windows": [
+          {
+            "main_eligible": false,
+            "number": 1615,
+            "title": "",
+            "visible": false
+          }
+        ],
+        "active": true,
+        "pid": 29001,
+        "visible_main_count": 0
+      },
+      "after": {
+        "windows": [
+          {
+            "main_eligible": false,
+            "number": 1615,
+            "title": "",
+            "visible": false
+          },
+          {
+            "main_eligible": true,
+            "number": 1634,
+            "title": "OpenCCman",
+            "visible": true
+          }
+        ],
+        "active": true,
+        "pid": 29001,
+        "visible_main_count": 1
+      },
+      "target_route_verified_by_ax": true,
+      "restore_triggered": false,
+      "continuous_recording": false
+    },
+    "pro": {
+      "before": {
+        "windows": [
+          {
+            "main_eligible": false,
+            "number": 1615,
+            "title": "",
+            "visible": false
+          }
+        ],
+        "active": true,
+        "pid": 29001,
+        "visible_main_count": 0
+      },
+      "after": {
+        "windows": [
+          {
+            "main_eligible": false,
+            "number": 1615,
+            "title": "",
+            "visible": false
+          },
+          {
+            "main_eligible": true,
+            "number": 1639,
+            "title": "OpenCCman",
+            "visible": true
+          }
+        ],
+        "active": true,
+        "pid": 29001,
+        "visible_main_count": 1
+      },
+      "target_route_verified_by_ax": true,
+      "restore_triggered": false,
+      "continuous_recording": false
+    }
+  },
+  "failed_or_inconclusive": [
+    "IME cycle scripts expected 720x600 but UIKit measured 720x540; script failures retained",
+    "CUA remote AX setValue did not change native editor; discarded setup",
+    "mobile automated tap runs did not establish busy; GUI action used",
+    "AXe Home did not actually background App; completed output verified, own QA job cleaned",
+    "CoreDevice locked 24001 then no-session 24003 after visible unlock; retry only after owned simulator reboot",
+    "ordinary first observer started resize before native click; no busy, excluded",
+    "Mac first observation could reopen window; excluded; controlled AppKit counts collected before commands",
+    "Mac count helper v1 Objective-C typing failed; corrected read-only query used"
+  ],
+  "remaining": [
+    "actual inner/outer display, rotation and book/tabletop poses; active division; OS left/right split view",
+    "full pose x language x font x action matrix",
+    "ordinary import in flight and other export stale-state combinations",
+    "mobile Preparing/Cancelling during resize; nonempty draft throughout task; password protected data unavailable/unlock recovery",
+    "positive unread Whats New and cold-start handoff during resize",
+    "actual provider successful save; final signed package and Duo hardware",
+    "minimum OS #16; transactions #14/#71; production/capacity #260/#268; VoiceOver experience"
+  ],
+  "cleanup": {
+    "simulator": "4CAD3041-0744-41A6-8B4E-F934CA9F0778",
+    "state_before": "Booted",
+    "content_size": "large",
+    "capture_keyboard": "off",
+    "keyboard_list_restored": [
+      "English (US)",
+      "Emoji"
+    ],
+    "original_fixture_paths_preserved": true,
+    "owned_live_resize_or_record_or_build": false,
+    "state_after": "Shutdown",
+    "other_booted_preserved": [
+      "834B95AE-438F-4D77-B189-F489C1F50346"
+    ],
+    "mac_qa_pid": 29001,
+    "mac_qa_exited": true,
+    "shared_DeviceHub": "preserved"
+  },
+  "evidence_notes": [
+    "raw media and logs outside Git; original and compressed copies separate",
+    "Customer Center public media masks QA anonymous User ID",
+    "simulator virtual recording fixed starting canvas can clip compact bottom; complete PNG screenshots supplement",
+    "Mac zero-window route has counts, AX and screenshots; no continuous zero-window recording"
+  ],
+  "evidence_files": {
+    "mobile-failure-real-results.json": "fbca91da53b74b93454a31c3b0582da97db54a92448ee92434c026bbfbc67914",
+    "mobile-cancel-real-results.json": "a240eaf5eacde9aa8f42de091793f86eb0bb8082392e6662014480298eceb8f6",
+    "input-reading-results.json": "90a7f6f06ffc58459db65b492ed082dbea51c9984caa3d462c4d782ea43a20a7",
+    "ordinary-results.json": "5649001f0029423353e42ada3f69340abc9323ae30d502e391628695630deb8c",
+    "ordinary2-results.json": "a0fa58700068caa560636afd564d43cdfb3fd69184a89a76bb13b7c47746f0d1",
+    "mobile-lock-real-results.json": "903cb99db5950b40ee23f0a2c9b27cb6a60e6acb0bf27cc3e7beae3db3a9cb44",
+    "center-default-resize-results.json": "e61c408332f88a11d0cd1d6cf12b39194e806d68221e1781fb7d0c1227f6d72e",
+    "center-xxxl-resize-results.json": "7cadfafee43a451cf056a3a18a14f7907b2d6f94018fdf51afe1d745d5453a2e",
+    "failure-reboot-resize-results.json": "f78082fb96ee74973133b70051b1f25fc8dd8e40d86010d31efedcf3759d23ed",
+    "ordinary2-business-result.json": "cd6ce3cc46f7b3443745c77c7b5f09f00facb761a190834ac4dc9067f5877152",
+    "reading-native-return-native.json": "ac8183d3ea8f2abe128ab615c4bc480004ea9a9aa5492956d808b1d1b8b5a8b2",
+    "reading-start-native.json": "52c5b5de2ea112b81050f91de656137a44a500cfd01e8e906392551d584e4403",
+    "ime-v2-intermediate-native.json": "96fd138d8d64c47d2387759b6ba0a97e80a0892e94a82ad25a28744fca3c7401",
+    "selection2-wide-native.json": "4c1bddedec6dda8ac15cf8129398e69b9c86261da662907d6a42e92944e7d783",
+    "reading-scroll1-native.json": "543411a7068094bf4b3444fc90ddefeb3075aec43a4ecba3ddcc17b1628639db",
+    "ime-marked-before-native.json": "4627d04fdab27ada5792619e63e00ba9f870dcdf843dc0e4987fd24b0597b04d",
+    "center-draft-filled-native.json": "a8e33ac919170f0f764665aef271de9d28b8e88542f111c570eceb694f34d57b",
+    "reading-pasted-native.json": "52c5b5de2ea112b81050f91de656137a44a500cfd01e8e906392551d584e4403",
+    "ime-v2-compact-native.json": "35909785b9316a08376b56ba866bddbe967e8bea8aff4fe79c8e5bb53b719f29",
+    "selection-wide-native.json": "941cb9168c14cf0c24b3ef6c4f282aed68be3484e0bb9a8f34c679183b84c62f",
+    "reading-paste-allowed-native.json": "52c5b5de2ea112b81050f91de656137a44a500cfd01e8e906392551d584e4403",
+    "center-default-return-native.json": "019dbb3ded40adf1775d40a9a926dc6ed3bb71e106ec47f2f81aca7e61e7f694",
+    "ime-v2-wide-native.json": "8ca31cb22c002f5e2f546503c7a89f98a756eedf8c68ba9bce67d32b1159788e",
+    "reading-middle-compact-native.json": "191fb7758210113717bfabf6c21608b34e7b9c45af8e92d72574990c298d2e45",
+    "center-pre-route-native.json": "79dc6636cddea1f5716dd55a5244553d0c4fc2e581e1722bed44d90c97bb974f",
+    "selection-before-v5-native.json": "7c147549481ef62e4780a4e122814fe825308cfd567562221d2f4b3ef2372968",
+    "ime-committed-converted-native.json": "52c5b5de2ea112b81050f91de656137a44a500cfd01e8e906392551d584e4403",
+    "ime-wide-native.json": "8ca31cb22c002f5e2f546503c7a89f98a756eedf8c68ba9bce67d32b1159788e",
+    "ime-final-native-return-native.json": "4627d04fdab27ada5792619e63e00ba9f870dcdf843dc0e4987fd24b0597b04d",
+    "reading-real-converted-native.json": "2d457387413dcc70e9ccb39f6f5247bef802158b5d51fab61f1ce94ec0e9e8b5",
+    "selection2-before-native.json": "f88a34e127aaa26a25078456a410a355219f6e703c4d21fd7b394194fc0a8e08",
+    "ordinary2-return-native.json": "2666040da2d6c3684f594ec11047f33d8efa899753393a2b4d2490bc7cea38e8",
+    "ime-compact-native.json": "35909785b9316a08376b56ba866bddbe967e8bea8aff4fe79c8e5bb53b719f29",
+    "selection2-native-return-native.json": "f88a34e127aaa26a25078456a410a355219f6e703c4d21fd7b394194fc0a8e08",
+    "selection2-compact-native.json": "11fe49530a08e530b476cbed767c82af56967400daece892629c150b4a6c0719",
+    "reading-real-paste-native.json": "9085cd991f8ef8814157f1cbe898e782170f0ab5642ddfc5e64110292d81481c",
+    "reading-middle-wide-return-native.json": "56099f4db56f788c4020429fff11ac5197e92a88e0689a31849c6aca479a6207",
+    "selection-returned-native.json": "ccc26468d96df4cecec155e045e36533b9495a9e88753e2181cdf7f9d23313f2",
+    "selection-compact-native.json": "88d3aeaa92505caf976e53c5f061be09470ad07625ebf12b21c4debf5773f605",
+    "center-xxxl-return-native.json": "8a054c283e7cc36f0028dbd6442759dcacc097ae9d621c79fb36470736c9bdcd",
+    "reading-converted-native.json": "52c5b5de2ea112b81050f91de656137a44a500cfd01e8e906392551d584e4403",
+    "ordinary-before-native.json": "93b1e413557220a694f7456d8518797d908ff6b3e995e57239101dcd3b896f30",
+    "ime-native-after-timeout-native.json": "4627d04fdab27ada5792619e63e00ba9f870dcdf843dc0e4987fd24b0597b04d",
+    "reading-middle-before-native.json": "56099f4db56f788c4020429fff11ac5197e92a88e0689a31849c6aca479a6207",
+    "selection-real-before-native.json": "e4223c1b2f1b15aa8aabd483cef04a696a07e73608bdbce6ea612b2692a4da87",
+    "mac-zero-before-settings-windows.json": "e8947c3567954966e1108cb7c27d804d3129bd80c7d93a2182d458a6d5922101",
+    "mac-initial-v2-windows.json": "e2da2d9a309cf393d2e9a8e0389a23b0031910d105c3f2648d9d9f1bd9c978ef",
+    "mac-after-settings-windows.json": "8e865011d8ca3cab3e20961182589d9e5416de953b1769015361c0b981801f88",
+    "mac-zero-before-pro-windows.json": "e8947c3567954966e1108cb7c27d804d3129bd80c7d93a2182d458a6d5922101",
+    "mac-after-pro-windows.json": "c9f86c5a1fb5ac9d23bb521f52d7b00c73f0a0461df8bcbce2356239464710cd",
+    "mobile-background-real-resources.json": "f9de0754a0e4910530be16c2ce15dca1c138629b640e47f89c02572bae8dff7c",
+    "mobile-lock-real-resources.json": "f9de0754a0e4910530be16c2ce15dca1c138629b640e47f89c02572bae8dff7c",
+    "selection2-virtual-original.mp4": "5db3c17b259d5dd01a75c6285880753129da6a6ceb6ab8f3fb5cffa61b6bc23a",
+    "center-default-virtual-original.mp4": "aa244fa8f82c070315b66c299b578bd97c88764631dda6636e4e83ed5c6026f3",
+    "mobile-background-original.mp4": "48ab34b7468cd8df7f3314d1c4cffb0fdb57869384fa041757f6394e39e88d59",
+    "mobile-cancel-v2-original.mp4": "bae66e5e78a6aeefb4879aef6331bf0825596c6f12d58b5e94ce2f94fba9cf39",
+    "ime-native-before-original.mp4": "41bb39e7380e8f5032a5b5e12de77434414ccf99eaedb24b4af3aea3bd14b87d",
+    "center-native-xxxl-close-original.mp4": "14472ba1715a9dc00a1caa5f89b7727fe35b401bc93676b7154daebbcbbc6717",
+    "center-native-default-close-original.mp4": "e07b61067ebf40a41febeca07fd075bb53f16a402340fe770f1bc5b459858ead",
+    "selection-native-original.mp4": "63b47f515af62f23a107655df6995c0c0ffa0631a45c7fff9fcfe232a0b4cc95",
+    "failure-reboot-retry-original.mp4": "31174061842b011e813f07477770c3cb488738d5261f83efbbfe833d16b2f5cc",
+    "center-xxxl-virtual-original.mp4": "08785099b55fff86c1fcb9a04d358587c3bbc2cbe97ab57afd06797b32149d16",
+    "ime-native-commit-original.mp4": "2c891af7256cdf7218d1476291135ad17951e12d41350f4f9ca0c983b24c8de6",
+    "center-native-default-original.mp4": "4201b3d0b8c3141ae3b83f5c86919dfed20db60ea05ad8361b1c25f639671cb8",
+    "ime-virtual-original.mp4": "af1b41c68abb75ede5dd8ea9e3577414a1f30d4e222645c8e15bd5e6a31e6aaf",
+    "mobile-lock-real-original.mp4": "7fe57b4a609855a99d337033a9d25ce9cd58fce2c67f48b405036e5d619feefb",
+    "mobile-cancel-original.mp4": "dfef3ec0453b2cee015d4bd96d56322331adc884b3b7a13a26160331a232ac50",
+    "ordinary2-virtual-original.mp4": "4d52b5fa8c6a06eb936b8d77cd233931156ec2750211ea70225fcc2f0eda21fd",
+    "failure-reboot-virtual-original.mp4": "e7a15c4f6cc2bd23b53b52f4d392a6004acc59be396107b905360898d83d578e",
+    "mobile-background-gui-original.mp4": "78862748884cbdad19403a169b89c5a13302ceffb112cf5c6ba20fe808a84096",
+    "reading-virtual-original.mp4": "04fbaabfcb4bd54e9e59decdb583a3b82b679cec2b8442a516617e61001cc6a1",
+    "mobile-background-real-original.mp4": "f32835de905b186ce41598ee17bb81d8baebc94f1dabb92444dfd0d80ef516ec",
+    "mobile-failure-real-original.mp4": "3e8f9f7b9656e6077e64faf395e8eed633828358d367308f49f87a76c921d703",
+    "mobile-cancel-real-original.mp4": "d54f02e58792381a77940211552111db5b5d107bed90d394d977f7096b32dd92",
+    "ime-v2-virtual-original.mp4": "c1d9f8ca38cde12dfdfc7b237de81d24e299863363f9c3bda033cc09844c12cf",
+    "ordinary-virtual-original.mp4": "bae7d31415de61cf3e98c49867c4b4427b1564894fffa006e73c469d30b36d32",
+    "export-media.py": "3f65e6e91ab8173097f15720e0c1dd8cd546a22fc63351b3ae8a8f2ce688b8ad",
+    "cycle.py": "064dc9efd9d95da686959676bc215ffdbbde780bd7a2e78cfe142900505cd692",
+    "mac-windows.py": "c509d8b64e5ff9698b34492138b1329f6d5ce95b87128732a21a9ab4501198cf",
+    "native-state.py": "7ff6e13319559c0bad35e81a4cda95a3ee1282acf0c7438225fb1baf41750713",
+    "ordinary-observer.py": "df4cfd919a6d508ea51d7d4b8f35fc1959be8b182555be65ddacd55ce4f7adef",
+    "finalize-media.py": "c56550332c869cbba8de5a4cfe71a0181deed5bb84a8c947d2548ed8f2b3d7a7",
+    "native-state-v3.py": "04c7ef69dfa326862d074e65b379b1c205344b05a1c993db02049e83c9d29477",
+    "native-state-v2.py": "db0327d6f4b323384be6d49315bf64862bdfb87b13f3254fd78ebfef375bf8fd",
+    "mobile-case.py": "9f962ccf5ecf65fcae7e235f50bccb232dc7b7f8eaa636fb214c95d66ab8c72c",
+    "cycle-two.py": "243878c2ad51f240b65f81b6f5bcb4a9b48912b5e44e3f777518cb45fabdbffb",
+    "prepare-comments.py": "4633ba88b94252426d4af49857b7094c642f95f57335d861b4768facc949e437",
+    "resize-state.py": "6b53896d290d3629301b1829fe8b63765010ffda24057e77f71652743aa3e039",
+    "native-state-v1.py": "03541734901d121d25884325e098ef3790cfc265648431d95e77e90438f6813f",
+    "mac-windows-v1.py": "4330980a7e281a63069d50ccb7e338a7700a0bf2e0b5662cadf7f19d45f69d16",
+    "native-state-v4.py": "956ae0a79af6d83b679de43527c4153a4120f64be909dea929591a8e7c812b26",
+    "record.py": "bc8b47bc2e1aaad71dc63bc0d338942db1a989d7748f5396ed3b18eaae59a74b",
+    "ordinary2-observer.py": "6f6cfc40236fb80268b5d09bb43e1053328595da65bb241cd1a7e221ec5cdb45",
+    "ax-helper.py": "834439b6c30efff92bd3ff52eef6ebe23b11a3a22b6ef057ed6b5caa6f3d1c98",
+    "prepare-media.py": "669a098df8b60b12a95f842d7926f663727fb2ab00cffd62b33888f8d455075d",
+    "build-summary.py": "81e60ad40880555d0493c4bd8deefb89010148ff49a14a6c37bb6c85a132a9c1",
+    "mobile-case-v2.py": "79f833e31ca19b0f520f7bbc85b5fe989a15bdffbefe6e50cd0f3cb45cf63c35",
+    "mobile-case-gui.py": "ca88f640f8838fef1af913c838358fc186adbcd650edad5dcd9c75ae40f0dd5d",
+    "cycle-v1.py": "4bce2750018365c88b067456ec9876174bcce3a664fb6bcb9bda326308632856"
+  },
+  "media": [
+    {
+      "file": "center-xxxl-compact.webp",
+      "original": "center-xxxl-compact.png",
+      "original_sha256": "561f11be033292b85bc901b80cef6d9de2836e7237a1b60a60929e7378a224a4",
+      "sha256": "45b350fef517808c5b59e1e9a272c20367f54993b2a3cd07904d4b4b8f7af692",
+      "bytes": 21350,
+      "redaction": "QA anonymous user ID",
+      "url": "https://github.com/user-attachments/assets/00fd68e7-6894-4fea-ac1a-9f325a146627",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6497095933",
+      "readback_verified": true
+    },
+    {
+      "file": "center-xxxl-virtual-redacted.mp4",
+      "sha256": "0e20506319fecf1fff233c8273af6f73a6c8a34f9512d05550464990012a4ed0",
+      "bytes": 23553,
+      "original": "center-xxxl-virtual-original.mp4",
+      "original_sha256": "08785099b55fff86c1fcb9a04d358587c3bbc2cbe97ab57afd06797b32149d16",
+      "redaction": "QA anonymous user ID",
+      "url": "https://github.com/user-attachments/assets/e018b8d2-c695-4a32-8437-eccb63c33dbc",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6497095933",
+      "readback_verified": true
+    },
+    {
+      "file": "mac-zero-settings-original.webp",
+      "original": "mac-zero-settings-original.png",
+      "original_sha256": "4f6f469796dbf04524544dc50969d4c3f5498e1102570393e5c7867835ee2cfa",
+      "sha256": "27db18b0e0da81646f70e4691051689b4d2d7d48988e406455babdf5067c4150",
+      "bytes": 13578,
+      "redaction": null,
+      "url": "https://github.com/user-attachments/assets/9ad0a6df-a797-429c-a9a2-28df60828fc3",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6497095933",
+      "readback_verified": true
+    },
+    {
+      "file": "mac-zero-pro-original.webp",
+      "original": "mac-zero-pro-original.png",
+      "original_sha256": "1937b875e9d0082d273572a3cb85c60f8560d77c307c5af2bc45910867bcfdda",
+      "sha256": "79cce5095ce92c38879cf67607b28ebc4e80acf7d41c1ad5162524e9668a2a94",
+      "bytes": 18208,
+      "redaction": null,
+      "url": "https://github.com/user-attachments/assets/6d572170-588e-4192-bca8-258fc0201b2b",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/280#issuecomment-6497095933",
+      "readback_verified": true
+    },
+    {
+      "file": "ime-marked-before.webp",
+      "original": "ime-marked-before.png",
+      "original_sha256": "9db6ea26573c9f69ab798a52f5ae186b135ed459cf5effa599264570f53f511c",
+      "sha256": "6dc77c306689ee8135e329b64331eebf0bc851ecbfd326a75d53b9e7acda09bf",
+      "bytes": 54742,
+      "redaction": null,
+      "url": "https://github.com/user-attachments/assets/7f15117f-affb-4b6e-9a3f-69de9c7f8d9c",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497120076",
+      "readback_verified": true
+    },
+    {
+      "file": "ime-v2-compact.webp",
+      "original": "ime-v2-compact.png",
+      "original_sha256": "44bd152b8ed0d11b727c4dcba343f88077a90cd02058557beaa6889fdc7731a1",
+      "sha256": "9d3baa4d574b4d93a23fc0bcf2d2eaa8edca9c2ef76eb899dfda52c6109d3a35",
+      "bytes": 40474,
+      "redaction": null,
+      "url": "https://github.com/user-attachments/assets/c4b4f242-27f8-4de5-a6c3-beac3a72109b",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497120076",
+      "readback_verified": true
+    },
+    {
+      "file": "ime-committed-converted.webp",
+      "original": "ime-committed-converted.png",
+      "original_sha256": "8161ad44be6dd875cd5e0f3081c7e965c555dad52520cca81d71fd0c54c06374",
+      "sha256": "8623f9e205a9e8603c84ad9a07f2d6db6ba4b5b709c7600d79a41eaa3f55b774",
+      "bytes": 39064,
+      "redaction": null,
+      "url": "https://github.com/user-attachments/assets/edc13cec-e5d3-4f30-95ed-411ce04d3ed3",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497120076",
+      "readback_verified": true
+    },
+    {
+      "file": "reading-middle-before.webp",
+      "original": "reading-middle-before.png",
+      "original_sha256": "e6bc7a850578d3a0694bb98d8d9702fc6c692907b28e6da57c86e41ca1d294bf",
+      "sha256": "939265331fd21bb66a950ce1b8315dab93e3b4e5faba46986ea8d2524c7f6bd8",
+      "bytes": 181564,
+      "redaction": null,
+      "url": "https://github.com/user-attachments/assets/9b59a3c4-bcc3-4850-b69e-e44fb12f7856",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497120076",
+      "readback_verified": true
+    },
+    {
+      "file": "reading-middle-compact.webp",
+      "original": "reading-middle-compact.png",
+      "original_sha256": "46733887c3aab6fc8e27b1e00666fae610b8c8a7620b5884593f8a342030e043",
+      "sha256": "3a52652c12688561d86e07719fb31050935f7f658b17cf1df02940445798e867",
+      "bytes": 62356,
+      "redaction": null,
+      "url": "https://github.com/user-attachments/assets/472b6508-4b23-4bd5-8316-a88d9bc5bf2a",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497120076",
+      "readback_verified": true
+    },
+    {
+      "file": "ime-native-commit.mp4",
+      "original": "ime-native-commit-original.mp4",
+      "trim_start": 16,
+      "trim_duration": 8.575,
+      "original_sha256": "2c891af7256cdf7218d1476291135ad17951e12d41350f4f9ca0c983b24c8de6",
+      "sha256": "46569d1247f7f81fe9a67080dd77a0954ee3e9e442f748cf3135794aa4e0cbc7",
+      "bytes": 86760,
+      "url": "https://github.com/user-attachments/assets/7cdf455c-a149-45be-a63c-cb7a7d9f10fc",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497120076",
+      "readback_verified": true
+    },
+    {
+      "file": "selection2-virtual.mp4",
+      "original": "selection2-virtual-original.mp4",
+      "trim_start": 0,
+      "trim_duration": 5.048,
+      "original_sha256": "5db3c17b259d5dd01a75c6285880753129da6a6ceb6ab8f3fb5cffa61b6bc23a",
+      "sha256": "b2911ab003d8c7df1ce0ad5e121bf88d8a73189baa4fb129c89990765426a1e3",
+      "bytes": 40687,
+      "url": "https://github.com/user-attachments/assets/254c4d72-463b-4716-8758-640d95f2a5b5",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497120076",
+      "readback_verified": true
+    },
+    {
+      "file": "ordinary2-virtual.mp4",
+      "original": "ordinary2-virtual-original.mp4",
+      "trim_start": 0,
+      "trim_duration": 1.981,
+      "original_sha256": "4d52b5fa8c6a06eb936b8d77cd233931156ec2750211ea70225fcc2f0eda21fd",
+      "sha256": "3609719f67aacaf176a30ef2d1dda59d9d0ad7f292593c48dd4025ca6c041042",
+      "bytes": 36761,
+      "url": "https://github.com/user-attachments/assets/c8316fc6-e388-41bb-be08-8dbb255d4325",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497120076",
+      "readback_verified": true
+    },
+    {
+      "file": "mobile-cancel-real-terminal.webp",
+      "original": "mobile-cancel-real-terminal.png",
+      "original_sha256": "b2096dcad29ceddcb6502236c3cba149de72984c7107f6a1076c3824bf176f95",
+      "sha256": "66590fb0a82a7d45ffbc535cdad4b673a4f9bbc8d2dd67af376abd49e53bee26",
+      "bytes": 32002,
+      "redaction": null,
+      "url": "https://github.com/user-attachments/assets/37f1f5ab-37bd-4acf-bbd2-4d552b29d984",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497162622",
+      "readback_verified": true
+    },
+    {
+      "file": "mobile-background-real-terminal.webp",
+      "original": "mobile-background-real-terminal.png",
+      "original_sha256": "a09a27b52a266372146069ee8621cea1a647c1dafda9e25ed7c5fffecc5b416d",
+      "sha256": "d02ecd0d7e738b5ed6a34d8a0bcac84bacc00a651ec8d2db29813a31ddac31a3",
+      "bytes": 32258,
+      "redaction": null,
+      "url": "https://github.com/user-attachments/assets/7b01c9c6-c860-48d6-a5ed-34bc35b25cdf",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497162622",
+      "readback_verified": true
+    },
+    {
+      "file": "mobile-lock-real-terminal.webp",
+      "original": "mobile-lock-real-terminal.png",
+      "original_sha256": "4ec9b62794a82b1b018f2363abf4260251622d359d39558ce83ad98859f68c0d",
+      "sha256": "a47d01851036524c78a9ee922bb66766b024e23bf80ebddacd48d12f46d1534d",
+      "bytes": 21420,
+      "redaction": null,
+      "url": "https://github.com/user-attachments/assets/65dbb747-e5b6-4f0a-8a97-f98953c21731",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497162622",
+      "readback_verified": true
+    },
+    {
+      "file": "failure-reboot-compact.webp",
+      "original": "failure-reboot-compact.png",
+      "original_sha256": "3ba9466659f1afd735984aea31fc45a73512a5094268b1c24a22c27fea325537",
+      "sha256": "dc5528dde962bb6d5cb10b2c8a4a45e396d9427517fc56740ae3dba801e876a9",
+      "bytes": 43384,
+      "redaction": null,
+      "url": "https://github.com/user-attachments/assets/18aaa20c-fdca-453d-8a96-8a332f69fde7",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497162622",
+      "readback_verified": true
+    },
+    {
+      "file": "mobile-cancel-real.mp4",
+      "original": "mobile-cancel-real-original.mp4",
+      "trim_start": 14,
+      "trim_duration": 16,
+      "original_sha256": "d54f02e58792381a77940211552111db5b5d107bed90d394d977f7096b32dd92",
+      "sha256": "85f03547fbcab556bd8097a5bf006d3fd401e3e015fa6b555cc6b8e708d3435f",
+      "bytes": 89902,
+      "url": "https://github.com/user-attachments/assets/d3800a8d-d1ec-4456-88b1-aa502964ffb4",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497162622",
+      "readback_verified": true
+    },
+    {
+      "file": "mobile-background-real.mp4",
+      "original": "mobile-background-real-original.mp4",
+      "trim_start": 8,
+      "trim_duration": 20.626,
+      "original_sha256": "f32835de905b186ce41598ee17bb81d8baebc94f1dabb92444dfd0d80ef516ec",
+      "sha256": "5be47d2df9c436a9cb27309641d340c7ad92e0b0c784dcbeac2323464588859a",
+      "bytes": 362796,
+      "url": "https://github.com/user-attachments/assets/210d5498-2411-49c3-9ffe-4553a49ed8b4",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497162622",
+      "readback_verified": true
+    },
+    {
+      "file": "mobile-lock-real.mp4",
+      "original": "mobile-lock-real-original.mp4",
+      "trim_start": 30,
+      "trim_duration": 64.628,
+      "original_sha256": "7fe57b4a609855a99d337033a9d25ce9cd58fce2c67f48b405036e5d619feefb",
+      "sha256": "bca43de622276030529c9c226b3c356aa29e226ef87a3ed29db9e0bb96f77c40",
+      "bytes": 544247,
+      "url": "https://github.com/user-attachments/assets/eea1db5a-0682-4473-bba7-45e3f3c37bf9",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497162622",
+      "readback_verified": true
+    },
+    {
+      "file": "failure-reboot-virtual.mp4",
+      "original": "failure-reboot-virtual-original.mp4",
+      "trim_start": 0,
+      "trim_duration": 1.843,
+      "original_sha256": "e7a15c4f6cc2bd23b53b52f4d392a6004acc59be396107b905360898d83d578e",
+      "sha256": "81e6d064c0fa3267f9da8de973db68ecd23422fd844e239e40203130163ec5d5",
+      "bytes": 19223,
+      "url": "https://github.com/user-attachments/assets/b36547a6-9c96-4930-998d-b1e863979655",
+      "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6497162622",
+      "readback_verified": true
+    }
+  ],
+  "remote_media_render": {
+    "session": "current authenticated GitHub browser",
+    "images_loaded": 12,
+    "videos_ready_state": 4,
+    "anonymous_access_verified": false
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "app_source": "4b36d7a4171ad7fd4a4ba3e89bf5946e25e4b587",
+  "test_source_sha256": "7d97781287f10ff33d97df7f3b9afe1c65c6636391babee311c5a7035ec57aea",
+  "recording_sha256": "68482aada2e0c6af5b28364e12176ee9fae98fe5e685592caeb15c5557c12ec2",
+  "recording_audio": false,
+  "post_test_voice_over_touch_enabled": 0,
+  "method": "XCUIVoiceOverService speech outputs plus simctl video; UI action with VoiceOver disabled",
+  "limits": [
+    "English confirmation and ready navigation only",
+    "Long explanatory speech returned truncated fragments",
+    "No VoiceOver gesture activation or Chinese/failure/progress coverage"
+  ]
+}

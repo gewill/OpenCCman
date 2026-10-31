@@ -1,0 +1,27 @@
+{
+  "input_bytes": 2147483648,
+  "output_bytes": 2147483648,
+  "input_sha256": "b8bfb292ad60b69a8fa799ffd5db0f129c654905426d06c6625f7760217a718b",
+  "expected_sha256": "713eac9628aaa6a6ab28cfbca7d1d3aed069b96264fb6ed70c189780c1c87e3e",
+  "actual_sha256": "713eac9628aaa6a6ab28cfbca7d1d3aed069b96264fb6ed70c189780c1c87e3e",
+  "equal": true,
+  "output_birth_epoch": 1790872888.6275449,
+  "conversion_to_observed_commit_seconds": 201.6129503250122,
+  "memory": {
+    "sample_interval_ms": 100,
+    "samples": 2312,
+    "baseline_physical_footprint_bytes": 91374816,
+    "peak_physical_footprint_bytes": 93897976,
+    "peak_resident_size_bytes": 179470336
+  },
+  "disk": {
+    "monitor_started_epoch": 1790872922.834782,
+    "finished_epoch": 1790873090.2404952,
+    "output_committed": true,
+    "peak_sampled_staging_logical_bytes": 2146697187,
+    "peak_sampled_staging_allocated_bytes": 2147745792,
+    "sample_interval_seconds": 0.1,
+    "note": "Started after conversion began; own observed staging path only. Sampling can miss the final write. Does not include original source or other applications."
+  },
+  "note": "Development-signed sandboxed Debug QA app; 2 GiB fixed s2t corpus, local APFS, native open/save panels, Pro and experimental gate injected only in QA. Full fixed-corpus independent literal oracle. Commit observation is bounded by 100ms poll; duration excludes opening panels."
+}
