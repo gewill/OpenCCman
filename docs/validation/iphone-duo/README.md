@@ -121,3 +121,7 @@ XXXL 用 `simctl ui <udid> content_size extra-extra-extra-large`，完成或失�
 What's New／Customer Center／启动交接及最终签名包仍未覆盖。
 Duo 真机与 VoiceOver 体验未验证；交易仍留 #14/#71，最低系统留 #16，移动文件生产开放与容量留 #260/#268。
 本轮不关闭任何 Issue，不合并、不打包分发、不部署。
+
+同日的[方向未确认复现与系统导出面板补验](orientation-readback-followup-2026-10-31.md)记录 #294 合并后 CI、
+17 次只读观察、独立进程/原生方向对照，以及系统面板跨折叠取消和实际 66 字节保存校验。
+方向内部根因未定位，完整矩阵仍开放。
