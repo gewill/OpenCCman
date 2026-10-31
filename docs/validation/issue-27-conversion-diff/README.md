@@ -122,3 +122,9 @@ iPad 自动化曾失败：27.0 不支持 devicectl appResize，安装的 27.1/27
 - iOS 原生输入法实际 marked text 操作未人工复验；macOS 原生自动检查覆盖其保护，不能外推三端全部输入法。iPhone 最终 Debug 04 已补跑默认／XXXL、导航、复制及粘贴失效。
 - App 帧时间／长期内存及真机近上限尚未达成性能验收；iPad 窄窗底缘点按失效原因仍有工具／系统坐标边界，滚动后路径已通过。
 - 本次 PR 即使合并也不自动关闭 #27；后续以真实设备／签名包的独立证据补齐关闭标准。
+
+## PR #312 检查补记
+
+2026-11-01 读回 HEAD `63cba61` 的 [App Regression](https://github.com/gewill/OpenCCman/actions/runs/41245607052) 失败，原因是既有性能工具测试把原生编辑器构造类名写死为 `NSTextView`。本功能使用其子类 `WorkspaceDiffTextView`，而基准变体仅移除滚动观察器的行为没有改变。更新构造断言并明确验证 `NSTextView` 继承，保留“恢复观察器后源码逐字相同”断言；未改 App 实现或削减验证条件。
+
+实际执行 `python3 -m unittest discover -s Tests/Benchmarks -p 'test_*.py'`：111 项，全部 OK；`git diff --check` 通过。此修复是测试适配，不能用本地结果代替后续当前 HEAD 的 CI 与审核门槛。

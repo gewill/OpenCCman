@@ -59,7 +59,8 @@ class BuildVerification(unittest.TestCase):
         updated = editor.read_text()
         self.assertEqual(updated.count('scrollKeeper.attach(editor)'), 0)
         self.assertEqual(updated.count('let layout = NSLayoutManager()'), 1)
-        self.assertEqual(updated.count('let editor = NSTextView('), 1)
+        self.assertEqual(updated.count('let editor = WorkspaceDiffTextView('), 1)
+        self.assertIn('final class WorkspaceDiffTextView: NSTextView', updated)
         self.assertEqual(updated.replace('      // Private benchmark: omit the viewport observer.\n',
                                          '      scrollKeeper.attach(editor)\n'), original)
 
