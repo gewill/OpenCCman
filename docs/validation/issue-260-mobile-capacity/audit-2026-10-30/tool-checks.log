@@ -1,0 +1,26 @@
+$ python3 scripts/test-mobile-capacity-fixtures.py
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.023s
+
+OK
+$ python3 scripts/test-mobile-capacity-preflight.py
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.817s
+
+OK
+$ python3 scripts/test-mobile-export-verifier.py
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.322s
+
+OK
+$ python3 -m unittest discover -s Tests/Benchmarks -p test_*.py
+...............................................................................................................
+----------------------------------------------------------------------
+Ran 111 tests in 1.107s
+
+OK
+$ ruby -e require "yaml"; YAML.load_file(".github/workflows/app-regression.yml"); puts "PASS: workflow YAML parses"
+PASS: workflow YAML parses

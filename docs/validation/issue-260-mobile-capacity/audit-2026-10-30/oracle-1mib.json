@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "purpose": "independent reference only; not device acceptance",
+  "wrapper_sha": "564b094b2b69f2c1e907fa3d89fe6845469a4e4e",
+  "oracle_source_sha256": "4e5111bbbc0bbc03e6d7f50eb58e9bda1b40bdc7721697c737663d985f72495a",
+  "binary_sha256": "8e177fe228503675a7d6504915cdd42d1380a98255a4a51cca6855af8b867267",
+  "fixture_manifest_sha256": "fc317f7a714ef6959ca886d43a3db21807a178aeec37b8d27ae3401fbe395970",
+  "rows": [
+    {
+      "fixture": "001MiB-unicode.txt",
+      "input_bytes": 1048576,
+      "input_sha256": "50fbbc85b7a0e8d72cebbb3019753401cc5a2249568db3b58a91add82092c09e",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "simplified",
+      "options_raw": 2,
+      "output_bytes": 1048573,
+      "output_sha256": "044493712207d07e7f7dbb5d0c0f42de2c4e0d24574e7de410c565cbee8de246"
+    },
+    {
+      "fixture": "001MiB-unicode.txt",
+      "input_bytes": 1048576,
+      "input_sha256": "50fbbc85b7a0e8d72cebbb3019753401cc5a2249568db3b58a91add82092c09e",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "traditional",
+      "options_raw": 1,
+      "output_bytes": 1048573,
+      "output_sha256": "32be3a4e425616a65cda3ee1e04eb7fd75fd8aed185864450ccd79966a40e608"
+    },
+    {
+      "fixture": "001MiB-unicode.txt",
+      "input_bytes": 1048576,
+      "input_sha256": "50fbbc85b7a0e8d72cebbb3019753401cc5a2249568db3b58a91add82092c09e",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "traditional-taiwan-idiom",
+      "options_raw": 1025,
+      "output_bytes": 1048573,
+      "output_sha256": "32be3a4e425616a65cda3ee1e04eb7fd75fd8aed185864450ccd79966a40e608"
+    },
+    {
+      "fixture": "001MiB-unicode.txt",
+      "input_bytes": 1048576,
+      "input_sha256": "50fbbc85b7a0e8d72cebbb3019753401cc5a2249568db3b58a91add82092c09e",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "taiwan",
+      "options_raw": 33,
+      "output_bytes": 1048573,
+      "output_sha256": "32be3a4e425616a65cda3ee1e04eb7fd75fd8aed185864450ccd79966a40e608"
+    },
+    {
+      "fixture": "001MiB-unicode.txt",
+      "input_bytes": 1048576,
+      "input_sha256": "50fbbc85b7a0e8d72cebbb3019753401cc5a2249568db3b58a91add82092c09e",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "taiwan-idiom",
+      "options_raw": 1057,
+      "output_bytes": 1048573,
+      "output_sha256": "32be3a4e425616a65cda3ee1e04eb7fd75fd8aed185864450ccd79966a40e608"
+    },
+    {
+      "fixture": "001MiB-unicode.txt",
+      "input_bytes": 1048576,
+      "input_sha256": "50fbbc85b7a0e8d72cebbb3019753401cc5a2249568db3b58a91add82092c09e",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "hong-kong",
+      "options_raw": 65,
+      "output_bytes": 1048573,
+      "output_sha256": "6ef34c6dfa424c395ed3051da13b383abf545bdfa2b898d870987257170f4f43"
+    },
+    {
+      "fixture": "001MiB-unicode.txt",
+      "input_bytes": 1048576,
+      "input_sha256": "50fbbc85b7a0e8d72cebbb3019753401cc5a2249568db3b58a91add82092c09e",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "hong-kong-taiwan-idiom",
+      "options_raw": 1089,
+      "output_bytes": 1048573,
+      "output_sha256": "6ef34c6dfa424c395ed3051da13b383abf545bdfa2b898d870987257170f4f43"
+    }
+  ]
+}

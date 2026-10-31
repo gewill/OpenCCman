@@ -1,0 +1,119 @@
+{
+  "date": "2026-10-29",
+  "app_source_commit": "bccc0df9f7f59b5d172d3396c1ee8f2aea13047c",
+  "app_bundle": "org.gewill.OpenCCman.WhatsNewUITests",
+  "app_executable_sha256": "31b4512f5d393e9e1348f996ab56dd3710fbeea21984e0cf75696fcf5be5b30e",
+  "test_base_commit": "bccc0df9f7f59b5d172d3396c1ee8f2aea13047c",
+  "device": "D4FE3CC7-4DBF-4333-84A7-FEA788DBD897",
+  "runtime": "iOS 27.1 (24A94425)",
+  "xcode": "Xcode 27.1 (27A9275)",
+  "developer_dir": "/Applications/Xcode-27.1.0.app/Contents/Developer",
+  "unverified": [
+    "Full Duo pose / both split edge matrix; only actual recorded dimensions count. A separate Device Hub window was created after shared-window contention.",
+    "IME marked text",
+    "nonzero selection and middle scroll",
+    "long-running tasks and system file panels during resize",
+    "Duo hardware and signed distribution",
+    "VoiceOver experience"
+  ],
+  "test_source_sha256": "6138b04022a53a87e67f0cf0221caae87b77bf0a25b6031324fbdfc42ef70bd2",
+  "results": {
+    "pro-closed-default": {
+      "summary": "Executed 3 tests, with 0 failures (0 unexpected) in 52.370 (52.375) seconds",
+      "native_log_sha256": "ea300a28638b004043e76561e4a93e57e0490d30f4736239a61d86c8ec64898c",
+      "cases": [
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testSimplifiedProAlertCancelsAndOpensClosableSheet]' passed (17.792 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testSystemProAlertCancelsAndOpensClosableSheet]' passed (17.197 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testTraditionalProAlertCancelsAndOpensClosableSheet]' passed (17.381 seconds)."
+      ],
+      "frames": [
+        "OPENCCMAN_DUO_CAPTURE zh-Hans-system-pro-alert: app=(0.0, 0.0, 466.0, 678.0), window=(0.0, 0.0, 466.0, 678.0)",
+        "OPENCCMAN_DUO_CAPTURE zh-Hans-pro-sheet-with-system-close: app=(0.0, 0.0, 466.0, 678.0), window=(0.0, 0.0, 466.0, 678.0)",
+        "OPENCCMAN_DUO_CAPTURE en-system-pro-alert: app=(0.0, 0.0, 466.0, 678.0), window=(0.0, 0.0, 466.0, 678.0)",
+        "OPENCCMAN_DUO_CAPTURE en-pro-sheet-with-system-close: app=(0.0, 0.0, 466.0, 678.0), window=(0.0, 0.0, 466.0, 678.0)",
+        "OPENCCMAN_DUO_CAPTURE zh-Hant-system-pro-alert: app=(0.0, 0.0, 466.0, 678.0), window=(0.0, 0.0, 466.0, 678.0)",
+        "OPENCCMAN_DUO_CAPTURE zh-Hant-pro-sheet-with-system-close: app=(0.0, 0.0, 466.0, 678.0), window=(0.0, 0.0, 466.0, 678.0)"
+      ]
+    },
+    "pro-closed-xxxl": {
+      "summary": "Executed 3 tests, with 0 failures (0 unexpected) in 52.371 (52.376) seconds",
+      "native_log_sha256": "11065a44cb32a7f2768f89d37996348da32b43d4738e3d86a40fe0cea1fc90f4",
+      "cases": [
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testSimplifiedProAlertCancelsAndOpensClosableSheet]' passed (17.808 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testSystemProAlertCancelsAndOpensClosableSheet]' passed (17.283 seconds).",
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testTraditionalProAlertCancelsAndOpensClosableSheet]' passed (17.280 seconds)."
+      ],
+      "frames": [
+        "OPENCCMAN_DUO_CAPTURE zh-Hans-system-pro-alert: app=(0.0, 0.0, 466.0, 678.0), window=(0.0, 0.0, 466.0, 678.0)",
+        "OPENCCMAN_DUO_CAPTURE zh-Hans-pro-sheet-with-system-close: app=(0.0, 0.0, 466.0, 678.0), window=(0.0, 0.0, 466.0, 678.0)",
+        "OPENCCMAN_DUO_CAPTURE en-system-pro-alert: app=(0.0, 0.0, 466.0, 678.0), window=(0.0, 0.0, 466.0, 678.0)",
+        "OPENCCMAN_DUO_CAPTURE en-pro-sheet-with-system-close: app=(0.0, 0.0, 466.0, 678.0), window=(0.0, 0.0, 466.0, 678.0)",
+        "OPENCCMAN_DUO_CAPTURE zh-Hant-system-pro-alert: app=(0.0, 0.0, 466.0, 678.0), window=(0.0, 0.0, 466.0, 678.0)",
+        "OPENCCMAN_DUO_CAPTURE zh-Hant-pro-sheet-with-system-close: app=(0.0, 0.0, 466.0, 678.0), window=(0.0, 0.0, 466.0, 678.0)"
+      ]
+    },
+    "settings-host": {
+      "summary": "Executed 1 test, with 1 failure (0 unexpected) in 101.805 (101.807) seconds",
+      "native_log_sha256": "e1fa3ff1d17f263216b44c1978358c48be959e0ba8ff14ea540fb78ae101bc3f",
+      "cases": [
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testHostResizeWithConversionSettingsKeepsDocument]' failed (101.805 seconds)."
+      ],
+      "frames": [],
+      "classification": "environment failure: appResize 24001 rejected landscape orientation; not an app result"
+    },
+    "settings-host-v2": {
+      "summary": "Executed 1 test, with 1 failure (0 unexpected) in 103.354 (103.357) seconds",
+      "native_log_sha256": "9ab496cb73950e05670566baaf7c75ca08c8aa14321af273242fcb92b39a0653",
+      "cases": [
+        "Test Case '-[WhatsNewPresentationTests.DuoReadinessTests testHostResizeWithConversionSettingsKeepsDocument]' failed (103.354 seconds)."
+      ],
+      "frames": [
+        "OPENCCMAN_DUO_CAPTURE settings-before-resize: app=(0.0, 0.0, 466.0, 678.0), window=(0.0, 0.0, 466.0, 678.0)"
+      ],
+      "classification": "acceptance failed: close position/hittability predicate timed out; cause unestablished; narrow return not executed"
+    }
+  },
+  "resize_trace": {
+    "window_sizes": [
+      [
+        466,
+        678
+      ],
+      [
+        950,
+        669
+      ]
+    ],
+    "models": [
+      "74101513-29F2-40D0-82EF-39EAA2B16123"
+    ],
+    "scene_ids": [
+      "9B63200F-4041-4C42-A4C9-11F6C79499D4"
+    ],
+    "native_editor_identity_sets": [
+      [
+        "ObjectIdentifier(0x00000001016cd800)",
+        "ObjectIdentifier(0x00000001016ce400)"
+      ]
+    ],
+    "division_active": false,
+    "input_and_result_characters": [
+      [
+        0,
+        0
+      ],
+      [
+        22,
+        0
+      ],
+      [
+        22,
+        22
+      ]
+    ],
+    "trace_sha256": "dc3cd73e743748d9a1e6363dbf1f7d25ebf2faf4809c97223e314817dbc6b999"
+  },
+  "app_inputs_changed": false,
+  "warning": "Test runner links Xcode XCTest libraries with iOS 17 minimum; no claim of iOS 15 execution. App deployment target is unchanged.",
+  "remote_evidence_comment": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6475733596"
+}

@@ -18,23 +18,23 @@ struct WorkspaceChecks {
                                                      accessibility: false, previousAxis: .horizontal)
     precondition(vertical.axis == .vertical)
     preference.axis = .horizontal
-    for platform in [WorkspaceLayoutResolution.Platform.mac, .pad, .phone] {
+    for platform in [WorkspaceLayoutResolution.Platform.mac, .mobile] {
       let accessible = WorkspaceLayoutResolution.resolve(preference: preference, width: 1400,
                                                           platform: platform, accessibility: true)
       precondition(accessible.axis == .vertical && accessible.inspectorWidth == 0)
       let normal = WorkspaceLayoutResolution.resolve(preference: preference, width: 1400,
                                                       platform: platform, accessibility: false)
-      precondition((normal.axis == .horizontal) == (platform != .phone))
+      precondition(normal.axis == .horizontal)
     }
     preference.inspector = .shown
-    let narrow = WorkspaceLayoutResolution.resolve(preference: preference, width: 500, platform: .pad, accessibility: false)
+    let narrow = WorkspaceLayoutResolution.resolve(preference: preference, width: 500, platform: .mobile, accessibility: false)
     precondition(narrow.inspectorWidth == 0)
     let sidebar = WorkspaceLayoutResolution.resolve(preference: preference, width: 1050, platform: .mac, accessibility: false)
     precondition(sidebar.inspectorWidth == 264 && sidebar.editorWidth == 762 && sidebar.axis == .horizontal)
     preference.inspector = .hidden
     let hidden = WorkspaceLayoutResolution.resolve(preference: preference, width: 1050, platform: .mac, accessibility: false)
     precondition(hidden.editorWidth == 1050)
-    for platform in [WorkspaceLayoutResolution.Platform.mac, .pad] {
+    for platform in [WorkspaceLayoutResolution.Platform.mac, .mobile] {
       let resolved = WorkspaceLayoutResolution.resolve(preference: preference, width: 1200,
                                                         platform: platform, accessibility: false)
       let panes = resolved.paneLengths(totalLength: 1200, preference: preference)
@@ -60,6 +60,24 @@ struct WorkspaceChecks {
       let result = WorkspaceLayoutResolution.resolve(preference: preference, width: width, platform: .mac, accessibility: false)
       precondition(result.axis == .vertical && result.editorWidth == 0)
     }
-    print("Workspace checks passed: hysteresis, user intent, inspector budget, accessibility, phone, window isolation, ratio recovery and pane minima")
+    // The same mobile window must cross both directions without changing its
+    // user's preference or split ratio. Includes the continuous transition band.
+    preference = WorkspaceLayoutPreference(axis: .horizontal, inspector: .hidden,
+                                          horizontalRatio: 0.65, verticalRatio: 0.4)
+    previous = nil
+    for width in stride(from: 300.0, through: 1200.0, by: 10) {
+      let resolved = WorkspaceLayoutResolution.resolve(preference: preference, width: width,
+        platform: .mobile, accessibility: false, previousAxis: previous)
+      precondition((resolved.axis == .horizontal) == (width >= 760))
+      previous = resolved.axis
+    }
+    for width in stride(from: 1200.0, through: 300.0, by: -10) {
+      let resolved = WorkspaceLayoutResolution.resolve(preference: preference, width: width,
+        platform: .mobile, accessibility: false, previousAxis: previous)
+      precondition((resolved.axis == .horizontal) == (width >= 720))
+      previous = resolved.axis
+    }
+    precondition(preference.axis == .horizontal && preference.horizontalRatio == 0.65 && preference.verticalRatio == 0.4)
+    print("PASS: workspace hysteresis, mobile width transitions, user intent, inspector budget, accessibility, window isolation, ratio recovery and pane minima")
   }
 }

@@ -44,9 +44,11 @@ struct MobileLargeFileTaskView: View {
       .navigationTitle(Text("large_file_title"))
       .navigationBarTitleDisplayMode(.inline)
       .toolbar {
-        if !coordinator.isWorking && !coordinator.isAwaitingConfirmation && coordinator.phase != .exporting {
-          ToolbarItem(placement: .confirmationAction) {
-            Button("Done") { coordinator.dismissPresentation() }
+        ToolbarItem(placement: .confirmationAction) {
+          if !coordinator.isWorking && !coordinator.isAwaitingConfirmation && coordinator.phase != .exporting {
+            Button { coordinator.dismissPresentation() } label: {
+              Label("Done", systemImage: "checkmark")
+            }
           }
         }
       }

@@ -1,0 +1,187 @@
+{
+  "source_sha": "23026c5ec8959c1eceeb6ad454d803b52f73cc53",
+  "worktree_status": "",
+  "xcode": "Xcode 27.1\nBuild version 27A9275",
+  "commands": [
+    {
+      "name": "fixtures",
+      "command": [
+        "python3",
+        "scripts/generate-mobile-capacity-fixtures.py",
+        "--output",
+        "/Users/rxwill/Library/Caches/Codex/OpenCCman-264-audit-20261030/fixtures"
+      ],
+      "exit_code": 0,
+      "seconds": 2.01,
+      "log_sha256": "e307d3eaec75a29dd7760d8957082a9a98c16022422eec4b63fcf63eee02d9d4",
+      "stopped_reason": null
+    },
+    {
+      "name": "small-fixture",
+      "command": [
+        "python3",
+        "scripts/generate-mobile-capacity-fixtures.py",
+        "--output",
+        "/Users/rxwill/Library/Caches/Codex/OpenCCman-264-audit-20261030/small-fixture",
+        "--sizes-mib",
+        "1",
+        "--corpora",
+        "unicode"
+      ],
+      "exit_code": 0,
+      "seconds": 2.0,
+      "log_sha256": "d23f15aa4d753db9f1ef0c50b00077b0f183b387f860c2024e90b454c3feb130",
+      "stopped_reason": null
+    },
+    {
+      "name": "small-oracle",
+      "command": [
+        "python3",
+        "scripts/generate-mobile-capacity-oracle.py",
+        "--fixtures",
+        "/Users/rxwill/Library/Caches/Codex/OpenCCman-264-audit-20261030/small-fixture",
+        "--opencc-path",
+        "/Users/rxwill/Library/Caches/Codex/OpenCCman-264-audit-20261030/wrapper",
+        "--output",
+        "/Users/rxwill/Library/Caches/Codex/OpenCCman-264-audit-20261030/small-oracle"
+      ],
+      "exit_code": 0,
+      "seconds": 16.03,
+      "log_sha256": "2d2ca36152c63d0886391ff6668959d91b9251a897ac45beb9ce1d0802307204",
+      "stopped_reason": null
+    },
+    {
+      "name": "oracle-semantics",
+      "command": [
+        "python3",
+        "scripts/test-mobile-capacity-oracle.py",
+        "--binary",
+        "/Users/rxwill/Library/Caches/Codex/OpenCCman-264-audit-20261030/small-oracle/package/.build/release/Oracle"
+      ],
+      "exit_code": 0,
+      "seconds": 2.01,
+      "log_sha256": "3851426979bee956d9e6acc7f8ba18147ae6e3d514a51ab2a45968fedbbb6dc4",
+      "stopped_reason": null
+    },
+    {
+      "name": "service-84",
+      "command": [
+        "python3",
+        "scripts/check-mobile-capacity-outputs.py",
+        "--fixtures",
+        "/Users/rxwill/Library/Caches/Codex/OpenCCman-264-audit-20261030/fixtures",
+        "--oracle",
+        "/Users/rxwill/.codex/worktrees/264-capacity-audit/OpenCCman/docs/validation/issue-260-mobile-capacity/oracle.json",
+        "--opencc-path",
+        "/Users/rxwill/Library/Caches/Codex/OpenCCman-264-audit-20261030/wrapper",
+        "--output",
+        "/Users/rxwill/Library/Caches/Codex/OpenCCman-264-audit-20261030/service-84"
+      ],
+      "exit_code": 0,
+      "seconds": 146.29,
+      "log_sha256": "a6bad5415f5fa5cf46810d551d728765c762307d4fc3583911eb11c72697f721",
+      "stopped_reason": null
+    }
+  ],
+  "scope": "Mac tool/service only; no device, memory, provider or production acceptance",
+  "historical_fixture_replication": {
+    "fixtures": 12,
+    "bytes": 713031680,
+    "all_lengths_and_hashes_match": true,
+    "regenerated_manifest_sha256": "9d77127a1df57ff136d70847bd3d490df56ca5e8f170ef2ddd195d29327eb233",
+    "reused_historical_manifest_sha256": "09f1b3153d7b633c07b399ca052de08f97cd08c7e0cfeacee7be5e4703d1388f",
+    "reason": "Exact fixture bytes and unchanged generator/wrapper permit use of historical independent oracle; original provenance retained."
+  },
+  "service_report_sha256": "830a16ead1d413f9d96b206a8785b49a9981ef4162242741d0c7151b690b1b85",
+  "completed": true,
+  "free_bytes_after": 31647006720,
+  "tool_checks": [
+    {
+      "command": [
+        "python3",
+        "scripts/test-mobile-capacity-fixtures.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/test-mobile-capacity-preflight.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/test-mobile-export-verifier.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Tests/Benchmarks",
+        "-p",
+        "test_*.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "ruby",
+        "-e",
+        "require \"yaml\"; YAML.load_file(\".github/workflows/app-regression.yml\"); puts \"PASS: workflow YAML parses\""
+      ],
+      "exit_code": 0
+    }
+  ],
+  "crosscheck": {
+    "service_rows": 84,
+    "unique_pairs": 84,
+    "full_lengths_hashes_modes_recovery_cleanup_match": true,
+    "six_source_hashes_match_clean_source_commit": true,
+    "runner_hash_matches": true,
+    "application_source_diff_from_develop": false
+  },
+  "artifacts": {
+    "service-report.json": {
+      "bytes": 32146,
+      "sha256": "830a16ead1d413f9d96b206a8785b49a9981ef4162242741d0c7151b690b1b85"
+    },
+    "oracle-1mib.json": {
+      "bytes": 3505,
+      "sha256": "aed553c1717bdf1c24ad7d35a8185d046d3829784e6adefc34e50385ac51c14a"
+    },
+    "regenerated-manifest.json": {
+      "bytes": 5180,
+      "sha256": "9d77127a1df57ff136d70847bd3d490df56ca5e8f170ef2ddd195d29327eb233"
+    },
+    "service-84.log": {
+      "bytes": 4077,
+      "sha256": "a6bad5415f5fa5cf46810d551d728765c762307d4fc3583911eb11c72697f721"
+    },
+    "oracle-semantics.log": {
+      "bytes": 111,
+      "sha256": "3851426979bee956d9e6acc7f8ba18147ae6e3d514a51ab2a45968fedbbb6dc4"
+    },
+    "tool-checks.log": {
+      "bytes": 879,
+      "sha256": "e1eebfc6e8b92fa11659990dbb00eb2fa89d760bad27cb44d33192956ec0b44a"
+    },
+    "original-defect-reproduction.json": {
+      "bytes": 279,
+      "sha256": "48cc10bd8053fe446a9bcc89c96f0a04f1ff6b01333ab733031e5e1b7fd86af7"
+    }
+  },
+  "guard": {
+    "minimum_free_bytes": 10737418240,
+    "per_log_max_bytes": 10485760,
+    "service_timeout_seconds": 1200,
+    "oracle_timeout_seconds": 900,
+    "stopped": false
+  }
+}

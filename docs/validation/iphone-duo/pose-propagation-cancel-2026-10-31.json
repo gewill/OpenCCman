@@ -1,0 +1,1013 @@
+{
+ "schema_version": 1,
+ "recorded_at": "2026-10-31T07:31:12.913318+00:00",
+ "source_binding": {
+  "source": "81b1baf8cf21b8e339a90a2b625a60bd32cc4b74",
+  "app_tree": "a9bc63c6f8f6ea12ea3b497c5528cb4bf35a0637",
+  "project_tree": "44b0dad8d0d71e3912dea0f65eb1fe4a6e2ac495",
+  "merged_pr": 298,
+  "push_ci_run": 41178598114,
+  "push_ci": "success",
+  "branch": "codex/282-vertical-request-root-cause",
+  "worktree_clean_at_start": true,
+  "qa_build": {
+   "bundle": "org.gewill.OpenCCman.WhatsNewUITests",
+   "version": "2.1 (30)",
+   "sdk": "iphonesimulator27.1",
+   "xcode_build": "27A9275",
+   "dylib_sha256": "a28c756e35b1e7e54b8160e3e50ca77b6531518340d516cb45c424a04d7e2bd3",
+   "rebuilt": false
+  },
+  "probe": {
+   "bundle": "org.gewill.OpenCCman.OrientationInputQA",
+   "binary_sha256": "e20d3283fdc9fc5aee760760412bc5806785a43e73eee51f050a9bcf1fdf9eb3",
+   "note": "independent UIKit probe from earlier rounds, reused unchanged"
+  },
+  "host_tools": {
+   "DEVELOPER_DIR": "/Applications/Xcode-27.2.0.app/Contents/Developer",
+   "xcode": "27.2 (27B52)",
+   "sim_use": "0.16.0 (5b543dceaf0f146bdbdc949545a26633f3de62a7)",
+   "axe": "1.8.0",
+   "ffmpeg": "9.0.2"
+  },
+  "device": {
+   "udid": "4CAD3041-0744-41A6-8B4E-F934CA9F0778",
+   "runtime": "iOS 27.1 (24A94425)",
+   "initial_state": "Shutdown",
+   "other_booted": []
+  }
+ },
+ "root_cause": {
+  "pipeline": [
+   "host vendor-defined HID report (orientation-picker / hinge-slider)",
+   "dtuhidd IndigoHIDServer -> avpCustom(0x500) virtual service, pending event dispatched on device open",
+   "SpringBoard CoreMotion CLDeviceStateNotifier (com.apple.locationd.Motion/DeviceState): identical-event filter, then CMMagicPoseEvent",
+   "SpringBoard DevicePose: per-surface (cover/inner) orientation compare",
+   "DeviceOrientationUpdateDeferral: Updated/Deferred device orientation (reason Device pose changed) -> interface rotation"
+  ],
+  "runs": {
+   "run1": {
+    "groups": 8,
+    "rotates": 16,
+    "unconfirmed": []
+   },
+   "run2": {
+    "rotates": 8,
+    "unconfirmed": [
+     "g3-inner-portrait",
+     "sticky-same-again"
+    ],
+    "recovered_by": "landscape-left then portrait"
+   },
+   "run3": {
+    "rotates": 5,
+    "unconfirmed": [
+     "g1-cover-portrait",
+     "sticky-same-again"
+    ],
+    "recovered_by": "landscape-left then portrait",
+    "capture": "all SpringBoard + probe logs"
+   }
+  },
+  "failure_signature": {
+   "delivered_to_guest": true,
+   "magic_pose_emitted": true,
+   "devicepose_logged_surface_change": true,
+   "orientation_update_for_either_surface": false,
+   "committed_in_devicepose": false,
+   "commit_evidence": [
+    "run2: alternate portrait produced no DevicePose change line; following request logged Po -> Ll (old value Po)",
+    "run3: alternate produced cover Ll -> Lr (old value Ll, not the dropped Po)"
+   ],
+   "sticky_cause": "CoreMotion identical-event filter: [defaultInit_SpringBoard:793] New event is identical to previous event, skipping!",
+   "sticky_skips": {
+    "run2": [
+     "15:14:55.666",
+     "15:15:03.806",
+     "15:15:06.784"
+    ],
+    "run3_after_failure": [
+     "15:17:21.958",
+     "15:17:29.988",
+     "15:17:32.951"
+    ]
+   },
+   "guest_time_zone": "+08:00 (host UTC = guest - 8h)"
+  },
+  "classification": {
+   "orientation_only": {
+    "total": 25,
+    "propagated": 23,
+    "dropped_with_flip": 2,
+    "dropped_without_flip": 0,
+    "flip_propagated": 18,
+    "noflip_propagated": 5
+   },
+   "flip": "DevicePose \"Transition style .fade -> .continuousSnapshot\" within 5 ms of the surface change",
+   "hinge_changes_note": "hinge changes propagate through display-transition deferral release, not \"Device pose changed\"; not classified as drops"
+  },
+  "proven": [
+   "loss is inside SpringBoard after DevicePose logs the surface change, for both cover and inner",
+   "retries of the same value are filtered by CoreMotion and cannot recover",
+   "a different value re-arms CoreMotion and DevicePose; the original then propagates"
+  ],
+  "not_proven": [
+   "why SpringBoard skips propagation (flip co-occurs with 2/2 drops but 18/20 flips propagated)",
+   "failure rate",
+   "Apple fix or permanent workaround",
+   "behaviour on a physical Duo"
+  ],
+  "product_impact": "none found: independent UIKit probe reproduces; OpenCCman orientation mask/code unchanged"
+ },
+ "cancel": {
+  "scope": "controlled 2s -qa-delay-conversion wait only; English/default size; not natural slow I/O or converter-internal execution",
+  "launch_args": [
+   "-AppleLanguages",
+   "(en)",
+   "-isPro",
+   "NO",
+   "-qa-suppress-review",
+   "-qa-duo-trace",
+   "-qa-delay-conversion"
+  ],
+  "hinge": "vendor-peer persistent connection, one report per case",
+  "tap": "sim-use tap --id workspace-convert (display routed)",
+  "cases": [
+   {
+    "tag": "c1-inner-to-cover",
+    "checks": {
+     "target_window_busy_before_cancel": true,
+     "source_kept": true,
+     "result_empty_after_cancel": true,
+     "convert_restored": true,
+     "export_matches_design": true,
+     "previous_caption_matches": true,
+     "quota_unchanged": true,
+     "display_switched": true
+    },
+    "quota_reads": [
+     {
+      "2026-10-31": 8
+     },
+     {
+      "2026-10-31": 8
+     },
+     {
+      "2026-10-31": 8
+     }
+    ],
+    "after_cancel": {
+     "source": "鼠标里面的硅二极管坏了，导致光标分辨率降低。",
+     "result": "",
+     "convert": [
+      [
+       "Convert",
+       true
+      ]
+     ],
+     "export_enabled": [
+      false
+     ],
+     "previous_result_caption": false
+    },
+    "after_wait": {
+     "source": "鼠标里面的硅二极管坏了，导致光标分辨率降低。",
+     "result": "",
+     "convert": [
+      [
+       "Convert",
+       true
+      ]
+     ],
+     "export_enabled": [
+      false
+     ],
+     "previous_result_caption": false
+    },
+    "busy_trace_window": [
+     951,
+     669
+    ],
+    "target_trace": {
+     "window": [
+      466,
+      678
+     ],
+     "busy": true
+    },
+    "final_display": {
+     "active_id": 1,
+     "rotation": "rot0",
+     "device": "portrait"
+    }
+   },
+   {
+    "tag": "c2-cover-to-inner",
+    "checks": {
+     "target_window_busy_before_cancel": true,
+     "source_kept": true,
+     "result_empty_after_cancel": true,
+     "convert_restored": true,
+     "export_matches_design": true,
+     "previous_caption_matches": true,
+     "quota_unchanged": true,
+     "display_switched": true
+    },
+    "quota_reads": [
+     {
+      "2026-10-31": 9
+     },
+     {
+      "2026-10-31": 9
+     },
+     {
+      "2026-10-31": 9
+     }
+    ],
+    "after_cancel": {
+     "source": "鼠标里面的硅二极管坏了，导致光标分辨率降低。",
+     "result": "",
+     "convert": [
+      [
+       "Convert",
+       true
+      ]
+     ],
+     "export_enabled": [
+      true
+     ],
+     "previous_result_caption": true
+    },
+    "after_wait": {
+     "source": "鼠标里面的硅二极管坏了，导致光标分辨率降低。",
+     "result": "",
+     "convert": [
+      [
+       "Convert",
+       true
+      ]
+     ],
+     "export_enabled": [
+      true
+     ],
+     "previous_result_caption": true
+    },
+    "busy_trace_window": [
+     466,
+     678
+    ],
+    "target_trace": {
+     "window": [
+      951,
+      669
+     ],
+     "busy": true
+    },
+    "final_display": {
+     "active_id": 3,
+     "rotation": "rot90",
+     "device": "landscapeRight"
+    }
+   }
+  ],
+  "timing": {
+   "c1-inner-to-cover-convert-tap": {
+    "started_at": "2026-10-31T07:27:41.043504+00:00",
+    "ended_at": "2026-10-31T07:27:41.917075+00:00"
+   },
+   "busy-observed": [
+    "2026-10-31T07:27:41.917537+00:00",
+    "2026-10-31T07:28:06.995711+00:00"
+   ],
+   "c1-inner-to-cover-hinge-ack": 1793431661.917783,
+   "target-window-trace": [
+    "2026-10-31T07:27:42.097029+00:00",
+    "2026-10-31T07:28:07.207120+00:00"
+   ],
+   "c1-inner-to-cover-cancel-tap": {
+    "started_at": "2026-10-31T07:27:42.097223+00:00",
+    "ended_at": "2026-10-31T07:27:42.869756+00:00"
+   },
+   "c2-cover-to-inner-convert-tap": {
+    "started_at": "2026-10-31T07:28:06.098087+00:00",
+    "ended_at": "2026-10-31T07:28:06.995264+00:00"
+   },
+   "c2-cover-to-inner-hinge-ack": 1793431686.996004,
+   "c2-cover-to-inner-cancel-tap": {
+    "started_at": "2026-10-31T07:28:07.207470+00:00",
+    "ended_at": "2026-10-31T07:28:08.016657+00:00"
+   }
+  },
+  "quota_note": "on-disk plist reads; prep conversion read 8 immediately and 9 four seconds later (deferred write). Cancel cases unchanged in immediate and delayed reads.",
+  "failed_attempts": [
+   {
+    "dir": "cancel/attempt1",
+    "cause": "sim-use fold took ~2.3s; QA wait elapsed, the second tap started a new real conversion; quota 3->5 and 6->8 are two counted successful conversions each, not a cancel result"
+   },
+   {
+    "dir": "cancel/attempt2",
+    "cause": "harness compared tuple with list; aborted before any tap"
+   },
+   {
+    "dir": "cancel/attempt3",
+    "cause": "axe coordinate tap went to the primary (cover) display while inner was active; no conversion started"
+   }
+  ]
+ },
+ "media": {
+  "upload": [
+   {
+    "path": "upload/c1-inner-to-cover-after-wait.jpg",
+    "bytes": 105043,
+    "sha256": "6a4f742c3a1de09162978692ce0dd27ab535deece53cf1c44511ba64f528fa15",
+    "url": "https://github.com/user-attachments/assets/eefe3933-61ea-497a-ad90-8c4240b15831",
+    "remote_readback_sha256_match": true
+   },
+   {
+    "path": "upload/c1-inner-to-cover.upright.mp4",
+    "bytes": 45970,
+    "sha256": "7bdc83799659ca7d7b02942b1c87d69611d6f99ba53a547a7c4cc5664a542cb3",
+    "url": "https://github.com/user-attachments/assets/7b38791a-6c83-4c60-a788-5f787b273084",
+    "remote_readback_sha256_match": true
+   },
+   {
+    "path": "upload/c2-cover-to-inner-after-wait.jpg",
+    "bytes": 102405,
+    "sha256": "df335c30158249a6649fe86ed6ec29f8cd8d89bd7e688594a5696e974613dc22",
+    "url": "https://github.com/user-attachments/assets/229c3bfe-44d5-463c-87b0-b1e4b12691fe",
+    "remote_readback_sha256_match": true
+   },
+   {
+    "path": "upload/c2-cover-to-inner.upright.mp4",
+    "bytes": 60494,
+    "sha256": "19f169cfada922a3a89e86a127cea54eb453ae9cd125a4c3a77b57a42de6ab0f",
+    "url": "https://github.com/user-attachments/assets/ec722234-4425-4d70-a56b-1ebc8dd4b9fe",
+    "remote_readback_sha256_match": true
+   }
+  ],
+  "transforms": "videos: transpose to content-upright, long edge <=1280, 15 fps, CRF 26; c1 starts with ~1.2s black while target display activates; screenshots: JPEG q82 long edge 1400",
+  "playback": "all originals and copies fully decoded with ffmpeg; frames at 5s / end inspected",
+  "comment_url": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6540649950",
+  "staging_note": "uploaded from a space-free scratch copy with identical SHA-256; long-term originals stay in evidence_root"
+ },
+ "cleanup": {
+  "udid": "4CAD3041-0744-41A6-8B4E-F934CA9F0778",
+  "state": "Shutdown",
+  "other_booted": [],
+  "log_streams_and_recorders_ended": true
+ },
+ "evidence_root": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/282-vertical-request/81b1baf8cf21b8e339a90a2b625a60bd32cc4b74/20261031",
+ "diagnostic_sources": {
+  "pose-flow.py": "# Bounded Duo orientation flow with guest pose logging (task-local diagnostic).\nimport subprocess,json,time,datetime,os,pathlib,sys,shutil\nimport sys\nP=pathlib.Path(__file__).parent/(sys.argv[1] if len(sys.argv)>1 else 'run');P.mkdir(exist_ok=True)\nU=\"4CAD3041-0744-41A6-8B4E-F934CA9F0778\"\nENV=dict(os.environ,DEVELOPER_DIR=\"/Applications/Xcode-27.2.0.app/Contents/Developer\")\nPRED=('(process == \"SpringBoard\" AND category BEGINSWITH \"Device\") OR '\n      '(process == \"dtuhidd\" AND NOT eventMessage CONTAINS \"property forKey\" AND NOT eventMessage CONTAINS \"ClientServiceNotification\" AND NOT eventMessage CONTAINS \"No matching virtual\") OR '\n      'subsystem == \"com.apple.CoreMotion\"')\ndef now():return datetime.datetime.now(datetime.timezone.utc).isoformat()\ndef log(o):\n o['host_at']=now()\n with (P/'flow.jsonl').open('a') as f:f.write(json.dumps(o,ensure_ascii=False)+'\\n')\n print(json.dumps(o,ensure_ascii=False)[:300],flush=True)\ndef run(cmd,timeout=40):\n assert shutil.disk_usage(P).free>12*2**30,'disk guard'\n s=now();t=time.monotonic();r=subprocess.run(cmd,env=ENV,capture_output=True,text=True,timeout=timeout)\n return {'cmd':cmd,'started_at':s,'ended_at':now(),'elapsed_s':round(time.monotonic()-t,3),'exit':r.returncode,'stdout':r.stdout,'stderr':r.stderr[-2000:]}\ndef sim(args,name):\n r=run(['sim-use','ios']+args+['--device',U,'--json']);d=json.loads(r['stdout'])['data'];r['data']=d;r['name']=name;log(r);return d\ndef native(name):\n f=P/(name+'-displays.json');run(['xcrun','devicectl','device','info','displays','--device',U,'--json-output',str(f)])\n j=json.loads(f.read_text())['result'];a=[x for x in j['displays'] if x.get('active') and 'integrated' in x['type']]\n o={'name':name,'kind':'native','active_id':a[0]['displayId'] if a else None,'rotation':a[0]['currentOrientation'] if a else None,'device':j['orientation']['currentDeviceOrientation'],'locked':j['orientation']['currentDeviceOrientationLocked']};log(o);return o\nstream=subprocess.Popen(['xcrun','simctl','spawn',U,'log','stream','--level','debug','--style','ndjson','--predicate',PRED],env=ENV,stdout=open(P/'guest-pose.ndjson','w'),stderr=open(P/'guest-pose.stderr','w'))\ntime.sleep(2);log({'event':'log-stream-started','pid':stream.pid})\ntry:\n native('start')\n start=time.monotonic();failed=None\n for g in range(1,13):\n  if time.monotonic()-start>420:break\n  for tag,args in [('open',['fold','open']),('inner-portrait',['rotate','portrait']),('half',['fold','half']),('closed',['fold','closed']),('cover-portrait',['rotate','portrait'])]:\n   d=sim(args,f'g{g}-{tag}')\n   if args[0]=='rotate' and not d['rotate']['confirmed']:failed=f'g{g}-{tag}';break\n  if failed:break\n log({'event':'flow-end','failed':failed,'elapsed_s':round(time.monotonic()-start,2)})\n if failed:\n  for k in range(4):native(f'failed-readonly-{k}');time.sleep(1)\n  d=sim(['rotate','portrait'],'sticky-same-again')\n  if not d['rotate']['confirmed']:\n   sim(['rotate','landscape-left'],'alternate-landscape-left')\n   sim(['rotate','portrait'],'original-after-alternate')\n  native('final')\n  run(['xcrun','simctl','io',U,'screenshot',str(P/'final.png')])\nfinally:\n time.sleep(2);stream.terminate();stream.wait(5);log({'event':'log-stream-stopped'})\n",
+  "pose-flow-wide.py": "# Bounded Duo orientation flow with guest pose logging (task-local diagnostic).\nimport subprocess,json,time,datetime,os,pathlib,sys,shutil\nimport sys\nP=pathlib.Path(__file__).parent/(sys.argv[1] if len(sys.argv)>1 else 'run');P.mkdir(exist_ok=True)\nU=\"4CAD3041-0744-41A6-8B4E-F934CA9F0778\"\nENV=dict(os.environ,DEVELOPER_DIR=\"/Applications/Xcode-27.2.0.app/Contents/Developer\")\nPRED_OLD=('(process == \"SpringBoard\" AND category BEGINSWITH \"Device\") OR '\n      '(process == \"dtuhidd\" AND NOT eventMessage CONTAINS \"property forKey\" AND NOT eventMessage CONTAINS \"ClientServiceNotification\" AND NOT eventMessage CONTAINS \"No matching virtual\") OR '\n      'subsystem == \"com.apple.CoreMotion\"')\ndef now():return datetime.datetime.now(datetime.timezone.utc).isoformat()\ndef log(o):\n o['host_at']=now()\n with (P/'flow.jsonl').open('a') as f:f.write(json.dumps(o,ensure_ascii=False)+'\\n')\n print(json.dumps(o,ensure_ascii=False)[:300],flush=True)\ndef run(cmd,timeout=40):\n assert shutil.disk_usage(P).free>12*2**30,'disk guard'\n s=now();t=time.monotonic();r=subprocess.run(cmd,env=ENV,capture_output=True,text=True,timeout=timeout)\n return {'cmd':cmd,'started_at':s,'ended_at':now(),'elapsed_s':round(time.monotonic()-t,3),'exit':r.returncode,'stdout':r.stdout,'stderr':r.stderr[-2000:]}\ndef sim(args,name):\n r=run(['sim-use','ios']+args+['--device',U,'--json']);d=json.loads(r['stdout'])['data'];r['data']=d;r['name']=name;log(r);return d\ndef native(name):\n f=P/(name+'-displays.json');run(['xcrun','devicectl','device','info','displays','--device',U,'--json-output',str(f)])\n j=json.loads(f.read_text())['result'];a=[x for x in j['displays'] if x.get('active') and 'integrated' in x['type']]\n o={'name':name,'kind':'native','active_id':a[0]['displayId'] if a else None,'rotation':a[0]['currentOrientation'] if a else None,'device':j['orientation']['currentDeviceOrientation'],'locked':j['orientation']['currentDeviceOrientationLocked']};log(o);return o\nPRED=PRED_OLD.replace('(process == \"SpringBoard\" AND category BEGINSWITH \"Device\")','process == \"SpringBoard\" OR process == \"OrientationInputQA\"')\nstream=subprocess.Popen(['xcrun','simctl','spawn',U,'log','stream','--level','debug','--style','ndjson','--predicate',PRED],env=ENV,stdout=open(P/'guest-pose.ndjson','w'),stderr=open(P/'guest-pose.stderr','w'))\ntime.sleep(2);log({'event':'log-stream-started','pid':stream.pid})\ntry:\n native('start')\n start=time.monotonic();failed=None\n for g in range(1,13):\n  if time.monotonic()-start>420:break\n  for tag,args in [('open',['fold','open']),('inner-portrait',['rotate','portrait']),('half',['fold','half']),('closed',['fold','closed']),('cover-portrait',['rotate','portrait'])]:\n   d=sim(args,f'g{g}-{tag}')\n   if args[0]=='rotate' and not d['rotate']['confirmed']:failed=f'g{g}-{tag}';break\n  if failed:break\n log({'event':'flow-end','failed':failed,'elapsed_s':round(time.monotonic()-start,2)})\n if failed:\n  for k in range(4):native(f'failed-readonly-{k}');time.sleep(1)\n  d=sim(['rotate','portrait'],'sticky-same-again')\n  if not d['rotate']['confirmed']:\n   sim(['rotate','landscape-left'],'alternate-landscape-left')\n   sim(['rotate','portrait'],'original-after-alternate')\n  native('final')\n  run(['xcrun','simctl','io',U,'screenshot',str(P/'final.png')])\nfinally:\n time.sleep(2);stream.terminate();stream.wait(5);log({'event':'log-stream-stopped'})\n",
+  "classify.py": "# Classify each CMMagicPose surface change by whether SpringBoard propagated it.\nimport json,sys,datetime,collections\ndef load(path):\n  rows=[]\n  for l in open(path):\n    try:e=json.loads(l)\n    except:continue\n    if 'timestamp' not in e or not e.get('processImagePath','').endswith('SpringBoard'):continue\n    rows.append((e['timestamp'][:26],e.get('category',''),e.get('eventMessage','')))\n  return rows\ntally=collections.Counter();out=[]\nfor run in sys.argv[1:]:\n  rows=load(run+'/guest-pose.ndjson')\n  for i,(ts,c,m) in enumerate(rows):\n    if c=='DevicePose' and 'surface orientation changed' in m:\n      t=datetime.datetime.strptime(ts,'%Y-%m-%d %H:%M:%S.%f')\n      win=[]\n      for j in range(max(0,i-12),min(len(rows),i+40)):\n        t2=datetime.datetime.strptime(rows[j][0],'%Y-%m-%d %H:%M:%S.%f')\n        if abs((t2-t).total_seconds())<=0.005:win.append(rows[j])\n      hinge=any('Hinge state changed' in x[2] for x in win)\n      flip=any('Transition style .fade -> .continuousSnapshot' in x[2] for x in win)\n      prop=any(x[1]=='DeviceOrientationUpdateDeferral' and 'Device pose changed' in x[2] for x in win)\n      k=('hinge' if hinge else 'orient','flip' if flip else 'noflip','propagated' if prop else 'DROPPED')\n      tally[k]+=1;out.append((run,ts[11:23],m.split('changed: ')[1],*k))\nfor o in out:print(*o)\nprint();[print(v,k) for k,v in sorted(tally.items())]\n",
+  "cancel/cancel-flow.py": "# Controlled-QA-wait Cancel across hinge changes (task-local acceptance harness).\nimport subprocess,json,time,datetime,os,pathlib,shutil,signal,plistlib,sys\nfrom peer import Peer\nP=pathlib.Path(__file__).parent\nU=\"4CAD3041-0744-41A6-8B4E-F934CA9F0778\";B=\"org.gewill.OpenCCman.WhatsNewUITests\"\nENV=dict(os.environ,DEVELOPER_DIR=\"/Applications/Xcode-27.2.0.app/Contents/Developer\")\nSOURCE=\"鼠标里面的硅二极管坏了，导致光标分辨率降低。\";RESULT=\"鼠標裏面的硅二極管壞了，導致光標分辨率降低。\"\ndef now():return datetime.datetime.now(datetime.timezone.utc).isoformat()\ndef log(o):\n o.setdefault('host_at',now())\n with (P/'actions.jsonl').open('a') as f:f.write(json.dumps(o,ensure_ascii=False)+'\\n')\ndef run(cmd,name,timeout=45):\n assert shutil.disk_usage(P).free>12*2**30,'disk guard'\n s=now();r=subprocess.run(cmd,env=ENV,capture_output=True,text=True,timeout=timeout)\n o={'name':name,'cmd':cmd,'started_at':s,'ended_at':now(),'exit':r.returncode,'stdout':r.stdout[-20000:],'stderr':r.stderr[-2000:]};log(o)\n assert r.returncode==0,(name,r.stderr[-400:]);return r.stdout\ndef sim(args,name):return json.loads(run(['sim-use','ios']+args+['--device',U,'--json'],name))['data']\ndef native(name):\n f=P/(name+'-displays.json');run(['xcrun','devicectl','device','info','displays','--device',U,'--json-output',str(f)],name)\n j=json.loads(f.read_text())['result'];a=[x for x in j['displays'] if x.get('active') and 'integrated' in x['type']][0]\n o={'active_id':a['displayId'],'rotation':a['currentOrientation'],'device':j['orientation']['currentDeviceOrientation']};log({'name':name+'-summary',**o});return o\ndef walk(n):\n if isinstance(n,list):\n  for v in n:yield from walk(v)\n elif isinstance(n,dict):\n  yield n;yield from walk(n.get('children',[]))\ndef ax(name):\n out=run(['axe','describe-ui','--udid',U],name+'-ax');(P/(name+'-ax.json')).write_text(out);return list(walk(json.loads(out)))\ndef state(name):\n nodes=ax(name);eds={x.get('AXUniqueId'):x for x in nodes if x.get('type')=='TextArea'}\n conv=[x for x in nodes if x.get('AXUniqueId')=='workspace-convert']\n exp=[x for x in nodes if x.get('AXLabel')=='Export TXT']\n labels=[x.get('AXLabel') for x in nodes if x.get('AXLabel')]\n o={'source':eds.get('workspace-source-editor',{}).get('AXValue') or '','result':eds.get('workspace-result-editor',{}).get('AXValue') or '',\n    'convert':[[x.get('AXLabel'),x.get('enabled')] for x in conv],'export_enabled':[x.get('enabled') for x in exp],\n    'previous_result_caption':any('revious' in (l or '') for l in labels),'empty_caption':any('No result' in (l or '') or 'result yet' in (l or '').lower() for l in labels)}\n log({'name':name+'-state',**o});(P/(name+'-state.json')).write_text(json.dumps(o,ensure_ascii=False,indent=2));return o\ndef shot(name,display):run(['xcrun','simctl','io',U,'screenshot','--display='+str(display),str(P/(name+'.png'))],name+'-shot')\ndef quota(name):\n c=run(['xcrun','simctl','get_app_container',U,B,'data'],name+'-data').strip()\n p=plistlib.loads((pathlib.Path(c)/'Library/Preferences'/(B+'.plist')).read_bytes())\n o={'name':name+'-quota','quota':p.get('testNumbersPerDay'),'isPro':p.get('isPro'),'kind':'on-disk plist read (may lag in-app value)'};log(o);return o\ndef trace_path():return pathlib.Path(run(['xcrun','simctl','get_app_container',U,B,'data'],'trace-data').strip())/'tmp/duo-layout-trace.jsonl'\ndef wait_busy(trace,offset,timeout=3):\n end=time.monotonic()+timeout\n while time.monotonic()<end:\n  with trace.open('rb') as f:f.seek(offset);lines=f.readlines()\n  for l in lines:\n   row=json.loads(l)\n   if row.get('busy'):log({'name':'busy-observed','trace':row});return row\n  time.sleep(.01)\n raise AssertionError('busy not observed')\nclass Record:\n def __init__(s,name,display):s.name=name;s.display=display\n def __enter__(s):\n  s.h=(P/(s.name+'-record.log')).open('w');s.p=subprocess.Popen(['xcrun','simctl','io',U,'recordVideo','--codec=h264','--display='+str(s.display),str(P/(s.name+'.mp4'))],env=ENV,stdout=s.h,stderr=s.h)\n  for _ in range(50):\n   if 'Recording started' in (P/(s.name+'-record.log')).read_text():log({'name':s.name+'-record-start'});return s\n   time.sleep(.1)\n  raise AssertionError('record start')\n def __exit__(s,*a):\n  s.p.send_signal(signal.SIGINT);s.p.wait(10);s.h.close();log({'name':s.name+'-record-end','exit':s.p.returncode})\nCENTER={1:(418,302),3:(903,252)};WINDOW={1:[466,678],3:[951,669]}\ndef tapxy(display,name):\n return sim(['tap','--id','workspace-convert','--element-type','Button'],name)\ndef wait_window_busy(trace,offset,display,timeout=3):\n end=time.monotonic()+timeout\n while time.monotonic()<end:\n  with trace.open('rb') as f:f.seek(offset);lines=f.readlines()\n  for l in lines:\n   row=json.loads(l)\n   if row.get('window')==WINDOW[display]:\n    log({'name':'target-window-trace','trace':row});return row\n  time.sleep(.01)\n raise AssertionError('target window not observed')\ndef case(tag,start_display,end_display,hinge,expect_previous):\n n=native(tag+'-start');assert n['active_id']==start_display,n\n before=state(tag+'-before');q0=quota(tag+'-before')\n assert before['convert']==[['Convert',True]] and before['source']==SOURCE,before\n trace=trace_path();offset=trace.stat().st_size\n with Peer(tag+'-hinge') as peer:\n  with Record(tag,end_display):\n   tapxy(start_display,tag+'-convert-tap')\n   busy=wait_busy(trace,offset)\n   ack=peer.send('hinge '+str(hinge));log({'name':tag+'-hinge-ack','ack':ack})\n   target=wait_window_busy(trace,offset,end_display)\n   assert target.get('busy') is True,('conversion finished before target window',target)\n   tapxy(end_display,tag+'-cancel-tap')\n   after=state(tag+'-after-cancel');shot(tag+'-after-cancel',end_display)\n   time.sleep(3.0)\n   later=state(tag+'-after-wait');shot(tag+'-after-wait',end_display)\n q1=quota(tag+'-after-immediate');time.sleep(4);q2=quota(tag+'-after-delayed')\n disp=native(tag+'-final')\n ok={'target_window_busy_before_cancel':target.get('busy') is True,\n     'source_kept':after['source']==SOURCE and later['source']==SOURCE,\n     'result_empty_after_cancel':after['result']=='' and later['result']=='',\n     'convert_restored':after['convert']==[['Convert',True]] and later['convert']==[['Convert',True]],\n     'export_matches_design':later['export_enabled']==[expect_previous],\n     'previous_caption_matches':later['previous_result_caption']==expect_previous,\n     'quota_unchanged':q0['quota']==q1['quota']==q2['quota'],\n     'display_switched':disp['active_id']==end_display}\n res={'tag':tag,'busy_trace':busy,'hinge_ack':ack,'target_trace':target,'after':after,'later':later,'quota':[q0,q1,q2],'final_display':disp,'checks':ok}\n (P/(tag+'-result.json')).write_text(json.dumps(res,ensure_ascii=False,indent=2));print(tag,json.dumps(ok),[q['quota'] for q in (q0,q1,q2)],flush=True);return res\n# Setup: clean QA launch without the What's New reset flag, fill sample.\nfor b in ['org.gewill.OpenCCman.OrientationInputQA',B]:\n subprocess.run(['xcrun','simctl','terminate',U,b],env=ENV,capture_output=True)\nsim(['fold','open'],'setup-open');time.sleep(1.5)\nq=quota('setup-before-launch')\nrun(['xcrun','simctl','launch',U,B,'-AppleLanguages','(en)','-isPro','NO','-qa-suppress-review','-qa-duo-trace','-qa-delay-conversion'],'setup-launch')\nfor i in range(20):\n nodes=ax('setup-ready-'+str(i))\n if any(x.get('AXUniqueId')=='source-fill-example' and x.get('enabled') for x in nodes):break\n time.sleep(.4)\nelse:raise AssertionError('not ready')\nsim(['tap','--id','source-fill-example','--element-type','Button'],'setup-fill');time.sleep(.5)\ns=state('setup-filled');assert s['source']==SOURCE and s['result']=='',s\nr1=case('c1-inner-to-cover',3,1,0,False)\nsim(['tap','--id','workspace-convert','--element-type','Button'],'c2-prep-convert');time.sleep(3.2)\np=state('c2-prep-done');assert p['result']==RESULT,p;quota('c2-prep-immediate');time.sleep(4);quota('c2-prep-delayed')\nr2=case('c2-cover-to-inner',1,3,180,True)\nprint('DONE',flush=True)\n",
+  "cancel/peer.py": "import diag as d,subprocess,time,json,select\nclass Peer:\n def __init__(self,name):self.name=name;self.log=[]\n def read(self,timeout=12):\n  assert select.select([self.proc.stdout],[],[],timeout)[0],\"peer output timeout\"\n  line=self.proc.stdout.readline();assert line,\"peer ended unexpectedly\"\n  item=json.loads(line);item['host_observed_at']=d.now();self.log.append(item);self.save();return item\n def save(self):(d.P/(self.name+'-peer.json')).write_text(json.dumps(self.log,indent=2))\n def __enter__(self):\n  self.err=(d.P/(self.name+'-peer.stderr')).open('w');self.proc=subprocess.Popen([str(d.P/'vendor-peer')],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=self.err,text=True,bufsize=1,env=d.E);self.log.append({'event':'spawn','host_at':d.now(),'pid':self.proc.pid});self.ready=self.read();assert self.ready['event']=='ready';return self\n def send(self,command):\n  self.proc.stdin.write(command+'\\n');self.proc.stdin.flush();r=self.read();assert r['event']=='sent' and r['command']==command;return r\n def __exit__(self,*args):\n  if self.proc.poll() is None:\n   self.proc.stdin.write('quit\\n');self.proc.stdin.flush();self.closed=self.read();assert self.closed['event']=='closed'\n  self.proc.wait(timeout=10);self.err.close();self.save()\n",
+  "cancel/diag.py": "import pathlib,os,datetime\nP=pathlib.Path(__file__).parent\nE=dict(os.environ,DEVELOPER_DIR=\"/Applications/Xcode-27.2.0.app/Contents/Developer\")\ndef now():return datetime.datetime.now(datetime.timezone.utc).isoformat()\n",
+  "cancel/vendor-peer.m": "// SPDX-License-Identifier: Apache-2.0\n// Wire format and XPC bridge derived from lycorp-jp/sim-use VendorDefinedHID.swift,\n// commit 5b543dceaf0f146bdbdc949545a26633f3de62a7. Task-local diagnostic only.\n#import <Foundation/Foundation.h>\n#import <IOKit/IOCFSerialize.h>\n#import <objc/message.h>\n#import <dlfcn.h>\n#import <xpc/xpc.h>\n#import <mach/mach.h>\n#import <sys/select.h>\ntypedef xpc_object_t (*EndpointFn)(mach_port_t,uint64_t,uint64_t);\ntypedef xpc_connection_t (*ConnectionFn)(xpc_object_t);\ntypedef void (*EnableFn)(xpc_connection_t);\nint main(int argc,char **argv){@autoreleasepool{\n if(argc!=1)return 2;\n void *h=dlopen(\"/Library/Developer/PrivateFrameworks/CoreSimulator.framework/CoreSimulator\",RTLD_NOW|RTLD_GLOBAL);if(!h)return 3;\n NSError *error=nil;Class contextClass=NSClassFromString(@\"SimServiceContext\");SEL contextSel=NSSelectorFromString(@\"sharedServiceContextForDeveloperDir:error:\");\n id context=((id(*)(id,SEL,id,NSError**))objc_msgSend)(contextClass,contextSel,@\"/Applications/Xcode-27.2.0.app/Contents/Developer\",&error);if(!context){fprintf(stderr,\"context error\\n\");return 3;}\n id set=((id(*)(id,SEL,NSError**))objc_msgSend)(context,NSSelectorFromString(@\"defaultDeviceSetWithError:\"),&error);if(!set)return 3;\n NSDictionary *devices=((id(*)(id,SEL))objc_msgSend)(set,NSSelectorFromString(@\"devicesByUDID\"));NSUUID *udid=[[NSUUID alloc]initWithUUIDString:@\"4CAD3041-0744-41A6-8B4E-F934CA9F0778\"];id device=devices[udid];if(!device)return 3;\n mach_port_t port=((mach_port_t(*)(id,SEL,id,NSError**))objc_msgSend)(device,NSSelectorFromString(@\"lookup:error:\"),@\"com.apple.coredevice.feature.remote.hid.vendordefined\",&error);if(!port){fprintf(stderr,\"lookup failed\\n\");return 3;}\n EndpointFn endpointFn=(EndpointFn)dlsym(RTLD_DEFAULT,\"xpc_endpoint_create_mach_port_4sim\");ConnectionFn connectionFn=(ConnectionFn)dlsym(RTLD_DEFAULT,\"xpc_connection_create_from_endpoint\");EnableFn enableFn=(EnableFn)dlsym(RTLD_DEFAULT,\"xpc_connection_enable_sim2host_4sim\");if(!endpointFn||!connectionFn||!enableFn)return 3;\n xpc_object_t endpoint=endpointFn(port,0,0);__attribute__((objc_precise_lifetime)) xpc_connection_t connection=connectionFn(endpoint);if(!connection)return 3;enableFn(connection);xpc_connection_set_event_handler(connection,^(xpc_object_t ignored){});xpc_connection_resume(connection);\n\n // Bare barrier and bounded pre-send warm-up; not proof of guest readiness.\n xpc_object_t initial=xpc_dictionary_create(NULL,NULL,0);xpc_dictionary_set_bool(initial,\"isBarrier\",true);\n dispatch_semaphore_t ready=dispatch_semaphore_create(0);__block BOOL readyOK=NO;\n xpc_connection_send_message_with_reply(connection,initial,NULL,^(xpc_object_t reply){readyOK=xpc_get_type(reply)!=XPC_TYPE_ERROR;dispatch_semaphore_signal(ready);});\n if(dispatch_semaphore_wait(ready,dispatch_time(DISPATCH_TIME_NOW,8*NSEC_PER_SEC))||!readyOK){xpc_connection_cancel(connection);return 4;}\n [NSThread sleepForTimeInterval:2];double opened=NSDate.date.timeIntervalSince1970;\n printf(\"{\\\"event\\\":\\\"ready\\\",\\\"reports_sent\\\":0,\\\"pre_send_wait_s\\\":2,\\\"epoch\\\":%.6f,\\\"guest_consumption_proven\\\":false}\\n\",opened);fflush(stdout);\n char line[128];int count=0;\n while(count<8){\n  fd_set fds;FD_ZERO(&fds);FD_SET(0,&fds);double remaining=90-(NSDate.date.timeIntervalSince1970-opened);if(remaining<=0)break;\n  struct timeval limit={(long)remaining,0};int readable=select(1,&fds,NULL,NULL,&limit);if(readable<=0||!fgets(line,sizeof(line),stdin))break;\n  NSString *command=[@(line) stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];if([command isEqual:@\"quit\"])break;\n  NSArray *parts=[command componentsSeparatedByString:@\" \"];if(parts.count!=2){fprintf(stderr,\"invalid command\\n\");break;}\n  NSString *kind=parts[0],*value=parts[1];NSDictionary *report=nil;\n  if([kind isEqual:@\"orient\"]&&[@[@\"portrait\",@\"pud\",@\"landscape-left\",@\"landscape-right\"] containsObject:value])report=@{@\"provider\":@\"com.apple.Virtualization.VirtualMachines\",@\"source\":@\"orientation-picker-control\",@\"type\":@\"enum\",@\"value\":value};\n  if([kind isEqual:@\"hinge\"]&&[@[@\"0\",@\"130\",@\"180\"] containsObject:value])report=@{@\"provider\":@\"com.apple.Virtualization.VirtualMachines\",@\"source\":@\"hinge-slider-control\",@\"type\":@\"range\",@\"value\":@([value intValue])};\n  if(!report){fprintf(stderr,\"command not whitelisted\\n\");break;}\n  CFDataRef serialized=IOCFSerialize((__bridge CFTypeRef)report,kIOCFSerializeToBinary);if(!serialized)break;\n  xpc_object_t payload=xpc_dictionary_create(NULL,NULL,0);xpc_dictionary_set_uint64(payload,\"usagePage\",0xFF61);xpc_dictionary_set_uint64(payload,\"usage\",0x5B);xpc_dictionary_set_uint64(payload,\"version\",0);xpc_dictionary_set_data(payload,\"data\",CFDataGetBytePtr(serialized),CFDataGetLength(serialized));CFRelease(serialized);\n  xpc_object_t message=xpc_dictionary_create(NULL,NULL,0);xpc_dictionary_set_string(message,\"messageType\",\"IndigoVendorDefinedEvent\");xpc_dictionary_set_bool(message,\"isBarrier\",false);xpc_dictionary_set_string(message,\"featureIdentifier\",\"com.apple.coredevice.feature.remote.hid.vendordefined\");xpc_dictionary_set_value(message,\"payload\",payload);double sent=NSDate.date.timeIntervalSince1970;xpc_connection_send_message(connection,message);\n  xpc_object_t barrier=xpc_dictionary_create(NULL,NULL,0);xpc_dictionary_set_bool(barrier,\"isBarrier\",true);dispatch_semaphore_t sem=dispatch_semaphore_create(0);__block BOOL replyOK=NO;xpc_connection_send_message_with_reply(connection,barrier,NULL,^(xpc_object_t reply){replyOK=xpc_get_type(reply)!=XPC_TYPE_ERROR;dispatch_semaphore_signal(sem);});long waited=dispatch_semaphore_wait(sem,dispatch_time(DISPATCH_TIME_NOW,8*NSEC_PER_SEC));if(waited||!replyOK){fprintf(stderr,\"barrier failed\\n\");break;}\n  count++;NSDictionary *result=@{@\"event\":@\"sent\",@\"udid\":udid.UUIDString,@\"command\":command,@\"sent_epoch\":@(sent),@\"barrier_epoch\":@(NSDate.date.timeIntervalSince1970),@\"reports_sent\":@(count),@\"barrier_success\":@YES,@\"guest_consumption_proven\":@NO};NSData *json=[NSJSONSerialization dataWithJSONObject:result options:0 error:nil];fwrite(json.bytes,1,json.length,stdout);puts(\"\");fflush(stdout);\n }\n xpc_connection_cancel(connection);printf(\"{\\\"event\\\":\\\"closed\\\",\\\"reports_sent\\\":%d}\\n\",count);fflush(stdout);\n}return 0;}\n",
+  "verify-pose-cancel.py": "# Offline, read-only check of this evidence root against the committed JSON index.\nimport json,hashlib,pathlib,sys\nP=pathlib.Path(__file__).parent\nidx=json.loads(pathlib.Path(sys.argv[1]).read_text())\nbad=[a['path'] for a in idx['artifact_snapshot'] if hashlib.sha256((P/a['path']).read_bytes()).hexdigest()!=a['sha256']]\nfor c in idx['cancel']['cases']:assert all(c['checks'].values()),c['tag']\nt=idx['root_cause']['classification']['orientation_only'];assert t['dropped_with_flip']==2 and t['dropped_without_flip']==0\nprint('FAIL' if bad else 'PASS',len(idx['artifact_snapshot']),'artifacts',bad[:5])\n"
+ },
+ "artifact_snapshot": [
+  {
+   "path": "cancel/actions.jsonl",
+   "bytes": 246611,
+   "sha256": "59cc18b7579b25f9c2b789bd67a92bb1fe375e8c2ebac8d3b1d8530bb805fcf9"
+  },
+  {
+   "path": "cancel/attempt1/actions.jsonl",
+   "bytes": 263888,
+   "sha256": "bfcfc921046a2b0608fd9ad0662bb1024302d9206421c95d23fbfa9a5d565840"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-after-cancel-ax.json",
+   "bytes": 137173,
+   "sha256": "9b3847ae941acd91281e135953327874daabaf0487d37e0abd98893feef72e11"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-after-cancel-state.json",
+   "bytes": 256,
+   "sha256": "595a07aba8f16797835481d006dbdb1324cf0d576c36ee7ff8f9be288aa447c5"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-after-cancel.png",
+   "bytes": 386717,
+   "sha256": "cd56fd74f3e5cbaf26f672d0ca6c8f954ac2b2f91ffd819fc71ee3656d731470"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-after-wait-ax.json",
+   "bytes": 130980,
+   "sha256": "9181a584909fa53068fda458ad6c1624416966bab7d256f575b8c02fb848b7c4"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-after-wait-state.json",
+   "bytes": 324,
+   "sha256": "44fab9e467430fbe662d9d6d345112e7b7ca19555a6c505b271b08d855445292"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-after-wait.png",
+   "bytes": 386808,
+   "sha256": "3760b378295ae09a59b0ada92c4c2a967a293f63450fcc18571edaa470e2b312"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-before-ax.json",
+   "bytes": 133941,
+   "sha256": "c970d698513e4658c250d873acc1b2cc6cbfd21b4a19f889540a1c47fab157d5"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-before-state.json",
+   "bytes": 259,
+   "sha256": "16af062907a638560d2b445f77e54c6a8b361e6b39a3763a74e62982b82d88dd"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-busy-ax.json",
+   "bytes": 130980,
+   "sha256": "3b023fd80ad625ff1f58c8be71cf490316041dcbbae393e9b3347dbded9bccd5"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-busy-state.json",
+   "bytes": 324,
+   "sha256": "44fab9e467430fbe662d9d6d345112e7b7ca19555a6c505b271b08d855445292"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-busy.png",
+   "bytes": 389023,
+   "sha256": "881525052cec6f7e721efaba5aabb3b92778a8fd3b6c8db514b4256ae04116ad"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-final-displays.json",
+   "bytes": 3165,
+   "sha256": "3b4c75e799ebe7e43684839615dd7e1f73145c7774773189e5e1c3226fb4ea62"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-record.log",
+   "bytes": 243,
+   "sha256": "5788033f1f8dbefacdbffa9ddb8311d3d51ad84cb0c472909191bfe6c245838b"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover-result.json",
+   "bytes": 3737,
+   "sha256": "1ba646fb6a0741599d6f9b09d2841aa99152b76918b0499e07d6e353eeef66e0"
+  },
+  {
+   "path": "cancel/attempt1/c1-inner-to-cover.mp4",
+   "bytes": 768145,
+   "sha256": "ad3392e7ca3a181a66865ed7cb27c5cf60aa4ca9d585f59b6680d7184f5aff4f"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-after-cancel-ax.json",
+   "bytes": 140184,
+   "sha256": "2c0fbc202096acde16d8d60f226ea162d41d86d4eb9ed480b7821f61e9c8b7af"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-after-cancel-state.json",
+   "bytes": 256,
+   "sha256": "595a07aba8f16797835481d006dbdb1324cf0d576c36ee7ff8f9be288aa447c5"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-after-cancel.png",
+   "bytes": 544400,
+   "sha256": "731935cee4f5d79c0fb3fbbb963e0ceb04901034515b35df09d2e7b4515206e7"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-after-wait-ax.json",
+   "bytes": 131738,
+   "sha256": "e02d28aaf0f21283a92994cbdb111d7ad9acce11120607d63a7b654e8c92a476"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-after-wait-state.json",
+   "bytes": 324,
+   "sha256": "44fab9e467430fbe662d9d6d345112e7b7ca19555a6c505b271b08d855445292"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-after-wait.png",
+   "bytes": 547949,
+   "sha256": "70abc5ceac76f45cb17cd6109a4255812a58c6f07653fdae4156f88c434710cc"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-before-ax.json",
+   "bytes": 130980,
+   "sha256": "d4d8873b45cf7f6815774dd56f5f010ccee68f91b393fcadcf602d34d2510d43"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-before-state.json",
+   "bytes": 324,
+   "sha256": "44fab9e467430fbe662d9d6d345112e7b7ca19555a6c505b271b08d855445292"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-busy-ax.json",
+   "bytes": 131738,
+   "sha256": "388768b73c4efc08fb0c5271ce78c374e6ccd967ec887f464f772fc8a8cb139a"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-busy-state.json",
+   "bytes": 324,
+   "sha256": "44fab9e467430fbe662d9d6d345112e7b7ca19555a6c505b271b08d855445292"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-busy.png",
+   "bytes": 549553,
+   "sha256": "8ce824fa2059a34eb18ebfaaacc10cdbc10b6ec683f4bf32a0940fa943d33f65"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-final-displays.json",
+   "bytes": 3177,
+   "sha256": "223b839e4ce12683be28cfaef6b58d91644dfb35e414420917bb0c4200b895d0"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-record.log",
+   "bytes": 243,
+   "sha256": "0f2819f4e00993f9318476547cbe0e65966041c78ff10d327d187be595ff4269"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner-result.json",
+   "bytes": 3531,
+   "sha256": "b25535cbbd050bb1022589d402ba5db975c9d9cc7f0645d9f8401c6798a95eb9"
+  },
+  {
+   "path": "cancel/attempt1/c2-cover-to-inner.mp4",
+   "bytes": 1850959,
+   "sha256": "27d40dc6957572177b3032613656d2067f24780fe232e9f5686a1458fafae22f"
+  },
+  {
+   "path": "cancel/attempt1/c2-prep-done-ax.json",
+   "bytes": 131010,
+   "sha256": "c23995e1cd2877575a2ae00fb6c32a55fb189bb1daf70c297c918b4068ea9ec0"
+  },
+  {
+   "path": "cancel/attempt1/c2-prep-done-state.json",
+   "bytes": 324,
+   "sha256": "44fab9e467430fbe662d9d6d345112e7b7ca19555a6c505b271b08d855445292"
+  },
+  {
+   "path": "cancel/attempt1/setup-filled-ax.json",
+   "bytes": 133903,
+   "sha256": "8c5a38bd88ea0ef1d7544587a61d06c7336cc3111cfe0755c38bbaa0ef6167ce"
+  },
+  {
+   "path": "cancel/attempt1/setup-filled-state.json",
+   "bytes": 259,
+   "sha256": "16af062907a638560d2b445f77e54c6a8b361e6b39a3763a74e62982b82d88dd"
+  },
+  {
+   "path": "cancel/attempt1/setup-ready-0-ax.json",
+   "bytes": 132344,
+   "sha256": "1bc0cc6ae5a11d636403947b93419ab1e61c96d742cfe9a033a0a5cbb01fd6ba"
+  },
+  {
+   "path": "cancel/attempt3/actions.jsonl",
+   "bytes": 187120,
+   "sha256": "f5aec90be5b41856dc353536256b171986affeafea6c652a7d79ad559b75671e"
+  },
+  {
+   "path": "cancel/attempt3/c1-inner-to-cover-before-ax.json",
+   "bytes": 133903,
+   "sha256": "4c095fe931c3090c5c7a01a4c99c5fcf7744785cdf30a959e382100fff94d87d"
+  },
+  {
+   "path": "cancel/attempt3/c1-inner-to-cover-before-state.json",
+   "bytes": 259,
+   "sha256": "16af062907a638560d2b445f77e54c6a8b361e6b39a3763a74e62982b82d88dd"
+  },
+  {
+   "path": "cancel/attempt3/c1-inner-to-cover-hinge-peer.json",
+   "bytes": 425,
+   "sha256": "2baf081cdcadcfa2aa4975240dbfc42bfea7f2256aec714b4290fe6471fef347"
+  },
+  {
+   "path": "cancel/attempt3/c1-inner-to-cover-record.log",
+   "bytes": 243,
+   "sha256": "5788033f1f8dbefacdbffa9ddb8311d3d51ad84cb0c472909191bfe6c245838b"
+  },
+  {
+   "path": "cancel/attempt3/c1-inner-to-cover-start-displays.json",
+   "bytes": 3177,
+   "sha256": "c3c603ba95e859cb92e9847f13b860ea77e800c1d57bede8d6282b1fe5c070d8"
+  },
+  {
+   "path": "cancel/attempt3/c1-inner-to-cover.mp4",
+   "bytes": 1525,
+   "sha256": "3f521d7336450daca537bb194e8702d954e13cc92808b5bac7425cffcf02e7f5"
+  },
+  {
+   "path": "cancel/attempt3/setup-filled-ax.json",
+   "bytes": 133903,
+   "sha256": "fa5208ca881bcca9c0d27b08ed76d64c4280bf28d5dd6683ad7d4574825102d8"
+  },
+  {
+   "path": "cancel/attempt3/setup-filled-state.json",
+   "bytes": 259,
+   "sha256": "16af062907a638560d2b445f77e54c6a8b361e6b39a3763a74e62982b82d88dd"
+  },
+  {
+   "path": "cancel/attempt3/setup-ready-0-ax.json",
+   "bytes": 498940,
+   "sha256": "ad409d4a9409e70d17ea3a2b81dcf42378f5a8ae01e39f8ab3d84aa3a4541d0b"
+  },
+  {
+   "path": "cancel/attempt3/setup-ready-1-ax.json",
+   "bytes": 131846,
+   "sha256": "383bf785993857de178a1fad923b05ae77c99257757014db97246ef04b7b2ebc"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-after-cancel-ax.json",
+   "bytes": 132911,
+   "sha256": "0949ce0d4abeb298ffb22fa912503d913caf5876101e844d979c1c51d2cc5189"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-after-cancel-state.json",
+   "bytes": 259,
+   "sha256": "16af062907a638560d2b445f77e54c6a8b361e6b39a3763a74e62982b82d88dd"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-after-cancel.png",
+   "bytes": 388672,
+   "sha256": "af512b181a85ec2eed3f5eb989583e68c1e4c9fb95be2d22e07c116c215e2c8a"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-after-wait-ax.json",
+   "bytes": 132941,
+   "sha256": "ba4d766038c0c5f72d5d8c284d93d45eb21bdd83e121920944b65e1c3d6264c0"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-after-wait-state.json",
+   "bytes": 259,
+   "sha256": "16af062907a638560d2b445f77e54c6a8b361e6b39a3763a74e62982b82d88dd"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-after-wait.png",
+   "bytes": 386892,
+   "sha256": "f5a697ded5570b3d0cf8c1642cea3799a186f225d0efa2c22daa12f075a8d348"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-before-ax.json",
+   "bytes": 133903,
+   "sha256": "49536e74d12657c98772e58e8e1808455fdf8f20f2ae31b9e366b4d69fc62bec"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-before-state.json",
+   "bytes": 259,
+   "sha256": "16af062907a638560d2b445f77e54c6a8b361e6b39a3763a74e62982b82d88dd"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-final-displays.json",
+   "bytes": 3165,
+   "sha256": "3b4c75e799ebe7e43684839615dd7e1f73145c7774773189e5e1c3226fb4ea62"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-hinge-peer.json",
+   "bytes": 760,
+   "sha256": "94ff157fc5ba34ad8251d1713a568d7cb6265540d6c5224e350e011ebfc99346"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-hinge-peer.stderr",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-record.log",
+   "bytes": 243,
+   "sha256": "5788033f1f8dbefacdbffa9ddb8311d3d51ad84cb0c472909191bfe6c245838b"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-result.json",
+   "bytes": 5202,
+   "sha256": "bf1bf291b15a7a26fed87557b16ea4b3cc3fe1bde40c406ea968d1fecb618983"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover-start-displays.json",
+   "bytes": 3177,
+   "sha256": "c3c603ba95e859cb92e9847f13b860ea77e800c1d57bede8d6282b1fe5c070d8"
+  },
+  {
+   "path": "cancel/c1-inner-to-cover.mp4",
+   "bytes": 739366,
+   "sha256": "47916352ca6f7efb89721cc98baa826ae58796623e1a39c3e44ab3ff88c0e91e"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-after-cancel-ax.json",
+   "bytes": 138051,
+   "sha256": "db7c417f1ae4292f67f228278c229f5aa8efce49d76bdb77a18522fc9a1fac26"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-after-cancel-state.json",
+   "bytes": 257,
+   "sha256": "4b800831787a229af0cdcedfb5f58eb3a4106a72fbfcd5c3e2a8aad60baf0c7a"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-after-cancel.png",
+   "bytes": 556154,
+   "sha256": "7c187ecf2b17ccaec7fc8d2465138e441aed26d54abc51ac47cba95f3590f40c"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-after-wait-ax.json",
+   "bytes": 136062,
+   "sha256": "2469b613d0cec73b8878d8fe28fe7320c3d4c22f885429839b262bfa45bf8a61"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-after-wait-state.json",
+   "bytes": 257,
+   "sha256": "4b800831787a229af0cdcedfb5f58eb3a4106a72fbfcd5c3e2a8aad60baf0c7a"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-after-wait.png",
+   "bytes": 554177,
+   "sha256": "55ac931b190c96afb013de395dea0b990df46a413b8041ac81110fdd110223ab"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-before-ax.json",
+   "bytes": 130980,
+   "sha256": "a1046482ccfd010e764ffea45c88c4b8502e2f2ce944b779feed7d57d323ea8b"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-before-state.json",
+   "bytes": 324,
+   "sha256": "44fab9e467430fbe662d9d6d345112e7b7ca19555a6c505b271b08d855445292"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-final-displays.json",
+   "bytes": 3177,
+   "sha256": "223b839e4ce12683be28cfaef6b58d91644dfb35e414420917bb0c4200b895d0"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-hinge-peer.json",
+   "bytes": 761,
+   "sha256": "7d7c10d0cea44eece500cc5c71591fb4f327326f7b846e23e7b5260fe726b2f5"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-hinge-peer.stderr",
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-record.log",
+   "bytes": 243,
+   "sha256": "0f2819f4e00993f9318476547cbe0e65966041c78ff10d327d187be595ff4269"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-result.json",
+   "bytes": 4931,
+   "sha256": "bedca64582f0c641b2e954c7dfac9195e8a7fd5d14f64bf819459a0d1754b488"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner-start-displays.json",
+   "bytes": 3165,
+   "sha256": "5e039b81798f471f50db49744e67d26c363a4ce3a5025af65c622811c52fad4a"
+  },
+  {
+   "path": "cancel/c2-cover-to-inner.mp4",
+   "bytes": 1354702,
+   "sha256": "adbc68ad7d74386cdef75292dfbbcba8bd0413e206acf5579c9362d46e0c8e6c"
+  },
+  {
+   "path": "cancel/c2-prep-done-ax.json",
+   "bytes": 130942,
+   "sha256": "dab5b7aa5517ed8cd903921075434b3d92c81979cda84eb93351820270384c39"
+  },
+  {
+   "path": "cancel/c2-prep-done-state.json",
+   "bytes": 324,
+   "sha256": "44fab9e467430fbe662d9d6d345112e7b7ca19555a6c505b271b08d855445292"
+  },
+  {
+   "path": "cancel/cancel-flow.py",
+   "bytes": 7923,
+   "sha256": "34f2162dd353893d3722172e057eef003ffc8de163c7242758b592dc6084df42"
+  },
+  {
+   "path": "cancel/diag.py",
+   "bytes": 218,
+   "sha256": "8053ae303443d5183990850fc29497002c429cffb17e3c788f36e9050838f52f"
+  },
+  {
+   "path": "cancel/peer.py",
+   "bytes": 1245,
+   "sha256": "c095228d6443143e14c1d3ae862c8fc0aa6f9ed48cf044d7421e41d255fe6cbe"
+  },
+  {
+   "path": "cancel/setup-filled-ax.json",
+   "bytes": 133903,
+   "sha256": "54af28cc188b1f7001324642dd51b7eb4752ce5021408dbd4acbcd351e1fbf2e"
+  },
+  {
+   "path": "cancel/setup-filled-state.json",
+   "bytes": 259,
+   "sha256": "16af062907a638560d2b445f77e54c6a8b361e6b39a3763a74e62982b82d88dd"
+  },
+  {
+   "path": "cancel/setup-ready-0-ax.json",
+   "bytes": 498940,
+   "sha256": "3084fb5081f060701260a82c8dc27d54081fa7a220c5d70f7b587ec4d7d3ca70"
+  },
+  {
+   "path": "cancel/setup-ready-1-ax.json",
+   "bytes": 131846,
+   "sha256": "31a3e6194aff0a13f7b3c3a5ce50328bb2b4abdad7cb218334433f0027cdfdb5"
+  },
+  {
+   "path": "cancel/vendor-peer",
+   "bytes": 55848,
+   "sha256": "5d3e82b471117b4e69241fd411ddec655db16955eaaab84f37ee0b332cb98a05"
+  },
+  {
+   "path": "cancel/vendor-peer.m",
+   "bytes": 6226,
+   "sha256": "6e5f37209475fca37b6e512f0ce15020f9b348ca803c26c6ae3f03cc671b0d53"
+  },
+  {
+   "path": "classify-output.txt",
+   "bytes": 3523,
+   "sha256": "bd9599e5c21d156ad87233509a0b323c69335e60da7203cf6179350ff4e0711e"
+  },
+  {
+   "path": "classify.py",
+   "bytes": 1378,
+   "sha256": "47e486ac49041ec57bb2345973676d0531949ffa01185289caf52daedd28a58f"
+  },
+  {
+   "path": "frames/c1-5s.png",
+   "bytes": 181413,
+   "sha256": "f96ae16e7409a1e6b554d081e373986b7d45e80e53e74a5cf8ed4b02d1513c41"
+  },
+  {
+   "path": "frames/c1-mid.png",
+   "bytes": 5364,
+   "sha256": "4dff3c0dc3e4be78202337712f0b91b04f5f09213af2dcf7e5fa3e4c1ded3621"
+  },
+  {
+   "path": "frames/c1u.png",
+   "bytes": 58055,
+   "sha256": "cd2af0b5465a016a0afadeee06851e2439ad74c1e207797fc3e65af4aa5daf72"
+  },
+  {
+   "path": "frames/c2-last.png",
+   "bytes": 189067,
+   "sha256": "42341f5a8f32c5664add7a7a73e22e8e6a50e419f9988b238477e16d9b2f6b41"
+  },
+  {
+   "path": "frames/c2u.png",
+   "bytes": 50081,
+   "sha256": "56bac1805c388ec3ad8a1dc76288476c279c6a3733587873516b7d424aee92b1"
+  },
+  {
+   "path": "pose-flow-wide.py",
+   "bytes": 3352,
+   "sha256": "c59021513b0587d87353cc50a5ac815162b28770b59c19fd32f548881216f3ba"
+  },
+  {
+   "path": "pose-flow.py",
+   "bytes": 3201,
+   "sha256": "73dbf4b2b42477664f0aa2ee677ca9fd4be724b2943722ac5b3f7e377b8ec862"
+  },
+  {
+   "path": "run1/flow.jsonl",
+   "bytes": 40636,
+   "sha256": "4a32b71910c1d85a977b368347afab4556a3d382bc0ec95cef70ace84ee80f50"
+  },
+  {
+   "path": "run1/guest-pose.ndjson",
+   "bytes": 12522036,
+   "sha256": "147d174b09c88706c8cfb5efc14f174d633476c1248c53da8f84252887577b25"
+  },
+  {
+   "path": "run1/guest-pose.stderr",
+   "bytes": 96,
+   "sha256": "f30123762d3a937fa1f042f9e15a8b038101e3988b9c2557b745f9975cb6a797"
+  },
+  {
+   "path": "run1/start-displays.json",
+   "bytes": 3140,
+   "sha256": "2466a31047eab23159c74e8b605295b697ce3bb277c82a8e05bba628d3a27228"
+  },
+  {
+   "path": "run2/failed-readonly-0-displays.json",
+   "bytes": 3169,
+   "sha256": "72e9036ef716256eac4b1a6df2b0bc1b92ebf0ffc01dd34f77fc1f5738080fc9"
+  },
+  {
+   "path": "run2/failed-readonly-1-displays.json",
+   "bytes": 3169,
+   "sha256": "da28170a23805da550ea7d0d418f11d30f577f63deee393920354efea8fb094a"
+  },
+  {
+   "path": "run2/failed-readonly-2-displays.json",
+   "bytes": 3169,
+   "sha256": "ff27c8db1b709fcdff0af69acf3a491f48720b3717436257e89657ea004f0ce0"
+  },
+  {
+   "path": "run2/failed-readonly-3-displays.json",
+   "bytes": 3169,
+   "sha256": "83d5765b5f1dc42aeffb156ddc51c1f874a1393ef44de36f59dc012e99f46adf"
+  },
+  {
+   "path": "run2/final-displays.json",
+   "bytes": 3144,
+   "sha256": "72203ddb5a00e2f5b46f3f24f569471deb18a98a58d5ee10bb67cc18bef4d3cc"
+  },
+  {
+   "path": "run2/flow.jsonl",
+   "bytes": 17472,
+   "sha256": "8a9d4a16132cf1c4febf3c89b37627a3327929485843b2cc1d29e28d6c7ec2f3"
+  },
+  {
+   "path": "run2/guest-pose.ndjson",
+   "bytes": 4944111,
+   "sha256": "c24ce858e3eae7902d65d44e361b2e05eeb5b2f644bba3255056b3799c0953e1"
+  },
+  {
+   "path": "run2/guest-pose.stderr",
+   "bytes": 96,
+   "sha256": "f30123762d3a937fa1f042f9e15a8b038101e3988b9c2557b745f9975cb6a797"
+  },
+  {
+   "path": "run2/start-displays.json",
+   "bytes": 3144,
+   "sha256": "f23a8b34ccd79b7d748e99c98d73219337235e923310b21b9d44d1494c0f87a3"
+  },
+  {
+   "path": "run2/timeline.txt",
+   "bytes": 36041,
+   "sha256": "a221b69ddb963d85c98433a070db100cd61f3adbb1fbec1d19bad1360ec14a49"
+  },
+  {
+   "path": "run3/failed-readonly-0-displays.json",
+   "bytes": 3168,
+   "sha256": "0684883ca8dc001f888bb781eec6525efd277ca5b683b08366fcd8fbabeaf251"
+  },
+  {
+   "path": "run3/failed-readonly-1-displays.json",
+   "bytes": 3168,
+   "sha256": "bb3e0c4b2f4c213e0d08088ec7344be516f39c5fbcf406a4eb9bd22991761f58"
+  },
+  {
+   "path": "run3/failed-readonly-2-displays.json",
+   "bytes": 3168,
+   "sha256": "b6b99cfbcb9fde58c8061e3a9048227599050c297c0abdd1627d775e830921d9"
+  },
+  {
+   "path": "run3/failed-readonly-3-displays.json",
+   "bytes": 3168,
+   "sha256": "26baafb85698a96bd2336c1a8b109de45f69365aed8349b16406e224f6b0c599"
+  },
+  {
+   "path": "run3/final-displays.json",
+   "bytes": 3144,
+   "sha256": "cd409875259d19611ed7dbb073a0cb6b78598369e1d31fb5772a64b6f71f6532"
+  },
+  {
+   "path": "run3/flow.jsonl",
+   "bytes": 10367,
+   "sha256": "11e88517d244a5babaa2cd368bb7a74e9efb7af36992864dd5e18f9f6af6fd35"
+  },
+  {
+   "path": "run3/guest-pose.ndjson",
+   "bytes": 30065943,
+   "sha256": "cacb93199d136c329b76c789bd626108664dbcb8e1e620792dc82080f6bd35ba"
+  },
+  {
+   "path": "run3/guest-pose.stderr",
+   "bytes": 96,
+   "sha256": "f30123762d3a937fa1f042f9e15a8b038101e3988b9c2557b745f9975cb6a797"
+  },
+  {
+   "path": "run3/start-displays.json",
+   "bytes": 3144,
+   "sha256": "baf9f44bca85a1466456130ccf3edcbc51a0da63393cdf8a5dcebb744c9e1c02"
+  },
+  {
+   "path": "upload/c1-inner-to-cover-after-wait.jpg",
+   "bytes": 105043,
+   "sha256": "6a4f742c3a1de09162978692ce0dd27ab535deece53cf1c44511ba64f528fa15"
+  },
+  {
+   "path": "upload/c1-inner-to-cover.upright.mp4",
+   "bytes": 45970,
+   "sha256": "7bdc83799659ca7d7b02942b1c87d69611d6f99ba53a547a7c4cc5664a542cb3"
+  },
+  {
+   "path": "upload/c2-cover-to-inner-after-wait.jpg",
+   "bytes": 102405,
+   "sha256": "df335c30158249a6649fe86ed6ec29f8cd8d89bd7e688594a5696e974613dc22"
+  },
+  {
+   "path": "upload/c2-cover-to-inner.upright.mp4",
+   "bytes": 60494,
+   "sha256": "19f169cfada922a3a89e86a127cea54eb453ae9cd125a4c3a77b57a42de6ab0f"
+  },
+  {
+   "path": "verify-pose-cancel.py",
+   "bytes": 603,
+   "sha256": "0615d34dfe822228054ef65ca6dbf48ad54f2ba74789b63b0bb2d534c61df0dc"
+  }
+ ],
+ "unverified": [
+  "why SpringBoard drops the propagation",
+  "full posture-language-font and overflow matrix",
+  "natural slow I/O / converter execution",
+  "actual exported file",
+  "left/right split, continuous resize",
+  "IME/reading",
+  "real Duo / final signed build",
+  "VoiceOver experience",
+  "transactions, minimum OS"
+ ]
+}
