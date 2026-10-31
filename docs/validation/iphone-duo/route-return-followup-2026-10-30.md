@@ -21,7 +21,7 @@
 5. 官方 27.2 runtime 下载开始后只到约 102.5 MB / 8.05 GB，随后用户重启；没有完成结果文件，当前仍无已安装 27.2 runtime，未继续下载。只确认旧 27.1 环境在用户重启后恢复，不宣称某一步单独修复根因。
 6. 重启后用户的 BuZhan Duo 已 Booted，本任务保留它，另启动自己的设备。boot 成功但 bootstatus 写有 `Data Migration Failed`；旧安装登记对应 App 文件不存在。保留数据，重新安装哈希一致 QA 包并实际打开、填示例和转换后，才确认本任务可继续。没有把 bootstatus 的退出 0 当作全部迁移成功。
 
-全局 Xcode 路径在重启前为 Xcode.app，重启后读回为 Xcode-27.2.0.app；本任务没有执行全局切换，也不将用户当前选择回改。原生 Device Hub 的早期观察选中了既有 Xcode.app 进程，不能称为 27.2 GUI 验证；重启后未操作共享 Device Hub。
+工具链记录更正：重启后的 `xcode-select -p` 采集继承了 `DEVELOPER_DIR` 覆盖，其 27.2 输出只能证明该进程的选择，不能据此宣称全局路径已变化。后续在移除覆盖后读回仍为 `/Applications/Xcode.app/Contents/Developer`。本任务没有执行全局切换。原生 Device Hub 的早期观察选中了既有 Xcode.app 进程，不能称为 27.2 GUI 验证；重启后未操作共享 Device Hub。
 
 ## 复现与修复验收
 

@@ -21,6 +21,10 @@ Mac 150% 分栏菜单实际动作及稿件保持，并记录本轮 Duo 启动环
 #291 合并后 CI、用户重启后恢复 Duo、英语半折叠菜单补验，以及 Help 返回时额外间距的实测修复；
 保留未完成矩阵与真机/签名包门槛。
 
+同日的 [中文半折叠菜单补验](chinese-menu-followup-2026-10-30.md)记录 #292 合并后 CI、
+简繁默认/XXXL 的四组菜单与返回，以及三次未完成尝试、工具链勘误和收尾旋转未确认项；
+不扩写为完整姿态/分屏/签名包通过。
+
 关联 #277–#282；这是首个开发候选，不是这些 Issues 的关闭记录。依据
 [指南固定版本](https://github.com/gewill/dev-standards/blob/3089d379d421566db7b367665cad196224466cf7/iphone_duo_readiness_guide.md)。
 日常分支从 develop `b8eca56b019d8718a41603b057c3b9f0839c1941` 创建，PR 回 develop。
