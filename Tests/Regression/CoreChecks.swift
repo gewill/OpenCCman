@@ -64,6 +64,29 @@ import OpenCC
     precondition(synchronousNullConverted == nullConverted)
     print("PASS: 7 option combinations × \(fixtures.count) fixtures; fixed NUL contracts, phrase boundaries, whitespace, Unicode and converter reuse")
 
+    let diffOptions: ChineseConverter.Options = [.traditionalize, .twStandard, .twIdiom]
+    let diffSample = "鼠标里面的硅二极管坏了，导致光标分辨率降低。"
+    let diffResult = try await ChineseConversionService.shared.convert(diffSample, options: diffOptions)
+    precondition(diffResult.utf8.elementsEqual("滑鼠裡面的矽二極體壞了，導致游標解析度降低。".utf8))
+    for separator in ["", "\r\n", "\r", "\u{2028}", "\u{2029}", "\0", "\u{FEFF}"] {
+      let source = separator + diffSample + separator
+      let result = try await ChineseConversionService.shared.convert(source, options: diffOptions)
+      precondition(result.utf8.elementsEqual((separator + diffResult + separator).utf8))
+      guard case let .computed(hunks) = ConversionDiff.compute(
+        source: source, result: result, limits: .init(characters: 1000, cells: 100_000, hunks: 100)) else {
+        fatalError("Real OpenCC sample must have a complete diff")
+      }
+      let a = Array(source), b = Array(result)
+      var restored = "", cursor = 0
+      for h in hunks {
+        restored += String(a[cursor..<h.source.lowerBound]) + String(b[h.result])
+        cursor = h.source.upperBound
+      }
+      restored += String(a[cursor...])
+      precondition(restored.utf8.elementsEqual(result.utf8))
+    }
+    print("PASS: live pinned OpenCC diff oracle, separator preservation and byte-exact hunk reconstruction")
+
     weak var releasedModel: HomeViewModel?
     autoreleasepool {
       let model = HomeViewModel()
@@ -186,6 +209,74 @@ import OpenCC
     }
     precondition(clearModel.inputText.isEmpty && clearModel.resultText.isEmpty && clearModel.exportSnapshot == nil,
                  "A cancelled import or conversion cannot republish after other checks complete")
+    try await checkDiffLifecycle()
+  }
+
+  @MainActor private static func checkDiffLifecycle() async throws {
+    UserDefaults.standard.set(true, forKey: UserDefaultsKeys.isPro.rawValue)
+    defer { UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.isPro.rawValue) }
+    let model = HomeViewModel()
+    model.applyPreset(.taiwan)
+    model.inputText = HomeViewModel.exampleSourceText
+    model.translate()
+    await waitUntilIdle(model)
+    let snapshot = model.diffSnapshot!
+    let exported = model.exportSnapshot
+    let quota = coreQuotaCount
+    precondition(!model.showsDifferences && model.diffDisplay == nil && !model.diffComputing,
+                 "Successful conversion must not calculate differences by default")
+    precondition(snapshot.source == HomeViewModel.exampleSourceText && snapshot.result == model.resultText)
+    precondition(snapshot.configuration == model.configuration)
+    model.showsDifferences = true
+    await waitForDiff(model)
+    precondition(model.diffDisplay?.id == snapshot.id && !(model.diffDisplay?.sourceRanges.isEmpty ?? true))
+    precondition(model.currentDiffIndex == nil, "Showing decoration alone must not request a selection change")
+    model.navigateDiff(by: 1)
+    precondition(model.currentDiffIndex == 0 && model.diffNavigationID != nil)
+    model.navigateDiff(by: -1)
+    precondition(model.currentDiffIndex == model.diffDisplay!.sourceRanges.count - 1)
+    precondition(model.exportSnapshot == exported && coreQuotaCount == quota,
+                 "Showing and navigating differences cannot change export or consume quota")
+    model.showsDifferences = false
+    model.showsDifferences = true
+    precondition(model.diffComputing)
+    model.inputText = "互联网"
+    precondition(model.diffSnapshot == nil && model.diffDisplay == nil && !model.diffComputing)
+    model.translate()
+    await waitUntilIdle(model)
+    await waitForDiff(model)
+    precondition(model.diffSnapshot?.id != snapshot.id && model.diffDisplay?.id == model.diffSnapshot?.id)
+    precondition(model.diffSnapshot?.source == "互联网", "Old worker must not overwrite the replacement snapshot")
+    let replacementExport = model.exportSnapshot
+    model.regionOptions = .notConvert
+    precondition(model.diffSnapshot == nil && model.diffDisplay == nil)
+    precondition(model.exportSnapshot == replacementExport, "Configuration invalidation preserves export semantics")
+    model.translate()
+    await waitUntilIdle(model)
+    await waitForDiff(model)
+    model.replaceSource(model.inputText)
+    precondition(model.diffSnapshot == nil, "Import/paste of identical text still invalidates provenance")
+    model.inputText = "e\u{301}汉"
+    model.translate()
+    await waitUntilIdle(model)
+    model.inputText = "é汉"
+    precondition(model.diffSnapshot == nil && model.resultText.isEmpty, "Canonical equality cannot hide a byte change")
+    model.inputText = String(repeating: "汉", count: 50_001)
+    model.translate()
+    await waitUntilIdle(model)
+    await waitForDiff(model)
+    precondition(model.diffTooLarge && model.diffDisplay == nil && model.exportSnapshot != nil)
+    model.cancelConversion()
+    precondition(model.diffSnapshot == nil && !model.diffTooLarge && !model.diffComputing)
+    print("PASS: real diff snapshot lifecycle, default-off, navigation, unchanged quota/export, stale worker rejection and over-limit UI state")
+  }
+
+  @MainActor private static func waitForDiff(_ model: HomeViewModel) async {
+    for _ in 0..<5000 {
+      if !model.diffComputing { return }
+      try? await Task.sleep(nanoseconds: 1_000_000)
+    }
+    preconditionFailure("Difference computation did not settle within five seconds")
   }
 
   @MainActor private static func waitUntilIdle(_ model: HomeViewModel) async {
