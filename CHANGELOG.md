@@ -13,16 +13,59 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 ## [Unreleased]
 
-Changes after the 2.1 release target `develop`.
+Changes not yet assigned to a published version.
+
+## [2.2] - Release candidate
+
+This version is not yet published. The minimum systems remain iOS/iPadOS 15
+and macOS 12; the homepage allowance remains 12 conversions per day.
 
 ### Added
 
-- Add a disabled development candidate for experimental iPhone/iPad TXT
-  conversion above 100 MiB and up to 1 GiB, with confirmation for every file,
-  storage checks during processing, and recoverable completed results. This
-  does not enable the feature in production; both the 100 MiB acceptance and
-  the separate signed-device capacity matrix remain required
-  ([#268](https://github.com/gewill/OpenCCman/issues/268)).
+- Enable Pro on iPhone and iPad to convert one UTF-8 TXT file larger than
+  10 MiB and up to 100 MiB directly to a file chosen in the system save panel.
+  The file body does not enter the editor or replace the current draft/result,
+  and homepage conversions are not used. Conversion runs in the foreground and
+  stops safely when the app moves to the background or the device locks. A
+  completed result survives a cancelled save or an app restart until it is
+  saved or deleted. Drag and drop and the ordinary editor remain limited to
+  10 MiB ([#256](https://github.com/gewill/OpenCCman/issues/256)).
+  Signed-device acceptance on iPhone passed; iPad, peak memory and the full
+  corpus matrix are still being verified in
+  [#260](https://github.com/gewill/OpenCCman/issues/260).
+
+### Changed
+
+- On iPhone, the workspace now follows the actual window size instead of the
+  device type, so wide windows and both iPhone Duo screens can use the side-by-
+  side layout while keeping the same editors, draft and selection. Primary
+  actions, back and close moved into the system navigation bar
+  ([#279](https://github.com/gewill/OpenCCman/issues/279),
+  [#280](https://github.com/gewill/OpenCCman/issues/280)).
+- The Pro prompt on iPhone and iPad uses a system alert; a pending file error
+  is shown after the Pro prompt or Pro page closes instead of being lost.
+- The menu bar icon on Mac is shown by default for people who never changed
+  the setting; an explicit on/off choice is kept
+  ([#274](https://github.com/gewill/OpenCCman/issues/274)).
+- Settings switches use the updated shadow style.
+
+### Fixed
+
+- On Mac, ⌘, and ⌘P open Settings and Pro even when More is in the toolbar
+  overflow menu; repeated commands keep the reading position.
+- Long import hints wrap in narrow Mac windows, and the English menu title no
+  longer truncates on iPhone at the largest supported text size.
+- The workspace panes keep their height after returning from Settings or Pro.
+- Each new window starts at the home screen, and a completed file result stays
+  retryable when the window that exported it closes.
+
+### Development
+
+- Add disabled development candidates for experimental TXT conversion above
+  100 MiB and up to 1 GiB on iPhone/iPad, and up to 8 GiB on Mac, with
+  confirmation for every file. Neither is enabled in this release
+  ([#268](https://github.com/gewill/OpenCCman/issues/268),
+  [#269](https://github.com/gewill/OpenCCman/issues/269)).
 
 ## [2.1] - 2026-10-01
 

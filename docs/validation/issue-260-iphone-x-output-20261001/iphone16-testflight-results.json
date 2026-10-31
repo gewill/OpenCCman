@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-01",
+  "device": {
+    "model": "iPhone 16 Pro",
+    "product_type": "iPhone17,1",
+    "os": "iOS 27.0.1",
+    "os_build": "24A446",
+    "transport": "wired, paired; iPhone Mirroring for interaction"
+  },
+  "app": {
+    "bundle_id": "org.gewill.OpenCCman",
+    "version": "2.2",
+    "build": "61",
+    "distribution": "TestFlight; user opened installed TestFlight app; devicectl verified bundle version",
+    "candidate_source_sha": "aad2b09931e34dbfab3e8218be22e94cd604fbb6",
+    "wrapper_sha": "564b094b2b69f2c1e907fa3d89fe6845469a4e4e"
+  },
+  "conditions": {
+    "appearance": "light",
+    "language": "English",
+    "workspace": "empty source and result",
+    "configuration": "Traditional Chinese / Taiwan Standard / Taiwan Idiom",
+    "options_raw": 1057,
+    "dynamic_type": "not changed, exact setting not measured",
+    "voiceover": "not changed",
+    "provider": "iCloud Drive; file initially displayed cloud download indicator"
+  },
+  "source": {
+    "filename": "openccman-stress-100MiB.txt",
+    "bytes": 104857600,
+    "sha256": "07eb067a9cf31914799b0528e11d7fe7af0fac4715524ae8a462f4eecd57daa4"
+  },
+  "saved_result": {
+    "filename": "openccman-stress-100MiB-converted.txt",
+    "bytes": 104857600,
+    "sha256": "77e868fb00118d8926030c22934049fef81bae07a325e036d1082e7415764f29",
+    "full_whole_file_oracle_match": true,
+    "readback": "system save to isolated iCloud QA directory, synchronized and read fully on Mac"
+  },
+  "observed_checks": {
+    "icloud_placeholder_download_and_import": "PASS",
+    "hundred_mib_conversion_to_ready": "PASS",
+    "save_panel_cancel_keeps_ready": "PASS",
+    "ready_recovered_after_process_restart": "PASS",
+    "save_retry_after_restart_and_full_readback": "PASS",
+    "hundred_mib_plus_one_byte_rejected": "PASS",
+    "background_at_about_five_percent": "PASS: Task stopped on return, same process",
+    "source_and_saved_result_unchanged_after_cancellation": "PASS",
+    "empty_editor_and_original_configuration_retained": "PASS",
+    "in_flight_cancel": "PASS: Task stopped, no save result action; recording includes 10% progress before cancel"
+  },
+  "restart_evidence": {
+    "method": "devicectl device process launch --terminate-existing; no debugger or QA arguments",
+    "first_launch_pid": 2119,
+    "second_launch_pid": 2125,
+    "return_from_background_pid": 2125
+  },
+  "sample_counts": {
+    "completed_conversions": 2,
+    "complete_system_export_and_hash_check": 1,
+    "conversion_cancel_pass": 1,
+    "background_stop_pass": 1,
+    "notes": "Second complete conversion happened before the attempted cancel click; it is not counted as a successful in-flight cancellation. Its duplicate local task was removed; prior exported result and source remain intact. Ten-cycle gate remains pending."
+  },
+  "tool_limitations": {
+    "device_hub": "native UI automation timed out twice; used iPhone Mirroring instead",
+    "devicectl_screen_record": "Screen Recording capability not supported by this connected device; screenshots worked",
+    "recording": "macOS screencapture recording of iPhone Mirroring window, then H.264 transcode; private home screen masked at documented intervals",
+    "profiling": "xctrace Activity Monitor could not select running TestFlight process by PID or name; devicectl still found PID 2125; no physical footprint measurement obtained",
+    "devicectl_screenshot": "1206x2622 images generated, but during Mirroring they show the lock screen; excluded from acceptance evidence. Public stills extracted from actual Mirroring recordings."
+  },
+  "remaining": "Full issue #260 matrix remains incomplete: low-memory iPhone/iPad, all modes/corpora/sizes, repetitions, close-to-10MiB draft, memory, provider/disk/lock/kill cases and signed Mac regression; #16 and #14/#71 retain their separate requirements",
+  "complete_issue_260_acceptance": false,
+  "environment_blockers": {
+    "physical_ipad": "Maintainer confirmed no available iPad on 2026-10-01; requirement not waived",
+    "testflight_memory_capture": "Activity Monitor cannot select the running TestFlight process by pid or name; no footprint result",
+    "iphone_x_build": "confirmation requested, not yet received"
+  }
+}

@@ -18,16 +18,19 @@ struct SettingsScene: View {
   #endif
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
   #if os(macOS)
-    @AppStorage(UserDefaultsKeys.showMenuBarIcon.rawValue) var showMenuBarIcon: Bool = false
+    @AppStorage(UserDefaultsKeys.showMenuBarIcon.rawValue) var showMenuBarIcon: Bool = true
     @AppStorage(UserDefaultsKeys.macTextSize.rawValue) private var macTextSizeRaw = AppTextSize.standard.rawValue
   #endif
 
   var body: some View {
     VStack {
+      #if os(macOS)
       navi
+      #endif
       list
     }
     .background(Color.Neumorphic.main)
+    .appNavigation("Settings")
   }
 
   var navi: some View {
@@ -121,6 +124,8 @@ struct SettingsScene: View {
               Text("Show Menu Bar Icon".localizedStringKey)
               Spacer()
               Toggle("Show Menu Bar Icon", isOn: $showMenuBarIcon)
+                .labelsHidden()
+                .accessibilityIdentifier("show-menu-bar-icon")
                 .toggleStyle(AppNeumorphicSwitchStyle())
                 .accessibilityLabel(Text("Show Menu Bar Icon"))
             }

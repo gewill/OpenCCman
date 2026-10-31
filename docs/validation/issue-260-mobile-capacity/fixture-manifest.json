@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "purpose": "input fixtures only; no device acceptance",
+  "wrapper_sha": "564b094b2b69f2c1e907fa3d89fe6845469a4e4e",
+  "app_sha": "abb9e45c582e19a160392403468f9689603f558f",
+  "generator_sha256": "b49a94e65e28a33ececa528e730651b9ef930b01b089b406aff0f41e9072bcc8",
+  "fixtures": [
+    {
+      "file": "020MiB-no-newline.txt",
+      "bytes": 20971520,
+      "sha256": "96c81843187de7bdf04d848af61d8052b024663fac758e401e8ff32aea45d145",
+      "corpus": "no-newline",
+      "seed_utf8_hex": "e9bca0e6a087e9878ce99da2e79a84e7a185e4ba8ce69e81e7aea1e59d8fe4ba86efbc8ce8bdafe4bbb6e4b88ee7a1ace4bbb6e99c80e8a681e6a380e69fa5e38082",
+      "tail": "ASCII x padding, never a split UTF-8 sequence"
+    },
+    {
+      "file": "020MiB-ascii.txt",
+      "bytes": 20971520,
+      "sha256": "fa0e50c6c865abed001e8416522690adc618a627972ce7d1f83a71267f098508",
+      "corpus": "ascii",
+      "seed_utf8_hex": "4f70656e43436d616e204153434949203031323334353637383920213f203c3e205b5d207b7d0d0a",
+      "tail": "ASCII x padding, never a split UTF-8 sequence"
+    },
+    {
+      "file": "020MiB-unicode.txt",
+      "bytes": 20971520,
+      "sha256": "098294c260f38bee7ff0750c92f7252934d682990b85c9b2b0a2e0f9a87ecff0",
+      "corpus": "unicode",
+      "seed_utf8_hex": "efbbbfe6b189e5ad97e887bae781a3e9a699e6b8aff09f9982f09f91a9f09f8fbde2808df09f92bb65cc8100e794b20d0a0d0ae4b9990ae4b8990de4b881e280a8e6888ae280a9",
+      "tail": "ASCII x padding, never a split UTF-8 sequence"
+    },
+    {
+      "file": "020MiB-phrases.txt",
+      "bytes": 20971520,
+      "sha256": "ef8e6966de18faabd30cb74e95aaf024b5ba5e25c8cb830a62b19fd9039b2c2f",
+      "corpus": "phrases",
+      "seed_utf8_hex": "e8bdafe4bbb6e9bca0e6a087e58685e5ad98e7a1ace79b98e68993e58db0e69cbae587bae7a79fe8bda6e887aae8a18ce8bda6e695b0e68daee5ba93e4ba92e88194e7bd91e69c8de58aa1e599a8e8a786e9a2910d0a",
+      "tail": "ASCII x padding, never a split UTF-8 sequence"
+    },
+    {
+      "file": "050MiB-no-newline.txt",
+      "bytes": 52428800,
+      "sha256": "45ff7f64f1c4e5e03c48d4b538e601519a9dd1fe832b722faa8f540597b89fd4",
+      "corpus": "no-newline",
+      "seed_utf8_hex": "e9bca0e6a087e9878ce99da2e79a84e7a185e4ba8ce69e81e7aea1e59d8fe4ba86efbc8ce8bdafe4bbb6e4b88ee7a1ace4bbb6e99c80e8a681e6a380e69fa5e38082",
+      "tail": "ASCII x padding, never a split UTF-8 sequence"
+    },
+    {
+      "file": "050MiB-ascii.txt",
+      "bytes": 52428800,
+      "sha256": "634c91e7898912f6e9cca26e994e7fd5f96ae96f7cece8745d00eac591227c8a",
+      "corpus": "ascii",
+      "seed_utf8_hex": "4f70656e43436d616e204153434949203031323334353637383920213f203c3e205b5d207b7d0d0a",
+      "tail": "ASCII x padding, never a split UTF-8 sequence"
+    },
+    {
+      "file": "050MiB-unicode.txt",
+      "bytes": 52428800,
+      "sha256": "ba35cd3a5dce04cccfab3e4f15ea4f22ced0df2d8b5986e4cc2e99b7a8231c30",
+      "corpus": "unicode",
+      "seed_utf8_hex": "efbbbfe6b189e5ad97e887bae781a3e9a699e6b8aff09f9982f09f91a9f09f8fbde2808df09f92bb65cc8100e794b20d0a0d0ae4b9990ae4b8990de4b881e280a8e6888ae280a9",
+      "tail": "ASCII x padding, never a split UTF-8 sequence"
+    },
+    {
+      "file": "050MiB-phrases.txt",
+      "bytes": 52428800,
+      "sha256": "2459789205db0c918427462d73a3d4dbddf4cd66e5f216eeec85747ff3aebb34",
+      "corpus": "phrases",
+      "seed_utf8_hex": "e8bdafe4bbb6e9bca0e6a087e58685e5ad98e7a1ace79b98e68993e58db0e69cbae587bae7a79fe8bda6e887aae8a18ce8bda6e695b0e68daee5ba93e4ba92e88194e7bd91e69c8de58aa1e599a8e8a786e9a2910d0a",
+      "tail": "ASCII x padding, never a split UTF-8 sequence"
+    },
+    {
+      "file": "100MiB-no-newline.txt",
+      "bytes": 104857600,
+      "sha256": "c86d3b0a3ffce9b9866fdd113c62faff35edeba46b1d2a72c16b43ac1f302437",
+      "corpus": "no-newline",
+      "seed_utf8_hex": "e9bca0e6a087e9878ce99da2e79a84e7a185e4ba8ce69e81e7aea1e59d8fe4ba86efbc8ce8bdafe4bbb6e4b88ee7a1ace4bbb6e99c80e8a681e6a380e69fa5e38082",
+      "tail": "ASCII x padding, never a split UTF-8 sequence"
+    },
+    {
+      "file": "100MiB-ascii.txt",
+      "bytes": 104857600,
+      "sha256": "7327e70a6de5f1dbbf5dabd5eac9ea031733a6de78d09c521e1a3b45b8db9c8a",
+      "corpus": "ascii",
+      "seed_utf8_hex": "4f70656e43436d616e204153434949203031323334353637383920213f203c3e205b5d207b7d0d0a",
+      "tail": "ASCII x padding, never a split UTF-8 sequence"
+    },
+    {
+      "file": "100MiB-unicode.txt",
+      "bytes": 104857600,
+      "sha256": "ef229d4caab4576842215252a2deb82063c090ccdf7906924c465ce7ccdb98b6",
+      "corpus": "unicode",
+      "seed_utf8_hex": "efbbbfe6b189e5ad97e887bae781a3e9a699e6b8aff09f9982f09f91a9f09f8fbde2808df09f92bb65cc8100e794b20d0a0d0ae4b9990ae4b8990de4b881e280a8e6888ae280a9",
+      "tail": "ASCII x padding, never a split UTF-8 sequence"
+    },
+    {
+      "file": "100MiB-phrases.txt",
+      "bytes": 104857600,
+      "sha256": "68d3da489051c5cd3733ba859a71532060c8eb470763f37754c9ae29dab62822",
+      "corpus": "phrases",
+      "seed_utf8_hex": "e8bdafe4bbb6e9bca0e6a087e58685e5ad98e7a1ace79b98e68993e58db0e69cbae587bae7a79fe8bda6e887aae8a18ce8bda6e695b0e68daee5ba93e4ba92e88194e7bd91e69c8de58aa1e599a8e8a786e9a2910d0a",
+      "tail": "ASCII x padding, never a split UTF-8 sequence"
+    }
+  ]
+}

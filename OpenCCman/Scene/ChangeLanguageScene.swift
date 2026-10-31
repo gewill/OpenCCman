@@ -18,7 +18,9 @@ struct ChangeLanguageScene: View {
 
   var body: some View {
     VStack {
+      #if os(macOS)
       navi
+      #endif
       list
     }
     .alert(restartAlertTitle, isPresented: $showRestartAlert) {
@@ -33,6 +35,7 @@ struct ChangeLanguageScene: View {
     } message: {
       Text("restart_app_message")
     }
+    .appNavigation("Language")
   }
 
   var navi: some View {

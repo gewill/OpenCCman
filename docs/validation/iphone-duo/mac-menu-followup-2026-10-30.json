@@ -1,0 +1,392 @@
+{
+  "date": "2026-10-30",
+  "source_commit": "54786a26abeb7404ed09aa3207b79b09c80397ab",
+  "source_state": "clean during acceptance; no App/project edits",
+  "issues": [
+    280,
+    282
+  ],
+  "issues_closed": false,
+  "merged_pr": {
+    "number": 270,
+    "head": "f99385364792fb91d920507e427aa63f6309f0a2",
+    "squash": "54786a26abeb7404ed09aa3207b79b09c80397ab",
+    "single_parent": true,
+    "reviewed_tree_match": true,
+    "post_merge_ci": "https://github.com/gewill/OpenCCman/actions/runs/41009437322",
+    "post_merge_ci_conclusion": "success"
+  },
+  "source_trees": {
+    "OpenCCman": "af9547d9113cd733fdb287cd22830784c5087a90",
+    "OpenCCman.xcodeproj": "44b0dad8d0d71e3912dea0f65eb1fe4a6e2ac495"
+  },
+  "environment": {
+    "macOS": "27.2 (26B123)",
+    "xcode": "27.1 (27A9275)",
+    "developer_dir": "/Applications/Xcode.app/Contents/Developer",
+    "devicectl": "651.32",
+    "sim_use": "0.16.0",
+    "axe": "1.8.0",
+    "language": "English",
+    "window_points": [
+      300,
+      412
+    ],
+    "capture_pixels": [
+      600,
+      824
+    ]
+  },
+  "qa_build": {
+    "bundle_id": "org.gewill.OpenCCman.WhatsNewUITests",
+    "version": "2.1(30)",
+    "configuration": "Debug",
+    "mac_dylib_sha256": "9f226919e7e888996cc2c0f0b34bf94c720d048006f5979dd303e101cbd0da9e",
+    "reused_build_record": "input-task-followup-2026-10-29.json",
+    "app_project_tree_same_as_bccf261": true,
+    "rebuilt": false,
+    "signed_distribution": false
+  },
+  "mac_acceptance": {
+    "source_utf8_bytes": 66,
+    "source_utf16_units": 22,
+    "result_utf8_bytes": 66,
+    "checks": [
+      {
+        "name": "100-horizontal-fallback",
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc",
+        "ratio_percent": 50,
+        "source_result_exact": true
+      },
+      {
+        "name": "150-larger-result",
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc",
+        "ratio_percent": 50,
+        "source_result_exact": true
+      },
+      {
+        "name": "150-larger-source",
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc",
+        "ratio_percent": 55,
+        "source_result_exact": true
+      },
+      {
+        "name": "150-equal-panes",
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc",
+        "ratio_percent": 50,
+        "source_result_exact": true
+      },
+      {
+        "name": "150-stacked",
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc",
+        "ratio_percent": 50,
+        "source_result_exact": true
+      },
+      {
+        "name": "150-scrolled-result",
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc",
+        "ratio_percent": 50,
+        "source_result_exact": true
+      },
+      {
+        "name": "100-restored-final",
+        "source_sha256": "b7489a5a4a3bf46efed621e0bc0d4334c6867cca869cd7fb14f2310923e1c220",
+        "result_sha256": "6c032e9769ec1bcd28f3b5c7a9541dc248e7625fc93d5993f23cb87be9f472cc",
+        "ratio_percent": 50,
+        "source_result_exact": true
+      }
+    ]
+  },
+  "video": {
+    "recorded_app_pid": 29557,
+    "window_id": 7542,
+    "original": "mac/150-pane-actions-fixed.mp4",
+    "original_duration_seconds": 72.16,
+    "original_variable_rate": true,
+    "share_copy": "mac-150-pane-actions-cfr.mp4",
+    "share_duration_seconds": 72.2,
+    "share_fps": 15,
+    "share_bytes": 250226,
+    "scope": "Only isolated QA window and child menus; audio/microphone disabled; ordinary menu operations, not timing or animation acceptance",
+    "original_complete_playback": true,
+    "copy_complete_playback": true,
+    "whole_copy_decode_passed": true,
+    "playback_end_timeline_seconds": [
+      72.16,
+      72.2
+    ]
+  },
+  "failures_and_boundaries": [
+    {
+      "scope": "Duo simulator environment",
+      "device": "4CAD3041-0744-41A6-8B4E-F934CA9F0778",
+      "initial_state": "Shutdown",
+      "boot_rounds": 2,
+      "commands_each_round": [
+        "simctl boot",
+        "simctl bootstatus -b"
+      ],
+      "error_domain": "com.apple.CoreSimulator.SimError",
+      "code": 401,
+      "message": "The iOS 27.1 simulator runtime is not available; runtime path not found",
+      "runtime_listed_available": true,
+      "outcome": "No App run; no product failure inferred; root cause unresolved"
+    },
+    {
+      "scope": "fold status while Shutdown",
+      "tool": "sim-use ios fold",
+      "error": "CoreDevice 1001 Get Display Information capability",
+      "outcome": "Prerequisite device not booted; not evidence of unsupported fold capability"
+    },
+    {
+      "scope": "global shortcuts",
+      "outcome": "QA shortcut page shows Accessibility permission required; no permission grant, no cross-app shortcut or Services action"
+    },
+    {
+      "scope": "operator input deviation",
+      "outcome": "Extra Return reached focused source after asynchronous menu update, inserted newline and invalidated old result; restored fixed source and deliberately converted again before 150% checks; not App data-loss regression",
+      "excluded_snapshot": "mac/100-larger-source.ax.txt"
+    },
+    {
+      "scope": "recorder",
+      "outcome": "Original helper aborted 134 with CGS_REQUIRE_INIT; new helper uses AppKit delegate/main run loop and recorded successfully",
+      "failed_log": "mac/150-pane-actions-record.log",
+      "success_log": "mac/150-pane-actions-fixed-record.log"
+    }
+  ],
+  "remaining": [
+    "Duo complete posture/orientation/language/default/XXXL and system overflow matrix",
+    "Runtime boot environment repair before Duo UI can continue",
+    "Signed devices, minimum OS #16, real transactions #14/#71, production capacity #260/#268",
+    "Global shortcuts/Services #19/#274 require separate permission and identity verification",
+    "This slice does not revalidate system provider export or all Mac menu entries"
+  ],
+  "cleanup": {
+    "font_percent": 100,
+    "axis": "stacked",
+    "pane_ratio_percent": 50,
+    "menu_bar_icon": "off unchanged",
+    "launch_at_login": "off unchanged",
+    "qa_app_exited": true,
+    "recorders_exited": true,
+    "simulator": "4CAD3041-0744-41A6-8B4E-F934CA9F0778",
+    "simulator_final_state": "Shutdown",
+    "simulator_shutdown_command_issued": false,
+    "reason": "Device never booted; no other devices operated",
+    "qa_clear_confirmation": "cancelled; no data deletion",
+    "quicktime": "Only new playback windows closed; prior window preserved"
+  },
+  "evidence_root": "/Users/rxwill/Library/Application Support/Codex/ui-evidence/OpenCCman/local-acceptance-20261030",
+  "raw_files": [
+    {
+      "file": "mac/100-before.png",
+      "bytes": 50281,
+      "sha256": "4db97a4548ca4ecda7d6e9b82cd6c0c57a3d0d6897b28972d4a10fab97a02dd9"
+    },
+    {
+      "file": "mac/100-horizontal-fallback.ax.txt",
+      "bytes": 2465,
+      "sha256": "495be3d6fe0dfc962d6fa4a7af67fdd2904f0f01c7a0c7583093a45785de7289"
+    },
+    {
+      "file": "mac/100-horizontal-fallback.png",
+      "bytes": 58318,
+      "sha256": "bbf2f4d9200f8519cde347a76f6dcdeb1ad01b782b423672c5ff4412243cb49a"
+    },
+    {
+      "file": "mac/100-larger-source.ax.txt",
+      "bytes": 2455,
+      "sha256": "2e2dc8ad8f35ade069d7a00ae47c6a9e5df00e60d9115475562fc6885a1d52ee"
+    },
+    {
+      "file": "mac/100-larger-source.png",
+      "bytes": 58960,
+      "sha256": "31b2edaab250daabdfe6a9e1476361d44b29eb1dda4fb99daad5f1be36e7be10"
+    },
+    {
+      "file": "mac/100-restored-final.ax.txt",
+      "bytes": 2788,
+      "sha256": "5cf4202c297e2e8a7e19099212535f055c28c3f00570d459910842b0be4a7161"
+    },
+    {
+      "file": "mac/100-restored-final.png",
+      "bytes": 66975,
+      "sha256": "8a695ee2369c2652fa48689d8cb818e600d9111a464e0f41dfdfdb235c899c02"
+    },
+    {
+      "file": "mac/100-settings-restored.ax.txt",
+      "bytes": 2675,
+      "sha256": "93b2d32e0a7321f5c5f5726dbde39fd5444886262badff4ec49420a944b161eb"
+    },
+    {
+      "file": "mac/100-settings-restored.png",
+      "bytes": 53949,
+      "sha256": "952f5abb20512994cae861c13d020e052ac5406191018bd0c19c84ac3b350fb3"
+    },
+    {
+      "file": "mac/150-equal-panes.ax.txt",
+      "bytes": 2878,
+      "sha256": "0d6ccff64bc06685cc8dac9d216a9007a9d49b4e4d1e102f20fcb39cf4a3cdb0"
+    },
+    {
+      "file": "mac/150-equal-panes.png",
+      "bytes": 67088,
+      "sha256": "243a4f0e2e809b06bebe7f78edfdb390c94e727616436a990ae3e0fd994b248f"
+    },
+    {
+      "file": "mac/150-larger-result.ax.txt",
+      "bytes": 2880,
+      "sha256": "eab254aa96f31db28ed9453ab84510088994a0633591ae04e962ea8da0942246"
+    },
+    {
+      "file": "mac/150-larger-result.png",
+      "bytes": 67044,
+      "sha256": "81f7516079c2d5a9973786f24b844032019fa1e9adda2d9e5584d07d8750041e"
+    },
+    {
+      "file": "mac/150-larger-source.ax.txt",
+      "bytes": 2874,
+      "sha256": "46908a630a007617f4160890ab0ea58d0925bba6bc5150bccf0621f8a096eb08"
+    },
+    {
+      "file": "mac/150-larger-source.png",
+      "bytes": 66457,
+      "sha256": "325ddb62cd979f5e7bbea6a3251890307446db39c3a20f7977f60d0b7799ffa4"
+    },
+    {
+      "file": "mac/150-pane-actions-fixed-record.log",
+      "bytes": 100,
+      "sha256": "069d77878e4816913bcf2d896b4bc78cb4003edecb93c6c4d8683e0c47f9beba"
+    },
+    {
+      "file": "mac/150-pane-actions-fixed.mp4",
+      "bytes": 3026429,
+      "sha256": "f364360f77009c641c5f04dcbab5e8166fb6a67e9e1c9ffe79d1e4a0525e93a5"
+    },
+    {
+      "file": "mac/150-pane-actions-record.log",
+      "bytes": 160,
+      "sha256": "b144d760153d653e1c3432851ea6bcf7abe1e2d452cecac2c303dc8a8d1edc72"
+    },
+    {
+      "file": "mac/150-scrolled-result.ax.txt",
+      "bytes": 2816,
+      "sha256": "ef68106089f78d7d2b914db7f840f3063ffbecefd6bbc2f48a926324c325026c"
+    },
+    {
+      "file": "mac/150-scrolled-result.png",
+      "bytes": 58715,
+      "sha256": "0c283b9b222c7dff290a08951a65c31599e8e44ad7081e2f96b0635c3452893b"
+    },
+    {
+      "file": "mac/150-stacked.ax.txt",
+      "bytes": 2788,
+      "sha256": "5cf4202c297e2e8a7e19099212535f055c28c3f00570d459910842b0be4a7161"
+    },
+    {
+      "file": "mac/150-stacked.png",
+      "bytes": 69082,
+      "sha256": "4755ae9469d8144a53b09814bb70415cd9b2322bdd6c5167a915f909d20b6086"
+    },
+    {
+      "file": "mac/cfr-playback-end.txt",
+      "bytes": 2483,
+      "sha256": "4e5809ce476009c7e04bfd1c5426335d1feeb42818a94c48857980291ebe6332"
+    },
+    {
+      "file": "mac/cfr-playback-start.txt",
+      "bytes": 1733,
+      "sha256": "fb8e45f40e7a88175b66c09ca1fd72d2d0b2ca29f7cfea393318616b39a91e11"
+    },
+    {
+      "file": "mac/events.json",
+      "bytes": 30031,
+      "sha256": "aac859ae1648e4cd02def37bad9ed4d88a0e7e4398c86b842b49145e3015ff44"
+    },
+    {
+      "file": "mac/global-shortcut-permission-required.ax.txt",
+      "bytes": 2808,
+      "sha256": "3d4b4c37049ca412fb0a69731a7211c0ba853cea3ba54ec7ba3e771d54704c35"
+    },
+    {
+      "file": "mac/global-shortcut-permission-required.png",
+      "bytes": 64937,
+      "sha256": "c6254a2637c55a4d4557fab084ed427ae7e769fd67b032421c1cb99c3f633748"
+    },
+    {
+      "file": "mac/libx264-help.txt",
+      "bytes": 7177,
+      "sha256": "17b77629f753998e6c83197f23c0e22e2abd400e50b4714745512a7ed34017c8"
+    },
+    {
+      "file": "mac/media-probe.json",
+      "bytes": 358,
+      "sha256": "f5f08852c8346f5a2e4b0845021b3843db982b1c98fe0dadf3f6b40211de639e"
+    },
+    {
+      "file": "mac/playback-end.txt",
+      "bytes": 2530,
+      "sha256": "5885346fa9050b08f031385fd13d8974d6c3f12898d8f35e799f9b147ea67c07"
+    },
+    {
+      "file": "mac/playback-start.txt",
+      "bytes": 1713,
+      "sha256": "77741dbf261bec8d5033d0628ed0266c380e90e778b853750643bc7476c6d22b"
+    },
+    {
+      "file": "mac/record-window.swift",
+      "bytes": 3177,
+      "sha256": "d0cbaa4ce52acbd22f66c19e29247688b711a7ffc4981b777b4da912d2a64187"
+    },
+    {
+      "file": "mac/video-frame-equal.png",
+      "bytes": 114002,
+      "sha256": "d190bf00ec6948c8f7df4e8fa598ef32e4c0a760130585e114c601fe97f20c2e"
+    },
+    {
+      "file": "mac/video-frame-larger-result.png",
+      "bytes": 114470,
+      "sha256": "437ee330e302e468973f2e72c5c59e6beadd29e82549ebe4f47059734cc29e28"
+    },
+    {
+      "file": "mac/video-frame-larger-source.png",
+      "bytes": 112090,
+      "sha256": "e508f81a29e8b7a68dde50eadda103fb64c12bb091db1cb54bc14edf5c76db7d"
+    },
+    {
+      "file": "mac/video-frame-stacked.png",
+      "bytes": 109352,
+      "sha256": "99b64519cc9118ce373d324e0e1f167bdb80b6c658ee1c6205684198c88da6f1"
+    }
+  ],
+  "media": [
+    {
+      "file": "100-horizontal-fallback.png",
+      "sha256": "bbf2f4d9200f8519cde347a76f6dcdeb1ad01b782b423672c5ff4412243cb49a",
+      "bytes": 58318,
+      "url": "https://github.com/user-attachments/assets/42d0b408-86d8-4748-b510-9270514daea3",
+      "remote_bytes_match": true
+    },
+    {
+      "file": "150-scrolled-result.png",
+      "sha256": "0c283b9b222c7dff290a08951a65c31599e8e44ad7081e2f96b0635c3452893b",
+      "bytes": 58715,
+      "url": "https://github.com/user-attachments/assets/f57abd81-cc28-4c57-8128-d1d2bebc6ed5",
+      "remote_bytes_match": true
+    },
+    {
+      "file": "mac-150-pane-actions-cfr.mp4",
+      "sha256": "35de3ac66b332fcdc93bf6e71af4b318891a38c8f3c74cc7320df219ef425e71",
+      "bytes": 250226,
+      "url": "https://github.com/user-attachments/assets/f2f771d3-b00a-47c0-a42f-eeae8ee2cce0",
+      "remote_bytes_match": true
+    }
+  ],
+  "issue_comment": "https://github.com/gewill/OpenCCman/issues/282#issuecomment-6516196687"
+}
