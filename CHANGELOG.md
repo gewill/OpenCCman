@@ -15,10 +15,13 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 Changes not yet assigned to a published version.
 
-## [2.2] - Release candidate
+## [2.2] - 2026-11-01
 
-This version is not yet published. The minimum systems remain iOS/iPadOS 15
-and macOS 12; the homepage allowance remains 12 conversions per day.
+Version 2.2 was built by Xcode Cloud as Build 63, from source
+`15390dde4b7f70a97c174259ebd945c5a81647bf`. Both platforms were approved
+and manually released on 2026-11-01; storefront propagation can take time.
+The minimum systems remain iOS/iPadOS 15 and macOS 12; the homepage
+allowance remains 12 conversions per day.
 
 ### Added
 
