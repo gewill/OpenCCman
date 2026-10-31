@@ -4,7 +4,7 @@
 
 ## 源码与环境
 
-- 分支 `codex/27-conversion-diff`，起点为当时最新 develop `4da54d40f525182e2847f4c4106edef96cfc50a7`。
+- 分支 `codex/27-conversion-diff`，起点为当时最新 develop `4da54d40f525182e2847f4c4106edef96cfc50a7`。实现提交为 `842c6074cf96616563643b2008372ea1edadfc60`；其后的本文来源补记不改变实现。
 - 构建和测量发生在未提交工作区；基线 SHA 不能单独代表产物。外部 `20261101-app-build-04/report.json` 保存完整 diff SHA-256、新文件哈希、依赖锁、命令、构建设置及二进制哈希。整理本文前已逐项比较当前源码与该报告，全部一致；此后仅整理证据文档。
 - 最终构建的受控文件 diff SHA-256：`378abcceddf271412a80e6d81580dbfdce2e0f1427f0e3b90d73f8e81740d409`；算法 SHA-256：`3af2626703801c822e36b26d7d27be5d091c2ee9317fe7a269d533b57b91b8da`。
 - Mac16,7 / Apple M4 Pro / 48 GiB；macOS 27.2（26B123）；Xcode 27.1（27A9275），进程级工具链 `/Applications/Xcode.app/Contents/Developer`。
@@ -113,7 +113,7 @@ iPad 自动化曾失败：27.0 不支持 devicectl appResize，安装的 27.1/27
 - `20261101-ui/mac/final-flow.mp4`：最终构建单 QA 窗口实际录制，包含转换、显示、导航、复制和原文失效；无音频。`final-100-wide-before/after.png`、`final-100-stacked.png`、`final-49000-tail.png`、`final-settings-invalidated.png` 为截图。
 - `20261101-ui/iphone/final-flow.mov`：最终构建的真实操作录像；`final-before.png`、`final-after.png`、`final-xxxl-next.png`、`final-copied.txt`、`final-paste-invalidated.json` 为最终证据。早期 `flow.mov` 包含提示／无效滚动，`show-diff.png` 含评分弹窗，不能作为最终功能截图。
 - `20261101-ui/ipad/paired-wide.png`、`narrow-next-window-render.png`、`xxxl-previous-confirmed-window-render.png`、`49000-last-window-render.png` 及相应 JSON；`49000-native-state-corrected.txt` 是最后一处真实 UITextView 选区／滚动偏移。
-- `evidence-index.json` 保存媒体哈希、构建来源和边界；`simulators-final.json` 记录本任务模拟器收尾。媒体的远程附件链接以 PR 正文为准；本记录不把本地检查写成远端 CI 结果。
+- `evidence-index.json` 保存媒体哈希、构建来源和边界；`simulators-final.json` 记录本任务模拟器收尾。媒体的远程附件链接见 [PR #312](https://github.com/gewill/OpenCCman/pull/312)；六个已上传附件的公开下载字节与本地 SHA-256 相同，正文已回读确认不含本地路径。Mac／iPhone 录像均完整解码并在 QuickTime 从头播放至结尾。本记录不把本地检查写成远端 CI 结果。
 
 ## 未验证及不关闭的项目
 
