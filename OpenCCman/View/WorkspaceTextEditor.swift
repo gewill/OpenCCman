@@ -1,10 +1,188 @@
 import SwiftUI
+#if os(iOS)
+  @_spi(Advanced) import SwiftUIIntrospect
+#endif
+
+#if os(macOS)
+  /// Draw behind glyphs without attributed-string mutations. Only visible
+  /// character ranges ask TextKit for geometry, including a caret for empty sides.
+  final class WorkspaceDiffTextView: NSTextView {
+    private(set) var decoration: WorkspaceDiffDecoration?
+    private var navigationID: UUID?
+
+    func updateDecoration(_ value: WorkspaceDiffDecoration?) {
+      let changed = decoration?.id != value?.id || decoration?.currentIndex != value?.currentIndex
+      if let value, !string.utf8.elementsEqual(value.text.utf8) {
+        decoration = nil
+        needsDisplay = true
+        return
+      }
+      decoration = value
+      if changed { needsDisplay = true }
+      guard !hasMarkedText(), let token = value?.navigationID, token != navigationID,
+            let range = value?.selectedRange else { return }
+      navigationID = token
+      setSelectedRange(range)
+      scrollRangeToVisible(range)
+    }
+
+    override func didChangeText() {
+      decoration = nil
+      needsDisplay = true
+      super.didChangeText()
+    }
+
+    override func drawBackground(in rect: NSRect) {
+      super.drawBackground(in: rect)
+      guard let decoration, !hasMarkedText(), let layout = layoutManager, let container = textContainer else { return }
+      let origin = textContainerOrigin
+      let visible = rect.offsetBy(dx: -origin.x, dy: -origin.y)
+      let glyphs = layout.glyphRange(forBoundingRect: visible, in: container)
+      let characters = layout.characterRange(forGlyphRange: glyphs, actualGlyphRange: nil)
+      func paint(_ box: CGRect, current: Bool, empty: Bool) {
+        var box = box.offsetBy(dx: origin.x, dy: origin.y)
+        if empty { box.size.width = 3 }
+        guard box.intersects(rect) else { return }
+        NSColor.systemOrange.withAlphaComponent(current ? 0.35 : 0.18).setFill()
+        NSBezierPath(rect: box).fill()
+        NSColor.labelColor.withAlphaComponent(0.8).setStroke()
+        let line = NSBezierPath()
+        line.move(to: NSPoint(x: box.minX, y: box.maxY - 1))
+        line.line(to: NSPoint(x: box.maxX, y: box.maxY - 1))
+        line.lineWidth = current ? 2 : 1
+        line.stroke()
+        if empty || current { NSBezierPath(rect: box.insetBy(dx: 0.5, dy: 0.5)).stroke() }
+      }
+      for (index, range) in decoration.ranges.enumerated() {
+        guard range.location <= NSMaxRange(characters), NSMaxRange(range) >= characters.location else { continue }
+        if range.length == 0 {
+          if range.location == (string as NSString).length {
+            let box: CGRect
+            if layout.extraLineFragmentRect.height > 0 { box = layout.extraLineFragmentRect }
+            else if layout.numberOfGlyphs > 0 {
+              let last = layout.boundingRect(forGlyphRange: NSRange(location: layout.numberOfGlyphs - 1, length: 1), in: container)
+              box = CGRect(x: last.maxX, y: last.minY, width: 3, height: last.height)
+            } else { box = CGRect(x: 0, y: 0, width: 3, height: (font?.pointSize ?? 12) * 1.3) }
+            paint(box, current: decoration.currentIndex == index, empty: true)
+          } else {
+            let glyph = layout.glyphIndexForCharacter(at: range.location)
+            paint(layout.boundingRect(forGlyphRange: NSRange(location: glyph, length: 1), in: container),
+                  current: decoration.currentIndex == index, empty: true)
+          }
+        } else {
+          let glyphRange = layout.glyphRange(forCharacterRange: NSIntersectionRange(range, characters), actualCharacterRange: nil)
+          layout.enumerateEnclosingRects(forGlyphRange: glyphRange, withinSelectedGlyphRange: NSRange(location: NSNotFound, length: 0), in: container) { box, _ in
+            paint(box, current: decoration.currentIndex == index, empty: false)
+          }
+        }
+      }
+    }
+  }
+#else
+  import UIKit
+
+  /// Overlay geometry uses UITextInput, keeping SwiftUI's editor/delegate,
+  /// marked text and TextKit version intact. It does not intercept touches.
+  @MainActor final class WorkspaceMobileDiffPainter: ObservableObject {
+    private weak var editor: UITextView?
+    private var overlay: WorkspaceDiffOverlay?
+    private var observations: [NSKeyValueObservation] = []
+    private var textObserver: NSObjectProtocol?
+    private var navigationID: UUID?
+
+    func update(_ editor: UITextView, decoration: WorkspaceDiffDecoration?) {
+      if self.editor !== editor {
+        overlay?.removeFromSuperview()
+        observations.removeAll()
+        if let textObserver { NotificationCenter.default.removeObserver(textObserver) }
+        self.editor = editor
+        let overlay = WorkspaceDiffOverlay()
+        overlay.editor = editor
+        overlay.isUserInteractionEnabled = false
+        overlay.isAccessibilityElement = false
+        overlay.backgroundColor = .clear
+        overlay.isOpaque = false
+        self.overlay = overlay
+        editor.addSubview(overlay)
+        observations = [editor.observe(\.contentOffset, options: [.new]) { [weak overlay, weak editor] _, _ in
+          guard let editor else { return }
+          overlay?.frame = editor.bounds
+          overlay?.setNeedsDisplay()
+        }, editor.observe(\.bounds, options: [.new]) { [weak overlay, weak editor] _, _ in
+          guard let editor else { return }
+          overlay?.frame = editor.bounds
+          overlay?.setNeedsDisplay()
+        }]
+        textObserver = NotificationCenter.default.addObserver(forName: UITextView.textDidChangeNotification, object: editor, queue: .main) { [weak overlay] _ in
+          overlay?.decoration = nil
+          overlay?.setNeedsDisplay()
+        }
+      }
+      if let decoration, !editor.text.utf8.elementsEqual(decoration.text.utf8) {
+        overlay?.decoration = nil
+        overlay?.setNeedsDisplay()
+        return
+      }
+      overlay?.decoration = decoration
+      overlay?.frame = editor.bounds
+      overlay?.setNeedsDisplay()
+      guard editor.markedTextRange == nil, let token = decoration?.navigationID, token != navigationID,
+            let range = decoration?.selectedRange else { return }
+      navigationID = token
+      editor.selectedRange = range
+      editor.scrollRangeToVisible(range)
+    }
+
+    deinit {
+      if let textObserver { NotificationCenter.default.removeObserver(textObserver) }
+    }
+  }
+
+  private final class WorkspaceDiffOverlay: UIView {
+    weak var editor: UITextView?
+    var decoration: WorkspaceDiffDecoration?
+
+    override func draw(_ rect: CGRect) {
+      guard let editor, let decoration, editor.markedTextRange == nil,
+            let top = editor.closestPosition(to: CGPoint(x: editor.bounds.minX, y: editor.bounds.minY)),
+            let bottom = editor.closestPosition(to: CGPoint(x: editor.bounds.maxX, y: editor.bounds.maxY)) else { return }
+      let start = editor.offset(from: editor.beginningOfDocument, to: top)
+      let end = editor.offset(from: editor.beginningOfDocument, to: bottom)
+      for (index, range) in decoration.ranges.enumerated() {
+        guard NSMaxRange(range) >= start, range.location <= end,
+              let a = editor.position(from: editor.beginningOfDocument, offset: max(range.location, start)),
+              let b = editor.position(from: editor.beginningOfDocument, offset: min(NSMaxRange(range), end)),
+              let textRange = editor.textRange(from: a, to: b) else { continue }
+        let boxes = range.length == 0 ? [editor.caretRect(for: a)] : editor.selectionRects(for: textRange).map(\.rect)
+        for raw in boxes {
+          var box = raw.offsetBy(dx: -editor.bounds.minX, dy: -editor.bounds.minY)
+          if range.length == 0 { box.size.width = 3 }
+          guard box.intersects(bounds) else { continue }
+          let current = decoration.currentIndex == index
+          UIColor.systemOrange.withAlphaComponent(current ? 0.25 : 0.14).setFill()
+          UIBezierPath(rect: box).fill()
+          UIColor.label.withAlphaComponent(0.85).setStroke()
+          let line = UIBezierPath()
+          line.move(to: CGPoint(x: box.minX, y: box.maxY - 1))
+          line.addLine(to: CGPoint(x: box.maxX, y: box.maxY - 1))
+          line.lineWidth = current ? 2 : 1
+          line.stroke()
+          if current || range.length == 0 { UIBezierPath(rect: box.insetBy(dx: 0.5, dy: 0.5)).stroke() }
+        }
+      }
+    }
+  }
+#endif
 
 /// The workspace owns text and layout; the platform editor owns editing state.
 struct WorkspaceTextEditor: View {
   @Binding var text: String
   var isEditable = true
   var label = ""
+  var diff: WorkspaceDiffDecoration?
+  #if os(iOS)
+    @StateObject private var diffPainter = WorkspaceMobileDiffPainter()
+  #endif
   #if os(macOS)
     var readingState: WorkspaceEditorReadingState?
   #endif
@@ -12,10 +190,13 @@ struct WorkspaceTextEditor: View {
   var body: some View {
     #if os(macOS)
       NativeWorkspaceTextEditor(text: $text, isEditable: isEditable, label: label,
-                                readingState: readingState)
+                                readingState: readingState, diff: diff)
     #else
       TextEditor(text: $text)
         .clearTextEdtorStyle(isEditable: isEditable)
+        .introspect(.textEditor, on: AppIntrospection.textEditor) { editor in
+          diffPainter.update(editor, decoration: diff)
+        }
     #endif
   }
 }
@@ -61,7 +242,7 @@ struct WorkspaceTextEditor: View {
       container.widthTracksTextView = true
       container.lineFragmentPadding = 0
       layout.addTextContainer(container)
-      let editor = NSTextView(frame: NSRect(x: 0, y: 0, width: 1, height: 1), textContainer: container)
+      let editor = WorkspaceDiffTextView(frame: NSRect(x: 0, y: 0, width: 1, height: 1), textContainer: container)
       editor.isRichText = false
       editor.isVerticallyResizable = true
       editor.isHorizontallyResizable = false
@@ -90,7 +271,8 @@ struct WorkspaceTextEditor: View {
     }
 
     func update(_ viewport: WorkspaceEditorViewport, text: Binding<String>, isEditable: Bool, isEnabled: Bool,
-                accessibilityLabel: String = "", textSize: AppTextSize = .standard) {
+                accessibilityLabel: String = "", textSize: AppTextSize = .standard,
+                diff: WorkspaceDiffDecoration? = nil) {
       self.text = text
       guard let editor = viewport.documentView as? NSTextView else { return }
       editor.isEditable = isEditable && isEnabled
@@ -124,12 +306,16 @@ struct WorkspaceTextEditor: View {
         applyingSource = true
         defer { applyingSource = false }
         if editor.hasMarkedText() { editor.unmarkText() }
+        (editor as? WorkspaceDiffTextView)?.updateDecoration(nil)
         editor.string = value
         renderedText = value
         // Old edit operations refer to the previous document's character ranges.
         // Native edits update renderedText before publishing, so their echo does
         // not clear the undo history.
         editor.undoManager?.removeAllActions()
+      }
+      if let diffEditor = editor as? WorkspaceDiffTextView {
+        diffEditor.updateDecoration(diff)
       }
       if !didRestoreReadingPosition {
         didRestoreReadingPosition = true
@@ -183,6 +369,7 @@ struct WorkspaceTextEditor: View {
     var isEditable: Bool
     var label: String
     var readingState: WorkspaceEditorReadingState?
+    var diff: WorkspaceDiffDecoration?
 
     func makeCoordinator() -> WorkspaceTextEditorCoordinator {
       WorkspaceTextEditorCoordinator(text: $text, readingState: readingState)
@@ -196,7 +383,7 @@ struct WorkspaceTextEditor: View {
       context.coordinator.update(viewport, text: $text, isEditable: isEditable,
                                  isEnabled: context.environment.isEnabled,
                                  accessibilityLabel: label.localized(in: context.environment.locale),
-                                 textSize: textSize)
+                                 textSize: textSize, diff: diff)
     }
 
     static func dismantleNSView(_ viewport: WorkspaceEditorViewport, coordinator: WorkspaceTextEditorCoordinator) {

@@ -118,6 +118,16 @@ struct OpenCCmanApp: App {
         Button("workspace_vertical") { workspaceCommand("vertical") }.keyboardShortcut("2", modifiers: [.command, .option])
         Button("workspace_equal") { workspaceCommand("equal") }
         Button("workspace_settings") { workspaceCommand("inspector") }.keyboardShortcut("i", modifiers: [.command, .option])
+        Divider()
+        Button("diff_toggle") {
+          NotificationCenter.default.post(name: Notification.Name("WorkspaceDiffCommand"), object: NSApp.keyWindow, userInfo: ["action": "toggle"])
+        }.keyboardShortcut("d", modifiers: [.command, .shift])
+        Button("diff_previous") {
+          NotificationCenter.default.post(name: Notification.Name("WorkspaceDiffCommand"), object: NSApp.keyWindow, userInfo: ["action": "previous"])
+        }.keyboardShortcut("[", modifiers: [.command, .option, .shift])
+        Button("diff_next") {
+          NotificationCenter.default.post(name: Notification.Name("WorkspaceDiffCommand"), object: NSApp.keyWindow, userInfo: ["action": "next"])
+        }.keyboardShortcut("]", modifiers: [.command, .option, .shift])
       }
       CommandGroup(after: .textEditing) {
         Button("Convert".localizedStringKey, systemImage: "arrow.trianglehead.2.counterclockwise") {
