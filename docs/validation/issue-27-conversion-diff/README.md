@@ -6,6 +6,8 @@
 
 后续 [导出、分享与最小 Mac 窗口补验](local-export-acceptance.md) 补齐 Mac/iPhone 实际保存文件、原生复制及选中词分享，以及当前构建 Mac 最小窗口 100%／150% 导航；并修复 Debug 代码载荷的构建证据缺口。下文未验清单保留原轮次边界，最新范围见补验记录。
 
+后续 [iOS 原生拼音组合与 iPad 文件导出补验](ime-ipad-acceptance.md) 已补真实 marked text 的失效／选词／重转，以及 iPad 本地文件保存读回；整篇分享尝试仍未通过。
+
 ## 源码与环境
 
 - 分支 `codex/27-conversion-diff`，起点为当时最新 develop `4da54d40f525182e2847f4c4106edef96cfc50a7`。实现提交为 `842c6074cf96616563643b2008372ea1edadfc60`；其后的本文来源补记不改变实现。
