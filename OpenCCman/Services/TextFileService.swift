@@ -245,18 +245,38 @@ enum TextFileService {
           let progress = provider.loadFileRepresentation(forTypeIdentifier: UTType.plainText.identifier, completionHandler: receiveFile)
           cancellation.setProgress(progress)
         } else {
-          let progress = provider.loadObject(ofClass: NSString.self) { item, error in
-            queue.async {
-              do {
-                try cancellation.check()
-                if let error { throw error }
-                guard let text = item as? String else { throw FileError.unsupportedFile }
-                guard text.utf8.count <= maximumBytes else { throw FileError.tooLarge }
-                cancellation.finish(.success(.text(ImportedText(text: text, sourceFilename: nil))))
-              } catch { cancellation.finish(.failure(error)) }
+          let receiveText = {
+            let progress = provider.loadObject(ofClass: NSString.self) { item, error in
+              queue.async {
+                do {
+                  try cancellation.check()
+                  if let error { throw error }
+                  guard let text = item as? String else { throw FileError.unsupportedFile }
+                  guard text.utf8.count <= maximumBytes else { throw FileError.tooLarge }
+                  cancellation.finish(.success(.text(ImportedText(text: text, sourceFilename: nil))))
+                } catch { cancellation.finish(.failure(error)) }
+              }
             }
+            cancellation.setProgress(progress)
           }
-          cancellation.setProgress(progress)
+          #if os(macOS)
+          // A Finder drop can carry plain text alone, with neither a file URL nor
+          // a suggested name. Its in-place representation is the original file,
+          // which keeps the filename and the large-file route; anything else is
+          // still read as text.
+          if provider.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) {
+            let progress = provider.loadInPlaceFileRepresentation(forTypeIdentifier: UTType.plainText.identifier) { url, inPlace, _ in
+              if inPlace, let url, url.pathExtension.lowercased() == "txt" {
+                receiveFile(url, nil)
+              } else {
+                receiveText()
+              }
+            }
+            cancellation.setProgress(progress)
+            return
+          }
+          #endif
+          receiveText()
         }
       }
     }, onCancel: { cancellation.cancel() })
