@@ -204,6 +204,7 @@ import OpenCC
     try await checkProviders()
     try await checkStreamingFiles()
     try await LargeFileCoordinatorChecks.run()
+    try await BatchCoordinatorChecks.run()
     if #available(macOS 13.0, *) {
       try await ShortcutsChecks.run()
     }

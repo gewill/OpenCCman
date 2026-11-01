@@ -18,6 +18,8 @@ parser.add_argument("--defaults-path", type=Path)
 modes = parser.add_mutually_exclusive_group()
 modes.add_argument("--benchmark", action="store_true", help="Compare conversion processing with the cc8c7e8 baseline")
 modes.add_argument("--model-lifetime", action="store_true", help="Check real model release without any UI host")
+modes.add_argument("--batch-benchmark", nargs=3, metavar=("INPUT", "OUTPUT", "REPORT"),
+                   help="Run the Mac batch coordinator over INPUT/*.txt into OUTPUT and write REPORT JSON")
 args = parser.parse_args()
 pins = json.loads((root / "OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved").read_text())["pins"]
 pins = {pin["identity"]: pin for pin in pins}
@@ -45,6 +47,8 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
         root / "OpenCCman/Services/MobileLargeFileService.swift",
         root / "OpenCCman/Services/MobileLargeFileCoordinator.swift",
         root / "OpenCCman/Services/MacLargeFileCoordinator.swift",
+        root / "OpenCCman/Services/MacBatchConversionCoordinator.swift",
+        root / "OpenCCman/Model/BatchConversionPlan.swift",
         root / "OpenCCman/Model/ConversionConfiguration.swift",
         root / "OpenCCman/Model/ConversionDiff.swift",
         root / "OpenCCman/Model/ConversionDiffSnapshot.swift",
@@ -55,10 +59,11 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
         root / "Tests/Regression/CoreSupport.swift",
         root / ("Tests/Benchmarks/ConversionBenchmark.swift" if args.benchmark else
                 "Tests/Regression/ModelLifetimeChecks.swift" if args.model_lifetime else
+                "Tests/Benchmarks/BatchConversionBenchmark.swift" if args.batch_benchmark else
                 "Tests/Regression/CoreChecks.swift"),
     ]:
         shutil.copy2(path, sources / path.name)
-    if not args.benchmark and not args.model_lifetime:
+    if not args.benchmark and not args.model_lifetime and not args.batch_benchmark:
         shutil.copy2(root / "OpenCCman/Services/ConvertTextIntent.swift", sources / "ConvertTextIntent.swift")
         shutil.copy2(root / "Tests/Regression/ShortcutsChecks.swift", sources / "ShortcutsChecks.swift")
         shutil.copy2(root / "Tests/Regression/FileChecks.swift", sources / "FileChecks.swift")
@@ -69,6 +74,7 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
         shutil.copy2(root / "Tests/Regression/MobileFileJobChecks.swift", sources / "MobileFileJobChecks.swift")
         shutil.copy2(root / "Tests/Regression/MobileCoordinatorChecks.swift", sources / "MobileCoordinatorChecks.swift")
         shutil.copy2(root / "Tests/Regression/LargeFileCoordinatorChecks.swift", sources / "LargeFileCoordinatorChecks.swift")
+        shutil.copy2(root / "Tests/Regression/BatchCoordinatorChecks.swift", sources / "BatchCoordinatorChecks.swift")
     (package / "Package.swift").write_text('''// swift-tools-version: 5.9
 import PackageDescription
 let package = Package(
@@ -81,4 +87,5 @@ let package = Package(
     ])]
 )
 ''')
-    subprocess.run(["swift", "run", "-c", "release", "--package-path", str(package), "CoreChecks"], check=True, timeout=600)
+    subprocess.run(["swift", "run", "-c", "release", "--package-path", str(package), "CoreChecks",
+                    *(args.batch_benchmark or [])], check=True, timeout=3600 if args.batch_benchmark else 600)

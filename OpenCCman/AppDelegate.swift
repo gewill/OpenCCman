@@ -65,9 +65,11 @@
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
       if terminationTask != nil { return .terminateLater }
-      guard MacLargeFileCoordinator.shared.isBusy else { return .terminateNow }
+      let batch = MacBatchConversionCoordinator.shared
+      guard MacLargeFileCoordinator.shared.isBusy || batch.isBusy else { return .terminateNow }
       terminationTask = Task {
         await MacLargeFileCoordinator.shared.prepareForTermination()
+        await batch.prepareForTermination()
         sender.reply(toApplicationShouldTerminate: true)
       }
       return .terminateLater

@@ -95,6 +95,12 @@ struct OpenCCmanApp: App {
     #if os(macOS)
     .windowStyle(.titleBar)
     .commands {
+      CommandGroup(after: .newItem) {
+        Button("batch_menu") {
+          AppDelegate.postWindowNotification(name: Notification.Name("OpenBatchConversionFromMenu"))
+        }
+        .keyboardShortcut("o", modifiers: [.command, .shift])
+      }
       CommandGroup(replacing: .appSettings) {
         Button("Settings") {
           AppDelegate.postWindowNotification(name: Notification.Name("OpenSettingsFromMenu"))

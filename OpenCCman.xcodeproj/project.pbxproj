@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C02500000000000000000031 /* MacBatchConversionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02500000000000000000032 /* MacBatchConversionView.swift */; };
+		C02500000000000000000021 /* MacBatchConversionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02500000000000000000022 /* MacBatchConversionCoordinator.swift */; };
+		C02500000000000000000011 /* BatchConversionPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02500000000000000000012 /* BatchConversionPlan.swift */; };
 		C25900000000000000000009 /* MobileLargeFileTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2590000000000000000000A /* MobileLargeFileTaskView.swift */; };
 		C25900000000000000000007 /* MobileFileRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25900000000000000000008 /* MobileFileRuntime.swift */; };
 		C25900000000000000000005 /* MobileFileExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25900000000000000000006 /* MobileFileExporter.swift */; };
@@ -109,6 +112,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C02500000000000000000032 /* MacBatchConversionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBatchConversionView.swift; sourceTree = "<group>"; };
+		C02500000000000000000022 /* MacBatchConversionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBatchConversionCoordinator.swift; sourceTree = "<group>"; };
+		C02500000000000000000012 /* BatchConversionPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchConversionPlan.swift; sourceTree = "<group>"; };
 		C2590000000000000000000A /* MobileLargeFileTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileLargeFileTaskView.swift; sourceTree = "<group>"; };
 		C25900000000000000000008 /* MobileFileRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileFileRuntime.swift; sourceTree = "<group>"; };
 		C25900000000000000000006 /* MobileFileExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileFileExporter.swift; sourceTree = "<group>"; };
@@ -240,6 +246,7 @@
 				CC2609280000000000000002 /* ConvertTextIntent.swift */,
 				CC0912202600000000000042 /* TextFileService.swift */,
 				C05200000000000000000022 /* MacLargeFileCoordinator.swift */,
+				C02500000000000000000022 /* MacBatchConversionCoordinator.swift */,
 				C05200000000000000000012 /* StreamingTextFileService.swift */,
 				C25700000000000000000002 /* StreamingConversionPump.swift */,
 				C25700000000000000000004 /* FileConversionPolicy.swift */,
@@ -309,6 +316,7 @@
 			children = (
 				2A4205A262DA48E58C8D9555 /* WorkspaceTextEditor.swift */,
 				C05200000000000000000032 /* MacLargeFileTaskView.swift */,
+				C02500000000000000000032 /* MacBatchConversionView.swift */,
 				C25900000000000000000006 /* MobileFileExporter.swift */,
 				C2590000000000000000000A /* MobileLargeFileTaskView.swift */,
 				C494425751394D56B5BA5763 /* WorkspaceScrollKeeper.swift */,
@@ -340,6 +348,7 @@
 				14C5B905AAE54E0EB4641B5D /* WorkspaceLayout.swift */,
 				0C7AFDA11A5645F2AEE661E6 /* ConversionDiffSnapshot.swift */,
 				297DDBA43E1D485892AB2741 /* ConversionDiff.swift */,
+				C02500000000000000000012 /* BatchConversionPlan.swift */,
 				CC0913202600000000000002 /* WhatsNew.swift */,
 				CC2609270000000000000002 /* LaunchMotion.swift */,
 				BE727E332B2DF85E00C63DB2 /* UserDefaultsKeys.swift */,
@@ -537,6 +546,9 @@
 				CC0912202600000000000041 /* TextFileService.swift in Sources */,
 				C05200000000000000000031 /* MacLargeFileTaskView.swift in Sources */,
 				C05200000000000000000021 /* MacLargeFileCoordinator.swift in Sources */,
+				C02500000000000000000031 /* MacBatchConversionView.swift in Sources */,
+				C02500000000000000000021 /* MacBatchConversionCoordinator.swift in Sources */,
+				C02500000000000000000011 /* BatchConversionPlan.swift in Sources */,
 				C05200000000000000000011 /* StreamingTextFileService.swift in Sources */,
 				C25700000000000000000001 /* StreamingConversionPump.swift in Sources */,
 				C25700000000000000000003 /* FileConversionPolicy.swift in Sources */,
