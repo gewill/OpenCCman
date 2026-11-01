@@ -59,12 +59,40 @@ class BuildVerification(unittest.TestCase):
         updated = editor.read_text()
         self.assertEqual(updated.count('scrollKeeper.attach(editor)'), 0)
         self.assertEqual(updated.count('let layout = NSLayoutManager()'), 1)
-        self.assertEqual(updated.count('let editor = NSTextView('), 1)
+        self.assertEqual(updated.count('let editor = WorkspaceDiffTextView('), 1)
+        self.assertIn('final class WorkspaceDiffTextView: NSTextView', updated)
         self.assertEqual(updated.replace('      // Private benchmark: omit the viewport observer.\n',
                                          '      scrollKeeper.attach(editor)\n'), original)
 
     def test_accepts_verified_unchanged_build(self):
         DRIVER.verify_build(self.output)
+
+    def test_textkit2_variants_preserve_editor_and_expected_keeper(self):
+        for name in ('no_anchor', 'modern_anchor', 'single_target'):
+            with self.subTest(variant=name):
+                source = self.output / name
+                for relative in ('OpenCCman/View/WorkspaceTextEditor.swift',
+                                 'OpenCCman/View/WorkspaceScrollKeeper.swift',
+                                 'Tests/Benchmarks/ModernWorkspaceScrollKeeper.swift'):
+                    target = source / relative
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes((ROOT / relative).read_bytes())
+                getattr(DRIVER, f'prepare_textkit2_{name}')(source)
+                editor = (source / 'OpenCCman/View/WorkspaceTextEditor.swift').read_text()
+                self.assertEqual(editor.count('let editor = WorkspaceDiffTextView(usingTextLayoutManager: true)'), 1)
+                self.assertNotIn('let layout = NSLayoutManager()', editor)
+                self.assertIn('final class WorkspaceDiffTextView: NSTextView', editor)
+                self.assertEqual(editor.count('scrollKeeper.attach(editor)'), 0 if name == 'no_anchor' else 1)
+                keeper = (source / 'OpenCCman/View/WorkspaceScrollKeeper.swift').read_text()
+                if name == 'no_anchor':
+                    self.assertEqual(keeper, (ROOT / 'OpenCCman/View/WorkspaceScrollKeeper.swift').read_text())
+                else:
+                    self.assertIn('private let scrollKeeper = ModernWorkspaceScrollKeeper()', editor)
+                    expected = (ROOT / ('docs/performance/2026-09-24-textkit-scroll-ablation/raw/'
+                                        'firstrect-single-target-scroll/ModernWorkspaceScrollKeeper.swift.txt'
+                                        if name == 'single_target' else
+                                        'Tests/Benchmarks/ModernWorkspaceScrollKeeper.swift')).read_text()
+                    self.assertIn(expected, keeper)
 
     def test_rejects_build_without_success_marker(self):
         (self.output / 'build-complete.json').unlink()

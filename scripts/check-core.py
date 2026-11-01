@@ -46,6 +46,8 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
         root / "OpenCCman/Services/MobileLargeFileCoordinator.swift",
         root / "OpenCCman/Services/MacLargeFileCoordinator.swift",
         root / "OpenCCman/Model/ConversionConfiguration.swift",
+        root / "OpenCCman/Model/ConversionDiff.swift",
+        root / "OpenCCman/Model/ConversionDiffSnapshot.swift",
         root / "OpenCCman/Model/ConvertedTextDocument.swift",
         root / "OpenCCman/Model/TestNumbersPerDayManager.swift",
         root / "OpenCCman/Model/WorkspaceEditorReadingState.swift",

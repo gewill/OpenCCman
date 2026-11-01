@@ -104,6 +104,8 @@
 		CC0913202600000000000101 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0913202600000000000102 /* WhatsNewView.swift */; };
 		3C3627644470F73B7875003F /* CustomerCenterScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAFB8436EC14FFC357BCEFA /* CustomerCenterScene.swift */; };
 		43088A90EB27980ABB8606C3 /* ProAccessUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860A8029E8FF16CE13720671 /* ProAccessUpdate.swift */; };
+		E39431E564324EF0BF15AE10 /* ConversionDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DDBA43E1D485892AB2741 /* ConversionDiff.swift */; };
+		BFD6A84D2DF049739A0546A3 /* ConversionDiffSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7AFDA11A5645F2AEE661E6 /* ConversionDiffSnapshot.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -200,6 +202,8 @@
 		CC0913202600000000000102 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 		7CAFB8436EC14FFC357BCEFA /* CustomerCenterScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCman/Scene/CustomerCenterScene.swift; sourceTree = SOURCE_ROOT; };
 		860A8029E8FF16CE13720671 /* ProAccessUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCman/Model/ProAccessUpdate.swift; sourceTree = SOURCE_ROOT; };
+		297DDBA43E1D485892AB2741 /* ConversionDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionDiff.swift; sourceTree = "<group>"; };
+		0C7AFDA11A5645F2AEE661E6 /* ConversionDiffSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionDiffSnapshot.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -334,6 +338,8 @@
 			isa = PBXGroup;
 			children = (
 				14C5B905AAE54E0EB4641B5D /* WorkspaceLayout.swift */,
+				0C7AFDA11A5645F2AEE661E6 /* ConversionDiffSnapshot.swift */,
+				297DDBA43E1D485892AB2741 /* ConversionDiff.swift */,
 				CC0913202600000000000002 /* WhatsNew.swift */,
 				CC2609270000000000000002 /* LaunchMotion.swift */,
 				BE727E332B2DF85E00C63DB2 /* UserDefaultsKeys.swift */,
@@ -520,6 +526,8 @@
 				65F0723944E44D75A8E21F63 /* WorkspaceComponents.swift in Sources */,
 				F37DBF9DC8F743048617A866 /* WorkspacePreferences.swift in Sources */,
 				C6DC3122255A43B8BDC575DD /* WorkspaceLayout.swift in Sources */,
+				BFD6A84D2DF049739A0546A3 /* ConversionDiffSnapshot.swift in Sources */,
+				E39431E564324EF0BF15AE10 /* ConversionDiff.swift in Sources */,
 				CC0913202600000000000101 /* WhatsNewView.swift in Sources */,
 				CC0913202600000000000001 /* WhatsNew.swift in Sources */,
 				CC2609270000000000000001 /* LaunchMotion.swift in Sources */,
