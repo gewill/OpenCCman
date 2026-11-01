@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-31T13:14:36Z",
+  "command": "metadata plan",
+  "reviewDir": "review/ios",
+  "planPath": "review/ios/plan.json",
+  "approvalPath": "review/ios/approved.json",
+  "planHash": "9eb669b60b83c07b10f88e5e2f2df4bcab45c7931c25f857e541e10d0959fd35",
+  "options": {
+    "appId": "6474449401",
+    "version": "2.2",
+    "platform": "IOS",
+    "dir": "proposed/ios",
+    "includes": [
+      "localizations"
+    ],
+    "allowDeletes": false
+  },
+  "plan": {
+    "appId": "6474449401",
+    "appInfoId": "",
+    "version": "2.2",
+    "versionId": "a45ea7c1-95f5-48d6-93a1-b514da32bdb9",
+    "dir": "proposed/ios",
+    "dryRun": true,
+    "includes": [
+      "localizations"
+    ],
+    "adds": [
+      {
+        "key": "version:2.2:en-US:whatsNew",
+        "scope": "version",
+        "locale": "en-US",
+        "version": "2.2",
+        "field": "whatsNew",
+        "reason": "field exists locally but not remotely",
+        "to": "Pro on iPhone and iPad can now convert a UTF-8 TXT file up to 100 MiB directly to a new file, keeping your current draft and result in place.\n\n• Choose one file larger than 10 MiB in the file picker, follow progress, cancel when needed, then save the result where you choose. A finished result is kept until you save or delete it, even after an app restart.\n• Conversion runs while the app is open and stops safely if the app moves to the background or the device locks.\n• On iPhone, the workspace follows the window size, so wide windows can show source and result side by side.\n• Main actions, Back and Close now use the system navigation bar.\n• The Pro prompt uses a system alert, and a pending file error is shown after it closes instead of being lost.\n• Workspace panes keep their height after you return from Settings or Pro."
+      },
+      {
+        "key": "version:2.2:zh-Hans:whatsNew",
+        "scope": "version",
+        "locale": "zh-Hans",
+        "version": "2.2",
+        "field": "whatsNew",
+        "reason": "field exists locally but not remotely",
+        "to": "Pro 用户现在可在 iPhone 和 iPad 上将最大 100 MiB 的 UTF-8 TXT 直接转换为新文件，当前稿件和结果保持原样。\n\n• 在文件选择器中选取单个大于 10 MiB 的文件，查看进度、随时取消，再保存到自选位置；已完成的结果在保存或删除前一直保留，重启应用也不丢失。\n• 转换在应用打开时进行，切到后台或锁屏会安全中止。\n• iPhone 的工作区按窗口大小排列，宽窗口可左右对照原文和结果。\n• 主要操作、返回和关闭按钮移入系统导航栏。\n• Pro 提示改用系统提醒；未显示的文件错误会在提示关闭后显示，不再丢失。\n• 从设置或 Pro 页面返回后，工作区面板保持原有高度。"
+      },
+      {
+        "key": "version:2.2:zh-Hant:whatsNew",
+        "scope": "version",
+        "locale": "zh-Hant",
+        "version": "2.2",
+        "field": "whatsNew",
+        "reason": "field exists locally but not remotely",
+        "to": "Pro 使用者現在可在 iPhone 和 iPad 上將最多 100 MiB 的 UTF-8 TXT 直接轉換為新檔案，目前稿件與結果保持原樣。\n\n• 在檔案選擇器中選取單一大於 10 MiB 的檔案，查看進度、隨時取消，再儲存到自選位置；已完成的結果在儲存或刪除前一直保留，重新啟動 App 也不會遺失。\n• 轉換在 App 開啟時進行，切到背景或鎖定螢幕會安全中止。\n• iPhone 的工作區依視窗大小排列，寬視窗可左右對照原文與結果。\n• 主要操作、返回與關閉按鈕移入系統導覽列。\n• Pro 提示改用系統提示框；未顯示的檔案錯誤會在提示關閉後顯示，不再遺失。\n• 從設定或 Pro 頁面返回後，工作區面板保持原有高度。"
+      }
+    ],
+    "updates": [
+      {
+        "key": "version:2.2:en-US:description",
+        "scope": "version",
+        "locale": "en-US",
+        "version": "2.2",
+        "field": "description",
+        "reason": "field value differs",
+        "from": "Convert Chinese text on iPhone and iPad, and add script conversion to your own Shortcuts workflows. OpenCCman brings local text conversion, TXT files and a native source/result workspace together.\n\nChoose Simplified Chinese, OpenCC Traditional, Taiwan Standard with Taiwan idioms, or Hong Kong Traditional. Advanced character-variant and regional wording options remain available. Simplified output is not a complete reverse conversion of Taiwan-specific vocabulary.\n\nStart with a blank draft, paste your text, or fill in an example when you need one. Compare source and result side by side or stacked on iPad. The compact iPhone Convert button leaves more room for reading. Clear Source asks before removing the current source and result.\n\nOn iOS and iPadOS 16 or later, the free Convert Chinese Text action accepts text and one of four presets, then returns the result to the next Shortcuts action. Connect it to clipboard or file actions without changing an open draft. It does not use the homepage daily allowance; text input is limited to 10 MiB in UTF-8.\n\nImport or drop one UTF-8 TXT file up to 10 MiB, including files with a BOM. Copy or share the result, or export the latest successful conversion as UTF-8 TXT without a BOM. Line endings, blank lines and Unicode text are preserved. Save Big5 or GBK files as UTF-8 first. Batch files and files over 10 MiB are not supported on iPhone or iPad, including with Pro.\n\nFree users can complete 12 successful homepage conversions per day. Importing, exporting and changing presets do not count. Lifetime Pro is a one-time purchase that removes the homepage limit and in-app recommendations. View purchase status or restore purchases in Settings.\n\nPowered by OpenCC, text conversion runs locally on your device. OpenCCman requires iOS or iPadOS 15 or later. Open source under the MIT license: https://github.com/gewill/OpenCCman",
+        "to": "Convert Chinese text on iPhone and iPad, and add script conversion to your own Shortcuts workflows. OpenCCman brings local text conversion, TXT files and a native source/result workspace together.\n\nChoose Simplified Chinese, OpenCC Traditional, Taiwan Standard with Taiwan idioms, or Hong Kong Traditional. Advanced character-variant and regional wording options remain available. Simplified output is not a complete reverse conversion of Taiwan-specific vocabulary.\n\nStart with a blank draft, paste your text, or fill in an example when you need one. Compare source and result side by side or stacked on iPad, and on iPhone when the window is wide enough. Clear Source asks before removing the current source and result.\n\nOn iOS and iPadOS 16 or later, the free Convert Chinese Text action accepts text and one of four presets, then returns the result to the next Shortcuts action. Connect it to clipboard or file actions without changing an open draft. It does not use the homepage daily allowance; text input is limited to 10 MiB in UTF-8.\n\nImport or drop one UTF-8 TXT file up to 10 MiB, including files with a BOM. Copy or share the result, or export the latest successful conversion as UTF-8 TXT without a BOM. Line endings, blank lines and Unicode text are preserved. Save Big5 or GBK files as UTF-8 first. With Pro, one UTF-8 TXT file larger than 10 MiB and up to 100 MiB can be chosen in the file picker and converted directly to a new file. The large file stays out of the editor, keeping your current draft and result; conversion runs while the app is open and stops safely if it moves to the background or the device locks. Drag and drop stays limited to 10 MiB, and batch conversion is not supported.\n\nFree users can complete 12 successful homepage conversions per day. Importing, exporting and changing presets do not count. Lifetime Pro is a one-time purchase that removes the homepage limit and in-app recommendations and unlocks large-file conversion. View purchase status or restore purchases in Settings.\n\nPowered by OpenCC, text conversion runs locally on your device. OpenCCman requires iOS or iPadOS 15 or later. Open source under the MIT license: https://github.com/gewill/OpenCCman"
+      },
+      {
+        "key": "version:2.2:zh-Hans:description",
+        "scope": "version",
+        "locale": "zh-Hans",
+        "version": "2.2",
+        "field": "description",
+        "reason": "field value differs",
+        "from": "在 iPhone 和 iPad 上处理中文文稿，也能通过「快捷指令」把简繁转换接入自己的工作流。OpenCCman 将本地文字转换、TXT 文件处理和原文／结果对照整合在原生应用中。\n\n提供简体中文、OpenCC 繁体、台湾正体与台湾词组、香港繁体四种常用预设；异体字与地区用词仍可在高级选项中调整。简体输出不等于完整的台湾词汇反向转换。\n\n新稿从空白开始，直接粘贴自己的文字，需要时再一键填入示例。iPad 可将原文和结果左右或上下排列；iPhone 的紧凑转换按钮留出更多阅读空间。清空原文前会确认，再移除当前原文和结果。\n\niOS 和 iPadOS 16 及以上可使用免费的「转换文字」快捷指令动作：输入文字、选择四个预设之一，并将转换结果交给后续动作。可与剪贴板或文件动作连接，不改变已打开的稿件，也不计入主页每日次数；文字输入按 UTF-8 计算最多 10 MiB。\n\n每次可导入或拖入单个不超过 10 MiB 的 UTF-8 TXT，支持带 BOM 的输入。结果可复制、分享，或将最近一次成功转换导出为不带 BOM 的 UTF-8 TXT，并保留换行、空行和 Unicode 字符。Big5、GBK 文件须先另存为 UTF-8。iPhone 和 iPad 暂不支持批量文件或超过 10 MiB 的文件，Pro 也遵循此容量限制。\n\n免费版每天可完成 12 次成功的主页转换；导入、导出和切换预设不计次。终身 Pro 一次购买，解除主页每日次数限制并隐藏应用推荐；可在设置中查看购买状态或恢复购买。\n\n基于 OpenCC，文字转换在设备本地完成。应用支持 iOS／iPadOS 15 及以上。基于 MIT 协议开源：https://github.com/gewill/OpenCCman",
+        "to": "在 iPhone 和 iPad 上处理中文文稿，也能通过「快捷指令」把简繁转换接入自己的工作流。OpenCCman 将本地文字转换、TXT 文件处理和原文／结果对照整合在原生应用中。\n\n提供简体中文、OpenCC 繁体、台湾正体与台湾词组、香港繁体四种常用预设；异体字与地区用词仍可在高级选项中调整。简体输出不等于完整的台湾词汇反向转换。\n\n新稿从空白开始，直接粘贴自己的文字，需要时再一键填入示例。iPad 可将原文和结果左右或上下排列，iPhone 在窗口足够宽时也可左右对照。清空原文前会确认，再移除当前原文和结果。\n\niOS 和 iPadOS 16 及以上可使用免费的「转换文字」快捷指令动作：输入文字、选择四个预设之一，并将转换结果交给后续动作。可与剪贴板或文件动作连接，不改变已打开的稿件，也不计入主页每日次数；文字输入按 UTF-8 计算最多 10 MiB。\n\n每次可导入或拖入单个不超过 10 MiB 的 UTF-8 TXT，支持带 BOM 的输入。结果可复制、分享，或将最近一次成功转换导出为不带 BOM 的 UTF-8 TXT，并保留换行、空行和 Unicode 字符。Big5、GBK 文件须先另存为 UTF-8。Pro 用户还可在文件选择器中选取单个大于 10 MiB、最大 100 MiB 的 UTF-8 TXT，直接转换为新文件。大文件不载入编辑器，当前稿件和结果保持原样；转换在应用打开时进行，切到后台或锁屏会安全中止。拖入文件仍限 10 MiB，暂不支持批量转换。\n\n免费版每天可完成 12 次成功的主页转换；导入、导出和切换预设不计次。终身 Pro 一次购买，解除主页每日次数限制、隐藏应用推荐，并解锁大文件转换；可在设置中查看购买状态或恢复购买。\n\n基于 OpenCC，文字转换在设备本地完成。应用支持 iOS／iPadOS 15 及以上。基于 MIT 协议开源：https://github.com/gewill/OpenCCman"
+      },
+      {
+        "key": "version:2.2:zh-Hant:description",
+        "scope": "version",
+        "locale": "zh-Hant",
+        "version": "2.2",
+        "field": "description",
+        "reason": "field value differs",
+        "from": "在 iPhone 和 iPad 上處理中文文稿，也能透過「捷徑」將簡繁轉換接入自己的工作流程。OpenCCman 將本機文字轉換、TXT 檔案處理與原文／結果對照整合在原生 App 中。\n\n提供簡體中文、OpenCC 繁體、臺灣正體與臺灣詞組、香港繁體四種常用預設；異體字與地區用詞仍可在進階選項中調整。簡體輸出不等於完整的臺灣詞彙反向轉換。\n\n新稿從空白開始，直接貼上自己的文字，需要時再一鍵填入範例。iPad 可將原文與結果左右或上下排列；iPhone 的精簡轉換按鈕留出更多閱讀空間。清除原文前會確認，再移除目前原文與結果。\n\niOS 和 iPadOS 16 以上可使用免費的「轉換文字」捷徑動作：輸入文字、選擇四個預設之一，並將轉換結果交給後續動作。可與剪貼簿或檔案動作連接，不變更已開啟的稿件，也不計入首頁每日次數；文字輸入以 UTF-8 計算最多 10 MiB。\n\n每次可匯入或拖入單一不超過 10 MiB 的 UTF-8 TXT，支援含 BOM 的輸入。結果可複製、分享，或將最近一次成功轉換匯出為不含 BOM 的 UTF-8 TXT，並保留換行、空行與 Unicode 字元。Big5、GBK 檔案須先另存為 UTF-8。iPhone 和 iPad 暫不支援批次檔案或超過 10 MiB 的檔案，Pro 亦遵循此容量限制。\n\n免費版每天可完成 12 次成功的首頁轉換；匯入、匯出及切換預設不計次。終身 Pro 為一次性購買，解除首頁每日次數限制並隱藏 App 推薦；可在設定中查看購買狀態或回復購買。\n\n基於 OpenCC，文字轉換在裝置本機完成。App 支援 iOS／iPadOS 15 以上。基於 MIT 授權開源：https://github.com/gewill/OpenCCman",
+        "to": "在 iPhone 和 iPad 上處理中文文稿，也能透過「捷徑」將簡繁轉換接入自己的工作流程。OpenCCman 將本機文字轉換、TXT 檔案處理與原文／結果對照整合在原生 App 中。\n\n提供簡體中文、OpenCC 繁體、臺灣正體與臺灣詞組、香港繁體四種常用預設；異體字與地區用詞仍可在進階選項中調整。簡體輸出不等於完整的臺灣詞彙反向轉換。\n\n新稿從空白開始，直接貼上自己的文字，需要時再一鍵填入範例。iPad 可將原文與結果左右或上下排列，iPhone 在視窗夠寬時也可左右對照。清除原文前會確認，再移除目前原文與結果。\n\niOS 和 iPadOS 16 以上可使用免費的「轉換文字」捷徑動作：輸入文字、選擇四個預設之一，並將轉換結果交給後續動作。可與剪貼簿或檔案動作連接，不變更已開啟的稿件，也不計入首頁每日次數；文字輸入以 UTF-8 計算最多 10 MiB。\n\n每次可匯入或拖入單一不超過 10 MiB 的 UTF-8 TXT，支援含 BOM 的輸入。結果可複製、分享，或將最近一次成功轉換匯出為不含 BOM 的 UTF-8 TXT，並保留換行、空行與 Unicode 字元。Big5、GBK 檔案須先另存為 UTF-8。Pro 使用者還可在檔案選擇器中選取單一大於 10 MiB、最多 100 MiB 的 UTF-8 TXT，直接轉換為新檔案。大檔案不載入編輯器，目前稿件與結果保持原樣；轉換在 App 開啟時進行，切到背景或鎖定螢幕會安全中止。拖入檔案仍限 10 MiB，暫不支援批次轉換。\n\n免費版每天可完成 12 次成功的首頁轉換；匯入、匯出及切換預設不計次。終身 Pro 為一次性購買，解除首頁每日次數限制、隱藏 App 推薦，並解鎖大檔案轉換；可在設定中查看購買狀態或回復購買。\n\n基於 OpenCC，文字轉換在裝置本機完成。App 支援 iOS／iPadOS 15 以上。基於 MIT 授權開源：https://github.com/gewill/OpenCCman"
+      }
+    ],
+    "deletes": [],
+    "apiCalls": [
+      {
+        "operation": "update_localization",
+        "scope": "version",
+        "count": 3
+      }
+    ]
+  }
+}

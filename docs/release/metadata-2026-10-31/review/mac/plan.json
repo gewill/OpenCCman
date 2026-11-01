@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-31T13:14:39Z",
+  "command": "metadata plan",
+  "reviewDir": "review/mac",
+  "planPath": "review/mac/plan.json",
+  "approvalPath": "review/mac/approved.json",
+  "planHash": "f0e0fb657889f47477aefa17f33bea9e172f69d8e8ec82905c271e66d9ffa816",
+  "options": {
+    "appId": "6474449401",
+    "version": "2.2",
+    "platform": "MAC_OS",
+    "dir": "proposed/mac",
+    "includes": [
+      "localizations"
+    ],
+    "allowDeletes": false
+  },
+  "plan": {
+    "appId": "6474449401",
+    "appInfoId": "",
+    "version": "2.2",
+    "versionId": "1fda2f5f-7edd-4458-a560-1765e58d5682",
+    "dir": "proposed/mac",
+    "dryRun": true,
+    "includes": [
+      "localizations"
+    ],
+    "adds": [
+      {
+        "key": "version:2.2:en-US:whatsNew",
+        "scope": "version",
+        "locale": "en-US",
+        "version": "2.2",
+        "field": "whatsNew",
+        "reason": "field exists locally but not remotely",
+        "to": "The menu bar icon is now easier to find, and keyboard commands work in more window layouts.\n\n• The menu bar icon is shown by default. If you turned it off or on before, your choice is kept.\n• ⌘, opens Settings and ⌘P opens Pro even when More is in the toolbar overflow menu, keeping your reading position.\n• Long import hints wrap in narrow windows instead of being cut off.\n• Settings switches use an updated style."
+      },
+      {
+        "key": "version:2.2:zh-Hans:whatsNew",
+        "scope": "version",
+        "locale": "zh-Hans",
+        "version": "2.2",
+        "field": "whatsNew",
+        "reason": "field exists locally but not remotely",
+        "to": "菜单栏图标更容易找到，键盘命令在更多窗口布局下可用。\n\n• 菜单栏图标默认显示；之前手动开启或关闭过的设置保持不变。\n• 「更多」收进工具栏溢出菜单时，⌘, 仍可打开设置、⌘P 仍可打开 Pro，并保留阅读位置。\n• 窄窗口中较长的导入提示会自动换行，不再被截断。\n• 设置中的开关采用更新后的样式。"
+      },
+      {
+        "key": "version:2.2:zh-Hant:whatsNew",
+        "scope": "version",
+        "locale": "zh-Hant",
+        "version": "2.2",
+        "field": "whatsNew",
+        "reason": "field exists locally but not remotely",
+        "to": "選單列圖示更容易找到，鍵盤指令在更多視窗佈局下可用。\n\n• 選單列圖示預設顯示；先前手動開啟或關閉過的設定保持不變。\n• 「更多」收進工具列溢出選單時，⌘, 仍可開啟設定、⌘P 仍可開啟 Pro，並保留閱讀位置。\n• 窄視窗中較長的匯入提示會自動換行，不再被截斷。\n• 設定中的開關採用更新後的樣式。"
+      }
+    ],
+    "updates": [],
+    "deletes": [],
+    "apiCalls": [
+      {
+        "operation": "update_localization",
+        "scope": "version",
+        "count": 3
+      }
+    ]
+  }
+}
