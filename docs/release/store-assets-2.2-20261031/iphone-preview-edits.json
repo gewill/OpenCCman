@@ -1,0 +1,49 @@
+{
+  "captureDate": "2026-10-31",
+  "appearance": "light",
+  "note": "Real localized QA app recordings from the 2.2 source on a new iPhone 18 Pro Max simulator. One continuous segment per locale from the system launch screen to the cancelled clear confirmation; no acceleration, cuts or fabricated UI.",
+  "outputs": [
+    {
+      "output": "marketing/preview/en-US/01-convert-and-clear.mp4",
+      "size": [
+        886,
+        1920
+      ],
+      "segments": [
+        {
+          "input": "raw/preview/en-US/01-convert-and-clear-recording.mp4",
+          "start": 6.9,
+          "duration": 29.0
+        }
+      ]
+    },
+    {
+      "output": "marketing/preview/zh-Hans/01-convert-and-clear.mp4",
+      "size": [
+        886,
+        1920
+      ],
+      "segments": [
+        {
+          "input": "raw/preview/zh-Hans/01-convert-and-clear-recording.mp4",
+          "start": 11.1,
+          "duration": 29.6
+        }
+      ]
+    },
+    {
+      "output": "marketing/preview/zh-Hant/01-convert-and-clear.mp4",
+      "size": [
+        886,
+        1920
+      ],
+      "segments": [
+        {
+          "input": "raw/preview/zh-Hant/01-convert-and-clear-recording.mp4",
+          "start": 13.2,
+          "duration": 28.4
+        }
+      ]
+    }
+  ]
+}

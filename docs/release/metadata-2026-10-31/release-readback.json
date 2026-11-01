@@ -1,0 +1,125 @@
+{
+  "date": "2026-11-01 (UTC+8)",
+  "app": "6474449401",
+  "beforeRelease": {
+    "readAt": "2026-10-31T23:2xZ",
+    "IOS": {
+      "versionId": "a45ea7c1-95f5-48d6-93a1-b514da32bdb9",
+      "appStoreState": "PENDING_DEVELOPER_RELEASE",
+      "releaseType": "MANUAL",
+      "build": {
+        "id": "c9539366-903d-4d40-90b1-d6b1a588aa52",
+        "version": "63",
+        "processingState": "VALID"
+      },
+      "reviewSubmission": {
+        "id": "92603338-60da-4965-a91e-9fb6e22bc742",
+        "state": "COMPLETE",
+        "submittedDate": "2026-10-31T15:28:27.574Z"
+      },
+      "phasedRelease": null
+    },
+    "MAC_OS": {
+      "versionId": "1fda2f5f-7edd-4458-a560-1765e58d5682",
+      "appStoreState": "PENDING_DEVELOPER_RELEASE",
+      "releaseType": "MANUAL",
+      "build": {
+        "id": "b96b3e97-a9ae-4d33-b4b7-e79ab265e257",
+        "version": "63",
+        "processingState": "VALID"
+      },
+      "reviewSubmission": {
+        "id": "72a7af72-cc49-438f-a10f-43a65a75a5f8",
+        "state": "COMPLETE",
+        "submittedDate": "2026-10-31T15:28:46.502Z"
+      },
+      "phasedRelease": null
+    }
+  },
+  "releaseCalls": [
+    {
+      "command": "asc versions release --version-id a45ea7c1-95f5-48d6-93a1-b514da32bdb9 --confirm",
+      "at": "2026-10-31T23:24:58Z",
+      "response": {
+        "releaseRequestId": "a45ea7c1-95f5-48d6-93a1-b514da32bdb9"
+      }
+    },
+    {
+      "command": "asc versions release --version-id 1fda2f5f-7edd-4458-a560-1765e58d5682 --confirm",
+      "at": "2026-10-31T23:25:11Z",
+      "response": {
+        "releaseRequestId": "1fda2f5f-7edd-4458-a560-1765e58d5682"
+      }
+    }
+  ],
+  "afterRelease": {
+    "readAt": "2026-10-31T23:25:26Z",
+    "IOS": {
+      "appStoreState": "READY_FOR_SALE",
+      "appVersionState": "READY_FOR_DISTRIBUTION",
+      "build": "63"
+    },
+    "MAC_OS": {
+      "appStoreState": "READY_FOR_SALE",
+      "appVersionState": "READY_FOR_DISTRIBUTION",
+      "build": "63"
+    },
+    "recheck": {
+      "readAt": "2026-10-31T23:5xZ",
+      "command": "asc versions view --include-build",
+      "IOS": {
+        "state": "READY_FOR_DISTRIBUTION",
+        "downloadable": true,
+        "buildVersion": "63"
+      },
+      "MAC_OS": {
+        "state": "READY_FOR_DISTRIBUTION",
+        "downloadable": true,
+        "buildVersion": "63"
+      }
+    }
+  },
+  "storefrontLookup": {
+    "api": "https://itunes.apple.com/lookup?id=6474449401&country=<cc>",
+    "currentVersionReleaseDate": "2026-10-31T23:25:01Z",
+    "observations": [
+      {
+        "at": "2026-10-31T23:25Z",
+        "us": "2.1",
+        "tw": "2.1",
+        "hk": "2.1",
+        "gb": "2.1",
+        "cn": "not listed"
+      },
+      {
+        "at": "2026-10-31T23:3xZ",
+        "us": "2.2 and 2.1 on successive reads",
+        "tw": "2.2 and 2.1 on successive reads",
+        "hk": "2.2",
+        "jp": "2.2",
+        "sg": "2.2",
+        "gb": "2.1"
+      },
+      {
+        "at": "2026-10-31T23:53Z",
+        "us": "2.1",
+        "tw": "2.2",
+        "hk": "2.2",
+        "jp": "2.2",
+        "gb": "2.1"
+      }
+    ],
+    "note": "Lookup is served from inconsistent CDN caches; storefronts were still propagating. The apps.apple.com page redirects to the China Today page from this network and the app is not sold in China, so the web page was not used as evidence."
+  },
+  "xcodeCloud": {
+    "workflow": "Default 00F5435C-1C48-4750-88FA-4563D018E4B3",
+    "xcode": "Xcode 27.1 (27A9275)",
+    "macOS": "27.0.1 (26A434)",
+    "build63Run": "0e88e351-77b5-4b99-a998-c2d91630bc58",
+    "completionStatus": "SUCCEEDED",
+    "sourceCommit": "15390dde4b7f70a97c174259ebd945c5a81647bf",
+    "sourceRef": "build/v2.2-20261031",
+    "startedDate": "2026-10-31T09:52:05.21Z",
+    "finishedDate": "2026-10-31T10:04:43.057Z"
+  }
+}

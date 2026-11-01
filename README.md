@@ -17,7 +17,7 @@ A native Chinese text conversion app for iPhone, iPad and Mac, powered by [OpenC
 - Cancel a conversion or import without letting a late result replace the current text. Cancellation does not forcibly interrupt native conversion already in progress.
 - Use OpenCCman free for 12 successful homepage conversions per day. Lifetime Pro removes that limit and in-app recommendations; existing lifetime purchases remain valid. Importing, exporting and changing presets do not use the daily allowance.
 
-OpenCCman 2.2 requires **iOS/iPadOS 15 or macOS 12**. Optional Launch at Login is available on macOS 13 or later. See the [2.2 release notes](https://github.com/gewill/OpenCCman/releases/tag/v2.2) and [changelog](CHANGELOG.md#22---2026-11-01) for technical changes and validation limits; the previous [2.1 release record](docs/release/launch-2.1-20261001.md) remains available.
+OpenCCman 2.2 requires **iOS/iPadOS 15 or macOS 12**. Optional Launch at Login is available on macOS 13 or later. See the [2.2 release notes](https://github.com/gewill/OpenCCman/releases/tag/v2.2), [changelog](CHANGELOG.md#22---2026-11-01) and [release record](docs/release/launch-2.2-20261101.md) for technical changes and validation limits.
 
 ## Development
 

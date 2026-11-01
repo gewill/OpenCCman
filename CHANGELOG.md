@@ -20,6 +20,7 @@ Changes not yet assigned to a published version.
 Version 2.2 was built by Xcode Cloud as Build 63, from source
 `15390dde4b7f70a97c174259ebd945c5a81647bf`. Both platforms were approved
 and manually released on 2026-11-01; storefront propagation can take time.
+See the [release record](docs/release/launch-2.2-20261101.md).
 The minimum systems remain iOS/iPadOS 15 and macOS 12; the homepage
 allowance remains 12 conversions per day.
 

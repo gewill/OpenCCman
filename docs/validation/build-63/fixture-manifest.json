@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "purpose": "input fixtures only; no device acceptance",
+  "wrapper_sha": "564b094b2b69f2c1e907fa3d89fe6845469a4e4e",
+  "app_sha": "776accc2276ec7a46c102378cb5af823d4703d8a",
+  "generator_sha256": "b49a94e65e28a33ececa528e730651b9ef930b01b089b406aff0f41e9072bcc8",
+  "fixtures": [
+    {
+      "file": "100MiB-phrases.txt",
+      "bytes": 104857600,
+      "sha256": "68d3da489051c5cd3733ba859a71532060c8eb470763f37754c9ae29dab62822",
+      "corpus": "phrases",
+      "seed_utf8_hex": "e8bdafe4bbb6e9bca0e6a087e58685e5ad98e7a1ace79b98e68993e58db0e69cbae587bae7a79fe8bda6e887aae8a18ce8bda6e695b0e68daee5ba93e4ba92e88194e7bd91e69c8de58aa1e599a8e8a786e9a2910d0a",
+      "tail": "ASCII x padding, never a split UTF-8 sequence"
+    }
+  ]
+}
