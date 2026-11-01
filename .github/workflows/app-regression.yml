@@ -118,6 +118,8 @@ jobs:
           python3 scripts/test-mobile-export-verifier.py
       - name: Check conversion diff alignment and invalidation
         run: bash scripts/check-conversion-diff.sh
+      - name: Check batch conversion queue and naming
+        run: bash scripts/check-batch-conversion.sh
       - name: Check window layout resolution and recovery
         run: bash scripts/check-workspace.sh
       - name: Check Mac window geometry

@@ -20,6 +20,7 @@ struct RootView: View {
   #endif
   #if os(macOS)
     @ObservedObject private var largeFile = MacLargeFileCoordinator.shared
+    @ObservedObject private var batch = MacBatchConversionCoordinator.shared
     @State private var largeFilePresentationIsActive = false
     @StateObject private var windowSizing = MainWindowSizing()
     @State private var isMainWindow = false
@@ -80,6 +81,17 @@ struct RootView: View {
       presentWhatsNewIfReady()
     }) {
       MacLargeFileTaskView(coordinator: largeFile)
+        .environment(\.locale, locale)
+        .onAppear { largeFilePresentationIsActive = true }
+    }
+    .sheet(isPresented: Binding(
+      get: { batch.session?.owner == viewModel.windowOwnerID },
+      set: { if !$0, !batch.isWorking { batch.cancel() } }
+    ), onDismiss: {
+      largeFilePresentationIsActive = false
+      presentWhatsNewIfReady()
+    }) {
+      MacBatchConversionView(coordinator: batch)
         .environment(\.locale, locale)
         .onAppear { largeFilePresentationIsActive = true }
     }
@@ -149,6 +161,7 @@ struct RootView: View {
       whatsNew.finish(in: presentationID)
       #if os(macOS)
         largeFile.ownerDidClose(viewModel.windowOwnerID)
+        batch.ownerDidClose(viewModel.windowOwnerID)
       #endif
     }
     #if os(macOS)
@@ -169,6 +182,7 @@ struct RootView: View {
       viewModel.cancelConversion()
       viewModel.cancelImport()
       largeFile.ownerDidClose(viewModel.windowOwnerID)
+      batch.ownerDidClose(viewModel.windowOwnerID)
     }
     .onReceive(NotificationCenter.default.publisher(for: NSWindow.didBecomeMainNotification)) { notification in
       if isTargetWindow(for: notification) {
@@ -187,6 +201,12 @@ struct RootView: View {
     .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenProFromMenu"))) { notification in
       guard isTargetWindow(for: notification), navigator.path != "/pro" else { return }
       navigator.navigate("/pro")
+    }
+    .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenBatchConversionFromMenu"))) { notification in
+      guard isTargetWindow(for: notification) else { return }
+      // The Pro prompt and the window's sheets belong to the home route.
+      if navigator.path != "/home" { navigator.navigate("/home") }
+      viewModel.chooseBatchFiles()
     }
     .onReceive(NotificationCenter.default.publisher(for: Notification.Name("OpenHelpFromMenu"))) { notification in
       guard isTargetWindow(for: notification) else { return }
@@ -233,7 +253,7 @@ struct RootView: View {
       isLaunchTransitionRunning: launchReveal.isActive
     )
     #if os(macOS)
-      eligibility.hasLargeFileTask = largeFile.isBusy || largeFilePresentationIsActive
+      eligibility.hasLargeFileTask = largeFile.isBusy || batch.isBusy || largeFilePresentationIsActive
     #else
       eligibility.hasLargeFileTask = MobileFileRuntime.isEnabled && (mobileFile.session != nil || mobileFile.presentationOwner != nil)
     #endif

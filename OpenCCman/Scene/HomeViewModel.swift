@@ -3,6 +3,7 @@ import Foundation
 import OpenCC
 import SwiftUI
 import SwiftyUserDefaults
+import UniformTypeIdentifiers
 
 #if os(macOS)
   extension Notification.Name {
@@ -456,6 +457,20 @@ class HomeViewModel: ObservableObject {
   }
 
   func importDroppedItems(_ providers: [NSItemProvider]) -> Bool {
+    #if os(macOS)
+      // Several dropped files open the Pro batch list instead of the editor.
+      if providers.count > 1 {
+        guard MacBatchConversionCoordinator.isQualified else {
+          showBatchProAlert()
+          return true
+        }
+        Task { [weak self] in
+          let urls = await Self.fileURLs(from: providers)
+          self?.offerBatch(urls)
+        }
+        return true
+      }
+    #endif
     guard providers.count == 1, let provider = providers.first else {
       error = TextFileService.FileError.multipleItems
       return false
@@ -529,6 +544,58 @@ class HomeViewModel: ObservableObject {
       }
     }
   }
+
+  #if os(macOS)
+    /// Menu entry: Pro chooses files; free users see the Pro prompt and nothing starts.
+    func chooseBatchFiles() {
+      guard MacBatchConversionCoordinator.isQualified else {
+        showBatchProAlert()
+        return
+      }
+      let panel = NSOpenPanel()
+      panel.allowsMultipleSelection = true
+      panel.canChooseDirectories = false
+      panel.allowedContentTypes = [.plainText]
+      panel.title = NSLocalizedString("batch_title", comment: "")
+      let completion: (NSApplication.ModalResponse) -> Void = { [weak self] response in
+        guard response == .OK else { return }
+        self?.offerBatch(panel.urls)
+      }
+      if let window { panel.beginSheetModal(for: window.attachedSheet ?? window, completionHandler: completion) }
+      else { panel.begin(completionHandler: completion) }
+    }
+
+    func offerBatch(_ urls: [URL]) {
+      do {
+        try MacBatchConversionCoordinator.shared.offer(
+          urls, configuration: configuration, qualified: MacBatchConversionCoordinator.isQualified,
+          owner: windowOwnerID, window: window)
+      } catch MacBatchConversionCoordinator.StartError.requiresPro {
+        showBatchProAlert()
+      } catch {
+        self.error = error
+      }
+    }
+
+    private func showBatchProAlert() {
+      proAlertDetailKey = "pro_batch_conversion"
+      showingProAlert = true
+    }
+
+    /// Finder drops carry file URLs; other dropped items are not files to convert.
+    private static func fileURLs(from providers: [NSItemProvider]) async -> [URL] {
+      var urls: [URL] = []
+      for provider in providers where provider.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) {
+        let url: URL? = await withCheckedContinuation { continuation in
+          _ = provider.loadDataRepresentation(forTypeIdentifier: UTType.fileURL.identifier) { data, _ in
+            continuation.resume(returning: data.flatMap { URL(dataRepresentation: $0, relativeTo: nil) })
+          }
+        }
+        if let url { urls.append(url) }
+      }
+      return urls
+    }
+  #endif
 
   func cancelImport() {
     importTask?.cancel()
