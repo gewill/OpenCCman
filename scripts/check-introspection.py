@@ -40,7 +40,7 @@ with tempfile.TemporaryDirectory(prefix="openccman-introspection-") as directory
     (sources / "Modify.swift").write_text("import SwiftUI\n" + styles[styles.index(anchor):])
     (package / "Package.swift").write_text('''// swift-tools-version: 6.0
 import PackageDescription
-let package = Package(name: "IntrospectionChecks", platforms: [.macOS(.v11)],
+let package = Package(name: "IntrospectionChecks", platforms: [.macOS(.v12)],
     dependencies: [''' + declaration + '''], targets: [
         .executableTarget(name: "Checks", dependencies: [
             .product(name: "SwiftUIIntrospect", package: "swiftui-introspect")
