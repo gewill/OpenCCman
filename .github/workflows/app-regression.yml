@@ -105,6 +105,8 @@ jobs:
         run: python3 Tests/Regression/CheckScriptChecks.py
       - name: Check project and source syntax
         run: bash scripts/check-project.sh
+      - name: Check local QA build artifact identity
+        run: python3 Tests/Regression/DuoBuildChecks.py
       - name: Check real conversion, presets and file workflow
         run: python3 scripts/check-core.py
       - name: Check performance report comparability

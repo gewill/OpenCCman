@@ -20,6 +20,13 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def app_code_hashes(app, executable):
+    # ENABLE_DEBUG_DYLIB puts application code beside the executable stub.
+    # Include those payloads: a matching stub alone does not identify the app.
+    paths = [executable, *sorted(executable.parent.glob("*.dylib"))]
+    return {str(path.relative_to(app)): digest(path) for path in paths}
+
+
 def version(value):
     return tuple(int(part) for part in str(value).split("."))
 
@@ -148,7 +155,8 @@ def main():
                 raise ValueError(f"Binary SDK differs from selected SDK {selected_sdk}: {binary_sdks}")
             report["artifacts"][platform] = {"command": native + ["build"], "app": str(app),
                 "plist": verified, "binary_sdks": binary_sdks,
-                "executable_sha256": digest(executable), "info_plist_sha256": digest(plist)}
+                "executable_sha256": digest(executable), "info_plist_sha256": digest(plist),
+                "app_code_sha256": app_code_hashes(app, executable)}
         if source_state() != report["source"]:
             raise RuntimeError("Source or dependency lock changed during validation; do not reuse these results")
         report["status"] = "passed"
