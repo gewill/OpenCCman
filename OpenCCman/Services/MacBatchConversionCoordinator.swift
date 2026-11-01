@@ -27,7 +27,7 @@ final class MacBatchConversionCoordinator: ObservableObject {
   }
 
   enum StartError: LocalizedError, Equatable {
-    case busy, requiresPro, empty, tooManyFiles(Int), folderUnavailable
+    case busy, requiresPro, empty, tooManyFiles(Int), folderUnavailable, dropUnavailable
     var errorDescription: String? {
       switch self {
       case .busy: return NSLocalizedString("large_file_busy", comment: "")
@@ -37,6 +37,7 @@ final class MacBatchConversionCoordinator: ObservableObject {
         return String(format: NSLocalizedString("batch_error_too_many", comment: ""),
                       count, BatchConversionPolicy.maximumFiles)
       case .folderUnavailable: return NSLocalizedString("batch_error_folder", comment: "")
+      case .dropUnavailable: return NSLocalizedString("batch_error_drop", comment: "")
       }
     }
   }

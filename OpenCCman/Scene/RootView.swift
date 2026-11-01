@@ -93,6 +93,8 @@ struct RootView: View {
     }) {
       MacBatchConversionView(coordinator: batch)
         .environment(\.locale, locale)
+        // Sheets do not inherit the in-app text size set on the window content.
+        .environment(\.appTextSize, AppTextSize(rawValue: macTextSizeRaw) ?? .standard)
         .onAppear { largeFilePresentationIsActive = true }
     }
     #endif

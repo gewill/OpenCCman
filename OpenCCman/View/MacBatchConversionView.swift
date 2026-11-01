@@ -174,7 +174,10 @@ struct MacBatchConversionView: View {
   private var symbol: String {
     switch coordinator.phase {
     case .finished:
-      return (coordinator.queue?.failedCount ?? 0) > 0 ? "exclamationmark.triangle" : "checkmark.circle"
+      guard let queue = coordinator.queue else { return "checkmark.circle" }
+      if queue.failedCount > 0 { return "exclamationmark.triangle" }
+      // A batch with nothing saved (all cancelled) must not look like success.
+      return queue.succeededCount == 0 ? "xmark.circle" : "checkmark.circle"
     default: return "doc.on.doc"
     }
   }

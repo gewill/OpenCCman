@@ -465,7 +465,10 @@ class HomeViewModel: ObservableObject {
           return true
         }
         Task { [weak self] in
-          let urls = await Self.fileURLs(from: providers)
+          guard let urls = await Self.fileURLs(from: providers) else {
+            self?.error = MacBatchConversionCoordinator.StartError.dropUnavailable
+            return
+          }
           self?.offerBatch(urls)
         }
         return true
@@ -582,16 +585,28 @@ class HomeViewModel: ObservableObject {
       showingProAlert = true
     }
 
-    /// Finder drops carry file URLs; other dropped items are not files to convert.
-    private static func fileURLs(from providers: [NSItemProvider]) async -> [URL] {
+    /// Finder drops may arrive as plain text only, without a file URL or name.
+    /// The in-place file representation still identifies the original file;
+    /// a copied or non-file item makes the whole drop unavailable, never a
+    /// silently shorter batch.
+    private static func fileURLs(from providers: [NSItemProvider]) async -> [URL]? {
       var urls: [URL] = []
-      for provider in providers where provider.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) {
+      for provider in providers {
         let url: URL? = await withCheckedContinuation { continuation in
-          _ = provider.loadDataRepresentation(forTypeIdentifier: UTType.fileURL.identifier) { data, _ in
-            continuation.resume(returning: data.flatMap { URL(dataRepresentation: $0, relativeTo: nil) })
+          if provider.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) {
+            _ = provider.loadDataRepresentation(forTypeIdentifier: UTType.fileURL.identifier) { data, _ in
+              continuation.resume(returning: data.flatMap { URL(dataRepresentation: $0, relativeTo: nil) })
+            }
+          } else if provider.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) {
+            _ = provider.loadInPlaceFileRepresentation(forTypeIdentifier: UTType.plainText.identifier) { url, inPlace, _ in
+              continuation.resume(returning: inPlace ? url : nil)
+            }
+          } else {
+            continuation.resume(returning: nil)
           }
         }
-        if let url { urls.append(url) }
+        guard let url else { return nil }
+        urls.append(url)
       }
       return urls
     }
