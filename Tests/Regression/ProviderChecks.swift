@@ -33,6 +33,30 @@ import UniformTypeIdentifiers
   precondition(importedString.sourceFilename == nil)
   precondition(importedString.exportFilename == "OpenCCman-converted.txt")
 
+  // Finder drops a TXT as plain text alone: no file URL, no suggested name,
+  // only an in-place file representation of the original file.
+  let finderProvider = inPlacePlainTextProvider(url)
+  precondition(!finderProvider.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier))
+  precondition(finderProvider.suggestedName == nil)
+  let importedInPlace = try await TextFileService.read(finderProvider)
+  precondition(importedInPlace.text == text, "In-place plain-text files read like file URLs")
+  precondition(importedInPlace.sourceFilename == filename, "In-place plain-text drops keep the original filename")
+
+  let largeURL = directory.appendingPathComponent("大文件.txt")
+  try Data(repeating: 0x61, count: TextFileService.maximumBytes + 1).write(to: largeURL)
+  guard case let .largeFile(largeSource) = try await TextFileService.prepare(inPlacePlainTextProvider(largeURL)) else {
+    preconditionFailure("A large in-place plain-text drop must stay on the Mac large-file route")
+  }
+  precondition(largeSource.sourceFilename == "大文件.txt")
+  try largeSource.close()
+
+  // An in-place file that is not a TXT is still read as text only, as before.
+  let markdownURL = directory.appendingPathComponent("notes.md")
+  try Data(text.utf8).write(to: markdownURL)
+  let importedMarkdown = try await TextFileService.read(inPlacePlainTextProvider(markdownURL))
+  precondition(importedMarkdown.text == text && importedMarkdown.sourceFilename == nil,
+               "Non-TXT in-place files fall back to their text without a filename")
+
   let loaderStarted = ProviderLoaderSignal()
   let silentProvider = NSItemProvider()
   silentProvider.registerDataRepresentation(forTypeIdentifier: UTType.fileURL.identifier, visibility: .all) { _ in
@@ -49,7 +73,19 @@ import UniformTypeIdentifiers
   } catch is CancellationError {
     // Completion proves the service resumed its own continuation on cancel.
   }
-  print("PASS: real NSURL/NSString providers and cancellation without a provider callback")
+  print("PASS: real NSURL/NSString/in-place plain-text providers and cancellation without a provider callback")
+}
+
+/// Mirrors the provider SwiftUI hands over for a Finder drop: plain text only,
+/// served in place from the original file.
+private func inPlacePlainTextProvider(_ url: URL) -> NSItemProvider {
+  let provider = NSItemProvider()
+  provider.registerFileRepresentation(forTypeIdentifier: UTType.plainText.identifier, fileOptions: [.openInPlace],
+                                      visibility: .all) { completion in
+    completion(url, false, nil)
+    return nil
+  }
+  return provider
 }
 
 @MainActor private final class ProviderLoaderSignal {

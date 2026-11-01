@@ -54,10 +54,6 @@ struct RootView: View {
       launchOverlay(anchors)
     }
     .neumorphicTheme(.openCCman)
-    #if os(macOS)
-      .environment(\.appTextSize, AppTextSize(rawValue: macTextSizeRaw) ?? .standard)
-      .font(AppTypography.font(.body, size: AppTextSize(rawValue: macTextSizeRaw) ?? .standard))
-    #endif
     .onChange(of: navigator.path) { newPath in
       print("Current path:", newPath)
     }
@@ -204,8 +200,15 @@ struct RootView: View {
     .onReceive(NotificationCenter.default.publisher(for: .convertTextFromMenu)) { notification in
       navigateToHome(for: notification)
     }
+    // Outermost, so the sheets above inherit the in-app text size with the window content.
+    .environment(\.appTextSize, textSize)
+    .font(AppTypography.font(.body, size: textSize))
     #endif
   }
+
+  #if os(macOS)
+    private var textSize: AppTextSize { AppTextSize(rawValue: macTextSizeRaw) ?? .standard }
+  #endif
 
   private var whatsNewEligibility: WhatsNewEligibility {
     var active = isVisible && scenePhase == .active
