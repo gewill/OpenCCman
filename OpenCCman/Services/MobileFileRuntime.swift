@@ -6,8 +6,9 @@ import UIKit
 @MainActor
 final class MobileFileRuntime {
   static let shared = MobileFileRuntime()
-  // #260 owns production enablement after signed device acceptance.
-  nonisolated static let productionEnabled = false
+  // Enabled for the v2.2 release: the maintainer accepted the open #260 iPad,
+  // footprint and corpus-matrix risks on 2026-10-31. Acceptance continues there.
+  nonisolated static let productionEnabled = true
   // #268 remains a separate candidate until its signed-device acceptance. The
   // 100 MiB release gate must not silently enable the experimental capacity.
   nonisolated static let experimentalCapacityEnabled = false

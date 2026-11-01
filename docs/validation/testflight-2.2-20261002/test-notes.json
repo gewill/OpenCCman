@@ -1,0 +1,12 @@
+{
+  "IOS": {
+    "en-US": "OpenCCman 2.2 beta: please test Pro TXT conversion up to 100 MiB. Check UTF-8/BOM, Chinese, emoji, CRLF and blank lines; cancel conversion; cancel Save and retry; reopen the app and save a completed result again. Test Files/iCloud Drive input and output while preserving the original. Files over 100 MiB should be rejected; ordinary editor imports remain limited to 10 MiB. This build does not enable the experimental 1 GiB mobile capacity. Please report device/iOS version, file size/configuration, steps, elapsed time and any error. Minimum iOS: 15.",
+    "zh-Hans": "OpenCCman 2.2 测试版：请验收 Pro 的单个 TXT 文件转换，最高 100 MiB。覆盖 UTF-8/BOM、中文、Emoji、CRLF 和空行；转换中取消、取消保存后重试、重启 App 后重新保存已完成结果。请测试“文件”／iCloud Drive 的导入和保存，核对原文件与输出完整性。超过 100 MiB 应拒绝，普通编辑器导入仍为 10 MiB。本包未开启移动端 1 GiB 实验容量。反馈请注明设备／iOS 版本、文件大小／转换配置、步骤、耗时及错误。最低 iOS 15。",
+    "zh-Hant": "OpenCCman 2.2 測試版：請驗收 Pro 的單個 TXT 檔案轉換，最高 100 MiB。涵蓋 UTF-8/BOM、中文、Emoji、CRLF 與空行；轉換中取消、取消儲存後重試、重啟 App 後重新儲存已完成結果。請測試「檔案」／iCloud Drive 的匯入與儲存，核對原始檔案與輸出完整性。超過 100 MiB 應拒絕，一般編輯器匯入仍為 10 MiB。本包未開啟行動端 1 GiB 實驗容量。回報請註明裝置／iOS 版本、檔案大小／轉換設定、步驟、耗時與錯誤。最低 iOS 15。"
+  },
+  "MAC_OS": {
+    "en-US": "OpenCCman 2.2 beta: please test Pro TXT conversion up to 1 GiB, especially saving to an external drive or network share. This build fixes false insufficient-space rejection and removes the doubled-input preflight from normal tasks while retaining incremental storage checks. Check conversion output, source preservation, cancel/retry, same-name replacement and errors when space becomes insufficient. Also check presets, split layouts and system text conversion entry points. The experimental 8 GiB capacity remains disabled. Please report Mac model/macOS, storage type, file size/configuration, steps, elapsed time and error. Minimum macOS: 12.",
+    "zh-Hans": "OpenCCman 2.2 测试版：请验收 Pro 的 TXT 转换，最高 1 GiB，重点测试外接盘和网络共享的保存。本包修复可用空间误判，取消常规任务的“两倍输入空间”预检，同时保留写入过程的空间保护。核对转换结果、原文件保留、取消／重试、同名替换和空间不足的错误处理，也请检查预设、左右／上下布局及系统文字转换入口。8 GiB 实验容量仍关闭。反馈请注明 Mac 型号／macOS、存储类型、文件大小／配置、步骤、耗时和错误。最低 macOS 12。",
+    "zh-Hant": "OpenCCman 2.2 測試版：請驗收 Pro 的 TXT 轉換，最高 1 GiB，重點測試外接磁碟與網路共享的儲存。本包修復可用空間誤判，取消一般任務的「兩倍輸入空間」預檢，同時保留寫入過程的空間保護。核對轉換結果、原始檔案保留、取消／重試、同名取代及空間不足的錯誤處理，也請檢查預設、左右／上下配置與系統文字轉換入口。8 GiB 實驗容量仍關閉。回報請註明 Mac 型號／macOS、儲存類型、檔案大小／設定、步驟、耗時與錯誤。最低 macOS 12。"
+  }
+}
