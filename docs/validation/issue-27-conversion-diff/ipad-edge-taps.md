@@ -8,7 +8,7 @@
 
 - PR #312 最终头 `cb5f6777c691b054401a5515d6ac4a6e5489f107`；[头提交 CI](https://github.com/gewill/OpenCCman/actions/runs/41254626612) 成功，需求／规范复审无剩余阻塞；Squash 合并提交 `8ec39b3e971c3efed9976525f52a9e330c683902`。
 - iPad A16 / iOS 27.0 模拟器，UDID `737A20AC-4B6E-4B43-9C2D-0306F6266B6C`；英语，375×532 原生窄窗口；默认字号与 XXXL。Xcode 27.1（27A9275），`DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer`。
-- 隔离 QA Bundle ID `org.gewill.OpenCCman.WhatsNewUITests`，Debug 04。实际安装的可执行文件 SHA-256 `d0a86a9f8d9f2ce251c0e5f2cbdbd20f70dbd0e2e646dc8265728c7df8b4c5c3` 与原双端构建报告一致。
+- 隔离 QA Bundle ID `org.gewill.OpenCCman.WhatsNewUITests`，Debug 04。实际安装的可执行文件 SHA-256 `d0a86a9f8d9f2ce251c0e5f2cbdbd20f70dbd0e2e646dc8265728c7df8b4c5c3` 与原双端构建报告一致。该值只识别启动文件，不能单独唯一绑定 Debug 代码；后续发现相同启动壳可以加载不同 `.debug.dylib`，见[载荷证据补正](local-export-acceptance.md#构建报告缺口与修复)。原来源与构建记录保留，不追认旧报告已验证完整载荷。
 - App 实现源为 `842c6074cf96616563643b2008372ea1edadfc60`，至 PR 最终头未再改变 App 源码。合并时 develop 另有 v2.2 版本号及 `MobileFileRuntime.productionEnabled` 改动；工作区／差异 UI 源码相同，但本次未重新构建合并产物，不能把旧二进制标为合并提交的新构建。
 - 本轮只更新验收记录；未改 App、部署下限、容量或依赖。没有重跑无关功能矩阵、双端完整构建或性能基准。
 

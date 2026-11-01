@@ -1,6 +1,7 @@
 import copy
 import importlib.util
 from pathlib import Path
+import tempfile
 import unittest
 
 spec = importlib.util.spec_from_file_location(
@@ -10,6 +11,34 @@ spec.loader.exec_module(duo)
 
 
 class DuoArtifactChecks(unittest.TestCase):
+    def test_changed_debug_payload_is_detected_even_with_identical_stub(self):
+        for subdirectory in ("", "Contents/MacOS"):
+            with self.subTest(subdirectory=subdirectory), tempfile.TemporaryDirectory() as directory:
+                app = Path(directory) / "OpenCCman.app"
+                executable = app / subdirectory / "OpenCCman"
+                executable.parent.mkdir(parents=True)
+                executable.write_bytes(b"unchanged executor stub")
+                payload = executable.with_name("OpenCCman.debug.dylib")
+                payload.write_bytes(b"implementation one")
+                before = duo.app_code_hashes(app, executable)
+                payload.write_bytes(b"implementation two")
+                after = duo.app_code_hashes(app, executable)
+                self.assertEqual(before[str(executable.relative_to(app))],
+                                 after[str(executable.relative_to(app))])
+                self.assertNotEqual(before[str(payload.relative_to(app))],
+                                    after[str(payload.relative_to(app))])
+
+    def test_non_split_executable_remains_supported_and_missing_executable_fails(self):
+        with tempfile.TemporaryDirectory() as directory:
+            app = Path(directory)
+            executable = app / "OpenCCman"
+            executable.write_bytes(b"release application")
+            self.assertEqual(duo.app_code_hashes(app, executable),
+                             {"OpenCCman": duo.digest(executable)})
+            executable.unlink()
+            with self.assertRaises(FileNotFoundError):
+                duo.app_code_hashes(app, executable)
+
     def setUp(self):
         self.info = {
             "DTSDKName": "iphonesimulator27.1", "MinimumOSVersion": "15.0",
