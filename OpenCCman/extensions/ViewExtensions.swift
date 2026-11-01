@@ -2,37 +2,18 @@ import SwiftUI
 @_spi(Advanced) import SwiftUIIntrospect
 
 #if os(macOS)
-  /// Introspect 26 deliberately skips later major systems. Opt in to 27 only:
-  /// 27.x still exposes the NSTextView selectors used here, while
-  /// Introspect 27 itself would raise our macOS deployment target to 12.
+  /// Explicitly supported systems only; a future major version needs validation.
   @MainActor
   enum AppIntrospection {
-    private static var isMacOS27: Bool {
-      if #available(macOS 28, *) { return false }
-      if #available(macOS 27, *) { return true }
-      return false
-    }
-
     static var textEditor: PlatformViewVersionPredicate<TextEditorType, NSTextView> {
-      if isMacOS27 { return .macOS(.v26...) }
-      return .macOS(.v11, .v12, .v13, .v14, .v15, .v26)
+      .macOS(.v12, .v13, .v14, .v15, .v26, .v27)
     }
   }
 #elseif os(iOS)
-  /// Introspect 26 skips iOS 27 by default. The native TextEditor is still a
-  /// UITextView on 27, so keep its read-only and layout configuration there.
-  /// Stop before 28 until that system's view hierarchy is verified.
   @MainActor
   enum AppIntrospection {
-    private static var isIOS27: Bool {
-      if #available(iOS 28, *) { return false }
-      if #available(iOS 27, *) { return true }
-      return false
-    }
-
     static var textEditor: PlatformViewVersionPredicate<TextEditorType, UITextView> {
-      if isIOS27 { return .iOS(.v26...) }
-      return .iOS(.v14, .v15, .v16, .v17, .v18, .v26)
+      .iOS(.v15, .v16, .v17, .v18, .v26, .v27)
     }
   }
 #endif

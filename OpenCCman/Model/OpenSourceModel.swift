@@ -280,7 +280,7 @@ let allOpenSourceModels =
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
     """),
-    OpenSourceModel(name: "MSDisplayLink", link: "https://github.com/Lakr233/MSDisplayLink", licence: """
+    OpenSourceModel(name: "DisplayLink", link: "https://github.com/Lakr233/DisplayLink", licence: """
     MIT License
 
     Copyright (c) 2024 Lakr Aream
