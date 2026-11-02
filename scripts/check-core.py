@@ -56,6 +56,7 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
         root / "OpenCCman/Model/TestNumbersPerDayManager.swift",
         root / "OpenCCman/Model/WorkspaceEditorReadingState.swift",
         root / "OpenCCman/Scene/HomeViewModel.swift",
+        root / "OpenCCmanTextAction/TextActionModel.swift",
         root / "Tests/Regression/CoreSupport.swift",
         root / ("Tests/Benchmarks/ConversionBenchmark.swift" if args.benchmark else
                 "Tests/Regression/ModelLifetimeChecks.swift" if args.model_lifetime else
@@ -75,6 +76,7 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
         shutil.copy2(root / "Tests/Regression/MobileCoordinatorChecks.swift", sources / "MobileCoordinatorChecks.swift")
         shutil.copy2(root / "Tests/Regression/LargeFileCoordinatorChecks.swift", sources / "LargeFileCoordinatorChecks.swift")
         shutil.copy2(root / "Tests/Regression/BatchCoordinatorChecks.swift", sources / "BatchCoordinatorChecks.swift")
+        shutil.copy2(root / "Tests/Regression/TextActionChecks.swift", sources / "TextActionChecks.swift")
     (package / "Package.swift").write_text('''// swift-tools-version: 5.9
 import PackageDescription
 let package = Package(

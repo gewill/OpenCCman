@@ -68,6 +68,10 @@ PR 与合并后真实 GitHub Actions 运行结果是线上验收依据。纯迁�
 `check-control-sizing.sh` 在临时目录按 `Package.resolved` 的精确 SHA 读取 Neumorphic，编译原生 SwiftUI/AppKit 测量程序。覆盖上游 28/30→44 复现、应用 Mac 28/32pt 完整外框、Segment 底座、开关及多行增长；不改依赖缓存。iOS 点击和布局证据见 [三端验收记录](validation/control-sizing/README.md)，此原生 Mac 检查不能代替触屏或 VoiceOver 验收。
 
 
+## QA 构建的 Bundle ID
+
+App 和 iOS 分享扩展（`OpenCCmanTextAction`，#29）的 Bundle ID 都由项目级设置 `OPENCCMAN_BUNDLE_ID` 派生，扩展为 `$(OPENCCMAN_BUNDLE_ID).TextAction`。QA 和 CI 构建要换 Bundle ID 时，在命令行覆盖 `OPENCCMAN_BUNDLE_ID=…`，不要覆盖 `PRODUCT_BUNDLE_IDENTIFIER`：后者会让扩展和 App 用同一个 ID，iOS 构建虽然成功，模拟器安装时会报 “Mismatched bundle IDs”。`check-text-action.sh` 会拒绝脚本和工作流里的 `PRODUCT_BUNDLE_IDENTIFIER=` 覆盖。
+
 ## 手动诊断与构建
 
 当前 develop 的 `workflow_dispatch` 提供：

@@ -130,7 +130,7 @@ def main():
                       "-derivedDataPath", str(platform_derived), "-disableAutomaticPackageResolution",
                       "-onlyUsePackageVersionsFromResolvedFile", "CODE_SIGNING_ALLOWED=NO",
                       f"ARCHS={archs}", "ONLY_ACTIVE_ARCH=NO",
-                      "PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.WhatsNewUITests"]
+                      "OPENCCMAN_BUNDLE_ID=org.gewill.OpenCCman.WhatsNewUITests"]
             if platform == "ios" and version(selected_sdk) >= (27, 1):
                 # Compile the opt-in QA probe only with an SDK that declares it.
                 # Ordinary Xcode 26.3/27.0 builds keep their existing code path.

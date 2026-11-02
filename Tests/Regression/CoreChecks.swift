@@ -208,6 +208,7 @@ import OpenCC
     if #available(macOS 13.0, *) {
       try await ShortcutsChecks.run()
     }
+    try await TextActionChecks.run()
     precondition(clearModel.inputText.isEmpty && clearModel.resultText.isEmpty && clearModel.exportSnapshot == nil,
                  "A cancelled import or conversion cannot republish after other checks complete")
     try await checkDiffLifecycle()
