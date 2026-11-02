@@ -123,7 +123,7 @@ def main():
                          '-clonedSourcePackagesDirPath', temp / 'packages',
                          '-disableAutomaticPackageResolution', '-onlyUsePackageVersionsFromResolvedFile',
                          'CODE_SIGNING_ALLOWED=NO', 'ARCHS=arm64 x86_64', 'ONLY_ACTIVE_ARCH=NO',
-                         'PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.NativeWindowLifecycleAuditAutoDocumentsActiveAnchor',
+                         'OPENCCMAN_BUNDLE_ID=org.gewill.OpenCCman.NativeWindowLifecycleAuditAutoDocumentsActiveAnchor',
                          'build'], case / 'build.log', 1200)
                     if (prepared / 'source' / LOCK).read_bytes() != (checkout / LOCK).read_bytes():
                         raise ValueError('Prepared dependency lock drifted')
