@@ -338,11 +338,7 @@
               return
           }
 
-          let options = ConversionConfiguration(
-              target: appDefaults[\.targetOptions],
-              variant: appDefaults[\.variantOptions],
-              region: appDefaults[\.regionOptions]
-          ).options
+          let options = ConversionConfiguration.saved.options
 
           do {
               let convertedText = try ChineseConversionService.convertSynchronously(string, options: options)

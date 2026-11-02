@@ -269,11 +269,7 @@ class GlobalShortcutService: ObservableObject {
     // MARK: - Text Conversion
     
     private func convertText(_ capture: ShortcutTextCapture, in application: NSRunningApplication) async {
-        let options = ConversionConfiguration(
-            target: appDefaults[\.targetOptions],
-            variant: appDefaults[\.variantOptions],
-            region: appDefaults[\.regionOptions]
-        ).options
+        let options = ConversionConfiguration.saved.options
 
         do {
             let convertedText = try await ChineseConversionService.shared.convert(capture.text, options: options)

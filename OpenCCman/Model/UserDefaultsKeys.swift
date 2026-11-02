@@ -8,6 +8,8 @@ extension DefaultsKeys {
   var targetOptions: DefaultsKey<HomeViewModel.Language> { .init(UserDefaultsKeys.targetOptions.rawValue, defaultValue: .traditional) }
   var variantOptions: DefaultsKey<HomeViewModel.Variant> { .init(UserDefaultsKeys.variantOptions.rawValue, defaultValue: .openCC) }
   var regionOptions: DefaultsKey<HomeViewModel.Region> { .init(UserDefaultsKeys.regionOptions.rawValue, defaultValue: .notConvert) }
+  var simplifiedSourceOptions: DefaultsKey<HomeViewModel.Variant> { .init(UserDefaultsKeys.simplifiedSourceOptions.rawValue, defaultValue: .openCC) }
+  var simplifiedRegionOptions: DefaultsKey<HomeViewModel.Region> { .init(UserDefaultsKeys.simplifiedRegionOptions.rawValue, defaultValue: .notConvert) }
   var showMenuBarIcon: DefaultsKey<Bool> { .init(UserDefaultsKeys.showMenuBarIcon.rawValue, defaultValue: true) }
 }
 
@@ -22,6 +24,8 @@ enum UserDefaultsKeys: String {
   case targetOptions
   case variantOptions
   case regionOptions
+  case simplifiedSourceOptions
+  case simplifiedRegionOptions
   case lastVersionPromptedForReview
   case showMenuBarIcon
   case macTextSize

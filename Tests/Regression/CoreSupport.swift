@@ -13,6 +13,8 @@ extension DefaultsKeys {
   var targetOptions: DefaultsKey<HomeViewModel.Language> { .init("targetOptions", defaultValue: .traditional) }
   var variantOptions: DefaultsKey<HomeViewModel.Variant> { .init("variantOptions", defaultValue: .openCC) }
   var regionOptions: DefaultsKey<HomeViewModel.Region> { .init("regionOptions", defaultValue: .notConvert) }
+  var simplifiedSourceOptions: DefaultsKey<HomeViewModel.Variant> { .init("simplifiedSourceOptions", defaultValue: .openCC) }
+  var simplifiedRegionOptions: DefaultsKey<HomeViewModel.Region> { .init("simplifiedRegionOptions", defaultValue: .notConvert) }
   var testNumbersPerDay: DefaultsKey<[String: Int]> { .init("testNumbersPerDay", defaultValue: [:]) }
 }
 enum UserDefaultsKeys: String {

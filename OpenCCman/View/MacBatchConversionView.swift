@@ -62,14 +62,9 @@ struct MacBatchConversionView: View {
 
   private func configuration(_ configuration: ConversionConfiguration) -> some View {
     HStack(spacing: 6) {
-      Text(configuration.target.title.localizedStringKey)
-      if configuration.target == .traditional {
-        Text("·")
-        Text(configuration.variant.title.localizedStringKey)
-        if configuration.region == .taiwan {
-          Text("·")
-          Text(configuration.region.title.localizedStringKey)
-        }
+      ForEach(Array(configuration.summaryKeys.enumerated()), id: \.offset) { index, key in
+        if index > 0 { Text("·") }
+        Text(key.localizedStringKey)
       }
     }
     .appFont(.subheadline)
