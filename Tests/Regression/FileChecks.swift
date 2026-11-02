@@ -15,6 +15,44 @@ import OpenCC
   precondition(ConversionConfiguration(target: .traditional, variant: .hongKong, region: .taiwan).preset == nil)
   precondition(ConversionConfiguration(target: .simplified, variant: .hongKong, region: .taiwan).preset == .simplified)
 
+  // Simplified output by source (#303). Saved traditional choices never apply,
+  // so settings from before the source control still convert with t2s.
+  for variant in ConversionConfiguration.Variant.allCases {
+    for region in ConversionConfiguration.Region.allCases {
+      let upgraded = ConversionConfiguration(target: .simplified, variant: variant, region: region)
+      precondition(upgraded.options == .simplify && upgraded.preset == .simplified && upgraded.summaryKeys == [upgraded.target.title],
+                   "Upgraded simplified settings keep t2s whatever the saved variant and idiom")
+    }
+  }
+  // Expected outputs from the OpenCC 1.4.2 command-line tool; each source differs.
+  let sample = "滑鼠裡面的軟體，著衣與衞生紙。"
+  let sources: [(ConversionConfiguration.Variant, ConversionConfiguration.Region, ChineseConverter.Options, String)] = [
+    (.openCC, .notConvert, .simplify, "滑鼠里面的软体，著衣与衞生纸。"),
+    (.openCC, .taiwan, .simplify, "滑鼠里面的软体，著衣与衞生纸。"),
+    (.taiwan, .notConvert, [.simplify, .twStandard], "滑鼠里面的软体，着衣与衞生纸。"),
+    (.taiwan, .taiwan, [.simplify, .twStandard, .twIdiom], "鼠标里面的软件，着衣与衞生纸。"),
+    (.hongKong, .notConvert, [.simplify, .hkStandard], "滑鼠里面的软体，著衣与卫生纸。"),
+    (.hongKong, .taiwan, [.simplify, .hkStandard], "滑鼠里面的软体，著衣与卫生纸。")
+  ]
+  for (source, region, options, expected) in sources {
+    for traditional in ConversionConfiguration.Preset.allCases.map(\.configuration) where traditional.target == .traditional {
+      let configuration = ConversionConfiguration(target: .simplified, variant: traditional.variant, region: traditional.region,
+                                                  simplifiedSource: source, simplifiedRegion: region)
+      precondition(configuration.options == options, "Only a Taiwan source offers idiom reversal")
+      precondition(configuration.offersSimplifiedRegion == (source == .taiwan))
+      precondition(configuration.preset == (source == .openCC ? .simplified : nil))
+    }
+    let output = try ChineseConversionService.convertSynchronously(sample, options: options)
+    precondition(output == expected, "\(source) source converts like the official configuration")
+  }
+  // Traditional presets ignore saved simplified choices.
+  for preset in ConversionConfiguration.Preset.allCases where preset.configuration.target == .traditional {
+    var configuration = preset.configuration
+    configuration.simplifiedSource = .taiwan
+    configuration.simplifiedRegion = .taiwan
+    precondition(configuration.preset == preset && configuration.options == preset.configuration.options)
+  }
+
   let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
   try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
   defer { try? FileManager.default.removeItem(at: directory) }
@@ -84,6 +122,19 @@ import OpenCC
   precondition(model.selectedPreset == .taiwan && model.options == presets[2].1)
   model.applyPreset(.simplified)
   precondition(model.variantOptions == .taiwan && model.regionOptions == .taiwan, "Inactive advanced preferences survive simplified output")
+  model.simplifiedSourceOptions = .taiwan
+  model.simplifiedRegionOptions = .taiwan
+  precondition(model.options == [.simplify, .twStandard, .twIdiom] && model.selectedPreset == nil,
+               "A Taiwan source with idiom reversal converts with tw2sp and shows as custom")
+  model.simplifiedSourceOptions = .hongKong
+  precondition(model.options == [.simplify, .hkStandard], "A Hong Kong source ignores the Taiwan idiom choice")
+  model.applyPreset(.taiwan)
+  precondition(model.simplifiedSourceOptions == .hongKong && model.simplifiedRegionOptions == .taiwan,
+               "A traditional preset keeps the simplified source choices")
+  model.applyPreset(.simplified)
+  precondition(model.simplifiedSourceOptions == .openCC && model.options == .simplify && model.selectedPreset == .simplified,
+               "The simplified preset returns to t2s")
+  precondition(model.variantOptions == .taiwan && model.regionOptions == .taiwan)
   precondition(coreQuotaCount == quotaBefore, "Imports and presets never consume quota")
 
   model.inputText = String(repeating: "汉字鼠标\n", count: 100_000)

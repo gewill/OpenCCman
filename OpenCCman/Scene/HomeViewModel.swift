@@ -47,6 +47,8 @@ class HomeViewModel: ObservableObject {
   @Published var targetOptions: Language = appDefaults[\.targetOptions] { didSet { if targetOptions != oldValue { cancelConversion() } } }
   @Published var variantOptions: Variant = appDefaults[\.variantOptions] { didSet { if variantOptions != oldValue { cancelConversion() } } }
   @Published var regionOptions: Region = appDefaults[\.regionOptions] { didSet { if regionOptions != oldValue { cancelConversion() } } }
+  @Published var simplifiedSourceOptions: Variant = appDefaults[\.simplifiedSourceOptions] { didSet { if simplifiedSourceOptions != oldValue { cancelConversion() } } }
+  @Published var simplifiedRegionOptions: Region = appDefaults[\.simplifiedRegionOptions] { didSet { if simplifiedRegionOptions != oldValue { cancelConversion() } } }
 
   @AppStorage(UserDefaultsKeys.lastVersionPromptedForReview.rawValue) var lastVersionPromptedForReview: String = ""
 
@@ -184,9 +186,11 @@ class HomeViewModel: ObservableObject {
   // MARK: - life cycle
 
   init() {
-    Publishers.CombineLatest3($targetOptions, $variantOptions, $regionOptions)
-      .map { targetOptions, variantOptions, regionOptions in
-        ConversionConfiguration(target: targetOptions, variant: variantOptions, region: regionOptions).options
+    Publishers.CombineLatest(Publishers.CombineLatest3($targetOptions, $variantOptions, $regionOptions),
+                             Publishers.CombineLatest($simplifiedSourceOptions, $simplifiedRegionOptions))
+      .map { traditional, simplified in
+        ConversionConfiguration(target: traditional.0, variant: traditional.1, region: traditional.2,
+                                simplifiedSource: simplified.0, simplifiedRegion: simplified.1).options
       }
       .removeDuplicates()
       .assign(to: &$options)
@@ -203,6 +207,10 @@ class HomeViewModel: ObservableObject {
       .sink { regionOptions in
         appDefaults[\.regionOptions] = regionOptions
       }.store(in: &cancellables)
+    $simplifiedSourceOptions.dropFirst()
+      .sink { appDefaults[\.simplifiedSourceOptions] = $0 }.store(in: &cancellables)
+    $simplifiedRegionOptions.dropFirst()
+      .sink { appDefaults[\.simplifiedRegionOptions] = $0 }.store(in: &cancellables)
 
     // Listen for text conversion service notifications
     #if os(macOS)
@@ -296,7 +304,8 @@ class HomeViewModel: ObservableObject {
   // MARK: - response methods
 
   var configuration: ConversionConfiguration {
-    ConversionConfiguration(target: targetOptions, variant: variantOptions, region: regionOptions)
+    ConversionConfiguration(target: targetOptions, variant: variantOptions, region: regionOptions,
+                            simplifiedSource: simplifiedSourceOptions, simplifiedRegion: simplifiedRegionOptions)
   }
 
   var selectedPreset: ConversionConfiguration.Preset? { configuration.preset }
@@ -315,8 +324,11 @@ class HomeViewModel: ObservableObject {
   func applyPreset(_ preset: ConversionConfiguration.Preset) {
     let configuration = preset.configuration
     targetOptions = configuration.target
-    // Keep inactive advanced choices when switching to simplified output.
-    guard configuration.target == .traditional else { return }
+    // Each preset sets only its own target's choices and keeps the other's.
+    guard configuration.target == .traditional else {
+      simplifiedSourceOptions = configuration.simplifiedSource
+      return
+    }
     variantOptions = configuration.variant
     regionOptions = configuration.region
   }
@@ -688,3 +700,13 @@ class HomeViewModel: ObservableObject {
 extension ConversionConfiguration.Language: Segmentable, DefaultsSerializable {}
 extension ConversionConfiguration.Variant: Segmentable, DefaultsSerializable {}
 extension ConversionConfiguration.Region: Segmentable, DefaultsSerializable {}
+
+extension ConversionConfiguration {
+  /// The workspace's saved choices, shared by the Services menu and the global shortcut.
+  static var saved: ConversionConfiguration {
+    ConversionConfiguration(target: appDefaults[\.targetOptions], variant: appDefaults[\.variantOptions],
+                            region: appDefaults[\.regionOptions],
+                            simplifiedSource: appDefaults[\.simplifiedSourceOptions],
+                            simplifiedRegion: appDefaults[\.simplifiedRegionOptions])
+  }
+}

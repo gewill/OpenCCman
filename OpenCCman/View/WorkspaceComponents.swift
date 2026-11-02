@@ -58,11 +58,17 @@ struct ConversionInspector: View {
         }
       }
       SegmentView(title: "Target Language", options: HomeViewModel.Language.allCases, selected: $viewModel.targetOptions)
-      Group {
+      if viewModel.targetOptions == .traditional {
         SegmentView(title: "Variant", options: HomeViewModel.Variant.allCases, selected: $viewModel.variantOptions)
         SegmentView(title: "Region Idiom", options: HomeViewModel.Region.allCases, selected: $viewModel.regionOptions)
+      } else {
+        // Simplified output reads traditional text written to a regional standard.
+        SegmentView(title: "source_variant", options: HomeViewModel.Variant.allCases,
+                    selected: $viewModel.simplifiedSourceOptions)
+        SegmentView(title: "Region Idiom", options: HomeViewModel.Region.allCases,
+                    selected: $viewModel.simplifiedRegionOptions)
+          .disabled(!viewModel.configuration.offersSimplifiedRegion)
       }
-      .disabled(viewModel.targetOptions == .simplified)
     }
     .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
     .launchSettle(order: 0)

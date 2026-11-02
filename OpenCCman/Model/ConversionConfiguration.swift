@@ -5,9 +5,21 @@ struct ConversionConfiguration: Equatable, Sendable {
   var target: Language
   var variant: Variant
   var region: Region
+  /// Where simplified output's traditional text comes from. Kept apart from
+  /// `variant`/`region`: their saved values never affected simplified output,
+  /// so reusing them would silently change it after an upgrade.
+  var simplifiedSource: Variant = .openCC
+  /// Taiwan idiom reversal for simplified output; only a Taiwan source offers it.
+  var simplifiedRegion: Region = .notConvert
 
   var options: ChineseConverter.Options {
-    guard target == .traditional else { return .simplify }
+    guard target == .traditional else {
+      switch simplifiedSource {
+      case .openCC: return .simplify
+      case .taiwan: return simplifiedRegion == .taiwan ? [.simplify, .twStandard, .twIdiom] : [.simplify, .twStandard]
+      case .hongKong: return [.simplify, .hkStandard]
+      }
+    }
     var options: ChineseConverter.Options = .traditionalize
     switch variant {
     case .openCC: break
@@ -19,10 +31,28 @@ struct ConversionConfiguration: Equatable, Sendable {
   }
 
   var preset: Preset? {
-    // Variant/idiom controls are inactive for simplified output; preserve their
-    // saved values without incorrectly labelling this effective option custom.
-    if target == .simplified { return .simplified }
-    return Preset.allCases.first { $0.configuration == self }
+    // Each target ignores the other target's saved choices.
+    if target == .simplified { return simplifiedSource == .openCC ? .simplified : nil }
+    return Preset.allCases.first {
+      $0.configuration.target == target && $0.configuration.variant == variant && $0.configuration.region == region
+    }
+  }
+
+  /// Whether the simplified idiom choice applies to the selected source.
+  var offersSimplifiedRegion: Bool { simplifiedSource == .taiwan }
+
+  /// Localization keys describing the effective conversion, for task summaries.
+  var summaryKeys: [String] {
+    switch target {
+    case .traditional:
+      return [target.title, variant.title] + (region == .taiwan ? [region.title] : [])
+    case .simplified:
+      switch simplifiedSource {
+      case .openCC: return [target.title]
+      case .taiwan: return [target.title, "source_from_taiwan"] + (simplifiedRegion == .taiwan ? [Region.taiwan.title] : [])
+      case .hongKong: return [target.title, "source_from_hong_kong"]
+      }
+    }
   }
 
   enum Language: String, CaseIterable, Identifiable, Sendable {
