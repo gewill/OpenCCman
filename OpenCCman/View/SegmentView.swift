@@ -48,9 +48,9 @@ struct SegmentView<T: Segmentable>: View {
   private var labelMeasurements: some View {
     ZStack {
       ForEach(options) { option in
-        let words = option.title.localized(in: locale).split(whereSeparator: { $0.isWhitespace })
+        let words = Self.unbrokenWords(in: option.title.localized(in: locale))
         ForEach(Array(words.enumerated()), id: \.offset) { _, word in
-          Text(String(word))
+          Text(word)
             .appFont(.body, weight: .semibold)
             .fixedSize()
             .background(
@@ -64,6 +64,22 @@ struct SegmentView<T: Segmentable>: View {
     .hidden()
     .accessibilityHidden(true)
     .allowsHitTesting(false)
+  }
+
+  // Chinese labels have no spaces, so a whitespace split would measure the whole
+  // label as one word. Runs containing ideographs are split into dictionary words
+  // instead: "OpenCC標準" measures "OpenCC" and "標準". Other runs, including all
+  // English words, stay whole.
+  static func unbrokenWords(in label: String) -> [String] {
+    label.split(whereSeparator: { $0.isWhitespace }).flatMap { run -> [String] in
+      let run = String(run)
+      guard run.unicodeScalars.contains(where: { $0.properties.isIdeographic }) else { return [run] }
+      var words: [String] = []
+      run.enumerateSubstrings(in: run.startIndex..., options: .byWords) { word, _, _, _ in
+        if let word { words.append(word) }
+      }
+      return words.isEmpty ? [run] : words
+    }
   }
 
   // Keep the selected value in the binding when width, language or type size changes.
