@@ -14,7 +14,7 @@
 
 以集成基线 `9daa9c77eea9d9fb6b0952b63772d4f68baf3bfd` 为准：
 
-- 应用部署下限为 iOS/iPadOS 15、macOS 12。SwiftyOpenCC 固定 `564b094b2b69f2c1e907fa3d89fe6845469a4e4e`，OpenCC 核心 `025f371dc76b598d77384fbdab90c937471844d8`（1.4.2）。
+- 应用部署下限为 iOS/iPadOS 15、macOS 12。SwiftyOpenCC 固定 `f5ba852583e1fce34889da71f21a644359abe398`，OpenCC 核心 `025f371dc76b598d77384fbdab90c937471844d8`（1.4.2）。
 - `makeStream()` 没有 Mac 平台限制。它保留 UTF-8、词组匹配、归一化、转换链及 IDS 上下文，不能由逐行或每块独立整篇转换替代。
 - 移动端目前仍拒绝超过 10 MiB 的导入。Mac 已开放单个大文件直接转换/保存，输入上限 1 GiB。旧验收文档中的 `productionEnabled=false` 是历史候选状态，不代表当前源码。
 - [Mac 流式记录](validation/large-file-streaming/README.md)有 100 MiB/1 GiB 正确性与内存测量，但只测特定配置和 Mac 服务；不是移动端整 App 的容量证据。
