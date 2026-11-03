@@ -19,7 +19,7 @@
 - 可以取消转换或导入，之后才返回的结果不会覆盖当前文字。取消不会强行中断已在进行的原生转换。
 - 免费版每天可完成 12 次成功的主页转换。终身 Pro 解除这一限制并隐藏应用推荐，已有的终身购买继续有效。导入、导出和切换预设不计入每日次数。
 
-OpenCCman 2.2 需要 **iOS／iPadOS 15 或 macOS 12**，可选的「登录时启动」需要 macOS 13 及以上。技术变化与验证边界见 [2.2 发布说明](https://github.com/gewill/OpenCCman/releases/tag/v2.2)（含简体中文段落）和英文 [更新日志](CHANGELOG.md#22---2026-11-01)；之前的 [2.1 发布记录](docs/release/launch-2.1-20261001.md) 仍可查看。
+OpenCCman 2.2 需要 **iOS／iPadOS 15 或 macOS 12**，可选的「登录时启动」需要 macOS 13 及以上。技术变化与验证边界见 [2.2 发布说明](https://github.com/gewill/OpenCCman/releases/tag/v2.2)（含简体中文段落）、英文 [更新日志](CHANGELOG.md#22---2026-11-01) 和 [发布记录](docs/release/launch-2.2-20261101.md)。
 
 ## 开发
 

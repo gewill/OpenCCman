@@ -48,4 +48,5 @@
 
 - Marketing 版本为 `主.次`（如 `2.2`），构建号以 Xcode Cloud 的 build 号为准，记作 `2.2(63)` 这类形式；本地工程 build 号不能代替云端产物身份。
 - 发布 Tag 为带注释的 `v<version>`（如 `v2.2`），指向发布 PR squash 后的 `main` 提交；推送时点按共享 [Release 规范](https://github.com/gewill/dev-standards/blob/main/github_release_guide.md)。`v1.0-macOS`、`v1.1-macOS` 是早期仅 macOS 的历史 Tag，不再沿用。
+- README 以英文 `README.md` 为主，日常改动只改英文版。每次发版（App Store 公开）后，按当时的英文 README 同步更新 `README.zh-Hans.md`、`README.zh-Hant.md`，繁体用词遵循 dev-standards 的 `zh_hant_terminology_guide.md`；两次发版之间中文版可以落后于英文版。
 - 每次上架记录写在 `docs/release/launch-<version>-<YYYYMMDD>.md`，Store 素材与元数据分别放在 `docs/release/store-assets-*`、`docs/release/metadata-*`。
