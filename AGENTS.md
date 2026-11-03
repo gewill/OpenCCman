@@ -6,25 +6,25 @@
 
 多语言切换、Xcode Cloud、翻译等跨项目规范的事实来源是内部规范仓库 `dev-standards`，不在本仓库维护副本。涉及这些主题时先读该仓库的对应规范；实现与规范冲突时，先判断哪一边是错的，更新规范，再改本仓库代码。
 
-本仓库 `docs/` 只保留本项目自己的记录：分支与 CI 约定、验收证据、发布流程。
+分支、日常开发与验证、Issue 处理、发布和 UI 留证遵循共享规则，本仓库不复制：[分支管理规范](https://github.com/gewill/dev-standards/blob/main/branching_guide.md)（本机 `~/git/dev-standards/branching_guide.md`）与全局 [AGENTS.md](https://github.com/gewill/skills/blob/main/codex/AGENTS.md)（本机 `~/git/skills/codex/AGENTS.md`）的「日常快速开发」「分支与集成」「Issue 处理」「统一发布流程」「UI 证据与流量优化」。两者均为私有仓库。
+
+本仓库 `docs/` 只保留本项目自己的记录：分支模式、远端保护、CI／打包触发器、版本命名、验收证据与发布记录。
 
 ## 分支与提交
 
-- 日常开发从最新 `develop` 新建 `codex/<issue>-<topic>` 分支，通过 PR 合回 `develop`。完整规则见 [docs/BRANCHING.md](docs/BRANCHING.md)。
+- 本项目的差异见 [docs/BRANCHING.md](docs/BRANCHING.md)。要点：`main`、`develop` 都由远端强制 PR 且要求 `App Regression`，所以日常改动也从最新 `develop` 建 `codex/<issue>-<topic>` 分支，通过 PR 合回 `develop`，不直接提交常驻分支。
 - `build` 前缀的分支会触发 Xcode Cloud 打包，日常开发不要使用。
-- 一个分支只承载一项任务。工作区有未提交改动时使用独立 worktree，不切换或重置他人的工作区。
 - 提交信息不写 AI 工具名、模型名、agent 模式或执行步骤。
 
-## 验收与关闭 Issue
+## Issue 与留证
 
-- Issue 只在其自身「关闭标准」被满足、且有运行证据时关闭。PR 合并不代替验收，本仓库的 PR 也不使用 `Closes #N` 关键字自动关闭 Issue。
+- 本仓库的 PR 不使用 `Closes #N` 等关键字自动关闭 Issue；Issue 按其自身「关闭标准」与共享规范的 Issue 处理规则手动关闭，PR 合并不代替验收。
 - 某项验收因环境缺失无法完成时，在 Issue 中明确转出到承接它的 Issue，不计为通过。最低系统相关留 #16，购买与 RevenueCatUI 相关留 #14 / #71。
-- UI 改动需要真实前后截图，交互过程需要录像。证据用 `gh issue|pr create|comment|edit --attach` 上传：正文用 markdown `![alt](/绝对路径.png)` 引用，并把**逐字相同**的绝对路径传给 `--attach`，否则 gh 会留下死链并把文件追加到正文末尾。
-- 不要把本地路径当作证据留在 Issue 或 PR 正文里。
+- Issue 正文或维护者已明确的专项验收（如指定设备、截图或录像）照做。默认不要求前后截图、录屏或上传；RevenueCat 购买／恢复、系统权限与隐私等高风险流程仍须保留最少必要证据。
 
 ## 验证
 
-App Regression 是 `develop` 的必需检查。本地可单独运行 `scripts/` 下的检查脚本，常用的有：
+日常验证范围按共享规范的「日常验证与集中检查」，不默认跑全量测试或 UI 自动化。`App Regression` 是 `main`、`develop` 的必需检查，PR 上自动运行。本地可单独运行 `scripts/` 下的检查脚本，常用的有：
 
 ```bash
 bash scripts/check-project.sh
@@ -40,7 +40,7 @@ bash scripts/check-control-labels.sh
 
 | 文档 | 内容 |
 | --- | --- |
-| [docs/BRANCHING.md](docs/BRANCHING.md) | 分支职责、打包分支触发规则与日常开发流程 |
+| [docs/BRANCHING.md](docs/BRANCHING.md) | 分支模式、远端保护、CI／打包触发器与版本命名 |
 | [docs/CI.md](docs/CI.md) | App Regression 的检查项与构建参数 |
 | [docs/XCODE_CLOUD.md](docs/XCODE_CLOUD.md) | 云端打包与 TestFlight 分发 |
-| [docs/validation/](docs/validation/) | 各项验收的运行证据与边界 |
+| [docs/validation/](docs/validation/) | 各项验收的运行证据与边界，含 [2026-09 分支迁移账本](docs/validation/branching-history-2026-09.md) |

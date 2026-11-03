@@ -30,7 +30,7 @@ PR/推送不会自动准备或发布依赖候选；在其他分支手动运行�
 
 ## 已完成的迁移与历史合并顺序
 
-2026-09-16 核对：[应用迁移 #43](https://github.com/gewill/OpenCCman/pull/43) 和 [默认协调器迁移 #44](https://github.com/gewill/OpenCCman/pull/44) 都已合并，main 上 `app.base` 已是 develop。下面保留原来的依赖顺序作为历史说明，不表示这些 PR 仍待合并。实时保护与旧引用状态见 [分支账本](BRANCHING.md#当前归档账本2026-09-17)。
+2026-09-16 核对：[应用迁移 #43](https://github.com/gewill/OpenCCman/pull/43) 和 [默认协调器迁移 #44](https://github.com/gewill/OpenCCman/pull/44) 都已合并，main 上 `app.base` 已是 develop。下面保留原来的依赖顺序作为历史说明，不表示这些 PR 仍待合并。实时保护与旧引用状态见 [分支账本](validation/branching-history-2026-09.md#当前归档账本2026-09-17)。
 
 1. **应用 CI 迁移 → `develop`**：通过 merge commit 接回旧 `build` 的 1.3 应用历史与 `main` 的协调器历史，保留已合入的分支规范。仅解决 README 的文档冲突，应用源码、工程与依赖锁文件保持旧 `build` 的内容。更新 CI 触发分支和应用侧同步配置。
 2. 等待 `develop` 合并提交的 `App Regression` 成功。配置 required check 时使用实际 job 名 `App Regression`，不绕过失败或尚未运行的检查。
