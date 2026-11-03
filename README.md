@@ -1,5 +1,7 @@
 # OpenCCman
 
+English · [简体中文](README.zh-Hans.md) · [繁體中文](README.zh-Hant.md)
+
 A native Chinese text conversion app for iPhone, iPad and Mac, powered by [OpenCC](https://github.com/BYVoid/OpenCC). Convert between Simplified and Traditional Chinese and adapt regional wording on your device.
 
 [Website](https://openccman.gewill.org/) · [App Store](https://apps.apple.com/app/id6474449401) · [Privacy policy](https://openccman.gewill.org/en/privacy.html) · [Support](https://openccman.gewill.org/en/support.html)
