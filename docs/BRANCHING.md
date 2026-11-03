@@ -25,7 +25,7 @@
 | 强推／删除 | 禁止 | 禁止 |
 | 线性历史、会话解决 | 未要求 | 未要求 |
 
-仓库没有 ruleset；squash、merge commit、rebase 三种合并方式都允许，未启用 auto-merge 和合并后自动删分支。
+仓库没有 ruleset；squash、merge commit、rebase 三种合并方式都允许；2026-11-03 应维护者要求开启仓库 auto-merge（仍须必需检查通过），未开启合并后自动删分支。
 
 与共享规范的差异：
 
