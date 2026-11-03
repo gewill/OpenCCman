@@ -21,8 +21,8 @@ OpenCCman 正式构建和分发使用 Xcode Cloud。执行构建、修改 workfl
 
 ## 构建顺序
 
-1. 应用修复以 PR 合入 `develop`，从已集成代码建立 `release/*` 发布候选。引擎变更先合入 SwiftyOpenCC，通过检查后再以独立应用 PR 固定完整 revision；不从尚未合并的引擎分支发布。
-2. 仅在需要云端验收包时，从明确的 `release/*` 或 `main` 提交创建并推送临时 `build/<version>-<YYYYMMDD>`，事先确认 SHA、版本与 `Package.resolved`。旧 `build` 已退出，命名冲突解除；普通 PR 合并不再承担打包入口。正式发布记录使用云端 run/build 号、平台和 source commit；本地工程 build 号不能代替云端产物身份。
+1. 应用修复以 PR 合入 `develop`；需要冻结版本同时继续开发时才从已集成代码建立 `release/*`，否则直接以选定的 `develop` 提交为候选，流程见共享规范（[分支规范](BRANCHING.md)）。引擎变更先合入 SwiftyOpenCC，通过检查后再以独立应用 PR 固定完整 revision；不从尚未合并的引擎分支发布。
+2. 仅在需要云端验收包时，从明确的候选提交（`develop`、`release/*` 或 `main`）创建并推送临时 `build/<version>-<YYYYMMDD>`，事先确认 SHA、版本与 `Package.resolved`。旧 `build` 已退出，命名冲突解除；普通 PR 合并不再承担打包入口。正式发布记录使用云端 run/build 号、平台和 source commit；本地工程 build 号不能代替云端产物身份。
 3. 推送后先检查是否已自动触发。只有自动触发失败且需要构建时才手动运行，避免重复归档。不要为了文档核对启动新的构建。
 4. 同时核对 iOS/macOS action 和 App Store Connect processing 状态。归档成功、整个 run 成功、处理为 `VALID`、可供 TestFlight 安装是不同阶段。
 5. 按本次已确认的发布范围验收云端产物，记录仍未测试的路径与维护者接受的风险；2.0 Build 56 的 #14/#15/#16/#212 后续项已移至 v2.1，不能写为通过。只有需要发布测试说明时才修改本次新 build 的 What to Test；不要误改旧 build 或顺带通知测试者。
@@ -79,6 +79,6 @@ asc xcode-cloud doctor --run-id <RUN_ID> --save-logs /tmp/openccman-cloud-logs
 
 ## 2026-09-17 归档核对
 
-Default 自动规则仍为 `pattern: build` / `isPrefix: true`。全部可见运行 38–53 均 COMPLETE；Build 49/50/53 两端均 VALID。旧分支归档与 SHA 映射见[分支账本](BRANCHING.md#当前归档账本2026-09-17)，保留历史产物及 2.0 候选分支。
+Default 自动规则仍为 `pattern: build` / `isPrefix: true`。全部可见运行 38–53 均 COMPLETE；Build 49/50/53 两端均 VALID。旧分支归档与 SHA 映射见[分支账本](validation/branching-history-2026-09.md#当前归档账本2026-09-17)，保留历史产物及 2.0 候选分支。
 
 Build 53 来源 `82b84780283927bff8d1782231524a3dc3282229`，已验证带连字符分支自动触发；带斜线分支的真实验收由 [#122](https://github.com/gewill/OpenCCman/issues/122) 留至下一次授权打包。本轮没有发包、修改 Cloud 配置或正式发布。

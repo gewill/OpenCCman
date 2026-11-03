@@ -79,10 +79,9 @@
 
 以下约定适用于每一条：
 
-- 从 `develop` 新建 `codex/` 分支，PR 合回 `develop`，PR 中不用 `Closes`。
+- 分支、PR 与留证按 [分支规范](BRANCHING.md) 及其链接的共享规范执行；默认不附前后截图或录像，下列条目验收中写明的除外。
 - 保持 iOS 15 / macOS 12 的最低支持版本。
 - 英文、简体、繁体三种语言同步更新；繁体用词遵循 dev-standards 的 `zh_hant_terminology_guide.md`。
-- UI 改动附前后截图，交互附录像。
 - 涉及引擎的改动先在 fork 通过 CI，再更新 App 引用的引擎 revision。
 
 ### 近期：引擎已具备或只需小改
