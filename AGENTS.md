@@ -14,6 +14,7 @@
 
 - 本项目的差异见 [docs/BRANCHING.md](docs/BRANCHING.md)。要点：`main`、`develop` 都由远端强制 PR 且要求 `App Regression`，所以日常改动也从最新 `develop` 建 `codex/<issue>-<topic>` 分支，通过 PR 合回 `develop`，不直接提交常驻分支。
 - `build` 前缀的分支会触发 Xcode Cloud 打包，日常开发不要使用。
+- README 日常只改英文 `README.md`；简体、繁体两份在每次发版后同步，见 [docs/BRANCHING.md](docs/BRANCHING.md#版本命名)。
 - 提交信息不写 AI 工具名、模型名、agent 模式或执行步骤。
 
 ## Issue 与留证
