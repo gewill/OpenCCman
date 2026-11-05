@@ -2,6 +2,8 @@
 
 2026-11-02。本页记录首版的规则、实现、自动检查和 iOS 模拟器实测。**不代表 #29 已验收**：真机、最终签名包、iPad 窄窗口和 VoiceOver 都还没有验证，见文末。
 
+2026-11-05 [本地开发签名与 iPad 验收进度](local-signing-20261105.md)：新增 App／扩展的 Apple Development 签名 Release 构建及嵌入签名核验；iPad 窄窗口因工具目标定位不稳定未完成，不计为通过。
+
 ## 已确认的规则
 
 维护者于 2026-11-02 确认，原文见 [#29 评论](https://github.com/gewill/OpenCCman/issues/29#issuecomment-6567851472)：
