@@ -43,13 +43,22 @@ AXe 1.8.0 的拖动成功缩窗及滚动；sim-use 0.16.0 的 native 坐标点�
 | --- | --- |
 | 默认字号 × 简体／繁体 OpenCC／台湾词组／香港 | 四次完整复制均与独立预期逐字节一致，各 115 字节、两个 CRLF |
 | XXXL × 同上四个预设 | 四次完整复制均与独立预期逐字节一致，各 115 字节；长预设名换行，滚动后复制／分享完整可见且可点 |
-| 默认字号，香港，Share Result → 系统 Copy | 先写入不同剪贴板哨兵，再点 Copy；读回完整 115 字节，等于香港预期 |
-| XXXL，台湾，Share Result → 系统 Copy | 同样使用哨兵排除旧剪贴板；读回完整 115 字节，等于台湾预期 |
+| 默认字号，台湾，Share Result → 系统 Copy | 用 devicectl 写入原文并读回确认与结果不同，再点 Copy；读回完整 115 字节，等于台湾预期 |
+| XXXL，台湾，Share Result → 系统 Copy | 同样确认操作前的原文哨兵；读回完整 115 字节，等于台湾预期 |
 | XXXL，Done | 返回 Files；磁盘源文件逐字节不变，未被结果覆盖 |
 | XXXL，重新打开扩展 | 台湾预设仍选中，证明选择保留 |
+| XXXL，Cancel | 返回 Files 原文件分享面板；源文件逐字节不变 |
 
-XXXL 导航栏标题按系统行为截断，Cancel、Done 均完整显示。本轮点击了 Cancel，
-但随后直接切入主 App，没有单独采集取消后的宿主状态，取消路径不新增通过结论。
+首次分享复制只用了 `simctl pbcopy` 写哨兵，后来发现该命令退出 0 却未改变
+Device Hub 下的剪贴板，所以首次结果不足以排除旧值，不计为通过。
+改用 `devicectl device pasteboard copy --device <UDID> --file <input.txt>`，
+立即以 `simctl pbpaste` 读回确认后，重新完成上述两种字号的分享复制。
+两次最终输出 SHA-256 均为
+`c2b9d3c9b340d1aa119603fdfe518dae1b19075582c6e3e0f4713e361f40322c`。
+有效证据为 `share-retest-{default,xxxl}-{before,after}.txt` 和
+`share-retest-results.json`；保留首次无效哨兵记录，避免混用。
+
+XXXL 导航栏标题按系统行为截断，Cancel、Done 均完整显示。
 额度未做运行前后读值；沿用既有逻辑回归，不能以本轮界面操作声称额度已重验。
 
 ## 证据与边界
