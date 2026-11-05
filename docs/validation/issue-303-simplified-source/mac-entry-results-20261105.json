@@ -32,7 +32,7 @@
         "sha256": "80a93a5edc97f581465a581b8e2857454d19375f951b378323d8d70f674d5683",
         "matches_whole_api": true
       },
-      "global_shortcut": "not_verified"
+      "global_shortcut": "attempted_not_confirmed"
     },
     {
       "configuration": "tw2s",
@@ -113,7 +113,21 @@
   "limits": [
     "Services uses NSPerformService API, not a host menu click",
     "Debug isolated ad-hoc packages; not distribution acceptance",
-    "Global shortcut manual control pending",
+    "Global shortcut manual attempts did not confirm replacement; root cause unresolved",
     "No simulator/device/system-minimum/VoiceOver acceptance in this run"
-  ]
+  ],
+  "global_shortcut_manual_control": {
+    "configuration": "t2s",
+    "user_confirmed_attempts": 2,
+    "first_attempt": "large-file completion sheet still open",
+    "second_attempt": "sheet dismissed; user instructed to focus TextEdit and select all",
+    "observed_after_each": "original selected text unchanged",
+    "settings_observed": {
+      "enabled": true,
+      "shortcut": "Option-Command-T",
+      "accessibility_permission_granted": true
+    },
+    "root_cause": "not_isolated",
+    "cleanup": "QA permission revoked and both QA apps quit"
+  }
 }
