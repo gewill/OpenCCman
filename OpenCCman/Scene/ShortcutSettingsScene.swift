@@ -169,6 +169,29 @@ struct ShortcutSettingsScene: View {
                             .softOuterShadow()
                     )
 
+                    // In-place replacement goes through Services, which work in the
+                    // App Sandbox without Accessibility permission.
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("shortcut_services_title".localizedStringKey)
+                            .appFont(.headline)
+
+                        Text("shortcut_services_content".localizedStringKey)
+                        .appFont(.body)
+                        .foregroundColor(Color.Neumorphic.secondary.opacity(0.8))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                        Button("Open Keyboard Settings".localizedStringKey) {
+                            shortcutService.openKeyboardShortcutSettings()
+                        }
+                        .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 8))
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: Constant.cornerRadius)
+                            .fill(Color.Neumorphic.main)
+                            .softOuterShadow()
+                    )
+
                     // Additional Info
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Tips".localizedStringKey)
