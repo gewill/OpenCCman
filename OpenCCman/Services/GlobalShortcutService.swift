@@ -167,6 +167,18 @@ class GlobalShortcutService: ObservableObject {
         NSWorkspace.shared.open(url)
     }
 
+    /// Keyboard settings hold the shortcuts users assign to Services. The convert
+    /// service replaces text in place, which the sandboxed shortcut cannot do.
+    func openKeyboardShortcutSettings() {
+        let address: String
+        if #available(macOS 13, *) {
+            address = "x-apple.systempreferences:com.apple.Keyboard-Settings.extension"
+        } else {
+            address = "x-apple.systempreferences:com.apple.preference.keyboard?Shortcuts"
+        }
+        NSWorkspace.shared.open(URL(string: address)!)
+    }
+
     // MARK: - Public Methods
 
     func convertSelectedText() {
