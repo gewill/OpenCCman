@@ -16,19 +16,10 @@ struct HelpScene: View {
   }
 
   var navi: some View {
-    ZStack(alignment: .center) {
-      Text("Help")
-        .appFont(.title)
-        .foregroundColor(Color.Neumorphic.secondary)
-      HStack {
-        BackButton()
-          .padding(.horizontal, Constant.padding * 2)
-        Spacer()
-      }
-    }
-    .padding(.vertical, Constant.padding)
-    .foregroundColor(Color.Neumorphic.secondary)
-    .background(Color.Neumorphic.main)
+    SceneHeader("Help", buttonInset: Constant.padding * 2)
+      .padding(.vertical, Constant.padding)
+      .foregroundColor(Color.Neumorphic.secondary)
+      .background(Color.Neumorphic.main)
   }
 
   var list: some View {

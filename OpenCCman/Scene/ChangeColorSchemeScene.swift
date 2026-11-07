@@ -21,17 +21,9 @@ struct ChangeColorSchemeScene: View {
   }
 
   var navi: some View {
-    ZStack(alignment: .center) {
-      Text("Appearance")
-        .appFont(.title)
-        .foregroundColor(Color.Neumorphic.secondary)
-      HStack {
-        BackButton()
-          .padding(.horizontal, Constant.padding)
-        Spacer()
-      }
-    }
-    .padding(.vertical, Constant.padding)
+    SceneHeader("Appearance")
+      .foregroundColor(Color.Neumorphic.secondary)
+      .padding(.vertical, Constant.padding)
   }
 
   var list: some View {

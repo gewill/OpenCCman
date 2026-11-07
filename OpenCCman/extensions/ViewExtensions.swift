@@ -35,6 +35,60 @@ struct SizePreferenceKey: PreferenceKey {
   static func reduce(value _: inout CGSize, nextValue _: () -> CGSize) {}
 }
 
+/// Shows `content` while its ideal width fits the width on offer, otherwise
+/// `fallback`. A macOS 12 stand-in for `ViewThatFits(in: .horizontal)` with two
+/// candidates; nest another one in `fallback` for a third.
+struct WidthFittingView<Content: View, Fallback: View>: View {
+  @State private var availableWidth: CGFloat = 0
+  @State private var idealWidth: CGFloat = 0
+  private let content: Content
+  private let fallback: Fallback
+
+  init(@ViewBuilder content: () -> Content, @ViewBuilder fallback: () -> Fallback) {
+    self.content = content()
+    self.fallback = fallback()
+  }
+
+  var body: some View {
+    Group {
+      // Until the first measurement arrives, assume the preferred layout fits.
+      if availableWidth == 0 || idealWidth <= availableWidth {
+        content
+      } else {
+        fallback
+      }
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    // Each reader handles only its own subtree's preference, so nested
+    // instances never see each other's widths.
+    .background {
+      GeometryReader { proxy in
+        Color.clear.preference(key: FittingWidthKey.self, value: proxy.size.width)
+      }
+      .onPreferenceChange(FittingWidthKey.self) { availableWidth = $0 }
+    }
+    .background(alignment: .topLeading) {
+      content
+        .fixedSize()
+        .hidden()
+        .accessibilityHidden(true)
+        .background {
+          GeometryReader { proxy in
+            Color.clear.preference(key: FittingWidthKey.self, value: proxy.size.width)
+          }
+          .onPreferenceChange(FittingWidthKey.self) { idealWidth = $0 }
+        }
+    }
+  }
+}
+
+private struct FittingWidthKey: PreferenceKey {
+  static var defaultValue: CGFloat = 0
+  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    value = max(value, nextValue())
+  }
+}
+
 extension View {
   func hideNavigationBar(_ hidden: Bool) -> some View {
     #if os(iOS)
