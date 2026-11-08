@@ -30,19 +30,10 @@ struct ShortcutSettingsScene: View {
     }
     
     var navi: some View {
-        ZStack(alignment: .center) {
-            Text("Shortcut Settings".localizedStringKey)
-                .appFont(.title)
-                .foregroundColor(Color.Neumorphic.secondary)
-            HStack {
-                BackButton()
-                    .padding(.horizontal, Constant.padding * 2)
-                Spacer()
-            }
-        }
-        .padding(.vertical, Constant.padding)
-        .foregroundColor(Color.Neumorphic.secondary)
-        .background(Color.Neumorphic.main)
+        SceneHeader("Shortcut Settings".localizedStringKey, buttonInset: Constant.padding * 2)
+            .padding(.vertical, Constant.padding)
+            .foregroundColor(Color.Neumorphic.secondary)
+            .background(Color.Neumorphic.main)
     }
     
     var list: some View {
@@ -58,26 +49,27 @@ struct ShortcutSettingsScene: View {
                         Text("Permissions".localizedStringKey)
                             .appFont(.headline)
 
-                        HStack {
-                            Image(systemName: shortcutService.hasAccessibilityPermission ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
-                                .foregroundColor(shortcutService.hasAccessibilityPermission ? .green : .orange)
-
-                            Text(shortcutService.hasAccessibilityPermission ? "Accessibility permission granted".localizedStringKey : "Accessibility permission required".localizedStringKey)
-                                .appFont(.body)
-
-                            Spacer()
-
-                            if !shortcutService.hasAccessibilityPermission {
-                                Button("Grant Permission".localizedStringKey) {
-                                    shortcutService.requestAccessibilityPermission()
+                        // One row while it fits. Otherwise the buttons move under
+                        // the status, side by side or stacked, so no word splits.
+                        WidthFittingView {
+                            HStack {
+                                permissionIcon
+                                permissionStatus
+                                Spacer()
+                                permissionButtons
+                            }
+                        } fallback: {
+                            VStack(alignment: .leading, spacing: 10) {
+                                HStack {
+                                    permissionIcon
+                                    permissionStatus
                                 }
-                                .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 8))
+                                WidthFittingView {
+                                    HStack { permissionButtons }
+                                } fallback: {
+                                    VStack(alignment: .leading) { permissionButtons }
+                                }
                             }
-
-                            Button("Refresh".localizedStringKey) {
-                                shortcutService.checkAccessibilityPermission()
-                            }
-                            .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 8))
                         }
                     }
                     .padding()
@@ -215,7 +207,31 @@ struct ShortcutSettingsScene: View {
         }
     }
 
+    #if os(macOS)
+    private var permissionIcon: some View {
+        Image(systemName: shortcutService.hasAccessibilityPermission ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
+            .foregroundColor(shortcutService.hasAccessibilityPermission ? .green : .orange)
+    }
 
+    private var permissionStatus: some View {
+        Text(shortcutService.hasAccessibilityPermission ? "Accessibility permission granted".localizedStringKey : "Accessibility permission required".localizedStringKey)
+            .appFont(.body)
+    }
+
+    @ViewBuilder private var permissionButtons: some View {
+        if !shortcutService.hasAccessibilityPermission {
+            Button("Grant Permission".localizedStringKey) {
+                shortcutService.requestAccessibilityPermission()
+            }
+            .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 8))
+        }
+
+        Button("Refresh".localizedStringKey) {
+            shortcutService.checkAccessibilityPermission()
+        }
+        .appNeumorphicButtonStyle(RoundedRectangle(cornerRadius: 8))
+    }
+    #endif
 }
 
 struct ShortcutSettingsScene_Previews: PreviewProvider {

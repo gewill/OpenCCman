@@ -23,15 +23,8 @@ struct FeedbackScene: View {
   }
 
   var navi: some View {
-    ZStack(alignment: .center) {
-      Text("Feedback").appFont(.title)
-      HStack {
-        BackButton()
-          .padding(.horizontal, Constant.padding)
-        Spacer()
-      }
-    }
-    .padding(.vertical, Constant.padding)
+    SceneHeader("Feedback")
+      .padding(.vertical, Constant.padding)
   }
 
   var list: some View {

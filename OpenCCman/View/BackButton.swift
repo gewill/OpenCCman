@@ -31,6 +31,36 @@ struct BackButton: View {
   }
 }
 
+/// The in-content title bar of a Mac route: the back button at the leading edge
+/// and the title centered in the window. A hidden copy of the button holds the
+/// same width at the trailing edge, so the title stays centered yet never slides
+/// under the button; when both no longer fit on one line, the title wraps.
+struct SceneHeader: View {
+  let title: LocalizedStringKey
+  /// Distance from the window edge to the back button.
+  let buttonInset: CGFloat
+
+  init(_ title: LocalizedStringKey, buttonInset: CGFloat = Constant.padding) {
+    self.title = title
+    self.buttonInset = buttonInset
+  }
+
+  var body: some View {
+    HStack(spacing: 8) {
+      BackButton()
+      Text(title)
+        .appFont(.title)
+        .multilineTextAlignment(.center)
+        .fixedSize(horizontal: false, vertical: true)
+        .frame(maxWidth: .infinity)
+      BackButton()
+        .hidden()
+        .accessibilityHidden(true)
+    }
+    .padding(.horizontal, buttonInset)
+  }
+}
+
 /// Each existing route remains the source of navigation state. The system owns
 /// only its bar and safe area; resizing never switches route or navigation host.
 private struct AppNavigationModifier: ViewModifier {
