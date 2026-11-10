@@ -1,0 +1,133 @@
+{
+  "source_sha": "fdb3798843469a7a3af538f17507c232fa36806d",
+  "date": "2026-11-05",
+  "configuration": "Debug",
+  "version": "2.2(30)",
+  "os": "macOS 27.2 (26B123)",
+  "xcode": "27.1 (27A9275)",
+  "input_sha256": "2e6b1e5a6199275906ebc2bfd5be10164b408181ae188593334fb6f40f667f0a",
+  "large_input_bytes": 11534364,
+  "large_input_sha256": "563acfb5fd49dd12b3a755e58f0b519a260f67d777593feb4e60cbcfdcfa4697",
+  "rows": [
+    {
+      "configuration": "t2s",
+      "editor": {
+        "bytes": 47,
+        "sha256": "01f3ff392db97dca0d3ebb2756bb63f6104ca57ce3949b57c07f01deaaaeb4df",
+        "matches": true
+      },
+      "services_api": {
+        "event": "sample_completed",
+        "output_bytes": 47,
+        "output_matches_expected": true,
+        "output_read_encode_ms": 0.295125,
+        "output_sha256": "01f3ff392db97dca0d3ebb2756bb63f6104ca57ce3949b57c07f01deaaaeb4df",
+        "pasteboard_unchanged": false,
+        "sample": 1,
+        "service_call_ms": 177.633333,
+        "service_succeeded": true
+      },
+      "large_file": {
+        "bytes": 11534364,
+        "sha256": "80a93a5edc97f581465a581b8e2857454d19375f951b378323d8d70f674d5683",
+        "matches_whole_api": true
+      },
+      "global_shortcut": "attempted_not_confirmed"
+    },
+    {
+      "configuration": "tw2s",
+      "editor": {
+        "bytes": 47,
+        "sha256": "03e123dffef831615e382920777697a9835d01a175fb1c7940acc5aec81541f4",
+        "matches": true
+      },
+      "services_api": {
+        "event": "sample_completed",
+        "output_bytes": 47,
+        "output_matches_expected": true,
+        "output_read_encode_ms": 0.31575,
+        "output_sha256": "03e123dffef831615e382920777697a9835d01a175fb1c7940acc5aec81541f4",
+        "pasteboard_unchanged": false,
+        "sample": 1,
+        "service_call_ms": 175.069834,
+        "service_succeeded": true
+      },
+      "large_file": {
+        "bytes": 11534364,
+        "sha256": "d22e59da386221b05098dd401c16ed4298da1656285acba162b42265154d88cc",
+        "matches_whole_api": true
+      },
+      "global_shortcut": "not_verified"
+    },
+    {
+      "configuration": "tw2sp",
+      "editor": {
+        "bytes": 47,
+        "sha256": "9a59d8c6ac4dc65500c1b6a50ea4a4ec69f2f15d0329b7eb97ba36be19b419c7",
+        "matches": true
+      },
+      "services_api": {
+        "event": "sample_completed",
+        "output_bytes": 47,
+        "output_matches_expected": true,
+        "output_read_encode_ms": 0.288375,
+        "output_sha256": "9a59d8c6ac4dc65500c1b6a50ea4a4ec69f2f15d0329b7eb97ba36be19b419c7",
+        "pasteboard_unchanged": false,
+        "sample": 1,
+        "service_call_ms": 176.191916,
+        "service_succeeded": true
+      },
+      "large_file": {
+        "bytes": 11534364,
+        "sha256": "3f3987e4ab3b3ba809930256a9c216f88d868973db9817d9e8f1680f966c90c8",
+        "matches_whole_api": true
+      },
+      "global_shortcut": "not_verified"
+    },
+    {
+      "configuration": "hk2s",
+      "editor": {
+        "bytes": 47,
+        "sha256": "e4e3571697339fdb21e12ff273153a40e12bf1170481e2c51c77fbc411c92843",
+        "matches": true
+      },
+      "services_api": {
+        "event": "sample_completed",
+        "output_bytes": 47,
+        "output_matches_expected": true,
+        "output_read_encode_ms": 0.27625,
+        "output_sha256": "e4e3571697339fdb21e12ff273153a40e12bf1170481e2c51c77fbc411c92843",
+        "pasteboard_unchanged": false,
+        "sample": 1,
+        "service_call_ms": 172.937084,
+        "service_succeeded": true
+      },
+      "large_file": {
+        "bytes": 11534364,
+        "sha256": "5f1342901e06824c28d0c34d69275b3982525468b9b3cc109f7e63e50266b319",
+        "matches_whole_api": true
+      },
+      "global_shortcut": "not_verified"
+    }
+  ],
+  "limits": [
+    "Services uses NSPerformService API, not a host menu click",
+    "Debug isolated ad-hoc packages; not distribution acceptance",
+    "Global shortcut manual attempts did not confirm replacement; root cause unresolved",
+    "No simulator/device/system-minimum/VoiceOver acceptance in this run"
+  ],
+  "global_shortcut_manual_control": {
+    "configuration": "t2s",
+    "user_confirmed_attempts": 2,
+    "first_attempt": "large-file completion sheet still open",
+    "second_attempt": "sheet dismissed; user instructed to focus TextEdit and select all",
+    "observed_after_each": "original selected text unchanged",
+    "settings_observed": {
+      "enabled": true,
+      "shortcut": "Option-Command-T",
+      "accessibility_permission_granted": true
+    },
+    "root_cause": "not_isolated",
+    "cleanup": "QA permission revoked and both QA apps quit"
+  }
+}

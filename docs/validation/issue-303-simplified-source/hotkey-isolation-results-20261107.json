@@ -1,0 +1,92 @@
+{
+  "source_sha": "fdb3798843469a7a3af538f17507c232fa36806d",
+  "bundle_id": "org.gewill.OpenCCman.ShortcutIsolation20261107",
+  "pid": 21290,
+  "shortcuts": {
+    "KeyboardShortcuts_convertSelectedText": {
+      "carbonKeyCode": 17,
+      "carbonModifiers": 6912
+    },
+    "KeyboardShortcuts_openSelectedText": {
+      "carbonKeyCode": 15,
+      "carbonModifiers": 6912
+    }
+  },
+  "isolation": {
+    "method": "0.5-second ps pid/comm polling plus NSWorkspace check before each CGEvent",
+    "start": "2026-11-07T17:28:50.327247+08:00",
+    "end": "2026-11-07T17:31:55.620019+08:00",
+    "samples": 335,
+    "max_sample_gap_seconds": 0.57531,
+    "other_openccman_processes_observed": false,
+    "allowed_helper": "send-isolated-shortcut (does not register hotkeys)",
+    "limitation": "Polling cannot rule out processes shorter than the sampling interval; not an all-third-party hotkey registry audit"
+  },
+  "rows": [
+    {
+      "configuration": "t2s",
+      "time": "2026-11-07T17:29:13.273693+08:00",
+      "input_method": "CGEvent HID",
+      "bytes": 47,
+      "sha256": "01f3ff392db97dca0d3ebb2756bb63f6104ca57ce3949b57c07f01deaaaeb4df",
+      "matches": true,
+      "host_ax_unchanged": true,
+      "trigger_utc": "2026-11-07T09:28:57Z",
+      "host_replaced": false
+    },
+    {
+      "configuration": "tw2s",
+      "time": "2026-11-07T17:29:54.247804+08:00",
+      "input_method": "CGEvent HID",
+      "bytes": 47,
+      "sha256": "03e123dffef831615e382920777697a9835d01a175fb1c7940acc5aec81541f4",
+      "matches": true,
+      "host_ax_unchanged": true,
+      "trigger_utc": "2026-11-07T09:29:38Z",
+      "host_replaced": false
+    },
+    {
+      "configuration": "tw2sp",
+      "time": "2026-11-07T17:30:30.395604+08:00",
+      "input_method": "CGEvent HID",
+      "bytes": 47,
+      "sha256": "9a59d8c6ac4dc65500c1b6a50ea4a4ec69f2f15d0329b7eb97ba36be19b419c7",
+      "matches": true,
+      "host_ax_unchanged": true,
+      "trigger_utc": "2026-11-07T09:30:15Z",
+      "host_replaced": false
+    },
+    {
+      "configuration": "hk2s",
+      "time": "2026-11-07T17:31:05.194458+08:00",
+      "input_method": "CGEvent HID",
+      "bytes": 47,
+      "sha256": "e4e3571697339fdb21e12ff273153a40e12bf1170481e2c51c77fbc411c92843",
+      "matches": true,
+      "host_ax_unchanged": true,
+      "trigger_utc": "2026-11-07T09:30:47Z",
+      "host_replaced": false
+    }
+  ],
+  "open_shortcut": {
+    "trigger_utc": "2026-11-07T09:31:46Z",
+    "source_present": true,
+    "result_cleared": true,
+    "copy_result_disabled": true,
+    "host_ax_unchanged": true
+  },
+  "host": {
+    "bytes": 47,
+    "sha256": "2e6b1e5a6199275906ebc2bfd5be10164b408181ae188593334fb6f40f667f0a",
+    "matches_original": true,
+    "file_unchanged": true
+  },
+  "cleanup": {
+    "accessibility_toggle": "off (CUA readback)",
+    "qa_process_exited": true,
+    "debugger_detached": true,
+    "test_document_closed": true,
+    "independent_shortcuts_retained": true,
+    "simulators_started_or_stopped": false
+  }
+}

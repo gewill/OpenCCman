@@ -1,0 +1,48 @@
+{
+  "source_sha": "fdb3798843469a7a3af538f17507c232fa36806d",
+  "code_sha256": "54ae5102382a5a5cc2c3b31592e76ffc6212f58dd67fe189ec9049df9cdeadb1",
+  "date": "2026-11-07",
+  "oracle": "OpenCC CLI 1.4.2 short input",
+  "rows": [
+    {
+      "configuration": "t2s",
+      "manual_shortcut": true,
+      "qa_output_matches": true,
+      "bytes": 47,
+      "sha256": "01f3ff392db97dca0d3ebb2756bb63f6104ca57ce3949b57c07f01deaaaeb4df",
+      "host_replaced": false
+    },
+    {
+      "configuration": "tw2s",
+      "manual_shortcut": true,
+      "qa_output_matches": true,
+      "bytes": 47,
+      "sha256": "03e123dffef831615e382920777697a9835d01a175fb1c7940acc5aec81541f4",
+      "host_replaced": false
+    },
+    {
+      "configuration": "tw2sp",
+      "manual_shortcut": true,
+      "qa_output_matches": true,
+      "bytes": 47,
+      "sha256": "9a59d8c6ac4dc65500c1b6a50ea4a4ec69f2f15d0329b7eb97ba36be19b419c7",
+      "host_replaced": false
+    },
+    {
+      "configuration": "hk2s",
+      "manual_shortcut": true,
+      "qa_output_matches": true,
+      "bytes": 47,
+      "sha256": "e4e3571697339fdb21e12ff273153a40e12bf1170481e2c51c77fbc411c92843",
+      "host_replaced": false
+    }
+  ],
+  "host_after_matches_original": true,
+  "host_after_sha256": "2e6b1e5a6199275906ebc2bfd5be10164b408181ae188593334fb6f40f667f0a",
+  "replacement_root_cause": "App Sandbox denied mach-lookup com.apple.axserver during AXFocusedWindow read",
+  "limits": [
+    "Other original/QA global registrations were not completely inventoried during manual triggering; simultaneous response cannot be excluded",
+    "No in-place replacement succeeded",
+    "No new app build, distribution or minimum OS validation"
+  ]
+}
