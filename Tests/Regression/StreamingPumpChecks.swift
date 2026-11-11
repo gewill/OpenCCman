@@ -114,13 +114,15 @@ func checkStreamingPump() async throws {
   completedCommit.cancel()
   try completedCommit.check() // Cancellation cannot revoke completed publication.
 
-  print("PASS: shared stream pump; seven configurations, split BOM/UTF-8/phrases, IDS/NUL/Unicode, output expansion, byte counts, faults, cancellation and caller-owned handles")
+  print("PASS: shared stream pump; nine configurations, split BOM/UTF-8/phrases, IDS/NUL/Unicode, output expansion, byte counts, faults, cancellation and caller-owned handles")
 }
 
 let streamingPumpOptions: [ChineseConverter.Options] = [
   .simplify, .traditionalize, [.traditionalize, .twStandard], [.traditionalize, .hkStandard],
   [.traditionalize, .twStandard, .twIdiom], [.traditionalize, .twIdiom],
-  [.traditionalize, .hkStandard, .twIdiom]
+  [.traditionalize, .hkStandard, .twIdiom],
+  // Hong Kong phrases (#304): s2hkp and hk2sp come from the engine's Configuration API.
+  [.traditionalize, .hkStandard, .hkIdiom], [.simplify, .hkStandard, .hkIdiom]
 ]
 
 /// The caller closes handles only after the worker has completed, even on error.

@@ -18,7 +18,7 @@ enum ControlLabelChecks {
     }
     for identifier in ["en", "zh-Hans", "zh-Hant"] {
       let locale = Locale(identifier: identifier)
-      for key in ["Simplified Chinese", "OpenCC Standard", "Taiwan Standard", "HongKong Standard", "Not convert", "Taiwan Idiom", "On", "Off", "In progress"] {
+      for key in ["Simplified Chinese", "OpenCC Standard", "Taiwan Standard", "HongKong Standard", "Not convert", "Taiwan Idiom", "HongKong Idiom", "On", "Off", "In progress"] {
         let result = key.localized(in: locale, bundle: bundle)
         precondition(!result.isEmpty)
         if identifier != "en" { precondition(result != key, "Missing \(identifier) control label: \(key)") }

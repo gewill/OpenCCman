@@ -357,6 +357,7 @@ final class MobileLargeFileService: @unchecked Sendable {
   private static let optionMask = ChineseConverter.Options.traditionalize.rawValue
     | ChineseConverter.Options.simplify.rawValue | ChineseConverter.Options.twStandard.rawValue
     | ChineseConverter.Options.hkStandard.rawValue | ChineseConverter.Options.twIdiom.rawValue
+    | ChineseConverter.Options.hkIdiom.rawValue
 
   private static func exportFilename(_ sourceFilename: String) -> String {
     var stem = (sourceFilename as NSString).deletingPathExtension

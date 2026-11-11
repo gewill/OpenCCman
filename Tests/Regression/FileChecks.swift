@@ -25,6 +25,7 @@ import OpenCC
     }
   }
   // Expected outputs from the OpenCC 1.4.2 command-line tool; each source differs.
+  // A Hong Kong source reverses Hong Kong phrases with hk2sp (#304).
   let sample = "滑鼠裡面的軟體，著衣與衞生紙。"
   let sources: [(ConversionConfiguration.Variant, ConversionConfiguration.Region, ChineseConverter.Options, String)] = [
     (.openCC, .notConvert, .simplify, "滑鼠里面的软体，著衣与衞生纸。"),
@@ -32,18 +33,52 @@ import OpenCC
     (.taiwan, .notConvert, [.simplify, .twStandard], "滑鼠里面的软体，着衣与衞生纸。"),
     (.taiwan, .taiwan, [.simplify, .twStandard, .twIdiom], "鼠标里面的软件，着衣与衞生纸。"),
     (.hongKong, .notConvert, [.simplify, .hkStandard], "滑鼠里面的软体，著衣与卫生纸。"),
-    (.hongKong, .taiwan, [.simplify, .hkStandard], "滑鼠里面的软体，著衣与卫生纸。")
+    (.hongKong, .taiwan, [.simplify, .hkStandard, .hkIdiom], "鼠标里面的软体，著衣与卫生纸。")
   ]
   for (source, region, options, expected) in sources {
     for traditional in ConversionConfiguration.Preset.allCases.map(\.configuration) where traditional.target == .traditional {
       let configuration = ConversionConfiguration(target: .simplified, variant: traditional.variant, region: traditional.region,
                                                   simplifiedSource: source, simplifiedRegion: region)
-      precondition(configuration.options == options, "Only a Taiwan source offers idiom reversal")
-      precondition(configuration.offersSimplifiedRegion == (source == .taiwan))
+      precondition(configuration.options == options, "Taiwan and Hong Kong sources offer phrase reversal")
+      precondition(configuration.offersSimplifiedRegion == (source != .openCC))
       precondition(configuration.preset == (source == .openCC ? .simplified : nil))
     }
     let output = try ChineseConversionService.convertSynchronously(sample, options: options)
     precondition(output == expected, "\(source) source converts like the official configuration")
+  }
+  precondition(ConversionConfiguration(target: .simplified, variant: .openCC, region: .notConvert,
+                                       simplifiedSource: .hongKong, simplifiedRegion: .taiwan).summaryKeys
+               == ["Simplified Chinese", "source_from_hong_kong", "HongKong Idiom"])
+
+  // Hong Kong phrases for traditional output (#304). Hong Kong standard with
+  // regional phrases moves from the legacy Taiwan-phrase configuration to s2hkp;
+  // the OpenCC standard keeps its Taiwan phrases. Expected outputs from the
+  // OpenCC 1.4.2 command-line tool.
+  let simplifiedSample = "鼠标里面的软件和打印机，用的是信息技术。"
+  let traditionalCases: [(ConversionConfiguration.Variant, ConversionConfiguration.Region, ChineseConverter.Options, String)] = [
+    (.hongKong, .notConvert, [.traditionalize, .hkStandard], "鼠標裏面的軟件和打印機，用的是信息技術。"),
+    (.hongKong, .taiwan, [.traditionalize, .hkStandard, .hkIdiom], "滑鼠裏面的軟件和打印機，用的是信息技術。"),
+    (.taiwan, .taiwan, [.traditionalize, .twStandard, .twIdiom], "滑鼠裡面的軟體和印表機，用的是資訊科技。")
+  ]
+  for (variant, region, options, expected) in traditionalCases {
+    let configuration = ConversionConfiguration(target: .traditional, variant: variant, region: region)
+    precondition(configuration.options == options, "\(variant) with \(region) maps to its configuration")
+    let output = try ChineseConversionService.convertSynchronously(simplifiedSample, options: options)
+    precondition(output == expected, "\(variant) with \(region) converts like the official configuration")
+  }
+  precondition(ConversionConfiguration(target: .traditional, variant: .openCC, region: .taiwan).options == [.traditionalize, .twIdiom],
+               "The OpenCC standard keeps the Taiwan-phrase compatibility configuration")
+  // Saved Hong Kong + regional phrases settings change output after the update.
+  let legacyHongKong = try ChineseConverter(options: [.traditionalize, .hkStandard, .twIdiom]).convert(simplifiedSample)
+  precondition(legacyHongKong == "滑鼠裏面的軟體和印表機，用的是資訊科技。" && legacyHongKong != traditionalCases[1].3,
+               "The migration replaces the legacy Taiwan phrases with Hong Kong phrases")
+  precondition(ConversionConfiguration(target: .traditional, variant: .hongKong, region: .taiwan).summaryKeys
+               == ["Traditional Chinese", "HongKong Standard", "HongKong Idiom"])
+  precondition(ConversionConfiguration(target: .traditional, variant: .openCC, region: .taiwan).summaryKeys
+               == ["Traditional Chinese", "OpenCC Standard", "Taiwan Idiom"])
+  for variant in ConversionConfiguration.Variant.allCases {
+    precondition(ConversionConfiguration.Region.notConvert.title(for: variant) == "Not convert")
+    precondition(ConversionConfiguration.Region.taiwan.title(for: variant) == (variant == .hongKong ? "HongKong Idiom" : "Taiwan Idiom"))
   }
   // Traditional presets ignore saved simplified choices.
   for preset in ConversionConfiguration.Preset.allCases where preset.configuration.target == .traditional {
@@ -127,7 +162,7 @@ import OpenCC
   precondition(model.options == [.simplify, .twStandard, .twIdiom] && model.selectedPreset == nil,
                "A Taiwan source with idiom reversal converts with tw2sp and shows as custom")
   model.simplifiedSourceOptions = .hongKong
-  precondition(model.options == [.simplify, .hkStandard], "A Hong Kong source ignores the Taiwan idiom choice")
+  precondition(model.options == [.simplify, .hkStandard, .hkIdiom], "A Hong Kong source with phrase reversal converts with hk2sp")
   model.applyPreset(.taiwan)
   precondition(model.simplifiedSourceOptions == .hongKong && model.simplifiedRegionOptions == .taiwan,
                "A traditional preset keeps the simplified source choices")
