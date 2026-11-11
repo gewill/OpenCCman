@@ -2,6 +2,21 @@
 
 2026-11-03 首轮实现与验证；2026-11-05 补充 [Mac 入口实测](mac-entry-acceptance-20261105.md)，2026-11-07 补充[全局快捷键排查](hotkey-diagnosis-20261107.md)、[独立 QA 快捷键复验](hotkey-isolation-20261107.md)及[服务入口替代方式](services-alternative-20261107.md)。四入口的配置输出均有全文比较证据；独立组合、仅本 QA 运行的本轮四配置复验全部输出正确，原位替换仍均未成功，并再次取得沙箱阻止 AX 焦点窗口读取的日志。现有服务经 TextEdit「服务」菜单和系统服务快捷键调用时，`hk2s` 原位替换成功且可撤销；这是服务功能的调用方式，不计为全局快捷键原位替换通过。进程采样范围和未验证项保留在复验记录中。**不代表 #303 已验收**。下文首轮记录保留其当时范围，最新结论与剩余项见补验记录。
 
+## 当前状态（2026-11-11）
+
+#323、#330、#333 都已合入 develop，尚未发布。#333 把 Mac 帮助页和快捷键设置页改为推荐用「服务」原位替换，并在 PR 里附了两个页面的前后截图。按 #303 的关闭标准逐项核对：
+
+| 关闭标准 | 状态 | 证据 |
+| --- | --- | --- |
+| `tw2s`／`tw2sp`／`hk2s` 输出与官方一致，并有 App 内回归 | 已满足 | 下文「自动检查」：`check-core` 用同一样例对照 OpenCC 1.4.2 命令行。SwiftyOpenCC 同版本官方样例的逐字节比对见 #302 |
+| 已保存的简体设置升级后仍为 `t2s` | 已满足 | 下文「自动检查」的升级用例；iOS 模拟器「升级后仍为 t2s」截图（#323） |
+| 编辑器、服务、全局快捷键、Mac 大文件输出一致 | 已满足 | [Mac 入口实测](mac-entry-acceptance-20261105.md)：编辑器、服务、大文件 12 个组合全文一致；[独立 QA 复验](hotkey-isolation-20261107.md)：全局快捷键四个配置的转换结果正确。全局快捷键在沙箱下不能原位替换，见 #303 评论 |
+| 三语文案、检查脚本、两端构建 | 已满足 | #323 的验证；#333 的文案同样三语，两端构建通过 |
+| iPhone、iPad、Mac 前后截图与切换录像；默认字号与 XXXL 可操作 | **部分** | 截图：iPhone、iPad 见 #323，Mac 见 #303 评论（2026-11-03）。**三端都还没有切换过程录像** |
+| 商店描述与 What's New 草稿，路线图记录 | 草稿已更新 | 下文草稿一节，2026-11-11 补了 Mac 描述第一段；路线图 N1 已记录状态。**提交 App Store 另走发布流程** |
+
+VoiceOver 体验未验证。
+
 ## 规则
 
 - 目标为简体时，可以选择原文标准（OpenCC／台湾／香港）；台湾来源还可以选择是否转换台湾地域用词。对应关系：
@@ -64,6 +79,14 @@ What's New 卡片草稿：
 
 - 标题：按原文地区转为简体／按原文地區轉為簡體／Simplified output by source region
 - 正文：转为简体时可以选择原文来自台湾或香港，台湾原文还能转换地域用词。／轉為簡體時可以選擇原文來自臺灣或香港，臺灣原文還能轉換地域用詞。／When converting to Simplified Chinese, choose whether the text is from Taiwan or Hong Kong, and convert Taiwan phrases too.
+
+Mac 描述第一段（2026-11-11 补充）：2.2 的 Mac 描述写着全局快捷键可以「转换并替换」选中内容。沙箱下全局快捷键不能原位替换（见 #303 评论与 #333），下一版把第一段改为：
+
+- 简体：在正在使用的 Mac 应用中选中文字即可转换。在支持 macOS「服务」的应用里，「Convert Chinese Text with OpenCCman」服务会直接替换选中的文字，还可以在系统设置里为它指定快捷键。自定义全局快捷键会转换选中文字并在 OpenCCman 中显示原文和结果，或把选中文字送到 OpenCCman 检查；全局快捷键需要辅助功能权限，不会改动原文。
+- 繁体：在正在使用的 Mac App 中選取文字即可轉換。在支援 macOS「服務」的 App 裡，「Convert Chinese Text with OpenCCman」服務會直接取代選取的文字，也可以在系統設定中為它指定快速鍵。自訂全域快速鍵會轉換選取文字並在 OpenCCman 中顯示原文和結果，或將選取文字送到 OpenCCman 檢查；全域快速鍵需要輔助使用權限，不會更動原文。
+- 英文：Convert selected Chinese text in the Mac app you are already writing in. In apps that support macOS Services, the "Convert Chinese Text with OpenCCman" service replaces the selection in place, and you can assign it a keyboard shortcut in System Settings. Customizable global shortcuts convert a selection and show the original and the result in OpenCCman, or open the selection there for review; they need Accessibility permission and leave the original text unchanged.
+
+繁体商店描述沿用现有的「輔助使用權限」，App 内的繁体文案是「輔助功能權限」，提交前要统一。
 
 ## 未验证（不计为通过）
 
