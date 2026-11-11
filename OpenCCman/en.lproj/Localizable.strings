@@ -12,18 +12,18 @@
 "help_global_service_title" = "Global Service (macOS)";
 "help_global_service_intro" = "OpenCCman provides multiple ways to convert Chinese text from any application:";
 
-"help_method1_title" = "Method 1: Global Keyboard Shortcuts (Recommended)";
-"help_method1_content" = "OpenCCman provides two global keyboard shortcuts:\n\n• Convert Selected Text (default: ⌘⌥T) - Automatically converts and replaces selected text in editable fields\n• Open Selected Text (default: ⌘⌥R) - Opens selected text in OpenCCman for manual conversion\n\n1. Go to Settings > Global Shortcut to configure your shortcuts\n2. Select any Chinese text in any application\n3. Press your configured shortcut\n4. Convert shortcut: Text will be automatically converted and replaced in-place (works in text editors, browsers, etc.)\n5. Open shortcut: OpenCCman will open with the text ready for conversion";
+"help_method1_title" = "Method 1: Right-click Services (Recommended for Replacing Text)";
+"help_method1_content" = "OpenCCman provides two right-click services:\n\n• \"Convert Chinese Text with OpenCCman\" - Converts the selected text with your current settings and replaces it in place\n• \"Open Selected Text in OpenCCman\" - Opens the app with the selected text for manual conversion\n\n1. Select text in an app that supports Services, such as TextEdit\n2. Right-click and choose your preferred service from the Services menu\n3. For convert service: text is converted and replaced in place\n4. For open service: OpenCCman opens with the text ready for conversion\n\nServices don't need Accessibility permission.";
 
-"help_method2_title" = "Method 2: Right-click Services";
-"help_method2_content" = "OpenCCman provides two right-click services:\n\n• \"Convert Chinese Text with OpenCCman\" - Automatically converts and replaces the selected text\n• \"Open Selected Text in OpenCCman\" - Opens the app with the selected text for manual conversion\n\n1. Select text in any app (Safari, TextEdit, etc.)\n2. Right-click and choose your preferred service from the Services menu\n3. For convert service: text is automatically converted and replaced\n4. For open service: OpenCCman opens with the text ready for conversion";
+"help_method2_title" = "Method 2: Global Keyboard Shortcuts";
+"help_method2_content" = "OpenCCman provides two global keyboard shortcuts:\n\n• Convert Selected Text (default: ⌘⌥T) - Converts the selected text and shows the original and the result in OpenCCman. The selected text isn't replaced; click Copy Result to copy the result\n• Open Selected Text (default: ⌘⌥R) - Opens selected text in OpenCCman for manual conversion\n\n1. Go to Settings > Global Shortcut to configure your shortcuts and grant Accessibility permission\n2. Select any Chinese text in any application\n3. Press your configured shortcut";
 
-"help_service_tip" = "You can also assign keyboard shortcuts to these services in System Settings > Keyboard > Keyboard Shortcuts > Services > Text for even faster access.";
+"help_service_tip" = "To replace text with a keyboard shortcut, assign one to \"Convert Chinese Text with OpenCCman\" in System Settings > Keyboard > Keyboard Shortcuts > Services > Text.";
 
 "help_service_details_title" = "Service Details";
-"help_service_details_content" = "• Convert Service: Best for quick, automatic conversion when you're confident with current settings\n• Open Service: Perfect when you want to review the text, adjust conversion settings, or keep both original and converted text visible\n• Both services work in any macOS application that supports text selection";
+"help_service_details_content" = "• Convert Service: Best for quick, automatic conversion when you're confident with current settings\n• Open Service: Perfect when you want to review the text, adjust conversion settings, or keep both original and converted text visible\n• Both services are available in apps that support the macOS Services menu; some apps may not offer them";
 
-"help_conclusion" = "The keyboard shortcut method is fastest for immediate conversion. Use the \"Open Selected Text\" service when you want to review or adjust settings before converting.";
+"help_conclusion" = "To replace selected text in place, use the Convert service, ideally with its own keyboard shortcut. The global keyboard shortcuts show the result in OpenCCman without changing the original text. Use \"Open Selected Text\" when you want to review or adjust settings before converting.";
 
 // MARK: - Services
 "Convert Chinese Text with OpenCCman" = "Convert Chinese Text with OpenCCman";
@@ -59,9 +59,12 @@
 "Accessibility permission required" = "Accessibility permission required";
 
 "Global shortcut feature is only available on macOS" = "Global shortcut feature is only available on macOS";
-"shortcut_instructions_enabled" = "1. Enable the global shortcuts above\n2. Click the shortcut recorders to set your preferred key combinations\n3. Select Chinese text in any application\n4. Press your configured shortcut:\n   • Convert shortcut: Text will be automatically converted and replaced in-place (works in editable fields)\n   • Open shortcut: OpenCCman will open with the text ready for conversion\n5. OpenCCman will also show the conversion result for reference";
+"shortcut_instructions_enabled" = "1. Enable the global shortcuts above\n2. Click the shortcut recorders to set your preferred key combinations\n3. Select Chinese text in any application\n4. Press your configured shortcut:\n   • Convert shortcut: OpenCCman shows the original and the converted text. The selected text isn't replaced; click Copy Result to copy the result\n   • Open shortcut: OpenCCman will open with the text ready for conversion";
 "shortcut_instructions_disabled" = "To use the global shortcut features:\n1. First grant accessibility permission above\n2. After granting permission, click \"Refresh\" to update status\n3. Then enable the global shortcuts and configure your shortcuts\n\nAccessibility permission allows OpenCCman to read selected text from other applications.";
 "shortcut_tips" = "• The shortcut recorders allow you to easily set any key combination\n• Common shortcuts like ⌘⌥T, ⌘⌥R, ⌘⌥C work well\n• Avoid conflicts with system shortcuts\n• Both shortcuts work globally across all applications";
+"shortcut_services_title" = "Replace Selected Text";
+"shortcut_services_content" = "The global shortcuts don't change the selected text. To replace it in place, use the service \"Convert Chinese Text with OpenCCman\": choose it from the Services menu, or assign it a shortcut in System Settings > Keyboard > Keyboard Shortcuts > Services > Text. Services don't need Accessibility permission.";
+"Open Keyboard Settings" = "Open Keyboard Settings";
 
 // MARK: - Accessibility Permission Alert
 "accessibility_permission_intro" = "OpenCCman needs accessibility permission to read selected text from other applications.";

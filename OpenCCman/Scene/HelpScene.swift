@@ -66,20 +66,11 @@ struct HelpScene: View {
               Text("help_global_service_intro".localizedStringKey)
                 .appFont(.body)
 
-              // Method 1
+              // Method 1: Services, the only route that replaces text in place
               VStack(alignment: .leading, spacing: 4) {
                 Text("help_method1_title".localizedStringKey)
                   .appFont(.subheadline, weight: .medium)
                 Text("help_method1_content".localizedStringKey)
-                  .appFont(.body)
-              }
-              .padding(.top, 8)
-
-              // Method 2
-              VStack(alignment: .leading, spacing: 4) {
-                Text("help_method2_title".localizedStringKey)
-                  .appFont(.subheadline, weight: .medium)
-                Text("help_method2_content".localizedStringKey)
                   .appFont(.body)
               }
               .padding(.top, 8)
@@ -95,6 +86,15 @@ struct HelpScene: View {
                 Text("help_service_details_title".localizedStringKey)
                   .appFont(.subheadline, weight: .medium)
                 Text("help_service_details_content".localizedStringKey)
+                  .appFont(.body)
+              }
+              .padding(.top, 8)
+
+              // Method 2: Global shortcuts show the result without replacing
+              VStack(alignment: .leading, spacing: 4) {
+                Text("help_method2_title".localizedStringKey)
+                  .appFont(.subheadline, weight: .medium)
+                Text("help_method2_content".localizedStringKey)
                   .appFont(.body)
               }
               .padding(.top, 8)
