@@ -60,13 +60,16 @@ struct ConversionInspector: View {
       SegmentView(title: "Target Language", options: HomeViewModel.Language.allCases, selected: $viewModel.targetOptions)
       if viewModel.targetOptions == .traditional {
         SegmentView(title: "Variant", options: HomeViewModel.Variant.allCases, selected: $viewModel.variantOptions)
-        SegmentView(title: "Region Idiom", options: HomeViewModel.Region.allCases, selected: $viewModel.regionOptions)
+        // The idiom choice follows the standard: Hong Kong phrases under Hong Kong.
+        SegmentView(title: "Region Idiom", options: HomeViewModel.Region.allCases, selected: $viewModel.regionOptions,
+                    label: { $0.title(for: viewModel.variantOptions) })
       } else {
         // Simplified output reads traditional text written to a regional standard.
         SegmentView(title: "source_variant", options: HomeViewModel.Variant.allCases,
                     selected: $viewModel.simplifiedSourceOptions)
         SegmentView(title: "Region Idiom", options: HomeViewModel.Region.allCases,
-                    selected: $viewModel.simplifiedRegionOptions)
+                    selected: $viewModel.simplifiedRegionOptions,
+                    label: { $0.title(for: viewModel.simplifiedSourceOptions) })
           .disabled(!viewModel.configuration.offersSimplifiedRegion)
       }
     }

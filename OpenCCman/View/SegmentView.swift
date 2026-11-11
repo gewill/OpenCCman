@@ -13,6 +13,8 @@ struct SegmentView<T: Segmentable>: View {
   let title: String
   let options: [T]
   @Binding var selected: T
+  /// The localization key shown for an option, when it depends on other choices.
+  var label: (T) -> String = { $0.title }
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
@@ -48,7 +50,7 @@ struct SegmentView<T: Segmentable>: View {
   private var labelMeasurements: some View {
     ZStack {
       ForEach(options) { option in
-        let words = Self.unbrokenWords(in: option.title.localized(in: locale))
+        let words = Self.unbrokenWords(in: label(option).localized(in: locale))
         ForEach(Array(words.enumerated()), id: \.offset) { _, word in
           Text(word)
             .appFont(.body, weight: .semibold)
@@ -97,7 +99,7 @@ struct SegmentView<T: Segmentable>: View {
       Button {
         selected = option
       } label: {
-        Text(option.title.localized(in: locale))
+        Text(label(option).localized(in: locale))
       }
       .buttonStyle(AppSegmentButtonStyle(selected: option == selected))
       .overlay(

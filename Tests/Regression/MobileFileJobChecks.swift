@@ -46,6 +46,19 @@ func checkMobileFileJobs() async throws {
   try await restarted.discard(ready.id)
   try requireMobileJob(empty(store))
 
+  // Hong Kong phrases (#304) use an app-only option bit; a recovered job keeps it.
+  let hongKong: ChineseConverter.Options = [.traditionalize, .hkStandard, .hkIdiom]
+  let hongKongStore = root()
+  let hongKongReady = try await service(hongKongStore).convert(source: source, options: hongKong)
+  let hongKongText = try ChineseConversionService.convertSynchronously(text, options: hongKong)
+  precondition(hongKongText.contains("滑鼠"), "s2hkp turns 鼠标 into the Hong Kong phrase")
+  try requireMobileJob(Data(contentsOf: hongKongReady.url) == Data(hongKongText.utf8))
+  precondition(hongKongReady.optionsRawValue == hongKong.rawValue)
+  let hongKongRestarted = service(hongKongStore)
+  try requireMobileJob(await hongKongRestarted.recover() == .ready(hongKongReady), "A journal with Hong Kong phrases recovers")
+  try await hongKongRestarted.discard(hongKongReady.id)
+  try requireMobileJob(empty(hongKongStore))
+
   let stages: [MobileLargeFileService.Stage] = [.snapshotRead, .snapshotWrite, .snapshotSync,
     .conversionRead, .conversionWrite, .outputSync, .beforeCommit, .afterOutputRename, .beforeJournalRename]
   for stage in stages {
