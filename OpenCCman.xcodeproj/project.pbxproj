@@ -45,7 +45,7 @@
 		095E17452E40746F0051BBB7 /* ServicesMenu.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */; };
 		CC0912202600000000000011 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000012 /* PrivacyInfo.xcprivacy */; };
 		09DBEC4F2E3BC32F00DD9C5B /* ShortcutSettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC4E2E3BC32F00DD9C5B /* ShortcutSettingsScene.swift */; };
-		09DBEC522E3BC4BC00DD9C5B /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 09DBEC512E3BC4BC00DD9C5B /* KeyboardShortcuts */; };
+		09DBEC522E3BC4BC00DD9C5B /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 09DBEC512E3BC4BC00DD9C5B /* KeyboardShortcuts */; };
 		09DBEC552E3BC69000DD9C5B /* GlobalShortcutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */; };
 		BE2C6D3E2B2D7EA700FC4112 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = BE2C6D3D2B2D7EA700FC4112 /* SwiftUIIntrospect */; };
 		BE2C6D502B2D7ED000FC4112 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D402B2D7ED000FC4112 /* ViewExtensions.swift */; };
@@ -1056,7 +1056,7 @@
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.3.0;
+				minimumVersion = 3.1.0;
 			};
 		};
 		BE2C6D3C2B2D7EA700FC4112 /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
@@ -1104,7 +1104,7 @@
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 6.5.16;
+				minimumVersion = 8.0.3;
 			};
 		};
 		BE781CB02CA131790022C4B8 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {

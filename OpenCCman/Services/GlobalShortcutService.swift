@@ -18,8 +18,8 @@ import Carbon
 // MARK: - Keyboard Shortcuts Extension
 
 extension KeyboardShortcuts.Name {
-    static let convertSelectedText = Self("convertSelectedText", default: .init(.t, modifiers: [.command, .option]))
-    static let openSelectedText = Self("openSelectedText", default: .init(.r, modifiers: [.command, .option]))
+    static let convertSelectedText = Self("convertSelectedText", initial: .init(.t, modifiers: [.command, .option]))
+    static let openSelectedText = Self("openSelectedText", initial: .init(.r, modifiers: [.command, .option]))
 }
 
 @MainActor
