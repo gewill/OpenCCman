@@ -4,6 +4,10 @@ import SwiftUI
 
 // Test-only definitions for the actual app constants and an isolated preferences domain.
 protocol Pickable: Identifiable { var title: LocalizedStringKey { get } }
+// Locale checks do not exercise the Mac large-file feature or its coordinator.
+#if os(macOS)
+enum MacLargeFileCoordinator { static let isEnabled = false }
+#endif
 private let suite = "OpenCCman.IAPLocaleChecks.\(UUID())"
 enum UserDefaults {
   static let standard = Foundation.UserDefaults(suiteName: suite)!
