@@ -13,6 +13,8 @@ import KeyboardShortcuts
 
 struct ShortcutSettingsScene: View {
     #if os(macOS)
+    @AppStorage(UserDefaultsKeys.shortcutFailureToast.rawValue) private var failureToast = true
+    @AppStorage(UserDefaultsKeys.shortcutSuccessToast.rawValue) private var successToast = false
     @ObservedObject private var shortcutService = GlobalShortcutService.shared
     #endif
 
@@ -142,6 +144,21 @@ struct ShortcutSettingsScene: View {
                             .softOuterShadow()
                     )
 
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("shortcut_feedback_title".localizedStringKey).appFont(.headline)
+                        feedbackToggle("shortcut_feedback_failure", isOn: $failureToast,
+                            identifier: "shortcut-failure-toast-toggle")
+                        feedbackToggle("shortcut_feedback_success", isOn: $successToast,
+                            identifier: "shortcut-success-toast-toggle")
+                        Text("shortcut_feedback_detail".localizedStringKey)
+                            .appFont(.body)
+                            .foregroundColor(Color.Neumorphic.secondary.opacity(0.8))
+                    }
+                    .appFont(.body)
+                    .padding()
+                    .background(RoundedRectangle(cornerRadius: Constant.cornerRadius)
+                        .fill(Color.Neumorphic.main).softOuterShadow())
+
                     // Instructions
                     VStack(alignment: .leading, spacing: 10) {
                         Text("How to Use".localizedStringKey)
@@ -161,8 +178,7 @@ struct ShortcutSettingsScene: View {
                             .softOuterShadow()
                     )
 
-                    // In-place replacement goes through Services, which work in the
-                    // App Sandbox without Accessibility permission.
+                    // Services remain an alternative without Accessibility permission.
                     VStack(alignment: .leading, spacing: 10) {
                         Text("shortcut_services_title".localizedStringKey)
                             .appFont(.headline)
@@ -231,6 +247,19 @@ struct ShortcutSettingsScene: View {
     }
 
     #if os(macOS)
+    private func feedbackToggle(_ key: String, isOn: Binding<Bool>, identifier: String) -> some View {
+        HStack(spacing: 12) {
+            Text(key.localizedStringKey)
+                .appFont(.body)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer()
+            Toggle(key, isOn: isOn)
+                .toggleStyle(AppNeumorphicSwitchStyle())
+                .accessibilityLabel(Text(key.localizedStringKey))
+                .accessibilityIdentifier(identifier)
+        }
+    }
+
     private var permissionIcon: some View {
         Image(systemName: shortcutService.hasAccessibilityPermission ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
             .foregroundColor(shortcutService.hasAccessibilityPermission ? .green : .orange)
