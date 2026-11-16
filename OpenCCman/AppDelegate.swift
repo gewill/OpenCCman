@@ -149,6 +149,9 @@
       if window?.isMiniaturized == true { window?.deminiaturize(nil) }
       window?.makeKeyAndOrderFront(nil)
       NSApp.activate(ignoringOtherApps: true)
+      // macOS may decline activation that comes a while after the user's action (a
+      // shortcut result shown after the paste hold); keep the window visible anyway.
+      window?.orderFrontRegardless()
       return window
     }
 
@@ -172,6 +175,7 @@
         guard let pending = pendingWindowNotification,
               pending.window == nil || pending.window === window else { return }
         pendingWindowNotification = nil
+        window.orderFrontRegardless()
         NotificationCenter.default.post(name: pending.name, object: window, userInfo: pending.userInfo)
       }
     }
