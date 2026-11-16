@@ -10,77 +10,195 @@ private final class Fixture {
     var posted: [CGKeyCode] = []
     var copied = 0
     var pasteResult: String?
+    var pasteTypes: [NSPasteboard.PasteboardType] = []
     var afterCopy: (() -> Void)?
     var afterPaste: (() -> Void)?
     var copyWorks = true
+    /// Seconds before the host's copy reaches the clipboard (nil: immediately).
+    var copyDelay: TimeInterval?
+    /// Whether the host reads the clipboard for ⌘V, and how late.
+    var pasteReads = true
+    var pasteDelay: TimeInterval?
+    var emptySelectionMetadata = false
+    var modifierChecks = 0
+    var modifiersHeldFor = 0
+    var clock: TimeInterval = 1_000
 
     init() {
         board.setString("original clipboard", forType: .string)
     }
 
-    func transaction() -> ShortcutClipboardTransaction {
+    private func hostCopies() {
+        board.clearContents()
+        let item = NSPasteboardItem()
+        item.setString(selection, forType: .string)
+        if emptySelectionMetadata {
+            // VS Code stores {"isFromEmptySelection":true,…} in Chromium web custom data.
+            let json = #"{"version":1,"isFromEmptySelection":true,"multicursorText":null,"mode":"plaintext"}"#
+            item.setData(json.data(using: .utf16LittleEndian)!, forType: NSPasteboard.PasteboardType("org.chromium.web-custom-data"))
+        }
+        board.writeObjects([item])
+    }
+
+    func transaction(pasteTimeout: TimeInterval = 0.4) -> ShortcutClipboardTransaction {
         ShortcutClipboardTransaction(pasteboard: board, sourceIsFrontmost: { self.frontmost },
-            readActivity: { self.activity }, sendKey: { key in
+            readActivity: { self.activity },
+            modifiersHeld: { self.modifierChecks += 1; return self.modifierChecks <= self.modifiersHeldFor },
+            sendKey: { key in
                 self.posted.append(key)
                 if key == CGKeyCode(kVK_ANSI_C) {
                     self.copied += 1
                     if self.copyWorks {
-                        self.board.clearContents()
-                        self.board.setString(self.selection, forType: .string)
+                        if let delay = self.copyDelay {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { self.hostCopies() }
+                        } else {
+                            self.hostCopies()
+                        }
                     }
                     self.afterCopy?()
                 } else if key == CGKeyCode(kVK_ANSI_V) {
-                    self.pasteResult = self.board.string(forType: .string)
+                    self.pasteTypes = self.board.types ?? []
+                    if self.pasteReads {
+                        if let delay = self.pasteDelay {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                                self.pasteResult = self.board.string(forType: .string)
+                            }
+                        } else {
+                            self.pasteResult = self.board.string(forType: .string)
+                        }
+                    }
                     self.afterPaste?()
                 }
                 return true
-            })
+            }, now: { self.clock }, pasteTimeout: pasteTimeout)
     }
 
     func release() { board.releaseGlobally() }
+}
+
+private func pause(_ seconds: TimeInterval) async {
+    try? await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
 }
 
 @main
 enum ShortcutTransactionChecks {
     @MainActor
     static func main() async throws {
-        // End-to-end transaction: two copies, a paste, full clipboard restoration.
+        // End-to-end transaction: two copies, a paste the app reads, full clipboard restoration.
         let success = Fixture(); defer { success.release() }
         let rich = NSPasteboardItem(); rich.setString("original clipboard", forType: .string)
         let rtf = Data("{\\rtf1 preserved}".utf8); rich.setData(rtf, forType: .rtf)
         success.board.clearContents(); success.board.writeObjects([rich])
         let transaction = success.transaction()
-        let text = try await transaction.capture()
-        try await transaction.replace(originalText: text, with: "简体结果")
+        let copy = try await transaction.capture()
+        precondition(copy == ShortcutCopy(text: "繁體原文"))
+        let outcome1 = try await transaction.replace(originalText: copy.text, with: "简体结果")
+        precondition(outcome1 == .pasted)
         precondition(success.posted == [CGKeyCode(kVK_ANSI_C), CGKeyCode(kVK_ANSI_C), CGKeyCode(kVK_ANSI_V)])
         precondition(success.pasteResult == "简体结果")
+        // The temporary text is marked transient; restorations are marked auto-generated.
+        precondition(success.pasteTypes.contains(.shortcutTransient), "Converted text must be transient")
         precondition(success.board.string(forType: .string) == "original clipboard")
         precondition(success.board.data(forType: .rtf) == rtf)
+        precondition(success.board.types?.contains(.shortcutAutoGenerated) == true)
 
-        // Even a programmatic selection change without input activity must fail.
-        try await rejected(.selectionChanged) { fixture, _ in fixture.selection = "另一段文字" }
-        try await rejected(.sourceChanged) { fixture, _ in fixture.frontmost = false }
+        // Every cancellation leaves the user's clipboard as it was.
+        try await rejected(.selectionChanged) { fixture in fixture.selection = "另一段文字" }
+        try await rejected(.sourceChanged) { fixture in fixture.frontmost = false }
         // Arrow key / text edit, or mouse selection change inside the same app.
-        try await rejected(.inputChanged) { fixture, _ in fixture.activity.counters[0] &+= 1 }
-        try await rejected(.inputChanged) { fixture, _ in fixture.activity.counters[1] &+= 1 }
-        try await rejected(.inputChanged) { fixture, _ in fixture.activity.hasHeldInput = true }
+        try await rejected(.inputChanged) { fixture in fixture.activity.counters[0] &+= 1 }
+        try await rejected(.inputChanged) { fixture in fixture.activity.counters[1] &+= 1 }
+        try await rejected(.inputChanged) { fixture in fixture.activity.hasHeldInput = true }
         // Moving away and back to identical text must still fail after user input.
-        try await rejected(.inputChanged) { fixture, _ in fixture.activity.counters[0] &+= 2 }
-        try await rejected(.clipboardChanged) { fixture, _ in
+        try await rejected(.inputChanged) { fixture in fixture.activity.counters[0] &+= 2 }
+        // The 5 s limit covers the whole transaction.
+        try await rejected(.inputChanged) { fixture in fixture.clock += ShortcutClipboardTransaction.timeLimit }
+        try await rejected(.clipboardChanged, keepsLatest: "latest user copy") { fixture in
             fixture.board.clearContents(); fixture.board.setString("latest user copy", forType: .string)
         }
         // A user copy of identical clipboard text is still a new ownership.
-        try await rejected(.clipboardChanged) { fixture, _ in
+        try await rejected(.clipboardChanged, keepsLatest: "original clipboard") { fixture in
             fixture.board.clearContents(); fixture.board.setString("original clipboard", forType: .string)
         }
-        // Interruption during re-copy also prevents V, not just before conversion.
-        try await rejected(.inputChanged) { fixture, _ in
+        // Interruption right after the host copied: the copy is undone first.
+        try await rejected(.inputChanged) { fixture in
             fixture.afterCopy = { fixture.activity.counters[1] &+= 1 }
         }
-        try await rejected(.sourceChanged) { fixture, _ in
+        try await rejected(.sourceChanged) { fixture in
             fixture.afterCopy = { fixture.frontmost = false }
         }
-        try await rejected(.copyUnavailable) { fixture, _ in fixture.copyWorks = false }
+        try await rejected(.copyUnavailable) { fixture in fixture.copyWorks = false }
+
+        // A host copy that lands after the app switch is still undone.
+        let late = Fixture(); defer { late.release() }
+        late.copyDelay = 0.12
+        late.afterCopy = { late.frontmost = false }
+        do {
+            _ = try await late.transaction().capture()
+            preconditionFailure("Expected cancellation")
+        } catch let error as ShortcutFailure {
+            precondition(error == .sourceChanged, "Unexpected cancellation: \(error)")
+        }
+        await pause(0.4)
+        precondition(late.board.string(forType: .string) == "original clipboard", "Late copy must be undone")
+
+        // VS Code copies the whole line for an empty selection: no selection, nothing pasted.
+        let emptySelection = Fixture(); defer { emptySelection.release() }
+        emptySelection.emptySelectionMetadata = true
+        do {
+            _ = try await emptySelection.transaction().capture()
+            preconditionFailure("Expected no selection")
+        } catch let error as ShortcutFailure {
+            precondition(error == .copyUnavailable)
+        }
+        precondition(emptySelection.board.string(forType: .string) == "original clipboard")
+
+        // The app ignored ⌘V (read-only text): report it so the result is shown instead.
+        let readOnly = Fixture(); defer { readOnly.release() }
+        readOnly.pasteReads = false
+        let ignored = readOnly.transaction(); let ignoredText = try await ignored.capture().text
+        let outcome2 = try await ignored.replace(originalText: ignoredText, with: "结果")
+        precondition(outcome2 == .notAccepted)
+        precondition(readOnly.posted.last == CGKeyCode(kVK_ANSI_V))
+        precondition(readOnly.board.string(forType: .string) == "original clipboard")
+
+        // A slow app still reads the converted text, not the restored clipboard.
+        let slow = Fixture(); defer { slow.release() }
+        slow.pasteDelay = 0.25
+        let slowTransaction = slow.transaction(pasteTimeout: 1)
+        let slowText = try await slowTransaction.capture().text
+        let outcome3 = try await slowTransaction.replace(originalText: slowText, with: "慢速结果")
+        precondition(outcome3 == .pasted)
+        precondition(slow.pasteResult == "慢速结果", "A slow paste must not get the old clipboard")
+        precondition(slow.board.string(forType: .string) == "original clipboard")
+
+        // Hotkey modifiers still down: wait for release, or give up without posting keys.
+        let released = Fixture(); defer { released.release() }
+        released.modifiersHeldFor = 5
+        let releasedTransaction = released.transaction()
+        let releasedText = try await releasedTransaction.capture().text
+        let outcome4 = try await releasedTransaction.replace(originalText: releasedText, with: "结果")
+        precondition(outcome4 == .pasted)
+        let held = Fixture(); defer { held.release() }
+        held.modifiersHeldFor = .max
+        do {
+            _ = try await held.transaction().capture()
+            preconditionFailure("Expected held modifiers")
+        } catch let error as ShortcutFailure {
+            precondition(error == .modifiersHeld)
+        }
+        precondition(held.posted.isEmpty, "No keys while modifiers are held")
+
+        // Clipboard data that cannot be read is refused before any key is sent.
+        let unreadable = Fixture(); defer { unreadable.release() }
+        unreadable.board.declareTypes([.string], owner: nil)
+        do {
+            _ = try await unreadable.transaction().capture()
+            preconditionFailure("Expected unreadable clipboard")
+        } catch let error as ShortcutFailure {
+            precondition(error == .clipboardUnreadable)
+        }
+        precondition(unreadable.posted.isEmpty)
 
         // A new user copy after sending V survives delayed clipboard restoration.
         let laterCopy = Fixture(); defer { laterCopy.release() }
@@ -88,24 +206,37 @@ enum ShortcutTransactionChecks {
         laterCopy.afterPaste = {
             laterCopy.board.clearContents(); laterCopy.board.setString("user copied later", forType: .string)
         }
-        try await later.replace(originalText: original, with: "结果")
+        _ = try await later.replace(originalText: original.text, with: "结果")
         precondition(laterCopy.board.string(forType: .string) == "user copied later")
-        print("PASS: shortcut transaction success, RTF restore, changed selection, app switch, keyboard/mouse activity, same-text return, clipboard ownership, interruption during re-copy, no copy response, later copy preservation.")
+
+        // Hosts that paste somewhere other than over the selection keep the result in OpenCCman.
+        let line = ShortcutCopy(text: "繁體原文\n"), plain = ShortcutCopy(text: "繁體原文")
+        precondition(!ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: "com.apple.Terminal", copy: plain))
+        precondition(!ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: "com.googlecode.iterm2", copy: plain))
+        precondition(!ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: "com.jetbrains.intellij", copy: line))
+        precondition(ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: "com.jetbrains.intellij", copy: plain))
+        precondition(ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: "com.apple.TextEdit", copy: line))
+        precondition(ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: nil, copy: plain))
+
+        print("PASS: shortcut transaction success with transient and restore markers, clipboard restored on every cancellation (including a copy that lands after the app switch), changed selection, app switch, keyboard/mouse activity, same-text return, 5 s limit, clipboard ownership, no copy response, VS Code empty selection, ignored paste, slow paste, held modifiers, unreadable clipboard, later copy preservation, paste policy.")
     }
 
     @MainActor
-    private static func rejected(_ expected: ShortcutFailure,
-        change: (Fixture, ShortcutClipboardTransaction) -> Void) async throws {
+    private static func rejected(_ expected: ShortcutFailure, keepsLatest latest: String? = nil,
+        change: (Fixture) -> Void) async throws {
         let fixture = Fixture(); defer { fixture.release() }
-        let transaction = fixture.transaction(); let text = try await transaction.capture()
-        change(fixture, transaction)
+        let transaction = fixture.transaction(); let text = try await transaction.capture().text
+        change(fixture)
         do {
-            try await transaction.replace(originalText: text, with: "must not paste")
+            _ = try await transaction.replace(originalText: text, with: "must not paste")
             preconditionFailure("Expected cancellation")
         } catch let error as ShortcutFailure {
-            precondition(error.messageKey == expected.messageKey, "Unexpected cancellation: \(error)")
+            precondition(error == expected, "Unexpected cancellation: \(error), expected \(expected)")
         }
         precondition(fixture.pasteResult == nil, "Cancelled operations must not send V")
         precondition(!fixture.posted.contains(CGKeyCode(kVK_ANSI_V)))
+        let clipboard = fixture.board.string(forType: .string)
+        precondition(clipboard == (latest ?? "original clipboard"),
+                     "Clipboard after \(expected): \(clipboard ?? "nil")")
     }
 }
