@@ -71,6 +71,17 @@
 "Target Language" = "目標語言";
 "Variant" = "異體字轉換";
 "Region Idiom" = "地域用詞轉換";
+
+// Source × target conversion (#305)
+"standard_opencc_traditional" = "OpenCC 繁體";
+"standard_taiwan" = "臺灣正體";
+"standard_hong_kong" = "香港繁體";
+"conversion_source" = "原文";
+"conversion_target" = "轉換為";
+"conversion_swap" = "對換";
+"conversion_swap_accessibility" = "對換原文與轉換為";
+"conversion_configuration_name" = "OpenCC 配置：%@";
+"show_conversion_configuration_name" = "顯示 OpenCC 配置名稱";
 "Source" = "原文";
 "Result" = "結果";
 "Convert" = "轉換";
@@ -195,6 +206,10 @@
 "whats_new_files_detail" = "匯入或拖入一個不超過 10 MiB 的 UTF-8 TXT 檔案，轉換後匯出到你選擇的位置。";
 "whats_new_reliability_title" = "轉換過程，由你掌控";
 "whats_new_reliability_detail" = "取消轉換即可阻止結果寫回。匯入失敗時保留原稿，未完成的轉換不占每日額度。";
+"whats_new_source_target_title" = "依原文與目標選擇轉換";
+"whats_new_source_target_detail" = "與 OpenCC 網頁版一樣，先選原文，再選要轉換為的標準，可一鍵對換。新增 OpenCC 繁體、臺灣正體與香港繁體之間的互轉。";
+"whats_new_taiwan_phrases_title" = "臺灣詞組設定更新";
+"whats_new_taiwan_phrases_detail" = "如果你之前選擇了「OpenCC 繁體＋臺灣模式」，現在會改為臺灣正體加臺灣詞組（s2twp），個別異體字與以前不同。";
 
 "On" = "開";
 

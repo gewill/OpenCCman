@@ -2,8 +2,25 @@ import Neumorphic
 import SwiftUI
 import UniformTypeIdentifiers
 
+/// "Simplified Chinese → Taiwan Standard · Taiwan Idiom", for task summaries.
+struct ConversionSummary: View {
+  let configuration: ConversionConfiguration
+
+  var body: some View {
+    let direction = Text(configuration.source.title.localizedStringKey) + Text(" → ")
+      + Text(configuration.target.title.localizedStringKey)
+    if let phrases = configuration.phraseTitle {
+      direction + Text(" · ") + Text(phrases.localizedStringKey)
+    } else {
+      direction
+    }
+  }
+}
+
 struct ConversionInspector: View {
   @Environment(\.colorScheme) private var colorScheme
+  @Environment(\.locale) private var locale
+  @AppStorage(UserDefaultsKeys.showsConversionConfigurationName.rawValue) private var showsConfigurationName = false
   var showsPresetList = false
   @EnvironmentObject private var viewModel: HomeViewModel
 
@@ -57,20 +74,31 @@ struct ConversionInspector: View {
           .accessibilityValue(Text((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey))
         }
       }
-      SegmentView(title: "Target Language", options: HomeViewModel.Language.allCases, selected: $viewModel.targetOptions)
-      if viewModel.targetOptions == .traditional {
-        SegmentView(title: "Variant", options: HomeViewModel.Variant.allCases, selected: $viewModel.variantOptions)
-        // The idiom choice follows the standard: Hong Kong phrases under Hong Kong.
-        SegmentView(title: "Region Idiom", options: HomeViewModel.Region.allCases, selected: $viewModel.regionOptions,
-                    label: { $0.title(for: viewModel.variantOptions) })
-      } else {
-        // Simplified output reads traditional text written to a regional standard.
-        SegmentView(title: "source_variant", options: HomeViewModel.Variant.allCases,
-                    selected: $viewModel.simplifiedSourceOptions)
-        SegmentView(title: "Region Idiom", options: HomeViewModel.Region.allCases,
-                    selected: $viewModel.simplifiedRegionOptions,
-                    label: { $0.title(for: viewModel.simplifiedSourceOptions) })
-          .disabled(!viewModel.configuration.offersSimplifiedRegion)
+      // Source × target like the official web converter (#305). A new source keeps a
+      // target it can convert to; targets without an OpenCC configuration are dimmed.
+      SegmentView(title: "conversion_source", options: HomeViewModel.Standard.allCases,
+                  selected: Binding(get: { viewModel.conversion.source },
+                                    set: { viewModel.conversion.select(source: $0) }))
+      Button(action: viewModel.swapConversion) {
+        Label("conversion_swap", systemImage: "arrow.up.arrow.down")
+      }
+      .appNeumorphicButtonStyle(Capsule())
+      .accessibilityLabel(Text("conversion_swap_accessibility"))
+      .accessibilityIdentifier("conversion-swap")
+      SegmentView(title: "conversion_target", options: HomeViewModel.Standard.allCases,
+                  selected: $viewModel.conversion.target,
+                  isEnabled: { ConversionConfiguration.accepts(source: viewModel.conversion.source, target: $0) })
+      // Regional phrases exist only between Simplified Chinese and Taiwan or Hong Kong.
+      SegmentView(title: "Region Idiom", options: HomeViewModel.Region.allCases,
+                  selected: $viewModel.conversion.phrases,
+                  label: { $0.title(for: viewModel.conversion.phraseRegion ?? .taiwan) })
+        .disabled(!viewModel.conversion.offersPhrases)
+      if showsConfigurationName {
+        Text(String(format: "conversion_configuration_name".localized(in: locale), viewModel.conversion.official.rawValue))
+          .appFont(.subheadline)
+          .foregroundColor(.secondary)
+          .textSelection(.enabled)
+          .accessibilityIdentifier("conversion-configuration-name")
       }
     }
     .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)

@@ -43,7 +43,7 @@ final class MacBatchConversionCoordinator: ObservableObject {
   }
 
   typealias Operation = @Sendable (
-    OpenedTextFile, URL, ChineseConverter.Options, @escaping @Sendable (UInt64, UInt64) -> Void
+    OpenedTextFile, URL, ChineseConverter.Configuration, @escaping @Sendable (UInt64, UInt64) -> Void
   ) async throws -> StreamingTextFileService.Result
 
   @Published private(set) var session: Session?
@@ -66,9 +66,9 @@ final class MacBatchConversionCoordinator: ObservableObject {
   init(qualified: @escaping @MainActor () -> Bool = { MacBatchConversionCoordinator.isQualified },
        otherTaskBusy: @escaping @MainActor () -> Bool = { MacLargeFileCoordinator.shared.isBusy },
        reportError: @escaping @MainActor (Error) -> Void = { NSApp.presentError($0) },
-       operation: @escaping Operation = { source, destination, options, progress in
+       operation: @escaping Operation = { source, destination, configuration, progress in
     try await StreamingTextFileService.convert(
-      source: source, destination: destination, options: options, capacity: .standard,
+      source: source, destination: destination, configuration: configuration, capacity: .standard,
       replacingExisting: false, progress: progress)
   }) {
     self.operation = operation
@@ -183,12 +183,12 @@ final class MacBatchConversionCoordinator: ObservableObject {
 
   private func run(_ session: Session, directory: URL) async {
     var namer = BatchOutputNamer()
-    let options = session.configuration.options
+    let configuration = session.configuration.official
     while self.session?.id == session.id, !Task.isCancelled, let index = queue?.nextWaitingIndex {
       queue?.begin(index)
       currentProcessedBytes = 0
       guard let item = queue?.items[index] else { return }
-      let outcome = await convert(item, into: directory, options: options, sessionID: session.id, namer: &namer)
+      let outcome = await convert(item, into: directory, configuration: configuration, sessionID: session.id, namer: &namer)
       guard self.session?.id == session.id else { return }
       switch outcome {
       case let .succeeded(name, bytes):
@@ -209,7 +209,7 @@ final class MacBatchConversionCoordinator: ObservableObject {
   }
 
   private func convert(_ item: BatchConversionQueue.Item, into directory: URL,
-                       options: ChineseConverter.Options, sessionID: UUID,
+                       configuration: ChineseConverter.Configuration, sessionID: UUID,
                        namer: inout BatchOutputNamer) async -> Outcome {
     for attempt in 1...Self.maximumNameAttempts {
       let name: String
@@ -224,7 +224,7 @@ final class MacBatchConversionCoordinator: ObservableObject {
       catch { return .failed(Self.describe(error)) }
       let throttle = FileProgressThrottle()
       do {
-        let result = try await operation(source, destination, options) { [weak self] processed, total in
+        let result = try await operation(source, destination, configuration) { [weak self] processed, total in
           guard throttle.shouldDeliver(processed: processed, total: total) else { return }
           Task { @MainActor in
             guard let self, self.session?.id == sessionID, self.phase == .converting else { return }

@@ -28,12 +28,7 @@ struct MacLargeFileTaskView: View {
             .textSelection(.enabled)
           Text(ByteCountFormatter.string(fromByteCount: Int64(session.byteCount), countStyle: .file))
             .foregroundStyle(.secondary)
-          HStack(spacing: 6) {
-            ForEach(Array(session.configuration.summaryKeys.enumerated()), id: \.offset) { index, key in
-              if index > 0 { Text("·") }
-              Text(key.localizedStringKey)
-            }
-          }
+          ConversionSummary(configuration: session.configuration)
           .appFont(.subheadline)
           .fixedSize(horizontal: false, vertical: true)
         }

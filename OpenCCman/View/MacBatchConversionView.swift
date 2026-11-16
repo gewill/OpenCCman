@@ -61,12 +61,7 @@ struct MacBatchConversionView: View {
   }
 
   private func configuration(_ configuration: ConversionConfiguration) -> some View {
-    HStack(spacing: 6) {
-      ForEach(Array(configuration.summaryKeys.enumerated()), id: \.offset) { index, key in
-        if index > 0 { Text("·") }
-        Text(key.localizedStringKey)
-      }
-    }
+    ConversionSummary(configuration: configuration)
     .appFont(.subheadline)
     .foregroundStyle(.secondary)
     .fixedSize(horizontal: false, vertical: true)

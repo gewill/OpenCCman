@@ -75,10 +75,10 @@ final class TextActionModel: ObservableObject {
     task?.cancel()
     result = nil
     phase = .converting
-    let options = preset.configuration.options
+    let configuration = preset.configuration.official
     task = Task {
       do {
-        let worker = Task.detached(priority: .userInitiated) { try Self.convertInChunks(input, options: options) }
+        let worker = Task.detached(priority: .userInitiated) { try Self.convertInChunks(input, configuration: configuration) }
         let converted = try await withTaskCancellationHandler { try await worker.value } onCancel: { worker.cancel() }
         // A preset changed while this ran; only the newest conversion may publish.
         guard current == generation else { return }
@@ -95,9 +95,9 @@ final class TextActionModel: ObservableObject {
   /// Same output as converting the whole string, but OpenCC only ever holds one
   /// chunk's segments: a whole 10 MiB conversion briefly needs several copies of
   /// the text, too many for an extension's memory limit.
-  nonisolated static func convertInChunks(_ text: String, options: ChineseConverter.Options,
+  nonisolated static func convertInChunks(_ text: String, configuration: ChineseConverter.Configuration,
                                           chunkBytes: Int = 256 * 1024) throws -> String {
-    let stream = try ChineseConversionService.converter(options: options).makeStream()
+    let stream = try ChineseConversionService.converter(configuration).makeStream()
     var output = Data()
     output.reserveCapacity(text.utf8.count)
     var text = text

@@ -15,6 +15,8 @@ struct SegmentView<T: Segmentable>: View {
   @Binding var selected: T
   /// The localization key shown for an option, when it depends on other choices.
   var label: (T) -> String = { $0.title }
+  /// Whether an option can be chosen; others stay visible but dimmed.
+  var isEnabled: (T) -> Bool = { _ in true }
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
@@ -102,6 +104,7 @@ struct SegmentView<T: Segmentable>: View {
         Text(label(option).localized(in: locale))
       }
       .buttonStyle(AppSegmentButtonStyle(selected: option == selected))
+      .disabled(!isEnabled(option))
       .overlay(
         SegmentGrooveDivider(isHorizontal: usesVerticalLayout)
           .opacity(option.id == options.first?.id ? 0 : 1),

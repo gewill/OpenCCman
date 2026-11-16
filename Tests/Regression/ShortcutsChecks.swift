@@ -18,7 +18,7 @@ enum ShortcutsChecks {
         intent.preset = preset
         let result = try await intent.perform()
         let expected = try await ChineseConversionService.shared.convert(
-          text, options: preset.configuration.options)
+          text, configuration: preset.configuration.official)
         precondition(result.value == expected,
                      "Shortcuts must return the same complete text as the matching app preset")
       }
