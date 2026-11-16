@@ -24,21 +24,24 @@ extension KeyboardShortcuts.Name {
 
 // MARK: - Sandbox-compatible shortcut transaction
 
-// Read hardware activity, never text or event payloads. Session counters may
-// include our own synthetic keys, so they cannot distinguish a user interrupt.
-// Our private CGEvent source does not update the hardware state table (observed
-// on macOS 27.2.1; earlier systems have not been checked).
+// Read hardware activity, never text or event payloads. Our own ⌘C/⌘V also reach
+// the HID state: C and V show as held for a moment, and the key-down counter takes
+// them in late batches (observed on macOS 27.2.1). Key-downs therefore cannot tell
+// the user from us; keyboard edits are caught by re-copying the selection before the
+// paste. Mouse and scroll counters, which our events never touch, still cancel.
 struct ShortcutInputActivity: Equatable {
     var counters: [UInt32]
     var hasHeldInput = false
 
     static func read() -> Self {
-        let types: [CGEventType] = [.keyDown, .leftMouseDown, .rightMouseDown,
+        let types: [CGEventType] = [.leftMouseDown, .rightMouseDown,
             .otherMouseDown, .leftMouseDragged, .rightMouseDragged,
             .otherMouseDragged, .scrollWheel]
-        let modifiers: Set<CGKeyCode> = [54, 55, 56, 57, 58, 59, 60, 61, 62, 63]
+        // Modifiers belong to the shortcut itself; C and V are the keys we post.
+        let ignored: Set<CGKeyCode> = [54, 55, 56, 57, 58, 59, 60, 61, 62, 63,
+                                       CGKeyCode(kVK_ANSI_C), CGKeyCode(kVK_ANSI_V)]
         let keyHeld = (0..<128).contains { code in
-            !modifiers.contains(CGKeyCode(code)) && CGEventSource.keyState(.hidSystemState, key: CGKeyCode(code))
+            !ignored.contains(CGKeyCode(code)) && CGEventSource.keyState(.hidSystemState, key: CGKeyCode(code))
         }
         let buttonHeld = [CGMouseButton.left, .right, .center].contains {
             CGEventSource.buttonState(.hidSystemState, button: $0)
@@ -48,17 +51,12 @@ struct ShortcutInputActivity: Equatable {
         }, hasHeldInput: keyHeld || buttonHeld)
     }
 
-    /// The handler runs on key-up, often while the shortcut's modifiers are still down.
-    static func modifiersHeld() -> Bool {
-        !CGEventSource.flagsState(.hidSystemState)
-            .intersection([.maskCommand, .maskAlternate, .maskControl, .maskShift]).isEmpty
-    }
 }
 
 enum ShortcutFailure: Error, Equatable {
     case sourceChanged, inputChanged, clipboardChanged, selectionChanged
     case copyUnavailable, permissionRequired, conversionFailed, busy
-    case clipboardUnreadable, modifiersHeld
+    case clipboardUnreadable
 
     var messageKey: String {
         switch self {
@@ -71,7 +69,6 @@ enum ShortcutFailure: Error, Equatable {
         case .conversionFailed: return "shortcut_conversion_failed"
         case .busy: return "shortcut_busy"
         case .clipboardUnreadable: return "shortcut_clipboard_unreadable"
-        case .modifiersHeld: return "shortcut_modifiers_held"
         }
     }
 }
@@ -157,7 +154,6 @@ final class ShortcutClipboardTransaction {
     private let pasteboard: NSPasteboard
     private let sourceIsFrontmost: () -> Bool
     private let readActivity: () -> ShortcutInputActivity
-    private let modifiersHeld: () -> Bool
     private let sendKey: (CGKeyCode) async -> Bool
     private let now: () -> TimeInterval
     private let pasteTimeout: TimeInterval
@@ -169,8 +165,7 @@ final class ShortcutClipboardTransaction {
         self.init(pasteboard: .general, sourceIsFrontmost: {
             NSWorkspace.shared.frontmostApplication?.processIdentifier == application.processIdentifier
                 && !application.isTerminated
-        }, readActivity: ShortcutInputActivity.read, modifiersHeld: ShortcutInputActivity.modifiersHeld,
-        sendKey: { keyCode in
+        }, readActivity: ShortcutInputActivity.read, sendKey: { keyCode in
             guard NSWorkspace.shared.frontmostApplication?.processIdentifier == application.processIdentifier,
                   let source = CGEventSource(stateID: .privateState),
                   let down = CGEvent(keyboardEventSource: source, virtualKey: keyCode, keyDown: true),
@@ -190,14 +185,12 @@ final class ShortcutClipboardTransaction {
     // a controllable clock; production always uses the initializer above.
     init(pasteboard: NSPasteboard, sourceIsFrontmost: @escaping () -> Bool,
          readActivity: @escaping () -> ShortcutInputActivity,
-         modifiersHeld: @escaping () -> Bool = { false },
          sendKey: @escaping (CGKeyCode) async -> Bool,
          now: @escaping () -> TimeInterval = { ProcessInfo.processInfo.systemUptime },
          pasteTimeout: TimeInterval = 1.5) {
         self.pasteboard = pasteboard
         self.sourceIsFrontmost = sourceIsFrontmost
         self.readActivity = readActivity
-        self.modifiersHeld = modifiersHeld
         self.sendKey = sendKey
         self.now = now
         self.pasteTimeout = pasteTimeout
@@ -225,16 +218,6 @@ final class ShortcutClipboardTransaction {
             ? ShortcutFailure.clipboardUnreadable : ShortcutFailure.clipboardChanged
     }
 
-    // A synthetic ⌘C/⌘V posted while the shortcut's modifiers are still down can
-    // reach the app with them (for example ⌥⌘V, Paste Style). Wait up to 1 s.
-    private func waitForModifierRelease() async throws {
-        for _ in 0..<100 {
-            guard modifiersHeld() else { return }
-            try await Task.sleep(nanoseconds: 10_000_000)
-        }
-        throw ShortcutFailure.modifiersHeld
-    }
-
     func capture() async throws -> ShortcutCopy {
         try await copySelection()
     }
@@ -243,9 +226,6 @@ final class ShortcutClipboardTransaction {
         try checkTarget()
         try checkClipboard()
         let original = try snapshotClipboard()
-        try await waitForModifierRelease()
-        try checkTarget()
-        try checkClipboard()
         guard await sendKey(CGKeyCode(kVK_ANSI_C)) else { throw ShortcutFailure.copyUnavailable }
         var failure: Error = ShortcutFailure.copyUnavailable
         for _ in 0..<20 {
@@ -289,7 +269,6 @@ final class ShortcutClipboardTransaction {
         let current = try await copySelection()
         guard current.text == originalText else { throw ShortcutFailure.selectionChanged }
         let original = try snapshotClipboard()
-        try await waitForModifierRelease()
         try checkTarget()
         try checkClipboard()
         let provider = ShortcutPasteProvider(text: convertedText)

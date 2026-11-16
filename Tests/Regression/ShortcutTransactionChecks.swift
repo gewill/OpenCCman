@@ -4,7 +4,8 @@ import Carbon
 @MainActor
 private final class Fixture {
     let board = NSPasteboard.withUniqueName()
-    var activity = ShortcutInputActivity(counters: [100, 20, 0, 0, 0, 0, 0, 0])
+    // Mouse-down, mouse-drag and scroll counters, as ShortcutInputActivity.read() returns them.
+    var activity = ShortcutInputActivity(counters: [20, 0, 0, 4000, 0, 0, 4400])
     var frontmost = true
     var selection = "繁體原文"
     var posted: [CGKeyCode] = []
@@ -20,8 +21,6 @@ private final class Fixture {
     var pasteReads = true
     var pasteDelay: TimeInterval?
     var emptySelectionMetadata = false
-    var modifierChecks = 0
-    var modifiersHeldFor = 0
     var clock: TimeInterval = 1_000
 
     init() {
@@ -43,7 +42,6 @@ private final class Fixture {
     func transaction(pasteTimeout: TimeInterval = 0.4) -> ShortcutClipboardTransaction {
         ShortcutClipboardTransaction(pasteboard: board, sourceIsFrontmost: { self.frontmost },
             readActivity: { self.activity },
-            modifiersHeld: { self.modifierChecks += 1; return self.modifierChecks <= self.modifiersHeldFor },
             sendKey: { key in
                 self.posted.append(key)
                 if key == CGKeyCode(kVK_ANSI_C) {
@@ -105,12 +103,15 @@ enum ShortcutTransactionChecks {
         // Every cancellation leaves the user's clipboard as it was.
         try await rejected(.selectionChanged) { fixture in fixture.selection = "另一段文字" }
         try await rejected(.sourceChanged) { fixture in fixture.frontmost = false }
-        // Arrow key / text edit, or mouse selection change inside the same app.
+        // A click, a drag or a scroll inside the same app, or a held key.
         try await rejected(.inputChanged) { fixture in fixture.activity.counters[0] &+= 1 }
-        try await rejected(.inputChanged) { fixture in fixture.activity.counters[1] &+= 1 }
+        try await rejected(.inputChanged) { fixture in fixture.activity.counters[3] &+= 1 }
+        try await rejected(.inputChanged) { fixture in fixture.activity.counters[6] &+= 1 }
         try await rejected(.inputChanged) { fixture in fixture.activity.hasHeldInput = true }
-        // Moving away and back to identical text must still fail after user input.
+        // Clicking away and back to identical text must still fail after user input.
         try await rejected(.inputChanged) { fixture in fixture.activity.counters[0] &+= 2 }
+        // Typing over the selection is caught by the re-copy, without key-down counts.
+        try await rejected(.copyUnavailable) { fixture in fixture.selection = "" }
         // The 5 s limit covers the whole transaction.
         try await rejected(.inputChanged) { fixture in fixture.clock += ShortcutClipboardTransaction.timeLimit }
         try await rejected(.clipboardChanged, keepsLatest: "latest user copy") { fixture in
@@ -172,23 +173,6 @@ enum ShortcutTransactionChecks {
         precondition(slow.pasteResult == "慢速结果", "A slow paste must not get the old clipboard")
         precondition(slow.board.string(forType: .string) == "original clipboard")
 
-        // Hotkey modifiers still down: wait for release, or give up without posting keys.
-        let released = Fixture(); defer { released.release() }
-        released.modifiersHeldFor = 5
-        let releasedTransaction = released.transaction()
-        let releasedText = try await releasedTransaction.capture().text
-        let outcome4 = try await releasedTransaction.replace(originalText: releasedText, with: "结果")
-        precondition(outcome4 == .pasted)
-        let held = Fixture(); defer { held.release() }
-        held.modifiersHeldFor = .max
-        do {
-            _ = try await held.transaction().capture()
-            preconditionFailure("Expected held modifiers")
-        } catch let error as ShortcutFailure {
-            precondition(error == .modifiersHeld)
-        }
-        precondition(held.posted.isEmpty, "No keys while modifiers are held")
-
         // Clipboard data that cannot be read is refused before any key is sent.
         let unreadable = Fixture(); defer { unreadable.release() }
         unreadable.board.declareTypes([.string], owner: nil)
@@ -218,7 +202,7 @@ enum ShortcutTransactionChecks {
         precondition(ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: "com.apple.TextEdit", copy: line))
         precondition(ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: nil, copy: plain))
 
-        print("PASS: shortcut transaction success with transient and restore markers, clipboard restored on every cancellation (including a copy that lands after the app switch), changed selection, app switch, keyboard/mouse activity, same-text return, 5 s limit, clipboard ownership, no copy response, VS Code empty selection, ignored paste, slow paste, held modifiers, unreadable clipboard, later copy preservation, paste policy.")
+        print("PASS: shortcut transaction success with transient and restore markers, clipboard restored on every cancellation (including a copy that lands after the app switch), changed selection, app switch, mouse/scroll activity and held keys, same-text return, typing over the selection, 5 s limit, clipboard ownership, no copy response, VS Code empty selection, ignored paste, slow paste, unreadable clipboard, later copy preservation, paste policy.")
     }
 
     @MainActor
