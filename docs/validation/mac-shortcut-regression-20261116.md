@@ -139,15 +139,40 @@ macOS 27 把「隐私与安全性」中的辅助功能权限改名为 Device Con
 
 App 内凡提到这项权限的文案在三种语言都有 macOS 27 版本，按运行系统切换。实机（简体）读回：设置页「已授予「设备控制和数据访问」权限」，帮助页三段与快捷键设置页说明均为新名称和新的只读文字说明。英文、繁体与 macOS 26 及更早的文案只由 `check-control-labels.sh` 覆盖，未在对应系统上运行。
 
+### 合入 `develop` 后复测（`b354f1e`）
+
+#341 于 2026-11-16 squash 合入 `develop`，合并提交为 `b354f1e`。在本 PR 开发期间，`develop` 已先合入 #340（RevenueCat 5.103.0、反馈邮箱）和 #342（KeyboardShortcuts 2.4.0 → 3.1.0、IQKeyboardManager 6.5.16 → 8.0.3），所以 `b354f1e` 与 PR head `b4b433f` 有 9 个文件不同。其中与快捷键有关的只有 #342：它把快捷键名称的 `default:` 改为 `initial:`，并升级了 KeyboardShortcuts 的大版本，而 #342 自己没有验证跨 App 快捷键。上文各轮实测都基于 KeyboardShortcuts 2.4.0。
+
+CI：PR 的 App Regression 运行在合并引用上，已包含 #340 和 #342；合入后 `develop` 的 App Regression 也已通过。
+
+实机：用 `b354f1e` 按同样方式构建开发签名的 QA 副本（同一 Bundle ID，沿用原有授权）。快捷键设置读回 ⌃⌥⇧⌘T 和 ⌃⌥⇧⌘R，权限显示为已授予。
+
+| 场景 | 结果（与 PR 分支一致） |
+| --- | --- |
+| TextEdit 全选后转换 | 原位替换；剪贴板还原，临时内容带 `TransientType` |
+| 无选区时按「打开」 | 提示「无法读取选中文字，请选中文字后重试。」 |
+| 复制后立即切走 | 取消并还原剪贴板，提示前台应用已变化 |
+| 宿主 1.2 秒后才读取 | 贴入转换结果，随后还原剪贴板 |
+| Chrome 网页只读文字 | OpenCCman 显示原文和结果，窗口在 Chrome 前面 |
+| Chrome 网页文本框 | 替换成功；没有提示音，不打开 OpenCCman |
+| Terminal 全选输出 | 不粘贴；OpenCCman 显示原文和结果 |
+
+慢速宿主那一行运行时，屏幕上还留着上一场景的取消提示；该场景本身没有取消，文字已替换。合入后没有复测 Firefox、Safari、VS Code、无法读取的剪贴板和多屏提示位置，这些只在 PR 分支上测过。
+
 ### 未验证与转出
 
-- 撤销授权后的权限提示及其 macOS 27 标题；最低系统上的输入计数与旧名称运行效果（转 #16）。
+- 撤销授权后的权限提示及其 macOS 27 标题；最低系统上的输入计数与旧名称运行效果（已在 #16 登记）。
 - 没有剪贴板读取工具的 Mac 上，只读文字转交 OpenCCman（窗口置前已在浏览器路径实测）；比 1.5 秒更慢的宿主仍会贴入被还原的剪贴板。
-- 真实慢速 App（只用 KeyProbe 模拟）、JetBrains／Sublime 整行复制、iTerm2／Warp 等其他终端（只有策略检查）、微信、分发签名包。
-- VoiceOver 实际朗读（只核对了播报通知）。
+- 全部关窗后由快捷键转交结果（已在 #19 登记）。
+- 真实慢速 App（只用 KeyProbe 模拟）、JetBrains／Sublime 整行复制、iTerm2／Warp 等其他终端（只有策略检查）、微信、分发签名包（云端签名包矩阵见 #15）。
+- VoiceOver 实际朗读，只核对了播报通知（已在 #20 登记）。
 
 ### 收尾
 
 QA 副本已退出并从 LaunchServices 注销（`lsregister` 与 Services 均为 0），副本、VS Code 隔离数据与 DerivedData 外的测试文件已删除，剪贴板已恢复为测试前内容，测试打开的 TextEdit、Safari 已退出。留给用户手动处理：隐私与安全性中 OpenCCman341QA 的权限条目，以及受保护、只能在 Finder 中删除的容器 `~/Library/Containers/org.gewill.OpenCCman.ShortcutReview20261116`。
 
-证据（未上传）：`~/Library/Application Support/Codex/ui-evidence/OpenCCman/341-shortcut-review-20261116/`，含 `run/results.log`、各场景日志、`t.sh`／`mkqa.sh` 与探针源码。
+合入后复测结束后再次清理：QA 副本已退出并注销（`lsregister` 与 Services 均为 0），复测打开的 Chrome、TextEdit 已退出，剪贴板已恢复。上述两项仍需用户手动处理。
+
+集成状态：#341 已合入 `develop`（`b354f1e`），远端分支已删除，尚未发布。#15 正文中过时的「800 ms 等待」一句已按上述结果更新，并在 #15、#16、#19、#20 留言说明已覆盖和待补验的项目；这些 Issue 都保持开放。
+
+证据（未上传）：`~/Library/Application Support/Codex/ui-evidence/OpenCCman/341-shortcut-review-20261116/`，含 `run/results.log`、各场景日志、`t.sh`／`mkqa.sh` 与探针源码；合入后复测的条目以 `develop-` 开头。
