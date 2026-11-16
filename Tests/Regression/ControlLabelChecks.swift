@@ -54,6 +54,14 @@ enum ControlLabelChecks {
         precondition(naming.contains(String(key.dropLast("_macos27".count))), "\(identifier) \(key) has no base string")
       }
     }
+    // Alerts and notices look up without a locale, in the bundle's own language.
+    let bundleLocale = Locale(identifier: bundle.preferredLocalizations.first!)
+    for key in namingKeys! {
+      for newName in [false, true] {
+        precondition(key.localizedNamingAccessibilityPermission(bundle: bundle, systemUsesNewName: newName)
+          == key.localizedNamingAccessibilityPermission(in: bundleLocale, bundle: bundle, systemUsesNewName: newName))
+      }
+    }
     // Strings without a variant read the same on every system.
     precondition("Refresh".localizedNamingAccessibilityPermission(in: Locale(identifier: "zh-Hans"), bundle: bundle, systemUsesNewName: true)
       == "Refresh".localized(in: Locale(identifier: "zh-Hans"), bundle: bundle))
