@@ -80,13 +80,13 @@ What's New 卡片草稿：
 - 标题：按原文地区转为简体／按原文地區轉為簡體／Simplified output by source region
 - 正文：转为简体时可以选择原文来自台湾或香港，台湾原文还能转换地域用词。／轉為簡體時可以選擇原文來自臺灣或香港，臺灣原文還能轉換地域用詞。／When converting to Simplified Chinese, choose whether the text is from Taiwan or Hong Kong, and convert Taiwan phrases too.
 
-Mac 描述第一段（2026-11-11 补充）：2.2 的 Mac 描述写着全局快捷键可以「转换并替换」选中内容。沙箱下全局快捷键不能原位替换（见 #303 评论与 #333），下一版把第一段改为：
+Mac 描述第一段（2026-11-11 补充，2026-11-16 按 #341 改写）：2.2 的 Mac 描述写着全局快捷键可以「转换并替换」选中内容。11-11 的草稿按当时「沙箱下全局快捷键不能原位替换」（见 #303 评论与 #333）写成不改动原文。#341 改为复制、转换后粘贴回原应用，下一版把第一段改为：
 
-- 简体：在正在使用的 Mac 应用中选中文字即可转换。在支持 macOS「服务」的应用里，「Convert Chinese Text with OpenCCman」服务会直接替换选中的文字，还可以在系统设置里为它指定快捷键。自定义全局快捷键会转换选中文字并在 OpenCCman 中显示原文和结果，或把选中文字送到 OpenCCman 检查；全局快捷键需要辅助功能权限，不会改动原文。
-- 繁体：在正在使用的 Mac App 中選取文字即可轉換。在支援 macOS「服務」的 App 裡，「Convert Chinese Text with OpenCCman」服務會直接取代選取的文字，也可以在系統設定中為它指定快速鍵。自訂全域快速鍵會轉換選取文字並在 OpenCCman 中顯示原文和結果，或將選取文字送到 OpenCCman 檢查；全域快速鍵需要輔助使用權限，不會更動原文。
-- 英文：Convert selected Chinese text in the Mac app you are already writing in. In apps that support macOS Services, the "Convert Chinese Text with OpenCCman" service replaces the selection in place, and you can assign it a keyboard shortcut in System Settings. Customizable global shortcuts convert a selection and show the original and the result in OpenCCman, or open the selection there for review; they need Accessibility permission and leave the original text unchanged.
+- 简体：在正在使用的 Mac 应用中选中文字即可转换。自定义全局快捷键会转换选中文字，并直接替换可编辑文本框里的原文；只读文字、终端等无法粘贴的地方，会在 OpenCCman 中显示原文和结果。另一个快捷键可以把选中文字送到 OpenCCman 检查。全局快捷键需要辅助功能权限。在支持 macOS「服务」的应用里，也可以用「Convert Chinese Text with OpenCCman」服务直接替换选中的文字，它不需要辅助功能权限，还可以在系统设置里为它指定快捷键。
+- 繁体：在正在使用的 Mac App 中選取文字即可轉換。自訂全域快速鍵會轉換選取文字，並直接取代可編輯文字欄位中的原文；唯讀文字、終端機等無法貼上的地方，會在 OpenCCman 中顯示原文和結果。另一個快速鍵可以把選取文字送到 OpenCCman 檢查。全域快速鍵需要輔助使用權限。在支援 macOS「服務」的 App 裡，也可以用「Convert Chinese Text with OpenCCman」服務直接取代選取的文字，它不需要輔助使用權限，也可以在系統設定中為它指定快速鍵。
+- 英文：Convert selected Chinese text in the Mac app you are already writing in. A customizable global shortcut converts the selection and replaces it in editable text fields; for read-only text, terminals, and other places that can't take a paste, OpenCCman shows the original and the result instead. Another shortcut opens the selection in OpenCCman for review. Global shortcuts need Accessibility permission. In apps that support macOS Services, the "Convert Chinese Text with OpenCCman" service also replaces the selection in place without Accessibility permission, and you can assign it a keyboard shortcut in System Settings.
 
-繁体商店描述沿用现有的「輔助使用權限」，App 内的繁体文案是「輔助功能權限」，提交前要统一。
+App 内的繁体文案已在 #341 统一为「輔助使用權限」，与繁体商店描述一致。
 
 ## 未验证（不计为通过）
 

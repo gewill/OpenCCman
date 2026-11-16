@@ -15,6 +15,21 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 Changes not yet assigned to a published version.
 
+### Changed
+
+- On Mac, the Convert global shortcut replaces the selection again in the
+  sandboxed app: it copies the selection, converts it and pastes the result
+  back without opening the main window. The paste is cancelled if the app,
+  input, clipboard or selection changes, and the clipboard is restored. When
+  the app does not read the pasted text (read-only text) or is a terminal,
+  OpenCCman shows the original and the result instead.
+- Shortcut failures and successes appear as a brief notice that VoiceOver
+  reads; failure notices are on by default and success notices off, each
+  switchable in Settings > Global Shortcut. A missing Accessibility permission
+  always shows the permission prompt.
+- Traditional Chinese wording now uses 輔助使用 for Accessibility and 拷貝
+  for Copy, matching macOS.
+
 ## [2.2] - 2026-11-01
 
 Version 2.2 was built by Xcode Cloud as Build 63, from source
