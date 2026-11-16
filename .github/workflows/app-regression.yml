@@ -161,6 +161,8 @@ jobs:
         run: python3 scripts/check-app-language.py
       - name: Check isolated pasteboard preservation
         run: bash scripts/check-pasteboard.sh
+      - name: Check global shortcut clipboard transaction
+        run: bash scripts/check-shortcut-transaction.sh
 
       - name: Build macOS validation app
         env:
