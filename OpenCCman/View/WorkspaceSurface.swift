@@ -183,8 +183,16 @@ struct WorkspaceSurface: View {
           } label: {
             VStack(alignment: .leading, spacing: 6) {
               Label("workspace_settings", systemImage: "slider.horizontal.3").appFont(.headline)
-              Text((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey)
-                .appFont(.subheadline).fixedSize(horizontal: false, vertical: true)
+              // Most source × target choices are not presets (#305): name the choice
+              // itself rather than "Custom", since the settings are not on screen.
+              Group {
+                if let preset = viewModel.selectedPreset {
+                  Text(preset.title.localizedStringKey)
+                } else {
+                  ConversionSummary(configuration: viewModel.conversion)
+                }
+              }
+              .appFont(.subheadline).fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
           }
