@@ -12,10 +12,9 @@ import OpenCC
           ["single", "multiline", "unmatched", "expansion"].contains(args[2]) else {
       fatalError("Usage: StreamingFileBenchmark <bytes> <single|multiline|unmatched|expansion> <directory> <report.json> <configuration>")
     }
-    let configurations: [String: ChineseConverter.Options] = [
-      "s2t": .traditionalize, "t2s": .simplify, "s2tw": [.traditionalize, .twStandard],
-      "s2hk": [.traditionalize, .hkStandard], "s2twp": [.traditionalize, .twStandard, .twIdiom],
-      "s2t-tw-idiom": [.traditionalize, .twIdiom], "s2hk-tw-idiom": [.traditionalize, .hkStandard, .twIdiom]]
+    // The two legacy Taiwan-phrase combinations were retired with #305.
+    let configurations: [String: ChineseConverter.Configuration] = [
+      "s2t": .s2t, "t2s": .t2s, "s2tw": .s2tw, "s2hk": .s2hk, "s2twp": .s2twp, "s2hkp": .s2hkp]
     guard let options = configurations[args[5]] else { fatalError("Unknown configuration") }
     let capacity: MacFileCapacity = byteCount > FileConversionPolicy.macMaximumBytes ? .experimental : .standard
     precondition(byteCount <= capacity.maximumInputBytes)
@@ -30,7 +29,7 @@ import OpenCC
       // it on child crash/timeout, when a Swift defer cannot run.
       for url in [input, output, cancellationOutput] { try? FileManager.default.removeItem(at: url) }
     }
-    let converter = try ChineseConversionService.converter(options: options)
+    let converter = try ChineseConversionService.converter(options)
     let separator = args[2] == "multiline" ? "\r\n\n" : "|ASCII-boundary|"
     let expansion = args[2] == "expansion" ? "显存顯存 内存 互联网 " : ""
     let tile = args[2] == "unmatched" ? String(repeating: "a", count: 64 * 1024) :
@@ -79,7 +78,7 @@ import OpenCC
     defer { _ = samples.stop() }
     let start = DispatchTime.now().uptimeNanoseconds
     let result = try await StreamingTextFileService.convert(
-      source: source, destination: output, options: options, capacity: capacity,
+      source: source, destination: output, configuration: options, capacity: capacity,
       hooks: .init(temporaryDirectoryCreated: { staging.record($0) }))
     let duration = Double(DispatchTime.now().uptimeNanoseconds - start) / 1_000_000
     // Serial stop drains any active sampler and prevents further records. Hash
@@ -124,7 +123,7 @@ import OpenCC
   }
 
   private static func measureCancellation(input: URL, destination: URL, staging: StagingRegistry,
-                                          options: ChineseConverter.Options, capacity: MacFileCapacity) async throws -> [String: Any] {
+                                          options: ChineseConverter.Configuration, capacity: MacFileCapacity) async throws -> [String: Any] {
     let preserved = Data("Keep this existing destination unchanged.\n".utf8)
     try preserved.write(to: destination)
     let probe = CancellationProbe()
@@ -132,7 +131,7 @@ import OpenCC
     let task = Task {
       await probe.waitUntilInstalled()
       return try await StreamingTextFileService.convert(
-        source: source, destination: destination, options: options, capacity: capacity,
+        source: source, destination: destination, configuration: options, capacity: capacity,
         progress: { processed, _ in
           // This callback follows a successful conversion/write of the block.
           if processed > 0 { probe.cancelAfterWrittenBlock(processedBytes: processed) }

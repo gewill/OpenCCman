@@ -50,14 +50,14 @@ def main():
     parser.add_argument("--corpora", nargs="+", choices=["single", "multiline", "unmatched", "expansion"], default=["single", "multiline"])
     parser.add_argument("--samples", type=int, default=3)
     parser.add_argument("--configurations", nargs="+", default=["s2t"],
-                        choices=["s2t", "t2s", "s2tw", "s2hk", "s2twp", "s2t-tw-idiom", "s2hk-tw-idiom"])
+                        choices=["s2t", "t2s", "s2tw", "s2hk", "s2twp", "s2hkp"])
     parser.add_argument("--experimental", action="store_true", help="Allow development-only capacity probes up to 8192 MiB")
     parser.add_argument("--timeout", type=int, default=300)
     args = parser.parse_args()
     maximum = 8192 if args.experimental else 1024
     if args.samples < 1 or any(size <= 0 or size > maximum for size in args.sizes_mib):
         parser.error(f"Require positive samples and file sizes up to {maximum} MiB")
-    if "expansion" in args.corpora and not set(args.configurations) <= {"s2twp", "s2t-tw-idiom", "s2hk-tw-idiom"}:
+    if "expansion" in args.corpora and not set(args.configurations) <= {"s2twp", "s2hkp"}:
         parser.error("The expansion corpus requires a Taiwan-idiom configuration")
     args.output.mkdir(parents=True, exist_ok=False)
     package = args.output / "package"

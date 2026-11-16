@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [f'OpenCCman/Services/{s}.swift' for s in (
     'ChineseConversionService', 'TextFileService', 'StreamingConversionPump',
     'FileConversionPolicy', 'MobileLargeFileService')]
+SOURCES.append('OpenCCman/Model/ConversionConfiguration.swift')  # record codes (#305)
 SOURCES.append('Tests/Benchmarks/MobileCapacityServiceProbe.swift')
 
 
@@ -88,7 +89,14 @@ let package = Package(name: "Probe", platforms: [.macOS(.v12)],
               'rows': []}
     results = output / 'results'
     results.mkdir()
+    # The two Taiwan-phrase compatibility modes were retired with #305: the app now
+    # converts those saved settings with s2twp / s2hkp, so its output no longer
+    # matches these historical oracle rows.
+    retired = {'traditional-taiwan-idiom', 'hong-kong-taiwan-idiom'}
     for i, row in enumerate(rows):
+        if row['mode'] in retired:
+            print(f'SKIP {i + 1}/{len(rows)}: {row["fixture"]} / {row["mode"]} (retired with #305)', flush=True)
+            continue
         result = results / f'{i:03d}.json'
         with tempfile.TemporaryDirectory(prefix='owned-job-', dir=output) as job:
             subprocess.run([str(binary), str(fixture_root / row['fixture']), str(row['options_raw']),

@@ -366,8 +366,7 @@ extension NativeWindowLifecycleAudit {
     let state: [String: Any] = ["source": model.inputText, "result": model.resultText,
       "export_text": model.exportSnapshot?.text ?? "", "export_name": model.resultFilename,
       "converting": model.isLoading, "importing": model.isImporting,
-      "target": String(describing: model.targetOptions), "variant": String(describing: model.variantOptions),
-      "region": String(describing: model.regionOptions)]
+      "configuration": model.configuration.official.rawValue]
     return documentDigest(try! JSONSerialization.data(withJSONObject: state, options: [.sortedKeys]))
   }
   static func documentRecord(_ event: String, anchor: ObjectIdentifier?, label: String, details: [String: Any]) {

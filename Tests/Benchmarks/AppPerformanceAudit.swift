@@ -210,7 +210,7 @@ final class AppPerformanceAudit {
     record(name, ["model_completion_ms": Double(finished - begin) / 1_000_000,
                   "result_layout_flush_ms": layoutMS, "input_bytes": inputBytes,
                   "input_sha256": inputHash, "output_sha256": resultHash,
-                  "output_bytes": outputBytes, "options": model.options.rawValue,
+                  "output_bytes": outputBytes, "options": model.configuration.official.recordCode,
                   "export_matches_result": true, "editors_match_model": true])
     await settle()
   }
@@ -457,23 +457,18 @@ final class AppPerformanceAudit {
       // separately labeled performance comparison with 1.4.2.
       let comparisonWithoutNUL = ProcessInfo.processInfo.arguments.contains("-performance-comparison-no-nul")
       model.replaceSource("软件网络鼠标里面伪说\r\n\r\n👨‍👩‍👧‍👦 e\u{301}" + (comparisonWithoutNUL ? "结束" : "\0结束"))
-      for target in ConversionConfiguration.Language.allCases {
-        for variant in ConversionConfiguration.Variant.allCases {
-          for region in ConversionConfiguration.Region.allCases {
-            if target == .simplified && (variant != .openCC || region != .notConvert) { continue }
-            model.targetOptions = target; model.variantOptions = variant; model.regionOptions = region
-            await yieldUI(window)
-            try await convert(model, window: window, name: "configuration_\(model.options.rawValue)")
-            // Independent fixed answers distinguish every effective converter.
-            let prefixes = [2: "软件网络鼠标里面伪说", 1: "軟件網絡鼠標裏面僞說",
-                            33: "軟件網絡鼠標裡面偽說", 65: "軟件網絡鼠標裏面偽説",
-                            1025: "軟體網路滑鼠裏面僞說", 1057: "軟體網路滑鼠裡面偽說",
-                            1089: "軟體網路滑鼠裏面偽説"]
-            let expected = prefixes[model.options.rawValue]! + "\r\n\r\n👨‍👩‍👧‍👦 e\u{301}"
-              + (comparisonWithoutNUL ? "" : "\0") + (target == .simplified ? "结束" : "結束")
-            guard model.resultText == expected else { throw NSError(domain: "PerformanceAudit", code: 3, userInfo: [NSLocalizedDescriptionKey: "Known-answer fixture mismatch"] ) }
-          }
-        }
+      // Every conversion from or to Simplified Chinese that the app offered before
+      // #305, plus Hong Kong phrases; known answers from the OpenCC 1.4.2 tool.
+      let prefixes: [ChineseConverter.Configuration: String] = [
+        .t2s: "软件网络鼠标里面伪说", .s2t: "軟件網絡鼠標裏面僞說", .s2tw: "軟件網絡鼠標裡面偽說",
+        .s2hk: "軟件網絡鼠標裏面偽説", .s2twp: "軟體網路滑鼠裡面偽說", .s2hkp: "軟件網絡滑鼠裏面偽説"]
+      for official in [ChineseConverter.Configuration.t2s, .s2t, .s2tw, .s2hk, .s2twp, .s2hkp] {
+        model.conversion = ConversionConfiguration(official: official)!
+        await yieldUI(window)
+        try await convert(model, window: window, name: "configuration_\(official.recordCode)")
+        let expected = prefixes[official]! + "\r\n\r\n👨‍👩‍👧‍👦 e\u{301}"
+          + (comparisonWithoutNUL ? "" : "\0") + (official == .t2s ? "结束" : "結束")
+        guard model.resultText == expected else { throw NSError(domain: "PerformanceAudit", code: 3, userInfo: [NSLocalizedDescriptionKey: "Known-answer fixture mismatch"] ) }
       }
       record("seven_configurations_resident")
       if ProcessInfo.processInfo.arguments.contains("-performance-hold-after-configurations") {
