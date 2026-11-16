@@ -13,10 +13,45 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 ## [Unreleased]
 
-Changes not yet assigned to a published version.
+Changes not yet assigned to a published version; they are planned for 2.3.
+
+### Added
+
+- Show Differences highlights what changed between the source and the result
+  after a successful conversion. Previous Difference and Next Difference move
+  both selections together (⌘⇧D shows or hides the differences; ⌘⌥⇧[ and
+  ⌘⌥⇧] move). It is off by default, clears after an edit or a settings change
+  until the next conversion, and is not shown for documents that are too large,
+  for example over 50,000 characters per side or with more than 5,000
+  differences. Copy, share and export stay plain text
+  ([#27](https://github.com/gewill/OpenCCman/issues/27)).
+- On Mac, Pro converts up to 100 TXT files at once: choose File › Batch Convert
+  TXT Files… (⌘⇧O) or drop two or more files onto a window, then choose an
+  output folder. Each file up to 1 GiB is saved there as a new file with the
+  current settings; originals are not changed and clashing names are numbered.
+  Files that are not TXT, larger than 1 GiB or listed twice are skipped with a
+  reason, and a failed file does not stop the rest. Batch conversion does not
+  use the daily allowance; without Pro the Pro prompt appears
+  ([#25](https://github.com/gewill/OpenCCman/issues/25)).
+- On iPhone and iPad, Convert Chinese Text in the Share sheet converts text
+  shared from other apps with a preset chosen in the extension, which keeps the
+  last choice. The result can be copied, shared or returned to apps that accept
+  it. It is free, does not use the daily allowance and accepts up to 10 MiB
+  ([#29](https://github.com/gewill/OpenCCman/issues/29)).
+- When converting to Simplified Chinese, Source Standard (OpenCC, Taiwan or
+  Hong Kong) selects t2s, tw2s or hk2s, and Taiwan sources can also convert
+  regional phrases (tw2sp). Saved settings keep converting with t2s. Services
+  and the global shortcut use the same settings
+  ([#303](https://github.com/gewill/OpenCCman/issues/303)).
 
 ### Changed
 
+- Hong Kong regional phrases: Traditional Chinese with the Hong Kong standard
+  and HongKong Idiom now converts with s2hkp (Hong Kong characters and phrases)
+  instead of Hong Kong characters with Taiwan phrases, and Simplified Chinese
+  from a Hong Kong source can convert regional phrases (hk2sp). Saved settings
+  that used these combinations produce different output after the update
+  ([#304](https://github.com/gewill/OpenCCman/issues/304)).
 - On Mac, the Convert global shortcut replaces the selection again in the
   sandboxed app: it copies the selection, converts it and pastes the result
   back without opening the main window. The paste is cancelled if the app,
@@ -38,6 +73,31 @@ Changes not yet assigned to a published version.
   systems keep the Accessibility name.
 - Traditional Chinese wording now uses 輔助使用 for the Accessibility
   permission before macOS 27 and 拷貝 for Copy, matching macOS.
+- The Feedback page uses support@gewill.org for the shown address, the copy
+  button and the mail link; the X/Twitter and Xiaohongshu entries are removed.
+
+### Fixed
+
+- On Mac, sheets such as What's New and the large-file panel follow the in-app
+  text size, and a single TXT file dropped from Finder keeps its file name.
+- Short Chinese labels in segmented options, such as OpenCC標準, stay
+  horizontal when there is room
+  ([#324](https://github.com/gewill/OpenCCman/issues/324)).
+- On Mac at 150% text, page titles are no longer covered by the back button,
+  and the permission row wraps between words
+  ([#334](https://github.com/gewill/OpenCCman/issues/334)).
+
+### Development
+
+- SwiftyOpenCC exposes all 16 official OpenCC configurations (OpenCC 1.4.2 is
+  unchanged); the app uses them for Hong Kong phrases
+  ([#302](https://github.com/gewill/OpenCCman/issues/302)).
+- Dependencies: RevenueCat and RevenueCatUI 5.78.0 → 5.103.0, KeyboardShortcuts
+  2.4.0 → 3.1.0, IQKeyboardManager 6.5.16 → 8.0.3, ColorfulX 5.8.3 → 6.2.1
+  (fixes a thread lock in the Pro gradient) and SwiftUI Introspect 26.0.0 →
+  27.1.0. Real purchases and restores with the new RevenueCat are not verified
+  yet ([#14](https://github.com/gewill/OpenCCman/issues/14),
+  [#71](https://github.com/gewill/OpenCCman/issues/71)).
 
 ## [2.2] - 2026-11-01
 
