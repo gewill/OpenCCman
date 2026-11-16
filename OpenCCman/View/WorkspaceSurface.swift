@@ -423,8 +423,24 @@ struct ConversionSettingsSheet: View {
         ToolbarItem(placement: .confirmationAction) { doneButton }
       }
       .appNavigation("workspace_settings", showsBack: false)
+      .modifier(TallSheetSizing())
     #endif
   }
+
+  #if os(iOS)
+  /// The swap row (#305) made the settings taller than an iPad form sheet in
+  /// portrait, cutting off Region Idiom. A page-sized sheet shows every row
+  /// again; iPhone sheets are unaffected, and earlier iPadOS versions scroll.
+  private struct TallSheetSizing: ViewModifier {
+    func body(content: Content) -> some View {
+      if #available(iOS 18.0, *) {
+        content.presentationSizing(.page)
+      } else {
+        content
+      }
+    }
+  }
+  #endif
 
   private var doneButton: some View {
     Button { windowState.showingConversionSettings = false } label: {
