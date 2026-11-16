@@ -119,13 +119,15 @@ enum ShortcutPastePolicy {
 }
 
 enum ShortcutPasteOutcome: Equatable {
+    /// Something read the converted text: normally the app's paste, but input methods
+    /// and clipboard tools that read every clipboard change look the same.
     case pasted
-    /// No app read the converted text after ⌘V (read-only text, no paste target).
+    /// Nothing read the converted text while it was held (read-only text, no paste target).
     case notAccepted
 }
 
-/// Supplies the converted text only when an app reads it. That read is the only
-/// observable sign that ⌘V reached a paste target. AppKit calls it on the main thread.
+/// Supplies the converted text only when something reads it. Not being read at all is
+/// the only reliable sign that ⌘V reached no paste target. AppKit calls it on the main thread.
 final class ShortcutPasteProvider: NSObject, NSPasteboardItemDataProvider, @unchecked Sendable {
     private let text: String
     private(set) var wasRequested = false
@@ -156,7 +158,7 @@ final class ShortcutClipboardTransaction {
     private let readActivity: () -> ShortcutInputActivity
     private let sendKey: (CGKeyCode) async -> Bool
     private let now: () -> TimeInterval
-    private let pasteTimeout: TimeInterval
+    private let pasteHold: TimeInterval
     private let expectedActivity: ShortcutInputActivity
     private var expectedClipboardCount: Int
     private let started: TimeInterval
@@ -187,13 +189,13 @@ final class ShortcutClipboardTransaction {
          readActivity: @escaping () -> ShortcutInputActivity,
          sendKey: @escaping (CGKeyCode) async -> Bool,
          now: @escaping () -> TimeInterval = { ProcessInfo.processInfo.systemUptime },
-         pasteTimeout: TimeInterval = 1.5) {
+         pasteHold: TimeInterval = 1.5) {
         self.pasteboard = pasteboard
         self.sourceIsFrontmost = sourceIsFrontmost
         self.readActivity = readActivity
         self.sendKey = sendKey
         self.now = now
-        self.pasteTimeout = pasteTimeout
+        self.pasteHold = pasteHold
         expectedActivity = readActivity()
         expectedClipboardCount = pasteboard.changeCount
         started = now()
@@ -282,23 +284,16 @@ final class ShortcutClipboardTransaction {
             throw ShortcutFailure.clipboardChanged
         }
         try checkTarget()
-        let readBeforePaste = provider.wasRequested
         guard await sendKey(CGKeyCode(kVK_ANSI_V)) else { throw ShortcutFailure.copyUnavailable }
-        if readBeforePaste {
-            // Another reader (a clipboard tool ignoring the transient marker) took the
-            // text first, so the app's own read is no longer observable.
-            await shortcutPause(0.8)
-            return .pasted
-        }
-        // Keep the text until the app reads it, so a slow app never pastes the
-        // restored clipboard; no read at all means the app ignored ⌘V.
-        for _ in 0..<max(1, Int((pasteTimeout / 0.02).rounded())) {
-            if provider.wasRequested || pasteboard.changeCount != ownership { break }
+        // Input methods and clipboard tools may read each change within a few hundred
+        // milliseconds, even with the transient marker, so the first read can come
+        // before a slow app's. Keep the text for the whole hold, so the app never pastes
+        // the restored clipboard; a newer copy is the user's and ends the hold.
+        for _ in 0..<max(1, Int((pasteHold / 0.02).rounded())) {
+            if pasteboard.changeCount != ownership { break }
             await shortcutPause(0.02)
         }
-        guard provider.wasRequested else { return .notAccepted }
-        await shortcutPause(0.2)
-        return .pasted
+        return provider.wasRequested ? .pasted : .notAccepted
     }
 }
 

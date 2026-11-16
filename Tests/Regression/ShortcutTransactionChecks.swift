@@ -20,6 +20,10 @@ private final class Fixture {
     /// Whether the host reads the clipboard for ⌘V, and how late.
     var pasteReads = true
     var pasteDelay: TimeInterval?
+    /// Seconds after ⌘V before an input method or clipboard tool reads the new text, as
+    /// some read every clipboard change regardless of the transient marker (nil: none).
+    var backgroundReadDelay: TimeInterval?
+    var backgroundRead: String?
     var emptySelectionMetadata = false
     var clock: TimeInterval = 1_000
 
@@ -39,7 +43,7 @@ private final class Fixture {
         board.writeObjects([item])
     }
 
-    func transaction(pasteTimeout: TimeInterval = 0.4) -> ShortcutClipboardTransaction {
+    func transaction(pasteHold: TimeInterval = 0.4) -> ShortcutClipboardTransaction {
         ShortcutClipboardTransaction(pasteboard: board, sourceIsFrontmost: { self.frontmost },
             readActivity: { self.activity },
             sendKey: { key in
@@ -56,6 +60,11 @@ private final class Fixture {
                     self.afterCopy?()
                 } else if key == CGKeyCode(kVK_ANSI_V) {
                     self.pasteTypes = self.board.types ?? []
+                    if let delay = self.backgroundReadDelay {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                            self.backgroundRead = self.board.string(forType: .string)
+                        }
+                    }
                     if self.pasteReads {
                         if let delay = self.pasteDelay {
                             DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
@@ -68,7 +77,7 @@ private final class Fixture {
                     self.afterPaste?()
                 }
                 return true
-            }, now: { self.clock }, pasteTimeout: pasteTimeout)
+            }, now: { self.clock }, pasteHold: pasteHold)
     }
 
     func release() { board.releaseGlobally() }
@@ -166,12 +175,34 @@ enum ShortcutTransactionChecks {
         // A slow app still reads the converted text, not the restored clipboard.
         let slow = Fixture(); defer { slow.release() }
         slow.pasteDelay = 0.25
-        let slowTransaction = slow.transaction(pasteTimeout: 1)
+        let slowTransaction = slow.transaction(pasteHold: 1)
         let slowText = try await slowTransaction.capture().text
         let outcome3 = try await slowTransaction.replace(originalText: slowText, with: "慢速结果")
         precondition(outcome3 == .pasted)
         precondition(slow.pasteResult == "慢速结果", "A slow paste must not get the old clipboard")
         precondition(slow.board.string(forType: .string) == "original clipboard")
+
+        // An input method reading every clipboard change takes the text before the slow
+        // app does: that first read must not end the hold and restore the clipboard early.
+        let watched = Fixture(); defer { watched.release() }
+        watched.backgroundReadDelay = 0.05
+        watched.pasteDelay = 0.3
+        let watchedTransaction = watched.transaction(pasteHold: 1)
+        let watchedText = try await watchedTransaction.capture().text
+        let outcome4 = try await watchedTransaction.replace(originalText: watchedText, with: "慢速结果")
+        precondition(outcome4 == .pasted)
+        precondition(watched.backgroundRead == "慢速结果")
+        precondition(watched.pasteResult == "慢速结果", "A read by another process must not end the hold")
+        precondition(watched.board.string(forType: .string) == "original clipboard")
+
+        // Such a reader also hides an ignored paste (read-only text): the result is then
+        // not shown, but the clipboard is still restored.
+        let watchedReadOnly = Fixture(); defer { watchedReadOnly.release() }
+        watchedReadOnly.backgroundReadDelay = 0.05
+        watchedReadOnly.pasteReads = false
+        let hidden = watchedReadOnly.transaction(); let hiddenText = try await hidden.capture().text
+        _ = try await hidden.replace(originalText: hiddenText, with: "结果")
+        precondition(watchedReadOnly.board.string(forType: .string) == "original clipboard")
 
         // Clipboard data that cannot be read is refused before any key is sent.
         let unreadable = Fixture(); defer { unreadable.release() }
@@ -202,7 +233,7 @@ enum ShortcutTransactionChecks {
         precondition(ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: "com.apple.TextEdit", copy: line))
         precondition(ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: nil, copy: plain))
 
-        print("PASS: shortcut transaction success with transient and restore markers, clipboard restored on every cancellation (including a copy that lands after the app switch), changed selection, app switch, mouse/scroll activity and held keys, same-text return, typing over the selection, 5 s limit, clipboard ownership, no copy response, VS Code empty selection, ignored paste, slow paste, unreadable clipboard, later copy preservation, paste policy.")
+        print("PASS: shortcut transaction success with transient and restore markers, clipboard restored on every cancellation (including a copy that lands after the app switch), changed selection, app switch, mouse/scroll activity and held keys, same-text return, typing over the selection, 5 s limit, clipboard ownership, no copy response, VS Code empty selection, ignored paste, slow paste (also after another process read the text first), unreadable clipboard, later copy preservation, paste policy.")
     }
 
     @MainActor
