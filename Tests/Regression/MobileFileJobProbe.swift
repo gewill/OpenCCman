@@ -31,7 +31,7 @@ import OpenCC
       try await service.discard(ready.id)
       print("PASS: fresh process validated and exported complete result")
     } else {
-      _ = try await service.convert(source: URL(fileURLWithPath: arguments[3]), options: [.traditionalize, .twIdiom])
+      _ = try await service.convert(source: URL(fileURLWithPath: arguments[3]), configuration: .s2twp)
       guard mode == "ready" else { throw MobileLargeFileService.JobError.invalidJournal }
       raise(SIGKILL)
     }
