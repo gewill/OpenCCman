@@ -248,7 +248,7 @@ import OpenCC
   _ = try await ChineseConversionService.shared.convert("", configuration: .t2s)
   await Task.yield()
   precondition(model.inputText == fixtures.last! && model.resultText.isEmpty && !model.isLoading)
-  print("PASS: presets, UTF-8/BOM/Unicode/NUL files, size limit, invalid input, cancellation and import replacement")
+  print("PASS: source × target: 10 pairs give the 14 official configurations, invalid targets fall back, swap and new sources; 72 pre-#305 settings migrate once (OpenCC + Taiwan phrases → s2twp); t2tw/t2hk/tw2t/hk2t match OpenCC 1.4.2; iOS job record codes; presets, UTF-8/BOM/Unicode/NUL files, size limit, invalid input, cancellation and import replacement")
 }
 
 @MainActor private func waitForImport(_ model: HomeViewModel) async {
