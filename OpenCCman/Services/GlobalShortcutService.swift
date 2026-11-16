@@ -355,10 +355,10 @@ class GlobalShortcutService: ObservableObject {
 
     private func showAccessibilityPermissionAlert() {
         let alert = NSAlert()
-        alert.messageText = NSLocalizedString("Accessibility Permission Required", comment: "")
+        alert.messageText = "Accessibility Permission Required".localizedNamingAccessibilityPermission()
 
         // Build the informative text using structured localization keys
-        let intro = NSLocalizedString("accessibility_permission_intro", comment: "")
+        let intro = "accessibility_permission_intro".localizedNamingAccessibilityPermission()
         let instructionsTitle = NSLocalizedString("accessibility_permission_instructions_title", comment: "")
         let step1 = NSLocalizedString("accessibility_permission_step1", comment: "")
         let step2 = NSLocalizedString("accessibility_permission_step2", comment: "")
@@ -454,7 +454,7 @@ class GlobalShortcutService: ObservableObject {
     private func report(_ failure: ShortcutFailure, near source: pid_t? = nil) {
         let enabled = UserDefaults.standard.object(forKey: UserDefaultsKeys.shortcutFailureToast.rawValue) as? Bool ?? true
         if enabled {
-            ShortcutToast.shared.show(NSLocalizedString(failure.messageKey, comment: ""), success: false, near: source)
+            ShortcutToast.shared.show(failure.messageKey.localizedNamingAccessibilityPermission(), success: false, near: source)
         }
     }
 

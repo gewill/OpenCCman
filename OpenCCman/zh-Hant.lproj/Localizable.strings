@@ -92,9 +92,11 @@
 
 "help_method1_title" = "方法一：右鍵服務（推薦用於取代文字）";
 "help_method1_content" = "OpenCCman 提供兩種右鍵服務：\n\n• 「Convert Chinese Text with OpenCCman」- 依目前設定轉換選取的文字，並直接取代原文\n• 「Open Selected Text in OpenCCman」- 開啟應用程式，將選取文字載入以便手動轉換\n\n1. 在支援「服務」的應用程式（如文字編輯）中選取文字\n2. 右鍵點擊並從「服務」選單中選擇您偏好的服務\n3. 轉換服務：文字將轉換並直接取代\n4. 開啟服務：OpenCCman 將開啟並載入文字，準備進行轉換\n\n使用服務不需要輔助使用權限。";
+"help_method1_content_macos27" = "OpenCCman 提供兩種右鍵服務：\n\n• 「Convert Chinese Text with OpenCCman」- 依目前設定轉換選取的文字，並直接取代原文\n• 「Open Selected Text in OpenCCman」- 開啟應用程式，將選取文字載入以便手動轉換\n\n1. 在支援「服務」的應用程式（如文字編輯）中選取文字\n2. 右鍵點擊並從「服務」選單中選擇您偏好的服務\n3. 轉換服務：文字將轉換並直接取代\n4. 開啟服務：OpenCCman 將開啟並載入文字，準備進行轉換\n\n使用服務不需要「裝置控制和資料取用」權限。";
 
 "help_method2_title" = "方法二：全域鍵盤快速鍵";
 "help_method2_content" = "OpenCCman 提供兩種全域鍵盤快速鍵：\n\n• 轉換選取文字（預設：⌘⌥T）：拷貝、轉換並貼回可編輯的文字欄位，不開啟主視窗；唯讀文字、終端機或不接受貼上的應用程式會改為在 OpenCCman 中顯示原文和結果\n• 開啟選取文字（預設：⌘⌥R）：在 OpenCCman 中開啟選取文字以便手動轉換\n\n1. 在「設定 > 全域快速鍵」中設定按鍵並授予輔助使用權限\n2. 在可編輯的文字欄位中選取中文文字\n3. 按下快速鍵，完成前保持應用程式與選取文字不變\n\n偵測到輸入、前景應用程式、剪貼板或選取文字變更時，會取消取代。失敗提示與成功提示可分別開關。";
+"help_method2_content_macos27" = "OpenCCman 提供兩種全域鍵盤快速鍵：\n\n• 轉換選取文字（預設：⌘⌥T）：拷貝、轉換並貼回可編輯的文字欄位，不開啟主視窗；唯讀文字、終端機或不接受貼上的應用程式會改為在 OpenCCman 中顯示原文和結果\n• 開啟選取文字（預設：⌘⌥R）：在 OpenCCman 中開啟選取文字以便手動轉換\n\n1. 在「設定 > 全域快速鍵」中設定按鍵並授予「裝置控制和資料取用」權限\n2. 在可編輯的文字欄位中選取中文文字\n3. 按下快速鍵，完成前保持應用程式與選取文字不變\n\n偵測到輸入、前景應用程式、剪貼板或選取文字變更時，會取消取代。失敗提示與成功提示可分別開關。";
 
 "help_service_tip" = "如需用快速鍵直接取代文字，可在「系統設定 > 鍵盤 > 鍵盤快速鍵 > 服務 > 文字」中為「Convert Chinese Text with OpenCCman」設定快速鍵。";
 
@@ -102,6 +104,7 @@
 "help_service_details_content" = "• 轉換服務：適合快速自動轉換，當您對目前設定有信心時使用\n• 開啟服務：適合想要查看文字、調整轉換設定或保持原文和轉換文字同時可見時使用\n• 兩種服務只會出現在支援 macOS「服務」選單的應用程式中，部分應用程式可能不提供";
 
 "help_conclusion" = "在支援的可編輯文字欄位中，可用轉換快速鍵原位取代文字；轉換期間偵測到變更時會取消取代。服務是不需要輔助使用權限的替代方式。如需在 OpenCCman 中檢視或調整設定，請使用「開啟選取文字」。";
+"help_conclusion_macos27" = "在支援的可編輯文字欄位中，可用轉換快速鍵原位取代文字；轉換期間偵測到變更時會取消取代。服務是不需要「裝置控制和資料取用」權限的替代方式。如需在 OpenCCman 中檢視或調整設定，請使用「開啟選取文字」。";
 
 // MARK: - Services
 "Convert Chinese Text with OpenCCman" = "使用 OpenCCman 轉換中文文本";
@@ -125,6 +128,7 @@
 "Test" = "測試";
 "Permissions" = "權限";
 "Accessibility Permission Required" = "需要輔助使用權限";
+"Accessibility Permission Required_macos27" = "需要「裝置控制和資料取用」權限";
 "Open System Preferences" = "開啟系統偏好設定";
 "Cancel" = "取消";
 "Grant Permission" = "授予權限";
@@ -132,18 +136,23 @@
 "Refresh" = "重新整理";
 "OK" = "確定";
 "Accessibility permission granted" = "已授予輔助使用權限";
+"Accessibility permission granted_macos27" = "已授予「裝置控制和資料取用」權限";
 "Accessibility permission required" = "需要輔助使用權限";
+"Accessibility permission required_macos27" = "需要「裝置控制和資料取用」權限";
 
 "Global shortcut feature is only available on macOS" = "全域快速鍵功能僅在 macOS 上可用";
 "shortcut_instructions_enabled" = "1. 啟用上方的全域快速鍵\n2. 設定您喜歡的按鍵組合\n3. 在支援的可編輯文字欄位中選取中文文字\n4. 按下快速鍵：\n   • 轉換：轉換並貼回原應用程式；唯讀文字或終端機會改為在 OpenCCman 中顯示結果\n   • 開啟：在 OpenCCman 中載入選取文字以便手動轉換\n\n完成前請保持應用程式與選取文字不變，偵測到變更時會取消取代。可在上方設定提示。";
 "shortcut_instructions_disabled" = "要使用全域快速鍵功能：\n1. 首先授予上面的輔助使用權限\n2. 授予權限後，點擊「重新整理」更新狀態\n3. 然後啟用全域快速鍵並配置您的快速鍵\n\n輔助使用權限用於向其他應用程式傳送拷貝和貼上按鍵。";
+"shortcut_instructions_disabled_macos27" = "要使用全域快速鍵功能：\n1. 首先授予上面的「裝置控制和資料取用」權限\n2. 授予權限後，點擊「重新整理」更新狀態\n3. 然後啟用全域快速鍵並配置您的快速鍵\n\n「裝置控制和資料取用」權限用於向其他應用程式傳送拷貝和貼上按鍵。";
 "shortcut_tips" = "• 唯讀文字或終端機中的結果會顯示在 OpenCCman 中，不會貼上\n• 轉換完成前保持選取文字不變\n• 全域快速鍵與服務使用不同的按鍵組合\n• 失敗提示與成功提示可分別開關";
 "shortcut_services_title" = "取代選取文字";
 "shortcut_services_content" = "服務是不需要輔助使用權限的替代方式，適用於支援服務的應用程式。從「服務」選單選擇「Convert Chinese Text with OpenCCman」，或在「系統設定 > 鍵盤 > 鍵盤快速鍵 > 服務 > 文字」中為它設定快速鍵。請使用與全域快速鍵不同的按鍵組合。";
+"shortcut_services_content_macos27" = "服務是不需要「裝置控制和資料取用」權限的替代方式，適用於支援服務的應用程式。從「服務」選單選擇「Convert Chinese Text with OpenCCman」，或在「系統設定 > 鍵盤 > 鍵盤快速鍵 > 服務 > 文字」中為它設定快速鍵。請使用與全域快速鍵不同的按鍵組合。";
 "Open Keyboard Settings" = "開啟鍵盤設定";
 
 // MARK: - Accessibility Permission Alert
 "accessibility_permission_intro" = "OpenCCman 需要輔助使用權限，才能拷貝其他應用程式中選取的文字並把結果貼回去。";
+"accessibility_permission_intro_macos27" = "OpenCCman 需要「裝置控制和資料取用」權限，才能拷貝其他應用程式中選取的文字並把結果貼回去。";
 "accessibility_permission_instructions_title" = "請按以下步驟操作：";
 "accessibility_permission_step1" = "1. 點擊下方的「開啟系統偏好設定」";
 "accessibility_permission_step2" = "2. 在列表中找到「OpenCCman」";
@@ -400,6 +409,7 @@
 "shortcut_copy_unavailable" = "無法讀取選取文字，請選取文字後再試。";
 
 "shortcut_permission_required" = "請在「系統設定 > 隱私權與安全性 > 輔助使用」中允許 OpenCCman，以使用全域快速鍵。";
+"shortcut_permission_required_macos27" = "請在「系統設定 > 隱私權與安全性 > 裝置控制和資料取用」中允許 OpenCCman，以使用全域快速鍵。";
 
 "shortcut_conversion_failed" = "轉換失敗，原文未被取代。";
 

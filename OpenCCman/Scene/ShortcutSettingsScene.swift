@@ -16,6 +16,7 @@ struct ShortcutSettingsScene: View {
     @AppStorage(UserDefaultsKeys.shortcutFailureToast.rawValue) private var failureToast = true
     @AppStorage(UserDefaultsKeys.shortcutSuccessToast.rawValue) private var successToast = false
     @ObservedObject private var shortcutService = GlobalShortcutService.shared
+    @Environment(\.locale) private var locale
     #endif
 
     var body: some View {
@@ -164,9 +165,9 @@ struct ShortcutSettingsScene: View {
                         Text("How to Use".localizedStringKey)
                             .appFont(.headline)
 
-                        Text(shortcutService.hasAccessibilityPermission ?
-                            "shortcut_instructions_enabled".localizedStringKey :
-                            "shortcut_instructions_disabled".localizedStringKey)
+                        Text(verbatim: (shortcutService.hasAccessibilityPermission ?
+                            "shortcut_instructions_enabled" : "shortcut_instructions_disabled")
+                            .localizedNamingAccessibilityPermission(in: locale))
                         .appFont(.body)
                         .foregroundColor(Color.Neumorphic.secondary.opacity(0.8))
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -183,7 +184,7 @@ struct ShortcutSettingsScene: View {
                         Text("shortcut_services_title".localizedStringKey)
                             .appFont(.headline)
 
-                        Text("shortcut_services_content".localizedStringKey)
+                        Text(verbatim: "shortcut_services_content".localizedNamingAccessibilityPermission(in: locale))
                         .appFont(.body)
                         .foregroundColor(Color.Neumorphic.secondary.opacity(0.8))
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -266,7 +267,8 @@ struct ShortcutSettingsScene: View {
     }
 
     private var permissionStatus: some View {
-        Text(shortcutService.hasAccessibilityPermission ? "Accessibility permission granted".localizedStringKey : "Accessibility permission required".localizedStringKey)
+        Text(verbatim: (shortcutService.hasAccessibilityPermission ? "Accessibility permission granted" : "Accessibility permission required")
+            .localizedNamingAccessibilityPermission(in: locale))
             .appFont(.body)
     }
 

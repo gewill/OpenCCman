@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HelpScene: View {
   @Environment(\.selectedLocale) private var selectedLocale: Binding<LocaleConstants>
+  @Environment(\.locale) private var locale
 
   // MARK: - life cycle
 
@@ -70,7 +71,7 @@ struct HelpScene: View {
               VStack(alignment: .leading, spacing: 4) {
                 Text("help_method1_title".localizedStringKey)
                   .appFont(.subheadline, weight: .medium)
-                Text("help_method1_content".localizedStringKey)
+                Text(verbatim: "help_method1_content".localizedNamingAccessibilityPermission(in: locale))
                   .appFont(.body)
               }
               .padding(.top, 8)
@@ -94,13 +95,13 @@ struct HelpScene: View {
               VStack(alignment: .leading, spacing: 4) {
                 Text("help_method2_title".localizedStringKey)
                   .appFont(.subheadline, weight: .medium)
-                Text("help_method2_content".localizedStringKey)
+                Text(verbatim: "help_method2_content".localizedNamingAccessibilityPermission(in: locale))
                   .appFont(.body)
               }
               .padding(.top, 8)
 
               // Conclusion
-              Text("help_conclusion".localizedStringKey)
+              Text(verbatim: "help_conclusion".localizedNamingAccessibilityPermission(in: locale))
                 .appFont(.body, weight: .medium)
                 .padding(.top, 8)
             }
