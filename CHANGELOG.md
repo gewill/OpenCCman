@@ -20,15 +20,22 @@ Changes not yet assigned to a published version.
 - On Mac, the Convert global shortcut replaces the selection again in the
   sandboxed app: it copies the selection, converts it and pastes the result
   back without opening the main window. The paste is cancelled if the app,
-  input, clipboard or selection changes, and the clipboard is restored. When
-  the app does not read the pasted text (read-only text) or is a terminal,
-  OpenCCman shows the original and the result instead.
+  input, clipboard or selection changes, and the clipboard is restored. In
+  terminals, OpenCCman shows the original and the result instead; read-only
+  text is shown the same way unless an input method or clipboard tool reads
+  the clipboard first, so the help suggests Open Selected Text for it.
+- The converted text stays on the clipboard for 1.5 seconds after pasting,
+  so a slow app does not paste the restored clipboard, and it is not offered
+  to other devices through Universal Clipboard.
 - Shortcut failures and successes appear as a brief notice that VoiceOver
   reads; failure notices are on by default and success notices off, each
   switchable in Settings > Global Shortcut. A missing Accessibility permission
   always shows the permission prompt.
-- Traditional Chinese wording now uses 輔助使用 for Accessibility and 拷貝
-  for Copy, matching macOS.
+- On macOS 27, the app calls the permission Device Control and Data Access
+  (设备控制和数据访问, 裝置控制和資料取用), as System Settings does; earlier
+  systems keep the Accessibility name.
+- Traditional Chinese wording now uses 輔助使用 for the Accessibility
+  permission before macOS 27 and 拷貝 for Copy, matching macOS.
 
 ## [2.2] - 2026-11-01
 
