@@ -1,15 +1,16 @@
 #if os(iOS)
   import Foundation
   import IQKeyboardManagerSwift
+  import IQKeyboardToolbarManager
   import UIKit
 
   class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
       // SwiftUI owns keyboard avoidance; a second manager must not translate
       // the hosting controller or inject a duplicate keyboard toolbar.
-      IQKeyboardManager.shared.enable = false
-      IQKeyboardManager.shared.enableAutoToolbar = false
-      IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+      IQKeyboardManager.shared.isEnabled = false
+      IQKeyboardToolbarManager.shared.isEnabled = false
+      IQKeyboardManager.shared.resignOnTouchOutside = true
 
       return true
     }
@@ -65,9 +66,11 @@
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
       if terminationTask != nil { return .terminateLater }
-      guard MacLargeFileCoordinator.shared.isBusy else { return .terminateNow }
+      let batch = MacBatchConversionCoordinator.shared
+      guard MacLargeFileCoordinator.shared.isBusy || batch.isBusy else { return .terminateNow }
       terminationTask = Task {
         await MacLargeFileCoordinator.shared.prepareForTermination()
+        await batch.prepareForTermination()
         sender.reply(toApplicationShouldTerminate: true)
       }
       return .terminateLater
@@ -146,6 +149,9 @@
       if window?.isMiniaturized == true { window?.deminiaturize(nil) }
       window?.makeKeyAndOrderFront(nil)
       NSApp.activate(ignoringOtherApps: true)
+      // macOS may decline activation that comes a while after the user's action (a
+      // shortcut result shown after the paste hold); keep the window visible anyway.
+      window?.orderFrontRegardless()
       return window
     }
 
@@ -169,6 +175,7 @@
         guard let pending = pendingWindowNotification,
               pending.window == nil || pending.window === window else { return }
         pendingWindowNotification = nil
+        window.orderFrontRegardless()
         NotificationCenter.default.post(name: pending.name, object: window, userInfo: pending.userInfo)
       }
     }
@@ -336,11 +343,7 @@
               return
           }
 
-          let options = ConversionConfiguration(
-              target: appDefaults[\.targetOptions],
-              variant: appDefaults[\.variantOptions],
-              region: appDefaults[\.regionOptions]
-          ).options
+          let options = ConversionConfiguration.saved.options
 
           do {
               let convertedText = try ChineseConversionService.convertSynchronously(string, options: options)

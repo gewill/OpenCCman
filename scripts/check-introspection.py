@@ -31,7 +31,7 @@ with tempfile.TemporaryDirectory(prefix="openccman-introspection-") as directory
         declaration = f'.package(url: {json.dumps(pin["location"])}, revision: {json.dumps(pin["state"]["revision"])})'
     sources = package / "Sources/Checks"
     sources.mkdir(parents=True)
-    for relative in ["OpenCCman/extensions/ViewExtensions.swift", "OpenCCman/extensions/StringExtensions.swift", "OpenCCman/View/AppTypography.swift", "OpenCCman/Model/WorkspaceEditorReadingState.swift", "OpenCCman/View/WorkspaceScrollKeeper.swift", "OpenCCman/View/WorkspaceTextEditor.swift", "Tests/Regression/IntrospectionChecks.swift", "OpenCCman/View/MainWindowSizing.swift", "OpenCCman/Model/MainWindowGeometry.swift"]:
+    for relative in ["OpenCCman/extensions/ViewExtensions.swift", "OpenCCman/extensions/StringExtensions.swift", "OpenCCman/View/AppTypography.swift", "OpenCCman/Model/WorkspaceEditorReadingState.swift", "OpenCCman/View/WorkspaceScrollKeeper.swift", "OpenCCman/View/WorkspaceTextEditor.swift", "OpenCCman/Model/ConversionDiff.swift", "OpenCCman/Model/ConversionDiffSnapshot.swift", "Tests/Regression/IntrospectionChecks.swift", "OpenCCman/View/MainWindowSizing.swift", "OpenCCman/Model/MainWindowGeometry.swift"]:
         shutil.copy2(root / relative, sources / Path(relative).name)
     styles = (root / "OpenCCman/Styles/Styles.swift").read_text()
     anchor = "extension View {\n  @ViewBuilder\n  func modify"
@@ -40,7 +40,7 @@ with tempfile.TemporaryDirectory(prefix="openccman-introspection-") as directory
     (sources / "Modify.swift").write_text("import SwiftUI\n" + styles[styles.index(anchor):])
     (package / "Package.swift").write_text('''// swift-tools-version: 6.0
 import PackageDescription
-let package = Package(name: "IntrospectionChecks", platforms: [.macOS(.v11)],
+let package = Package(name: "IntrospectionChecks", platforms: [.macOS(.v12)],
     dependencies: [''' + declaration + '''], targets: [
         .executableTarget(name: "Checks", dependencies: [
             .product(name: "SwiftUIIntrospect", package: "swiftui-introspect")

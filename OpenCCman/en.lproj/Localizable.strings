@@ -12,18 +12,21 @@
 "help_global_service_title" = "Global Service (macOS)";
 "help_global_service_intro" = "OpenCCman provides multiple ways to convert Chinese text from any application:";
 
-"help_method1_title" = "Method 1: Global Keyboard Shortcuts (Recommended)";
-"help_method1_content" = "OpenCCman provides two global keyboard shortcuts:\n\n• Convert Selected Text (default: ⌘⌥T) - Automatically converts and replaces selected text in editable fields\n• Open Selected Text (default: ⌘⌥R) - Opens selected text in OpenCCman for manual conversion\n\n1. Go to Settings > Global Shortcut to configure your shortcuts\n2. Select any Chinese text in any application\n3. Press your configured shortcut\n4. Convert shortcut: Text will be automatically converted and replaced in-place (works in text editors, browsers, etc.)\n5. Open shortcut: OpenCCman will open with the text ready for conversion";
+"help_method1_title" = "Method 1: Right-click Services (Recommended for Replacing Text)";
+"help_method1_content" = "OpenCCman provides two right-click services:\n\n• \"Convert Chinese Text with OpenCCman\" - Converts the selected text with your current settings and replaces it in place\n• \"Open Selected Text in OpenCCman\" - Opens the app with the selected text for manual conversion\n\n1. Select text in an app that supports Services, such as TextEdit\n2. Right-click and choose your preferred service from the Services menu\n3. For convert service: text is converted and replaced in place\n4. For open service: OpenCCman opens with the text ready for conversion\n\nServices don't need Accessibility permission.";
+"help_method1_content_macos27" = "OpenCCman provides two right-click services:\n\n• \"Convert Chinese Text with OpenCCman\" - Converts the selected text with your current settings and replaces it in place\n• \"Open Selected Text in OpenCCman\" - Opens the app with the selected text for manual conversion\n\n1. Select text in an app that supports Services, such as TextEdit\n2. Right-click and choose your preferred service from the Services menu\n3. For convert service: text is converted and replaced in place\n4. For open service: OpenCCman opens with the text ready for conversion\n\nServices don't need Device Control and Data Access.";
 
-"help_method2_title" = "Method 2: Right-click Services";
-"help_method2_content" = "OpenCCman provides two right-click services:\n\n• \"Convert Chinese Text with OpenCCman\" - Automatically converts and replaces the selected text\n• \"Open Selected Text in OpenCCman\" - Opens the app with the selected text for manual conversion\n\n1. Select text in any app (Safari, TextEdit, etc.)\n2. Right-click and choose your preferred service from the Services menu\n3. For convert service: text is automatically converted and replaced\n4. For open service: OpenCCman opens with the text ready for conversion";
+"help_method2_title" = "Method 2: Global Keyboard Shortcuts";
+"help_method2_content" = "OpenCCman provides two global keyboard shortcuts:\n\n• Convert Selected Text (default: ⌘⌥T): copies, converts, and pastes back into an editable text field without opening the main window. Where a paste can't replace the selection, such as in terminals, OpenCCman shows the original and the result instead; for read-only text, use Open Selected Text\n• Open Selected Text (default: ⌘⌥R): opens the selection in OpenCCman for manual conversion\n\n1. Configure shortcuts and grant Accessibility permission in Settings > Global Shortcut\n2. Select Chinese text in an editable text field\n3. Press the shortcut and keep the app and selection unchanged until it finishes\n\nReplacement is cancelled if input, the active app, clipboard, or selected text changes. Failure and success messages can be switched on or off separately.";
+"help_method2_content_macos27" = "OpenCCman provides two global keyboard shortcuts:\n\n• Convert Selected Text (default: ⌘⌥T): copies, converts, and pastes back into an editable text field without opening the main window. Where a paste can't replace the selection, such as in terminals, OpenCCman shows the original and the result instead; for read-only text, use Open Selected Text\n• Open Selected Text (default: ⌘⌥R): opens the selection in OpenCCman for manual conversion\n\n1. Configure shortcuts and grant Device Control and Data Access in Settings > Global Shortcut\n2. Select Chinese text in an editable text field\n3. Press the shortcut and keep the app and selection unchanged until it finishes\n\nReplacement is cancelled if input, the active app, clipboard, or selected text changes. Failure and success messages can be switched on or off separately.";
 
-"help_service_tip" = "You can also assign keyboard shortcuts to these services in System Settings > Keyboard > Keyboard Shortcuts > Services > Text for even faster access.";
+"help_service_tip" = "To replace text with a keyboard shortcut, assign one to \"Convert Chinese Text with OpenCCman\" in System Settings > Keyboard > Keyboard Shortcuts > Services > Text.";
 
 "help_service_details_title" = "Service Details";
-"help_service_details_content" = "• Convert Service: Best for quick, automatic conversion when you're confident with current settings\n• Open Service: Perfect when you want to review the text, adjust conversion settings, or keep both original and converted text visible\n• Both services work in any macOS application that supports text selection";
+"help_service_details_content" = "• Convert Service: Best for quick, automatic conversion when you're confident with current settings\n• Open Service: Perfect when you want to review the text, adjust conversion settings, or keep both original and converted text visible\n• Both services are available in apps that support the macOS Services menu; some apps may not offer them";
 
-"help_conclusion" = "The keyboard shortcut method is fastest for immediate conversion. Use the \"Open Selected Text\" service when you want to review or adjust settings before converting.";
+"help_conclusion" = "Use the Convert global shortcut to replace text in a supported editable field. Changes during conversion cancel replacement. Services offer an alternative without Accessibility permission. Use Open Selected Text to review or adjust settings in OpenCCman.";
+"help_conclusion_macos27" = "Use the Convert global shortcut to replace text in a supported editable field. Changes during conversion cancel replacement. Services offer an alternative without Device Control and Data Access. Use Open Selected Text to review or adjust settings in OpenCCman.";
 
 // MARK: - Services
 "Convert Chinese Text with OpenCCman" = "Convert Chinese Text with OpenCCman";
@@ -47,24 +50,31 @@
 "Test" = "Test";
 "Permissions" = "Permissions";
 "Accessibility Permission Required" = "Accessibility Permission Required";
+"Accessibility Permission Required_macos27" = "Device Control and Data Access Required";
 "Open System Preferences" = "Open System Preferences";
 "Cancel" = "Cancel";
 "Grant Permission" = "Grant Permission";
 "Try Again" = "Try Again";
 "Refresh" = "Refresh";
-"No Text Selected" = "No Text Selected";
-"Please select some Chinese text first, then try the shortcut again." = "Please select some Chinese text first, then try the shortcut again.";
 "OK" = "OK";
 "Accessibility permission granted" = "Accessibility permission granted";
+"Accessibility permission granted_macos27" = "Device Control and Data Access granted";
 "Accessibility permission required" = "Accessibility permission required";
+"Accessibility permission required_macos27" = "Device Control and Data Access required";
 
 "Global shortcut feature is only available on macOS" = "Global shortcut feature is only available on macOS";
-"shortcut_instructions_enabled" = "1. Enable the global shortcuts above\n2. Click the shortcut recorders to set your preferred key combinations\n3. Select Chinese text in any application\n4. Press your configured shortcut:\n   • Convert shortcut: Text will be automatically converted and replaced in-place (works in editable fields)\n   • Open shortcut: OpenCCman will open with the text ready for conversion\n5. OpenCCman will also show the conversion result for reference";
-"shortcut_instructions_disabled" = "To use the global shortcut features:\n1. First grant accessibility permission above\n2. After granting permission, click \"Refresh\" to update status\n3. Then enable the global shortcuts and configure your shortcuts\n\nAccessibility permission allows OpenCCman to read selected text from other applications.";
-"shortcut_tips" = "• The shortcut recorders allow you to easily set any key combination\n• Common shortcuts like ⌘⌥T, ⌘⌥R, ⌘⌥C work well\n• Avoid conflicts with system shortcuts\n• Both shortcuts work globally across all applications";
+"shortcut_instructions_enabled" = "1. Enable global shortcuts above\n2. Set your preferred key combinations\n3. Select Chinese text in a supported editable text field\n4. Press the shortcut:\n   • Convert: converts and pastes into the original app; in terminals, OpenCCman shows the result instead\n   • Open: loads the selection in OpenCCman for manual conversion, also for read-only text\n\nKeep the app and selection unchanged until conversion finishes. Changes cancel replacement. Configure feedback messages above.";
+"shortcut_instructions_disabled" = "To use the global shortcut features:\n1. First grant accessibility permission above\n2. After granting permission, click \"Refresh\" to update status\n3. Then enable the global shortcuts and configure your shortcuts\n\nAccessibility permission lets OpenCCman send copy and paste keystrokes to other applications.";
+"shortcut_instructions_disabled_macos27" = "To use the global shortcut features:\n1. First grant Device Control and Data Access above\n2. After granting permission, click \"Refresh\" to update status\n3. Then enable the global shortcuts and configure your shortcuts\n\nDevice Control and Data Access lets OpenCCman send copy and paste keystrokes to other applications.";
+"shortcut_tips" = "• Results for terminals appear in OpenCCman instead of being pasted; use Open for read-only text\n• Keep the selection unchanged until conversion finishes\n• Use distinct key combinations for global shortcuts and Services\n• Configure failure and success messages independently";
+"shortcut_services_title" = "Replace Selected Text";
+"shortcut_services_content" = "Services are an alternative for apps that support them and do not need Accessibility permission. Choose “Convert Chinese Text with OpenCCman” from the Services menu, or assign a shortcut in System Settings > Keyboard > Keyboard Shortcuts > Services > Text. Use a different key combination from your global shortcuts.";
+"shortcut_services_content_macos27" = "Services are an alternative for apps that support them and do not need Device Control and Data Access. Choose “Convert Chinese Text with OpenCCman” from the Services menu, or assign a shortcut in System Settings > Keyboard > Keyboard Shortcuts > Services > Text. Use a different key combination from your global shortcuts.";
+"Open Keyboard Settings" = "Open Keyboard Settings";
 
 // MARK: - Accessibility Permission Alert
-"accessibility_permission_intro" = "OpenCCman needs accessibility permission to read selected text from other applications.";
+"accessibility_permission_intro" = "OpenCCman needs Accessibility permission to copy the selected text in other applications and paste the result back.";
+"accessibility_permission_intro_macos27" = "OpenCCman needs Device Control and Data Access to copy the selected text in other applications and paste the result back.";
 "accessibility_permission_instructions_title" = "Please:";
 "accessibility_permission_step1" = "1. Click \"Open System Preferences\" below";
 "accessibility_permission_step2" = "2. Find \"OpenCCman\" in the list";
@@ -243,3 +253,95 @@
 "mac_file_experimental_capacity" = "This file exceeds the experimental 8 GiB limit. Choose a smaller TXT file.";
 "mac_file_insufficient_space" = "Not enough space on the destination volume. Free some space or choose another destination, then import the file again.";
 "mac_file_experimental_pro" = "Pro: try files over 1 GiB, up to 8 GiB. Experimental; confirm each task. May fail.";
+
+// Conversion differences
+"diff_show" = "Show Differences";
+"diff_hide" = "Hide Differences";
+"diff_toggle" = "Show / Hide Differences";
+"diff_on" = "On";
+"diff_off" = "Off";
+"diff_previous" = "Previous Difference";
+"diff_next" = "Next Difference";
+"diff_computing" = "Calculating differences…";
+"diff_too_large" = "Document too large. Differences are not displayed.";
+"diff_identical" = "No differences";
+"diff_reconvert" = "Convert again to view differences for the current text and settings.";
+"diff_count" = "Difference %ld of %ld";
+"diff_total" = "%ld differences";
+
+"batch_menu" = "Batch Convert TXT Files…";
+"batch_title" = "Batch Convert TXT Files";
+"batch_converting" = "Converting Files";
+"batch_complete" = "Batch Conversion Finished";
+"batch_explanation" = "Each file is converted with the current settings and saved as a new file in the folder you choose. Original files are never changed. If a name is already taken, a number is added instead of replacing the existing file.";
+"batch_choose_folder" = "Choose Output Folder…";
+"batch_start" = "Convert";
+"batch_summary_ready" = "%ld files ready, %ld skipped";
+"batch_summary_finished" = "%ld converted, %ld failed, %ld cancelled, %ld skipped";
+"batch_progress" = "Batch progress";
+"batch_progress_count" = "File %ld of %ld";
+"batch_keep_open" = "Keep OpenCCman open until the batch finishes. Cancelling stops the current file and every file that has not started; files already saved stay in the folder.";
+"batch_cleanup" = "Stopping the current file and removing its temporary data…";
+"batch_output_folder" = "Output folder: %@";
+"batch_file_list" = "Files";
+"batch_state_waiting" = "Waiting";
+"batch_state_converting" = "Converting";
+"batch_state_succeeded" = "Saved as %@";
+"batch_state_failed" = "Failed: %@";
+"batch_state_cancelled" = "Cancelled";
+"batch_skip_type" = "Skipped: not a TXT file";
+"batch_skip_size" = "Skipped: larger than 1 GiB";
+"batch_skip_duplicate" = "Skipped: already in the list";
+"batch_error_empty" = "Choose at least one TXT file.";
+"batch_error_too_many" = "%ld files were selected. Batch conversion handles at most %ld files at a time. Choose fewer files.";
+"batch_error_folder" = "The output folder is unavailable or cannot be written to. Choose another folder.";
+"batch_error_drop" = "Some dropped items could not be opened as files. Choose the files with File › Batch Convert TXT Files… instead.";
+"pro_batch_conversion" = "Convert up to 100 TXT files at once on Mac with Pro.";
+
+/* Share sheet text action (#29) */
+"text_action_title" = "Convert Chinese Text";
+"text_action_preset_section" = "Conversion";
+"text_action_result_section" = "Result";
+"text_action_loading" = "Reading text…";
+"text_action_converting" = "Converting…";
+"text_action_empty" = "There is no text to convert.";
+"text_action_conversion_failed" = "Conversion failed: %@";
+"text_action_character_count" = "%@ characters";
+"text_action_preview_truncated" = "Showing the first %@ characters. Copy Result, Share Result and Done use the full result.";
+"text_action_return_hint" = "Some apps put the result back when you tap Done. If nothing changes, copy or share the result instead.";
+"text_action_copied" = "Copied";
+"text_action_share" = "Share Result";
+
+/* Simplified output by source region (#303) */
+"source_variant" = "Source Standard";
+"source_from_taiwan" = "From Taiwan Standard";
+"source_from_hong_kong" = "From HongKong Standard";
+
+"shortcut_feedback_title" = "Shortcut Feedback";
+
+"shortcut_feedback_failure" = "Show failure messages";
+
+"shortcut_feedback_success" = "Show success messages";
+
+"shortcut_feedback_detail" = "Messages appear briefly without interrupting typing. Failure messages are on by default; success messages are off.";
+
+"shortcut_cancelled_source" = "Cancelled: the active app changed. Select the text again and retry.";
+
+"shortcut_cancelled_input" = "Cancelled: input changed or timed out. Select the text again and retry.";
+
+"shortcut_cancelled_clipboard" = "Cancelled: the clipboard changed. Your latest copy was preserved.";
+
+"shortcut_cancelled_selection" = "Replacement cancelled: the selection changed. Select the text again and retry.";
+
+"shortcut_copy_unavailable" = "Could not read the selected text. Select some text and retry.";
+
+"shortcut_permission_required" = "Allow OpenCCman in System Settings > Privacy & Security > Accessibility to use global shortcuts.";
+"shortcut_permission_required_macos27" = "Allow OpenCCman in System Settings > Privacy & Security > Device Control and Data Access to use global shortcuts.";
+
+"shortcut_conversion_failed" = "Conversion failed. The original text was not replaced.";
+
+"shortcut_busy" = "The previous shortcut operation is still running. Please try again shortly.";
+
+"shortcut_paste_sent" = "The converted text was sent to the original app.";
+
+"shortcut_clipboard_unreadable" = "Cancelled: the current clipboard contents can't be fully backed up, so nothing was changed. Copy something else and retry.";

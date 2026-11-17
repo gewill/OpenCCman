@@ -7,6 +7,8 @@ xcrun swiftc -warnings-as-errors -swift-version 5 -D WORKSPACE_SCROLL_CHECKS -ta
   "$repo_root/OpenCCman/View/AppTypography.swift" \
   "$repo_root/OpenCCman/Model/WorkspaceEditorReadingState.swift" \
   "$repo_root/OpenCCman/View/WorkspaceScrollKeeper.swift" \
+  "$repo_root/OpenCCman/Model/ConversionDiff.swift" \
+  "$repo_root/OpenCCman/Model/ConversionDiffSnapshot.swift" \
   "$repo_root/OpenCCman/View/WorkspaceTextEditor.swift" \
   "$repo_root/OpenCCman/extensions/StringExtensions.swift" \
   "$repo_root/Tests/Regression/WorkspaceTextEditorChecks.swift" \

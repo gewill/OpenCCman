@@ -1,0 +1,191 @@
+{
+  "date": "2026-11-12",
+  "source": "0ac4790455acda3e03947b8682c7454602abe1ad",
+  "qa_bundle_id": "org.gewill.OpenCCman.MacEntries20261112",
+  "oracle": "OpenCC 1.4.2: CLI for short samples, one opencc_convert_utf8 call over the whole file for large and batch inputs",
+  "results": [
+    {
+      "entry": "editor",
+      "config": "s2hkp",
+      "method": "result editor (AX value)",
+      "bytes": 62,
+      "sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "expected_sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "matches": true,
+      "source_matches_input": true
+    },
+    {
+      "entry": "editor",
+      "config": "s2hkp",
+      "method": "Copy Result -> pasteboard",
+      "bytes": 62,
+      "sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "expected_sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "matches": true
+    },
+    {
+      "entry": "services",
+      "config": "s2hkp",
+      "method": "NSPerformService (OpenCCman 304 QA Convert)",
+      "bytes": 62,
+      "sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "expected_sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "matches": true,
+      "service_succeeded": true,
+      "service_call_ms": 130.8
+    },
+    {
+      "entry": "services",
+      "config": "s2hkp",
+      "method": "TextEdit > Services menu, replaced in place",
+      "bytes": 62,
+      "sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "expected_sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "matches": true,
+      "undo_restored_original": true
+    },
+    {
+      "entry": "global shortcut",
+      "config": "s2hkp",
+      "method": "ctrl+opt+shift+cmd+T in TextEdit, QA result editor",
+      "bytes": 62,
+      "sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "expected_sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "matches": true,
+      "qa_source_matches_selection": true,
+      "host_text_unchanged": true
+    },
+    {
+      "entry": "global shortcut",
+      "config": "s2hkp",
+      "method": "Copy Result -> pasteboard",
+      "bytes": 62,
+      "sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "expected_sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "matches": true
+    },
+    {
+      "entry": "large file",
+      "config": "s2hkp",
+      "method": "Import TXT -> save panel -> direct-to-file",
+      "bytes": 11532000,
+      "sha256": "9ad51b6e4105c3667e304ee28ce703c631d4e547ba17e34e0ca19b654c5da002",
+      "expected_sha256": "9ad51b6e4105c3667e304ee28ce703c631d4e547ba17e34e0ca19b654c5da002",
+      "matches": true,
+      "input_bytes": 11532000,
+      "input_sha256": "0f234e117126471725960189b55e53a0e905f6f1ffdb094113fa4b62354ddd00"
+    },
+    {
+      "entry": "batch",
+      "config": "s2hkp",
+      "method": "File > Batch Convert, a-s2hkp.txt",
+      "bytes": 62,
+      "sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "expected_sha256": "db87ebedce3450852cea3d86267992a5bfb78a106e3ea45401865eb7a5331bb8",
+      "matches": true,
+      "input_bytes": 62
+    },
+    {
+      "entry": "batch",
+      "config": "s2hkp",
+      "method": "File > Batch Convert, b-s2hkp.txt",
+      "bytes": 62000,
+      "sha256": "2558e72b9acb17302d99efcf79bca8a1020bd50184b0d43273607f34bb88f75f",
+      "expected_sha256": "2558e72b9acb17302d99efcf79bca8a1020bd50184b0d43273607f34bb88f75f",
+      "matches": true,
+      "input_bytes": 62000
+    },
+    {
+      "entry": "editor",
+      "config": "hk2sp",
+      "method": "result editor (AX value)",
+      "bytes": 47,
+      "sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "expected_sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "matches": true,
+      "source_matches_input": true
+    },
+    {
+      "entry": "editor",
+      "config": "hk2sp",
+      "method": "Copy Result -> pasteboard",
+      "bytes": 47,
+      "sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "expected_sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "matches": true
+    },
+    {
+      "entry": "services",
+      "config": "hk2sp",
+      "method": "NSPerformService (OpenCCman 304 QA Convert)",
+      "bytes": 47,
+      "sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "expected_sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "matches": true,
+      "service_succeeded": true,
+      "service_call_ms": 132.9
+    },
+    {
+      "entry": "services",
+      "config": "hk2sp",
+      "method": "TextEdit > Services menu, replaced in place",
+      "bytes": 47,
+      "sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "expected_sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "matches": true,
+      "undo_restored_original": true
+    },
+    {
+      "entry": "global shortcut",
+      "config": "hk2sp",
+      "method": "ctrl+opt+shift+cmd+T in TextEdit, QA result editor",
+      "bytes": 47,
+      "sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "expected_sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "matches": true,
+      "qa_source_matches_selection": true,
+      "host_text_unchanged": true
+    },
+    {
+      "entry": "global shortcut",
+      "config": "hk2sp",
+      "method": "Copy Result -> pasteboard",
+      "bytes": 47,
+      "sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "expected_sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "matches": true
+    },
+    {
+      "entry": "large file",
+      "config": "hk2sp",
+      "method": "Import TXT -> save panel -> direct-to-file",
+      "bytes": 11534364,
+      "sha256": "8dbc540c1dbc8e25a72a3acd69f24d24d7821d488223fe68e82979d525264507",
+      "expected_sha256": "8dbc540c1dbc8e25a72a3acd69f24d24d7821d488223fe68e82979d525264507",
+      "matches": true,
+      "input_bytes": 11534364,
+      "input_sha256": "563acfb5fd49dd12b3a755e58f0b519a260f67d777593feb4e60cbcfdcfa4697"
+    },
+    {
+      "entry": "batch",
+      "config": "hk2sp",
+      "method": "File > Batch Convert, a-hk2sp.txt",
+      "bytes": 47,
+      "sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "expected_sha256": "4dff9ec6de642f7c1c812ba000d4b5c4d63d5cab7d9383f713b893b251565fa8",
+      "matches": true,
+      "input_bytes": 47
+    },
+    {
+      "entry": "batch",
+      "config": "hk2sp",
+      "method": "File > Batch Convert, b-hk2sp.txt",
+      "bytes": 47000,
+      "sha256": "5645ebb8165831c23d43636406f970f1ad3b287cfb95c26f20a027868770ea8d",
+      "expected_sha256": "5645ebb8165831c23d43636406f970f1ad3b287cfb95c26f20a027868770ea8d",
+      "matches": true,
+      "input_bytes": 47000
+    }
+  ],
+  "all_match": true
+}

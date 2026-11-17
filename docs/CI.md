@@ -30,7 +30,7 @@ PR/推送不会自动准备或发布依赖候选；在其他分支手动运行�
 
 ## 已完成的迁移与历史合并顺序
 
-2026-09-16 核对：[应用迁移 #43](https://github.com/gewill/OpenCCman/pull/43) 和 [默认协调器迁移 #44](https://github.com/gewill/OpenCCman/pull/44) 都已合并，main 上 `app.base` 已是 develop。下面保留原来的依赖顺序作为历史说明，不表示这些 PR 仍待合并。实时保护与旧引用状态见 [分支账本](BRANCHING.md#当前归档账本2026-09-17)。
+2026-09-16 核对：[应用迁移 #43](https://github.com/gewill/OpenCCman/pull/43) 和 [默认协调器迁移 #44](https://github.com/gewill/OpenCCman/pull/44) 都已合并，main 上 `app.base` 已是 develop。下面保留原来的依赖顺序作为历史说明，不表示这些 PR 仍待合并。实时保护与旧引用状态见 [分支账本](validation/branching-history-2026-09.md#当前归档账本2026-09-17)。
 
 1. **应用 CI 迁移 → `develop`**：通过 merge commit 接回旧 `build` 的 1.3 应用历史与 `main` 的协调器历史，保留已合入的分支规范。仅解决 README 的文档冲突，应用源码、工程与依赖锁文件保持旧 `build` 的内容。更新 CI 触发分支和应用侧同步配置。
 2. 等待 `develop` 合并提交的 `App Regression` 成功。配置 required check 时使用实际 job 名 `App Regression`，不绕过失败或尚未运行的检查。
@@ -67,6 +67,10 @@ PR 与合并后真实 GitHub Actions 运行结果是线上验收依据。纯迁�
 
 `check-control-sizing.sh` 在临时目录按 `Package.resolved` 的精确 SHA 读取 Neumorphic，编译原生 SwiftUI/AppKit 测量程序。覆盖上游 28/30→44 复现、应用 Mac 28/32pt 完整外框、Segment 底座、开关及多行增长；不改依赖缓存。iOS 点击和布局证据见 [三端验收记录](validation/control-sizing/README.md)，此原生 Mac 检查不能代替触屏或 VoiceOver 验收。
 
+
+## QA 构建的 Bundle ID
+
+App 和 iOS 分享扩展（`OpenCCmanTextAction`，#29）的 Bundle ID 都由项目级设置 `OPENCCMAN_BUNDLE_ID` 派生，扩展为 `$(OPENCCMAN_BUNDLE_ID).TextAction`。QA 和 CI 构建要换 Bundle ID 时，在命令行覆盖 `OPENCCMAN_BUNDLE_ID=…`，不要覆盖 `PRODUCT_BUNDLE_IDENTIFIER`：后者会让扩展和 App 用同一个 ID，iOS 构建虽然成功，模拟器安装时会报 “Mismatched bundle IDs”。`check-text-action.sh` 会拒绝脚本和工作流里的 `PRODUCT_BUNDLE_IDENTIFIER=` 覆盖。
 
 ## 手动诊断与构建
 

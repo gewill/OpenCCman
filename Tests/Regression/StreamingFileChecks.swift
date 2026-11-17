@@ -14,7 +14,9 @@ func checkStreamingFiles() async throws {
   let options: [ChineseConverter.Options] = [
     .simplify, .traditionalize, [.traditionalize, .twStandard],
     [.traditionalize, .hkStandard], [.traditionalize, .twStandard, .twIdiom],
-    [.traditionalize, .twIdiom], [.traditionalize, .hkStandard, .twIdiom]
+    [.traditionalize, .twIdiom], [.traditionalize, .hkStandard, .twIdiom],
+    // Hong Kong phrases (#304): s2hkp and hk2sp come from the engine's Configuration API.
+    [.traditionalize, .hkStandard, .hkIdiom], [.simplify, .hkStandard, .hkIdiom]
   ]
   for option in options {
     // Place phrases across actual 256 KiB file reads, including a split scalar.
@@ -29,7 +31,7 @@ func checkStreamingFiles() async throws {
     }
     let expected = try ChineseConversionService.convertSynchronously(text, options: option)
     let actual = try Data(contentsOf: output)
-    precondition(actual == Data(expected.utf8), "Streaming files must exactly match whole conversion in all seven configurations")
+    precondition(actual == Data(expected.utf8), "Streaming files must exactly match whole conversion in all nine configurations")
     precondition(result.inputBytes == UInt64(data.count) && result.outputBytes == UInt64(actual.count))
     precondition(observations.isMonotonic(total: UInt64(data.count)))
   }
@@ -166,7 +168,7 @@ func checkStreamingFiles() async throws {
     precondition(temporaryDirectories.allRemoved, "Cancellation must await replacement-directory cleanup")
   }
   try await checkMacCapacityAndStorage(directory)
-  print("PASS: bounded file streaming, seven configurations, BOM/NUL/Unicode, real provider lifetime, aliases, invalid UTF-8, I/O faults, changed files and cancellation before commit")
+  print("PASS: bounded file streaming, nine configurations, BOM/NUL/Unicode, real provider lifetime, aliases, invalid UTF-8, I/O faults, changed files and cancellation before commit")
 }
 
 private func checkMacCapacityAndStorage(_ directory: URL) async throws {

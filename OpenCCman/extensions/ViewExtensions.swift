@@ -2,37 +2,18 @@ import SwiftUI
 @_spi(Advanced) import SwiftUIIntrospect
 
 #if os(macOS)
-  /// Introspect 26 deliberately skips later major systems. Opt in to 27 only:
-  /// 27.x still exposes the NSTextView selectors used here, while
-  /// Introspect 27 itself would raise our macOS deployment target to 12.
+  /// Explicitly supported systems only; a future major version needs validation.
   @MainActor
   enum AppIntrospection {
-    private static var isMacOS27: Bool {
-      if #available(macOS 28, *) { return false }
-      if #available(macOS 27, *) { return true }
-      return false
-    }
-
     static var textEditor: PlatformViewVersionPredicate<TextEditorType, NSTextView> {
-      if isMacOS27 { return .macOS(.v26...) }
-      return .macOS(.v11, .v12, .v13, .v14, .v15, .v26)
+      .macOS(.v12, .v13, .v14, .v15, .v26, .v27)
     }
   }
 #elseif os(iOS)
-  /// Introspect 26 skips iOS 27 by default. The native TextEditor is still a
-  /// UITextView on 27, so keep its read-only and layout configuration there.
-  /// Stop before 28 until that system's view hierarchy is verified.
   @MainActor
   enum AppIntrospection {
-    private static var isIOS27: Bool {
-      if #available(iOS 28, *) { return false }
-      if #available(iOS 27, *) { return true }
-      return false
-    }
-
     static var textEditor: PlatformViewVersionPredicate<TextEditorType, UITextView> {
-      if isIOS27 { return .iOS(.v26...) }
-      return .iOS(.v14, .v15, .v16, .v17, .v18, .v26)
+      .iOS(.v15, .v16, .v17, .v18, .v26, .v27)
     }
   }
 #endif
@@ -52,6 +33,60 @@ extension View {
 struct SizePreferenceKey: PreferenceKey {
   static var defaultValue: CGSize = .zero
   static func reduce(value _: inout CGSize, nextValue _: () -> CGSize) {}
+}
+
+/// Shows `content` while its ideal width fits the width on offer, otherwise
+/// `fallback`. A macOS 12 stand-in for `ViewThatFits(in: .horizontal)` with two
+/// candidates; nest another one in `fallback` for a third.
+struct WidthFittingView<Content: View, Fallback: View>: View {
+  @State private var availableWidth: CGFloat = 0
+  @State private var idealWidth: CGFloat = 0
+  private let content: Content
+  private let fallback: Fallback
+
+  init(@ViewBuilder content: () -> Content, @ViewBuilder fallback: () -> Fallback) {
+    self.content = content()
+    self.fallback = fallback()
+  }
+
+  var body: some View {
+    Group {
+      // Until the first measurement arrives, assume the preferred layout fits.
+      if availableWidth == 0 || idealWidth <= availableWidth {
+        content
+      } else {
+        fallback
+      }
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    // Each reader handles only its own subtree's preference, so nested
+    // instances never see each other's widths.
+    .background {
+      GeometryReader { proxy in
+        Color.clear.preference(key: FittingWidthKey.self, value: proxy.size.width)
+      }
+      .onPreferenceChange(FittingWidthKey.self) { availableWidth = $0 }
+    }
+    .background(alignment: .topLeading) {
+      content
+        .fixedSize()
+        .hidden()
+        .accessibilityHidden(true)
+        .background {
+          GeometryReader { proxy in
+            Color.clear.preference(key: FittingWidthKey.self, value: proxy.size.width)
+          }
+          .onPreferenceChange(FittingWidthKey.self) { idealWidth = $0 }
+        }
+    }
+  }
+}
+
+private struct FittingWidthKey: PreferenceKey {
+  static var defaultValue: CGFloat = 0
+  static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+    value = max(value, nextValue())
+  }
 }
 
 extension View {

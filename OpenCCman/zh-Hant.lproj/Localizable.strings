@@ -64,6 +64,7 @@
 "HongKong Standard" = "香港標準";
 "Not convert" = "不轉換";
 "Taiwan Idiom" = "臺灣模式";
+"HongKong Idiom" = "香港模式";
 
 // MARK: - Home
 "Convert Chinese text with [OpenCC](https://github.com/BYVoid/OpenCC)" = "使用[OpenCC](https://github.com/BYVoid/OpenCC)轉換中文文本";
@@ -77,7 +78,6 @@
 // MARK: - Feedback
 "Feedback" = "反饋";
 "Thank you for using %@. We are always looking for ways to improve the app and your feedback is an important part of that process. If you have any suggestions or ideas, please let us know." = " 感謝您選擇使用%@。我們一直致力於改進我們的應用程序，您的反饋對我們來說非常重要。如果您有任何建議或想法，請隨時與我們分享。";
-"You can contact us via the following methods, email is prefered:" = "您可以通過以下方式聯繫我們，電子郵件是首選：";
 
 // MARK: - Help
 "Help" = "幫助";
@@ -89,18 +89,21 @@
 "help_global_service_title" = "全域服務 (macOS)";
 "help_global_service_intro" = "OpenCCman 提供多種方式在任何應用程式中轉換中文文字：";
 
-"help_method1_title" = "方法一：全域鍵盤快速鍵（推薦）";
-"help_method1_content" = "OpenCCman 提供兩種全域鍵盤快速鍵：\n\n• 轉換選取文字（預設：⌘⌥T）- 自動轉換並在可編輯欄位中替換選取的文字\n• 開啟選取文字（預設：⌘⌥R）- 在 OpenCCman 中開啟選取文字以便手動轉換\n\n1. 前往「設定 > 全域快速鍵」配置您的快速鍵\n2. 在任何應用程式中選取中文文字\n3. 按下您配置的快速鍵\n4. 轉換快速鍵：文字將自動轉換並就地替換（適用於文字編輯器、瀏覽器等）\n5. 開啟快速鍵：OpenCCman 將開啟並載入文字，準備進行轉換";
+"help_method1_title" = "方法一：右鍵服務（推薦用於取代文字）";
+"help_method1_content" = "OpenCCman 提供兩種右鍵服務：\n\n• 「Convert Chinese Text with OpenCCman」- 依目前設定轉換選取的文字，並直接取代原文\n• 「Open Selected Text in OpenCCman」- 開啟應用程式，將選取文字載入以便手動轉換\n\n1. 在支援「服務」的應用程式（如文字編輯）中選取文字\n2. 右鍵點擊並從「服務」選單中選擇您偏好的服務\n3. 轉換服務：文字將轉換並直接取代\n4. 開啟服務：OpenCCman 將開啟並載入文字，準備進行轉換\n\n使用服務不需要輔助使用權限。";
+"help_method1_content_macos27" = "OpenCCman 提供兩種右鍵服務：\n\n• 「Convert Chinese Text with OpenCCman」- 依目前設定轉換選取的文字，並直接取代原文\n• 「Open Selected Text in OpenCCman」- 開啟應用程式，將選取文字載入以便手動轉換\n\n1. 在支援「服務」的應用程式（如文字編輯）中選取文字\n2. 右鍵點擊並從「服務」選單中選擇您偏好的服務\n3. 轉換服務：文字將轉換並直接取代\n4. 開啟服務：OpenCCman 將開啟並載入文字，準備進行轉換\n\n使用服務不需要「裝置控制和資料取用」權限。";
 
-"help_method2_title" = "方法二：右鍵服務";
-"help_method2_content" = "OpenCCman 提供兩種右鍵服務：\n\n• 「使用 OpenCCman 轉換中文文本」- 自動轉換並替換選取的文字\n• 「在 OpenCCman 中開啟選取文字」- 開啟應用程式，將選取文字載入以便手動轉換\n\n1. 在任何應用程式（Safari、文字編輯等）中選取文字\n2. 右鍵點擊並從「服務」選單中選擇您偏好的服務\n3. 轉換服務：文字將自動轉換並替換\n4. 開啟服務：OpenCCman 將開啟並載入文字，準備進行轉換";
+"help_method2_title" = "方法二：全域鍵盤快速鍵";
+"help_method2_content" = "OpenCCman 提供兩種全域鍵盤快速鍵：\n\n• 轉換選取文字（預設：⌘⌥T）：拷貝、轉換並貼回可編輯的文字欄位，不開啟主視窗；終端機等無法直接取代的地方會改為在 OpenCCman 中顯示原文和結果，唯讀文字請使用「開啟選取文字」\n• 開啟選取文字（預設：⌘⌥R）：在 OpenCCman 中開啟選取文字以便手動轉換\n\n1. 在「設定 > 全域快速鍵」中設定按鍵並授予輔助使用權限\n2. 在可編輯的文字欄位中選取中文文字\n3. 按下快速鍵，完成前保持應用程式與選取文字不變\n\n偵測到輸入、前景應用程式、剪貼板或選取文字變更時，會取消取代。失敗提示與成功提示可分別開關。";
+"help_method2_content_macos27" = "OpenCCman 提供兩種全域鍵盤快速鍵：\n\n• 轉換選取文字（預設：⌘⌥T）：拷貝、轉換並貼回可編輯的文字欄位，不開啟主視窗；終端機等無法直接取代的地方會改為在 OpenCCman 中顯示原文和結果，唯讀文字請使用「開啟選取文字」\n• 開啟選取文字（預設：⌘⌥R）：在 OpenCCman 中開啟選取文字以便手動轉換\n\n1. 在「設定 > 全域快速鍵」中設定按鍵並授予「裝置控制和資料取用」權限\n2. 在可編輯的文字欄位中選取中文文字\n3. 按下快速鍵，完成前保持應用程式與選取文字不變\n\n偵測到輸入、前景應用程式、剪貼板或選取文字變更時，會取消取代。失敗提示與成功提示可分別開關。";
 
-"help_service_tip" = "您也可以在「系統設定 > 鍵盤 > 鍵盤快速鍵 > 服務 > 文字」中為這些服務分配鍵盤快捷鍵，以便更快速地訪問。";
+"help_service_tip" = "如需用快速鍵直接取代文字，可在「系統設定 > 鍵盤 > 鍵盤快速鍵 > 服務 > 文字」中為「Convert Chinese Text with OpenCCman」設定快速鍵。";
 
 "help_service_details_title" = "服務詳情";
-"help_service_details_content" = "• 轉換服務：適合快速自動轉換，當您對目前設定有信心時使用\n• 開啟服務：適合想要查看文字、調整轉換設定或保持原文和轉換文字同時可見時使用\n• 兩種服務都可在任何支援文字選取的 macOS 應用程式中使用";
+"help_service_details_content" = "• 轉換服務：適合快速自動轉換，當您對目前設定有信心時使用\n• 開啟服務：適合想要查看文字、調整轉換設定或保持原文和轉換文字同時可見時使用\n• 兩種服務只會出現在支援 macOS「服務」選單的應用程式中，部分應用程式可能不提供";
 
-"help_conclusion" = "鍵盤快速鍵方式最快速，適合立即轉換。當您想要在轉換前查看或調整設定時，請使用「開啟選取文字」服務。";
+"help_conclusion" = "在支援的可編輯文字欄位中，可用轉換快速鍵原位取代文字；轉換期間偵測到變更時會取消取代。服務是不需要輔助使用權限的替代方式。如需在 OpenCCman 中檢視或調整設定，請使用「開啟選取文字」。";
+"help_conclusion_macos27" = "在支援的可編輯文字欄位中，可用轉換快速鍵原位取代文字；轉換期間偵測到變更時會取消取代。服務是不需要「裝置控制和資料取用」權限的替代方式。如需在 OpenCCman 中檢視或調整設定，請使用「開啟選取文字」。";
 
 // MARK: - Services
 "Convert Chinese Text with OpenCCman" = "使用 OpenCCman 轉換中文文本";
@@ -123,25 +126,32 @@
 "Tips" = "提示";
 "Test" = "測試";
 "Permissions" = "權限";
-"Accessibility Permission Required" = "需要輔助功能權限";
+"Accessibility Permission Required" = "需要輔助使用權限";
+"Accessibility Permission Required_macos27" = "需要「裝置控制和資料取用」權限";
 "Open System Preferences" = "開啟系統偏好設定";
 "Cancel" = "取消";
 "Grant Permission" = "授予權限";
 "Try Again" = "重試";
 "Refresh" = "重新整理";
-"No Text Selected" = "未選取文字";
-"Please select some Chinese text first, then try the shortcut again." = "請先選取一些中文文字，然後再試一次快速鍵。";
 "OK" = "確定";
-"Accessibility permission granted" = "已授予輔助功能權限";
-"Accessibility permission required" = "需要輔助功能權限";
+"Accessibility permission granted" = "已授予輔助使用權限";
+"Accessibility permission granted_macos27" = "已授予「裝置控制和資料取用」權限";
+"Accessibility permission required" = "需要輔助使用權限";
+"Accessibility permission required_macos27" = "需要「裝置控制和資料取用」權限";
 
 "Global shortcut feature is only available on macOS" = "全域快速鍵功能僅在 macOS 上可用";
-"shortcut_instructions_enabled" = "1. 啟用上面的全域快速鍵\n2. 點擊快速鍵錄製器設定您喜歡的按鍵組合\n3. 在任何應用程式中選取中文文字\n4. 按下您配置的快速鍵：\n   • 轉換快速鍵：文字將自動轉換並就地替換（適用於可編輯欄位）\n   • 開啟快速鍵：OpenCCman 將開啟並載入文字，準備進行轉換\n5. OpenCCman 也會顯示轉換結果以供參考";
-"shortcut_instructions_disabled" = "要使用全域快速鍵功能：\n1. 首先授予上面的輔助功能權限\n2. 授予權限後，點擊「重新整理」更新狀態\n3. 然後啟用全域快速鍵並配置您的快速鍵\n\n輔助功能權限允許 OpenCCman 從其他應用程式讀取選取的文字。";
-"shortcut_tips" = "• 快速鍵錄製器允許您輕鬆設定任何按鍵組合\n• 常用快速鍵如 ⌘⌥T、⌘⌥R、⌘⌥C 效果很好\n• 避免與系統快速鍵衝突\n• 兩個快速鍵都在所有應用程式中全域工作";
+"shortcut_instructions_enabled" = "1. 啟用上方的全域快速鍵\n2. 設定您喜歡的按鍵組合\n3. 在支援的可編輯文字欄位中選取中文文字\n4. 按下快速鍵：\n   • 轉換：轉換並貼回原應用程式；終端機會改為在 OpenCCman 中顯示結果\n   • 開啟：在 OpenCCman 中載入選取文字以便手動轉換，也適用於唯讀文字\n\n完成前請保持應用程式與選取文字不變，偵測到變更時會取消取代。可在上方設定提示。";
+"shortcut_instructions_disabled" = "要使用全域快速鍵功能：\n1. 首先授予上面的輔助使用權限\n2. 授予權限後，點擊「重新整理」更新狀態\n3. 然後啟用全域快速鍵並配置您的快速鍵\n\n輔助使用權限用於向其他應用程式傳送拷貝和貼上按鍵。";
+"shortcut_instructions_disabled_macos27" = "要使用全域快速鍵功能：\n1. 首先授予上面的「裝置控制和資料取用」權限\n2. 授予權限後，點擊「重新整理」更新狀態\n3. 然後啟用全域快速鍵並配置您的快速鍵\n\n「裝置控制和資料取用」權限用於向其他應用程式傳送拷貝和貼上按鍵。";
+"shortcut_tips" = "• 終端機中的結果會顯示在 OpenCCman 中，不會貼上；唯讀文字請用「開啟」快速鍵\n• 轉換完成前保持選取文字不變\n• 全域快速鍵與服務使用不同的按鍵組合\n• 失敗提示與成功提示可分別開關";
+"shortcut_services_title" = "取代選取文字";
+"shortcut_services_content" = "服務是不需要輔助使用權限的替代方式，適用於支援服務的應用程式。從「服務」選單選擇「Convert Chinese Text with OpenCCman」，或在「系統設定 > 鍵盤 > 鍵盤快速鍵 > 服務 > 文字」中為它設定快速鍵。請使用與全域快速鍵不同的按鍵組合。";
+"shortcut_services_content_macos27" = "服務是不需要「裝置控制和資料取用」權限的替代方式，適用於支援服務的應用程式。從「服務」選單選擇「Convert Chinese Text with OpenCCman」，或在「系統設定 > 鍵盤 > 鍵盤快速鍵 > 服務 > 文字」中為它設定快速鍵。請使用與全域快速鍵不同的按鍵組合。";
+"Open Keyboard Settings" = "開啟鍵盤設定";
 
 // MARK: - Accessibility Permission Alert
-"accessibility_permission_intro" = "OpenCCman 需要輔助功能權限來讀取其他應用程式中的選取文字。";
+"accessibility_permission_intro" = "OpenCCman 需要輔助使用權限，才能拷貝其他應用程式中選取的文字並把結果貼回去。";
+"accessibility_permission_intro_macos27" = "OpenCCman 需要「裝置控制和資料取用」權限，才能拷貝其他應用程式中選取的文字並把結果貼回去。";
 "accessibility_permission_instructions_title" = "請按以下步驟操作：";
 "accessibility_permission_step1" = "1. 點擊下方的「開啟系統偏好設定」";
 "accessibility_permission_step2" = "2. 在列表中找到「OpenCCman」";
@@ -166,7 +176,7 @@
 "Import TXT" = "匯入 TXT";
 "Export TXT" = "匯出 TXT";
 "Paste Text" = "貼上文字";
-"Copy Result" = "複製結果";
+"Copy Result" = "拷貝結果";
 "previous_result_available" = "仍可匯出上一次成功轉換的結果。";
 "text_file_hint" = "匯入或拖至此處：單個 UTF-8 TXT 檔案或純文字，上限 10 MiB。";
 "file_error_type" = "請選擇 UTF-8 編碼的一般 TXT 檔案，或拖入純文字。";
@@ -315,3 +325,95 @@
 "mac_file_experimental_capacity" = "此檔案超過實驗性 8 GiB 上限，請選取較小的 TXT 檔案。";
 "mac_file_insufficient_space" = "目的地磁碟可用空間不足。請釋放空間或選取其他目標位置，再重新匯入檔案。";
 "mac_file_experimental_pro" = "Pro 實驗功能：轉換超過 1 GiB、最大 8 GiB 的檔案。每次確認，不保證成功。";
+
+// Conversion differences
+"diff_show" = "顯示差異";
+"diff_hide" = "隱藏差異";
+"diff_toggle" = "顯示／隱藏差異";
+"diff_on" = "開啟";
+"diff_off" = "關閉";
+"diff_previous" = "上一處差異";
+"diff_next" = "下一處差異";
+"diff_computing" = "正在計算差異…";
+"diff_too_large" = "文稿過大，未顯示差異。";
+"diff_identical" = "沒有差異";
+"diff_reconvert" = "請重新轉換，以查看目前原文與設定對應的差異。";
+"diff_count" = "第 %ld／共 %ld 處";
+"diff_total" = "共 %ld 處差異";
+
+"batch_menu" = "批次轉換 TXT 檔案…";
+"batch_title" = "批次轉換 TXT 檔案";
+"batch_converting" = "正在轉換檔案";
+"batch_complete" = "批次轉換已結束";
+"batch_explanation" = "每個檔案都依目前設定轉換，並在你選擇的資料夾中儲存為新檔案，原始檔案不會被修改。如果檔名已被使用，會自動加上編號，不會取代既有檔案。";
+"batch_choose_folder" = "選擇輸出資料夾…";
+"batch_start" = "轉換";
+"batch_summary_ready" = "可轉換 %ld 個，略過 %ld 個";
+"batch_summary_finished" = "成功 %ld 個，失敗 %ld 個，已取消 %ld 個，略過 %ld 個";
+"batch_progress" = "批次轉換進度";
+"batch_progress_count" = "第 %ld／共 %ld 個";
+"batch_keep_open" = "請保持 OpenCCman 開啟，直到批次轉換結束。取消會停止目前的檔案和所有尚未開始的檔案，已儲存的檔案會保留在資料夾中。";
+"batch_cleanup" = "正在停止目前的檔案並清理暫存資料…";
+"batch_output_folder" = "輸出資料夾：%@";
+"batch_file_list" = "檔案";
+"batch_state_waiting" = "等待中";
+"batch_state_converting" = "正在轉換";
+"batch_state_succeeded" = "已儲存為 %@";
+"batch_state_failed" = "失敗：%@";
+"batch_state_cancelled" = "已取消";
+"batch_skip_type" = "已略過：不是 TXT 檔案";
+"batch_skip_size" = "已略過：大於 1 GiB";
+"batch_skip_duplicate" = "已略過：已在清單中";
+"batch_error_empty" = "請至少選擇一個 TXT 檔案。";
+"batch_error_too_many" = "已選擇 %ld 個檔案，批次轉換一次最多處理 %ld 個，請減少檔案數量。";
+"batch_error_folder" = "輸出資料夾無法使用或無法寫入，請選擇其他資料夾。";
+"batch_error_drop" = "拖入的項目中有無法作為檔案開啟的內容。請改用「檔案 › 批次轉換 TXT 檔案…」選擇檔案。";
+"pro_batch_conversion" = "Pro 可在 Mac 上一次批次轉換最多 100 個 TXT 檔案。";
+
+/* Share sheet text action (#29) */
+"text_action_title" = "簡繁轉換";
+"text_action_preset_section" = "轉換設定";
+"text_action_result_section" = "結果";
+"text_action_loading" = "正在讀取文字…";
+"text_action_converting" = "正在轉換…";
+"text_action_empty" = "沒有可轉換的文字。";
+"text_action_conversion_failed" = "轉換失敗：%@";
+"text_action_character_count" = "共 %@ 個字元";
+"text_action_preview_truncated" = "僅顯示前 %@ 個字元；拷貝結果、分享結果和完成都使用完整結果。";
+"text_action_return_hint" = "部分 App 支援點一下「完成」把結果寫回原處；如果沒有變化，請改用拷貝或分享。";
+"text_action_copied" = "已拷貝";
+"text_action_share" = "分享結果";
+
+/* Simplified output by source region (#303) */
+"source_variant" = "原文標準";
+"source_from_taiwan" = "原文為臺灣標準";
+"source_from_hong_kong" = "原文為香港標準";
+
+"shortcut_feedback_title" = "快速鍵提示";
+
+"shortcut_feedback_failure" = "顯示失敗提示";
+
+"shortcut_feedback_success" = "顯示成功提示";
+
+"shortcut_feedback_detail" = "提示短暫顯示，不中斷輸入。預設開啟失敗提示、關閉成功提示。";
+
+"shortcut_cancelled_source" = "已取消：前景應用程式已變更，請重新選取文字後再試。";
+
+"shortcut_cancelled_input" = "已取消：偵測到輸入變更或等候逾時，請重新選取文字後再試。";
+
+"shortcut_cancelled_clipboard" = "已取消：剪貼板已變更，已保留您最新拷貝的內容。";
+
+"shortcut_cancelled_selection" = "已取消取代：選取文字已變更，請重新選取後再試。";
+
+"shortcut_copy_unavailable" = "無法讀取選取文字，請選取文字後再試。";
+
+"shortcut_permission_required" = "請在「系統設定 > 隱私權與安全性 > 輔助使用」中允許 OpenCCman，以使用全域快速鍵。";
+"shortcut_permission_required_macos27" = "請在「系統設定 > 隱私權與安全性 > 裝置控制和資料取用」中允許 OpenCCman，以使用全域快速鍵。";
+
+"shortcut_conversion_failed" = "轉換失敗，原文未被取代。";
+
+"shortcut_busy" = "上一次快速鍵操作尚未結束，請稍後再試。";
+
+"shortcut_paste_sent" = "轉換結果已傳送至原應用程式。";
+
+"shortcut_clipboard_unreadable" = "已取消：目前剪貼板內容無法完整備份，為避免遺失沒有做任何更動。請先拷貝其他內容後再試。";

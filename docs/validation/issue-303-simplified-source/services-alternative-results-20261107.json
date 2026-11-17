@@ -1,0 +1,109 @@
+{
+  "source_sha": "fdb3798843469a7a3af538f17507c232fa36806d",
+  "bundle_id": "org.gewill.OpenCCman.ShortcutIsolation20261107",
+  "version": "2.2(30)",
+  "code_sha256": "54ae5102382a5a5cc2c3b31592e76ffc6212f58dd67fe189ec9049df9cdeadb1",
+  "entitlements": [
+    "com.apple.security.app-sandbox",
+    "com.apple.security.files.user-selected.read-write",
+    "com.apple.security.network.client"
+  ],
+  "configuration": "hk2s",
+  "qa_accessibility_permission": "not granted in either round",
+  "host": "TextEdit 1.21",
+  "input": {
+    "bytes": 47,
+    "line_ending": "CRLF",
+    "sha256": "2e6b1e5a6199275906ebc2bfd5be10164b408181ae188593334fb6f40f667f0a"
+  },
+  "expected": {
+    "tool": "opencc 1.4.2 -c hk2s",
+    "bytes": 47,
+    "sha256": "e4e3571697339fdb21e12ff273153a40e12bf1170481e2c51c77fbc411c92843"
+  },
+  "services_menu": {
+    "time": "2026-11-07T17:58:49.640613+08:00",
+    "entry": "TextEdit > Services > OpenCCman 303 Isolated QA OpenCCman 303 QA Convert",
+    "readback": "host select all and copy",
+    "host_replaced": true,
+    "bytes": 47,
+    "sha256": "e4e3571697339fdb21e12ff273153a40e12bf1170481e2c51c77fbc411c92843",
+    "matches_expected": true,
+    "undo_restored_original": true
+  },
+  "services_shortcut": {
+    "key_equivalent": "@^~$y",
+    "set_via": "defaults write pbs NSServicesStatus, then pbs -update; not entered through the System Settings UI",
+    "input_method": "CGEvent HID",
+    "readback": "TextEdit AX value, polled every 0.1 s for up to 20 s",
+    "runs": [
+      {
+        "label": "cold",
+        "shortcut_sent_utc": "2026-11-07T10:22:17Z",
+        "qa_running_before": false,
+        "host_replaced": true,
+        "seconds_until_change": 0.92,
+        "sha256": "e4e3571697339fdb21e12ff273153a40e12bf1170481e2c51c77fbc411c92843",
+        "matches_expected": true,
+        "undo_restored_original": true
+      },
+      {
+        "label": "warm",
+        "shortcut_sent_utc": "2026-11-07T10:23:06Z",
+        "qa_running_before": true,
+        "host_replaced": true,
+        "seconds_until_change": 0.52,
+        "sha256": "e4e3571697339fdb21e12ff273153a40e12bf1170481e2c51c77fbc411c92843",
+        "matches_expected": true,
+        "undo_restored_original": true
+      },
+      {
+        "label": "control-no-key",
+        "shortcut_sent_utc": "2026-11-07T10:23:26Z",
+        "qa_running_before": true,
+        "key_equivalent_removed": true,
+        "host_replaced": false,
+        "wait_seconds": 20,
+        "sha256": "2e6b1e5a6199275906ebc2bfd5be10164b408181ae188593334fb6f40f667f0a"
+      }
+    ],
+    "stopped_attempts": [
+      {
+        "label": "warm-attempt1",
+        "start_utc": "2026-11-07T10:22:26Z",
+        "stop": "AX text read right after reopening the open test file did not match the source; shortcut not sent"
+      },
+      {
+        "label": "warm-attempt2",
+        "start_utc": "2026-11-07T10:22:43Z",
+        "stop": "AX text read right after reopening the open test file did not match the source; shortcut not sent"
+      }
+    ]
+  },
+  "sandbox_reporting": {
+    "query": "/usr/bin/log show --predicate 'subsystem == \"com.apple.sandbox.reporting\" AND eventMessage CONTAINS \"OpenCCman(\"'",
+    "window": "2026-11-07T18:21:30+08:00/2026-11-07T18:24:30+08:00",
+    "axserver_denials": 0,
+    "other_denials": [
+      {
+        "time": "2026-11-07T18:22:17.948+08:00",
+        "pid": 59948,
+        "target": "com.apple.universalaccessAuthWarn",
+        "caller": "GlobalShortcutService.checkAccessibilityPermission() (GlobalShortcutService.swift:131) during launch"
+      }
+    ],
+    "positive_control": {
+      "window": "2026-11-07T17:28:50+08:00/2026-11-07T17:31:56+08:00",
+      "axserver_denials": 4
+    }
+  },
+  "cleanup": {
+    "services_settings_restored_from_backup": true,
+    "pbs_export_matches_backup": true,
+    "textedit_exited": true,
+    "qa_exited": true,
+    "test_file_matches_source": true,
+    "other_openccman_settings_changed": false,
+    "simulators_started_or_stopped": false
+  }
+}

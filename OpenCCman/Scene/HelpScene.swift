@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HelpScene: View {
   @Environment(\.selectedLocale) private var selectedLocale: Binding<LocaleConstants>
+  @Environment(\.locale) private var locale
 
   // MARK: - life cycle
 
@@ -16,19 +17,10 @@ struct HelpScene: View {
   }
 
   var navi: some View {
-    ZStack(alignment: .center) {
-      Text("Help")
-        .appFont(.title)
-        .foregroundColor(Color.Neumorphic.secondary)
-      HStack {
-        BackButton()
-          .padding(.horizontal, Constant.padding * 2)
-        Spacer()
-      }
-    }
-    .padding(.vertical, Constant.padding)
-    .foregroundColor(Color.Neumorphic.secondary)
-    .background(Color.Neumorphic.main)
+    SceneHeader("Help", buttonInset: Constant.padding * 2)
+      .padding(.vertical, Constant.padding)
+      .foregroundColor(Color.Neumorphic.secondary)
+      .background(Color.Neumorphic.main)
   }
 
   var list: some View {
@@ -75,20 +67,11 @@ struct HelpScene: View {
               Text("help_global_service_intro".localizedStringKey)
                 .appFont(.body)
 
-              // Method 1
+              // Method 1: Services, the only route that replaces text in place
               VStack(alignment: .leading, spacing: 4) {
                 Text("help_method1_title".localizedStringKey)
                   .appFont(.subheadline, weight: .medium)
-                Text("help_method1_content".localizedStringKey)
-                  .appFont(.body)
-              }
-              .padding(.top, 8)
-
-              // Method 2
-              VStack(alignment: .leading, spacing: 4) {
-                Text("help_method2_title".localizedStringKey)
-                  .appFont(.subheadline, weight: .medium)
-                Text("help_method2_content".localizedStringKey)
+                Text(verbatim: "help_method1_content".localizedNamingAccessibilityPermission(in: locale))
                   .appFont(.body)
               }
               .padding(.top, 8)
@@ -108,8 +91,17 @@ struct HelpScene: View {
               }
               .padding(.top, 8)
 
+              // Method 2: Global shortcuts show the result without replacing
+              VStack(alignment: .leading, spacing: 4) {
+                Text("help_method2_title".localizedStringKey)
+                  .appFont(.subheadline, weight: .medium)
+                Text(verbatim: "help_method2_content".localizedNamingAccessibilityPermission(in: locale))
+                  .appFont(.body)
+              }
+              .padding(.top, 8)
+
               // Conclusion
-              Text("help_conclusion".localizedStringKey)
+              Text(verbatim: "help_conclusion".localizedNamingAccessibilityPermission(in: locale))
                 .appFont(.body, weight: .medium)
                 .padding(.top, 8)
             }

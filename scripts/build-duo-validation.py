@@ -20,6 +20,13 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def app_code_hashes(app, executable):
+    # ENABLE_DEBUG_DYLIB puts application code beside the executable stub.
+    # Include those payloads: a matching stub alone does not identify the app.
+    paths = [executable, *sorted(executable.parent.glob("*.dylib"))]
+    return {str(path.relative_to(app)): digest(path) for path in paths}
+
+
 def version(value):
     return tuple(int(part) for part in str(value).split("."))
 
@@ -123,7 +130,7 @@ def main():
                       "-derivedDataPath", str(platform_derived), "-disableAutomaticPackageResolution",
                       "-onlyUsePackageVersionsFromResolvedFile", "CODE_SIGNING_ALLOWED=NO",
                       f"ARCHS={archs}", "ONLY_ACTIVE_ARCH=NO",
-                      "PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.WhatsNewUITests"]
+                      "OPENCCMAN_BUNDLE_ID=org.gewill.OpenCCman.WhatsNewUITests"]
             if platform == "ios" and version(selected_sdk) >= (27, 1):
                 # Compile the opt-in QA probe only with an SDK that declares it.
                 # Ordinary Xcode 26.3/27.0 builds keep their existing code path.
@@ -148,7 +155,8 @@ def main():
                 raise ValueError(f"Binary SDK differs from selected SDK {selected_sdk}: {binary_sdks}")
             report["artifacts"][platform] = {"command": native + ["build"], "app": str(app),
                 "plist": verified, "binary_sdks": binary_sdks,
-                "executable_sha256": digest(executable), "info_plist_sha256": digest(plist)}
+                "executable_sha256": digest(executable), "info_plist_sha256": digest(plist),
+                "app_code_sha256": app_code_hashes(app, executable)}
         if source_state() != report["source"]:
             raise RuntimeError("Source or dependency lock changed during validation; do not reuse these results")
         report["status"] = "passed"

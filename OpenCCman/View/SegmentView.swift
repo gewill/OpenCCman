@@ -13,6 +13,8 @@ struct SegmentView<T: Segmentable>: View {
   let title: String
   let options: [T]
   @Binding var selected: T
+  /// The localization key shown for an option, when it depends on other choices.
+  var label: (T) -> String = { $0.title }
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
@@ -48,9 +50,9 @@ struct SegmentView<T: Segmentable>: View {
   private var labelMeasurements: some View {
     ZStack {
       ForEach(options) { option in
-        let words = option.title.localized(in: locale).split(whereSeparator: { $0.isWhitespace })
+        let words = Self.unbrokenWords(in: label(option).localized(in: locale))
         ForEach(Array(words.enumerated()), id: \.offset) { _, word in
-          Text(String(word))
+          Text(word)
             .appFont(.body, weight: .semibold)
             .fixedSize()
             .background(
@@ -64,6 +66,22 @@ struct SegmentView<T: Segmentable>: View {
     .hidden()
     .accessibilityHidden(true)
     .allowsHitTesting(false)
+  }
+
+  // Chinese labels have no spaces, so a whitespace split would measure the whole
+  // label as one word. Runs containing ideographs are split into dictionary words
+  // instead: "OpenCC標準" measures "OpenCC" and "標準". Other runs, including all
+  // English words, stay whole.
+  static func unbrokenWords(in label: String) -> [String] {
+    label.split(whereSeparator: { $0.isWhitespace }).flatMap { run -> [String] in
+      let run = String(run)
+      guard run.unicodeScalars.contains(where: { $0.properties.isIdeographic }) else { return [run] }
+      var words: [String] = []
+      run.enumerateSubstrings(in: run.startIndex..., options: .byWords) { word, _, _, _ in
+        if let word { words.append(word) }
+      }
+      return words.isEmpty ? [run] : words
+    }
   }
 
   // Keep the selected value in the binding when width, language or type size changes.
@@ -81,7 +99,7 @@ struct SegmentView<T: Segmentable>: View {
       Button {
         selected = option
       } label: {
-        Text(option.title.localized(in: locale))
+        Text(label(option).localized(in: locale))
       }
       .buttonStyle(AppSegmentButtonStyle(selected: option == selected))
       .overlay(

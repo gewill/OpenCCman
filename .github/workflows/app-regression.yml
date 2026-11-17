@@ -105,6 +105,8 @@ jobs:
         run: python3 Tests/Regression/CheckScriptChecks.py
       - name: Check project and source syntax
         run: bash scripts/check-project.sh
+      - name: Check local QA build artifact identity
+        run: python3 Tests/Regression/DuoBuildChecks.py
       - name: Check real conversion, presets and file workflow
         run: python3 scripts/check-core.py
       - name: Check performance report comparability
@@ -114,6 +116,12 @@ jobs:
           python3 scripts/test-mobile-capacity-fixtures.py
           python3 scripts/test-mobile-capacity-preflight.py
           python3 scripts/test-mobile-export-verifier.py
+      - name: Check conversion diff alignment and invalidation
+        run: bash scripts/check-conversion-diff.sh
+      - name: Check batch conversion queue and naming
+        run: bash scripts/check-batch-conversion.sh
+      - name: Check Share sheet text action packaging
+        run: bash scripts/check-text-action.sh
       - name: Check window layout resolution and recovery
         run: bash scripts/check-workspace.sh
       - name: Check Mac window geometry
@@ -153,6 +161,8 @@ jobs:
         run: python3 scripts/check-app-language.py
       - name: Check isolated pasteboard preservation
         run: bash scripts/check-pasteboard.sh
+      - name: Check global shortcut clipboard transaction
+        run: bash scripts/check-shortcut-transaction.sh
 
       - name: Build macOS validation app
         env:
@@ -164,7 +174,7 @@ jobs:
             -derivedDataPath "${{ runner.temp }}/openccman-app" \
             -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
             CODE_SIGNING_ALLOWED=NO ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
-            PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.PRValidation build
+            OPENCCMAN_BUNDLE_ID=org.gewill.OpenCCman.PRValidation build
           ditto -c -k --keepParent \
             "${{ runner.temp }}/openccman-app/Build/Products/Debug/OpenCCman.app" \
             "${{ runner.temp }}/OpenCCman-validation.zip"
@@ -249,7 +259,7 @@ jobs:
             -derivedDataPath "${{ runner.temp }}/openccman-ios" \
             -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
             CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=NO \
-            PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.UIValidation build
+            OPENCCMAN_BUNDLE_ID=org.gewill.OpenCCman.UIValidation build
           git diff --exit-code -- OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
           ditto -c -k --keepParent \
             "${{ runner.temp }}/openccman-ios/Build/Products/Debug-iphonesimulator/OpenCCman.app" \
@@ -318,7 +328,7 @@ jobs:
             -derivedDataPath "${{ runner.temp }}/lifecycle-derived" \
             -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
             CODE_SIGNING_ALLOWED=NO ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
-            PRODUCT_BUNDLE_IDENTIFIER="$diagnostic_bundle" "${build_args[@]}" build \
+            OPENCCMAN_BUNDLE_ID="$diagnostic_bundle" "${build_args[@]}" build \
             2>&1 | tee "${{ runner.temp }}/lifecycle-artifact/build.log"
           cmp OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved \
             "${{ runner.temp }}/native-window-lifecycle/source/OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
@@ -436,7 +446,7 @@ jobs:
             -derivedDataPath "${{ runner.temp }}/services-app" \
             -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
             CODE_SIGNING_ALLOWED=NO ARCHS="arm64 x86_64" ONLY_ACTIVE_ARCH=NO \
-            PRODUCT_BUNDLE_IDENTIFIER=org.gewill.OpenCCman.ServicesValidation build
+            OPENCCMAN_BUNDLE_ID=org.gewill.OpenCCman.ServicesValidation build
           ditto -c -k --keepParent \
             "${{ runner.temp }}/services-app/Build/Products/Release/OpenCCman.app" \
             "${{ runner.temp }}/services-artifact/OpenCCman-services-validation.zip"

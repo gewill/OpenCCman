@@ -60,7 +60,37 @@ enum SegmentLayoutChecks {
     state.width = 400
     settle()
     precondition(abs(state.height - wideVariants) < 1, "Three variants must also recover after widening")
-    print("PASS: native segment narrow/wide, live English/Traditional Chinese, selection stability and accessibility layout")
+    state.width = 240
+    state.locale = Locale(identifier: "zh_Hant")
+    settle()
+    let chineseVariants = state.height
+    precondition(chineseVariants < wideVariants + 15, "Short Chinese variants must stay in one row")
+    state.selected = state.options[2]
+    settle()
+    precondition(abs(state.height - chineseVariants) < 1, "Chinese selection must not change segment orientation")
+    state.width = 120
+    settle()
+    precondition(state.height > chineseVariants + 28, "Chinese variants must stack before splitting words")
+    state.sizeCategory = .accessibilityExtraExtraExtraLarge
+    state.width = 400
+    settle()
+    precondition(state.height > chineseVariants + 28, "Chinese accessibility type must keep the vertical fallback")
+    print("PASS: native segment narrow/wide, live English/Traditional Chinese, Chinese variants, selection stability and accessibility layout")
+  }
+
+  static func runWordChecks() {
+    let cases: [(String, [String])] = [
+      ("HongKong Standard", ["HongKong", "Standard"]),
+      ("e-mail iOS15", ["e-mail", "iOS15"]),
+      ("OpenCC標準", ["OpenCC", "標準"]),
+      ("臺灣標準", ["臺灣", "標準"]),
+      ("地域用词转换", ["地域", "用词", "转换"]),
+    ]
+    for (label, expected) in cases {
+      let words = SegmentView<Option>.unbrokenWords(in: label)
+      precondition(words == expected, "Unexpected unbroken words for \(label): \(words)")
+    }
+    print("PASS: segment labels keep Latin words whole and split Chinese runs into words")
   }
 
   private struct Option: Segmentable {

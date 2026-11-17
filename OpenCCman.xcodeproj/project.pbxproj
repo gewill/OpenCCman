@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C02500000000000000000031 /* MacBatchConversionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02500000000000000000032 /* MacBatchConversionView.swift */; };
+		C02500000000000000000021 /* MacBatchConversionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02500000000000000000022 /* MacBatchConversionCoordinator.swift */; };
+		C02500000000000000000011 /* BatchConversionPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02500000000000000000012 /* BatchConversionPlan.swift */; };
 		C25900000000000000000009 /* MobileLargeFileTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2590000000000000000000A /* MobileLargeFileTaskView.swift */; };
 		C25900000000000000000007 /* MobileFileRuntime.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25900000000000000000008 /* MobileFileRuntime.swift */; };
 		C25900000000000000000005 /* MobileFileExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25900000000000000000006 /* MobileFileExporter.swift */; };
@@ -42,7 +45,7 @@
 		095E17452E40746F0051BBB7 /* ServicesMenu.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 095E17442E40746F0051BBB7 /* ServicesMenu.xcstrings */; };
 		CC0912202600000000000011 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000012 /* PrivacyInfo.xcprivacy */; };
 		09DBEC4F2E3BC32F00DD9C5B /* ShortcutSettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC4E2E3BC32F00DD9C5B /* ShortcutSettingsScene.swift */; };
-		09DBEC522E3BC4BC00DD9C5B /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 09DBEC512E3BC4BC00DD9C5B /* KeyboardShortcuts */; };
+		09DBEC522E3BC4BC00DD9C5B /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = 09DBEC512E3BC4BC00DD9C5B /* KeyboardShortcuts */; };
 		09DBEC552E3BC69000DD9C5B /* GlobalShortcutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DBEC532E3BC69000DD9C5B /* GlobalShortcutService.swift */; };
 		BE2C6D3E2B2D7EA700FC4112 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = BE2C6D3D2B2D7EA700FC4112 /* SwiftUIIntrospect */; };
 		BE2C6D502B2D7ED000FC4112 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2C6D402B2D7ED000FC4112 /* ViewExtensions.swift */; };
@@ -104,9 +107,52 @@
 		CC0913202600000000000101 /* WhatsNewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0913202600000000000102 /* WhatsNewView.swift */; };
 		3C3627644470F73B7875003F /* CustomerCenterScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAFB8436EC14FFC357BCEFA /* CustomerCenterScene.swift */; };
 		43088A90EB27980ABB8606C3 /* ProAccessUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860A8029E8FF16CE13720671 /* ProAccessUpdate.swift */; };
+		E39431E564324EF0BF15AE10 /* ConversionDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297DDBA43E1D485892AB2741 /* ConversionDiff.swift */; };
+		BFD6A84D2DF049739A0546A3 /* ConversionDiffSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7AFDA11A5645F2AEE661E6 /* ConversionDiffSnapshot.swift */; };
+		C02900000000000000000012 /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02900000000000000000002 /* ActionViewController.swift */; };
+		C02900000000000000000013 /* TextActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02900000000000000000003 /* TextActionView.swift */; };
+		C02900000000000000000014 /* TextActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02900000000000000000004 /* TextActionModel.swift */; };
+		C02900000000000000000016 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C02900000000000000000006 /* InfoPlist.xcstrings */; };
+		C02900000000000000000017 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C02900000000000000000007 /* PrivacyInfo.xcprivacy */; };
+		C02900000000000000000021 /* ChineseConversionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000002 /* ChineseConversionService.swift */; };
+		C02900000000000000000022 /* ConversionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000022 /* ConversionConfiguration.swift */; };
+		C02900000000000000000023 /* TextFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0912202600000000000042 /* TextFileService.swift */; };
+		C02900000000000000000024 /* FileConversionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C25700000000000000000004 /* FileConversionPolicy.swift */; };
+		C02900000000000000000025 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE727E3A2B2E00D000C63DB2 /* Localizable.strings */; };
+		C02900000000000000000026 /* OpenCC in Frameworks */ = {isa = PBXBuildFile; productRef = C02900000000000000000027 /* OpenCC */; };
+		C02900000000000000000028 /* OpenCCmanTextAction.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C02900000000000000000001 /* OpenCCmanTextAction.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C02900000000000000000018 /* TextActionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02900000000000000000008 /* TextActionInput.swift */; };
+		C02900000000000000000019 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C02900000000000000000009 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C02900000000000000000051 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BEA770DB2B2C904900AFA2F0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C02900000000000000000041;
+			remoteInfo = OpenCCmanTextAction;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C02900000000000000000034 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C02900000000000000000028 /* OpenCCmanTextAction.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		C02500000000000000000032 /* MacBatchConversionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBatchConversionView.swift; sourceTree = "<group>"; };
+		C02500000000000000000022 /* MacBatchConversionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacBatchConversionCoordinator.swift; sourceTree = "<group>"; };
+		C02500000000000000000012 /* BatchConversionPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchConversionPlan.swift; sourceTree = "<group>"; };
 		C2590000000000000000000A /* MobileLargeFileTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileLargeFileTaskView.swift; sourceTree = "<group>"; };
 		C25900000000000000000008 /* MobileFileRuntime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileFileRuntime.swift; sourceTree = "<group>"; };
 		C25900000000000000000006 /* MobileFileExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileFileExporter.swift; sourceTree = "<group>"; };
@@ -200,6 +246,17 @@
 		CC0913202600000000000102 /* WhatsNewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewView.swift; sourceTree = "<group>"; };
 		7CAFB8436EC14FFC357BCEFA /* CustomerCenterScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCman/Scene/CustomerCenterScene.swift; sourceTree = SOURCE_ROOT; };
 		860A8029E8FF16CE13720671 /* ProAccessUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCCman/Model/ProAccessUpdate.swift; sourceTree = SOURCE_ROOT; };
+		297DDBA43E1D485892AB2741 /* ConversionDiff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionDiff.swift; sourceTree = "<group>"; };
+		0C7AFDA11A5645F2AEE661E6 /* ConversionDiffSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionDiffSnapshot.swift; sourceTree = "<group>"; };
+		C02900000000000000000001 /* OpenCCmanTextAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenCCmanTextAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C02900000000000000000002 /* ActionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionViewController.swift; sourceTree = "<group>"; };
+		C02900000000000000000003 /* TextActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextActionView.swift; sourceTree = "<group>"; };
+		C02900000000000000000004 /* TextActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextActionModel.swift; sourceTree = "<group>"; };
+		C02900000000000000000005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C02900000000000000000006 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		C02900000000000000000007 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		C02900000000000000000008 /* TextActionInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextActionInput.swift; sourceTree = "<group>"; };
+		C02900000000000000000009 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +278,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C02900000000000000000032 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C02900000000000000000026 /* OpenCC in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -236,6 +301,7 @@
 				CC2609280000000000000002 /* ConvertTextIntent.swift */,
 				CC0912202600000000000042 /* TextFileService.swift */,
 				C05200000000000000000022 /* MacLargeFileCoordinator.swift */,
+				C02500000000000000000022 /* MacBatchConversionCoordinator.swift */,
 				C05200000000000000000012 /* StreamingTextFileService.swift */,
 				C25700000000000000000002 /* StreamingConversionPump.swift */,
 				C25700000000000000000004 /* FileConversionPolicy.swift */,
@@ -305,6 +371,7 @@
 			children = (
 				2A4205A262DA48E58C8D9555 /* WorkspaceTextEditor.swift */,
 				C05200000000000000000032 /* MacLargeFileTaskView.swift */,
+				C02500000000000000000032 /* MacBatchConversionView.swift */,
 				C25900000000000000000006 /* MobileFileExporter.swift */,
 				C2590000000000000000000A /* MobileLargeFileTaskView.swift */,
 				C494425751394D56B5BA5763 /* WorkspaceScrollKeeper.swift */,
@@ -334,6 +401,9 @@
 			isa = PBXGroup;
 			children = (
 				14C5B905AAE54E0EB4641B5D /* WorkspaceLayout.swift */,
+				0C7AFDA11A5645F2AEE661E6 /* ConversionDiffSnapshot.swift */,
+				297DDBA43E1D485892AB2741 /* ConversionDiff.swift */,
+				C02500000000000000000012 /* BatchConversionPlan.swift */,
 				CC0913202600000000000002 /* WhatsNew.swift */,
 				CC2609270000000000000002 /* LaunchMotion.swift */,
 				BE727E332B2DF85E00C63DB2 /* UserDefaultsKeys.swift */,
@@ -351,6 +421,7 @@
 			isa = PBXGroup;
 			children = (
 				BEA770E52B2C904900AFA2F0 /* OpenCCman */,
+				C02900000000000000000061 /* OpenCCmanTextAction */,
 				BEA770E42B2C904900AFA2F0 /* Products */,
 			);
 			indentWidth = 2;
@@ -361,6 +432,7 @@
 			isa = PBXGroup;
 			children = (
 				BEA770E32B2C904900AFA2F0 /* OpenCCman.app */,
+				C02900000000000000000001 /* OpenCCmanTextAction.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -401,6 +473,21 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		C02900000000000000000061 /* OpenCCmanTextAction */ = {
+			isa = PBXGroup;
+			children = (
+				C02900000000000000000002 /* ActionViewController.swift */,
+				C02900000000000000000003 /* TextActionView.swift */,
+				C02900000000000000000004 /* TextActionModel.swift */,
+				C02900000000000000000008 /* TextActionInput.swift */,
+				C02900000000000000000009 /* Assets.xcassets */,
+				C02900000000000000000005 /* Info.plist */,
+				C02900000000000000000006 /* InfoPlist.xcstrings */,
+				C02900000000000000000007 /* PrivacyInfo.xcprivacy */,
+			);
+			path = OpenCCmanTextAction;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -410,11 +497,13 @@
 			buildPhases = (
 				BEA770DF2B2C904900AFA2F0 /* Sources */,
 				BEA770E02B2C904900AFA2F0 /* Frameworks */,
+				C02900000000000000000034 /* Embed Foundation Extensions */,
 				BEA770E12B2C904900AFA2F0 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C02900000000000000000052 /* PBXTargetDependency */,
 			);
 			name = OpenCCman;
 			packageProductDependencies = (
@@ -434,6 +523,26 @@
 			productReference = BEA770E32B2C904900AFA2F0 /* OpenCCman.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C02900000000000000000041 /* OpenCCmanTextAction */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C02900000000000000000042 /* Build configuration list for PBXNativeTarget "OpenCCmanTextAction" */;
+			buildPhases = (
+				C02900000000000000000031 /* Sources */,
+				C02900000000000000000032 /* Frameworks */,
+				C02900000000000000000033 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenCCmanTextAction;
+			packageProductDependencies = (
+				C02900000000000000000027 /* OpenCC */,
+			);
+			productName = OpenCCmanTextAction;
+			productReference = C02900000000000000000001 /* OpenCCmanTextAction.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -446,6 +555,9 @@
 				TargetAttributes = {
 					BEA770E22B2C904900AFA2F0 = {
 						CreatedOnToolsVersion = 15.1;
+					};
+					C02900000000000000000041 = {
+						CreatedOnToolsVersion = 27.1;
 					};
 				};
 			};
@@ -477,6 +589,7 @@
 			projectRoot = "";
 			targets = (
 				BEA770E22B2C904900AFA2F0 /* OpenCCman */,
+				C02900000000000000000041 /* OpenCCmanTextAction */,
 			);
 		};
 /* End PBXProject section */
@@ -494,6 +607,17 @@
 				0920E96C2E3F4D3C003C9715 /* InfoPlist.xcstrings in Resources */,
 				CC2609290000000000000001 /* AppIcon.icon in Resources */,
 				BEA770EB2B2C904A00AFA2F0 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C02900000000000000000033 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C02900000000000000000025 /* Localizable.strings in Resources */,
+				C02900000000000000000019 /* Assets.xcassets in Resources */,
+				C02900000000000000000016 /* InfoPlist.xcstrings in Resources */,
+				C02900000000000000000017 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +644,8 @@
 				65F0723944E44D75A8E21F63 /* WorkspaceComponents.swift in Sources */,
 				F37DBF9DC8F743048617A866 /* WorkspacePreferences.swift in Sources */,
 				C6DC3122255A43B8BDC575DD /* WorkspaceLayout.swift in Sources */,
+				BFD6A84D2DF049739A0546A3 /* ConversionDiffSnapshot.swift in Sources */,
+				E39431E564324EF0BF15AE10 /* ConversionDiff.swift in Sources */,
 				CC0913202600000000000101 /* WhatsNewView.swift in Sources */,
 				CC0913202600000000000001 /* WhatsNew.swift in Sources */,
 				CC2609270000000000000001 /* LaunchMotion.swift in Sources */,
@@ -529,6 +655,9 @@
 				CC0912202600000000000041 /* TextFileService.swift in Sources */,
 				C05200000000000000000031 /* MacLargeFileTaskView.swift in Sources */,
 				C05200000000000000000021 /* MacLargeFileCoordinator.swift in Sources */,
+				C02500000000000000000031 /* MacBatchConversionView.swift in Sources */,
+				C02500000000000000000021 /* MacBatchConversionCoordinator.swift in Sources */,
+				C02500000000000000000011 /* BatchConversionPlan.swift in Sources */,
 				C05200000000000000000011 /* StreamingTextFileService.swift in Sources */,
 				C25700000000000000000001 /* StreamingConversionPump.swift in Sources */,
 				C25700000000000000000003 /* FileConversionPolicy.swift in Sources */,
@@ -585,7 +714,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C02900000000000000000031 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C02900000000000000000012 /* ActionViewController.swift in Sources */,
+				C02900000000000000000013 /* TextActionView.swift in Sources */,
+				C02900000000000000000014 /* TextActionModel.swift in Sources */,
+				C02900000000000000000018 /* TextActionInput.swift in Sources */,
+				C02900000000000000000021 /* ChineseConversionService.swift in Sources */,
+				C02900000000000000000022 /* ConversionConfiguration.swift in Sources */,
+				C02900000000000000000023 /* TextFileService.swift in Sources */,
+				C02900000000000000000024 /* FileConversionPolicy.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C02900000000000000000052 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = C02900000000000000000041 /* OpenCCmanTextAction */;
+			targetProxy = C02900000000000000000051 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		CC2609280000000000000015 /* AppShortcuts.strings */ = {
@@ -666,6 +819,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				OPENCCMAN_BUNDLE_ID = org.gewill.OpenCCman;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -722,6 +876,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OPENCCMAN_BUNDLE_ID = org.gewill.OpenCCman;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
@@ -756,8 +911,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.2;
-				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.OpenCCman;
+				MARKETING_VERSION = 2.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENCCMAN_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -796,11 +951,67 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.2;
-				PRODUCT_BUNDLE_IDENTIFIER = org.gewill.OpenCCman;
+				MARKETING_VERSION = 2.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENCCMAN_BUNDLE_ID)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C02900000000000000000043 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 30;
+				DEVELOPMENT_TEAM = RLK76T8Y89;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OpenCCmanTextAction/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Convert Chinese Text";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Ge Will. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 2.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENCCMAN_BUNDLE_ID).TextAction";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C02900000000000000000044 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 30;
+				DEVELOPMENT_TEAM = RLK76T8Y89;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OpenCCmanTextAction/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Convert Chinese Text";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Ge Will. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				MARKETING_VERSION = 2.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENCCMAN_BUNDLE_ID).TextAction";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -828,6 +1039,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		C02900000000000000000042 /* Build configuration list for PBXNativeTarget "OpenCCmanTextAction" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C02900000000000000000043 /* Debug */,
+				C02900000000000000000044 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -836,7 +1056,7 @@
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.3.0;
+				minimumVersion = 3.1.0;
 			};
 		};
 		BE2C6D3C2B2D7EA700FC4112 /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
@@ -844,7 +1064,7 @@
 			repositoryURL = "https://github.com/siteline/swiftui-introspect";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 26.0.0;
+				minimumVersion = 27.1.0;
 			};
 		};
 		BE2C6D652B2D817100FC4112 /* XCRemoteSwiftPackageReference "neumorphic" */ = {
@@ -884,7 +1104,7 @@
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 6.5.16;
+				minimumVersion = 8.0.3;
 			};
 		};
 		BE781CB02CA131790022C4B8 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
@@ -892,7 +1112,7 @@
 			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
 			requirement = {
 				kind = exactVersion;
-				version = 5.78.0;
+				version = 5.103.0;
 			};
 		};
 		BEA770F52B2C92B700AFA2F0 /* XCRemoteSwiftPackageReference "SwiftyOpenCC" */ = {
@@ -900,7 +1120,7 @@
 			repositoryURL = "https://github.com/gewill/SwiftyOpenCC";
 			requirement = {
 				kind = revision;
-				revision = 564b094b2b69f2c1e907fa3d89fe6845469a4e4e;
+				revision = f5ba852583e1fce34889da71f21a644359abe398;
 			};
 		};
 		BEA956372B31EB7B00E04625 /* XCRemoteSwiftPackageReference "ColorfulX" */ = {
@@ -908,7 +1128,7 @@
 			repositoryURL = "https://github.com/Lakr233/ColorfulX";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.5.1;
+				minimumVersion = 6.2.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -968,6 +1188,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BEA956372B31EB7B00E04625 /* XCRemoteSwiftPackageReference "ColorfulX" */;
 			productName = ColorfulX;
+		};
+		C02900000000000000000027 /* OpenCC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BEA770F52B2C92B700AFA2F0 /* XCRemoteSwiftPackageReference "SwiftyOpenCC" */;
+			productName = OpenCC;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

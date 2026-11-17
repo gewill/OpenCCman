@@ -28,7 +28,7 @@ actor ChineseConversionService {
   }
 
   // ChineseConverter is immutable and thread-safe. Only its construction and
-  // this cache need a lock. The app exposes seven distinct option combinations.
+  // this cache need a lock. The app exposes eleven distinct configurations.
   private final class ConverterCache: @unchecked Sendable {
     private let lock = NSLock()
     private var converters: [Int: ChineseConverter] = [:]
@@ -39,7 +39,11 @@ actor ChineseConversionService {
       if let converter = converters[options.rawValue] {
         return converter
       }
-      let converter = try ChineseConverter(options: options)
+      // The app-only Hong Kong phrase flag maps to official configurations that
+      // `Options` cannot express; the engine never sees that bit.
+      let converter = options.contains(.hkIdiom)
+        ? try ChineseConverter(configuration: options.contains(.simplify) ? .hk2sp : .s2hkp)
+        : try ChineseConverter(options: options)
       converters[options.rawValue] = converter
       return converter
     }

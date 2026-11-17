@@ -18,67 +18,309 @@ import Carbon
 // MARK: - Keyboard Shortcuts Extension
 
 extension KeyboardShortcuts.Name {
-    static let convertSelectedText = Self("convertSelectedText", default: .init(.t, modifiers: [.command, .option]))
-    static let openSelectedText = Self("openSelectedText", default: .init(.r, modifiers: [.command, .option]))
+    static let convertSelectedText = Self("convertSelectedText", initial: .init(.t, modifiers: [.command, .option]))
+    static let openSelectedText = Self("openSelectedText", initial: .init(.r, modifiers: [.command, .option]))
 }
 
-@MainActor
-private struct ShortcutTextCapture {
-    let text: String
-    let selection: ShortcutSelection?
-}
+// MARK: - Sandbox-compatible shortcut transaction
 
-// AX identity is only a guard for automatic replacement. Applications that do
-// not expose a focused editable element and selected text still get the result
-// in OpenCCman, where the user can copy it manually.
-@MainActor
-private struct ShortcutSelection {
-    let window: AXUIElement
-    let element: AXUIElement
-    let range: CFRange
-    let text: String
+// Read hardware activity, never text or event payloads. Our own ⌘C/⌘V also reach
+// the HID state: C and V show as held for a moment, and the key-down counter takes
+// them in late batches (observed on macOS 27.2.1). Key-downs therefore cannot tell
+// the user from us; keyboard edits are caught by re-copying the selection before the
+// paste. Mouse and scroll counters, which our events never touch, still cancel.
+struct ShortcutInputActivity: Equatable {
+    var counters: [UInt32]
+    var hasHeldInput = false
 
-    static func capture(in application: NSRunningApplication) -> Self? {
-        guard NSWorkspace.shared.frontmostApplication?.processIdentifier == application.processIdentifier else {
-            return nil
+    static func read() -> Self {
+        let types: [CGEventType] = [.leftMouseDown, .rightMouseDown,
+            .otherMouseDown, .leftMouseDragged, .rightMouseDragged,
+            .otherMouseDragged, .scrollWheel]
+        // Modifiers belong to the shortcut itself; C and V are the keys we post.
+        let ignored: Set<CGKeyCode> = [54, 55, 56, 57, 58, 59, 60, 61, 62, 63,
+                                       CGKeyCode(kVK_ANSI_C), CGKeyCode(kVK_ANSI_V)]
+        let keyHeld = (0..<128).contains { code in
+            !ignored.contains(CGKeyCode(code)) && CGEventSource.keyState(.hidSystemState, key: CGKeyCode(code))
         }
-        let appElement = AXUIElementCreateApplication(application.processIdentifier)
-        AXUIElementSetMessagingTimeout(appElement, 0.25)
-        var windowValue: CFTypeRef?
-        guard AXUIElementCopyAttributeValue(appElement, kAXFocusedWindowAttribute as CFString, &windowValue) == .success,
-              let windowValue,
-              CFGetTypeID(windowValue) == AXUIElementGetTypeID() else { return nil }
-        let window = windowValue as! AXUIElement
-        var focusedValue: CFTypeRef?
-        guard AXUIElementCopyAttributeValue(appElement, kAXFocusedUIElementAttribute as CFString, &focusedValue) == .success,
-              let focusedValue,
-              CFGetTypeID(focusedValue) == AXUIElementGetTypeID() else { return nil }
-        let focused = focusedValue as! AXUIElement
-        AXUIElementSetMessagingTimeout(focused, 0.25)
-
-        var rangeValue: CFTypeRef?
-        guard AXUIElementCopyAttributeValue(focused, kAXSelectedTextRangeAttribute as CFString, &rangeValue) == .success,
-              let rangeValue,
-              CFGetTypeID(rangeValue) == AXValueGetTypeID() else { return nil }
-        let axRange = rangeValue as! AXValue
-        var range = CFRange()
-        guard AXValueGetValue(axRange, .cfRange, &range), range.length > 0 else { return nil }
-
-        var textValue: CFTypeRef?
-        guard AXUIElementCopyAttributeValue(focused, kAXSelectedTextAttribute as CFString, &textValue) == .success,
-              let text = textValue as? String,
-              !text.isEmpty else { return nil }
-        return Self(window: window, element: focused, range: range, text: text)
+        let buttonHeld = [CGMouseButton.left, .right, .center].contains {
+            CGEventSource.buttonState(.hidSystemState, button: $0)
+        }
+        return Self(counters: types.map {
+            CGEventSource.counterForEventType(.hidSystemState, eventType: $0)
+        }, hasHeldInput: keyHeld || buttonHeld)
     }
 
-    func matches(in application: NSRunningApplication, text expectedText: String? = nil) -> Bool {
-        guard let current = Self.capture(in: application) else { return false }
-        return CFEqual(window, current.window)
-            && CFEqual(element, current.element)
-            && range.location == current.range.location
-            && range.length == current.range.length
-            && text == current.text
-            && (expectedText == nil || text == expectedText)
+}
+
+enum ShortcutFailure: Error, Equatable {
+    case sourceChanged, inputChanged, clipboardChanged, selectionChanged
+    case copyUnavailable, permissionRequired, conversionFailed, busy
+    case clipboardUnreadable
+
+    var messageKey: String {
+        switch self {
+        case .sourceChanged: return "shortcut_cancelled_source"
+        case .inputChanged: return "shortcut_cancelled_input"
+        case .clipboardChanged: return "shortcut_cancelled_clipboard"
+        case .selectionChanged: return "shortcut_cancelled_selection"
+        case .copyUnavailable: return "shortcut_copy_unavailable"
+        case .permissionRequired: return "shortcut_permission_required"
+        case .conversionFailed: return "shortcut_conversion_failed"
+        case .busy: return "shortcut_busy"
+        case .clipboardUnreadable: return "shortcut_clipboard_unreadable"
+        }
+    }
+}
+
+extension NSPasteboard.PasteboardType {
+    // nspasteboard.org markers: clipboard managers and history tools skip these.
+    static let shortcutTransient = Self("org.nspasteboard.TransientType")
+    static let shortcutAutoGenerated = Self("org.nspasteboard.AutoGeneratedType")
+}
+
+/// The text the source app copied for ⌘C.
+struct ShortcutCopy: Equatable {
+    let text: String
+
+    /// VS Code-family editors copy the whole line when nothing is selected and
+    /// record that in their clipboard metadata, which Chromium stores as web
+    /// custom data (UTF-16). Treat such a copy as "no selection".
+    static func isFromEmptySelection(_ pasteboard: NSPasteboard) -> Bool {
+        let marker = "\"isFromEmptySelection\":true"
+        if let data = pasteboard.data(forType: NSPasteboard.PasteboardType("vscode-editor-data")),
+           String(decoding: data, as: UTF8.self).contains(marker) { return true }
+        guard let custom = pasteboard.data(forType: NSPasteboard.PasteboardType("org.chromium.web-custom-data")),
+              let needle = marker.data(using: .utf16LittleEndian) else { return false }
+        return custom.range(of: needle) != nil
+    }
+}
+
+/// Without Accessibility access to other apps (App Sandbox), the paste target
+/// cannot be inspected, so apps known to paste somewhere other than over the
+/// selection get the result in OpenCCman instead.
+enum ShortcutPastePolicy {
+    // Terminals paste at the prompt, not over the selected output.
+    static let terminalBundleIdentifiers: Set<String> = [
+        "com.apple.Terminal", "com.googlecode.iterm2", "dev.warp.Warp-Stable", "dev.warp.Warp",
+        "com.mitchellh.ghostty", "io.alacritty", "org.alacritty", "net.kovidgoyal.kitty",
+        "com.github.wez.wezterm", "co.zeit.hyper", "org.tabby",
+    ]
+    // Editors that copy the current line for an empty selection without metadata.
+    static let lineCopyEditorPrefixes = ["com.jetbrains.", "com.sublimetext.", "com.google.android.studio"]
+
+    // Chrome and Firefox neither copy nor beep for ⌘C with only a caret (measured on
+    // macOS 27.2.1); AppKit and WebKit text views beep. Only there a second copy after
+    // pasting can show that a read-only selection survived.
+    static let silentCaretCopyBundleIdentifiers: Set<String> = [
+        "com.google.Chrome", "com.google.Chrome.beta", "com.google.Chrome.dev", "com.google.Chrome.canary",
+        "org.mozilla.firefox", "org.mozilla.firefoxdeveloperedition", "org.mozilla.nightly",
+    ]
+
+    static func allowsAutomaticPaste(bundleIdentifier: String?, copy: ShortcutCopy) -> Bool {
+        guard let identifier = bundleIdentifier else { return true }
+        if terminalBundleIdentifiers.contains(identifier) { return false }
+        if lineCopyEditorPrefixes.contains(where: { identifier.hasPrefix($0) }),
+           copy.text.hasSuffix("\n") || copy.text.hasSuffix("\r") { return false }
+        return true
+    }
+
+    /// Whether to copy again after pasting, to tell a refused paste from a read by an
+    /// input method or clipboard tool.
+    static func verifiesPaste(bundleIdentifier: String?) -> Bool {
+        bundleIdentifier.map(silentCaretCopyBundleIdentifiers.contains) ?? false
+    }
+}
+
+enum ShortcutPasteOutcome: Equatable {
+    /// Something read the converted text: normally the app's paste, but input methods
+    /// and clipboard tools that read every clipboard change look the same unless the
+    /// selection is checked afterwards.
+    case pasted
+    /// Nothing read the converted text while it was held, or the selection was still
+    /// there afterwards (read-only text, no paste target).
+    case notAccepted
+}
+
+/// Supplies the converted text only when something reads it. Not being read at all is
+/// the only reliable sign that ⌘V reached no paste target. AppKit calls it on the main thread.
+final class ShortcutPasteProvider: NSObject, NSPasteboardItemDataProvider, @unchecked Sendable {
+    private let text: String
+    private(set) var wasRequested = false
+
+    init(text: String) { self.text = text }
+
+    func pasteboard(_ pasteboard: NSPasteboard?, item: NSPasteboardItem,
+                    provideDataForType type: NSPasteboard.PasteboardType) {
+        wasRequested = true
+        item.setString(text, forType: type)
+    }
+}
+
+/// A wait that cancellation cannot cut short: clipboard clean-up must still run.
+@MainActor
+func shortcutPause(_ seconds: TimeInterval) async {
+    await withCheckedContinuation { continuation in
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) { continuation.resume() }
+    }
+}
+
+@MainActor
+final class ShortcutClipboardTransaction {
+    static let timeLimit: TimeInterval = 5
+
+    private let pasteboard: NSPasteboard
+    private let sourceIsFrontmost: () -> Bool
+    private let readActivity: () -> ShortcutInputActivity
+    private let sendKey: (CGKeyCode) async -> Bool
+    private let now: () -> TimeInterval
+    private let pasteHold: TimeInterval
+    private let expectedActivity: ShortcutInputActivity
+    private var expectedClipboardCount: Int
+    private let started: TimeInterval
+
+    convenience init(application: NSRunningApplication) {
+        self.init(pasteboard: .general, sourceIsFrontmost: {
+            NSWorkspace.shared.frontmostApplication?.processIdentifier == application.processIdentifier
+                && !application.isTerminated
+        }, readActivity: ShortcutInputActivity.read, sendKey: { keyCode in
+            guard NSWorkspace.shared.frontmostApplication?.processIdentifier == application.processIdentifier,
+                  let source = CGEventSource(stateID: .privateState),
+                  let down = CGEvent(keyboardEventSource: source, virtualKey: keyCode, keyDown: true),
+                  let up = CGEvent(keyboardEventSource: source, virtualKey: keyCode, keyDown: false) else { return false }
+            source.localEventsSuppressionInterval = 0
+            down.flags = .maskCommand
+            up.flags = .maskCommand
+            // Use the same system event route as 1.1, not AXUIElement access.
+            down.post(tap: .cghidEventTap)
+            try? await Task.sleep(nanoseconds: 10_000_000)
+            up.post(tap: .cghidEventTap)
+            return true
+        })
+    }
+
+    // The injected transport lets regression checks use a private pasteboard and
+    // a controllable clock; production always uses the initializer above.
+    init(pasteboard: NSPasteboard, sourceIsFrontmost: @escaping () -> Bool,
+         readActivity: @escaping () -> ShortcutInputActivity,
+         sendKey: @escaping (CGKeyCode) async -> Bool,
+         now: @escaping () -> TimeInterval = { ProcessInfo.processInfo.systemUptime },
+         pasteHold: TimeInterval = 1.5) {
+        self.pasteboard = pasteboard
+        self.sourceIsFrontmost = sourceIsFrontmost
+        self.readActivity = readActivity
+        self.sendKey = sendKey
+        self.now = now
+        self.pasteHold = pasteHold
+        expectedActivity = readActivity()
+        expectedClipboardCount = pasteboard.changeCount
+        started = now()
+    }
+
+    private func checkTarget() throws {
+        guard !Task.isCancelled, sourceIsFrontmost() else { throw ShortcutFailure.sourceChanged }
+        let activity = readActivity()
+        guard now() - started < Self.timeLimit,
+              !activity.hasHeldInput, activity == expectedActivity else { throw ShortcutFailure.inputChanged }
+    }
+
+    private func checkClipboard() throws {
+        guard pasteboard.changeCount == expectedClipboardCount else { throw ShortcutFailure.clipboardChanged }
+    }
+
+    private func snapshotClipboard() throws -> PasteboardSnapshot {
+        if let snapshot = PasteboardSnapshot(pasteboard) { return snapshot }
+        // An unchanged count means a representation could not be read (for example
+        // lazily provided data); refusing protects contents we could not restore.
+        throw pasteboard.changeCount == expectedClipboardCount
+            ? ShortcutFailure.clipboardUnreadable : ShortcutFailure.clipboardChanged
+    }
+
+    func capture() async throws -> ShortcutCopy {
+        try await copySelection()
+    }
+
+    private func copySelection(polls: Int = 20) async throws -> ShortcutCopy {
+        try checkTarget()
+        try checkClipboard()
+        let original = try snapshotClipboard()
+        guard await sendKey(CGKeyCode(kVK_ANSI_C)) else { throw ShortcutFailure.copyUnavailable }
+        var failure: Error = ShortcutFailure.copyUnavailable
+        for _ in 0..<polls {
+            do { try await Task.sleep(nanoseconds: 50_000_000) } catch { failure = error; break }
+            // Look for the copy before checking the target: once the source app has
+            // replaced the user's clipboard, every exit has to put it back.
+            if pasteboard.changeCount != expectedClipboardCount { return try takeCopy(restoring: original) }
+            do { try checkTarget() } catch { failure = error; break }
+        }
+        // A copy already in flight may still land; undo it rather than leave the
+        // selection on the user's clipboard.
+        for _ in 0..<15 {
+            if pasteboard.changeCount != expectedClipboardCount {
+                _ = try? takeCopy(restoring: original)
+                break
+            }
+            await shortcutPause(0.02)
+        }
+        throw failure
+    }
+
+    private func takeCopy(restoring original: PasteboardSnapshot) throws -> ShortcutCopy {
+        let copiedCount = pasteboard.changeCount
+        let text = pasteboard.string(forType: .string)
+        let emptySelection = ShortcutCopy.isFromEmptySelection(pasteboard)
+        // A second change after the copy belongs to the user; leave it alone.
+        guard pasteboard.changeCount == copiedCount,
+              let restoredCount = original.restore(to: pasteboard, ifUnchangedSince: copiedCount,
+                                                   marking: .shortcutAutoGenerated) else {
+            throw ShortcutFailure.clipboardChanged
+        }
+        expectedClipboardCount = restoredCount
+        try checkTarget()
+        guard let text, !text.isEmpty, !emptySelection else { throw ShortcutFailure.copyUnavailable }
+        return ShortcutCopy(text: text)
+    }
+
+    func replace(originalText: String, with convertedText: String,
+                 verifyingSelection: Bool = false) async throws -> ShortcutPasteOutcome {
+        // Re-copy immediately before pasting. No selection / changed selection /
+        // clipboard ownership / user activity all fail closed. AX is not required.
+        let current = try await copySelection()
+        guard current.text == originalText else { throw ShortcutFailure.selectionChanged }
+        let original = try snapshotClipboard()
+        try checkTarget()
+        try checkClipboard()
+        let provider = ShortcutPasteProvider(text: convertedText)
+        let item = NSPasteboardItem()
+        guard item.setDataProvider(provider, forTypes: [.string]),
+              item.setData(Data(), forType: .shortcutTransient) else { throw ShortcutFailure.clipboardChanged }
+        // This Mac only: Universal Clipboard would offer the temporary text to nearby devices.
+        let ownership = pasteboard.prepareForNewContents(with: .currentHostOnly)
+        // Put the user's clipboard back on every exit, unless they copied since.
+        defer { original.restore(to: pasteboard, ifUnchangedSince: ownership, marking: .shortcutAutoGenerated) }
+        guard pasteboard.writeObjects([item]), pasteboard.changeCount == ownership else {
+            throw ShortcutFailure.clipboardChanged
+        }
+        try checkTarget()
+        guard await sendKey(CGKeyCode(kVK_ANSI_V)) else { throw ShortcutFailure.copyUnavailable }
+        // Input methods and clipboard tools may read each change within a few hundred
+        // milliseconds, even with the transient marker, so the first read can come
+        // before a slow app's. Keep the text for the whole hold, so the app never pastes
+        // the restored clipboard; a newer copy is the user's and ends the hold.
+        for _ in 0..<max(1, Int((pasteHold / 0.02).rounded())) {
+            if pasteboard.changeCount != ownership { break }
+            await shortcutPause(0.02)
+        }
+        guard provider.wasRequested else { return .notAccepted }
+        guard verifyingSelection,
+              let restored = original.restore(to: pasteboard, ifUnchangedSince: ownership,
+                                              marking: .shortcutAutoGenerated) else { return .pasted }
+        // The read may have been an input method's. A paste leaves no selection to copy;
+        // a refused paste leaves the original selected. Copy once more with the user's
+        // clipboard back in place; input, an app switch or a newer copy keeps the result.
+        expectedClipboardCount = restored
+        guard let survivor = try? await copySelection(polls: 6) else { return .pasted }
+        return survivor.text == originalText ? .notAccepted : .pasted
     }
 }
 
@@ -140,10 +382,10 @@ class GlobalShortcutService: ObservableObject {
 
     private func showAccessibilityPermissionAlert() {
         let alert = NSAlert()
-        alert.messageText = NSLocalizedString("Accessibility Permission Required", comment: "")
+        alert.messageText = "Accessibility Permission Required".localizedNamingAccessibilityPermission()
 
         // Build the informative text using structured localization keys
-        let intro = NSLocalizedString("accessibility_permission_intro", comment: "")
+        let intro = "accessibility_permission_intro".localizedNamingAccessibilityPermission()
         let instructionsTitle = NSLocalizedString("accessibility_permission_instructions_title", comment: "")
         let step1 = NSLocalizedString("accessibility_permission_step1", comment: "")
         let step2 = NSLocalizedString("accessibility_permission_step2", comment: "")
@@ -167,6 +409,18 @@ class GlobalShortcutService: ObservableObject {
         NSWorkspace.shared.open(url)
     }
 
+    /// Keyboard settings hold the shortcuts users assign to Services. The convert
+    /// service is an alternative that does not require Accessibility permission.
+    func openKeyboardShortcutSettings() {
+        let address: String
+        if #available(macOS 13, *) {
+            address = "x-apple.systempreferences:com.apple.Keyboard-Settings.extension"
+        } else {
+            address = "x-apple.systempreferences:com.apple.preference.keyboard?Shortcuts"
+        }
+        NSWorkspace.shared.open(URL(string: address)!)
+    }
+
     // MARK: - Public Methods
 
     func convertSelectedText() {
@@ -178,139 +432,63 @@ class GlobalShortcutService: ObservableObject {
     }
 
     private func performAction(convert: Bool) {
-        guard !isPerformingAction else { return }
+        guard !isPerformingAction else { report(.busy); return }
         checkAccessibilityPermission()
         guard hasAccessibilityPermission else {
+            // The user has to act on this, so it never depends on the failure-message switch.
             requestAccessibilityPermission()
             return
         }
         guard let sourceApplication = NSWorkspace.shared.frontmostApplication else { return }
+        let source = sourceApplication.processIdentifier
 
+        let transaction = ShortcutClipboardTransaction(application: sourceApplication)
         isPerformingAction = true
         Task {
             defer { isPerformingAction = false }
-            guard let capture = await getSelectedText(from: sourceApplication, forReplacement: convert),
-                  !capture.text.isEmpty else {
-                showNoTextSelectedAlert()
-                return
-            }
-
-            if convert {
-                await convertText(capture, in: sourceApplication)
-            } else {
-                bringAppToFrontAndSetTextOnly(originalText: capture.text)
-            }
-        }
-    }
-
-    private func showNoTextSelectedAlert() {
-        DispatchQueue.main.async {
-            let alert = NSAlert()
-            alert.messageText = NSLocalizedString("No Text Selected", comment: "")
-            alert.informativeText = NSLocalizedString("Please select some Chinese text first, then try the shortcut again.", comment: "")
-            alert.addButton(withTitle: NSLocalizedString("OK", comment: ""))
-            alert.alertStyle = .informational
-            alert.runModal()
-        }
-    }
-    
-    // MARK: - Text Capture
-
-    private func getSelectedText(
-        from application: NSRunningApplication,
-        forReplacement: Bool
-    ) async -> ShortcutTextCapture? {
-        let pasteboard = NSPasteboard.general
-        guard let originalClipboard = PasteboardSnapshot(pasteboard) else { return nil }
-        let originalChangeCount = originalClipboard.changeCount
-        let selection = forReplacement ? ShortcutSelection.capture(in: application) : nil
-
-        // A copy changes ownership even when its text matches the existing clipboard.
-        // Leave the current contents intact if the source application cannot copy.
-        guard pasteboard.changeCount == originalChangeCount,
-              await simulateKeyPress(keyCode: CGKeyCode(kVK_ANSI_C), in: application) else { return nil }
-        for _ in 0..<20 {
-            guard (try? await Task.sleep(nanoseconds: 50_000_000)) != nil else { return nil }
-            guard NSWorkspace.shared.frontmostApplication?.processIdentifier == application.processIdentifier else { return nil }
-            let copiedChangeCount = pasteboard.changeCount
-            if copiedChangeCount != originalChangeCount {
-                let text = pasteboard.string(forType: .string)
-                originalClipboard.restore(to: pasteboard, ifUnchangedSince: copiedChangeCount)
-                guard let text else { return nil }
-                // The copied text can still be converted when AX does not expose
-                // a stable selection, but it must never be pasted automatically.
-                let verifiedSelection = selection?.matches(in: application, text: text) == true ? selection : nil
-                return ShortcutTextCapture(text: text, selection: verifiedSelection)
+            do {
+                let copy = try await transaction.capture()
+                guard convert else {
+                    bringAppToFrontAndSetTextOnly(originalText: copy.text)
+                    return
+                }
+                let result: String
+                do {
+                    result = try await ChineseConversionService.shared.convert(copy.text, options: ConversionConfiguration.saved.options)
+                } catch {
+                    report(.conversionFailed, near: source)
+                    return
+                }
+                // Terminals, likely whole-line copies, and apps that ignore ⌘V keep the
+                // result visible in OpenCCman instead of losing it.
+                let identifier = sourceApplication.bundleIdentifier
+                guard ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: identifier, copy: copy),
+                      try await transaction.replace(originalText: copy.text, with: result,
+                          verifyingSelection: ShortcutPastePolicy.verifiesPaste(bundleIdentifier: identifier)) == .pasted else {
+                    bringAppToFrontAndSetText(originalText: copy.text, convertedText: result)
+                    return
+                }
+                // Keep the original app and its input focused on success.
+                if UserDefaults.standard.bool(forKey: UserDefaultsKeys.shortcutSuccessToast.rawValue) {
+                    ShortcutToast.shared.show(NSLocalizedString("shortcut_paste_sent", comment: ""), success: true, near: source)
+                }
+            } catch let error as ShortcutFailure {
+                report(error, near: source)
+            } catch {
+                report(.inputChanged, near: source)
             }
         }
-        return nil
     }
 
-    private func simulateKeyPress(
-        keyCode: CGKeyCode,
-        in application: NSRunningApplication,
-        matching selection: ShortcutSelection? = nil
-    ) async -> Bool {
-        if let selection, !selection.matches(in: application) { return false }
-        guard NSWorkspace.shared.frontmostApplication?.processIdentifier == application.processIdentifier,
-              let keyDownEvent = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: true),
-              let keyUpEvent = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: false) else {
-            return false
+    private func report(_ failure: ShortcutFailure, near source: pid_t? = nil) {
+        let enabled = UserDefaults.standard.object(forKey: UserDefaultsKeys.shortcutFailureToast.rawValue) as? Bool ?? true
+        if enabled {
+            ShortcutToast.shared.show(failure.messageKey.localizedNamingAccessibilityPermission(), success: false, near: source)
         }
-        keyDownEvent.flags = .maskCommand
-        keyUpEvent.flags = .maskCommand
-        keyDownEvent.postToPid(application.processIdentifier)
-        // Always balance key down with key up, even if the task was cancelled.
-        try? await Task.sleep(nanoseconds: 10_000_000)
-        keyUpEvent.postToPid(application.processIdentifier)
-        return true
-    }
-
-    // MARK: - Text Conversion
-    
-    private func convertText(_ capture: ShortcutTextCapture, in application: NSRunningApplication) async {
-        let options = ConversionConfiguration(
-            target: appDefaults[\.targetOptions],
-            variant: appDefaults[\.variantOptions],
-            region: appDefaults[\.regionOptions]
-        ).options
-
-        do {
-            let convertedText = try await ChineseConversionService.shared.convert(capture.text, options: options)
-            if let selection = capture.selection {
-                await replaceSelectedText(with: convertedText, in: application, matching: selection)
-            }
-            bringAppToFrontAndSetText(originalText: capture.text, convertedText: convertedText)
-        } catch {
-            NSAlert(error: error).runModal()
-        }
-    }
-
-    // MARK: - Text Replacement
-
-    private func replaceSelectedText(
-        with convertedText: String,
-        in application: NSRunningApplication,
-        matching selection: ShortcutSelection
-    ) async {
-        // Conversion may finish after focus or selection moved within the same app.
-        guard selection.matches(in: application) else { return }
-        let pasteboard = NSPasteboard.general
-        guard let originalClipboard = PasteboardSnapshot(pasteboard),
-              pasteboard.changeCount == originalClipboard.changeCount else { return }
-        let replacementChangeCount = pasteboard.clearContents()
-        let written = pasteboard.setString(convertedText, forType: .string)
-        defer {
-            originalClipboard.restore(to: pasteboard, ifUnchangedSince: replacementChangeCount)
-        }
-        guard written,
-              await simulateKeyPress(keyCode: CGKeyCode(kVK_ANSI_V), in: application, matching: selection) else { return }
-        // Event posting has no paste-completion callback. Allow the receiving app to read first.
-        try? await Task.sleep(nanoseconds: 800_000_000)
     }
 
     // MARK: - App Integration
-    
+
     private func bringAppToFrontAndSetText(originalText: String, convertedText: String) {
         AppDelegate.postWindowNotification(
             name: .globalShortcutDidConvertText,
@@ -330,6 +508,134 @@ class GlobalShortcutService: ObservableObject {
         )
     }
 
+}
+
+// A local HUD, not a system notification: no permission prompt, activation,
+// mouse interception, or document text. Only one panel/timer stays active.
+@MainActor
+private final class ShortcutToastPanel: NSPanel {
+    override var canBecomeKey: Bool { false }
+    override var canBecomeMain: Bool { false }
+}
+
+@MainActor
+private final class ShortcutToastCard: NSView {
+    override var wantsUpdateLayer: Bool { true }
+
+    override func updateLayer() {
+        // Resolve semantic colors in this view's appearance, including dark mode.
+        effectiveAppearance.performAsCurrentDrawingAppearance {
+            layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
+            layer?.shadowColor = NSColor.black.cgColor
+        }
+        layer?.cornerRadius = 12
+        layer?.borderWidth = 0
+        layer?.masksToBounds = false
+        layer?.shadowOpacity = 0.10
+        layer?.shadowRadius = 10
+        layer?.shadowOffset = NSSize(width: 0, height: -3)
+        layer?.shadowPath = CGPath(roundedRect: bounds, cornerWidth: 12, cornerHeight: 12, transform: nil)
+    }
+}
+
+@MainActor
+final class ShortcutToast {
+    static let shared = ShortcutToast()
+    private var panel: NSPanel?
+    private var dismissal: Task<Void, Never>?
+
+    func show(_ message: String, success: Bool, near source: pid_t? = nil) {
+        dismissal?.cancel()
+        panel?.orderOut(nil)
+        let screen = Self.screen(showing: source)
+            ?? NSScreen.screens.first { $0.frame.contains(NSEvent.mouseLocation) } ?? NSScreen.main
+        guard let frame = screen?.visibleFrame else { return }
+        let scale = AppTextSize(rawValue: UserDefaults.standard.integer(forKey: UserDefaultsKeys.macTextSize.rawValue))?.multiplier ?? 1
+        let inset: CGFloat = 18
+        let maximumWidth = min(380 * scale, frame.width - 64)
+        let label = NSTextField(wrappingLabelWithString: message)
+        let font = NSFont.systemFont(ofSize: 13 * scale, weight: .regular)
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineSpacing = 2 * scale
+        paragraph.lineBreakMode = .byWordWrapping
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font, .foregroundColor: NSColor.labelColor, .paragraphStyle: paragraph
+        ]
+        let singleLineWidth = (message as NSString).size(withAttributes: attributes).width
+        let width = min(maximumWidth, max(200 * scale, ceil(singleLineWidth) + 80 * scale))
+        let textWidth = width - 60 * scale
+        label.font = font
+        label.maximumNumberOfLines = 0
+        label.cell?.wraps = true
+        label.cell?.isScrollable = false
+        label.attributedStringValue = NSAttributedString(string: message, attributes: attributes)
+        label.preferredMaxLayoutWidth = textWidth
+        label.setAccessibilityIdentifier("shortcut-toast-message")
+        let bounds = (message as NSString).boundingRect(with: NSSize(width: textWidth, height: 600),
+            options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: attributes)
+        let cellHeight = label.cell?.cellSize(forBounds: NSRect(x: 0, y: 0, width: textWidth, height: 600)).height ?? bounds.height
+        let textHeight = ceil(max(bounds.height, cellHeight)) + 2 * scale
+        let height = max(44 * scale, textHeight + 24 * scale)
+        let hud = ShortcutToastPanel(contentRect: NSRect(x: frame.midX - (width + 2 * inset) / 2,
+            y: frame.minY + 60 - inset, width: width + 2 * inset, height: height + 2 * inset),
+            styleMask: [.borderless, .nonactivatingPanel], backing: .buffered, defer: false)
+        hud.isReleasedWhenClosed = false
+        hud.level = .floating
+        hud.isOpaque = false
+        hud.backgroundColor = .clear
+        // Transparent padding keeps a single subtle card shadow from clipping.
+        // The window has no native shadow or material bezel to double the edge.
+        hud.hasShadow = false
+        hud.hidesOnDeactivate = false
+        hud.ignoresMouseEvents = true
+        hud.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary, .transient, .ignoresCycle]
+        let root = NSView(frame: NSRect(x: 0, y: 0, width: width + 2 * inset, height: height + 2 * inset))
+        let card = ShortcutToastCard(frame: NSRect(x: inset, y: inset, width: width, height: height))
+        card.wantsLayer = true
+        let symbol = NSImageView(frame: NSRect(x: 16 * scale, y: (height - 16 * scale) / 2,
+            width: 16 * scale, height: 16 * scale))
+        symbol.image = NSImage(systemSymbolName: success ? "checkmark.circle.fill" : "exclamationmark.circle.fill", accessibilityDescription: nil)
+        symbol.imageScaling = .scaleProportionallyUpOrDown
+        symbol.contentTintColor = success ? .systemGreen : .systemOrange
+        // Decorative: the announcement below carries the message.
+        symbol.setAccessibilityElement(false)
+        label.frame = NSRect(x: 42 * scale, y: 12 * scale, width: textWidth, height: height - 24 * scale)
+        card.addSubview(symbol)
+        card.addSubview(label)
+        root.addSubview(card)
+        hud.contentView = root
+        panel = hud
+        hud.orderFrontRegardless()
+        // The panel never takes focus, so VoiceOver would not read it on its own.
+        NSAccessibility.post(element: NSApp as Any, notification: .announcementRequested, userInfo: [
+            .announcement: message,
+            .priority: NSAccessibilityPriorityLevel.high.rawValue
+        ])
+        dismissal = Task { [weak self, weak hud] in
+            do { try await Task.sleep(nanoseconds: success ? 2_500_000_000 : 4_000_000_000) }
+            catch { return }
+            guard self?.panel === hud else { return }
+            hud?.orderOut(nil)
+            self?.panel = nil
+        }
+    }
+
+    /// The screen showing the source app's front window, so the message appears
+    /// where the user is working rather than wherever the pointer rests.
+    private static func screen(showing source: pid_t?) -> NSScreen? {
+        guard let source,
+              let windows = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements],
+                                                       kCGNullWindowID) as? [[String: Any]],
+              let window = windows.first(where: {
+                  ($0[kCGWindowOwnerPID as String] as? pid_t) == source && ($0[kCGWindowLayer as String] as? Int) == 0
+              }),
+              let bounds = window[kCGWindowBounds as String] as? [String: CGFloat],
+              let primary = NSScreen.screens.first else { return nil }
+        // Window bounds have a top-left origin on the primary display; AppKit's is bottom-left.
+        let center = NSPoint(x: (bounds["X"] ?? 0) + (bounds["Width"] ?? 0) / 2,
+                             y: primary.frame.maxY - (bounds["Y"] ?? 0) - (bounds["Height"] ?? 0) / 2)
+        return NSScreen.screens.first { $0.frame.contains(center) }
+    }
 }
 
 // Preserve every item and representation, including rich text, images, and file URLs.
@@ -353,13 +659,16 @@ struct PasteboardSnapshot {
         self.changeCount = changeCount
     }
 
-    func restore(to pasteboard: NSPasteboard, ifUnchangedSince changeCount: Int) {
+    @discardableResult
+    func restore(to pasteboard: NSPasteboard, ifUnchangedSince changeCount: Int,
+                 marking marker: NSPasteboard.PasteboardType? = nil) -> Int? {
         // Another copy belongs to the user and must survive our delayed restoration.
-        guard pasteboard.changeCount == changeCount else { return }
-        pasteboard.clearContents()
-        if !items.isEmpty {
-            pasteboard.writeObjects(items)
-        }
+        guard pasteboard.changeCount == changeCount else { return nil }
+        let ownership = pasteboard.clearContents()
+        guard let first = items.first else { return ownership }
+        // A marker keeps clipboard history tools from recording the restoration as a new copy.
+        if let marker, !first.types.contains(marker) { first.setData(Data(), forType: marker) }
+        return pasteboard.writeObjects(items) ? ownership : nil
     }
 }
 

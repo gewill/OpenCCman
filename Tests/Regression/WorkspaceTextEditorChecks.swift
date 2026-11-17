@@ -5,6 +5,16 @@ import SwiftUI
 enum WorkspaceTextEditorChecks {
   @MainActor static func main() {
     _ = NSApplication.shared
+    if #available(macOS 12.0, *) {
+      // Private benchmark variants must retain the native subclass while
+      // opting into TextKit 2; a disabled decoration must not force fallback.
+      let modernEditor = WorkspaceDiffTextView(usingTextLayoutManager: true)
+      modernEditor.string = "中文 👩🏽‍💻"
+      modernEditor.updateDecoration(nil)
+      precondition(modernEditor.textLayoutManager != nil)
+      precondition(modernEditor.string == "中文 👩🏽‍💻")
+      print("PASS: diff editor retains explicit TextKit 2 construction with differences disabled")
+    }
     var source = "中文\u{0} 👩🏽‍💻 e\u{301}\r\n\r\nsecond line"
     let binding = Binding(get: { source }, set: { source = $0 })
     let coordinator = WorkspaceTextEditorCoordinator(text: binding)
@@ -32,6 +42,27 @@ enum WorkspaceTextEditorChecks {
     coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true)
     precondition(editor.selectedRange() == selection)
     precondition(editor.undoManager!.canUndo)
+
+    let diffEditor = editor as! WorkspaceDiffTextView
+    let plainStorage = editor.textStorage!.copy() as! NSAttributedString
+    let beforeDiffSelection = editor.selectedRange()
+    let diffID = UUID()
+    let decoration = WorkspaceDiffDecoration(id: diffID, text: editor.string,
+                                             ranges: [NSRange(location: 0, length: 1)],
+                                             currentIndex: nil, navigationID: nil)
+    diffEditor.updateDecoration(decoration)
+    precondition(editor.selectedRange() == beforeDiffSelection && editor.textStorage!.isEqual(to: plainStorage),
+                 "Showing differences must not alter selection or attributed storage")
+    let navigation = UUID()
+    diffEditor.updateDecoration(WorkspaceDiffDecoration(id: diffID, text: editor.string,
+      ranges: decoration.ranges, currentIndex: 0, navigationID: navigation))
+    precondition(editor.selectedRange() == decoration.ranges[0])
+    editor.setSelectedRange(beforeDiffSelection)
+    diffEditor.updateDecoration(WorkspaceDiffDecoration(id: diffID, text: editor.string,
+      ranges: decoration.ranges, currentIndex: 0, navigationID: navigation))
+    precondition(editor.selectedRange() == beforeDiffSelection, "Layout updates cannot replay navigation")
+    diffEditor.updateDecoration(nil)
+    precondition(editor.textStorage!.isEqual(to: plainStorage) && editor.undoManager!.canUndo)
     coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true, accessibilityLabel: "Source")
     precondition(editor.accessibilityLabel() == "Source" && editor.selectedRange() == selection)
     editor.undoManager!.undo()
@@ -44,6 +75,10 @@ enum WorkspaceTextEditorChecks {
     let marked = editor.markedRange()
     let markedSelection = editor.selectedRange()
     let textBeforeUpdate = editor.string
+    diffEditor.updateDecoration(WorkspaceDiffDecoration(id: UUID(), text: editor.string,
+      ranges: [NSRange(location: 0, length: 1)], currentIndex: 0, navigationID: UUID()))
+    precondition(editor.hasMarkedText() && editor.selectedRange() == markedSelection,
+                 "Difference navigation cannot interrupt marked text")
     coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true)
     precondition(editor.hasMarkedText() && editor.markedRange() == marked)
     precondition(editor.selectedRange() == markedSelection && editor.string == textBeforeUpdate)

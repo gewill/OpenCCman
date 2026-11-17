@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-31",
+  "build": "2.2 (63), Xcode Cloud run 0e88e351-77b5-4b99-a998-c2d91630bc58, source 15390dde4b7f70a97c174259ebd945c5a81647bf",
+  "mac": {"install": "TestFlight auto-installed 2.2 (63); codesign Authority=TestFlight Beta Distribution, team RLK76T8Y89",
+          "passed": ["example conversion (zh-Hant UI)", "Settings and Pro opened via app menu, document kept after return", "Settings shows 2.2(63)", "show menu bar icon ON and status item present", "new layered icon"],
+          "not_run": ["keyboard ⌘,/⌘P in narrow window with More in overflow", "Mac large-file conversion"]},
+  "iphone16pro": {"os": "iOS 27.2 (24B119)", "install": "TestFlight update 62 -> 63, devicectl reads 2.2 (63)",
+          "passed": ["system navigation bar layout", "example conversion with Taiwan Standard + Idioms", "100 MiB AirDropped input (sha256 68d3da48...) -> confirm page -> Converting -> Ready to save in ~10 s -> system save to iCloud Drive",
+                     "output 112173244 bytes sha256 9d7363c7c35ca9c0dd2181f7b64a3329a2b28ebb10c0495ba6e5b73adb6859ac equals independent taiwan-idiom whole-text reference"],
+          "not_run": ["cancel / background abort / restart recovery / +1 byte rejection (covered on Build 61 in #260)", "memory footprint", "iPad", "purchase/restore matrix (#14/#71)"]}
+}

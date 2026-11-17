@@ -72,7 +72,7 @@ trap on_exit EXIT
 xcodebuild -project "$repo_root/OpenCCman.xcodeproj" -scheme OpenCCman \
   -configuration Debug -destination 'generic/platform=iOS Simulator' \
   -derivedDataPath "$result_dir/app-derived" -onlyUsePackageVersionsFromResolvedFile \
-  CODE_SIGNING_ALLOWED=NO PRODUCT_BUNDLE_IDENTIFIER="$bundle_id" \
+  CODE_SIGNING_ALLOWED=NO OPENCCMAN_BUNDLE_ID="$bundle_id" \
   INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace=YES build \
   > "$result_dir/app-build.log" 2>&1 || {
     tail -n 80 "$result_dir/app-build.log" >&2

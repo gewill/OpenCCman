@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "purpose": "independent reference only; not device acceptance",
+  "wrapper_sha": "564b094b2b69f2c1e907fa3d89fe6845469a4e4e",
+  "oracle_source_sha256": "4e5111bbbc0bbc03e6d7f50eb58e9bda1b40bdc7721697c737663d985f72495a",
+  "binary_sha256": "0f9fdd56b10763853b197a564c256b65900b8cd42e5c2958a1bde84ad86e086a",
+  "fixture_manifest_sha256": "7d9b9914d999c9e8abec70e89634069ad7509499261cb3cd3ca39e9e02942eea",
+  "rows": [
+    {
+      "fixture": "100MiB-phrases.txt",
+      "input_bytes": 104857600,
+      "input_sha256": "68d3da489051c5cd3733ba859a71532060c8eb470763f37754c9ae29dab62822",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "simplified",
+      "options_raw": 2,
+      "output_bytes": 104857600,
+      "output_sha256": "68d3da489051c5cd3733ba859a71532060c8eb470763f37754c9ae29dab62822"
+    },
+    {
+      "fixture": "100MiB-phrases.txt",
+      "input_bytes": 104857600,
+      "input_sha256": "68d3da489051c5cd3733ba859a71532060c8eb470763f37754c9ae29dab62822",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "traditional",
+      "options_raw": 1,
+      "output_bytes": 104857600,
+      "output_sha256": "a6680b162b26f6d40fdca74e01b4578b3f960574bf44bb7e1087b6556bb9105e"
+    },
+    {
+      "fixture": "100MiB-phrases.txt",
+      "input_bytes": 104857600,
+      "input_sha256": "68d3da489051c5cd3733ba859a71532060c8eb470763f37754c9ae29dab62822",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "traditional-taiwan-idiom",
+      "options_raw": 1025,
+      "output_bytes": 112173244,
+      "output_sha256": "9d7363c7c35ca9c0dd2181f7b64a3329a2b28ebb10c0495ba6e5b73adb6859ac"
+    },
+    {
+      "fixture": "100MiB-phrases.txt",
+      "input_bytes": 104857600,
+      "input_sha256": "68d3da489051c5cd3733ba859a71532060c8eb470763f37754c9ae29dab62822",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "taiwan",
+      "options_raw": 33,
+      "output_bytes": 104857600,
+      "output_sha256": "a6680b162b26f6d40fdca74e01b4578b3f960574bf44bb7e1087b6556bb9105e"
+    },
+    {
+      "fixture": "100MiB-phrases.txt",
+      "input_bytes": 104857600,
+      "input_sha256": "68d3da489051c5cd3733ba859a71532060c8eb470763f37754c9ae29dab62822",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "taiwan-idiom",
+      "options_raw": 1057,
+      "output_bytes": 112173244,
+      "output_sha256": "9d7363c7c35ca9c0dd2181f7b64a3329a2b28ebb10c0495ba6e5b73adb6859ac"
+    },
+    {
+      "fixture": "100MiB-phrases.txt",
+      "input_bytes": 104857600,
+      "input_sha256": "68d3da489051c5cd3733ba859a71532060c8eb470763f37754c9ae29dab62822",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "hong-kong",
+      "options_raw": 65,
+      "output_bytes": 104857600,
+      "output_sha256": "a6680b162b26f6d40fdca74e01b4578b3f960574bf44bb7e1087b6556bb9105e"
+    },
+    {
+      "fixture": "100MiB-phrases.txt",
+      "input_bytes": 104857600,
+      "input_sha256": "68d3da489051c5cd3733ba859a71532060c8eb470763f37754c9ae29dab62822",
+      "method": "one whole-text ChineseConverter.convert; strip one initial UTF-8 BOM",
+      "mode": "hong-kong-taiwan-idiom",
+      "options_raw": 1089,
+      "output_bytes": 112173244,
+      "output_sha256": "9d7363c7c35ca9c0dd2181f7b64a3329a2b28ebb10c0495ba6e5b73adb6859ac"
+    }
+  ]
+}

@@ -178,6 +178,7 @@ struct MobileLargeFileTaskView: View {
       if options.contains(.traditionalize) {
         Text(options.contains(.twStandard) ? "Taiwan Standard" : options.contains(.hkStandard) ? "HongKong Standard" : "OpenCC Standard")
         if options.contains(.twIdiom) { Text("Taiwan Idiom") }
+        if options.contains(.hkIdiom) { Text("HongKong Idiom") }
       }
     }.appFont(.subheadline)
   }

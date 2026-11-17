@@ -68,8 +68,8 @@ def prepare_textkit2_no_anchor(source):
       container.widthTracksTextView = true
       container.lineFragmentPadding = 0
       layout.addTextContainer(container)
-      let editor = NSTextView(frame: NSRect(x: 0, y: 0, width: 1, height: 1), textContainer: container)''',
-                 '''      let editor = NSTextView(usingTextLayoutManager: true)
+      let editor = WorkspaceDiffTextView(frame: NSRect(x: 0, y: 0, width: 1, height: 1), textContainer: container)''',
+                 '''      let editor = WorkspaceDiffTextView(usingTextLayoutManager: true)
       editor.frame = NSRect(x: 0, y: 0, width: 1, height: 1)
       editor.textContainer?.widthTracksTextView = true
       editor.textContainer?.lineFragmentPadding = 0''')
@@ -292,7 +292,7 @@ def main():
         build = ['xcodebuild', '-project', str(source / 'OpenCCman.xcodeproj'), '-scheme', 'OpenCCman',
                  '-configuration', 'Release', '-destination', 'platform=macOS', '-derivedDataPath', str(args.output / 'derived'),
                  '-clonedSourcePackagesDirPath', str(packages), '-disableAutomaticPackageResolution', '-onlyUsePackageVersionsFromResolvedFile',
-                 'PRODUCT_BUNDLE_IDENTIFIER=' + BUNDLE, 'CODE_SIGNING_ALLOWED=NO', 'CODE_SIGN_ENTITLEMENTS=', 'ENABLE_APP_SANDBOX=NO', 'build']
+                 'OPENCCMAN_BUNDLE_ID=' + BUNDLE, 'CODE_SIGNING_ALLOWED=NO', 'CODE_SIGN_ENTITLEMENTS=', 'ENABLE_APP_SANDBOX=NO', 'build']
         with (args.output / 'build.log').open('w') as log:
             subprocess.run(build, stdout=log, stderr=subprocess.STDOUT, check=True)
         if (source / LOCK).read_bytes() != expected_lock:

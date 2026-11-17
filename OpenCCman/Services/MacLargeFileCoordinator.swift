@@ -7,7 +7,7 @@ import UniformTypeIdentifiers
 
 /// Limits main-actor work before enqueueing it, rather than dropping updates
 /// after an unbounded backlog of UI tasks has already accumulated.
-private final class FileProgressThrottle: @unchecked Sendable {
+final class FileProgressThrottle: @unchecked Sendable {
   private let lock = NSLock()
   private var lastTime: TimeInterval = 0
   private var lastFraction = -1.0
@@ -98,6 +98,7 @@ final class MacLargeFileCoordinator: ObservableObject {
   private let enabled: Bool
   private let experimentalEnabled: @MainActor () -> Bool
   private let qualified: @MainActor () -> Bool
+  private let otherTaskBusy: @MainActor () -> Bool
   private var consentSessionID: UUID?
   private var source: OpenedTextFile?
   private var conversionTask: Task<Void, Never>?
@@ -108,6 +109,7 @@ final class MacLargeFileCoordinator: ObservableObject {
   init(enabled: Bool = MacLargeFileCoordinator.isEnabled,
        experimentalEnabled: @escaping @MainActor () -> Bool = { MacLargeFileCoordinator.isExperimentalCapacityEnabled },
        qualified: @escaping @MainActor () -> Bool = { MacLargeFileCoordinator.isQualified },
+       otherTaskBusy: @escaping @MainActor () -> Bool = { MacBatchConversionCoordinator.shared.isBusy },
        reportError: @escaping @MainActor (Error) -> Void = { NSApp.presentError($0) },
        operation: @escaping Operation = { source, destination, options, capacity, progress in
     try await StreamingTextFileService.convert(
@@ -118,6 +120,7 @@ final class MacLargeFileCoordinator: ObservableObject {
     self.enabled = enabled
     self.experimentalEnabled = experimentalEnabled
     self.qualified = qualified
+    self.otherTaskBusy = otherTaskBusy
   }
 
   var isBusy: Bool { session != nil }
@@ -137,7 +140,8 @@ final class MacLargeFileCoordinator: ObservableObject {
       throw TextFileService.FileError.tooLarge
     }
     try Self.validateSize(source.byteCount, experimentalEnabled: experimentalEnabled())
-    guard session == nil else { throw StartError.busy }
+    // A batch and a single large file share one global file-task slot.
+    guard session == nil, !otherTaskBusy() else { throw StartError.busy }
     guard qualified else { throw StartError.requiresPro }
     self.source = source
     ownerWindow = window
@@ -313,7 +317,7 @@ final class MacLargeFileCoordinator: ObservableObject {
     clear()
   }
 
-  private static func presentationError(_ error: Error) -> Error {
+  static func presentationError(_ error: Error) -> Error {
     guard let cleanup = error as? StreamingTextFileService.CleanupError else { return error }
     let recovery = NSLocalizedString("large_file_cleanup_recovery", comment: "Private temporary file recovery")
       + "\n" + cleanup.temporaryDirectory.path

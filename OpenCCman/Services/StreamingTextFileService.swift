@@ -72,6 +72,7 @@ enum StreamingTextFileService {
     destination: URL,
     options: ChineseConverter.Options,
     capacity: MacFileCapacity = .standard,
+    replacingExisting: Bool = true,
     progress: @escaping @Sendable (UInt64, UInt64) -> Void = { _, _ in },
     hooks: Hooks = Hooks()
   ) async throws -> Result {
@@ -84,7 +85,8 @@ enum StreamingTextFileService {
           // The coordinator can now safely release the single-task slot.
           do {
             let result = try run(source: source, destination: destination, options: ChineseConverter.Options(rawValue: optionsRawValue),
-                                 capacity: capacity, progress: progress, cancellation: cancellation, hooks: hooks)
+                                 capacity: capacity, replacingExisting: replacingExisting,
+                                 progress: progress, cancellation: cancellation, hooks: hooks)
             continuation.resume(returning: result)
           } catch ConversionError.invalidUTF8 {
             continuation.resume(throwing: TextFileService.FileError.invalidUTF8)
@@ -99,6 +101,7 @@ enum StreamingTextFileService {
     destination: URL,
     options: ChineseConverter.Options,
     capacity: MacFileCapacity,
+    replacingExisting: Bool,
     progress: @Sendable (UInt64, UInt64) -> Void,
     cancellation: StreamingConversionCancellation,
     hooks: Hooks
@@ -115,6 +118,8 @@ enum StreamingTextFileService {
     let input = try source.beginReading()
     try source.verifyUnchanged(input)
     let destinationFingerprint = try TextFileFingerprint.read(url: destination, followSymlink: false)
+    // Batch output reserves a free name; an item created there since is never replaced.
+    if destinationFingerprint != nil, !replacingExisting { throw FileError.destinationChanged }
     if let resolved = try TextFileFingerprint.read(url: destination), source.fingerprint.isSameFile(as: resolved) {
       throw FileError.sameFile
     }

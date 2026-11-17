@@ -58,11 +58,20 @@ struct ConversionInspector: View {
         }
       }
       SegmentView(title: "Target Language", options: HomeViewModel.Language.allCases, selected: $viewModel.targetOptions)
-      Group {
+      if viewModel.targetOptions == .traditional {
         SegmentView(title: "Variant", options: HomeViewModel.Variant.allCases, selected: $viewModel.variantOptions)
-        SegmentView(title: "Region Idiom", options: HomeViewModel.Region.allCases, selected: $viewModel.regionOptions)
+        // The idiom choice follows the standard: Hong Kong phrases under Hong Kong.
+        SegmentView(title: "Region Idiom", options: HomeViewModel.Region.allCases, selected: $viewModel.regionOptions,
+                    label: { $0.title(for: viewModel.variantOptions) })
+      } else {
+        // Simplified output reads traditional text written to a regional standard.
+        SegmentView(title: "source_variant", options: HomeViewModel.Variant.allCases,
+                    selected: $viewModel.simplifiedSourceOptions)
+        SegmentView(title: "Region Idiom", options: HomeViewModel.Region.allCases,
+                    selected: $viewModel.simplifiedRegionOptions,
+                    label: { $0.title(for: viewModel.simplifiedSourceOptions) })
+          .disabled(!viewModel.configuration.offersSimplifiedRegion)
       }
-      .disabled(viewModel.targetOptions == .simplified)
     }
     .neumorphicCard(RoundedRectangle(cornerRadius: Constant.cornerRadius), padding: Constant.padding)
     .launchSettle(order: 0)
@@ -218,10 +227,10 @@ struct SourcePane: View {
 
   @ViewBuilder private var sourceEditor: some View {
     #if os(macOS)
-      WorkspaceTextEditor(text: $viewModel.inputText, label: "Source",
+      WorkspaceTextEditor(text: $viewModel.inputText, label: "Source", diff: viewModel.diffDecoration(source: true),
                           readingState: viewModel.sourceReadingState)
     #else
-      WorkspaceTextEditor(text: $viewModel.inputText, label: "Source")
+      WorkspaceTextEditor(text: $viewModel.inputText, label: "Source", diff: viewModel.diffDecoration(source: true))
     #endif
   }
 }
@@ -252,11 +261,20 @@ struct ResultPane: View {
           .appNeumorphicButtonStyle(Circle(), kind: .icon)
           .accessibilityLabel(Text("Export TXT"))
           .disabled(viewModel.exportSnapshot == nil)
+          Button { viewModel.showsDifferences.toggle() } label: {
+            Image(systemName: "highlighter")
+          }
+          .appNeumorphicButtonStyle(Circle(), kind: .icon)
+          .accessibilityLabel(Text(viewModel.showsDifferences ? "diff_hide" : "diff_show"))
+          .accessibilityValue(Text(viewModel.showsDifferences ? "diff_on" : "diff_off"))
+          .accessibilityIdentifier("workspace-diff-toggle")
+          .help(viewModel.showsDifferences ? "diff_hide" : "diff_show")
           Spacer()
           if viewModel.isLoading {
             ProgressView().accessibilityLabel(Text("Convert"))
           }
         }
+        if viewModel.showsDifferences { ConversionDiffControls() }
         if viewModel.resultText.isEmpty, viewModel.exportSnapshot != nil {
           Text("previous_result_available").appFont(.caption).foregroundColor(.secondary)
         }
@@ -286,9 +304,9 @@ struct ResultPane: View {
   @ViewBuilder private var resultEditor: some View {
     #if os(macOS)
       WorkspaceTextEditor(text: .constant(viewModel.resultText), isEditable: false,
-                          label: "Result", readingState: viewModel.resultReadingState)
+                          label: "Result", diff: viewModel.diffDecoration(source: false), readingState: viewModel.resultReadingState)
     #else
-      WorkspaceTextEditor(text: .constant(viewModel.resultText), isEditable: false, label: "Result")
+      WorkspaceTextEditor(text: .constant(viewModel.resultText), isEditable: false, label: "Result", diff: viewModel.diffDecoration(source: false))
     #endif
   }
 }
@@ -319,5 +337,47 @@ struct ConversionAction: View {
       .keyboardShortcut("t")
       .disabled(viewModel.isImporting || viewModel.inputText.isEmpty)
     }
+  }
+}
+
+private struct ConversionDiffControls: View {
+  @EnvironmentObject private var viewModel: HomeViewModel
+  @Environment(\.locale) private var locale
+
+  var body: some View {
+    if viewModel.diffComputing {
+      Text("diff_computing").appFont(.caption).accessibilityIdentifier("workspace-diff-status")
+    } else if viewModel.diffTooLarge {
+      Text("diff_too_large").appFont(.caption).fixedSize(horizontal: false, vertical: true)
+        .accessibilityIdentifier("workspace-diff-status")
+    } else if let display = viewModel.diffDisplay {
+      if display.sourceRanges.isEmpty {
+        Text("diff_identical").appFont(.caption).accessibilityIdentifier("workspace-diff-status")
+      } else {
+        HStack(alignment: .center, spacing: 8) {
+          Button { viewModel.navigateDiff(by: -1) } label: { Image(systemName: "chevron.left") }
+            .appNeumorphicButtonStyle(Circle(), kind: .icon)
+            .accessibilityLabel(Text("diff_previous"))
+            .accessibilityIdentifier("workspace-diff-previous")
+          Button { viewModel.navigateDiff(by: 1) } label: { Image(systemName: "chevron.right") }
+            .appNeumorphicButtonStyle(Circle(), kind: .icon)
+            .accessibilityLabel(Text("diff_next"))
+            .accessibilityIdentifier("workspace-diff-next")
+          Text(countText(total: display.sourceRanges.count))
+            .appFont(.caption).fixedSize(horizontal: false, vertical: true)
+            .accessibilityIdentifier("workspace-diff-count")
+        }
+      }
+    } else {
+      Text("diff_reconvert").appFont(.caption).fixedSize(horizontal: false, vertical: true)
+        .accessibilityIdentifier("workspace-diff-status")
+    }
+  }
+
+  private func countText(total: Int) -> String {
+    if let index = viewModel.currentDiffIndex {
+      return String(format: "diff_count".localized(in: locale), index + 1, total)
+    }
+    return String(format: "diff_total".localized(in: locale), total)
   }
 }

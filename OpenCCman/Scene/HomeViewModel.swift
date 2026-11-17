@@ -3,6 +3,7 @@ import Foundation
 import OpenCC
 import SwiftUI
 import SwiftyUserDefaults
+import UniformTypeIdentifiers
 
 #if os(macOS)
   extension Notification.Name {
@@ -23,7 +24,7 @@ class HomeViewModel: ObservableObject {
 
   @Published var inputText: String = "" {
     didSet {
-      guard inputText != oldValue else { return }
+      guard !inputText.utf8.elementsEqual(oldValue.utf8) else { return }
       #if os(macOS)
         sourceReadingState.invalidate()
       #endif
@@ -35,6 +36,7 @@ class HomeViewModel: ObservableObject {
   }
   @Published var resultText: String = "" {
     didSet {
+      if !resultText.utf8.elementsEqual(oldValue.utf8) { invalidateDiff() }
       #if os(macOS)
         if resultText != oldValue { resultReadingState.invalidate() }
       #endif
@@ -42,9 +44,11 @@ class HomeViewModel: ObservableObject {
   }
 
   @Published var options: ChineseConverter.Options = []
-  @Published var targetOptions: Language = appDefaults[\.targetOptions]
-  @Published var variantOptions: Variant = appDefaults[\.variantOptions]
-  @Published var regionOptions: Region = appDefaults[\.regionOptions]
+  @Published var targetOptions: Language = appDefaults[\.targetOptions] { didSet { if targetOptions != oldValue { cancelConversion() } } }
+  @Published var variantOptions: Variant = appDefaults[\.variantOptions] { didSet { if variantOptions != oldValue { cancelConversion() } } }
+  @Published var regionOptions: Region = appDefaults[\.regionOptions] { didSet { if regionOptions != oldValue { cancelConversion() } } }
+  @Published var simplifiedSourceOptions: Variant = appDefaults[\.simplifiedSourceOptions] { didSet { if simplifiedSourceOptions != oldValue { cancelConversion() } } }
+  @Published var simplifiedRegionOptions: Region = appDefaults[\.simplifiedRegionOptions] { didSet { if simplifiedRegionOptions != oldValue { cancelConversion() } } }
 
   @AppStorage(UserDefaultsKeys.lastVersionPromptedForReview.rawValue) var lastVersionPromptedForReview: String = ""
 
@@ -63,6 +67,92 @@ class HomeViewModel: ObservableObject {
     guard !resultText.isEmpty, let resultConfiguration else { return false }
     return resultConfiguration.options != configuration.options
   }
+  @Published private(set) var diffSnapshot: ConversionDiffSnapshot<ConversionConfiguration>?
+  @Published var showsDifferences = false {
+    didSet {
+      guard showsDifferences != oldValue else { return }
+      cancelDiffCalculation()
+      if showsDifferences { calculateDiff() }
+    }
+  }
+  @Published private(set) var diffDisplay: ConversionDiffDisplay?
+  @Published private(set) var diffComputing = false
+  @Published private(set) var diffTooLarge = false
+  @Published private(set) var currentDiffIndex: Int?
+  @Published private(set) var diffNavigationID: UUID?
+  private var diffGeneration = ConversionDiffGeneration()
+  private var diffWorker: Task<ConversionDiffDisplay?, Never>?
+  private var diffPublication: Task<Void, Never>?
+  #if DEBUG
+    private var diffMetricsTask: Task<Void, Never>?
+  #endif
+
+  func diffDecoration(source: Bool) -> WorkspaceDiffDecoration? {
+    guard showsDifferences, let display = diffDisplay, let snapshot = diffSnapshot,
+          display.id == snapshot.id else { return nil }
+    return WorkspaceDiffDecoration(id: display.id, text: source ? snapshot.source : snapshot.result,
+                                   ranges: source ? display.sourceRanges : display.resultRanges,
+                                   currentIndex: currentDiffIndex, navigationID: diffNavigationID)
+  }
+
+  func navigateDiff(by step: Int) {
+    guard showsDifferences, let display = diffDisplay, !display.sourceRanges.isEmpty else { return }
+    let count = display.sourceRanges.count
+    currentDiffIndex = currentDiffIndex.map { ($0 + step + count) % count } ?? (step > 0 ? 0 : count - 1)
+    diffNavigationID = UUID()
+  }
+
+  private func cancelDiffCalculation() {
+    #if DEBUG
+      diffMetricsTask?.cancel()
+      diffMetricsTask = nil
+    #endif
+    diffGeneration.invalidate()
+    diffWorker?.cancel()
+    diffPublication?.cancel()
+    diffWorker = nil
+    diffPublication = nil
+    diffDisplay = nil
+    currentDiffIndex = nil
+    diffNavigationID = nil
+    diffComputing = false
+    diffTooLarge = false
+  }
+
+  private func invalidateDiff() {
+    cancelDiffCalculation()
+    diffSnapshot = nil
+  }
+
+  private func calculateDiff() {
+    guard showsDifferences, let snapshot = diffSnapshot else { return }
+    let generation = diffGeneration.id
+    diffComputing = true
+    #if DEBUG
+      if Bundle.main.bundleIdentifier == "org.gewill.OpenCCman.WhatsNewUITests",
+         ProcessInfo.processInfo.arguments.contains("-qa-diff-metrics") {
+        diffMetricsTask = Self.measureDiffResponsiveness(snapshotID: snapshot.id)
+      }
+    #endif
+    let worker = Task.detached(priority: .userInitiated) { () -> ConversionDiffDisplay? in
+      let outcome = ConversionDiff.compute(source: snapshot.source, result: snapshot.result,
+                                          limits: .workspace, cancelled: { Task.isCancelled })
+      guard case let .computed(hunks) = outcome, !Task.isCancelled else { return nil }
+      return ConversionDiffDisplay(id: snapshot.id, source: snapshot.source, result: snapshot.result, hunks: hunks)
+    }
+    diffWorker = worker
+    diffPublication = Task { [weak self] in
+      let display = await worker.value
+      guard !Task.isCancelled, let self, self.diffGeneration.accepts(generation),
+            self.diffSnapshot?.id == snapshot.id, self.showsDifferences else { return }
+      self.diffDisplay = display
+      self.diffTooLarge = display == nil
+      self.diffComputing = false
+      self.diffWorker = nil
+      self.diffPublication = nil
+    }
+  }
+
   @Published private(set) var exportSnapshot: ExportSnapshot?
   var resultFilename: String { exportSnapshot?.filename ?? "OpenCCman-converted.txt" }
   @Published var localProgress: Double = 0.0 // 0.0 ~ 1.0
@@ -96,9 +186,11 @@ class HomeViewModel: ObservableObject {
   // MARK: - life cycle
 
   init() {
-    Publishers.CombineLatest3($targetOptions, $variantOptions, $regionOptions)
-      .map { targetOptions, variantOptions, regionOptions in
-        ConversionConfiguration(target: targetOptions, variant: variantOptions, region: regionOptions).options
+    Publishers.CombineLatest(Publishers.CombineLatest3($targetOptions, $variantOptions, $regionOptions),
+                             Publishers.CombineLatest($simplifiedSourceOptions, $simplifiedRegionOptions))
+      .map { traditional, simplified in
+        ConversionConfiguration(target: traditional.0, variant: traditional.1, region: traditional.2,
+                                simplifiedSource: simplified.0, simplifiedRegion: simplified.1).options
       }
       .removeDuplicates()
       .assign(to: &$options)
@@ -115,6 +207,10 @@ class HomeViewModel: ObservableObject {
       .sink { regionOptions in
         appDefaults[\.regionOptions] = regionOptions
       }.store(in: &cancellables)
+    $simplifiedSourceOptions.dropFirst()
+      .sink { appDefaults[\.simplifiedSourceOptions] = $0 }.store(in: &cancellables)
+    $simplifiedRegionOptions.dropFirst()
+      .sink { appDefaults[\.simplifiedRegionOptions] = $0 }.store(in: &cancellables)
 
     // Listen for text conversion service notifications
     #if os(macOS)
@@ -178,6 +274,19 @@ class HomeViewModel: ObservableObject {
         }
         .store(in: &cancellables)
 
+      NotificationCenter.default.publisher(for: Notification.Name("WorkspaceDiffCommand"))
+        .sink { [weak self] notification in
+          DispatchQueue.main.async {
+            guard let self, self.accepts(notification) else { return }
+            switch notification.userInfo?["action"] as? String {
+            case "toggle": self.showsDifferences.toggle()
+            case "previous": self.navigateDiff(by: -1)
+            case "next": self.navigateDiff(by: 1)
+            default: break
+            }
+          }
+        }.store(in: &cancellables)
+
       // Listen for menu convert notifications
       NotificationCenter.default.publisher(for: .convertTextFromMenu)
         .sink { [weak self] notification in
@@ -195,7 +304,8 @@ class HomeViewModel: ObservableObject {
   // MARK: - response methods
 
   var configuration: ConversionConfiguration {
-    ConversionConfiguration(target: targetOptions, variant: variantOptions, region: regionOptions)
+    ConversionConfiguration(target: targetOptions, variant: variantOptions, region: regionOptions,
+                            simplifiedSource: simplifiedSourceOptions, simplifiedRegion: simplifiedRegionOptions)
   }
 
   var selectedPreset: ConversionConfiguration.Preset? { configuration.preset }
@@ -214,8 +324,11 @@ class HomeViewModel: ObservableObject {
   func applyPreset(_ preset: ConversionConfiguration.Preset) {
     let configuration = preset.configuration
     targetOptions = configuration.target
-    // Keep inactive advanced choices when switching to simplified output.
-    guard configuration.target == .traditional else { return }
+    // Each preset sets only its own target's choices and keeps the other's.
+    guard configuration.target == .traditional else {
+      simplifiedSourceOptions = configuration.simplifiedSource
+      return
+    }
     variantOptions = configuration.variant
     regionOptions = configuration.region
   }
@@ -241,6 +354,7 @@ class HomeViewModel: ObservableObject {
       return
     }
 
+    invalidateDiff()
     isLoading = true
     resultText = ""
     localProgress = 0.0
@@ -284,6 +398,8 @@ class HomeViewModel: ObservableObject {
         self.resultConfiguration = currentConfiguration
         self.resultText = result
         self.exportSnapshot = ExportSnapshot(text: result, filename: filename)
+        self.diffSnapshot = ConversionDiffSnapshot(source: currentInput, result: result, configuration: currentConfiguration)
+        self.calculateDiff()
         reservation.commit()
         self.reservation = nil
         self.showReview()
@@ -305,6 +421,7 @@ class HomeViewModel: ObservableObject {
   }
 
   func cancelConversion() {
+    invalidateDiff()
     conversionTask?.cancel()
     conversionTask = nil
     conversionID = nil
@@ -352,6 +469,23 @@ class HomeViewModel: ObservableObject {
   }
 
   func importDroppedItems(_ providers: [NSItemProvider]) -> Bool {
+    #if os(macOS)
+      // Several dropped files open the Pro batch list instead of the editor.
+      if providers.count > 1 {
+        guard MacBatchConversionCoordinator.isQualified else {
+          showBatchProAlert()
+          return true
+        }
+        Task { [weak self] in
+          guard let urls = await Self.fileURLs(from: providers) else {
+            self?.error = MacBatchConversionCoordinator.StartError.dropUnavailable
+            return
+          }
+          self?.offerBatch(urls)
+        }
+        return true
+      }
+    #endif
     guard providers.count == 1, let provider = providers.first else {
       error = TextFileService.FileError.multipleItems
       return false
@@ -361,6 +495,7 @@ class HomeViewModel: ObservableObject {
   }
 
   private func startImport(_ read: @escaping () async throws -> TextFileService.PreparedImport) {
+    cancelConversion()
     cancelImport()
     error = nil
     isImporting = true
@@ -425,6 +560,70 @@ class HomeViewModel: ObservableObject {
     }
   }
 
+  #if os(macOS)
+    /// Menu entry: Pro chooses files; free users see the Pro prompt and nothing starts.
+    func chooseBatchFiles() {
+      guard MacBatchConversionCoordinator.isQualified else {
+        showBatchProAlert()
+        return
+      }
+      let panel = NSOpenPanel()
+      panel.allowsMultipleSelection = true
+      panel.canChooseDirectories = false
+      panel.allowedContentTypes = [.plainText]
+      panel.title = NSLocalizedString("batch_title", comment: "")
+      let completion: (NSApplication.ModalResponse) -> Void = { [weak self] response in
+        guard response == .OK else { return }
+        self?.offerBatch(panel.urls)
+      }
+      if let window { panel.beginSheetModal(for: window.attachedSheet ?? window, completionHandler: completion) }
+      else { panel.begin(completionHandler: completion) }
+    }
+
+    func offerBatch(_ urls: [URL]) {
+      do {
+        try MacBatchConversionCoordinator.shared.offer(
+          urls, configuration: configuration, qualified: MacBatchConversionCoordinator.isQualified,
+          owner: windowOwnerID, window: window)
+      } catch MacBatchConversionCoordinator.StartError.requiresPro {
+        showBatchProAlert()
+      } catch {
+        self.error = error
+      }
+    }
+
+    private func showBatchProAlert() {
+      proAlertDetailKey = "pro_batch_conversion"
+      showingProAlert = true
+    }
+
+    /// Finder drops may arrive as plain text only, without a file URL or name.
+    /// The in-place file representation still identifies the original file;
+    /// a copied or non-file item makes the whole drop unavailable, never a
+    /// silently shorter batch.
+    private static func fileURLs(from providers: [NSItemProvider]) async -> [URL]? {
+      var urls: [URL] = []
+      for provider in providers {
+        let url: URL? = await withCheckedContinuation { continuation in
+          if provider.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier) {
+            _ = provider.loadDataRepresentation(forTypeIdentifier: UTType.fileURL.identifier) { data, _ in
+              continuation.resume(returning: data.flatMap { URL(dataRepresentation: $0, relativeTo: nil) })
+            }
+          } else if provider.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) {
+            _ = provider.loadInPlaceFileRepresentation(forTypeIdentifier: UTType.plainText.identifier) { url, inPlace, _ in
+              continuation.resume(returning: inPlace ? url : nil)
+            }
+          } else {
+            continuation.resume(returning: nil)
+          }
+        }
+        guard let url else { return nil }
+        urls.append(url)
+      }
+      return urls
+    }
+  #endif
+
   func cancelImport() {
     importTask?.cancel()
     importTask = nil
@@ -450,10 +649,36 @@ class HomeViewModel: ObservableObject {
   #endif
 
   deinit {
+    #if DEBUG
+      diffMetricsTask?.cancel()
+    #endif
+    diffWorker?.cancel()
+    diffPublication?.cancel()
     conversionTask?.cancel()
     reservation?.release()
     importTask?.cancel()
   }
+
+  #if DEBUG
+    /// QA-only two-second main-actor probe, including first render after the
+    /// worker publishes. It records no document text and is cancelled on edits.
+    private static func measureDiffResponsiveness(snapshotID: UUID) -> Task<Void, Never> {
+      let start = DispatchTime.now().uptimeNanoseconds
+      return Task { @MainActor in
+        var last = start
+        var maximum: Double = 0
+        var samples = 0
+        while !Task.isCancelled, DispatchTime.now().uptimeNanoseconds - start < 2_000_000_000 {
+          do { try await Task.sleep(nanoseconds: 8_000_000) } catch { break }
+          let now = DispatchTime.now().uptimeNanoseconds
+          maximum = max(maximum, Double(now - last) / 1e6)
+          samples += 1
+          last = now
+        }
+        print("DIFF_QA snapshot=\(snapshotID) main_actor_samples=\(samples) max_gap_ms=\(maximum) cancelled=\(Task.isCancelled)")
+      }
+    }
+  #endif
 
   // MARK: - Review
 
@@ -475,3 +700,13 @@ class HomeViewModel: ObservableObject {
 extension ConversionConfiguration.Language: Segmentable, DefaultsSerializable {}
 extension ConversionConfiguration.Variant: Segmentable, DefaultsSerializable {}
 extension ConversionConfiguration.Region: Segmentable, DefaultsSerializable {}
+
+extension ConversionConfiguration {
+  /// The workspace's saved choices, shared by the Services menu and the global shortcut.
+  static var saved: ConversionConfiguration {
+    ConversionConfiguration(target: appDefaults[\.targetOptions], variant: appDefaults[\.variantOptions],
+                            region: appDefaults[\.regionOptions],
+                            simplifiedSource: appDefaults[\.simplifiedSourceOptions],
+                            simplifiedRegion: appDefaults[\.simplifiedRegionOptions])
+  }
+}
