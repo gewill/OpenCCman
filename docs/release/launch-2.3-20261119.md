@@ -32,6 +32,6 @@ The published tag continues to identify the binary source; subsequent README, ch
 
 ## Website deployment
 
-Website `main` commit `8efcd6b3aa3af357905bfde99e963c583b9babac` was pushed, read back equal to `origin/main`, rebuilt without tracked changes, and deployed to Cloudflare Pages Production (`526ecea2.openccman-website.pages.dev`). Eighteen affected pages across three languages returned HTTP 200 from the official domain and matched the committed output byte-for-byte. The production Chinese changelog was also viewed in the browser.
+Website `main` commit `8efcd6b3aa3af357905bfde99e963c583b9babac` was pushed, read back equal to `origin/main`, rebuilt without tracked changes, and deployed to Cloudflare Pages Production (`526ecea2.openccman-website.pages.dev`). Production verification compares eighteen affected pages across three languages. The three home pages and nine guides match the committed output byte-for-byte. Cloudflare rewrites email addresses on the three changelogs and three support pages; their content is compared after decoding that documented transformation, including the mailto destination. Initial Python HTTP requests received 403; ordinary curl requests and browser navigation succeed. The production Chinese changelog was also viewed in the browser.
 
 Initial public US/TW Apple Lookup responses still returned 2.2 immediately after release; this propagation observation does not override the independently verified ASC publication state.
