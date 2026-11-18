@@ -29,3 +29,9 @@ Both versions were read as PENDING_DEVELOPER_RELEASE with release type MANUAL an
 Public links: [App Store](https://apps.apple.com/app/id6474449401), [GitHub Release](https://github.com/gewill/OpenCCman/releases/tag/v2.3), [website release notes](https://openccman.gewill.org/en/changelog).
 
 The published tag continues to identify the binary source; subsequent README, changelog and release-record commits do not change the shipped binary.
+
+## Website deployment
+
+Website `main` commit `8efcd6b3aa3af357905bfde99e963c583b9babac` was pushed, read back equal to `origin/main`, rebuilt without tracked changes, and deployed to Cloudflare Pages Production (`526ecea2.openccman-website.pages.dev`). Eighteen affected pages across three languages returned HTTP 200 from the official domain and matched the committed output byte-for-byte. The production Chinese changelog was also viewed in the browser.
+
+Initial public US/TW Apple Lookup responses still returned 2.2 immediately after release; this propagation observation does not override the independently verified ASC publication state.
