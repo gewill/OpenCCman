@@ -15,10 +15,11 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 Changes not yet assigned to a published version.
 
-## [2.3] - Release candidate
+## [2.3] - 2026-11-19
 
-This version is not yet published. The minimum systems remain iOS/iPadOS 15
-and macOS 12; the homepage allowance remains 12 conversions per day.
+Released on the App Store for iOS/iPadOS and macOS as 2.3 (65), built from
+`0fca3a2893161fc08c17e9fe3a0fb142090d5a4a`. The minimum systems remain
+iOS/iPadOS 15 and macOS 12; the homepage allowance remains 12 conversions per day.
 
 ### Added
 
