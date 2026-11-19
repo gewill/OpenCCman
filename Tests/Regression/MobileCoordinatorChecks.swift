@@ -102,6 +102,7 @@ func checkMobileCoordinator() async throws {
     preconditionFailure("The confirmed source change must be reported")
   }
   try await checkMobileCapacityConfirmation()
+  try await checkMobileInterruptedDismissal()
   print("PASS: mobile coordinator Pro recheck, single reservation, frozen configuration, resource pairing, owner transfer, stale export callbacks, save cancellation/retry and source identity")
 }
 
@@ -184,6 +185,63 @@ private func checkMobileCapacityConfirmation() async throws {
   do { try coordinator.validateSize(FileConversionPolicy.mobileExperimentalMaximumBytes + 1); preconditionFailure("1 GiB + 1 is rejected") }
   catch MobileLargeFileCoordinator.StartError.exceedsExperimentalCapacity {}
   print("PASS: per-session experimental confirmation, closed gate, no job before consent, cancel/scene release, stale response, Pro/gate recheck and source growth")
+}
+
+/// A task stopped while working (Cancel, or a background expiration) shows
+/// "stopped" with Done as its only action. After Done no scene activation
+/// presents it again and it no longer counts as a task; a saved result and a
+/// failure are still presented again, as before.
+@MainActor
+private func checkMobileInterruptedDismissal() async throws {
+  let fm = FileManager.default
+  let root = fm.temporaryDirectory.appendingPathComponent("mobile-interrupted-\(UUID())")
+  try fm.createDirectory(at: root, withIntermediateDirectories: true)
+  defer { try? fm.removeItem(at: root) }
+  let input = root.appendingPathComponent("large.txt")
+  fm.createFile(atPath: input.path, contents: Data("鼠标".utf8))
+  let handle = try FileHandle(forWritingTo: input)
+  try handle.truncate(atOffset: UInt64(FileConversionPolicy.editorMaximumBytes + 1))
+  try handle.close()
+  let service = MobileLargeFileService(root: root.appendingPathComponent("jobs"), protection: .init(available: true))
+  let coordinator = MobileLargeFileCoordinator(factory: { service }, isQualified: { true })
+  coordinator.recover()
+  await coordinator.waitUntilSettled()
+  let owner = UUID()
+  let configuration = ConversionConfiguration.Preset.taiwan.configuration
+
+  try coordinator.offer(OpenedTextFile(url: input), configuration: configuration, owner: owner)
+  try coordinator.start()
+  coordinator.cancel()
+  await coordinator.waitUntilSettled()
+  precondition(coordinator.phase == .interrupted && coordinator.session != nil && coordinator.presentationOwner == owner,
+               "Cancelling a working task shows it as stopped")
+  coordinator.dismissPresentation()
+  precondition(coordinator.session == nil && coordinator.presentationOwner == nil,
+               "Done forgets a stopped task, so it no longer holds back What's New")
+  for _ in 0..<3 {
+    precondition(!coordinator.claimPresentation(owner), "A stopped task is not presented again on activation")
+  }
+  precondition(!coordinator.claimPresentation(UUID()))
+
+  // A saved result is still presented again after Done, and so is a failure.
+  try coordinator.offer(OpenedTextFile(url: input), configuration: configuration, owner: owner)
+  try coordinator.start()
+  await coordinator.waitUntilSettled()
+  precondition(coordinator.phase == .ready)
+  coordinator.dismissPresentation()
+  precondition(coordinator.session != nil && coordinator.claimPresentation(owner))
+  coordinator.discardResult()
+  await coordinator.waitUntilSettled()
+  precondition(coordinator.phase == .completed && coordinator.session == nil)
+
+  try coordinator.offer(OpenedTextFile(url: input), configuration: configuration, owner: owner)
+  try Data("changed".utf8).write(to: input)
+  try coordinator.start()
+  await coordinator.waitUntilSettled()
+  precondition(coordinator.phase == .failed)
+  coordinator.dismissPresentation()
+  precondition(coordinator.presentationOwner == nil && coordinator.claimPresentation(owner))
+  print("PASS: mobile stopped task dismissed once and not presented again; saved result and failure still presented")
 }
 
 private func requireMobileCapacity(_ value: Bool) { precondition(value) }
