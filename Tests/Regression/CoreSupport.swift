@@ -10,11 +10,14 @@ enum UserDefaults {
 }
 let appDefaults = DefaultsAdapter(defaults: UserDefaults.standard, keyStore: DefaultsKeys())
 extension DefaultsKeys {
-  var targetOptions: DefaultsKey<HomeViewModel.Language> { .init("targetOptions", defaultValue: .traditional) }
-  var variantOptions: DefaultsKey<HomeViewModel.Variant> { .init("variantOptions", defaultValue: .openCC) }
-  var regionOptions: DefaultsKey<HomeViewModel.Region> { .init("regionOptions", defaultValue: .notConvert) }
-  var simplifiedSourceOptions: DefaultsKey<HomeViewModel.Variant> { .init("simplifiedSourceOptions", defaultValue: .openCC) }
-  var simplifiedRegionOptions: DefaultsKey<HomeViewModel.Region> { .init("simplifiedRegionOptions", defaultValue: .notConvert) }
+  var conversionSource: DefaultsKey<ConversionConfiguration.Standard?> { .init("conversionSource") }
+  var conversionTarget: DefaultsKey<ConversionConfiguration.Standard?> { .init("conversionTarget") }
+  var conversionPhrases: DefaultsKey<ConversionConfiguration.Region> { .init("conversionPhrases", defaultValue: .notConvert) }
+  var targetOptions: DefaultsKey<ConversionConfiguration.Language> { .init("targetOptions", defaultValue: .traditional) }
+  var variantOptions: DefaultsKey<ConversionConfiguration.Variant> { .init("variantOptions", defaultValue: .openCC) }
+  var regionOptions: DefaultsKey<ConversionConfiguration.Region> { .init("regionOptions", defaultValue: .notConvert) }
+  var simplifiedSourceOptions: DefaultsKey<ConversionConfiguration.Variant> { .init("simplifiedSourceOptions", defaultValue: .openCC) }
+  var simplifiedRegionOptions: DefaultsKey<ConversionConfiguration.Region> { .init("simplifiedRegionOptions", defaultValue: .notConvert) }
   var testNumbersPerDay: DefaultsKey<[String: Int]> { .init("testNumbersPerDay", defaultValue: [:]) }
 }
 enum UserDefaultsKeys: String {

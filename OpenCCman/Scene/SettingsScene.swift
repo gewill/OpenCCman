@@ -17,6 +17,7 @@ struct SettingsScene: View {
     @State private var presentingSafariView: Bool = false
   #endif
   @AppStorage(UserDefaultsKeys.isPro.rawValue) var isPro: Bool = false
+  @AppStorage(UserDefaultsKeys.showsConversionConfigurationName.rawValue) private var showsConfigurationName = false
   #if os(macOS)
     @AppStorage(UserDefaultsKeys.showMenuBarIcon.rawValue) var showMenuBarIcon: Bool = true
     @AppStorage(UserDefaultsKeys.macTextSize.rawValue) private var macTextSizeRaw = AppTextSize.standard.rawValue
@@ -141,6 +142,16 @@ struct SettingsScene: View {
         #endif
 
         VStack(spacing: Constant.padding) {
+          HStack(alignment: .center, spacing: 6) {
+            Text("show_conversion_configuration_name".localizedStringKey)
+            Spacer()
+            Toggle("show_conversion_configuration_name", isOn: $showsConfigurationName)
+              .labelsHidden()
+              .toggleStyle(AppNeumorphicSwitchStyle())
+              .accessibilityLabel(Text("show_conversion_configuration_name"))
+              .accessibilityIdentifier("show-conversion-configuration-name")
+          }
+          Divider()
           CellButton(title: "Language") {
             navigator.navigate("/settings/changeLanguage")
           }

@@ -18,7 +18,7 @@ import OpenCC
     var reported: [String] = []
     let coordinator = MacBatchConversionCoordinator(qualified: { true }, otherTaskBusy: { false },
                                                     reportError: { reported.append("\($0)") })
-    let configuration = ConversionConfiguration(target: .traditional, variant: .taiwan, region: .taiwan)
+    let configuration = ConversionConfiguration(source: .simplified, target: .taiwan, phrases: .taiwan)
     try coordinator.offer(urls, configuration: configuration, qualified: true, owner: UUID(), window: nil)
     let footprintBefore = footprint()
     var peakFootprint = footprintBefore

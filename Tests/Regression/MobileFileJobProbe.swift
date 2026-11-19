@@ -31,7 +31,7 @@ import OpenCC
       try await service.discard(ready.id)
       print("PASS: fresh process validated and exported complete result")
     } else {
-      _ = try await service.convert(source: URL(fileURLWithPath: arguments[3]), options: [.traditionalize, .twIdiom])
+      _ = try await service.convert(source: URL(fileURLWithPath: arguments[3]), configuration: .s2twp)
       guard mode == "ready" else { throw MobileLargeFileService.JobError.invalidJournal }
       raise(SIGKILL)
     }
@@ -57,7 +57,7 @@ import OpenCC
       }))
     let source = root.appendingPathComponent("source.txt")
     try Data("头发\0\r\n".utf8).write(to: source)
-    let first = try await service.convert(source: source, options: .traditionalize)
+    let first = try await service.convert(source: source, configuration: .s2t)
     let before = observations.values.last!!
     let allocation = root.appendingPathComponent("owned-pressure.bin")
     try Data().write(to: allocation, options: .withoutOverwriting)
@@ -73,7 +73,7 @@ import OpenCC
     let atExport = observations.values.last!!
     try await service.discard(first.id)
     let secondStart = observations.values.count
-    let second = try await service.convert(source: source, options: .traditionalize)
+    let second = try await service.convert(source: source, configuration: .s2t)
     let atSecondPreflight = observations.values[secondStart]!
     // At least half of the 256 MiB allocation must be observed. This is a local
     // integration assertion, not a claim about exact purgeable capacity.

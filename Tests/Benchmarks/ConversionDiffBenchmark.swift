@@ -11,8 +11,8 @@ import OpenCC
       fatalError("Usage: DiffBenchmark corpus.txt prefixCharacters characterCap cellCap hunkCap")
     }
     let source = String(try String(contentsOfFile: args[1], encoding: .utf8).prefix(count))
-    let options: ChineseConverter.Options = [.traditionalize, .twStandard, .twIdiom]
-    let result = try await ChineseConversionService.shared.convert(source, options: options)
+    let options = ChineseConverter.Configuration.s2twp
+    let result = try await ChineseConversionService.shared.convert(source, configuration: options)
     var before = rusage()
     getrusage(RUSAGE_SELF, &before)
     var gaps: [Double] = []
@@ -66,10 +66,10 @@ import OpenCC
     ]
     print(String(data: try JSONSerialization.data(withJSONObject: record, options: [.sortedKeys]), encoding: .utf8)!)
     let sample = "鼠标里面的硅二极管坏了，导致光标分辨率降低。"
-    let actual = try await ChineseConversionService.shared.convert(sample, options: options)
+    let actual = try await ChineseConversionService.shared.convert(sample, configuration: options)
     precondition(actual.utf8.elementsEqual("滑鼠裡面的矽二極體壞了，導致游標解析度降低。".utf8))
     for separator in ["\r\n", "\r", "\u{2028}", "\u{2029}", "\0", "\u{FEFF}"] {
-      let converted = try await ChineseConversionService.shared.convert(separator + "鼠标" + separator, options: options)
+      let converted = try await ChineseConversionService.shared.convert(separator + "鼠标" + separator, configuration: options)
       precondition(converted.utf8.elementsEqual((separator + "滑鼠" + separator).utf8))
     }
     print("PASS: pinned OpenCC sample and literal separator preservation; complete diff reconstructs output")

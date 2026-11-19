@@ -11,7 +11,7 @@ func checkStreamingPump() async throws {
   let destination = directory.appendingPathComponent("partial.txt")
   let text = "\r\n头发干杯显存顯存鼠标\0⿰木木👨‍👩‍👧‍👦e\u{301}中\u{FEFF}文\n\n"
 
-  for options in streamingPumpOptions {
+  for configuration in streamingPumpConfigurations {
     for size in [1, 2, 3, 7, 31, StreamingConversionPump.bufferBytes] {
       // Tiny reads split the BOM, UTF-8 scalars, IDS and dictionary phrases.
       // The production-sized read also crosses a real 256 KiB boundary.
@@ -20,10 +20,10 @@ func checkStreamingPump() async throws {
         : text + text
       let bytes = Data([0xEF, 0xBB, 0xBF]) + Data(fixture.utf8)
       try bytes.write(to: source)
-      let expected = try ChineseConversionService.convertSynchronously(fixture, options: options)
+      let expected = try ChineseConversionService.convertSynchronously(fixture, configuration: configuration)
       let recorder = PumpProgressRecorder()
       let result = try await runStreamingPump(source: source, destination: destination, expectedBytes: UInt64(bytes.count),
-                                              options: options, chunkSize: size, progress: { recorder.append($0, $1) })
+                                              configuration: configuration, chunkSize: size, progress: { recorder.append($0, $1) })
       let actual = try Data(contentsOf: destination)
       precondition(actual == Data(expected.utf8), "The pump must match independent whole-text conversion")
       precondition(result.inputBytes == UInt64(bytes.count) && result.outputBytes == UInt64(actual.count))
@@ -39,8 +39,8 @@ func checkStreamingPump() async throws {
       let bytes = Data(fixture.utf8)
       try bytes.write(to: source)
       let result = try await runStreamingPump(source: source, destination: destination,
-                                              expectedBytes: UInt64(bytes.count), options: options, chunkSize: size)
-      let expected = try ChineseConversionService.convertSynchronously(fixture, options: options)
+                                              expectedBytes: UInt64(bytes.count), configuration: configuration, chunkSize: size)
+      let expected = try ChineseConversionService.convertSynchronously(fixture, configuration: configuration)
       let actual = try Data(contentsOf: destination)
       precondition(actual == Data(expected.utf8) && result.outputBytes == UInt64(actual.count))
     }
@@ -58,7 +58,7 @@ func checkStreamingPump() async throws {
   try Data(expanded.utf8).write(to: source)
   let expandedResult = try await runStreamingPump(source: source, destination: destination,
                                                  expectedBytes: UInt64(expanded.utf8.count),
-                                                 options: [.traditionalize, .twStandard, .twIdiom], chunkSize: 1)
+                                                 configuration: .s2twp, chunkSize: 1)
   precondition(expandedResult.outputBytes > expandedResult.inputBytes,
                "Output is allowed to grow; the buffer reserve is not a file capacity")
 
@@ -114,22 +114,19 @@ func checkStreamingPump() async throws {
   completedCommit.cancel()
   try completedCommit.check() // Cancellation cannot revoke completed publication.
 
-  print("PASS: shared stream pump; nine configurations, split BOM/UTF-8/phrases, IDS/NUL/Unicode, output expansion, byte counts, faults, cancellation and caller-owned handles")
+  print("PASS: shared stream pump; fourteen configurations, split BOM/UTF-8/phrases, IDS/NUL/Unicode, output expansion, byte counts, faults, cancellation and caller-owned handles")
 }
 
-let streamingPumpOptions: [ChineseConverter.Options] = [
-  .simplify, .traditionalize, [.traditionalize, .twStandard], [.traditionalize, .hkStandard],
-  [.traditionalize, .twStandard, .twIdiom], [.traditionalize, .twIdiom],
-  [.traditionalize, .hkStandard, .twIdiom],
-  // Hong Kong phrases (#304): s2hkp and hk2sp come from the engine's Configuration API.
-  [.traditionalize, .hkStandard, .hkIdiom], [.simplify, .hkStandard, .hkIdiom]
+// Every configuration the source × target settings offer (#305).
+let streamingPumpConfigurations: [ChineseConverter.Configuration] = [
+  .s2t, .t2s, .s2tw, .s2twp, .s2hk, .s2hkp, .tw2s, .tw2sp, .hk2s, .hk2sp, .t2tw, .t2hk, .tw2t, .hk2t
 ]
 
 /// The caller closes handles only after the worker has completed, even on error.
 /// Seeking/synchronizing before close explicitly detects accidental pump close.
 func runStreamingPump(
   source: URL, destination: URL, expectedBytes: UInt64,
-  options: ChineseConverter.Options = .traditionalize,
+  configuration: ChineseConverter.Configuration = .s2t,
   chunkSize: Int = StreamingConversionPump.bufferBytes,
   cancellation: StreamingConversionCancellation = StreamingConversionCancellation(),
   hooks: StreamingConversionPump.Hooks = .init(),
@@ -144,7 +141,7 @@ func runStreamingPump(
       precondition(!Thread.isMainThread)
       continuation.resume(returning: Result {
         try StreamingConversionPump.run(input: input, output: output, expectedInputBytes: expectedBytes,
-                                        options: options, cancellation: cancellation,
+                                        configuration: configuration, cancellation: cancellation,
                                         progress: progress, hooks: hooks, chunkSize: chunkSize)
       })
     }

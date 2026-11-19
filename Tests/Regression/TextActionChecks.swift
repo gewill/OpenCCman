@@ -23,7 +23,7 @@ enum TextActionChecks {
         model.preset = preset
         model.receive { text }
         try await waitUntilSettled(model)
-        let expected = try await ChineseConversionService.shared.convert(text, options: preset.configuration.options)
+        let expected = try await ChineseConversionService.shared.convert(text, configuration: preset.configuration.official)
         precondition(model.phase == .converted && model.result == expected,
                      "The action returns the same complete text as the matching app preset")
         precondition(model.inputCharacterCount == text.count)
@@ -42,7 +42,7 @@ enum TextActionChecks {
     model.preset = .taiwan
     model.preset = .traditional
     try await waitUntilSettled(model)
-    let traditional = try await ChineseConversionService.shared.convert(source, options: ConversionConfiguration.Preset.traditional.configuration.options)
+    let traditional = try await ChineseConversionService.shared.convert(source, configuration: ConversionConfiguration.Preset.traditional.configuration.official)
     precondition(model.preset == .traditional && model.result == traditional,
                  "A superseded conversion must not overwrite the newest preset's result")
     let preview = model.preview!
@@ -51,12 +51,12 @@ enum TextActionChecks {
 
     // Chunks split UTF-8 scalars and dictionary phrases; output still matches
     // converting the whole text at once.
-    let options = ConversionConfiguration.Preset.taiwan.configuration.options
+    let options = ConversionConfiguration.Preset.taiwan.configuration.official
     let small = [String(repeating: "a", count: 255) + "鼠标" + String(repeating: "软件", count: 300), "", "👨‍👩‍👧‍👦\r\n\0头发"]
     for (text, chunks) in small.map({ ($0, [1, 2, 7, 256, 256 * 1024]) }) + [(source, [4_099, 256 * 1024])] {
-      let whole = try await ChineseConversionService.shared.convert(text, options: options)
+      let whole = try await ChineseConversionService.shared.convert(text, configuration: options)
       for chunk in chunks {
-        let chunked = try TextActionModel.convertInChunks(text, options: options, chunkBytes: chunk)
+        let chunked = try TextActionModel.convertInChunks(text, configuration: options, chunkBytes: chunk)
         precondition(chunked == whole, "Chunked conversion must equal whole-text conversion at every boundary")
       }
     }

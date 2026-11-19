@@ -70,21 +70,23 @@ enum StreamingTextFileService {
   static func convert(
     source: OpenedTextFile,
     destination: URL,
-    options: ChineseConverter.Options,
+    configuration: ChineseConverter.Configuration,
     capacity: MacFileCapacity = .standard,
     replacingExisting: Bool = true,
     progress: @escaping @Sendable (UInt64, UInt64) -> Void = { _, _ in },
     hooks: Hooks = Hooks()
   ) async throws -> Result {
     let cancellation = StreamingConversionCancellation()
-    let optionsRawValue = options.rawValue
+    // Cross the queue with the name; the enum is not declared Sendable.
+    let configurationName = configuration.rawValue
     return try await withTaskCancellationHandler(operation: {
       try await withCheckedThrowingContinuation { continuation in
         queue.async {
           // run's cleanup has completed before resuming, including cancellation.
           // The coordinator can now safely release the single-task slot.
           do {
-            let result = try run(source: source, destination: destination, options: ChineseConverter.Options(rawValue: optionsRawValue),
+            let result = try run(source: source, destination: destination,
+                                 configuration: ChineseConverter.Configuration(rawValue: configurationName)!,
                                  capacity: capacity, replacingExisting: replacingExisting,
                                  progress: progress, cancellation: cancellation, hooks: hooks)
             continuation.resume(returning: result)
@@ -99,7 +101,7 @@ enum StreamingTextFileService {
   private static func run(
     source: OpenedTextFile,
     destination: URL,
-    options: ChineseConverter.Options,
+    configuration: ChineseConverter.Configuration,
     capacity: MacFileCapacity,
     replacingExisting: Bool,
     progress: @Sendable (UInt64, UInt64) -> Void,
@@ -145,7 +147,7 @@ enum StreamingTextFileService {
       defer { try? output.close() }
       let result = try StreamingConversionPump.run(
         input: input, output: output, expectedInputBytes: source.byteCount,
-        options: options, cancellation: cancellation, progress: progress,
+        configuration: configuration, cancellation: cancellation, progress: progress,
         hooks: .init(beforeRead: hooks.beforeRead, beforeWrite: hooks.beforeWrite,
                      beforeOutputWrite: { try storage.beforeWrite($0) }))
       try source.verifyUnchanged(input)

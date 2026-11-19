@@ -35,6 +35,12 @@ struct WhatsNewRelease: Identifiable {
         Card(id: "files", symbol: "doc.text"),
         Card(id: "reliability", symbol: "checkmark.shield"),
       ])
+    case "2.4":
+      // Source × target conversions (#305) and the retired OpenCC + Taiwan phrases setting.
+      return WhatsNewRelease(version: version, cards: [
+        Card(id: "source_target", symbol: "arrow.left.arrow.right"),
+        Card(id: "taiwan_phrases", symbol: "character.bubble"),
+      ])
     default:
       return nil
     }

@@ -22,55 +22,52 @@ import OpenCC
       "\0\0\0", "前段\0" + String(repeating: "汉", count: 4001) + "\0后段",
       String(repeating: "鼠标里面的硅二极管坏了，导致光标分辨率降低。\n\n", count: 5000)
     ]
-    let allOptions: [ChineseConverter.Options] = [
-      .simplify, .traditionalize,
-      [.traditionalize, .twIdiom], [.traditionalize, .twStandard],
-      [.traditionalize, .twStandard, .twIdiom], [.traditionalize, .hkStandard],
-      [.traditionalize, .hkStandard, .twIdiom]
+    // Every configuration the source × target settings offer (#305).
+    let allConfigurations: [ChineseConverter.Configuration] = [
+      .s2t, .t2s, .s2tw, .s2twp, .s2hk, .s2hkp, .tw2s, .tw2sp, .hk2s, .hk2sp, .t2tw, .t2hk, .tw2t, .hk2t
     ]
-    for options in allOptions {
-      let converter = try ChineseConversionService.converter(options: options)
-      let reusedConverter = try ChineseConversionService.converter(options: options)
+    for configuration in allConfigurations {
+      let converter = try ChineseConversionService.converter(configuration)
+      let reusedConverter = try ChineseConversionService.converter(configuration)
       precondition(converter === reusedConverter, "Reuse the compiled converter")
       for fixture in fixtures {
-        let result = try await ChineseConversionService.shared.convert(fixture, options: options)
+        let result = try await ChineseConversionService.shared.convert(fixture, configuration: configuration)
         precondition(result == converter.convert(fixture), "Full-text conversion must preserve OpenCC semantics")
       }
       let input = "\0鼠标\0\0汉字\0 😀 e\u{301}\r\n"
+      // The input is Simplified, so only conversions from Simplified change it.
       let expected: String
-      if options == .simplify {
-        expected = "\0鼠标\0\0汉字\0 😀 e\u{301}\r\n"
-      } else if options.contains(.twIdiom) {
-        expected = "\0滑鼠\0\0漢字\0 😀 e\u{301}\r\n"
-      } else {
-        expected = "\0鼠標\0\0漢字\0 😀 e\u{301}\r\n"
+      switch configuration {
+      case .s2t, .s2tw, .s2hk: expected = "\0鼠標\0\0漢字\0 😀 e\u{301}\r\n"
+      case .s2twp, .s2hkp: expected = "\0滑鼠\0\0漢字\0 😀 e\u{301}\r\n"
+      default: expected = input
       }
       // Also exercise an input decoded by Foundation, rather than a Swift literal.
       let cocoaInput = NSString(data: Data(input.utf8), encoding: String.Encoding.utf8.rawValue)! as String
-      let synchronous = try ChineseConversionService.convertSynchronously(cocoaInput, options: options)
-      let asynchronous = try await ChineseConversionService.shared.convert(input, options: options)
+      let synchronous = try ChineseConversionService.convertSynchronously(cocoaInput, configuration: configuration)
+      let asynchronous = try await ChineseConversionService.shared.convert(input, configuration: configuration)
       precondition(Data(synchronous.utf8) == Data(expected.utf8), "Every NUL and suffix must survive the byte-length bridge")
       precondition(Data(asynchronous.utf8) == Data(expected.utf8), "Background conversion shares the NUL contract")
     }
-    let phrase = try await ChineseConversionService.shared.convert(fixtures[4], options: [.traditionalize, .twIdiom])
+    let phrase = try await ChineseConversionService.shared.convert(fixtures[4], configuration: .s2twp)
     precondition(phrase == String(repeating: "a", count: 3999) + "滑鼠", "Do not split a phrase at the old 4000-character boundary")
     let formatting = "\n\nASCII\n\n\n\r\n" + String(repeating: "x", count: 8001) + "\n\n"
-    let unchanged = try await ChineseConversionService.shared.convert(formatting, options: .traditionalize)
+    let unchanged = try await ChineseConversionService.shared.convert(formatting, configuration: .s2t)
     precondition(unchanged == formatting, "No insertion, deletion or reordering of separators")
     let nullDelimited = "\0鼠标\0\0汉字\0"
-    let nullConverted = try await ChineseConversionService.shared.convert(nullDelimited, options: [.traditionalize, .twIdiom])
+    let nullConverted = try await ChineseConversionService.shared.convert(nullDelimited, configuration: .s2twp)
     precondition(nullConverted == "\0滑鼠\0\0漢字\0", "The byte-length bridge must not truncate text at U+0000")
-    let synchronousNullConverted = try ChineseConversionService.convertSynchronously(nullDelimited, options: [.traditionalize, .twIdiom])
+    let synchronousNullConverted = try ChineseConversionService.convertSynchronously(nullDelimited, configuration: .s2twp)
     precondition(synchronousNullConverted == nullConverted)
-    print("PASS: 7 option combinations × \(fixtures.count) fixtures; fixed NUL contracts, phrase boundaries, whitespace, Unicode and converter reuse")
+    print("PASS: \(allConfigurations.count) configurations × \(fixtures.count) fixtures; fixed NUL contracts, phrase boundaries, whitespace, Unicode and converter reuse")
 
-    let diffOptions: ChineseConverter.Options = [.traditionalize, .twStandard, .twIdiom]
+    let diffConfiguration = ChineseConverter.Configuration.s2twp
     let diffSample = "鼠标里面的硅二极管坏了，导致光标分辨率降低。"
-    let diffResult = try await ChineseConversionService.shared.convert(diffSample, options: diffOptions)
+    let diffResult = try await ChineseConversionService.shared.convert(diffSample, configuration: diffConfiguration)
     precondition(diffResult.utf8.elementsEqual("滑鼠裡面的矽二極體壞了，導致游標解析度降低。".utf8))
     for separator in ["", "\r\n", "\r", "\u{2028}", "\u{2029}", "\0", "\u{FEFF}"] {
       let source = separator + diffSample + separator
-      let result = try await ChineseConversionService.shared.convert(source, options: diffOptions)
+      let result = try await ChineseConversionService.shared.convert(source, configuration: diffConfiguration)
       precondition(result.utf8.elementsEqual((separator + diffResult + separator).utf8))
       guard case let .computed(hunks) = ConversionDiff.compute(
         source: source, result: result, limits: .init(characters: 1000, cells: 100_000, hunks: 100)) else {
@@ -122,7 +119,7 @@ import OpenCC
     clearModel.translate()
     precondition(clearModel.isLoading)
     clearModel.clearSource()
-    _ = try await ChineseConversionService.shared.convert("", options: .simplify)
+    _ = try await ChineseConversionService.shared.convert("", configuration: .t2s)
     await Task.yield()
     precondition(clearModel.inputText.isEmpty && clearModel.resultText.isEmpty && clearModel.exportSnapshot == nil)
     precondition(clearModel.sourceFilename == nil && !clearModel.isLoading && coreQuotaCount == 0,
@@ -172,9 +169,7 @@ import OpenCC
     precondition(model.resultConfigurationChanged)
     precondition(model.resultText == resultBeforeSettings && coreQuotaCount == 1,
                  "Changing settings retains prior result without charging")
-    model.targetOptions = configBeforeSettings.target
-    model.variantOptions = configBeforeSettings.variant
-    model.regionOptions = configBeforeSettings.region
+    model.conversion = configBeforeSettings
     precondition(!model.resultConfigurationChanged)
 
     let previousExport = model.exportSnapshot
@@ -186,7 +181,7 @@ import OpenCC
     model.translate()
     model.cancelConversion()
     model.inputText = "鼠标"
-    model.regionOptions = .taiwan
+    model.conversion = ConversionConfiguration(source: .simplified, target: .taiwan, phrases: .taiwan)
     model.translate()
     await waitUntilIdle(model)
     precondition(model.resultText == "滑鼠", "Cancelled work must not overwrite its replacement")
@@ -250,7 +245,7 @@ import OpenCC
     precondition(model.diffSnapshot?.id != snapshot.id && model.diffDisplay?.id == model.diffSnapshot?.id)
     precondition(model.diffSnapshot?.source == "互联网", "Old worker must not overwrite the replacement snapshot")
     let replacementExport = model.exportSnapshot
-    model.regionOptions = .notConvert
+    model.conversion.phrases = .notConvert
     precondition(model.diffSnapshot == nil && model.diffDisplay == nil)
     precondition(model.exportSnapshot == replacementExport, "Configuration invalidation preserves export semantics")
     model.translate()

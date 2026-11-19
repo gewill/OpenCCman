@@ -19,6 +19,8 @@ enum WhatsNewChecks {
     precondition(WhatsNewRelease.content(for: "1.3")?.cards.map(\.id) == ["presets", "files", "reliability"])
     precondition(WhatsNewRelease.content(for: "1.2") == nil)
     precondition(WhatsNewRelease.content(for: "1.4") == nil)
+    precondition(WhatsNewRelease.content(for: "2.4")?.cards.map(\.id) == ["source_target", "taiwan_phrases"])
+    precondition(WhatsNewRelease.content(for: "2.3") == nil)
     precondition(WhatsNewRelease.content(for: "") == nil)
     let unknown = WhatsNewCoordinator(version: "1.4", defaults: defaults)
     precondition(unknown.reserve(for: first, eligibility: ready, manually: true) == nil)

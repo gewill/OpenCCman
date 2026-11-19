@@ -43,12 +43,11 @@ class HomeViewModel: ObservableObject {
     }
   }
 
-  @Published var options: ChineseConverter.Options = []
-  @Published var targetOptions: Language = appDefaults[\.targetOptions] { didSet { if targetOptions != oldValue { cancelConversion() } } }
-  @Published var variantOptions: Variant = appDefaults[\.variantOptions] { didSet { if variantOptions != oldValue { cancelConversion() } } }
-  @Published var regionOptions: Region = appDefaults[\.regionOptions] { didSet { if regionOptions != oldValue { cancelConversion() } } }
-  @Published var simplifiedSourceOptions: Variant = appDefaults[\.simplifiedSourceOptions] { didSet { if simplifiedSourceOptions != oldValue { cancelConversion() } } }
-  @Published var simplifiedRegionOptions: Region = appDefaults[\.simplifiedRegionOptions] { didSet { if simplifiedRegionOptions != oldValue { cancelConversion() } } }
+  /// This window's conversion (#305). Changes are saved for new windows, the
+  /// Services menu and the global shortcut; open windows keep their own choice.
+  @Published var conversion: ConversionConfiguration = .saved {
+    didSet { if conversion.official != oldValue.official { cancelConversion() } }
+  }
 
   @AppStorage(UserDefaultsKeys.lastVersionPromptedForReview.rawValue) var lastVersionPromptedForReview: String = ""
 
@@ -65,7 +64,7 @@ class HomeViewModel: ObservableObject {
   @Published private(set) var resultConfiguration: ConversionConfiguration?
   var resultConfigurationChanged: Bool {
     guard !resultText.isEmpty, let resultConfiguration else { return false }
-    return resultConfiguration.options != configuration.options
+    return resultConfiguration.official != configuration.official
   }
   @Published private(set) var diffSnapshot: ConversionDiffSnapshot<ConversionConfiguration>?
   @Published var showsDifferences = false {
@@ -186,31 +185,10 @@ class HomeViewModel: ObservableObject {
   // MARK: - life cycle
 
   init() {
-    Publishers.CombineLatest(Publishers.CombineLatest3($targetOptions, $variantOptions, $regionOptions),
-                             Publishers.CombineLatest($simplifiedSourceOptions, $simplifiedRegionOptions))
-      .map { traditional, simplified in
-        ConversionConfiguration(target: traditional.0, variant: traditional.1, region: traditional.2,
-                                simplifiedSource: simplified.0, simplifiedRegion: simplified.1).options
-      }
+    $conversion.dropFirst()
       .removeDuplicates()
-      .assign(to: &$options)
-
-    $targetOptions.dropFirst()
-      .sink { targetOptions in
-        appDefaults[\.targetOptions] = targetOptions
-      }.store(in: &cancellables)
-    $variantOptions.dropFirst()
-      .sink { variantOptions in
-        appDefaults[\.variantOptions] = variantOptions
-      }.store(in: &cancellables)
-    $regionOptions.dropFirst()
-      .sink { regionOptions in
-        appDefaults[\.regionOptions] = regionOptions
-      }.store(in: &cancellables)
-    $simplifiedSourceOptions.dropFirst()
-      .sink { appDefaults[\.simplifiedSourceOptions] = $0 }.store(in: &cancellables)
-    $simplifiedRegionOptions.dropFirst()
-      .sink { appDefaults[\.simplifiedRegionOptions] = $0 }.store(in: &cancellables)
+      .sink { $0.save() }
+      .store(in: &cancellables)
 
     // Listen for text conversion service notifications
     #if os(macOS)
@@ -303,10 +281,7 @@ class HomeViewModel: ObservableObject {
 
   // MARK: - response methods
 
-  var configuration: ConversionConfiguration {
-    ConversionConfiguration(target: targetOptions, variant: variantOptions, region: regionOptions,
-                            simplifiedSource: simplifiedSourceOptions, simplifiedRegion: simplifiedRegionOptions)
-  }
+  var configuration: ConversionConfiguration { conversion }
 
   var selectedPreset: ConversionConfiguration.Preset? { configuration.preset }
 
@@ -322,15 +297,12 @@ class HomeViewModel: ObservableObject {
   }
 
   func applyPreset(_ preset: ConversionConfiguration.Preset) {
-    let configuration = preset.configuration
-    targetOptions = configuration.target
-    // Each preset sets only its own target's choices and keeps the other's.
-    guard configuration.target == .traditional else {
-      simplifiedSourceOptions = configuration.simplifiedSource
-      return
-    }
-    variantOptions = configuration.variant
-    regionOptions = configuration.region
+    conversion = preset.configuration
+  }
+
+  /// Exchanges the source and the target standards; the texts stay as they are.
+  func swapConversion() {
+    conversion.swap()
   }
 
   func translate() {
@@ -370,7 +342,6 @@ class HomeViewModel: ObservableObject {
 
     let currentInput = inputText
     let currentConfiguration = configuration
-    let currentOptions = options
     let filename = TextFileService.ImportedText(text: "", sourceFilename: sourceFilename).exportFilename
     let identifier = UUID()
     conversionID = identifier
@@ -389,7 +360,7 @@ class HomeViewModel: ObservableObject {
             }
           }
         #endif
-        let result = try await ChineseConversionService.shared.convert(currentInput, options: currentOptions)
+        let result = try await ChineseConversionService.shared.convert(currentInput, configuration: currentConfiguration.official)
         try Task.checkCancellation()
         guard let self, self.conversionID == identifier else {
           reservation.release()
@@ -692,21 +663,33 @@ class HomeViewModel: ObservableObject {
 
   // MARK: - Options
 
-  typealias Language = ConversionConfiguration.Language
-  typealias Variant = ConversionConfiguration.Variant
+  typealias Standard = ConversionConfiguration.Standard
   typealias Region = ConversionConfiguration.Region
 }
 
-extension ConversionConfiguration.Language: Segmentable, DefaultsSerializable {}
-extension ConversionConfiguration.Variant: Segmentable, DefaultsSerializable {}
+extension ConversionConfiguration.Standard: Segmentable, DefaultsSerializable {}
 extension ConversionConfiguration.Region: Segmentable, DefaultsSerializable {}
+extension ConversionConfiguration.Language: DefaultsSerializable {}
+extension ConversionConfiguration.Variant: DefaultsSerializable {}
 
 extension ConversionConfiguration {
-  /// The workspace's saved choices, shared by the Services menu and the global shortcut.
+  /// The saved conversion, shared by new windows, the Services menu and the global
+  /// shortcut. Settings from before #305 are migrated on the first read.
   static var saved: ConversionConfiguration {
-    ConversionConfiguration(target: appDefaults[\.targetOptions], variant: appDefaults[\.variantOptions],
-                            region: appDefaults[\.regionOptions],
-                            simplifiedSource: appDefaults[\.simplifiedSourceOptions],
-                            simplifiedRegion: appDefaults[\.simplifiedRegionOptions])
+    if let source = appDefaults[\.conversionSource], let target = appDefaults[\.conversionTarget] {
+      return ConversionConfiguration(source: source, target: target, phrases: appDefaults[\.conversionPhrases])
+    }
+    let migrated = ConversionConfiguration(
+      legacyTarget: appDefaults[\.targetOptions], variant: appDefaults[\.variantOptions],
+      region: appDefaults[\.regionOptions], simplifiedSource: appDefaults[\.simplifiedSourceOptions],
+      simplifiedRegion: appDefaults[\.simplifiedRegionOptions])
+    migrated.save()
+    return migrated
+  }
+
+  func save() {
+    appDefaults[\.conversionSource] = source
+    appDefaults[\.conversionTarget] = target
+    appDefaults[\.conversionPhrases] = phrases
   }
 }

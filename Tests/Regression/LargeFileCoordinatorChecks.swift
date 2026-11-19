@@ -39,7 +39,7 @@ enum LargeFileCoordinatorChecks {
     let input = directory.appendingPathComponent("source.txt")
     let output = directory.appendingPathComponent("converted.txt")
     try Data("头发与鼠标".utf8).write(to: input)
-    let configuration = ConversionConfiguration(target: .traditional, variant: .taiwan, region: .taiwan)
+    let configuration = ConversionConfiguration(source: .simplified, target: .taiwan, phrases: .taiwan)
     let owner = UUID()
     let worker = Worker()
     var reportedErrors: [NSError] = []

@@ -49,8 +49,8 @@ import OpenCC
   }
 @main enum Benchmark {
   static func main() async throws {
-    let options: ChineseConverter.Options = [.traditionalize, .twIdiom]
-    let converter = try ChineseConversionService.converter(options: options)
+    let configuration = ChineseConverter.Configuration.s2twp
+    let converter = try ChineseConversionService.converter(configuration)
     let fixtures = [
       ("lost-prefix", "前段\n\n" + String(repeating: "汉", count: 4001)),
       ("phrase-boundary", String(repeating: "a", count: 3999) + "鼠标"),
@@ -59,7 +59,7 @@ import OpenCC
     for (name, input) in fixtures {
       let old = chunked(text: input).map { converter.convert($0) }.joined(separator: "\n")
       let expected = converter.convert(input)
-      let current = try await ChineseConversionService.shared.convert(input, options: options)
+      let current = try await ChineseConversionService.shared.convert(input, configuration: configuration)
       precondition(old != expected && current == expected)
       print("REPRO \(name): old wrong; current matches OpenCC; old/output UTF8 bytes \(old.utf8.count)/\(current.utf8.count)")
     }
@@ -76,7 +76,7 @@ import OpenCC
       }
       oldTimes.append(Double(DispatchTime.now().uptimeNanoseconds - start) / 1e6)
       let next = DispatchTime.now().uptimeNanoseconds
-      let current = try await ChineseConversionService.shared.convert(input, options: options)
+      let current = try await ChineseConversionService.shared.convert(input, configuration: configuration)
       newTimes.append(Double(DispatchTime.now().uptimeNanoseconds - next) / 1e6)
       precondition(!old.isEmpty && current == converter.convert(input))
     }

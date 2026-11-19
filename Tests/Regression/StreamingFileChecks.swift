@@ -10,12 +10,12 @@ private func checkVolumeExport(in volume: URL, staging: URL) async throws {
   let input = staging.appendingPathComponent("volume-source.txt")
   let body = "鼠标里面的硅二极管坏了。\r\n"
   try Data(body.utf8).write(to: input)
-  let expected = try ChineseConversionService.convertSynchronously(body, options: .traditionalize)
+  let expected = try ChineseConversionService.convertSynchronously(body, configuration: .s2t)
   for (name, replacing, exists) in [("batch.txt", false, false), ("new.txt", true, false), ("old.txt", true, true)] {
     let output = directory.appendingPathComponent(name)
     if exists { try Data("old".utf8).write(to: output) }
     _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input),
-      destination: output, options: .traditionalize, replacingExisting: replacing)
+      destination: output, configuration: .s2t, replacingExisting: replacing)
     let actual = try Data(contentsOf: output)
     precondition(actual == Data(expected.utf8))
   }
@@ -23,7 +23,7 @@ private func checkVolumeExport(in volume: URL, staging: URL) async throws {
   let sentinel = Data("someone else".utf8)
   do {
     _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input),
-      destination: collision, options: .traditionalize, replacingExisting: false,
+      destination: collision, configuration: .s2t, replacingExisting: false,
       hooks: .init(beforeCommit: { try sentinel.write(to: collision) }))
     preconditionFailure("A competing file must survive")
   } catch StreamingTextFileService.FileError.destinationChanged {}
@@ -63,14 +63,11 @@ func checkStreamingFiles() async throws {
   let output = directory.appendingPathComponent("converted.txt")
   let preserved = Data("已有文件：不能丢失".utf8)
   let body = "\r\n头发干杯鼠标\0\0⿰木木👨‍👩‍👧‍👦e\u{301}\n\r\n"
-  let options: [ChineseConverter.Options] = [
-    .simplify, .traditionalize, [.traditionalize, .twStandard],
-    [.traditionalize, .hkStandard], [.traditionalize, .twStandard, .twIdiom],
-    [.traditionalize, .twIdiom], [.traditionalize, .hkStandard, .twIdiom],
-    // Hong Kong phrases (#304): s2hkp and hk2sp come from the engine's Configuration API.
-    [.traditionalize, .hkStandard, .hkIdiom], [.simplify, .hkStandard, .hkIdiom]
+  // Every configuration the source × target settings offer (#305).
+  let configurations: [ChineseConverter.Configuration] = [
+    .s2t, .t2s, .s2tw, .s2twp, .s2hk, .s2hkp, .tw2s, .tw2sp, .hk2s, .hk2sp, .t2tw, .t2hk, .tw2t, .hk2t
   ]
-  for option in options {
+  for option in configurations {
     // Place phrases across actual 256 KiB file reads, including a split scalar.
     let text = String(repeating: "a", count: StreamingTextFileService.bufferBytes - 5) + body + body
     let data = Data([0xEF, 0xBB, 0xBF]) + Data(text.utf8)
@@ -78,18 +75,18 @@ func checkStreamingFiles() async throws {
     try preserved.write(to: output)
     let source = try OpenedTextFile(url: input)
     let observations = FileProgressRecorder()
-    let result = try await StreamingTextFileService.convert(source: source, destination: output, options: option) {
+    let result = try await StreamingTextFileService.convert(source: source, destination: output, configuration: option) {
       observations.append($0, total: $1)
     }
-    let expected = try ChineseConversionService.convertSynchronously(text, options: option)
+    let expected = try ChineseConversionService.convertSynchronously(text, configuration: option)
     let actual = try Data(contentsOf: output)
-    precondition(actual == Data(expected.utf8), "Streaming files must exactly match whole conversion in all nine configurations")
+    precondition(actual == Data(expected.utf8), "Streaming files must exactly match whole conversion in every offered configuration")
     precondition(result.inputBytes == UInt64(data.count) && result.outputBytes == UInt64(actual.count))
     precondition(observations.isMonotonic(total: UInt64(data.count)))
   }
   for bytes in [Data(), Data([0x61]), Data([0x61, 0x62]), Data([0xEF, 0xBB, 0xBF])] {
     try bytes.write(to: input)
-    let result = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input), destination: output, options: .traditionalize)
+    let result = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input), destination: output, configuration: .s2t)
     let actual = try Data(contentsOf: output)
     precondition(actual == (bytes.count == 3 ? Data() : bytes))
     precondition(result.outputBytes == UInt64(actual.count))
@@ -108,7 +105,7 @@ func checkStreamingFiles() async throws {
   }
   precondition(prepared.byteCount == UInt64(TextFileService.maximumBytes + 1))
   try FileManager.default.removeItem(at: input)
-  let providerResult = try await StreamingTextFileService.convert(source: prepared, destination: output, options: .traditionalize)
+  let providerResult = try await StreamingTextFileService.convert(source: prepared, destination: output, configuration: .s2t)
   precondition(providerResult.inputBytes == UInt64(TextFileService.maximumBytes + 1))
   precondition(providerResult.outputBytes == providerResult.inputBytes)
 
@@ -117,7 +114,7 @@ func checkStreamingFiles() async throws {
     if alias.lastPathComponent == "hard-link.txt" { try FileManager.default.linkItem(at: input, to: alias) }
     if alias.lastPathComponent == "symbolic-link.txt" { try FileManager.default.createSymbolicLink(at: alias, withDestinationURL: input) }
     do {
-      _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input), destination: alias, options: .traditionalize)
+      _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input), destination: alias, configuration: .s2t)
       preconditionFailure("Source/destination aliases must be rejected")
     } catch StreamingTextFileService.FileError.sameFile {}
     try requireFileBytes(input, Data(body.utf8))
@@ -127,7 +124,7 @@ func checkStreamingFiles() async throws {
     try invalid.write(to: input)
     try preserved.write(to: output)
     do {
-      _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input), destination: output, options: .traditionalize)
+      _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input), destination: output, configuration: .s2t)
       preconditionFailure("Invalid UTF-8 must fail without publishing partial output")
     } catch TextFileService.FileError.invalidUTF8 {}
     try requireFileBytes(output, preserved)
@@ -144,7 +141,7 @@ func checkStreamingFiles() async throws {
     var hooks = fault
     hooks.temporaryDirectoryCreated = { temporaryDirectories.append($0) }
     do {
-      _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input), destination: output, options: .traditionalize, hooks: hooks)
+      _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input), destination: output, configuration: .s2t, hooks: hooks)
       preconditionFailure("Injected read/write/commit failures must propagate")
     } catch is POSIXError {}
     try requireFileBytes(output, preserved)
@@ -157,7 +154,7 @@ func checkStreamingFiles() async throws {
   try preserved.write(to: output)
   do {
     _ = try await StreamingTextFileService.convert(
-      source: OpenedTextFile(url: input), destination: output, options: .traditionalize,
+      source: OpenedTextFile(url: input), destination: output, configuration: .s2t,
       hooks: .init(beforeWrite: { throw POSIXError(.ENOSPC) }, beforeCleanup: { throw POSIXError(.EACCES) }))
     preconditionFailure("Cleanup failure must be visible")
   } catch let error as StreamingTextFileService.CleanupError {
@@ -172,7 +169,7 @@ func checkStreamingFiles() async throws {
   let sourceChanged = try OpenedTextFile(url: input)
   try Data((body + "变化").utf8).write(to: input)
   do {
-    _ = try await StreamingTextFileService.convert(source: sourceChanged, destination: output, options: .traditionalize)
+    _ = try await StreamingTextFileService.convert(source: sourceChanged, destination: output, configuration: .s2t)
     preconditionFailure("A modified source must be rejected")
   } catch TextFileService.FileError.sourceChanged {}
   try requireFileBytes(output, preserved)
@@ -180,7 +177,7 @@ func checkStreamingFiles() async throws {
   let replacedSource = try OpenedTextFile(url: input)
   try Data(body.utf8).write(to: input, options: .atomic)
   do {
-    _ = try await StreamingTextFileService.convert(source: replacedSource, destination: output, options: .traditionalize)
+    _ = try await StreamingTextFileService.convert(source: replacedSource, destination: output, configuration: .s2t)
     preconditionFailure("Replacing a still-present source path must be detected")
   } catch TextFileService.FileError.sourceChanged {}
   try requireFileBytes(output, preserved)
@@ -188,7 +185,7 @@ func checkStreamingFiles() async throws {
   let changedDestination = Data("其他窗口保存的新内容".utf8)
   do {
     _ = try await StreamingTextFileService.convert(
-      source: OpenedTextFile(url: input), destination: output, options: .traditionalize,
+      source: OpenedTextFile(url: input), destination: output, configuration: .s2t,
       hooks: .init(beforeCommit: { try changedDestination.write(to: output) }))
     preconditionFailure("A changed destination must be preserved")
   } catch StreamingTextFileService.FileError.destinationChanged {}
@@ -207,7 +204,7 @@ func checkStreamingFiles() async throws {
     hooks.temporaryDirectoryCreated = { temporaryDirectories.append($0) }
     let workerHooks = hooks
     let source = try OpenedTextFile(url: input)
-    let task = Task { try await StreamingTextFileService.convert(source: source, destination: output, options: .traditionalize, hooks: workerHooks) }
+    let task = Task { try await StreamingTextFileService.convert(source: source, destination: output, configuration: .s2t, hooks: workerHooks) }
     await gate.waitUntilBlocked()
     task.cancel()
     try requireFileBytes(output, preserved)
@@ -220,7 +217,7 @@ func checkStreamingFiles() async throws {
     precondition(temporaryDirectories.allRemoved, "Cancellation must await replacement-directory cleanup")
   }
   try await checkMacCapacityAndStorage(directory)
-  print("PASS: bounded file streaming, nine configurations, BOM/NUL/Unicode, real provider lifetime, aliases, invalid UTF-8, I/O faults, changed files and cancellation before commit")
+  print("PASS: bounded file streaming, fourteen configurations, BOM/NUL/Unicode, real provider lifetime, aliases, invalid UTF-8, I/O faults, changed files and cancellation before commit")
 }
 
 private func checkMacCapacityAndStorage(_ directory: URL) async throws {
@@ -248,7 +245,7 @@ private func checkMacCapacityAndStorage(_ directory: URL) async throws {
     let directories = FileTemporaryRecorder()
     do {
       _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
-        options: .traditionalize, capacity: size > FileConversionPolicy.macMaximumBytes ? .experimental : .standard,
+        configuration: .s2t, capacity: size > FileConversionPolicy.macMaximumBytes ? .experimental : .standard,
         hooks: .init(temporaryDirectoryCreated: { directories.append($0) }, beforeRead: { throw Stop.read }, availableBytes: { _ in Int64.max }))
       preconditionFailure("Stop the sparse metadata probe before reading")
     } catch Stop.read {}
@@ -259,7 +256,7 @@ private func checkMacCapacityAndStorage(_ directory: URL) async throws {
     try handle.truncate(atOffset: capacity.maximumInputBytes + 1)
     do {
       _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
-        options: .traditionalize, capacity: capacity,
+        configuration: .s2t, capacity: capacity,
         hooks: .init(beforeRead: { preconditionFailure("Over-limit input must not be read") }))
       preconditionFailure("Service cannot bypass the selected capacity")
     } catch let error as StreamingTextFileService.FileError {
@@ -274,7 +271,7 @@ private func checkMacCapacityAndStorage(_ directory: URL) async throws {
     let directories = FileTemporaryRecorder()
     do {
       _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
-        options: .traditionalize, capacity: capacity,
+        configuration: .s2t, capacity: capacity,
         hooks: .init(temporaryDirectoryCreated: { directories.append($0) }, beforeRead: { throw Stop.read },
           availableBytes: { _ in 1_610_612_736 }))
       preconditionFailure("Capacity probe must stop before conversion")
@@ -291,7 +288,7 @@ private func checkMacCapacityAndStorage(_ directory: URL) async throws {
   try handle.truncate(atOffset: FileConversionPolicy.macExperimentalMaximumBytes + 1)
   do {
     _ = try await StreamingTextFileService.convert(source: changed, destination: output,
-      options: .traditionalize, capacity: .experimental)
+      configuration: .s2t, capacity: .experimental)
     preconditionFailure("Growth after confirmation must be rejected")
   } catch TextFileService.FileError.sourceChanged {}
   try requireFileBytes(output, preserved)
@@ -303,13 +300,13 @@ private func checkMacCapacityAndStorage(_ directory: URL) async throws {
   // The query models a false zero from important usage and positive free space.
   let constrainedSpace = StreamingTextFileService.availableCapacity(importantUsage: 0, ordinary: 73 * 1024 * 1024)
   let result = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
-    options: .traditionalize, hooks: .init(availableBytes: { _ in constrainedSpace }))
+    configuration: .s2t, hooks: .init(availableBytes: { _ in constrainedSpace }))
   precondition(result.outputBytes == UInt64(payload.count))
   try requireFileBytes(output, payload)
   for capacity in [MacFileCapacity.standard, .experimental] {
     // Unknown estimates still allow I/O, including all ordinary error handling.
     _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
-      options: .traditionalize, capacity: capacity, hooks: .init(availableBytes: { _ in nil }))
+      configuration: .s2t, capacity: capacity, hooks: .init(availableBytes: { _ in nil }))
     try requireFileBytes(output, payload)
   }
   try preserved.write(to: output)
@@ -322,7 +319,7 @@ private func checkMacCapacityAndStorage(_ directory: URL) async throws {
     let directories = FileTemporaryRecorder()
     do {
       _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
-        options: .traditionalize, capacity: capacity,
+        configuration: .s2t, capacity: capacity,
         hooks: .init(temporaryDirectoryCreated: { directories.append($0) }, availableBytes: { _ in space }))
       preconditionFailure("Experimental preflight and known-full volumes must fail")
     } catch StreamingTextFileService.FileError.insufficientSpace {}
@@ -335,7 +332,7 @@ private func checkMacCapacityAndStorage(_ directory: URL) async throws {
       let directories = FileTemporaryRecorder()
       do {
         _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
-          options: .traditionalize, capacity: capacity,
+          configuration: .s2t, capacity: capacity,
           hooks: .init(temporaryDirectoryCreated: { directories.append($0) }, availableBytes: { _ in space.query() }))
         preconditionFailure("Initial and mid-conversion space loss must fail")
       } catch StreamingTextFileService.FileError.insufficientSpace {}
@@ -346,7 +343,7 @@ private func checkMacCapacityAndStorage(_ directory: URL) async throws {
     let directories = FileTemporaryRecorder()
     do {
       _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: source), destination: output,
-        options: .traditionalize, capacity: capacity,
+        configuration: .s2t, capacity: capacity,
         hooks: .init(temporaryDirectoryCreated: { directories.append($0) }, availableBytes: { _ in throw POSIXError(.EACCES) }))
       preconditionFailure("Capacity query errors must not be hidden as unknown space")
     } catch let error as POSIXError { precondition(error.code == .EACCES) }

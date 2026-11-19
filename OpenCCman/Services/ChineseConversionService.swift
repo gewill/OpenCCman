@@ -8,43 +8,39 @@ actor ChineseConversionService {
 
   // NSServices must return synchronously. Share construction with the background
   // path: SwiftyOpenCC's dictionary cache does not synchronize all of its reads.
-  nonisolated static func converter(options: ChineseConverter.Options) throws -> ChineseConverter {
-    try cache.converter(options: options)
+  nonisolated static func converter(_ configuration: ChineseConverter.Configuration) throws -> ChineseConverter {
+    try cache.converter(configuration)
   }
 
-  nonisolated static func convertSynchronously(_ text: String, options: ChineseConverter.Options) throws -> String {
-    let converter = try converter(options: options)
+  nonisolated static func convertSynchronously(_ text: String, configuration: ChineseConverter.Configuration) throws -> String {
+    let converter = try converter(configuration)
     // The pinned wrapper passes byte lengths and preserves NUL in its bridge.
     // Avoid a second full UTF-8 scan, especially for NSString-backed input.
     return converter.convert(text)
   }
 
-  func convert(_ text: String, options: ChineseConverter.Options) throws -> String {
+  func convert(_ text: String, configuration: ChineseConverter.Configuration) throws -> String {
     try Task.checkCancellation()
     // Keep phrase context and every original separator intact.
-    let result = try Self.convertSynchronously(text, options: options)
+    let result = try Self.convertSynchronously(text, configuration: configuration)
     try Task.checkCancellation()
     return result
   }
 
   // ChineseConverter is immutable and thread-safe. Only its construction and
-  // this cache need a lock. The app exposes eleven distinct configurations.
+  // this cache need a lock. The app offers fourteen official configurations.
   private final class ConverterCache: @unchecked Sendable {
     private let lock = NSLock()
-    private var converters: [Int: ChineseConverter] = [:]
+    private var converters: [String: ChineseConverter] = [:]
 
-    func converter(options: ChineseConverter.Options) throws -> ChineseConverter {
+    func converter(_ configuration: ChineseConverter.Configuration) throws -> ChineseConverter {
       lock.lock()
       defer { lock.unlock() }
-      if let converter = converters[options.rawValue] {
+      if let converter = converters[configuration.rawValue] {
         return converter
       }
-      // The app-only Hong Kong phrase flag maps to official configurations that
-      // `Options` cannot express; the engine never sees that bit.
-      let converter = options.contains(.hkIdiom)
-        ? try ChineseConverter(configuration: options.contains(.simplify) ? .hk2sp : .s2hkp)
-        : try ChineseConverter(options: options)
-      converters[options.rawValue] = converter
+      let converter = try ChineseConverter(configuration: configuration)
+      converters[configuration.rawValue] = converter
       return converter
     }
   }

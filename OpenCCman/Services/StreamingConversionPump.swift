@@ -23,7 +23,7 @@ enum StreamingConversionPump {
     input: FileHandle,
     output: FileHandle,
     expectedInputBytes: UInt64,
-    options: ChineseConverter.Options,
+    configuration: ChineseConverter.Configuration,
     cancellation: StreamingConversionCancellation,
     progress: @Sendable (UInt64, UInt64) -> Void = { _, _ in },
     hooks: Hooks = Hooks(),
@@ -31,7 +31,7 @@ enum StreamingConversionPump {
   ) throws -> Result {
     precondition(chunkSize > 0 && chunkSize <= bufferBytes)
     try cancellation.check()
-    let stream = try ChineseConversionService.converter(options: options).makeStream()
+    let stream = try ChineseConversionService.converter(configuration).makeStream()
     try cancellation.check()
     var inputBytes: UInt64 = 0
     var outputBytes: UInt64 = 0

@@ -21,7 +21,7 @@ enum BatchCoordinatorChecks {
     func release() { continuation?.resume(); continuation = nil }
   }
 
-  private static let configuration = ConversionConfiguration(target: .traditional, variant: .taiwan, region: .taiwan)
+  private static let configuration = ConversionConfiguration(source: .simplified, target: .taiwan, phrases: .taiwan)
 
   @MainActor
   static func run() async throws {
@@ -150,11 +150,11 @@ enum BatchCoordinatorChecks {
     for (index, name) in expectedNames.enumerated() {
       guard let name else { continue }
       let single = reference.appendingPathComponent("\(index).txt")
-      _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: urls[index]), destination: single, options: configuration.options)
+      _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: urls[index]), destination: single, configuration: configuration.official)
       let actual = try Data(contentsOf: output.appendingPathComponent(name))
       let singleOutput = try Data(contentsOf: single)
       precondition(actual == singleOutput, "Batch output must match single-file conversion: \(name)")
-      let editor = try ChineseConversionService.convertSynchronously(TextFileService.decode(before[index]), options: configuration.options)
+      let editor = try ChineseConversionService.convertSynchronously(TextFileService.decode(before[index]), configuration: configuration.official)
       precondition(actual == Data(editor.utf8), "Batch output must match the editor path: \(name)")
     }
     let afterSources = try urls.map { try Data(contentsOf: $0) }
@@ -184,7 +184,7 @@ enum BatchCoordinatorChecks {
         try rival.write(to: destination)
       }
       if source.sourceFilename == "full.txt" { hooks.availableBytes = { _ in 0 } }
-      return try await StreamingTextFileService.convert(source: source, destination: destination, options: options,
+      return try await StreamingTextFileService.convert(source: source, destination: destination, configuration: options,
                                                         replacingExisting: false, progress: progress, hooks: hooks)
     }
     try batch.offer([race, full, after], configuration: configuration, qualified: true, owner: UUID(), window: nil)

@@ -345,10 +345,10 @@
               return
           }
 
-          let options = ConversionConfiguration.saved.options
+          let configuration = ConversionConfiguration.saved.official
 
           do {
-              let convertedText = try ChineseConversionService.convertSynchronously(string, options: options)
+              let convertedText = try ChineseConversionService.convertSynchronously(string, configuration: configuration)
 
               // Clear the pasteboard and set the converted text
               pboard.clearContents()
