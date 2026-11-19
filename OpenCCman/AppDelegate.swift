@@ -154,9 +154,8 @@
 
     @discardableResult
     private static func activateExistingMainWindow() -> NSWindow? {
-      let window = [NSApp.keyWindow, NSApp.mainWindow].compactMap { $0 }.first(where: readyWindows.contains)
-        ?? NSApp.windows.first(where: readyWindows.contains)
-        ?? NSApp.windows.first { $0.canBecomeMain && !($0 is NSPanel) }
+      let window = MainWindowReopenController.selectWindow(key: NSApp.keyWindow, main: NSApp.mainWindow,
+        windows: NSApp.windows, isReady: readyWindows.contains)
       guard let window else { return nil }
       if NSApp.isHidden { NSApp.unhide(nil) }
       if window.isMiniaturized { window.deminiaturize(nil) }
