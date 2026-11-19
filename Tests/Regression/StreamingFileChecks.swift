@@ -3,10 +3,62 @@ import Foundation
 import OpenCC
 import UniformTypeIdentifiers
 
+private func checkVolumeExport(in volume: URL, staging: URL) async throws {
+  let directory = volume.appendingPathComponent(UUID().uuidString)
+  try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: false)
+  defer { try? FileManager.default.removeItem(at: directory) }
+  let input = staging.appendingPathComponent("volume-source.txt")
+  let body = "鼠标里面的硅二极管坏了。\r\n"
+  try Data(body.utf8).write(to: input)
+  let expected = try ChineseConversionService.convertSynchronously(body, options: .traditionalize)
+  for (name, replacing, exists) in [("batch.txt", false, false), ("new.txt", true, false), ("old.txt", true, true)] {
+    let output = directory.appendingPathComponent(name)
+    if exists { try Data("old".utf8).write(to: output) }
+    _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input),
+      destination: output, options: .traditionalize, replacingExisting: replacing)
+    let actual = try Data(contentsOf: output)
+    precondition(actual == Data(expected.utf8))
+  }
+  let collision = directory.appendingPathComponent("raced.txt")
+  let sentinel = Data("someone else".utf8)
+  do {
+    _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input),
+      destination: collision, options: .traditionalize, replacingExisting: false,
+      hooks: .init(beforeCommit: { try sentinel.write(to: collision) }))
+    preconditionFailure("A competing file must survive")
+  } catch StreamingTextFileService.FileError.destinationChanged {}
+  let staged = directory.appendingPathComponent("staged.txt")
+  try Data("staged".utf8).write(to: staged)
+  do {
+    try StreamingTextFileService.atomicCommit(staged, to: collision, replacing: false)
+    preconditionFailure("Exclusive reservation must reject an existing name")
+  } catch StreamingTextFileService.FileError.destinationChanged {}
+  let retained = try Data(contentsOf: staged)
+  precondition(retained == Data("staged".utf8))
+  let invalidSource = directory.appendingPathComponent("source-directory")
+  try FileManager.default.createDirectory(at: invalidSource, withIntermediateDirectories: false)
+  let reserved = directory.appendingPathComponent("reserved.txt")
+  do {
+    try StreamingTextFileService.atomicCommit(invalidSource, to: reserved, replacing: false)
+    preconditionFailure("Replacing a regular file with a directory must fail")
+  } catch let error as POSIXError {
+    precondition(error.code == .ENOTDIR || error.code == .EISDIR)
+  }
+  precondition(!FileManager.default.fileExists(atPath: reserved.path))
+  let survivor = try Data(contentsOf: collision)
+  precondition(survivor == sentinel)
+  print("PASS: new batch destination and existing destination on \(volume.path)")
+}
+
 func checkStreamingFiles() async throws {
   let directory = FileManager.default.temporaryDirectory.appendingPathComponent("OpenCCman-stream-files-\(UUID().uuidString)")
   try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
   defer { try? FileManager.default.removeItem(at: directory) }
+  if let volumes = ProcessInfo.processInfo.environment["OPENCCMAN_TEST_EXPORT_VOLUMES"] {
+    for volume in volumes.components(separatedBy: ":") {
+      try await checkVolumeExport(in: URL(fileURLWithPath: volume), staging: directory)
+    }
+  }
   let input = directory.appendingPathComponent("含 空格#文稿.txt")
   let output = directory.appendingPathComponent("converted.txt")
   let preserved = Data("已有文件：不能丢失".utf8)
