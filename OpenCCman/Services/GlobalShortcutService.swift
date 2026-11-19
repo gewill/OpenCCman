@@ -330,17 +330,27 @@ final class ShortcutClipboardTransaction {
 class GlobalShortcutService: ObservableObject {
     static let shared = GlobalShortcutService()
 
-    @Published var isEnabled: Bool = true {
+    /// The "Enable Global Shortcut" switch. Stored so it survives a relaunch;
+    /// an install that never changed it keeps the shortcuts enabled.
+    @Published var isEnabled: Bool = GlobalShortcutService.storedIsEnabled {
         didSet {
             guard isEnabled != oldValue else { return }
+            UserDefaults.standard.set(isEnabled, forKey: UserDefaultsKeys.globalShortcutEnabled.rawValue)
             KeyboardShortcuts.isEnabled = isEnabled
         }
+    }
+
+    nonisolated static var storedIsEnabled: Bool {
+        UserDefaults.standard.object(forKey: UserDefaultsKeys.globalShortcutEnabled.rawValue) as? Bool ?? true
     }
 
     @Published private(set) var hasAccessibilityPermission = false
     private var isPerformingAction = false
 
     private init() {
+        // Apply the stored switch before the handlers register their hot keys:
+        // a disabled shortcut must not hold its key combination after launch.
+        KeyboardShortcuts.isEnabled = isEnabled
         checkAccessibilityPermission()
         setupKeyboardShortcuts()
     }

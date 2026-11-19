@@ -41,5 +41,6 @@ enum UserDefaultsKeys: String {
   case showMenuBarIcon
   case shortcutFailureToast
   case shortcutSuccessToast
+  case globalShortcutEnabled
   case macTextSize
 }
