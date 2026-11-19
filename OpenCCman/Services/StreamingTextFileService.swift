@@ -243,14 +243,37 @@ enum StreamingTextFileService {
   }
 
   private static func atomicCommit(_ temporary: URL, to destination: URL, replacing: Bool) throws {
-    let status = temporary.withUnsafeFileSystemRepresentation { temporaryPath in
-      destination.withUnsafeFileSystemRepresentation { destinationPath -> Int32 in
-        guard let temporaryPath, let destinationPath else { return -1 }
-        // EXCL closes the race where a previously absent destination appears.
-        return renamex_np(temporaryPath, destinationPath, replacing ? 0 : UInt32(RENAME_EXCL))
+    try temporary.withUnsafeFileSystemRepresentation { source in
+      try destination.withUnsafeFileSystemRepresentation { target in
+        guard let source, let target else { throw FileError.invalidDestination }
+        if renamex_np(source, target, replacing ? 0 : UInt32(RENAME_EXCL)) == 0 { return }
+        guard !replacing, errno == ENOTSUP else {
+          if errno == EEXIST { throw FileError.destinationChanged }
+          throw TextFileFingerprint.posixError()
+        }
+
+        // FAT volumes lack exclusive rename. Reserve the name inside the
+        // coordinated accessor before publishing the completed staging file.
+        let reservation = open(target, O_CREAT | O_EXCL | O_WRONLY | O_CLOEXEC, S_IRUSR | S_IWUSR)
+        guard reservation >= 0 else {
+          if errno == EEXIST { throw FileError.destinationChanged }
+          throw TextFileFingerprint.posixError()
+        }
+        defer { close(reservation) }
+        var reserved = stat()
+        var current = stat()
+        guard fstat(reservation, &reserved) == 0, lstat(target, &current) == 0,
+              reserved.st_dev == current.st_dev, reserved.st_ino == current.st_ino else {
+          throw FileError.destinationChanged
+        }
+        if rename(source, target) != 0 {
+          let error = TextFileFingerprint.posixError()
+          if lstat(target, &current) == 0, reserved.st_dev == current.st_dev,
+             reserved.st_ino == current.st_ino { unlink(target) }
+          throw error
+        }
       }
     }
-    guard status == 0 else { throw TextFileFingerprint.posixError() }
   }
 }
 #endif
