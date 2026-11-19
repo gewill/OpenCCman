@@ -41,7 +41,7 @@
     private struct PendingWindowNotification {
       let name: Notification.Name
       let userInfo: [AnyHashable: Any]?
-      weak var window: NSWindow?
+      let windowID: ObjectIdentifier?
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -51,6 +51,8 @@
       // Initialize services
       #if os(macOS)
       _ = GlobalShortcutService.shared
+      NotificationCenter.default.addObserver(self, selector: #selector(windowWillClose(_:)),
+        name: NSWindow.willCloseNotification, object: nil)
       setupMenuBar()
       setupStatusBar()
 
@@ -126,6 +128,14 @@
       KeyboardShortcuts.isEnabled = GlobalShortcutService.shared.isEnabled
     }
 
+    @objc private func windowWillClose(_ notification: Notification) {
+      guard let window = notification.object as? NSWindow else { return }
+      Self.readyWindows.remove(window)
+      if Self.pendingWindowNotification?.windowID == ObjectIdentifier(window) {
+        Self.pendingWindowNotification = nil
+      }
+    }
+
     @discardableResult
     static func activateMainWindow() -> NSWindow? {
       if let window = activateExistingMainWindow() { return window }
@@ -144,14 +154,17 @@
 
     @discardableResult
     private static func activateExistingMainWindow() -> NSWindow? {
-      let keyWindow = NSApp.keyWindow.flatMap { $0.canBecomeMain ? $0 : nil }
-      let window = keyWindow ?? NSApp.mainWindow ?? NSApp.windows.first(where: { $0.canBecomeMain })
-      if window?.isMiniaturized == true { window?.deminiaturize(nil) }
-      window?.makeKeyAndOrderFront(nil)
+      let window = [NSApp.keyWindow, NSApp.mainWindow].compactMap { $0 }.first(where: readyWindows.contains)
+        ?? NSApp.windows.first(where: readyWindows.contains)
+        ?? NSApp.windows.first { $0.canBecomeMain && !($0 is NSPanel) }
+      guard let window else { return nil }
+      if NSApp.isHidden { NSApp.unhide(nil) }
+      if window.isMiniaturized { window.deminiaturize(nil) }
+      window.makeKeyAndOrderFront(nil)
       NSApp.activate(ignoringOtherApps: true)
       // macOS may decline activation that comes a while after the user's action (a
       // shortcut result shown after the paste hold); keep the window visible anyway.
-      window?.orderFrontRegardless()
+      window.orderFrontRegardless()
       return window
     }
 
@@ -160,7 +173,7 @@
       // Only the latest request is retained while SwiftUI creates and binds its window.
       pendingWindowNotification = nil
       guard let window, readyWindows.contains(window) else {
-        pendingWindowNotification = PendingWindowNotification(name: name, userInfo: userInfo, window: window)
+        pendingWindowNotification = PendingWindowNotification(name: name, userInfo: userInfo, windowID: window.map(ObjectIdentifier.init))
         return
       }
       NotificationCenter.default.post(name: name, object: window, userInfo: userInfo)
@@ -173,7 +186,7 @@
         readyWindows.add(window)
         windowReopener.windowBecameReady()
         guard let pending = pendingWindowNotification,
-              pending.window == nil || pending.window === window else { return }
+              pending.windowID == nil || pending.windowID == ObjectIdentifier(window) else { return }
         pendingWindowNotification = nil
         window.orderFrontRegardless()
         NotificationCenter.default.post(name: pending.name, object: window, userInfo: pending.userInfo)
