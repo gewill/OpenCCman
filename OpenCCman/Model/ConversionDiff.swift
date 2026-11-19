@@ -131,3 +131,25 @@ enum ConversionDiff {
     return merged.count > limits.hunks ? .notComputed : .computed(merged)
   }
 }
+
+extension String {
+  /// Byte-exact equality, the same rule as the diff: canonically equivalent
+  /// spellings are different text. Avoids reading a whole document where it
+  /// can. The same string value, such as a native editor's echo of its own
+  /// edit, matches by representation. Text with a different UTF-16 length
+  /// cannot match, and AppKit's bridged strings report that length in
+  /// constant time; they have no contiguous UTF-8 to compare directly.
+  func hasSameUTF8(as other: String) -> Bool {
+    // One storage object (or the same small string) with the same length.
+    if withUnsafeBytes(of: self, { a in withUnsafeBytes(of: other) { b in a.elementsEqual(b) } }) {
+      return true
+    }
+    let contiguous = utf8.withContiguousStorageIfAvailable { a in
+      other.utf8.withContiguousStorageIfAvailable { b in
+        a.count == b.count && (a.isEmpty || memcmp(a.baseAddress!, b.baseAddress!, a.count) == 0)
+      }
+    } ?? nil
+    if let contiguous { return contiguous }
+    return utf16.count == other.utf16.count && utf8.elementsEqual(other.utf8)
+  }
+}

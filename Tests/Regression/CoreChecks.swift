@@ -258,6 +258,17 @@ import OpenCC
     await waitUntilIdle(model)
     model.inputText = "é汉"
     precondition(model.diffSnapshot == nil && model.resultText.isEmpty, "Canonical equality cannot hide a byte change")
+    model.inputText = "e\u{301}\u{323}汉"
+    model.translate()
+    await waitUntilIdle(model)
+    model.inputText = "e\u{323}\u{301}汉"
+    precondition(model.resultText.isEmpty, "Equal length and canonical equality cannot hide a byte change")
+    model.translate()
+    await waitUntilIdle(model)
+    let unchangedResult = model.resultText
+    model.inputText = String(decoding: Array(model.inputText.utf8), as: UTF8.self)
+    precondition(!unchangedResult.isEmpty && model.resultText == unchangedResult,
+                 "Writing identical bytes again is not an edit")
     model.inputText = String(repeating: "汉", count: 50_001)
     model.translate()
     await waitUntilIdle(model)

@@ -24,7 +24,9 @@ class HomeViewModel: ObservableObject {
 
   @Published var inputText: String = "" {
     didSet {
-      guard !inputText.utf8.elementsEqual(oldValue.utf8) else { return }
+      // Byte-exact, so canonically equivalent spellings are a change. Every
+      // native keystroke lands here; this must not scan the whole document.
+      guard !inputText.hasSameUTF8(as: oldValue) else { return }
       #if os(macOS)
         sourceReadingState.invalidate()
       #endif
