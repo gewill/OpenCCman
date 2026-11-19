@@ -328,8 +328,9 @@ struct WorkspaceTextEditor: View {
     func saveReadingPosition(in viewport: WorkspaceEditorViewport) {
       guard let readingState, let editor = viewport.documentView as? NSTextView else { return }
       // A source replacement can race route teardown. Only retain a position
-      // in the document actually held by the window model.
-      guard editor.string.utf8.elementsEqual(text.wrappedValue.utf8) else {
+      // in the document actually held by the window model. The editor holds
+      // `renderedText`, so the model's echo of it matches without a scan.
+      guard (renderedText ?? editor.string).hasSameUTF8(as: text.wrappedValue) else {
         readingState.invalidate()
         return
       }
@@ -348,18 +349,12 @@ struct WorkspaceTextEditor: View {
     }
 
     private func matchesRenderedBytes(_ value: String) -> Bool {
-      guard let renderedText else { return false }
       // String equality is canonically equivalent, but file imports must also
-      // preserve the spelling/order of combining scalars. Compare literal UTF-8;
-      // identical contiguous storage takes the constant-time path on UI echoes.
-      let contiguousMatch = renderedText.utf8.withContiguousStorageIfAvailable { old in
-        value.utf8.withContiguousStorageIfAvailable { new in
-          guard old.count == new.count else { return false }
-          guard !old.isEmpty else { return true }
-          return old.baseAddress == new.baseAddress || memcmp(old.baseAddress!, new.baseAddress!, old.count) == 0
-        }
-      } ?? nil
-      return contiguousMatch ?? renderedText.utf8.elementsEqual(value.utf8)
+      // preserve the spelling/order of combining scalars. Compare literal UTF-8.
+      // A native edit records the string it publishes, and the model hands back
+      // that same value, so the echo of every keystroke matches without reading
+      // the document. AppKit's bridged strings have no contiguous UTF-8.
+      renderedText?.hasSameUTF8(as: value) ?? false
     }
   }
 

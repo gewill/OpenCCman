@@ -172,6 +172,8 @@ enum WorkspaceTextEditorChecks {
         checkProductionViewport(mebibytes: mebibytes, editable: editable)
       }
     }
+    checkKeystrokeEcho(mebibytes: 10)
+    checkExternalReplacement(mebibytes: 1)
     // The intervening RunLoop turns also drain the hosted editor's deferred
     // capture. It must not expand the initial viewport measurement to all text.
     withExtendedLifetime(host) {
@@ -329,6 +331,82 @@ enum WorkspaceTextEditorChecks {
     precondition(!editor.undoManager!.canUndo)
     record(["scenario": "production-tail-navigation-and-replacement", "MiB": mebibytes, "bytes": original.utf8.count,
             "editable": editable, "passed": true])
+  }
+
+  /// A native keystroke publishes the editor's own string. The model's change
+  /// check (`HomeViewModel.inputText`) and the next update must not compare the
+  /// whole document: together they stay within 20 ms at 10 MiB.
+  @MainActor private static func checkKeystrokeEcho(mebibytes: Int) {
+    let paragraph = "中文按鍵 👩🏽‍💻 e\u{301}\r\n" + String(repeating: "鼠标里面的硅二极管坏了 ", count: 16) + "\r\n"
+    var document = String(repeating: paragraph, count: mebibytes * 1_048_576 / paragraph.utf8.count)
+    var changes = 0
+    var modelCheck: CFAbsoluteTime = 0
+    let binding = Binding(get: { document }, set: { value in
+      let oldValue = document
+      document = value
+      let started = CFAbsoluteTimeGetCurrent()
+      if !document.hasSameUTF8(as: oldValue) { changes += 1 }  // HomeViewModel.inputText didSet
+      modelCheck += CFAbsoluteTimeGetCurrent() - started
+    })
+    let coordinator = WorkspaceTextEditorCoordinator(text: binding)
+    let viewport = coordinator.makeViewport()
+    viewport.setFrameSize(NSSize(width: 420, height: 240))
+    coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true)
+    let editor = viewport.documentView as! NSTextView
+    for place in ["middle", "end"] {
+      let length = editor.textStorage!.length
+      editor.setSelectedRange(NSRange(location: place == "middle" ? length / 2 : length, length: 0))
+      let before = changes
+      modelCheck = 0
+      editor.insertText("字", replacementRange: NSRange(location: NSNotFound, length: 0))
+      editor.breakUndoCoalescing()
+      precondition(changes == before + 1 && editor.string.utf8.count == document.utf8.count,
+                   "A typed character reaches the model as a change")
+      let selection = editor.selectedRange()
+      let started = CFAbsoluteTimeGetCurrent()
+      coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true, accessibilityLabel: "Source")
+      let update = CFAbsoluteTimeGetCurrent() - started
+      record(["scenario": "keystroke-echo-\(place)", "MiB": mebibytes, "bytes": document.utf8.count,
+              "modelCheckMilliseconds": modelCheck * 1000, "updateMilliseconds": update * 1000,
+              "passed": modelCheck + update < 0.02])
+      precondition(modelCheck + update < 0.02, "A keystroke compared the whole document")
+      precondition(editor.undoManager!.canUndo && editor.selectedRange() == selection,
+                   "The editor's own echo must not replace its document")
+    }
+    print("PASS: \(mebibytes) MiB keystroke echo; model change check and editor update without a document comparison")
+  }
+
+  /// Model writes that bypass the editor still compare bytes at document size:
+  /// equal length with one different character is rendered, a new string with
+  /// identical bytes is not (the undo history survives).
+  @MainActor private static func checkExternalReplacement(mebibytes: Int) {
+    let paragraph = "外部替換 👩🏽‍💻 e\u{301}\r\n" + String(repeating: "鼠标里面的硅二极管坏了 ", count: 16) + "\r\n"
+    let count = mebibytes * 1_048_576 / paragraph.utf8.count
+    var document = String(repeating: paragraph, count: count)
+    let binding = Binding(get: { document }, set: { document = $0 })
+    let coordinator = WorkspaceTextEditorCoordinator(text: binding)
+    let viewport = coordinator.makeViewport()
+    viewport.setFrameSize(NSSize(width: 420, height: 240))
+    coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true)
+    let editor = viewport.documentView as! NSTextView
+    editor.setSelectedRange(NSRange(location: 0, length: 0))
+    editor.insertText("前", replacementRange: NSRange(location: NSNotFound, length: 0))
+    editor.breakUndoCoalescing()
+    precondition(editor.undoManager!.canUndo)
+
+    document = String(decoding: Array(document.utf8), as: UTF8.self)
+    coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true)
+    precondition(editor.undoManager!.canUndo, "Identical bytes in a new string are not a replacement")
+
+    let half = String(repeating: paragraph, count: count / 2)
+    let replaced = paragraph.replacingOccurrences(of: "坏", with: "壞")
+    precondition(replaced.utf16.count == paragraph.utf16.count && replaced.utf8.count == paragraph.utf8.count)
+    document = "後" + half + replaced + String(repeating: paragraph, count: count - count / 2 - 1)
+    precondition(document.utf16.count == editor.textStorage!.length)
+    coordinator.update(viewport, text: binding, isEditable: true, isEnabled: true)
+    precondition(editor.string.utf8.elementsEqual(document.utf8) && !editor.undoManager!.canUndo,
+                 "An equal-length model replacement must be rendered")
+    print("PASS: \(mebibytes) MiB external replacement; equal length rendered, identical bytes kept with undo")
   }
 
   @MainActor private static func topLine(_ editor: NSTextView, _ viewport: NSScrollView) -> NSRange {
