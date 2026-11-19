@@ -178,6 +178,20 @@ jobs:
           ditto -c -k --keepParent \
             "${{ runner.temp }}/openccman-app/Build/Products/Debug/OpenCCman.app" \
             "${{ runner.temp }}/OpenCCman-validation.zip"
+      - name: Build iOS Simulator app and Share extension
+        env:
+          DEVELOPER_DIR: /Applications/Xcode_26.3.app/Contents/Developer
+        run: |
+          # The macOS build above never compiles the iOS-only sources or the
+          # Share extension. Same parameters as the manual ios-validation job;
+          # the shared derived data reuses the resolved package checkouts.
+          xcodebuild -project OpenCCman.xcodeproj -scheme OpenCCman \
+            -configuration Debug -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "${{ runner.temp }}/openccman-app" \
+            -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=NO \
+            OPENCCMAN_BUNDLE_ID=org.gewill.OpenCCman.UIValidation build
+          test -d "${{ runner.temp }}/openccman-app/Build/Products/Debug-iphonesimulator/OpenCCman.app/PlugIns/OpenCCmanTextAction.appex"
       - name: Verify dependency lock is unchanged
         run: git diff --exit-code -- OpenCCman.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
       - name: Upload unsigned macOS validation app

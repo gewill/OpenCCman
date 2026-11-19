@@ -8,12 +8,12 @@ GitHub Actions 负责回归与依赖候选验证，Xcode Cloud 负责正式签�
 
 | 工作流 / 检查 | 触发条件 | 执行环境与范围 |
 | --- | --- | --- |
-| `App Regression` | 目标为 `main`、`develop`、`codex/**`、`release/**`、`hotfix/**` 的 PR；main/develop/release/hotfix 推送；手动运行 | `macos-15`，20 分钟；工程和 Swift 语法、真实转换/文件/预设、窗口布局、原生控件完整尺寸、编辑器滚动/Introspect、Pro、StoreKit、额度、What’s New、开屏转场、本地化、隔离剪贴板回归及双架构 macOS Debug 验证构建（在 macOS 15 上不含 App 图标，见下文） |
+| `App Regression` | 目标为 `main`、`develop`、`codex/**`、`release/**`、`hotfix/**` 的 PR；main/develop/release/hotfix 推送；手动运行 | `macos-15`，20 分钟；工程和 Swift 语法、真实转换/文件/预设、窗口布局、原生控件完整尺寸、编辑器滚动/Introspect、Pro、StoreKit、额度、What’s New、开屏转场、本地化、隔离剪贴板回归、双架构 macOS Debug 验证构建，以及 arm64 iOS Simulator Debug 构建（含分享扩展 `OpenCCmanTextAction`，iOS 专用源码只在这一步编译；两次构建在 macOS 15 上都不含 App 图标，见下文） |
 | `App icon` | 与 `App Regression` 相同的 PR 与推送 | `macos-26`，10 分钟；`scripts/check-app-icon.sh` 用 actool 为 macOS 12+ 与 iOS 15+ 编译 `AppIcon.icon`，检查浅色、深色、着色分层图标与旧系统回退图；目前不是必需检查 |
 | `Upstream Coordinator Tests` | main/develop/release/hotfix 中修改协调器源码、配置、测试或其 workflow 的 PR/推送；周检；手动运行 | `ubuntu-24.04`，5 分钟；临时 Git 仓库与假 GitHub API 测试，并验证公开 Checks API 的读权限 |
 | 上游检测 → 准备 → 发布 | **仅 `main`** 的周一 09:17（UTC+8）或手动运行 | 检测/发布用 Ubuntu；有候选才用 `macos-15` 验证；写令牌仅位于独立发布 job |
 
-所有 Runner 继续使用 GitHub 托管环境。产品部署下限和依赖 revision 由应用工程管理。当前常规回归已包含完整 macOS 验证构建，并非最初迁移时的纯脚本检查；没有建立模拟器矩阵。
+所有 Runner 继续使用 GitHub 托管环境。产品部署下限和依赖 revision 由应用工程管理。当前常规回归已包含完整 macOS 验证构建与 iOS Simulator 编译（含分享扩展，#353），并非最初迁移时的纯脚本检查；iOS 只编译、不安装或运行，没有建立模拟器矩阵。
 
 App 图标是 Icon Composer 文件 `OpenCCman/AppIcon.icon`（见 [App 图标](APP_ICON.md)）。Xcode 26.3 的 actool 只能在 macOS 26 及以上的主机上编译它，在 macOS 15 上渲染进程会崩溃（`AssetCatalogAgent-AssetRuntime` 关闭连接）。因此所有构建完整 App 的任务在 checkout 后检查主机版本，低于 26 时通过 `XCODE_XCCONFIG_FILE` 加载 `scripts/without-app-icon.xcconfig`，在不含图标的情况下构建：`App Regression` 的验证构建、iOS Simulator 验证构建、窗口生命周期、编辑器对比、Services 验证与性能基线。这些产物没有 App 图标，其余行为不变；图标本身由 `App icon` 任务在 macOS 26 上检查。普通 PR 仍在 macOS 15 上运行。
 
@@ -76,7 +76,7 @@ App 和 iOS 分享扩展（`OpenCCmanTextAction`，#29）的 Bundle ID 都由项
 
 当前 develop 的 `workflow_dispatch` 提供：
 
-- `build_ios_validation`：用配置的 Xcode 26.3 构建未签名 arm64 iOS Simulator 应用，不自动运行设备验收；此选项不会关闭普通 App Regression。
+- `build_ios_validation`：用配置的 Xcode 26.3 构建未签名 arm64 iOS Simulator 应用并上传为 artifact，不自动运行设备验收；此选项不会关闭普通 App Regression。普通 App Regression 已用相同参数编译 iOS 目标，此选项只在需要可安装的模拟器包时使用。
 - `diagnose_window_lifetime`：在 macOS 15 顺序运行两个最小 WindowGroup 变体。可配合 `observe_window_hosts` 记录弱窗口/初始宿主；后者单独勾选不启动诊断。
 - `diagnose_editor_anchor`：运行固定 macOS 15 编辑器锚点诊断。
 
