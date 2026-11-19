@@ -8,18 +8,22 @@ A native Chinese text conversion app for iPhone, iPad and Mac, powered by [OpenC
 
 [![Download on the App Store](assets/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg)](https://apps.apple.com/app/id6474449401)
 
-## OpenCCman 2.2
+## OpenCCman 2.3
 
-- Choose from four common presets: Simplified Chinese, OpenCC Traditional, Taiwan Standard with Taiwan idioms, and Hong Kong Traditional. Advanced character and regional wording options remain available. Simplified output is not a complete reverse conversion of Taiwan-specific vocabulary.
+- Show Differences highlights paired changes after conversion with Previous/Next navigation. It is off by default, invalidates when the source or settings change, and skips documents above its calculation limits. Copy, share and export stay plain text.
+- On iPhone and iPad, the free Convert Chinese Text action in the Share sheet converts up to 10 MiB without using the daily allowance.
+- The Mac global shortcut regression in 2.1/2.2 is fixed: converting a selection pastes it back without opening the main window, with checks to cancel if the app, input, clipboard or selection changes. Terminals open source and result instead.
+
+- Choose from four common presets: Simplified Chinese, OpenCC Traditional, Taiwan Standard with Taiwan idioms, and Hong Kong Traditional. Advanced character and regional wording options remain available. For Simplified output, choose OpenCC, Taiwan or Hong Kong as the source standard; Taiwan and Hong Kong sources can also convert regional phrases.
 - Read source and result side by side or stacked on Mac and iPad. Each window keeps its layout preference, while narrow windows temporarily stack the panes. The iPhone workspace follows the window size, so wide windows can show both panes side by side, and uses a compact Convert action to leave more room for text.
 - On Mac, use customizable global shortcuts to convert selected text in another app and replace it in an editable field, or open the selection in OpenCCman. Compatible apps can also use macOS Services. Replacement requires Accessibility permission (called Device Control and Data Access on macOS 27) and support from the source app.
-- Import or drop one UTF-8 TXT file up to 10 MiB, including files with a BOM; export the latest successful result as UTF-8 without a BOM. Line endings, blank lines and Unicode text are preserved. On Mac, Pro can convert one UTF-8 TXT over 10 MiB and up to 1 GiB directly to a file, with progress and cancellation while preserving the editor draft. On iPhone and iPad, Pro can convert one UTF-8 TXT over 10 MiB and up to 100 MiB directly to a file chosen in the save panel; conversion runs while the app is open and stops safely in the background. Drag and drop and the editor remain limited to 10 MiB on every device. Batch conversion and Big5/GBK decoding are not supported.
+- Import or drop one UTF-8 TXT file up to 10 MiB, including files with a BOM; export the latest successful result as UTF-8 without a BOM. Line endings, blank lines and Unicode text are preserved. On Mac, Pro can convert one UTF-8 TXT over 10 MiB and up to 1 GiB directly to a file, with progress and cancellation while preserving the editor draft. On iPhone and iPad, Pro can convert one UTF-8 TXT over 10 MiB and up to 100 MiB directly to a file chosen in the save panel; conversion runs while the app is open and stops safely in the background. The editor remains limited to 10 MiB. Mac Pro can batch-convert up to 100 UTF-8 TXT files, each up to 1 GiB, from File › Batch Convert TXT Files… (⌘⇧O) or by dropping two or more files. Originals are kept and name clashes are numbered. iPhone/iPad still handle one file at a time. Big5/GBK decoding is not supported.
 - Automate text conversion with the free Shortcuts action on iOS/iPadOS 16+ and macOS 13+: four presets, up to 10 MiB of UTF-8 text, without consuming homepage conversions.
 - Start with an empty workspace or insert an example. Clear Source asks for confirmation before clearing the source and result.
 - Cancel a conversion or import without letting a late result replace the current text. Cancellation does not forcibly interrupt native conversion already in progress.
 - Use OpenCCman free for 12 successful homepage conversions per day. Lifetime Pro removes that limit and in-app recommendations; existing lifetime purchases remain valid. Importing, exporting and changing presets do not use the daily allowance.
 
-OpenCCman 2.2 requires **iOS/iPadOS 15 or macOS 12**. Optional Launch at Login is available on macOS 13 or later. See the [2.2 release notes](https://github.com/gewill/OpenCCman/releases/tag/v2.2), [changelog](CHANGELOG.md#22---2026-11-01) and [release record](docs/release/launch-2.2-20261101.md) for technical changes and validation limits.
+OpenCCman 2.3 requires **iOS/iPadOS 15 or macOS 12**. Optional Launch at Login is available on macOS 13 or later. See the [2.3 release notes](https://github.com/gewill/OpenCCman/releases/tag/v2.3), [changelog](CHANGELOG.md#23---2026-11-19) and [release record](docs/release/launch-2.3-20261119.md) for technical changes and validation limits.
 
 ## Development
 
