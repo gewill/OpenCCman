@@ -13,7 +13,31 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 ## [Unreleased]
 
-Changes not yet assigned to a published version.
+### Added
+
+- Choose a conversion by source and target standard, as on the OpenCC web
+  converter: Simplified Chinese, OpenCC Traditional, Taiwan Traditional and
+  Hong Kong Traditional. Swap exchanges the two and leaves the texts as they
+  are; the result notes the changed settings until the next conversion.
+  Conversions between OpenCC, Taiwan and Hong Kong Traditional are new
+  (`t2tw`, `t2hk`, `tw2t`, `hk2t`). Targets without an OpenCC configuration
+  are dimmed, and regional phrases are offered between Simplified Chinese and
+  Taiwan or Hong Kong Traditional
+  ([#305](https://github.com/gewill/OpenCCman/issues/305)).
+- Settings › Show OpenCC Configuration Names shows the configuration, such as
+  `s2twp`, under the conversion options. It is off by default.
+
+### Changed
+
+- Saved conversion settings carry over unchanged, except OpenCC Traditional
+  with Taiwan Idiom, which becomes Taiwan Traditional with Taiwan phrases
+  (`s2twp`): the phrases are the same, and a few variant characters differ.
+  What's New explains the change.
+- On iPhone, the conversion settings card names a choice that is not a
+  preset, such as Taiwan Traditional → Simplified Chinese · Taiwan Idiom,
+  instead of Custom.
+- On iPadOS 18 and later, the conversion settings sheet is page-sized, so
+  every option fits in portrait.
 
 ## [2.3] - 2026-11-19
 
