@@ -1,6 +1,25 @@
 #if os(macOS)
 import AppKit
 
+struct PendingWindowNotification {
+  let name: Notification.Name
+  let userInfo: [AnyHashable: Any]?
+  let windowID: ObjectIdentifier?
+
+  static func take(for window: NSWindow, from pending: inout Self?) -> Self? {
+    guard let request = pending, request.windowID == nil || request.windowID == ObjectIdentifier(window) else {
+      return nil
+    }
+    pending = nil
+    return request
+  }
+
+  static func discard(boundTo window: NSWindow, from pending: inout Self?) {
+    if pending?.windowID == ObjectIdentifier(window) { pending = nil }
+  }
+}
+
+
 /// Coalesces external entry requests until SwiftUI has actually bound a window.
 /// A successful Launch Services callback means the process opened, not that its
 /// WindowGroup is ready to consume a notification.

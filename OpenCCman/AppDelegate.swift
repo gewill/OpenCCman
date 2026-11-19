@@ -38,12 +38,6 @@
     private static let windowReopener = MainWindowReopenController()
     private static var pendingWindowNotification: PendingWindowNotification?
 
-    private struct PendingWindowNotification {
-      let name: Notification.Name
-      let userInfo: [AnyHashable: Any]?
-      let windowID: ObjectIdentifier?
-    }
-
     func applicationDidFinishLaunching(_ notification: Notification) {
       // Register the text conversion service
       NSApp.servicesProvider = TextConversionService.shared
@@ -131,9 +125,7 @@
     @objc private func windowWillClose(_ notification: Notification) {
       guard let window = notification.object as? NSWindow else { return }
       Self.readyWindows.remove(window)
-      if Self.pendingWindowNotification?.windowID == ObjectIdentifier(window) {
-        Self.pendingWindowNotification = nil
-      }
+      PendingWindowNotification.discard(boundTo: window, from: &Self.pendingWindowNotification)
     }
 
     @discardableResult
@@ -184,9 +176,7 @@
         guard let window, NSApp.windows.contains(where: { $0 === window }) else { return }
         readyWindows.add(window)
         windowReopener.windowBecameReady()
-        guard let pending = pendingWindowNotification,
-              pending.windowID == nil || pending.windowID == ObjectIdentifier(window) else { return }
-        pendingWindowNotification = nil
+        guard let pending = PendingWindowNotification.take(for: window, from: &pendingWindowNotification) else { return }
         window.orderFrontRegardless()
         NotificationCenter.default.post(name: pending.name, object: window, userInfo: pending.userInfo)
       }
