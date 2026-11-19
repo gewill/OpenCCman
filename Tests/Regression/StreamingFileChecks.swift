@@ -10,12 +10,12 @@ private func checkVolumeExport(in volume: URL, staging: URL) async throws {
   let input = staging.appendingPathComponent("volume-source.txt")
   let body = "鼠标里面的硅二极管坏了。\r\n"
   try Data(body.utf8).write(to: input)
-  let expected = try ChineseConversionService.convertSynchronously(body, options: .traditionalize)
+  let expected = try ChineseConversionService.convertSynchronously(body, configuration: .s2t)
   for (name, replacing, exists) in [("batch.txt", false, false), ("new.txt", true, false), ("old.txt", true, true)] {
     let output = directory.appendingPathComponent(name)
     if exists { try Data("old".utf8).write(to: output) }
     _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input),
-      destination: output, options: .traditionalize, replacingExisting: replacing)
+      destination: output, configuration: .s2t, replacingExisting: replacing)
     let actual = try Data(contentsOf: output)
     precondition(actual == Data(expected.utf8))
   }
@@ -23,7 +23,7 @@ private func checkVolumeExport(in volume: URL, staging: URL) async throws {
   let sentinel = Data("someone else".utf8)
   do {
     _ = try await StreamingTextFileService.convert(source: OpenedTextFile(url: input),
-      destination: collision, options: .traditionalize, replacingExisting: false,
+      destination: collision, configuration: .s2t, replacingExisting: false,
       hooks: .init(beforeCommit: { try sentinel.write(to: collision) }))
     preconditionFailure("A competing file must survive")
   } catch StreamingTextFileService.FileError.destinationChanged {}
