@@ -1,3 +1,4 @@
+#if os(macOS)
 import AppKit
 
 /// Coalesces external entry requests until SwiftUI has actually bound a window.
@@ -30,3 +31,4 @@ final class MainWindowReopenController {
     pendingID = nil
   }
 }
+#endif
