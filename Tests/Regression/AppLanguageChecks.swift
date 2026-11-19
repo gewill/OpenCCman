@@ -21,6 +21,12 @@ enum AppLanguageChecks {
       return
     }
 
+    for (choice, path) in [(LocaleConstants.en, "en"), (.zh_Hans, "zh-Hans"), (.zh_Hant, "zh-Hant"),
+                           (.system, LocaleConstants.systemIdentifier.replacingOccurrences(of: "_", with: "-"))] {
+      precondition(["en", "zh-Hans", "zh-Hant"].contains(path))
+      precondition(choice.helpUrl == "https://openccman.gewill.org/\(path)/support.html")
+      precondition(choice.privacyUrl == "https://openccman.gewill.org/\(path)/privacy.html")
+    }
     checkLanguageTags()
     checkAppleLanguagesSync()
     checkLegacySelectionSurvives()
