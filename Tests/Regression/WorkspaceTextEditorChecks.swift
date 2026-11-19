@@ -172,6 +172,7 @@ enum WorkspaceTextEditorChecks {
         checkProductionViewport(mebibytes: mebibytes, editable: editable)
       }
     }
+    checkLiteralEquality()
     checkKeystrokeEcho(mebibytes: 10)
     checkExternalReplacement(mebibytes: 1)
     // The intervening RunLoop turns also drain the hosted editor's deferred
@@ -331,6 +332,35 @@ enum WorkspaceTextEditorChecks {
     precondition(!editor.undoManager!.canUndo)
     record(["scenario": "production-tail-navigation-and-replacement", "MiB": mebibytes, "bytes": original.utf8.count,
             "editable": editable, "passed": true])
+  }
+
+  /// Each shortcut in `hasSameUTF8` must give the byte-exact answer, in both
+  /// directions: the same value, small strings, identical bytes in new
+  /// storage, equal-length differences and AppKit's bridged snapshots.
+  @MainActor private static func checkLiteralEquality() {
+    let large = String(repeating: "中文 e\u{301}", count: 50_000)
+    let pairs: [(String, String, Bool)] = [
+      ("", "", true), ("", "a", false),
+      ("e\u{301}x", "xe\u{301}", false),
+      ("e\u{301}\u{323}", "e\u{323}\u{301}", false),
+      (large, String(decoding: Array(large.utf8), as: UTF8.self), true),
+      (large, large.replacingOccurrences(of: "文", with: "字"), false),
+      (large, large + "x", false),
+    ]
+    for (a, b, expected) in pairs {
+      precondition(a.hasSameUTF8(as: b) == expected && b.hasSameUTF8(as: a) == expected)
+    }
+    precondition(large.hasSameUTF8(as: large))
+    let editor = NSTextView()
+    editor.string = large
+    let bridged = editor.string
+    precondition(bridged.hasSameUTF8(as: bridged) && bridged.hasSameUTF8(as: large) && large.hasSameUTF8(as: bridged))
+    editor.setSelectedRange(NSRange(location: 1, length: 1))
+    editor.insertText("字", replacementRange: NSRange(location: NSNotFound, length: 0))
+    let replaced = editor.string
+    precondition(replaced.utf16.count == bridged.utf16.count)
+    precondition(!replaced.hasSameUTF8(as: bridged) && !bridged.hasSameUTF8(as: replaced) && !replaced.hasSameUTF8(as: large))
+    print("PASS: byte-exact equality for the same value, small, large, bridged, equal-length and canonically equivalent text")
   }
 
   /// A native keystroke publishes the editor's own string. The model's change
