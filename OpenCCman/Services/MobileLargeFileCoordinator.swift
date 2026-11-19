@@ -279,6 +279,10 @@ final class MobileLargeFileCoordinator: ObservableObject {
   func dismissPresentation() {
     guard task == nil, !isWorking, !isAwaitingConfirmation, phase != .exporting else { return }
     presentationOwner = nil
+    // A stopped task leaves nothing to save or retry; Done is its only action.
+    // Forget it as a cancelled confirmation does, so a later scene activation
+    // does not present it again and What's New is no longer held back.
+    if phase == .interrupted { session = nil }
   }
 
   /// Only after the UI confirms deleting private jobs; editor files are outside
