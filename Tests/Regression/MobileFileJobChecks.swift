@@ -12,7 +12,7 @@ func checkMobileFileJobs() async throws {
   let text = "头发干杯显存鼠标\0👨‍👩‍👧‍👦e\u{301}\r\n\n"
   let bytes = Data([0xef, 0xbb, 0xbf]) + Data(text.utf8)
   try bytes.write(to: source)
-  let expected = Data(try ChineseConversionService.convertSynchronously(text, options: .traditionalize).utf8)
+  let expected = Data(try ChineseConversionService.convertSynchronously(text, configuration: .s2t).utf8)
   let gate = LargeFileProtectionGate(available: true)
   func root() -> URL { directory.appendingPathComponent(UUID().uuidString) }
   func service(_ url: URL, hooks: MobileLargeFileService.Hooks = .init()) -> MobileLargeFileService {
@@ -23,16 +23,16 @@ func checkMobileFileJobs() async throws {
   let store = root()
   let first = service(store)
   try requireMobileJob(await first.recover() == .empty)
-  let ready = try await first.convert(source: source, options: .traditionalize)
+  let ready = try await first.convert(source: source, configuration: .s2t)
   try requireMobileJob(Data(contentsOf: ready.url) == expected)
   precondition(ready.exportFilename == "稿件-converted.txt")
   precondition(ready.url.lastPathComponent == ready.exportFilename)
-  precondition(ready.optionsRawValue == ChineseConverter.Options.traditionalize.rawValue)
+  precondition(ready.optionsRawValue == ChineseConverter.Configuration.s2t.recordCode && ready.optionsRawValue == 1)
   try requireMobileJob(Data(contentsOf: source) == bytes)
   precondition(!fm.fileExists(atPath: ready.url.deletingLastPathComponent().appendingPathComponent("input.txt").path))
   try requireMobileJob(await first.exportURL(for: ready.id) == ready.url)
   do {
-    _ = try await first.convert(source: source, options: .simplify)
+    _ = try await first.convert(source: source, configuration: .t2s)
     preconditionFailure("An unexported result reserves the only job slot")
   } catch MobileLargeFileService.JobError.pendingResult {}
   do { try await first.discard(UUID()); preconditionFailure("Late callbacks must not delete the current result") }
@@ -46,25 +46,27 @@ func checkMobileFileJobs() async throws {
   try await restarted.discard(ready.id)
   try requireMobileJob(empty(store))
 
-  // Hong Kong phrases (#304) use an app-only option bit; a recovered job keeps it.
-  let hongKong: ChineseConverter.Options = [.traditionalize, .hkStandard, .hkIdiom]
-  let hongKongStore = root()
-  let hongKongReady = try await service(hongKongStore).convert(source: source, options: hongKong)
-  let hongKongText = try ChineseConversionService.convertSynchronously(text, options: hongKong)
-  precondition(hongKongText.contains("滑鼠"), "s2hkp turns 鼠标 into the Hong Kong phrase")
-  try requireMobileJob(Data(contentsOf: hongKongReady.url) == Data(hongKongText.utf8))
-  precondition(hongKongReady.optionsRawValue == hongKong.rawValue)
-  let hongKongRestarted = service(hongKongStore)
-  try requireMobileJob(await hongKongRestarted.recover() == .ready(hongKongReady), "A journal with Hong Kong phrases recovers")
-  try await hongKongRestarted.discard(hongKongReady.id)
-  try requireMobileJob(empty(hongKongStore))
+  // Hong Kong phrases (#304) keep the record code earlier versions wrote; a
+  // configuration added with #305 gets a new code. Both recover after a restart.
+  for (configuration, check) in [(ChineseConverter.Configuration.s2hkp, "滑鼠"), (.t2hk, "")] {
+    let store = root()
+    let ready = try await service(store).convert(source: source, configuration: configuration)
+    let converted = try ChineseConversionService.convertSynchronously(text, configuration: configuration)
+    precondition(check.isEmpty || converted.contains(check), "s2hkp turns 鼠标 into the Hong Kong phrase")
+    try requireMobileJob(Data(contentsOf: ready.url) == Data(converted.utf8))
+    precondition(ready.optionsRawValue == configuration.recordCode)
+    let restarted = service(store)
+    try requireMobileJob(await restarted.recover() == .ready(ready), "A journal for \(configuration) recovers")
+    try await restarted.discard(ready.id)
+    try requireMobileJob(empty(store))
+  }
 
   let stages: [MobileLargeFileService.Stage] = [.snapshotRead, .snapshotWrite, .snapshotSync,
     .conversionRead, .conversionWrite, .outputSync, .beforeCommit, .afterOutputRename, .beforeJournalRename]
   for stage in stages {
     let store = root()
     let instance = service(store, hooks: .init(boundary: { if $0 == stage { throw POSIXError(.ENOSPC) } }))
-    do { _ = try await instance.convert(source: source, options: .traditionalize); preconditionFailure("Injected I/O must fail") }
+    do { _ = try await instance.convert(source: source, configuration: .s2t); preconditionFailure("Injected I/O must fail") }
     catch let error as POSIXError { precondition(error.code == .ENOSPC) }
     try requireMobileJob(empty(store), "No partial or ready record survives a failed job")
     try requireMobileJob(Data(contentsOf: source) == bytes)
@@ -73,7 +75,7 @@ func checkMobileFileJobs() async throws {
     let store = root()
     let barrier = MobileJobBarrier()
     let instance = service(store, hooks: .init(boundary: { if $0 == stage { barrier.pauseOnce() } }))
-    let task = Task { try await instance.convert(source: source, options: .traditionalize) }
+    let task = Task { try await instance.convert(source: source, configuration: .s2t) }
     try await barrier.waitUntilPaused()
     task.cancel()
     barrier.resume()
@@ -86,7 +88,7 @@ func checkMobileFileJobs() async throws {
   let commitStore = root()
   let commitBarrier = MobileJobBarrier()
   let commitService = service(commitStore, hooks: .init(boundary: { if $0 == .afterOutputRename { commitBarrier.pauseOnce() } }))
-  let committedTask = Task { try await commitService.convert(source: source, options: .traditionalize) }
+  let committedTask = Task { try await commitService.convert(source: source, configuration: .s2t) }
   try await commitBarrier.waitUntilPaused()
   let cancelFinished = DispatchSemaphore(value: 0)
   DispatchQueue.global().async { committedTask.cancel(); cancelFinished.signal() }
@@ -98,19 +100,19 @@ func checkMobileFileJobs() async throws {
 
   let noSpace = root()
   do {
-    _ = try await service(noSpace, hooks: .init(availableBytes: { _ in 0 })).convert(source: source, options: .simplify)
+    _ = try await service(noSpace, hooks: .init(availableBytes: { _ in 0 })).convert(source: source, configuration: .t2s)
     preconditionFailure("Known insufficient space is rejected")
   } catch MobileLargeFileService.JobError.insufficientSpace {}
   try requireMobileJob(empty(noSpace))
   let unknown = service(root(), hooks: .init(availableBytes: { _ in nil }))
-  let unknownReady = try await unknown.convert(source: source, options: .traditionalize)
+  let unknownReady = try await unknown.convert(source: source, configuration: .s2t)
   try await unknown.discard(unknownReady.id)
 
   let changedStore = root()
   do {
     _ = try await service(changedStore, hooks: .init(boundary: {
       if $0 == .snapshotWrite { try Data("changed".utf8).write(to: source) }
-    })).convert(source: source, options: .traditionalize)
+    })).convert(source: source, configuration: .s2t)
     preconditionFailure("A changing source cannot publish a snapshot")
   } catch TextFileService.FileError.sourceChanged {}
   try requireMobileJob(empty(changedStore))
@@ -121,7 +123,7 @@ func checkMobileFileJobs() async throws {
     _ = try await service(cleanupStore, hooks: .init(boundary: {
       if $0 == .snapshotRead { throw POSIXError(.EIO) }
       if $0 == .cleanup { throw POSIXError(.EACCES) }
-    })).convert(source: source, options: .traditionalize)
+    })).convert(source: source, configuration: .s2t)
     preconditionFailure("Cleanup errors must remain observable")
   } catch let error as MobileLargeFileService.CleanupError {
     precondition((error.primary as? POSIXError)?.code == .EIO)
@@ -135,7 +137,7 @@ func checkMobileFileJobs() async throws {
   do {
     _ = try await service(protectedStore, hooks: .init(boundary: {
       if $0 == .conversionRead { gate.setAvailable(false) }
-    })).convert(source: source, options: .traditionalize)
+    })).convert(source: source, configuration: .s2t)
     preconditionFailure("Protection loss must stop the worker")
   } catch let error as MobileLargeFileService.CleanupError {
     guard case MobileLargeFileService.JobError.protectedDataUnavailable = error.primary else { throw error }
@@ -149,7 +151,7 @@ func checkMobileFileJobs() async throws {
   let inputCleanup = service(inputCleanupStore, hooks: .init(boundary: {
     if $0 == .inputCleanup { throw POSIXError(.EACCES) }
   }))
-  let pendingCleanup = try await inputCleanup.convert(source: source, options: .traditionalize)
+  let pendingCleanup = try await inputCleanup.convert(source: source, configuration: .s2t)
   precondition(pendingCleanup.cleanupPending)
   guard case .ready(let retriedCleanup) = try await service(inputCleanupStore).recover() else {
     preconditionFailure("A committed result survives failed input cleanup")
@@ -163,15 +165,15 @@ func checkMobileFileJobs() async throws {
   try sparse.truncate(atOffset: FileConversionPolicy.mobileMaximumBytes + 1)
   try sparse.close()
   let oversizedStore = root()
-  do { _ = try await service(oversizedStore).convert(source: oversized, options: .simplify); preconditionFailure("100 MiB + 1 is rejected before copy") }
+  do { _ = try await service(oversizedStore).convert(source: oversized, configuration: .t2s); preconditionFailure("100 MiB + 1 is rejected before copy") }
   catch MobileLargeFileService.JobError.inputTooLarge {}
   try requireMobileJob(empty(oversizedStore))
 
   let serialStore = root()
   let serialService = service(serialStore)
   // Two concurrently submitted jobs share the same queue and persistent slot.
-  async let a = serialService.convert(source: source, options: .simplify)
-  async let b = serialService.convert(source: source, options: .traditionalize)
+  async let a = serialService.convert(source: source, configuration: .t2s)
+  async let b = serialService.convert(source: source, configuration: .s2t)
   var successes = 0
   do { _ = try await a; successes += 1 } catch MobileLargeFileService.JobError.pendingResult {}
   do { _ = try await b; successes += 1 } catch MobileLargeFileService.JobError.pendingResult {}
@@ -197,7 +199,7 @@ func checkMobileFileJobs() async throws {
 
   // Same-length corruption is detected by streaming SHA256, not just size.
   let damagedStore = root()
-  let damaged = try await service(damagedStore).convert(source: source, options: .traditionalize)
+  let damaged = try await service(damagedStore).convert(source: source, configuration: .s2t)
   try Data(repeating: 0x61, count: Int(damaged.outputBytes)).write(to: damaged.url)
   do { _ = try await service(damagedStore).recover(); preconditionFailure("Corrupt ready output cannot be exported") }
   catch MobileLargeFileService.JobError.invalidJournal {}
@@ -232,7 +234,7 @@ private func checkMobileExperimentalJobs() async throws {
     let root = directory.appendingPathComponent(UUID().uuidString)
     let service = store(root, hooks: .init(boundary: { if $0 == .snapshotRead { throw Probe.reachedRead } },
                                           availableBytes: { _ in Int64.max }))
-    do { _ = try await service.convert(source: source, options: .traditionalize, capacity: .experimental); preconditionFailure("Read probe must stop") }
+    do { _ = try await service.convert(source: source, configuration: .s2t, capacity: .experimental); preconditionFailure("Read probe must stop") }
     catch Probe.reachedRead {}
     try requireMobileJob(fm.contentsOfDirectory(atPath: root.path).isEmpty)
     try requireMobileJob(TextFileFingerprint.read(url: source)?.size == size)
@@ -241,7 +243,7 @@ private func checkMobileExperimentalJobs() async throws {
   let tooLarge = directory.appendingPathComponent("too-large")
   do {
     _ = try await store(tooLarge, hooks: .init(boundary: { if $0 == .snapshotRead { preconditionFailure("Must reject before reading") } }))
-      .convert(source: source, options: .traditionalize, capacity: .experimental)
+      .convert(source: source, configuration: .s2t, capacity: .experimental)
     preconditionFailure("The experimental upper bound is finite")
   } catch MobileLargeFileService.JobError.experimentalInputTooLarge {}
   try requireMobileJob(fm.contentsOfDirectory(atPath: tooLarge.path).isEmpty)
@@ -250,10 +252,10 @@ private func checkMobileExperimentalJobs() async throws {
   try handle.truncate(atOffset: FileConversionPolicy.mobileMaximumBytes + 1)
   let root = directory.appendingPathComponent("roundtrip")
   let instance = store(root)
-  let ready = try await instance.convert(source: source, options: .traditionalize, capacity: .experimental)
+  let ready = try await instance.convert(source: source, configuration: .s2t, capacity: .experimental)
   precondition(ready.capacity == .experimental)
   let original = try String(contentsOf: source, encoding: .utf8)
-  let oracle = Data(try ChineseConversionService.convertSynchronously(original, options: .traditionalize).utf8)
+  let oracle = Data(try ChineseConversionService.convertSynchronously(original, configuration: .s2t).utf8)
   try requireMobileJob(Data(contentsOf: ready.url) == oracle, "Compare the entire output with independent whole-text conversion")
   let restored = store(root)
   try requireMobileJob(await restored.recover() == .ready(ready))
@@ -270,7 +272,7 @@ private func checkMobileExperimentalJobs() async throws {
     do {
       _ = try await store(root, hooks: .init(boundary: { if $0 == stage { budget.exhaust() } },
                                            availableBytes: { _ in budget.read() }))
-        .convert(source: source, options: .traditionalize, capacity: .experimental)
+        .convert(source: source, configuration: .s2t, capacity: .experimental)
       preconditionFailure("Disk space lost during work must be detected")
     } catch MobileLargeFileService.JobError.insufficientSpace {}
     try requireMobileJob(fm.contentsOfDirectory(atPath: root.path).isEmpty)
@@ -279,14 +281,14 @@ private func checkMobileExperimentalJobs() async throws {
   // Legacy results still restore, but a missing/unknown policy never grants a
   // larger allowance, and corrupt output lengths cannot overflow export math.
   let journalRoot = directory.appendingPathComponent("journal")
-  let smallReady = try await store(journalRoot).convert(source: source, options: .traditionalize)
+  let smallReady = try await store(journalRoot).convert(source: source, configuration: .s2t)
   let journalURL = smallReady.url.deletingLastPathComponent().appendingPathComponent("ready.json")
   let legacy = try JSONSerialization.jsonObject(with: Data(contentsOf: journalURL)) as! [String: Any]
   precondition(legacy["schema"] as? Int == 1 && legacy["capacity"] == nil, "Standard results remain backward-readable")
   try JSONSerialization.data(withJSONObject: legacy).write(to: journalURL)
   try requireMobileJob(await store(journalRoot).recover() == .ready(smallReady))
   let experimentalRoot = directory.appendingPathComponent("experimental-journal")
-  let experimentalReady = try await store(experimentalRoot).convert(source: source, options: .traditionalize, capacity: .experimental)
+  let experimentalReady = try await store(experimentalRoot).convert(source: source, configuration: .s2t, capacity: .experimental)
   let experimentalJournalURL = experimentalReady.url.deletingLastPathComponent().appendingPathComponent("ready.json")
   let valid = try JSONSerialization.jsonObject(with: Data(contentsOf: experimentalJournalURL)) as! [String: Any]
   precondition(valid["schema"] as? Int == 2 && valid["capacity"] as? String == "experimental")

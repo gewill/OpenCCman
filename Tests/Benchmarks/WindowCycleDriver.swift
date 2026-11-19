@@ -140,9 +140,7 @@ extension NativeWindowLifecycleAudit {
       "source": model.inputText, "result": model.resultText,
       "converting": model.isLoading, "importing": model.isImporting,
       "quota": appDefaults[\.testNumbersPerDay],
-      "target": String(describing: model.targetOptions),
-      "variant": String(describing: model.variantOptions),
-      "region": String(describing: model.regionOptions),
+      "configuration": model.configuration.official.rawValue,
     ]
     let data = try! JSONSerialization.data(withJSONObject: state, options: [.sortedKeys])
     return SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()

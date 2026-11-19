@@ -88,6 +88,17 @@
 "preset_taiwan" = "Taiwan · Standard + Idioms";
 "preset_hong_kong" = "Hong Kong · Traditional";
 "preset_custom" = "Custom";
+
+// Source × target conversion (#305)
+"standard_opencc_traditional" = "OpenCC Traditional";
+"standard_taiwan" = "Taiwan Traditional";
+"standard_hong_kong" = "Hong Kong Traditional";
+"conversion_source" = "From";
+"conversion_target" = "To";
+"conversion_swap" = "Swap";
+"conversion_swap_accessibility" = "Swap From and To";
+"conversion_configuration_name" = "OpenCC configuration: %@";
+"show_conversion_configuration_name" = "Show OpenCC Configuration Names";
 "shortcut_convert_title" = "Convert Chinese Text";
 "shortcut_convert_short_title" = "Convert Chinese";
 "shortcut_convert_description" = "Convert text with OpenCCman and pass the result to the next Shortcuts action.";
@@ -117,6 +128,10 @@
 "whats_new_files_detail" = "Import or drop one UTF-8 TXT file up to 10 MiB, then export the converted result to a location you choose.";
 "whats_new_reliability_title" = "Stay in control";
 "whats_new_reliability_detail" = "Cancel a conversion to stop its result from appearing. Import errors keep your draft, and unfinished conversions do not use your daily allowance.";
+"whats_new_source_target_title" = "Choose From and To";
+"whats_new_source_target_detail" = "Like the OpenCC web converter, pick the standard of your text and the standard to convert to, and swap them in one tap. Conversions between OpenCC, Taiwan and Hong Kong Traditional are new.";
+"whats_new_taiwan_phrases_title" = "Taiwan Phrases Setting Updated";
+"whats_new_taiwan_phrases_detail" = "If you chose OpenCC Traditional with Taiwan Idiom, OpenCCman now converts to Taiwan Traditional with Taiwan phrases (s2twp). A few variant characters differ from before.";
 
 "On" = "On";
 

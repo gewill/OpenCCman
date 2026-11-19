@@ -454,7 +454,7 @@ class GlobalShortcutService: ObservableObject {
                 }
                 let result: String
                 do {
-                    result = try await ChineseConversionService.shared.convert(copy.text, options: ConversionConfiguration.saved.options)
+                    result = try await ChineseConversionService.shared.convert(copy.text, configuration: ConversionConfiguration.saved.official)
                 } catch {
                     report(.conversionFailed, near: source)
                     return

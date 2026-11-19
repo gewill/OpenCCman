@@ -43,7 +43,7 @@ func checkMobileCoordinator() async throws {
   try coordinator.start()
   await coordinator.waitUntilSettled()
   precondition(coordinator.phase == .ready && began == 1 && ended == 1)
-  precondition(coordinator.ready?.optionsRawValue == configuration.options.rawValue)
+  precondition(coordinator.ready?.optionsRawValue == configuration.official.recordCode)
   precondition(!coordinator.claimPresentation(otherOwner))
   coordinator.ownerDidClose(owner)
   precondition(coordinator.claimPresentation(otherOwner))

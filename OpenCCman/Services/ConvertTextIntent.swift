@@ -58,7 +58,7 @@ struct ConvertChineseTextIntent: AppIntent {
     guard text.utf8.count <= TextFileService.maximumBytes else {
       throw ShortcutConversionError.textTooLarge
     }
-    let result = try await ChineseConversionService.shared.convert(text, options: preset.configuration.options)
+    let result = try await ChineseConversionService.shared.convert(text, configuration: preset.configuration.official)
     return .result(value: result)
   }
 }

@@ -82,7 +82,7 @@ final class MacLargeFileCoordinator: ObservableObject {
   }
 
   typealias Operation = @Sendable (
-    OpenedTextFile, URL, ChineseConverter.Options, MacFileCapacity,
+    OpenedTextFile, URL, ChineseConverter.Configuration, MacFileCapacity,
     @escaping @Sendable (UInt64, UInt64) -> Void
   ) async throws -> StreamingTextFileService.Result
 
@@ -111,9 +111,9 @@ final class MacLargeFileCoordinator: ObservableObject {
        qualified: @escaping @MainActor () -> Bool = { MacLargeFileCoordinator.isQualified },
        otherTaskBusy: @escaping @MainActor () -> Bool = { MacBatchConversionCoordinator.shared.isBusy },
        reportError: @escaping @MainActor (Error) -> Void = { NSApp.presentError($0) },
-       operation: @escaping Operation = { source, destination, options, capacity, progress in
+       operation: @escaping Operation = { source, destination, configuration, capacity, progress in
     try await StreamingTextFileService.convert(
-      source: source, destination: destination, options: options, capacity: capacity, progress: progress)
+      source: source, destination: destination, configuration: configuration, capacity: capacity, progress: progress)
   }) {
     self.operation = operation
     self.reportError = reportError
@@ -247,7 +247,7 @@ final class MacLargeFileCoordinator: ObservableObject {
             try await Task.sleep(nanoseconds: 3_000_000_000)
           }
         #endif
-        let result = try await operation(source, destination, session.configuration.options, session.capacity) { [weak self] input, total in
+        let result = try await operation(source, destination, session.configuration.official, session.capacity) { [weak self] input, total in
           guard throttle.shouldDeliver(processed: input, total: total) else { return }
           Task { @MainActor in
             guard let self, self.session?.id == session.id, self.phase == .converting else { return }

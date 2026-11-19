@@ -183,8 +183,16 @@ struct WorkspaceSurface: View {
           } label: {
             VStack(alignment: .leading, spacing: 6) {
               Label("workspace_settings", systemImage: "slider.horizontal.3").appFont(.headline)
-              Text((viewModel.selectedPreset?.title ?? "preset_custom").localizedStringKey)
-                .appFont(.subheadline).fixedSize(horizontal: false, vertical: true)
+              // Most source × target choices are not presets (#305): name the choice
+              // itself rather than "Custom", since the settings are not on screen.
+              Group {
+                if let preset = viewModel.selectedPreset {
+                  Text(preset.title.localizedStringKey)
+                } else {
+                  ConversionSummary(configuration: viewModel.conversion)
+                }
+              }
+              .appFont(.subheadline).fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
           }
@@ -415,8 +423,24 @@ struct ConversionSettingsSheet: View {
         ToolbarItem(placement: .confirmationAction) { doneButton }
       }
       .appNavigation("workspace_settings", showsBack: false)
+      .modifier(TallSheetSizing())
     #endif
   }
+
+  #if os(iOS)
+  /// The swap row (#305) made the settings taller than an iPad form sheet in
+  /// portrait, cutting off Region Idiom. A page-sized sheet shows every row
+  /// again; iPhone sheets are unaffected, and earlier iPadOS versions scroll.
+  private struct TallSheetSizing: ViewModifier {
+    func body(content: Content) -> some View {
+      if #available(iOS 18.0, *) {
+        content.presentationSizing(.page)
+      } else {
+        content
+      }
+    }
+  }
+  #endif
 
   private var doneButton: some View {
     Button { windowState.showingConversionSettings = false } label: {

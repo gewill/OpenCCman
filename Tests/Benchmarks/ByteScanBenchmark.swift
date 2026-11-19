@@ -16,29 +16,25 @@ import OpenCC
   }
 
   // Conversion body from develop f8f40f2. Both paths share the unchanged cache.
-  @inline(never) private static func baseline(_ text: String, options: ChineseConverter.Options) throws -> String {
-    let converter = try ChineseConversionService.converter(options: options)
+  @inline(never) private static func baseline(_ text: String, options: ChineseConverter.Configuration) throws -> String {
+    let converter = try ChineseConversionService.converter(options)
     guard text.utf8.contains(0) else { return converter.convert(text) }
     return text.split(separator: "\0", omittingEmptySubsequences: false)
       .map { converter.convert(String($0)) }
       .joined(separator: "\0")
   }
 
-  @inline(never) private static func current(_ text: String, options: ChineseConverter.Options) throws -> String {
-    try ChineseConversionService.convertSynchronously(text, options: options)
+  @inline(never) private static func current(_ text: String, options: ChineseConverter.Configuration) throws -> String {
+    try ChineseConversionService.convertSynchronously(text, configuration: options)
   }
 
   static func main() throws {
     _ = NSApplication.shared
     let board = NSPasteboard.withUniqueName()
     defer { board.releaseGlobally() }
-    let modes: [(String, ChineseConverter.Options)] = [
-      ("s2t", .traditionalize), ("t2s", .simplify),
-      ("s2tw", [.traditionalize, .twStandard]),
-      ("s2twp", [.traditionalize, .twStandard, .twIdiom]),
-      ("s2hk", [.traditionalize, .hkStandard]),
-      ("legacy-s2t-tw-idiom", [.traditionalize, .twIdiom]),
-      ("legacy-s2hk-tw-idiom", [.traditionalize, .hkStandard, .twIdiom])
+    // The two legacy Taiwan-phrase combinations were retired with #305.
+    let modes: [(String, ChineseConverter.Configuration)] = [
+      ("s2t", .s2t), ("t2s", .t2s), ("s2tw", .s2tw), ("s2twp", .s2twp), ("s2hk", .s2hk), ("s2hkp", .s2hkp)
     ]
     emit(["event": "metadata", "protocol": 1,
           "os": ProcessInfo.processInfo.operatingSystemVersionString,
@@ -56,7 +52,7 @@ import OpenCC
       precondition(inputBytes.count == size)
       for (mode, options) in modes {
         // Prepare and validate references outside the measured interval.
-        let converter = try ChineseConversionService.converter(options: options)
+        let converter = try ChineseConversionService.converter(options)
         let expected = Data(converter.convert(text).utf8)
         precondition(expected != inputBytes, "Unchanged text must not pass a conversion fixture")
         let warmedBaseline = try baseline(text, options: options)

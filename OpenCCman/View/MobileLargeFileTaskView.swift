@@ -171,16 +171,14 @@ struct MobileLargeFileTaskView: View {
       .appNeumorphicButtonStyle(Capsule())
       .accessibilityIdentifier("mobile-file-delete")
   }
-  private func configuration(_ raw: Int) -> some View {
-    let options = ChineseConverter.Options(rawValue: raw)
-    return VStack(alignment: .leading, spacing: 4) {
-      Text(options.contains(.traditionalize) ? "Traditional Chinese" : "Simplified Chinese")
-      if options.contains(.traditionalize) {
-        Text(options.contains(.twStandard) ? "Taiwan Standard" : options.contains(.hkStandard) ? "HongKong Standard" : "OpenCC Standard")
-        if options.contains(.twIdiom) { Text("Taiwan Idiom") }
-        if options.contains(.hkIdiom) { Text("HongKong Idiom") }
-      }
-    }.appFont(.subheadline)
+  @ViewBuilder
+  private func configuration(_ code: Int) -> some View {
+    if let official = ChineseConverter.Configuration(recordCode: code),
+       let configuration = ConversionConfiguration(official: official) {
+      ConversionSummary(configuration: configuration)
+        .appFont(.subheadline)
+        .fixedSize(horizontal: false, vertical: true)
+    }
   }
   private var title: String {
     switch coordinator.phase {

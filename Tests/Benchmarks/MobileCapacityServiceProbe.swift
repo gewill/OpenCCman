@@ -11,7 +11,10 @@ import OpenCC
     }
     let root = URL(fileURLWithPath: a[5], isDirectory: true)
     let service = MobileLargeFileService(root: root, protection: .init(available: true))
-    let ready = try await service.convert(source: URL(fileURLWithPath: a[1]), options: .init(rawValue: raw))
+    guard let configuration = ChineseConverter.Configuration(recordCode: raw) else {
+      throw NSError(domain: "CapacityProbe.configuration", code: 1, userInfo: [NSLocalizedDescriptionKey: "unknown code \(raw)"])
+    }
+    let ready = try await service.convert(source: URL(fileURLWithPath: a[1]), configuration: configuration)
     guard ready.outputBytes == expectedBytes else {
       throw NSError(domain: "CapacityProbe.outputBytes", code: 1, userInfo: [NSLocalizedDescriptionKey: "actual=\(ready.outputBytes) expected=\(expectedBytes)"])
     }

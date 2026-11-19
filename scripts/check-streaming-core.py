@@ -20,6 +20,8 @@ SOURCES = [
     "OpenCCman/Services/TextFileService.swift",
     "OpenCCman/Services/StreamingConversionPump.swift",
     "OpenCCman/Services/FileConversionPolicy.swift",
+    # Record codes key the oracle rows (#305).
+    "OpenCCman/Model/ConversionConfiguration.swift",
 ]
 CHECKS = [
     "Tests/Regression/StreamingPumpChecks.swift",
@@ -116,15 +118,20 @@ final class StreamingCoreTests: XCTestCase {
     XCTAssertEqual(try StreamingPumpCapacityFixture.hash(source), report["input_sha256"] as? String)
     XCTAssertEqual(StreamingPumpCapacityFixture.byteCount, FileConversionPolicy.mobileMaximumBytes)
     XCTAssertEqual(TextFileService.maximumBytes, FileConversionPolicy.editorMaximumBytes)
-    XCTAssertEqual(rows.count, streamingPumpOptions.count)
-    for options in streamingPumpOptions {
-      let expected = try XCTUnwrap(rows.first { ($0["options"] as? Int) == options.rawValue })
+    // Rows are keyed by record code; a pinned oracle may predate configurations added
+    // with #305 and still list the retired combinations, which are skipped here.
+    let tested = streamingPumpConfigurations.filter { configuration in
+      rows.contains { ($0["options"] as? Int) == configuration.recordCode }
+    }
+    XCTAssertFalse(tested.isEmpty)
+    for options in tested {
+      let expected = try XCTUnwrap(rows.first { ($0["options"] as? Int) == options.recordCode })
       let result = try await runStreamingPump(source: source, destination: destination,
-        expectedBytes: StreamingPumpCapacityFixture.byteCount, options: options)
+        expectedBytes: StreamingPumpCapacityFixture.byteCount, configuration: options)
       XCTAssertEqual(result.inputBytes, StreamingPumpCapacityFixture.byteCount)
       XCTAssertEqual(result.outputBytes, (expected["output_bytes"] as? NSNumber)?.uint64Value)
       XCTAssertEqual(try StreamingPumpCapacityFixture.hash(destination), expected["output_sha256"] as? String)
-      print("PASS: 100 MiB shared pump, options=\\(options.rawValue), output=\\(result.outputBytes), full SHA256 matched Mac whole-text oracle")
+      print("PASS: 100 MiB shared pump, configuration=\\(options.rawValue), output=\\(result.outputBytes), full SHA256 matched Mac whole-text oracle")
     }
   }
 }

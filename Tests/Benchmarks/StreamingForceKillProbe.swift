@@ -31,7 +31,7 @@ import OpenCC
     _ = try await StreamingTextFileService.convert(
       source: source,
       destination: fixture.appendingPathComponent("converted.txt"),
-      options: .traditionalize,
+      configuration: .s2t,
       progress: { processed, _ in
         if phase == "middle", processed >= 1024 * 1024, !FileManager.default.fileExists(atPath: ready.path) {
           try! Data("middle".utf8).write(to: ready, options: .atomic)

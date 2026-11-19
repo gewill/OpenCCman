@@ -1,8 +1,31 @@
-import Foundation
+import AppKit
 
 @main
 struct MainWindowReopenChecks {
   @MainActor static func main() {
+    _ = NSApplication.shared
+    let editor = NSWindow(contentRect: .zero, styleMask: [.titled, .miniaturizable],
+                          backing: .buffered, defer: true)
+    let panel = NSPanel()
+    // Hidden and minimized editors may have neither key/main status nor
+    // canBecomeMain. Readiness is independent of those AppKit properties.
+    let selected = MainWindowReopenController.selectWindow(key: panel, main: nil,
+      windows: [panel, editor], isReady: { $0 === editor })
+    precondition(selected === editor)
+    precondition(MainWindowReopenController.selectWindow(key: nil, main: nil, windows: [panel],
+                                                         isReady: { _ in false }) == nil)
+    let name = Notification.Name("window-test")
+    let bound = PendingWindowNotification(name: name, userInfo: nil, windowID: ObjectIdentifier(editor))
+    var pending: PendingWindowNotification? = bound
+    precondition(PendingWindowNotification.take(for: panel, from: &pending) == nil)
+    PendingWindowNotification.discard(boundTo: panel, from: &pending)
+    precondition(PendingWindowNotification.take(for: editor, from: &pending)?.name == name)
+    pending = bound
+    PendingWindowNotification.discard(boundTo: editor, from: &pending)
+    precondition(pending == nil)
+    pending = PendingWindowNotification(name: name, userInfo: nil, windowID: nil)
+    precondition(PendingWindowNotification.take(for: panel, from: &pending)?.name == name)
+    precondition(PendingWindowNotification.take(for: editor, from: &pending) == nil)
     let controller = MainWindowReopenController()
     var completions: [MainWindowReopenController.Completion] = []
     var failures = 0

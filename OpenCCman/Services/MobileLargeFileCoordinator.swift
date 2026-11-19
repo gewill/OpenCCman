@@ -14,6 +14,7 @@ final class MobileLargeFileCoordinator: ObservableObject {
     let id: UUID
     let filename: String
     let inputBytes: UInt64
+    /// `ChineseConverter.Configuration.recordCode`, as stored in the job record.
     let optionsRawValue: Int
   }
   enum StartError: Error { case busy, requiresPro, exceedsCapacity, exceedsExperimentalCapacity, notLargeFile }
@@ -106,7 +107,7 @@ final class MobileLargeFileCoordinator: ObservableObject {
     self.source = source
     presentationOwner = owner
     session = Session(id: UUID(), filename: source.sourceFilename,
-                      inputBytes: source.byteCount, optionsRawValue: configuration.options.rawValue)
+                      inputBytes: source.byteCount, optionsRawValue: configuration.official.recordCode)
     processedBytes = 0
     failure = nil
     phase = .confirmation
@@ -133,7 +134,9 @@ final class MobileLargeFileCoordinator: ObservableObject {
   }
 
   private func beginConversion(capacity: MobileFileCapacity) throws {
-    guard phase == .confirmation, let source, let session, let service, task == nil else { return }
+    guard phase == .confirmation, let source, let session, let service, task == nil,
+          // The code was written from an offered configuration, so it always reads back.
+          let configuration = ChineseConverter.Configuration(recordCode: session.optionsRawValue) else { return }
     // Qualification is frozen only when actual work starts, not when offered.
     guard isQualified() else { throw StartError.requiresPro }
     try validateSize(session.inputBytes)
@@ -145,7 +148,7 @@ final class MobileLargeFileCoordinator: ObservableObject {
     task = Task {
       do {
         let result = try await service.convert(
-          source: source.sourceURL, options: .init(rawValue: session.optionsRawValue),
+          source: source.sourceURL, configuration: configuration,
           capacity: capacity,
           expectedSource: source.fingerprint,
           snapshotReady: { try source.close() },
