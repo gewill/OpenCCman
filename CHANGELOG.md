@@ -13,7 +13,13 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
 
 ## [Unreleased]
 
-Changes not yet assigned to a published version; they are planned for 2.3.
+Changes not yet assigned to a published version.
+
+## [2.3] - 2026-11-19
+
+Released on the App Store for iOS/iPadOS and macOS as 2.3 (65), built from
+`0fca3a2893161fc08c17e9fe3a0fb142090d5a4a`. The minimum systems remain
+iOS/iPadOS 15 and macOS 12; the homepage allowance remains 12 conversions per day.
 
 ### Added
 
@@ -68,6 +74,10 @@ Changes not yet assigned to a published version; they are planned for 2.3.
   reads; failure notices are on by default and success notices off, each
   switchable in Settings > Global Shortcut. A missing Accessibility permission
   always shows the permission prompt.
+- On Mac, Settings > Global Shortcut adds a Replace Selected Text card: in
+  apps that support Services, Convert Chinese Text with OpenCCman replaces a
+  selection without Accessibility permission, and Open Keyboard Settings opens
+  the system settings where a Services shortcut can be assigned.
 - On macOS 27, the app calls the permission Device Control and Data Access
   (设备控制和数据访问, 裝置控制和資料取用), as System Settings does; earlier
   systems keep the Accessibility name.
