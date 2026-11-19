@@ -242,7 +242,7 @@ enum StreamingTextFileService {
     }
   }
 
-  private static func atomicCommit(_ temporary: URL, to destination: URL, replacing: Bool) throws {
+  static func atomicCommit(_ temporary: URL, to destination: URL, replacing: Bool) throws {
     try temporary.withUnsafeFileSystemRepresentation { source in
       try destination.withUnsafeFileSystemRepresentation { target in
         guard let source, let target else { throw FileError.invalidDestination }

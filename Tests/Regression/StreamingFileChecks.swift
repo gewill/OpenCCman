@@ -27,6 +27,24 @@ private func checkVolumeExport(in volume: URL, staging: URL) async throws {
       hooks: .init(beforeCommit: { try sentinel.write(to: collision) }))
     preconditionFailure("A competing file must survive")
   } catch StreamingTextFileService.FileError.destinationChanged {}
+  let staged = directory.appendingPathComponent("staged.txt")
+  try Data("staged".utf8).write(to: staged)
+  do {
+    try StreamingTextFileService.atomicCommit(staged, to: collision, replacing: false)
+    preconditionFailure("Exclusive reservation must reject an existing name")
+  } catch StreamingTextFileService.FileError.destinationChanged {}
+  let retained = try Data(contentsOf: staged)
+  precondition(retained == Data("staged".utf8))
+  let invalidSource = directory.appendingPathComponent("source-directory")
+  try FileManager.default.createDirectory(at: invalidSource, withIntermediateDirectories: false)
+  let reserved = directory.appendingPathComponent("reserved.txt")
+  do {
+    try StreamingTextFileService.atomicCommit(invalidSource, to: reserved, replacing: false)
+    preconditionFailure("Replacing a regular file with a directory must fail")
+  } catch let error as POSIXError {
+    precondition(error.code == .ENOTDIR || error.code == .EISDIR)
+  }
+  precondition(!FileManager.default.fileExists(atPath: reserved.path))
   let survivor = try Data(contentsOf: collision)
   precondition(survivor == sentinel)
   print("PASS: new batch destination and existing destination on \(volume.path)")
