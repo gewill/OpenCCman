@@ -99,6 +99,7 @@ enum ShortcutTransactionChecks {
     @MainActor
     static func main() async throws {
         // End-to-end transaction: two copies, a paste the app reads, full clipboard restoration.
+        let C = CGKeyCode(kVK_ANSI_C), V = CGKeyCode(kVK_ANSI_V)
         let success = Fixture(); defer { success.release() }
         let rich = NSPasteboardItem(); rich.setString("original clipboard", forType: .string)
         let rtf = Data("{\\rtf1 preserved}".utf8); rich.setData(rtf, forType: .rtf)
@@ -108,7 +109,7 @@ enum ShortcutTransactionChecks {
         precondition(copy == ShortcutCopy(text: "繁體原文"))
         let outcome1 = try await transaction.replace(originalText: copy.text, with: "简体结果")
         precondition(outcome1 == .pasted)
-        precondition(success.posted == [CGKeyCode(kVK_ANSI_C), CGKeyCode(kVK_ANSI_C), CGKeyCode(kVK_ANSI_V)])
+        precondition(success.posted == [C, C, V, C])
         precondition(success.pasteResult == "简体结果")
         // The temporary text is marked transient; restorations are marked auto-generated.
         precondition(success.pasteTypes.contains(.shortcutTransient), "Converted text must be transient")
@@ -202,24 +203,14 @@ enum ShortcutTransactionChecks {
         precondition(watched.pasteResult == "慢速结果", "A read by another process must not end the hold")
         precondition(watched.board.string(forType: .string) == "original clipboard")
 
-        // Where ⌘C with only a caret beeps, the selection is not checked afterwards: such a
-        // reader then hides an ignored paste (read-only text), but the clipboard is restored.
-        let watchedReadOnly = Fixture(); defer { watchedReadOnly.release() }
-        watchedReadOnly.backgroundReadDelay = 0.05
-        watchedReadOnly.pasteReads = false
-        let hidden = watchedReadOnly.transaction(); let hiddenText = try await hidden.capture().text
-        _ = try await hidden.replace(originalText: hiddenText, with: "结果")
-        precondition(watchedReadOnly.board.string(forType: .string) == "original clipboard")
-        let C = CGKeyCode(kVK_ANSI_C), V = CGKeyCode(kVK_ANSI_V)
-
-        // Chrome and Firefox copy once more: a refused paste leaves the original selected,
-        // so the result is shown instead of lost, even after such a reader.
+        // An unrelated reader must not hide a refused paste in a native read-only host.
         let verifiedRefusal = Fixture(); defer { verifiedRefusal.release() }
         verifiedRefusal.backgroundReadDelay = 0.05
         verifiedRefusal.pasteReads = false
         let refused = verifiedRefusal.transaction(); let refusedText = try await refused.capture().text
-        let outcome5 = try await refused.replace(originalText: refusedText, with: "结果", verifyingSelection: true)
+        let outcome5 = try await refused.replace(originalText: refusedText, with: "结果")
         precondition(outcome5 == .notAccepted, "A selection that survives the paste means it was refused")
+        precondition(verifiedRefusal.backgroundRead == "结果" && verifiedRefusal.pasteResult == nil)
         precondition(verifiedRefusal.posted == [C, C, V, C])
         precondition(verifiedRefusal.board.string(forType: .string) == "original clipboard")
 
@@ -227,7 +218,7 @@ enum ShortcutTransactionChecks {
         let verifiedPaste = Fixture(); defer { verifiedPaste.release() }
         verifiedPaste.backgroundReadDelay = 0.05
         let checked = verifiedPaste.transaction(); let checkedText = try await checked.capture().text
-        let outcome6 = try await checked.replace(originalText: checkedText, with: "结果", verifyingSelection: true)
+        let outcome6 = try await checked.replace(originalText: checkedText, with: "结果")
         precondition(outcome6 == .pasted && verifiedPaste.pasteResult == "结果")
         precondition(verifiedPaste.posted == [C, C, V, C])
         precondition(verifiedPaste.board.string(forType: .string) == "original clipboard")
@@ -238,7 +229,7 @@ enum ShortcutTransactionChecks {
         movedOn.pasteReads = false
         movedOn.afterPaste = { movedOn.activity.counters[0] &+= 1 }
         let skipped = movedOn.transaction(); let skippedText = try await skipped.capture().text
-        let outcome7 = try await skipped.replace(originalText: skippedText, with: "结果", verifyingSelection: true)
+        let outcome7 = try await skipped.replace(originalText: skippedText, with: "结果")
         precondition(outcome7 == .pasted && movedOn.posted == [C, C, V])
         precondition(movedOn.board.string(forType: .string) == "original clipboard")
 
@@ -270,13 +261,8 @@ enum ShortcutTransactionChecks {
         precondition(ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: "com.jetbrains.intellij", copy: plain))
         precondition(ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: "com.apple.TextEdit", copy: line))
         precondition(ShortcutPastePolicy.allowsAutomaticPaste(bundleIdentifier: nil, copy: plain))
-        precondition(ShortcutPastePolicy.verifiesPaste(bundleIdentifier: "com.google.Chrome"))
-        precondition(ShortcutPastePolicy.verifiesPaste(bundleIdentifier: "org.mozilla.firefox"))
-        precondition(!ShortcutPastePolicy.verifiesPaste(bundleIdentifier: "com.apple.Safari"))
-        precondition(!ShortcutPastePolicy.verifiesPaste(bundleIdentifier: "com.apple.TextEdit"))
-        precondition(!ShortcutPastePolicy.verifiesPaste(bundleIdentifier: nil))
 
-        print("PASS: shortcut transaction success with transient and restore markers, clipboard restored on every cancellation (including a copy that lands after the app switch), changed selection, app switch, mouse/scroll activity and held keys, same-text return, typing over the selection, 5 s limit, clipboard ownership, no copy response, VS Code empty selection, ignored paste, slow paste (also after another process read the text first), refused paste found by a second copy in Chrome and Firefox (and skipped after input), unreadable clipboard, later copy preservation, paste policy.")
+        print("PASS: shortcut transaction success with transient and restore markers, clipboard restored on every cancellation (including a copy that lands after the app switch), changed selection, app switch, mouse/scroll activity and held keys, same-text return, typing over the selection, 5 s limit, clipboard ownership, no copy response, VS Code empty selection, ignored paste, slow paste (also after another process read the text first), refused paste found by a second copy even with a background reader (and skipped after input), unreadable clipboard, later copy preservation, paste policy.")
     }
 
     @MainActor
