@@ -176,7 +176,12 @@ import SwiftUI
 
 /// The workspace owns text and layout; the platform editor owns editing state.
 struct WorkspaceTextEditor: View {
-  @Binding var text: String
+  #if os(macOS)
+    /// By reference: a binding would put the document into every view value.
+    let text: WorkspaceEditorText
+  #else
+    @Binding var text: String
+  #endif
   var isEditable = true
   var label = ""
   var diff: WorkspaceDiffDecoration?
@@ -189,7 +194,7 @@ struct WorkspaceTextEditor: View {
 
   var body: some View {
     #if os(macOS)
-      NativeWorkspaceTextEditor(text: $text, isEditable: isEditable, label: label,
+      NativeWorkspaceTextEditor(text: text, isEditable: isEditable, label: label,
                                 readingState: readingState, diff: diff)
     #else
       TextEditor(text: $text)
@@ -214,9 +219,11 @@ struct WorkspaceTextEditor: View {
 
   @MainActor
   final class WorkspaceTextEditorCoordinator: NSObject, NSTextViewDelegate {
-    private var text: Binding<String>
+    private var text: WorkspaceEditorText
     private var renderedText: String?
     private var applyingSource = false
+    /// AppKit is about to replace text with different text; read by the next text change.
+    private var editChangesText = false
     private var appliedTextSize = AppTextSize.standard
     private let scrollKeeper = WorkspaceScrollKeeper()
     private let editingUndoManager = UndoManager()
@@ -227,7 +234,7 @@ struct WorkspaceTextEditor: View {
       var isScrollRestorationPending: Bool { scrollKeeper.isRestorationPending }
     #endif
 
-    init(text: Binding<String>, readingState: WorkspaceEditorReadingState? = nil) {
+    init(text: WorkspaceEditorText, readingState: WorkspaceEditorReadingState? = nil) {
       self.text = text
       self.readingState = readingState
     }
@@ -270,7 +277,7 @@ struct WorkspaceTextEditor: View {
       return viewport
     }
 
-    func update(_ viewport: WorkspaceEditorViewport, text: Binding<String>, isEditable: Bool, isEnabled: Bool,
+    func update(_ viewport: WorkspaceEditorViewport, text: WorkspaceEditorText, isEditable: Bool, isEnabled: Bool,
                 accessibilityLabel: String = "", textSize: AppTextSize = .standard,
                 diff: WorkspaceDiffDecoration? = nil) {
       self.text = text
@@ -299,7 +306,7 @@ struct WorkspaceTextEditor: View {
         }
         appliedTextSize = textSize
       }
-      let value = text.wrappedValue
+      let value = text.value
       // A layout, language, theme or task update must not write back into the
       // native editor: doing so would disturb marked text, selection and undo.
       if !matchesRenderedBytes(value) {
@@ -330,18 +337,37 @@ struct WorkspaceTextEditor: View {
       // A source replacement can race route teardown. Only retain a position
       // in the document actually held by the window model. The editor holds
       // `renderedText`, so the model's echo of it matches without a scan.
-      guard (renderedText ?? editor.string).hasSameUTF8(as: text.wrappedValue) else {
+      guard (renderedText ?? editor.string).hasSameUTF8(as: text.value) else {
         readingState.invalidate()
         return
       }
       readingState.position = scrollKeeper.currentReadingPosition()
     }
 
+    func textView(_ textView: NSTextView, shouldChangeTextInRanges affectedRanges: [NSValue],
+                  replacementStrings: [String]?) -> Bool {
+      // Compare only the edited ranges, literally (UTF-16, so byte-exact), and
+      // tell the model when the text really changed: then it need not compare
+      // the documents, which for an equal-length edit reads them up to the edit.
+      // Without this report the model compares, so a missed edit stays correct.
+      guard !applyingSource, let replacementStrings, replacementStrings.count == affectedRanges.count,
+            let current = textView.textStorage?.mutableString else { return true }
+      for (range, replacement) in zip(affectedRanges.map(\.rangeValue), replacementStrings)
+      where range.length != replacement.utf16.count
+        || !current.substring(with: range).utf16.elementsEqual(replacement.utf16) {
+        editChangesText = true
+        break
+      }
+      return true
+    }
+
     func textDidChange(_ notification: Notification) {
       guard !applyingSource, let editor = notification.object as? NSTextView else { return }
       let value = editor.string
       renderedText = value
-      text.wrappedValue = value
+      let changed = editChangesText
+      editChangesText = false
+      text.publish(value, changed: changed)
     }
 
     func undoManager(for view: NSTextView) -> UndoManager? {
@@ -360,14 +386,14 @@ struct WorkspaceTextEditor: View {
 
   private struct NativeWorkspaceTextEditor: NSViewRepresentable {
     @Environment(\.appTextSize) private var textSize
-    @Binding var text: String
+    let text: WorkspaceEditorText
     var isEditable: Bool
     var label: String
     var readingState: WorkspaceEditorReadingState?
     var diff: WorkspaceDiffDecoration?
 
     func makeCoordinator() -> WorkspaceTextEditorCoordinator {
-      WorkspaceTextEditorCoordinator(text: $text, readingState: readingState)
+      WorkspaceTextEditorCoordinator(text: text, readingState: readingState)
     }
 
     func makeNSView(context: Context) -> WorkspaceEditorViewport {
@@ -375,7 +401,7 @@ struct WorkspaceTextEditor: View {
     }
 
     func updateNSView(_ viewport: WorkspaceEditorViewport, context: Context) {
-      context.coordinator.update(viewport, text: $text, isEditable: isEditable,
+      context.coordinator.update(viewport, text: text, isEditable: isEditable,
                                  isEnabled: context.environment.isEnabled,
                                  accessibilityLabel: label.localized(in: context.environment.locale),
                                  textSize: textSize, diff: diff)

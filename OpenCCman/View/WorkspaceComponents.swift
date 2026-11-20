@@ -255,7 +255,7 @@ struct SourcePane: View {
 
   @ViewBuilder private var sourceEditor: some View {
     #if os(macOS)
-      WorkspaceTextEditor(text: $viewModel.inputText, label: "Source", diff: viewModel.diffDecoration(source: true),
+      WorkspaceTextEditor(text: viewModel.sourceEditorText, label: "Source", diff: viewModel.diffDecoration(source: true),
                           readingState: viewModel.sourceReadingState)
     #else
       WorkspaceTextEditor(text: $viewModel.inputText, label: "Source", diff: viewModel.diffDecoration(source: true))
@@ -331,7 +331,7 @@ struct ResultPane: View {
 
   @ViewBuilder private var resultEditor: some View {
     #if os(macOS)
-      WorkspaceTextEditor(text: .constant(viewModel.resultText), isEditable: false,
+      WorkspaceTextEditor(text: viewModel.resultEditorText, isEditable: false,
                           label: "Result", diff: viewModel.diffDecoration(source: false), readingState: viewModel.resultReadingState)
     #else
       WorkspaceTextEditor(text: .constant(viewModel.resultText), isEditable: false, label: "Result", diff: viewModel.diffDecoration(source: false))
