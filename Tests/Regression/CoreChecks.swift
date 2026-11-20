@@ -269,6 +269,26 @@ import OpenCC
     model.inputText = String(decoding: Array(model.inputText.utf8), as: UTF8.self)
     precondition(!unchangedResult.isEmpty && model.resultText == unchangedResult,
                  "Writing identical bytes again is not an edit")
+    #if os(macOS)
+      // The Mac editor's writes (#352): an unreported edit is compared, so
+      // identical bytes keep the result and the revision; a reported change is
+      // applied without comparing, and both editors see a new revision.
+      let sourceRevision = model.sourceEditorText.revision
+      let resultRevision = model.resultEditorText.revision
+      model.sourceEditorText.publish(String(decoding: Array(model.inputText.utf8), as: UTF8.self), changed: false)
+      precondition(model.resultText == unchangedResult && model.sourceEditorText.revision == sourceRevision
+                   && model.resultEditorText.revision == resultRevision, "An unreported identical edit is not a change")
+      precondition(model.sourceEditorText.value.utf8.elementsEqual(model.inputText.utf8))
+      model.sourceEditorText.publish("e\u{323}\u{301}字", changed: true)
+      precondition(model.inputText == "e\u{323}\u{301}字" && model.resultText.isEmpty
+                   && model.sourceEditorText.revision == sourceRevision + 1
+                   && model.resultEditorText.revision == resultRevision + 1, "A reported change clears the result")
+      model.sourceEditorText.publish("e\u{323}\u{301}汉", changed: false)
+      precondition(model.inputText == "e\u{323}\u{301}汉" && model.sourceEditorText.revision == sourceRevision + 2,
+                   "An unreported equal-length edit is still found by comparison")
+      model.resultEditorText.publish("ignored", changed: true)
+      precondition(model.resultText.isEmpty, "The read-only result pane has no writer")
+    #endif
     model.inputText = String(repeating: "汉", count: 50_001)
     model.translate()
     await waitUntilIdle(model)

@@ -10,17 +10,21 @@ private final class Observations {
   weak var result: NSTextView?
   weak var window: NSWindow?
   var legacyCalls = 0
+  var sourceString = "原文 é 👩🏽‍💻"
+  lazy var sourceText = WorkspaceEditorTextSource(read: { [unowned self] in sourceString },
+                                                  write: { [unowned self] text, _ in sourceString = text })
+  let resultText = WorkspaceEditorTextSource(read: { "結果" })
 }
 
 @MainActor
 private struct Editors: View {
   let observations: Observations
-  @State private var source = "原文 é 👩🏽‍💻"
 
   var body: some View {
     HStack {
-      WorkspaceTextEditor(text: $source, label: "Source")
-      WorkspaceTextEditor(text: .constant("結果"), isEditable: false, label: "Result")
+      WorkspaceTextEditor(text: WorkspaceEditorText(source: observations.sourceText, revision: 0), label: "Source")
+      WorkspaceTextEditor(text: WorkspaceEditorText(source: observations.resultText, revision: 0),
+                          isEditable: false, label: "Result")
     }
     .background(MainWindowReader { observations.window = $0 }
       .allowsHitTesting(false).accessibilityHidden(true))

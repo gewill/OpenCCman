@@ -20,14 +20,43 @@ class HomeViewModel: ObservableObject {
   #if os(macOS)
     let sourceReadingState = WorkspaceEditorReadingState()
     let resultReadingState = WorkspaceEditorReadingState()
+    /// The panes' text for the Mac editors. SwiftUI compares the revision,
+    /// never the document (#352).
+    var sourceEditorText: WorkspaceEditorText {
+      WorkspaceEditorText(source: sourceTextSource, revision: sourceRevision)
+    }
+    var resultEditorText: WorkspaceEditorText {
+      WorkspaceEditorText(source: resultTextSource, revision: resultRevision)
+    }
+    private var sourceRevision = 0
+    private var resultRevision = 0
+    /// Set by the source editor for the assignment that follows (see `inputText`).
+    private var sourceEditChanged = false
+    private lazy var sourceTextSource = WorkspaceEditorTextSource(
+      read: { [weak self] in self?.inputText ?? "" },
+      write: { [weak self] text, changed in
+        guard let self else { return }
+        sourceEditChanged = changed
+        inputText = text
+      })
+    private lazy var resultTextSource = WorkspaceEditorTextSource(read: { [weak self] in self?.resultText ?? "" })
   #endif
 
   @Published var inputText: String = "" {
     didSet {
       // Byte-exact, so canonically equivalent spellings are a change. Every
       // native keystroke lands here; this must not scan the whole document.
-      guard !inputText.hasSameUTF8(as: oldValue) else { return }
+      // A change of length is decided at once, and the Mac editor reports an
+      // edit that replaced text with different text, of any length.
       #if os(macOS)
+        let reportedChange = sourceEditChanged
+        sourceEditChanged = false
+      #else
+        let reportedChange = false
+      #endif
+      guard reportedChange || !inputText.hasSameUTF8(as: oldValue) else { return }
+      #if os(macOS)
+        sourceRevision += 1
         sourceReadingState.invalidate()
       #endif
       cancelImport()
@@ -38,8 +67,10 @@ class HomeViewModel: ObservableObject {
   }
   @Published var resultText: String = "" {
     didSet {
-      if !resultText.utf8.elementsEqual(oldValue.utf8) { invalidateDiff() }
+      let changed = !resultText.utf8.elementsEqual(oldValue.utf8)
+      if changed { invalidateDiff() }
       #if os(macOS)
+        if changed { resultRevision += 1 }
         if resultText != oldValue { resultReadingState.invalidate() }
       #endif
     }

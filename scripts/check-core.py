@@ -55,6 +55,7 @@ with tempfile.TemporaryDirectory(prefix="openccman-core-") as directory:
         root / "OpenCCman/Model/ConvertedTextDocument.swift",
         root / "OpenCCman/Model/TestNumbersPerDayManager.swift",
         root / "OpenCCman/Model/WorkspaceEditorReadingState.swift",
+        root / "OpenCCman/Model/WorkspaceEditorText.swift",
         root / "OpenCCman/Scene/HomeViewModel.swift",
         root / "OpenCCmanTextAction/TextActionModel.swift",
         root / "Tests/Regression/CoreSupport.swift",

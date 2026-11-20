@@ -6,6 +6,7 @@ trap 'rm -rf "$audit_dir"' EXIT
 xcrun swiftc -warnings-as-errors -swift-version 5 -D WORKSPACE_SCROLL_CHECKS -target "$(uname -m)-apple-macos11.0" \
   "$repo_root/OpenCCman/View/AppTypography.swift" \
   "$repo_root/OpenCCman/Model/WorkspaceEditorReadingState.swift" \
+  "$repo_root/OpenCCman/Model/WorkspaceEditorText.swift" \
   "$repo_root/OpenCCman/View/WorkspaceScrollKeeper.swift" \
   "$repo_root/OpenCCman/Model/ConversionDiff.swift" \
   "$repo_root/OpenCCman/Model/ConversionDiffSnapshot.swift" \
