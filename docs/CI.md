@@ -74,15 +74,46 @@ App 和 iOS 分享扩展（`OpenCCmanTextAction`，#29）的 Bundle ID 都由项
 
 ## 手动诊断与构建
 
-当前 develop 的 `workflow_dispatch` 提供：
+`App Regression` 可以手动运行（`workflow_dispatch`），命令是 `gh workflow run app-regression.yml --repo gewill/OpenCCman --ref <分支> -f <输入>=true`。`regression_system` 填系统名，例如 `-f regression_system=macos-26`。下列 job 都在 macOS 15 上运行，只有 `build_ios_validation` 的系统随 `regression_system`。
 
-- `build_ios_validation`：用配置的 Xcode 26.3 构建未签名 arm64 iOS Simulator 应用并上传为 artifact，不自动运行设备验收；此选项不会关闭普通 App Regression。普通 App Regression 已用相同参数编译 iOS 目标，此选项只在需要可安装的模拟器包时使用。
-- `diagnose_window_lifetime`：在 macOS 15 顺序运行两个最小 WindowGroup 变体。可配合 `observe_window_hosts` 记录弱窗口/初始宿主；后者单独勾选不启动诊断。
-- `diagnose_editor_anchor`：运行固定 macOS 15 编辑器锚点诊断。
+以下三项不关闭普通回归，该次手动运行仍会执行 `App Regression` job：
 
-两种 diagnose 入口取代该次手动运行的普通 regression job；普通 PR/push 始终执行 App Regression。可选 job 没运行时显示 skipped，不能当作该项验收通过。诊断包和回归构建都不能代替 Xcode Cloud 的分发签名产物。
+- `regression_system`：选择该次手动运行的 `App Regression` 与 `build_ios_validation` 用 `macos-15`（默认）还是 `macos-26`。PR 与推送始终用 macOS 15。见 [macOS 26 单次回归](validation/macos26-regression.md)。
+- `build_ios_validation`：job「Build iOS Simulator validation app」，20 分钟。
+  - 用配置的 Xcode 26.3 构建未签名的 arm64 iOS Simulator 应用，上传 artifact `ios-simulator-validation-app`，不自动运行设备验收。
+  - 普通 App Regression 已用相同参数编译 iOS 目标，只有需要可安装的模拟器包时才用这一项。
+- `build_services_validation`：job「Build Release Services validation app」，20 分钟。构建未签名的 universal Mac Release 包，上传 `services-release-validation-app`，供手动测量 Services。见 [可追溯 Release 包](performance/services/README.md#可追溯-release-包)。
 
-该清单以核对时 develop `b2e0e63` 为准；尚在 PR 中的真实 WindowGroup Release 构建等扩展，合并后再纳入当前入口说明，不把候选工作流写成已上线能力。
+以下各项会取代普通回归：勾选任意一项，该次手动运行就不再执行 `App Regression` job。
+
+- `measure_app_baseline`：job「Release application performance baseline」，35 分钟。用 5 个新进程测量 Release 应用的性能基线，上传 `app-performance-baseline`。见 [合并后应用性能基线](performance/integrated-baseline.md)。
+- `compare_workspace_editor`：job「Same-runner Release editor comparison」，45 分钟。在同一个 runner 上依次运行固定旧版 `cb73fc5` 和候选版本的 Release 文稿流程并对照，上传 `workspace-editor-comparison`。见 [同机对照入口](performance/native-editor-sizing.md#同机对照入口)。
+- `diagnose_editor_anchor`：job「Bounded macOS 15 anchor trace」，10 分钟。原版与追踪版交替运行固定次数，再做一组首轮恢复延迟 120 ms 的对照，上传 `editor-anchor-diagnostic`。见 [编辑器锚点诊断](validation/editor-anchor-diagnosis/README.md)。
+- `diagnose_window_lifetime`：job「Native WindowGroup lifetime comparison」，8 分钟。依次运行 EnvironmentObject 与 ObservedObject 两个最小 WindowGroup 变体，上传 `window-lifetime-diagnostic`。见 [模型传递与观察工具对照](performance/window-environment-lifetime/2026-09-15/README.md)。
+  - `observe_window_hosts`：在这项诊断里加上对窗口和内容视图的弱引用观察，见 [区分关窗后的窗口、宿主与模型](performance/weak-window-hosts/README.md)。单独勾选时，既不启动诊断，也不关闭普通回归。
+- 原生窗口生命周期系列：共用 job「Build native window lifecycle diagnostic app」，20 分钟，构建隔离的 universal Release 诊断包，上传 `native-window-lifecycle-app`。
+  - `build_window_lifecycle`：只构建，不在 CI 上测量。见 [原生 WindowGroup 生命周期诊断](performance/native-window-lifecycle/README.md)。
+  - `automatic_window_lifecycle`：构建后运行真实 WindowGroup 的自驱动协议。诊断包的最低系统是 macOS 13。见 [真实应用的窗口观察方式对照](performance/native-window-ax-control.md)。
+  - `cycle_window_lifecycle`：从菜单新建并关闭窗口，共三轮。见 [三轮原生窗口生命周期验收](performance/native-window-three-cycles.md)。
+  - `document_window_lifecycle`：用固定的 1 MiB 和 10 MiB 文稿，通过原生调用主动关闭窗口。见 [原生窗口文稿生命周期验收](performance/native-window-documents.md)。
+  - `active_anchor_window_lifecycle`：在文稿协议基础上，于保留窗口转换期间关闭另一个原生窗口。见 [保留窗口活动转换时关闭其他窗口](performance/retained-active-window.md)。
+  - `profile_document_stages`：沿用上一项的协议，采样导入和转换时的调用栈，结果只作观察。见 [文稿阶段调用栈诊断](performance/document-stage-profiling.md)。
+
+  同时勾选多项时只运行一种协议，优先级从高到低：
+  1. `active_anchor_window_lifecycle` 或 `profile_document_stages`
+  2. `document_window_lifecycle`
+  3. `cycle_window_lifecycle`
+  4. `automatic_window_lifecycle`
+
+  勾选了 `profile_document_stages` 时，测量不要求模型已释放；其余协议都要求。
+
+其他规则：
+
+- 手动运行不执行 `App icon`。普通 PR 和推送始终执行 `App Regression` 与 `App icon`。
+- 可选 job 没有运行时显示 skipped，不能当作该项验收已通过。
+- 诊断包和回归构建都不能代替 Xcode Cloud 的分发签名产物。
+
+本节以 develop `fbe32ca` 的工作流为准。增删手动入口时同步更新本节，不要把候选工作流写成已上线的能力。
 
 ## Xcode 27 与 RevenueCat 编译诊断
 
