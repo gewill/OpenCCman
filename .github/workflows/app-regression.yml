@@ -107,10 +107,18 @@ jobs:
         run: bash scripts/check-project.sh
       - name: Check local QA build artifact identity
         run: python3 Tests/Regression/DuoBuildChecks.py
+      - name: TEMP probe FAT rename on this runner
+        continue-on-error: true
+        run: |
+          d="$(mktemp -d)"
+          xcrun clang -o "$d/probe" scripts/tmp-fat-probe.c
+          for f in ExFAT FAT32; do fs=$f; [[ $f == FAT32 ]] && fs="MS-DOS FAT32"; mkdir "$d/$f"; hdiutil create -quiet -size 300m -fs "$fs" -volname OCMPROBE "$d/$f.dmg"; hdiutil attach -quiet -nobrowse -mountpoint "$d/$f" "$d/$f.dmg"; done
+          "$d/probe" "$d/ExFAT" "$d/FAT32"
+          for f in ExFAT FAT32; do hdiutil detach -quiet "$d/$f"; done
       - name: Check real conversion, presets and file workflow on APFS, exFAT and FAT32
         # Mounts 300 MB exFAT and FAT32 images and runs check-core.py with them, so
         # the export commit for volumes without exclusive rename runs on real volumes.
-        run: bash scripts/check-fat-export.sh
+        run: script -q /dev/null bash scripts/check-fat-export.sh
       - name: Check performance report comparability
         run: python3 -m unittest discover -s Tests/Benchmarks -p 'test_*.py'
       - name: Check mobile capacity fixtures and export verification
