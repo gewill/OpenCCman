@@ -8,7 +8,7 @@ GitHub Actions 负责回归与依赖候选验证，Xcode Cloud 负责正式签�
 
 | 工作流 / 检查 | 触发条件 | 执行环境与范围 |
 | --- | --- | --- |
-| `App Regression` | 目标为 `main`、`develop`、`codex/**`、`release/**`、`hotfix/**` 的 PR；main/develop/release/hotfix 推送；手动运行 | `macos-15`，20 分钟；工程和 Swift 语法、真实转换/文件/预设、窗口布局、原生控件完整尺寸、编辑器滚动/Introspect、Pro、StoreKit、额度、What’s New、开屏转场、本地化、隔离剪贴板回归、双架构 macOS Debug 验证构建，以及 arm64 iOS Simulator Debug 构建（含分享扩展 `OpenCCmanTextAction`，iOS 专用源码只在这一步编译；两次构建在 macOS 15 上都不含 App 图标，见下文） |
+| `App Regression` | 目标为 `main`、`develop`、`codex/**`、`release/**`、`hotfix/**` 的 PR；main/develop/release/hotfix 推送；手动运行 | `macos-15`，20 分钟；工程和 Swift 语法、真实转换/文件/预设（文件导出另在 300 MB 的 exFAT、FAT32 映像上检查新建、覆盖与批量提交）、窗口布局、原生控件完整尺寸、编辑器滚动/Introspect、Pro、StoreKit、额度、What’s New、开屏转场、本地化、隔离剪贴板回归、双架构 macOS Debug 验证构建，以及 arm64 iOS Simulator Debug 构建（含分享扩展 `OpenCCmanTextAction`，iOS 专用源码只在这一步编译；两次构建在 macOS 15 上都不含 App 图标，见下文） |
 | `App icon` | 与 `App Regression` 相同的 PR 与推送 | `macos-26`，10 分钟；`scripts/check-app-icon.sh` 用 actool 为 macOS 12+ 与 iOS 15+ 编译 `AppIcon.icon`，检查浅色、深色、着色分层图标与旧系统回退图；目前不是必需检查 |
 | `Upstream Coordinator Tests` | main/develop/release/hotfix 中修改协调器源码、配置、测试或其 workflow 的 PR/推送；周检；手动运行 | `ubuntu-24.04`，5 分钟；临时 Git 仓库与假 GitHub API 测试，并验证公开 Checks API 的读权限 |
 | 上游检测 → 准备 → 发布 | **仅 `main`** 的周一 09:17（UTC+8）或手动运行 | 检测/发布用 Ubuntu；有候选才用 `macos-15` 验证；写令牌仅位于独立发布 job |

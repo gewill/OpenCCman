@@ -107,8 +107,10 @@ jobs:
         run: bash scripts/check-project.sh
       - name: Check local QA build artifact identity
         run: python3 Tests/Regression/DuoBuildChecks.py
-      - name: Check real conversion, presets and file workflow
-        run: python3 scripts/check-core.py
+      - name: Check real conversion, presets and file workflow on APFS, exFAT and FAT32
+        # Mounts 300 MB exFAT and FAT32 images and runs check-core.py with them, so
+        # the export commit for volumes without exclusive rename runs on real volumes.
+        run: bash scripts/check-fat-export.sh
       - name: Check performance report comparability
         run: python3 -m unittest discover -s Tests/Benchmarks -p 'test_*.py'
       - name: Check mobile capacity fixtures and export verification
