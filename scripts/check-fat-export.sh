@@ -4,9 +4,16 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 scratch="$(mktemp -d)"
 mounts=()
 cleanup() {
-  local mounted
+  local mounted attempt
   for mounted in "${mounts[@]:-}"; do
-    [[ -z "$mounted" ]] || hdiutil detach "$mounted" || return 1
+    [[ -n "$mounted" ]] || continue
+    # A volume that was just written can stay busy for a moment; a volume that
+    # never detaches still fails the check.
+    for attempt in 1 2 3; do
+      hdiutil detach "$mounted" && continue 2
+      sleep 2
+    done
+    return 1
   done
   rm -rf "$scratch"
 }
