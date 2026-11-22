@@ -3,10 +3,28 @@ import Foundation
 import OpenCC
 import UniformTypeIdentifiers
 
+/// Whether the volume refuses an exclusive rename to a new name; the export
+/// commit then reserves the name before renaming (#351). exFAT refuses it on
+/// macOS 15 and 27, FAT32 only on later systems: macOS 15 FAT32 honors it.
+private func refusesExclusiveRename(in directory: URL) throws -> Bool {
+  let source = directory.appendingPathComponent("exclusive-probe-source")
+  let target = directory.appendingPathComponent("exclusive-probe-target")
+  try Data("probe".utf8).write(to: source)
+  defer {
+    try? FileManager.default.removeItem(at: source)
+    try? FileManager.default.removeItem(at: target)
+  }
+  if renamex_np(source.path, target.path, UInt32(RENAME_EXCL)) == 0 { return false }
+  let code = errno
+  guard code == ENOTSUP else { throw POSIXError(POSIXErrorCode(rawValue: code) ?? .EIO) }
+  return true
+}
+
 private func checkVolumeExport(in volume: URL, staging: URL) async throws {
   let directory = volume.appendingPathComponent(UUID().uuidString)
   try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: false)
   defer { try? FileManager.default.removeItem(at: directory) }
+  let reservesName = try refusesExclusiveRename(in: directory)
   let input = staging.appendingPathComponent("volume-source.txt")
   let body = "鼠标里面的硅二极管坏了。\r\n"
   try Data(body.utf8).write(to: input)
@@ -35,19 +53,24 @@ private func checkVolumeExport(in volume: URL, staging: URL) async throws {
   } catch StreamingTextFileService.FileError.destinationChanged {}
   let retained = try Data(contentsOf: staged)
   precondition(retained == Data("staged".utf8))
-  let invalidSource = directory.appendingPathComponent("source-directory")
-  try FileManager.default.createDirectory(at: invalidSource, withIntermediateDirectories: false)
-  let reserved = directory.appendingPathComponent("reserved.txt")
-  do {
-    try StreamingTextFileService.atomicCommit(invalidSource, to: reserved, replacing: false)
-    preconditionFailure("Replacing a regular file with a directory must fail")
-  } catch let error as POSIXError {
-    precondition(error.code == .ENOTDIR || error.code == .EISDIR)
+  if reservesName {
+    // A rename that fails after the name was reserved removes the reservation.
+    // A directory cannot replace the regular file that reserves the name.
+    let invalidSource = directory.appendingPathComponent("source-directory")
+    try FileManager.default.createDirectory(at: invalidSource, withIntermediateDirectories: false)
+    let reserved = directory.appendingPathComponent("reserved.txt")
+    do {
+      try StreamingTextFileService.atomicCommit(invalidSource, to: reserved, replacing: false)
+      preconditionFailure("Replacing a regular file with a directory must fail")
+    } catch let error as POSIXError {
+      precondition(error.code == .ENOTDIR || error.code == .EISDIR)
+    }
+    precondition(!FileManager.default.fileExists(atPath: reserved.path))
   }
-  precondition(!FileManager.default.fileExists(atPath: reserved.path))
   let survivor = try Data(contentsOf: collision)
   precondition(survivor == sentinel)
-  print("PASS: new batch destination and existing destination on \(volume.path)")
+  let commit = reservesName ? "reserved-name commit" : "exclusive rename"
+  print("PASS: new batch destination and existing destination on \(volume.path) (\(commit))")
 }
 
 func checkStreamingFiles() async throws {
