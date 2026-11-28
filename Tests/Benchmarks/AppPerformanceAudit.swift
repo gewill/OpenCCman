@@ -3,6 +3,7 @@
 import AppKit
 import Combine
 import CryptoKit
+import OpenCC
 import os.signpost
 
 import SwiftUI
@@ -470,7 +471,7 @@ final class AppPerformanceAudit {
           + (comparisonWithoutNUL ? "" : "\0") + (official == .t2s ? "结束" : "結束")
         guard model.resultText == expected else { throw NSError(domain: "PerformanceAudit", code: 3, userInfo: [NSLocalizedDescriptionKey: "Known-answer fixture mismatch"] ) }
       }
-      record("seven_configurations_resident")
+      record("six_configurations_resident")
       if ProcessInfo.processInfo.arguments.contains("-performance-hold-after-configurations") {
         timer?.invalidate(); timer = nil
         save(status: "profiling_hold")

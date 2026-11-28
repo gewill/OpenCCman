@@ -2,7 +2,50 @@
 
 2026-11-16 实现与验证，2026-11-17 补 Mac 前台核对，见 PR [#345](https://github.com/gewill/OpenCCman/pull/345)。跟踪 #301（路线图 M1）。
 
-开发前决定记录在 [#305 评论](https://github.com/gewill/OpenCCman/issues/305#issuecomment-6906814762)。按决定，PR 等 2.3 切出发布分支或上架后再合入 `develop`，目前尚未合入、尚未发布。各项关闭标准的证据见下文，未验证项见文末；是否关闭由维护者决定。
+开发前决定记录在 [#305 评论](https://github.com/gewill/OpenCCman/issues/305#issuecomment-6906814762)。按决定，PR 等 2.3 切出发布分支或上架后再合入 `develop`，该 PR 随后已合入 develop。各项关闭标准的证据见下文，未验证项见文末；是否关闭由维护者决定。
+
+## 2026-11-28 从 2.3 升级的 Mac 实测
+
+在 macOS 27.2.1（arm64）用 Xcode 27.2（27B52）分别构建 v2.3 标签 `0fca3a2` 和 develop `13a9d67` 的 Debug App。两个产物使用项目沙盒权限和同一隔离 Bundle ID，按顺序运行，共用同一偏好容器。新版构建覆盖 `MARKETING_VERSION=2.4` 以验收对应版本的更新说明。工程当时的默认版本仍为 2.3，正式候选包须复核实际版本。
+
+1. 在 2.3 的转换设置中选择 Traditional Chinese、OpenCC Standard、Taiwan Idiom，预设显示 Custom。输入「鼠标里面的软件和打印机，用的是信息技术。」并转换，结果编辑器显示「滑鼠裏面的軟體和印表機，用的是資訊科技。」。关闭旧进程前核对隔离偏好文件，只有旧的相关键 `regionOptions=Taiwan Idiom`，其余选项用默认值。
+2. 启动同标识的 2.4 QA 包，首页自动出现 What’s New。本次英文页面明确指出 OpenCC Traditional with Taiwan Idiom 改用 Taiwan Traditional with Taiwan phrases（s2twp），并告知部分异体字有变化。
+3. 关闭说明，直接输入同一原文并转换，结果为「滑鼠裡面的軟體和印表機，用的是資訊科技。」。样本只有「裏」变为「裡」。偏好文件读回 `conversionSource=s`、`conversionTarget=tw`、`conversionPhrases=Taiwan Idiom`、`lastPresentedWhatsNewVersion=2.4`，旧键仍在。
+4. 再次启动新版，直接进入工作区。打开转换设置，台湾预设、简体来源、台湾目标和台湾词组均已选中。
+5. `bash scripts/check-whats-new.sh` 的展示协调器与三语资源检查通过。本次运行的是本地重建包；商店分发包覆盖安装、真机升级与 VoiceOver 朗读未验证。
+
+### 四个内置预设的跨进程对照
+
+从各自版本编译工作区模型、实际偏好键和转换服务，依赖使用相同的锁定版本；每组使用独立 UserDefaults suite。2.3 进程调用 `applyPreset`、`translate`，同步偏好后退出。两个先后启动的新版进程分别读取偏好，不重选预设，断言预设名称、官方配置和结果。三次输出均按 UTF-8 字节比较。这组运行覆盖模型及偏好持久化；上面的兼容配置另有 App 界面实测。
+
+| 2.3 预设 | 迁移后配置 | 三次一致的输出 |
+| --- | --- | --- |
+| 简体 | `t2s` | 滑鼠里面的软体，著衣与衞生纸。 |
+| OpenCC 繁体 | `s2t` | 鼠標裏面的軟件和打印機，用的是信息技術。爲着衛生紙與麪包。 |
+| 台湾正体加词组 | `s2twp` | 滑鼠裡面的軟體和印表機，用的是資訊科技。為著衛生紙與麵包。 |
+| 香港繁体 | `s2hk` | 鼠標裏面的軟件和打印機，用的是信息技術。為着衞生紙與麪包。 |
+
+简体预设的输入为「滑鼠裡面的軟體，著衣與衞生紙。」；其余三组输入为「鼠标里面的软件和打印机，用的是信息技术。为着卫生纸与面包。」。同机 `check-core.py` 初次使用 Xcode 27.2 的 SwiftPM 默认后端，在链接 OpenCC C++ 符号时失败；切换为 `swift run --build-system native` 后整组通过，包括 72 种旧设置映射。两个版本的完整 macOS App 均通过 Xcode 构建。
+
+### iPhone 覆盖安装
+
+iPhone 17 模拟器，iOS 27.0，同一隔离 Bundle ID，两个 Debug 构建均含分享扩展。旧版在设置中开启台湾词组，首页显示 Custom。使用 App 自带示例，2.3 结果为「滑鼠裏面的矽二極體壞了，導致游標解析度降低。」。
+
+终止 2.3，直接用 `simctl install` 覆盖安装新版。系统分配了新的数据目录路径。首次启动前读回偏好文件，`regionOptions=Taiwan Idiom` 与当日一次转换计数均保留，新来源与目标键仍不存在。首次启动自动显示 2.4 的台湾词组迁移说明，首页变为台湾正体加词组预设。关闭说明后再次填入同一示例，结果为「滑鼠裡面的矽二極體壞了，導致游標解析度降低。」。进程退出后核对新设置 `s / tw / Taiwan Idiom`、旧地域键和已展示版本 `2.4`。本次只启动该模拟器，结束后已恢复 Shutdown。
+
+### iPad 覆盖安装与保留预设
+
+在 iPad Pro 11 英寸（M4）模拟器、iPadOS 27.0，以繁体中文运行上述两个 Debug 包。在 2.3 弹层选「香港繁體」，填入内置示例并转换。覆盖安装后、首次启动前，旧键仍是 `Traditional Chinese / HongKong Standard / Not convert`。新版首次启动正常展示繁体中文的台湾词组迁移说明，并保留首页的「香港繁體」预设。关闭说明后再填入同一示例并转换。
+
+两版结果均为「鼠標裏面的硅二極管壞了，導致光標分辨率降低。」。从两个版本的原文与结果编辑框读回 UTF-8，原文一致、结果逐字节一致，并与独立运行 `opencc -c s2hk.json` 的输出一致。退出后新键为 `s / hk / Not convert`，已展示版本为 `2.4`。模拟器已恢复 Shutdown。
+
+### Release 基准工具复验
+
+在 Apple M4 Pro、macOS 27.2.1、Xcode 27.2 上，原基准 App 的 Release 构建报 `cannot find type 'ChineseConverter' in scope`。基准已改用官方配置，但缺少模块导入；比较器仍校验两个退役配置，无法读取按新配置生成的报告。修复见 `087eb47`，改动限于基准与报告工具。
+
+- `python3 scripts/benchmark-app.py --output <新目录> --packages <已锁定的 SourcePackages> --samples 3 --timeout 300` 成功。三个独立 Release 进程分别通过六个配置的已知答案断言（t2s、s2t、s2tw、s2hk、s2twp、s2hkp），含混合文字、组合字符、CRLF 和 NUL；三份原始报告均通过比较器的同组校验。本次只验工具和输出正确性，未作跨版本耗时比较。
+- `python3 Tests/Benchmarks/test_app_performance_report.py` 通过 19 项。当前配置缺失或记录码错误会被拒绝；历史七配置的完整报告仍可读取。
+- 私有窗口诊断分别用 `--cycles` 和 `--documents` 准备，两个 arm64 macOS Release 构建通过。本次未执行这两个独立的窗口生命周期场景。
 
 ## 关闭标准核对（2026-11-17 更新）
 
@@ -182,7 +225,7 @@ Mac 的 What's New 2.4：
 - **VoiceOver**：体验未验证。
 - **iOS 大文件**：没有实机运行，服务层由 `check-mobile-file-jobs.py` 覆盖。
 - **旧系统**：iPadOS 15–17 的设置弹窗没测；最低系统 iOS 15／macOS 12 的验收留在 #16。
-- **基准工具**：`AppPerformanceAudit` 与窗口驱动已改为新接口，但没有编译运行。
+- **窗口驱动**：两个 Release 诊断产物已完成编译，运行边界见上方 2026-11-28 记录。
 
 ## 观察
 
