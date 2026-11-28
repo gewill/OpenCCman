@@ -1,6 +1,43 @@
-# OpenCC 支持完善路线图（草案）
+# OpenCC 支持与后续功能路线图
 
-本文对照 OpenCC 官方 Web 转换器，盘点 OpenCCman 现在开放了哪些 OpenCC 能力，并给出分阶段计划。文中所有条目都是待审阅的规划：不代表已经排期，也不自动建 Issue。第 6 节的问题确认后，再按条目建 Issue 或补充到现有 Issue。
+## 版本排期（2026-11-28）
+
+13 项按版本先后和版本内列出顺序推进。里程碑记录目标范围；涉及产品决策、引擎或容量验证的条目按所列条件交付，发版日期另定。
+
+### [v2.4](https://github.com/gewill/OpenCCman/milestone/4) 来源与目标转换
+
+- [#305](https://github.com/gewill/OpenCCman/issues/305) 交付简体、OpenCC 繁体、台湾、香港之间的 14 个官方配置。#345 已合入；重点验收从 2.3 升级、旧预设映射及 s2twp 迁移提示。
+
+### [v2.5](https://github.com/gewill/OpenCCman/milestone/5) 系统入口与文件可靠性
+
+- [#308](https://github.com/gewill/OpenCCman/issues/308) #26 关闭且 #305 配置稳定后，将新配置接入 Shortcuts；验证旧快捷指令仍能运行、输出与编辑器一致。
+- [#22](https://github.com/gewill/OpenCCman/issues/22) 实测 TextEdit 及第二宿主的大文本 Services 等待、超时与输出正确性，交付容量边界决定和必要的文件转换引导。
+- [#217](https://github.com/gewill/OpenCCman/issues/217) 验证 Mac 强退、卷断连、文件提供方和可模拟的断电场景；处理或明确记录临时文件残留及恢复限制。
+
+### [v2.6](https://github.com/gewill/OpenCCman/milestone/6) 选择合适的转换配置
+
+- [#309](https://github.com/gewill/OpenCCman/issues/309) 基于 #305 对同一段原文预览多配置结果并可选用配置；落实付费归属、输入长度与取消行为。
+- [#306](https://github.com/gewill/OpenCCman/issues/306) 基于 #302、#305，先确认日文字形属于产品范围；通过后交付 t2jp／jp2t 字形转换，否则记录决策。
+
+### [v2.7](https://github.com/gewill/OpenCCman/milestone/7) 结果校对与本地历史
+
+- [#307](https://github.com/gewill/OpenCCman/issues/307) 复用 #27 转换快照，待正式上游候选 API 同步并由 fork 导出后，交付候选字标注、改选及纯文本导出。
+- [#28](https://github.com/gewill/OpenCCman/issues/28) 依赖 #27；确认用户需求、保留期限与容量后，交付默认关闭的本地历史，支持主动启用、恢复、逐项删除和清空。
+
+### [v2.8](https://github.com/gewill/OpenCCman/milestone/8) 大文件容量扩展
+
+- [#268](https://github.com/gewill/OpenCCman/issues/268) 先完成 #260 的 100 MiB 验收，再用低内存 iPhone 和 iPad 签名包验证逐任务确认与最高 1 GiB 的实验路径；根据实测决定是否开放。
+- [#269](https://github.com/gewill/OpenCCman/issues/269) 同样先完成 #260，结合 #217 的 Mac 中断证据，独立测试 2／4／8 GiB，交付有限上限决定与逐任务确认。测试阶梯不构成容量承诺。
+
+### [v2.9](https://github.com/gewill/OpenCCman/milestone/9) 图片输入与词库评估
+
+- [#30](https://github.com/gewill/OpenCCman/issues/30) 用公开混排截图验证识别质量、隐私与资源消耗；达标后交付图片取字、人工校对、转换流程。
+- [#31](https://github.com/gewill/OpenCCman/issues/31) 以真实术语样本验证自定义词典与术语保护的优先级、冲突和引擎接口，交付可审阅方案及是否实施的结论。
+- [#310](https://github.com/gewill/OpenCCman/issues/310) 分别评估 jieba、CNGov、分词诊断、地区字形与实验配置；逐项记录采用、暂缓或放弃的依据，采用项另行拆分。
+
+## 规划依据（2026-10-31 原始调研）
+
+以下为排期前的技术调研与当时的待决策事项。当前版本归属以上方里程碑为准。
 
 - 调研日期：2026-10-31
 - 代码基准：`develop` @ [`81b1baf`](https://github.com/gewill/OpenCCman/tree/81b1baf8cf21b8e339a90a2b625a60bd32cc4b74)，引擎 [`gewill/SwiftyOpenCC` @ `564b094`](https://github.com/gewill/SwiftyOpenCC/tree/564b094b2b69f2c1e907fa3d89fe6845469a4e4e)（OpenCC 1.4.2）。下文代码链接里的行号都以这两个提交为准。
