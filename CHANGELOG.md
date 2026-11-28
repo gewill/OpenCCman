@@ -38,6 +38,23 @@ are grouped with the later 1.1 source snapshot rather than assigned release date
   instead of Custom.
 - On iPadOS 18 and later, the conversion settings sheet is page-sized, so
   every option fits in portrait.
+- On Mac, shortcut settings explain how the system alert volume affects sounds
+  you may hear when replacing selected text.
+
+### Fixed
+
+- On Mac, Services and shortcuts can deliver text to a hidden or minimized
+  workspace. When a read-only selection cannot be replaced, the conversion
+  shortcut brings the result back to the workspace. The global shortcut
+  setting now survives a restart.
+- Typing in a large document on Mac avoids repeated whole-document comparisons.
+- Large-file and batch conversions can write new output files on exFAT and
+  FAT32 volumes.
+- On iPhone and iPad, dismissing a stopped file task keeps its notice from
+  reopening automatically.
+- The Simplified and Traditional Chinese help and privacy links now open the
+  corresponding language pages. The online help button uses the selected
+  language.
 
 ## [2.3] - 2026-11-19
 
