@@ -27,8 +27,10 @@ def load(directory):
         foreground_required = False
         if run['status'] != 'complete' or [r['name'] for r in run['rows']] != names:
             raise ValueError('Incomplete or inconsistent stage set')
-        configs = [r['options'] for r in run['rows'] if r['name'].startswith('configuration_')]
-        if set(configs) != {2, 1, 1025, 33, 1057, 65, 1089} or len(configs) != 7:
+        expected = ({2, 1, 33, 65, 1057, 2113} if 'six_configurations_resident' in names
+                    else {2, 1, 1025, 33, 1057, 65, 1089})
+        configs = {r['name']: r['options'] for r in run['rows'] if r['name'].startswith('configuration_')}
+        if configs != {f'configuration_{code}': code for code in expected}:
             raise ValueError('Missing effective configuration coverage')
         for row in run['rows']:
             foreground_required |= row['name'] == 'root_layout_ready'

@@ -56,6 +56,22 @@ class Reports(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'configuration coverage'):
             MODULE.compare(self.before, self.after)
 
+    def test_official_configuration_coverage(self):
+        row = self.run['rows'][0]
+        current = dict(self.run, rows=[
+            dict(row, name=f'configuration_{code}', options=code)
+            for code in (2, 1, 33, 65, 1057, 2113)
+        ] + [dict(row, name='six_configurations_resident')])
+        self.write(self.after, run=current)
+        with self.assertRaisesRegex(ValueError, 'Missing stage'):
+            MODULE.compare(self.before, self.after)
+        self.write(self.before, run=current)
+        MODULE.compare(self.before, self.after)
+        current['rows'][-2]['options'] = 1089
+        self.write(self.after, run=current)
+        with self.assertRaisesRegex(ValueError, 'configuration coverage'):
+            MODULE.compare(self.before, self.after)
+
     def test_rejects_different_input(self):
         changed = copy.deepcopy(self.run)
         changed['rows'][0]['input_sha256'] = 'different'
