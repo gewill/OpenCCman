@@ -33,6 +33,20 @@ iPhone 17 模拟器，iOS 27.0，同一隔离 Bundle ID，两个 Debug 构建均
 
 终止 2.3，直接用 `simctl install` 覆盖安装新版。系统分配了新的数据目录路径。首次启动前读回偏好文件，`regionOptions=Taiwan Idiom` 与当日一次转换计数均保留，新来源与目标键仍不存在。首次启动自动显示 2.4 的台湾词组迁移说明，首页变为台湾正体加词组预设。关闭说明后再次填入同一示例，结果为「滑鼠裡面的矽二極體壞了，導致游標解析度降低。」。进程退出后核对新设置 `s / tw / Taiwan Idiom`、旧地域键和已展示版本 `2.4`。本次只启动该模拟器，结束后已恢复 Shutdown。
 
+### iPad 覆盖安装与保留预设
+
+在 iPad Pro 11 英寸（M4）模拟器、iPadOS 27.0，以繁体中文运行上述两个 Debug 包。在 2.3 弹层选「香港繁體」，填入内置示例并转换。覆盖安装后、首次启动前，旧键仍是 `Traditional Chinese / HongKong Standard / Not convert`。新版首次启动正常展示繁体中文的台湾词组迁移说明，并保留首页的「香港繁體」预设。关闭说明后再填入同一示例并转换。
+
+两版结果均为「鼠標裏面的硅二極管壞了，導致光標分辨率降低。」。从两个版本的原文与结果编辑框读回 UTF-8，原文一致、结果逐字节一致，并与独立运行 `opencc -c s2hk.json` 的输出一致。退出后新键为 `s / hk / Not convert`，已展示版本为 `2.4`。模拟器已恢复 Shutdown。
+
+### Release 基准工具复验
+
+在 Apple M4 Pro、macOS 27.2.1、Xcode 27.2 上，原基准 App 的 Release 构建报 `cannot find type 'ChineseConverter' in scope`。基准已改用官方配置，但缺少模块导入；比较器仍校验两个退役配置，无法读取按新配置生成的报告。修复见 `087eb47`，改动限于基准与报告工具。
+
+- `python3 scripts/benchmark-app.py --output <新目录> --packages <已锁定的 SourcePackages> --samples 3 --timeout 300` 成功。三个独立 Release 进程分别通过六个配置的已知答案断言（t2s、s2t、s2tw、s2hk、s2twp、s2hkp），含混合文字、组合字符、CRLF 和 NUL；三份原始报告均通过比较器的同组校验。本次只验工具和输出正确性，未作跨版本耗时比较。
+- `python3 Tests/Benchmarks/test_app_performance_report.py` 通过 19 项。当前配置缺失或记录码错误会被拒绝；历史七配置的完整报告仍可读取。
+- 私有窗口诊断分别用 `--cycles` 和 `--documents` 准备，两个 arm64 macOS Release 构建通过。本次未执行这两个独立的窗口生命周期场景。
+
 ## 关闭标准核对（2026-11-17 更新）
 
 | 关闭标准 | 状态 | 证据 |
@@ -211,7 +225,7 @@ Mac 的 What's New 2.4：
 - **VoiceOver**：体验未验证。
 - **iOS 大文件**：没有实机运行，服务层由 `check-mobile-file-jobs.py` 覆盖。
 - **旧系统**：iPadOS 15–17 的设置弹窗没测；最低系统 iOS 15／macOS 12 的验收留在 #16。
-- **基准工具**：`AppPerformanceAudit` 与窗口驱动已改为新接口，但没有编译运行。
+- **窗口驱动**：两个 Release 诊断产物已完成编译，运行边界见上方 2026-11-28 记录。
 
 ## 观察
 
